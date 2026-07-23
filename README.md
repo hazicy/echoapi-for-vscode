@@ -1,4 +1,12 @@
 # EchoAPI for VS Code
+We are officially open-sourcing our EchoAPI extension for VS Code.
+### Why open-source now?
+ We originally built this extension out of frustration after Thunder Client suddenly locked core features behind mandatory paywalls. Back then, we just wanted a proper, free API client for VS Code. Now, as our team shifts focus to building AI application tools, we no longer have much time to maintain it. So, we want to hand it over to the community for maintenance and growth.
+### What this means for you:
+* The Extension Remains Free: We believe lightweight, local API tools in the AI era shouldn't cost money. Because of this, EchoAPI for VS Code remains completely free for everyone.
+* Core Features Intact: Still ultra-lightweight, no login required, with offline usage and seamless Git collaboration.
+* Your Turn to Build: Feel free to contribute, maintain, or even fork it to build a completely new product!
+Thank you for being part of our journey. We hope the community takes good care of it!
 
 ![EchoAPI for VS Code](./public/assets/92c325a5-4c8d-4c49-ae33-35bf94b85b26.png "image.png")
 
