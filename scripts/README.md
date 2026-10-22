@@ -30,3 +30,19 @@ Watch mode tracks imported source and styles. Restart it after editing files in
 
 Packaging still checks production dependencies through `vsce`. Changing bundlers does
 not bypass Yarn registry or dependency-resolution failures.
+
+## Build language
+
+By default (`--language auto`), one build follows the VS Code display language at
+runtime using `vscode.env.language`. The extension host initializes translations
+synchronously before translated constants are evaluated. Webviews receive the
+resolved language through the HTML `lang` attribute before their modules run;
+Ant Design controls use the same language. Simplified Chinese (`zh-CN`, `zh-Hans`,
+`zh-SG`) selects Chinese; other locales fall back to English. Changing the VS Code
+display language takes effect after the editor restarts.
+
+For development, `--serve` uses the browser language. To override the application
+language, use `node scripts/build.cjs --production --language zh-cn` or
+`--language en`. The `--language=zh-cn` form is also accepted, including in watch
+and serve modes. Native command titles and settings descriptions use VS Code
+`package.nls` localization and always follow the editor language.

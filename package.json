@@ -60,25 +60,26 @@
   "files": [
     "LICENSE.txt",
     "dist/**",
+    "package.nls*.json",
     "README.md",
     "CHANGELOG.md"
   ],
   "sandbox": false,
   "contributes": {
     "configuration": {
-      "title": "EchoAPI Settings",
+      "title": "%configuration.title%",
       "properties": {
         "echoapi.documentServicePort": {
           "type": "number",
           "default": 3000,
-          "description": "Default port number of the local document service"
+          "description": "%configuration.documentServicePort.description%"
         }
       }
     },
     "submenus": [
       {
         "id": "myView.commit",
-        "label": "Commit"
+        "label": "%submenu.commit%"
       }
     ],
     "viewsContainers": {
@@ -131,20 +132,20 @@
     "commands": [
       {
         "command": "echoapi.openEnv",
-        "title": "Environment"
+        "title": "%command.openEnv%"
       },
       {
         "command": "echoapi.openExtenisonSettings",
-        "title": "Extension Settings"
+        "title": "%command.openExtenisonSettings%"
       },
       {
         "command": "echoapi.feedBack",
-        "title": "FeedBack",
+        "title": "%command.feedBack%",
         "category": "EchoAPI"
       },
       {
         "command": "echoapi.openHelpDoc",
-        "title": "Help Docs",
+        "title": "%command.openHelpDoc%",
         "category": "EchoAPI"
       }
     ]

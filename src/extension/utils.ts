@@ -1,3 +1,4 @@
+import { language } from '@/locale/language';
 import { ApiDetailsData } from "@/types/apis/api";
 import { assign, cloneDeep, concat, find, findIndex, forEach, groupBy, head, isArray, isEmpty, isEqual, isNull, isNumber, isObject, isPlainObject, isString, isUndefined, keys, map, omit, pullAt, reduce, size, trim, values } from "lodash";
 import { GenSendBaseOptionsType, SendBaseOptions } from "./type";
@@ -909,7 +910,7 @@ export const getHtmlForWebview = (webviewUri: vscode.Uri, resourceBaseUrl: vscod
 
   return `
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang="${language}">
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">

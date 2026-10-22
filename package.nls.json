@@ -1,0 +1,9 @@
+{
+  "configuration.title": "EchoAPI Settings",
+  "configuration.documentServicePort.description": "Default port number of the local document service",
+  "submenu.commit": "Commit",
+  "command.openEnv": "Environment",
+  "command.openExtenisonSettings": "Extension Settings",
+  "command.feedBack": "FeedBack",
+  "command.openHelpDoc": "Help Docs"
+}

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { App as AntdApp, ConfigProvider, Skeleton } from 'antd';
 import useGlobalTheme from '@/theme';
-import enUS from 'antd/locale/en_US';
+import antdLocale from '@/locale/antd';
 
 import '@/assets/css/reset.css';
 
@@ -126,7 +126,7 @@ function FolderTestPanel() {
         token: customTheme.token,
         components: customTheme.components,
       }}
-      locale={enUS}
+      locale={antdLocale}
     >
       <AntdApp>
         <ThemeProvider theme={customTheme}>

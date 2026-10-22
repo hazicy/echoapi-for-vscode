@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { App as AntdApp, ConfigProvider, Skeleton } from 'antd';
 import useGlobalTheme from '@/theme';
 import ErrorBoundary from '@/components/business/ErrorBoundary';
-import enUS from 'antd/locale/en_US';
+import antdLocale from '@/locale/antd';
 
 import '@/assets/css/reset.css';
 
@@ -185,7 +185,7 @@ function TagPanel() {
         token: customTheme.token,
         components: customTheme.components,
       }}
-      locale={enUS}
+      locale={antdLocale}
     >
       <AntdApp>
         <HotkeysProvider

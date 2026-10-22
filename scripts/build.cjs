@@ -5,6 +5,18 @@ const { nodeModulesPolyfillPlugin } = require('esbuild-plugins-node-modules-poly
 const { transform } = require('@svgr/core');
 
 const root = path.resolve(__dirname, '..');
+const languageFlag = process.argv.find(arg => arg.startsWith('--language='));
+const languageIndex = process.argv.indexOf('--language');
+const requestedLanguage = languageFlag ? languageFlag.slice('--language='.length)
+  : languageIndex >= 0 ? process.argv[languageIndex + 1] : 'auto';
+const languageAliases = { auto: 'auto', en: 'en', 'en-us': 'en', cn: 'zh-cn', zh: 'zh-cn', 'zh-cn': 'zh-cn' };
+const languageKey = requestedLanguage?.toLowerCase();
+const language = Object.prototype.hasOwnProperty.call(languageAliases, languageKey)
+  ? languageAliases[languageKey] : undefined;
+if (!language) {
+  console.error('Unsupported or missing --language. Supported languages: auto, en, zh-cn (aliases: en-US, cn, zh, zh-CN).');
+  process.exit(1);
+}
 const production = process.argv.includes('--production');
 const serve = process.argv.includes('--serve');
 const watch = serve || process.argv.includes('--watch');
@@ -85,12 +97,14 @@ async function main() {
     absWorkingDir: root, bundle: true, minify: production, sourcemap: production ? false : 'linked',
     sourcesContent: false, logLevel: 'info', jsx: 'automatic',
     alias: { '@': path.join(root, 'src') },
-    define: { 'process.env.NODE_ENV': JSON.stringify(production ? 'production' : 'development') },
+    define: { 'process.env.NODE_ENV': JSON.stringify(production ? 'production' : 'development'),
+      __ECHOAPI_LANGUAGE__: JSON.stringify(language) },
     drop: production ? ['console', 'debugger'] : [], legalComments: 'none',
   };
   const extension = {
     ...common, entryPoints: ['src/extension.ts'], outfile: 'dist/extension.js',
     platform: 'node', format: 'cjs', target: 'node16', external: ['vscode'],
+    alias: { ...common.alias, '@/locale/runtime': path.join(root, 'src/locale/runtime.extension.ts') },
     mainFields: ['main', 'module'], plugins: [jsoncEsm],
   };
   const webviews = {
