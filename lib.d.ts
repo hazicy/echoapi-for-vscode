@@ -10,7 +10,6 @@ declare global {
   declare module 'js-yaml';
   declare module 'type-of-is';
   declare module 'auto-json-faker';
-  declare module 'convert-design-debug';
   declare module 'exp-mock';
 
   declare module '*.png' {

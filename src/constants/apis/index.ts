@@ -373,11 +373,6 @@ export const APIS_CONTENT_MAP: {
 } = {
   api: [
     {
-      value: "design",
-      label: i18next.t("common.api_tab.design"),
-      children: null,
-    },
-    {
       value: "debug",
       label: i18next.t("common.api_tab.run"),
       children: null,

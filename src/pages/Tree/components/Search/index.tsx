@@ -68,9 +68,6 @@ const Search: FC<Props> = ({
             onChange={(event) => setSearchValue(event.target.value)}
           />
           {showActions &&  <Flex className="actions-wrap" align="center">
-              {type == 'design' &&  <Tooltip title={'History'}>
-                <IconFont type="icon-history" style={{ fontSize: 12 }} onClick={handleHistory} />
-              </Tooltip>}
 
               <Tooltip placement="topRight" title={t('common.folder_operate.locate')}>
                 <IconFont type="icon-positioning" onClick={()=>onPosition(apisActiveKey)} />

@@ -140,10 +140,6 @@ function TagPanel() {
           
           setLodaing(false);
           break;
-        case 'setDesignApiData':
-          const { apisActiveData } = useApis.getState();
-          updateApisActiveData({ ...apisActiveData, open_api: message?.data?.open_api || {},name:message?.data?.name || '' });
-          break;
         case 'setVscodeTheme':
           updateVscodeTheme(message.data);
           break;

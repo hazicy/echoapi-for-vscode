@@ -236,17 +236,12 @@ export const API_METHODS: string[] = [
 ];
 
 export enum DEFAULT_OPEN_NEW_TAB_ENUM {
-  DESIGN = "design",
   PREVIEW = "preview",
   DEBUG = "debug",
 }
 
 // Default tab options for new/open API
 export const DEFAULT_OPEN_NEW_TAB_OPTIONS = [
-  {
-    label: i18next.t("system_settings.general.default_tab_design"),
-    value: DEFAULT_OPEN_NEW_TAB_ENUM.DESIGN,
-  },
   {
     label: i18next.t("system_settings.general.default_tab_debug"),
     value: DEFAULT_OPEN_NEW_TAB_ENUM.DEBUG,
@@ -292,17 +287,6 @@ export const CONTENT_TYPES: Record<string, string> = {
 };
 
 // Request content types
-export const DESIGN_CONTENT_TYPES: Record<string, string> = {
-  none: "none",
-  "multipart/form-data": "form-data",
-  "application/x-www-form-urlencoded": "urlencoded",
-  "application/json": "json",
-  "application/xml": "xml",
-  "application/javascript": "javascript",
-  "text/plain": "plain",
-  "text/html": "html",
-  "application/octet-stream": "binary",
-};
 
 export const API_CONTENT_TYPES = [
   "none",

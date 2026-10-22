@@ -22,8 +22,6 @@ type State = {
   onlineUserList: UserListRes[];
   /**streamline mode */
   streamliningMode: number;
-  /**preview 3 modes */
-  designMode: 'edit' | 'read' | 'both';
 };
 
 type Action = {
@@ -36,7 +34,6 @@ type Action = {
   updateUserList: (userList: State['userList']) => void;
   updateOnlineUserList: (onlineUserList: State['onlineUserList']) => void;
   updateStreamliningMode: (streamliningMode: State['streamliningMode']) => void;
-  updateDesignMode: (designMode: State['designMode']) => void;
   updateUserConfig:(state:State )=>void;
 };
 
@@ -52,7 +49,6 @@ const useUserConfig = create<State & Action>()(
       userList: [] as UserListRes[],
       onlineUserList: [] as UserListRes[],
       streamliningMode: -1,
-      designMode: 'edit',
 
       updateIsReadonly: (isReadonly) => set(() => ({ isReadonly })),
       updateToken: (token) => set(() => ({ token })),
@@ -63,7 +59,6 @@ const useUserConfig = create<State & Action>()(
       updateUserList: (userList) => set(() => ({ userList })),
       updateOnlineUserList: (onlineUserList) => set(() => ({ onlineUserList })),
       updateStreamliningMode: (streamliningMode) => set(() => ({ streamliningMode })),
-      updateDesignMode: (designMode) => set(() => ({ designMode })),
       updateUserConfig:(payload)=>set((state) => ({ ...state, ...payload  }))
     }),
     { name: 'useUserConfig' }

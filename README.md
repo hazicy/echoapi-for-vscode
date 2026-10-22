@@ -27,10 +27,6 @@ EchoAPI has a few standout features:
 
 Getting started with EchoAPI is a breeze. Just navigate to the VS Code Extensions Marketplace, search for EchoAPI, and hit install. No additional tools or sign-ins are necessary—everything operates straight from your VS Code sidebar.
 
-## API Design (Designing a New Request)
-
-![Designing a New Request](./public/assets/0471b5e5-0ec4-48df-b662-667bbc613abf.png "image.png")
-In the Design area, simply click on “HTTP/1.2 Request” to quickly generate the API design documentation. It supports real-time editing and instant document updates, ensuring a smooth and efficient design process.
 
 ## API Debug (Creating a New Request)
 

@@ -16,7 +16,6 @@ import { userSingOut } from '@/extension/user';
 import { onThemeChange, onFontSizeChange } from '@/extension/theme';
 import { initializePlugin } from '@/extension/init';
 import { restartServer, startDocsServer } from '@/extension/swaggerUi';
-import { createDesignPanel } from './extension/panelManager/design';
 import { createShareListPanel } from './extension/panelManager/shareList';
 import { isNumber } from 'lodash';
 
@@ -127,13 +126,6 @@ export async function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand('echoapi.folderTestReportData', (data) => {
       createfolderTestReportDataPanel(data, context);
-    })
-  );
-
-  // Design page
-  context.subscriptions.push(
-    vscode.commands.registerCommand('echoapi.design', (data) => {
-      createDesignPanel(data, context);
     })
   );
 

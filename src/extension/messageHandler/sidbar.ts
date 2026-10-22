@@ -25,7 +25,7 @@ import {
   isFunction,
   isPlainObject,
 } from "lodash";
-import { fillInOpenApi, getCodeHarRequest, updateOpenData } from "../apis";
+import { getCodeHarRequest, updateOpenData } from "../apis";
 import { DEFAULT_TEAM } from "@/constants/team";
 import { DEFAULT_PROJECT } from "@/constants/project";
 import {
@@ -59,8 +59,7 @@ const saveApiListItem = (
   const index = apiList.findIndex((e: any) => e?.target_id === data?.target_id);
   if (index > -1) {
     apiList.splice(index, 1, data); // Replace target element
-    // Update tab content and title after replacement
-    updateOpenData(openedPanels, data);
+      updateOpenData(openedPanels, data);
   } else {
     data.sort = getMaxSort(apiList, data.parent_id);
     apiList.push(data); // Add element
@@ -117,7 +116,6 @@ export const handleMessage = async (
     openedPanels,
     openedFolderTestPanels,
     openedFolderTestReportDataPanels,
-    openedDocPanels,
     pushWebView,
     shareListWebView,
   } = globalConfig;
@@ -243,10 +241,6 @@ export const handleMessage = async (
           openedPanel.dispose();
         });
 
-        // Clear open document tabs
-        forEach(openedDocPanels, (openedPanel) => {
-          openedPanel.dispose();
-        });
 
         // Close all tab pages
         forEach(globalConfig, (panel, key) => {
@@ -296,10 +290,6 @@ export const handleMessage = async (
       curData.is_changed = -1;
       vscode.commands.executeCommand("openTabPanel", curData);
       break;
-    case "openDesignPanel":
-      await fillInOpenApi(message.data, context);
-      vscode.commands.executeCommand("echoapi.design", message.data);
-      break;
     case "createShare":
       createShare(message.data, context);
       // Refresh share list
@@ -307,15 +297,6 @@ export const handleMessage = async (
         action: "setShareData",
         data: getProjectShareData(context),
       });
-      break;
-    case "openDesignPanelById":
-      const curApiData = apiList.find(
-        (i: ApiDetailsData) => i?.target_id === message.data,
-      );
-      curApiData.is_create = -1;
-      // Supplement open api initial data
-      await fillInOpenApi(curApiData, context);
-      vscode.commands.executeCommand("echoapi.design", curApiData);
       break;
     case "showInputBox":
       const userInput = await vscode.window.showInputBox({
@@ -408,10 +389,6 @@ export const handleMessage = async (
               openedPanels[k].dispose();
               // delete openedPanels[message.data.target_id];
             }
-            if (openedDocPanels[k]) {
-              // Close design tab
-              openedDocPanels[k].dispose();
-            }
             // Delete directory-related automated test data
             const folderName = getTestingFolderName(k, context);
             if (openedFolderTestPanels[folderName]) {
@@ -429,10 +406,6 @@ export const handleMessage = async (
             // Tab already exists, close tab
             openedPanels[message.data.target_id].dispose();
             // delete openedPanels[message.data.target_id];
-          }
-          if (openedDocPanels[message.data.target_id]) {
-            // Close design tab
-            openedDocPanels[message.data.target_id].dispose();
           }
         }
 
@@ -670,10 +643,6 @@ export const handleMessage = async (
     case "deleteShare":
       deleteShare(message.data, context);
 
-      // Close share tab
-      if (openedDocPanels?.[message?.data?.target_id]) {
-        openedDocPanels[message?.data?.target_id].dispose();
-      }
 
       // Refresh share list
       // sidePanelWebView && sidePanelWebView.webview.postMessage({ action: 'setProjectShareData', data: getProjectShareData(context) });

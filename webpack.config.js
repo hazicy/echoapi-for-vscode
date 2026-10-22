@@ -93,7 +93,6 @@ const reactConfig = {
     importDataPanel:'./src/webviews/importDataPanel.tsx',
     folderTestPanel:'./src/webviews/folderTestPanel.tsx',
     folderTestReportPanel:'./src/webviews/folderTestReportPanel.tsx',
-    designPanel:'./src/webviews/designPanel.tsx',
     shareListPanel:'./src/webviews/shareListPanel.tsx',
     exportDataPanel:'./src/webviews/exportDataPanel.tsx'
   },

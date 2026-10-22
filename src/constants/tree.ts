@@ -116,23 +116,6 @@ export const APIS_FOLDER_ADD_LIST = concat(
   ] as any,
 ) as MenuProps["items"];
 
-export const DESIGN_APIS_FOLDER_ADD_LIST = concat(
-  [],
-  map([TREE_TITLE[0]], (item, index) => ({
-    ...omit(APIS_CREATE_LIST[index], ["gradientColor", "icon"]),
-    label: item,
-    icon: APIS_CREATE_LIST[index]?.icon as string,
-    gradientColor:
-      (APIS_CREATE_LIST[index] as ApisCreateListItem)?.gradientColor || [],
-  })),
-  [
-    {
-      key: APIS_TARGET_TYPE_ENUM.FOLDER,
-      label: i18next.t("common.folder_operate.new_subfolder"),
-      icon: "icon-add-folder",
-    },
-  ] as any,
-) as MenuProps["items"];
 
 export const APIS_FOLDER_OPERATE_LIST = [
   {
@@ -216,44 +199,6 @@ export const APIS_FOLDER_OPERATE_LIST = [
   },
 ];
 
-export const DESIGN_APIS_FOLDER_OPERATE_LIST = [
-  {
-    key: APIS_TARGET_TYPE_ENUM.API,
-    label: i18next.t("common.folder_operate.new_http_request"),
-    icon: "icon-api",
-    gradientColor: ["#F6504B", "#F98E8B"],
-  },
-  {
-    key: APIS_TARGET_TYPE_ENUM.FOLDER,
-    label: i18next.t("common.folder_operate.new_subfolder"),
-    icon: "icon-add-folder",
-  },
-  {
-    type: "divider",
-  },
-  {
-    key: APIS_MORE_OPERATE_ENUM.DISPLAYFINDER,
-    icon: "icon-dakaiwenjianziyuanguanliqi",
-    label: window?.isMac
-      ? i18next.t("common.folder_operate.reveal_finder")
-      : i18next.t("common.folder_operate.reveal_folder"),
-  },
-  {
-    type: "divider",
-  },
-
-  {
-    key: APIS_MORE_OPERATE_ENUM.EDIT,
-    icon: "icon-edit",
-    label: i18next.t("common.folder_operate.rename"),
-  },
-
-  {
-    key: APIS_MORE_OPERATE_ENUM.DELETE,
-    icon: "icon-trash",
-    label: i18next.t("common.folder_operate.delete"),
-  },
-];
 
 export const SOCKET_SERVICE_FOLDER_OPERATE_LIST = [
   {
@@ -397,38 +342,6 @@ export const SOCKETIO_METHOD_OPERATE_LIST = [
   },
 ];
 
-export const DESIGN_APIS_MORE_OPERATE_LIST = [
-  {
-    key: APIS_MORE_OPERATE_ENUM.COPYOPENAPIURL,
-    label: i18next.t("common.folder_operate.copy_openapi"),
-    icon: "icon-copy",
-  },
-  {
-    key: APIS_MORE_OPERATE_ENUM.DISPLAYFINDER,
-    icon: "icon-dakaiwenjianziyuanguanliqi",
-    label: window?.isMac
-      ? i18next.t("common.folder_operate.reveal_finder")
-      : i18next.t("common.folder_operate.reveal_folder"),
-  },
-  {
-    type: "divider",
-  },
-  {
-    key: APIS_MORE_OPERATE_ENUM.CLONE,
-    label: i18next.t("common.folder_operate.clone"),
-    icon: "icon-clone",
-  },
-  {
-    key: APIS_MORE_OPERATE_ENUM.EDIT,
-    icon: "icon-edit",
-    label: i18next.t("common.folder_operate.rename"),
-  },
-  {
-    key: APIS_MORE_OPERATE_ENUM.DELETE,
-    label: i18next.t("common.folder_operate.delete"),
-    icon: "icon-trash",
-  },
-];
 
 export const APIS_MORE_OPERATE_LIST = [
   {

@@ -2,10 +2,9 @@ import * as vscode from 'vscode';
 import { globalConfig } from '../constants';
 import { downloadFile, getApiList } from '../utils';
 import { batchDeleteShare, deleteShare, getDocBaseUrl, getOpenApi, getProjectShareData } from '../utils/share';
-import { isArray } from 'lodash';
 
 export const handelPushMessage = async (message: { action: string, data: any }, context: vscode.ExtensionContext) => {
-  const { shareListWebView, openedDocPanels } = globalConfig;
+  const { shareListWebView } = globalConfig;
 
   switch (message.action) {
     case 'getSystemConfig':
@@ -26,24 +25,11 @@ export const handelPushMessage = async (message: { action: string, data: any }, 
     case 'deleteShare':
       deleteShare(message.data, context);
 
-      // Close share tab
-      if (openedDocPanels?.[message?.data?.target_id]) {
-        openedDocPanels[message?.data?.target_id].dispose();
-      }
-
       // Refresh share list
       shareListWebView?.webview.postMessage({ action: 'setShareData', data: getProjectShareData(context) });
       break;
     case 'batchDeleteShare':
       batchDeleteShare(message.data, context);
-      // Close share tab
-      if (isArray(message.data)) {
-        message.data.forEach(id => {
-          if (openedDocPanels?.[id]) {
-            openedDocPanels[id].dispose();
-          }
-        });
-      }
 
       // Refresh share list
       shareListWebView?.webview.postMessage({ action: 'setShareData', data: getProjectShareData(context) });

@@ -49,22 +49,11 @@
     "save_request_open_debug_title":"保存该请求并打开设计标签?",
     "push_to_debug":"推送到调试",
     "save_and_push":"保存并推送",
-    "push_design_to_debug_tip":"将设计数据推送到调试区域吗? \r\n 这将会覆盖现有数据，且无法撤销操作。",
     "confirm_data_push":"确认数据推送",
-    "save_request_title":"保存该请求并打开设计标签?",
-    "save_request_content":"在打开设计标签之前, 您需要先保存.",
     "save_and_open":"保存并打开",
     "save_before_share_tip":"分享前保存请求",
     "open_debug":"打开调试标签",
-    "open_design":"打开设计标签",
     "will_overwrite_tip":"这将覆盖现有数据并且无法撤消。",
-    "pull_debug_to_design_tip":"拉取调试数据到设计文档?",
-    "generate_dubug_tip":"根据设计文档生成调试数据",
-    "generate_dubug_body_tip":"从设计文档中生成调试body数据。",
-    "not_create_design_tip":"API设计文档还没有创建。里面没有数据。",
-    "debug_design_diff_tip":"API设计和调试数据的区别：",
-    "generate_debug_body_tip":"根据设计文档生成调试body数据？",
-    "go_ahead_design_data_tip":"您要继续使用这些设计数据吗？这一步无法撤销。",
     "form":"表单",
     "code_option":"代码",
     "try_it":"试试看",
@@ -93,7 +82,6 @@
     },
     "api_tab": {
       "preview": "预览",
-      "design": "设计",
       "run": "调试",
       "case": "接口用例",
       "stress": "一键压测",
@@ -968,7 +956,6 @@
     "general": {
       "title": "扩展设置",
       "default_tab": "新建或打开接口默认tab页",
-      "default_tab_design": "设计",
       "default_tab_preview": "预览",
       "default_tab_debug": "调试",
       "default_method": "新建接口默认请求Method",
@@ -1737,7 +1724,7 @@
         "local_tip": "需要安装EchoAPI客户端"
       }
     },
-    "design": {
+    "response_labels": {
       "http2_tip": "优先使用http1,如果请求失败则使用http2",
       "save": "保存",
       "folder": "目录",

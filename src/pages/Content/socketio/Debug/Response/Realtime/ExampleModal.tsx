@@ -125,7 +125,7 @@ const Index = forwardRef((props: Props, ref) => {
 
   const onOk = () => {
     if (!exampleInfo?.name) {
-      message.info(t('api.design.new_modal.name_error_tip'));
+      message.info(t('api.response_labels.new_modal.name_error_tip'));
       return;
     }
     if (isCreate) {

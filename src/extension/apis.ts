@@ -325,16 +325,6 @@ export const updateOpenData = (openedPanels: { [key: string]: vscode.WebviewPane
   }
 };
 
-export const updateOpenApiData = (openedPanels: { [key: string]: vscode.WebviewPanel }, apiData: ApiDetailsData) => {
-  const panel = openedPanels?.[apiData?.target_id];
-  if (apiData?.target_type === 'api' && panel) {
-    // Update title
-    panel.title = showTabName(apiData?.name);
-    // Update content
-    panel.webview.postMessage({ action: 'setDesignApiData', data: apiData });
-  }
-};
-
 export const updateOpenProjectConfig = (openedPanels: { [key: string]: vscode.WebviewPanel }, projectConfig: ProjectConfigType) => {
   forEach(openedPanels, (openedPanel) => {
     openedPanel.webview.postMessage({ action: 'setProjectConfig', data: projectConfig });

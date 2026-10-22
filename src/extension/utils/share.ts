@@ -222,13 +222,6 @@ export const updatePageDocBaseUrl = (docBaseUrl: string) => {
     });
   });
 
-  // Notify open tabs
-  forEach(globalConfig.openedDocPanels, (openedDocPanel, key) => {
-    openedDocPanel.webview.postMessage({
-      action: "setDocBaseUrl",
-      data: docBaseUrl,
-    });
-  });
 };
 
 export const getDocBaseUrl = (context: vscode.ExtensionContext) => {

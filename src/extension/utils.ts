@@ -905,7 +905,7 @@ export const getUserConfig = (context: vscode.ExtensionContext): { currentTeam: 
   };
 };
 
-export const getHtmlForWebview = (webviewUri: vscode.Uri, resourceBaseUrl: vscode.Uri, data?: any, script?: Boolean, designScript?: Boolean) => {
+export const getHtmlForWebview = (webviewUri: vscode.Uri, resourceBaseUrl: vscode.Uri, data?: any, script?: Boolean) => {
 
   return `
     <!DOCTYPE html>
@@ -942,7 +942,6 @@ export const getHtmlForWebview = (webviewUri: vscode.Uri, resourceBaseUrl: vscod
     </script>
       <script src="${webviewUri}"></script>
       ${script && '<script async src="https://www.echoapi.cloud/analytics/analyticsv2.min.js"></script>'}
-      ${designScript && '<script async src="https://www.echoapi.cloud/analytics/analyticsv2-design.min.js"></script>'}
     </body>
     </html>
   `;

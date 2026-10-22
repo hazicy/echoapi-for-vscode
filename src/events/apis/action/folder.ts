@@ -7,7 +7,7 @@ import { APIS_TARGET_TYPE_ENUM } from "@/constants/apis";
 import { useApis } from "@/store";
 
 export const addFolderChild = async (params: ApisItemActionType) => {
-  const { apisData } = params;
+  const { apisData, childTargetType } = params;
   const result = await createOpensItem({
     target_type: childTargetType as APIS_TARGET_TYPE_ENUM,
     project_id: "",
@@ -15,10 +15,7 @@ export const addFolderChild = async (params: ApisItemActionType) => {
   });
   if (["api", "sse"].includes(childTargetType as APIS_TARGET_TYPE_ENUM)) {
     window?.vscode.postMessage({
-      action:
-        tabsValue == "docs" && childTargetType === "api"
-          ? "openDesignPanel"
-          : "openTagPanel",
+      action: "openTagPanel",
       data: result,
     });
   }
@@ -41,7 +38,7 @@ export const addApiChild = async (params: ApisItemActionType) => {
     parent_id: apisData?.target_id || "0",
   });
   window?.vscode.postMessage({
-    action: tabsValue == "docs" ? "openDesignPanel" : "openTagPanel",
+    action: "openTagPanel",
     data: result,
   });
 };
@@ -70,7 +67,7 @@ export const addSseChild = async (params: ApisItemActionType) => {
     parent_id: apisData?.target_id || "0",
   });
   window?.vscode.postMessage({
-    action: tabsValue == "docs" ? "openDesignPanel" : "openTagPanel",
+    action: "openTagPanel",
     data: result,
   });
 };

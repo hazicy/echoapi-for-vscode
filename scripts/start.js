@@ -14,7 +14,6 @@ const devConfig = {
     importDataPanel: path.resolve(__dirname, '../src/webviews/importDataPanel.tsx'),
     folderTestPanel: path.resolve(__dirname, '../src/webviews/folderTestPanel.tsx'),
     folderTestReportPanel: path.resolve(__dirname, '../src/webviews/folderTestReportPanel.tsx'),
-    designPanel: path.resolve(__dirname, '../src/webviews/designPanel.tsx'),
     shareListPanel: path.resolve(__dirname, '../src/webviews/shareListPanel.tsx'),
     exportDataPanel: path.resolve(__dirname, '../src/webviews/exportDataPanel.tsx'),
   },

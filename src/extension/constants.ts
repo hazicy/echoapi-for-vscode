@@ -12,7 +12,6 @@ interface GlobalConfigType {
   importDataWebView:vscode.WebviewPanel | null;
   exportDataWebView:vscode.WebviewPanel | null;
   shareListWebView:vscode.WebviewPanel | null;
-  openedDocPanels:{ [key: string]: vscode.WebviewPanel };
 }
 
 interface WebsocketStoreType {
@@ -23,7 +22,6 @@ enum PanelNameEnum {
   EXPORTDATA = 'EXPORTDATA',
   IMPORTDATA = 'IMPORTDATA',
   SHARELIST = 'SHARELIST',
-  DESIGN = 'DESIGN',
   PUSH = 'PUSH',
   LOGIN = 'LOGIN',
   ENVIRONMENT = 'ENVIRONMENT',
@@ -70,7 +68,6 @@ export const globalConfig:GlobalConfigType = {
   
   exportDataWebView:null,
   // Global store for open document pages
-  openedDocPanels:{},
 };
 
 export const websocketStore:WebsocketStoreType = {
@@ -104,11 +101,6 @@ export const PANEL_OPTIONS:PanelOptionsType = {
     viewType: 'shareListPanel',
     title: i18next.t('docs.share_modal.share_list'),
     iconName: 'share_list.png'
-  },
-  [PanelNameEnum.DESIGN]: {
-    viewType: 'designPanel',
-    title: 'Design',
-    iconName: 'doc.png'
   },
   [PanelNameEnum.PUSH]: {
     viewType: 'pushPanel',

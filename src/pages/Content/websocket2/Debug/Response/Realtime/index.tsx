@@ -175,7 +175,7 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
         },
       }}
     >
-      <Tooltip title={t('api.design.save_response')}>
+      <Tooltip title={t('api.response_labels.save_response')}>
         <IconFont type="icon-save" className="icon-copy" />
       </Tooltip>
     </Dropdown>

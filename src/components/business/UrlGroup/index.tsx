@@ -421,7 +421,7 @@ const UrlGroup = (props: UrlGroupProps) => {
                 <Select.Option key={item.value} value={item.value}>
                   {item.label}
                   {item.value === 'http/2' && (
-                    <Tooltip title={t('api.design.http2_tip')}>
+                    <Tooltip title={t('api.response_labels.http2_tip')}>
                       <IconFont style={{ marginLeft: 4 }} type="icon-wenhao" />
                     </Tooltip>
                   )}

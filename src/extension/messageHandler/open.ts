@@ -10,7 +10,6 @@ import {
   showTabName,
 } from "../utils";
 import {
-  fillInOpenApi,
   getCodeHarRequest,
   sendApi,
   sendSse,
@@ -46,7 +45,7 @@ const saveApiData = (
   context: vscode.ExtensionContext,
   panel: vscode.WebviewPanel,
 ) => {
-  const { sidePanelWebView, openedDocPanels } = globalConfig;
+  const { sidePanelWebView } = globalConfig;
   const apiList: ApiDetailsData[] = getApiList(context);
   // Local stored data collection
   let newData: ApiDetailsData = data;
@@ -65,13 +64,6 @@ const saveApiData = (
   // Save and update open
   panel.webview.postMessage({ action: "setApiData", data: newData });
 
-  // Update tab content and title after replacement
-  if (openedDocPanels?.[newData.target_id]) {
-    openedDocPanels[newData.target_id].webview.postMessage({
-      action: "setDebugApiData",
-      data: newData,
-    });
-  }
 
   // Update title
   panel.title = showTabName(newData?.name);
@@ -106,7 +98,7 @@ export const handelOpenMessage = async (
   panel: vscode.WebviewPanel,
   apiData: ApiDetailsData,
 ) => {
-  const { sidePanelWebView, environmentWebView, openedDocPanels } =
+  const { sidePanelWebView, environmentWebView } =
     globalConfig;
   const { action, data } = message;
 
@@ -251,26 +243,6 @@ export const handelOpenMessage = async (
         }
         await downloadFile(fileObj.fileName, fileObj.openApiStr);
       }
-      break;
-    case "openDesignPanelById":
-      const local_apiList: ApiDetailsData[] = getApiList(context);
-      const curApiData: any = local_apiList.find(
-        (i: ApiDetailsData) => i?.target_id === message.data,
-      );
-      curApiData.is_create = -1;
-      // Supplement open api initial data
-      await fillInOpenApi(curApiData, context);
-      vscode.commands.executeCommand("echoapi.design", curApiData);
-      break;
-    case "saveAndOpenDesignPanel":
-      saveApiData(data, context, panel);
-      const curDebugApiData: any = getApiList(context).find(
-        (i: ApiDetailsData) => i?.target_id === message?.data?.target_id,
-      );
-      curDebugApiData.is_create = -1;
-      // Supplement open api initial data
-      await fillInOpenApi(curDebugApiData, context);
-      vscode.commands.executeCommand("echoapi.design", curDebugApiData);
       break;
     case "getCodeHar":
       // Fix: cannot carry global parameters under directory (temporarily modify directory id)

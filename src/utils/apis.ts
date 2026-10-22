@@ -135,52 +135,6 @@ export const genRestfulByUrl = (
   return restfulList;
 };
 
-// Generate new restful array based on url
-export const designGenRestfulByUrl = (
-  url: string,
-  oldParameter: Array<ParametersItem>
-): Array<ParametersItem> => {
-  const restfulList: any = [];
-  // Auto-prepend url http://
-  if (!isURL(url)) {
-    url = `http://${url}`;
-  }
-  const regex = /(?<!{){([^{}]+)}(?!})/g;
-
-  try {
-    const matches = url.match(regex);
-
-    if (isArray(matches) && matches.length > 0) {
-      forEach(matches, (matchesItem) => {
-        if (matchesItem.length > 0) {
-          matchesItem = matchesItem.replace(/^{|}$/g, '');
-
-          let obj: ParametersItem | null = null;
-          const oldIndex = findIndex(oldParameter, {
-            name: matchesItem,
-          });
-
-          if (oldIndex !== -1) {
-            obj = oldParameter[oldIndex];
-          }
-
-          restfulList.push({
-            name: matchesItem,
-            in: 'path',
-            description: obj?.description || '',
-            required: true,
-            example: obj?.example || '',
-            schema: {
-              type: 'string'
-            }
-          });
-        }
-      });
-    }
-  } catch (error) { }
-  return restfulList;
-};
-
 // Generate new url based on query array
 export const genUrlByQuery = (
   url: string,
@@ -469,22 +423,6 @@ export const EchoApiRequestBodyToopenApiRequestBody = (body: ApisBaseRequestBody
     }
   }
 };
-
-export const mergeDesignAndDebugParams = (designParams:Array<ApisBaseDataItem>,debugParams:Array<ApisBaseDataItem>)=>{
-  forEach(designParams,(item)=>{
-    const debugIndex = debugParams.findIndex(i=>i.key === item.key)
-    // Check if debug already has this key; if so, keep debug's value and description
-    if(debugIndex > -1){
-      if(isString(debugParams[debugIndex]?.value) &&  debugParams[debugIndex]?.value.length > 0){
-        item.value = debugParams[debugIndex].value;
-      }
-      if(isString(debugParams[debugIndex]?.description) &&  debugParams[debugIndex]?.description.length > 0){
-        item.description = debugParams[debugIndex].description;
-      }
-    }
-  });
-  return designParams;
-}
 
 export const fillInOpenApi = async (apiData: ApiDetailsData) => {
   if (!isPlainObject(apiData?.open_api)) {

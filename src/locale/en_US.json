@@ -49,22 +49,11 @@
     "save_request_open_debug_title":"Save the request to open the Debug Tabs?",
     "push_to_debug":"Push to Debug",
     "save_and_push":"Save and Push",
-    "push_design_to_debug_tip":"Push design data to the debug area? \r\n This will overwrite existing data and cannot be undone.",
     "confirm_data_push":"Confirm Data Push",
-    "save_request_title":"Save the request to open the Design Tabs?",
-    "save_request_content":"Before opening the Design Tabs, you need to save it.",
     "save_and_open":"Save and Open",
     "save_before_share_tip":"Save the Request before sharing",
     "open_debug":"Open Debug Tabs",
-    "open_design":"Open Design Tabs",
     "will_overwrite_tip":"This will overwrite existing data and cannot be undone.",
-    "pull_debug_to_design_tip":"Pull the debug data into the design doc?",
-    "generate_dubug_tip":"Generate debug data according to the design doc",
-    "generate_dubug_body_tip":"Generate debug body data from the design document.",
-    "not_create_design_tip":"The API design doc hasn't been created. There's no data in it.",
-    "debug_design_diff_tip":"The differences between API design and debug data:",
-    "generate_debug_body_tip":"Generate debug body data according to the design doc?",
-    "go_ahead_design_data_tip":"Do you wanna go ahead with the design data? This can't be undone.",
     "form":"Form",
     "code_option":"Code",
     "try_it":"Try it",
@@ -93,7 +82,6 @@
     },
     "api_tab": {
       "preview": "Preview",
-      "design": "Design",
       "run": "Debug",
       "case": "Cases",
       "stress": "Load Testing",
@@ -968,7 +956,6 @@
     "general": {
       "title": "Extended",
       "default_tab": "Default tab page for new API",
-      "default_tab_design": "Design",
       "default_tab_preview": "Preview",
       "default_tab_debug": "Debug",
       "default_method": "Default request method for new API",
@@ -1735,7 +1722,7 @@
         "local_tip": "EchoAPI client installation required"
       }
     },
-    "design": {
+    "response_labels": {
       "http2_tip": "Try to send an HTTP request using HTTP/2",
       "save": "Save",
       "folder": "Folder",

@@ -40,35 +40,6 @@ export const ApiDebugContainer = styled(Flex)`
   }
 `;
 
-export const ApiDesignContainer = styled(Flex)`
-  width: 100%;
-  height: 100%;
-  background-color: var(--color-bg-right);
-  padding-top: 12px;
-  overflow: hidden;
-  > header {
-    padding: 0 16px;
-    .beautify-btn{
-      height: 32px;
-      width: 70px;
-    }
-  }
-
-  > main {
-    flex: 1;
-  }
-  .resizable-panel-right-wrap{
-    &>div {
-      height: 100%;
-    overflow: hidden;
-    }
-    .beautify-tabs-content-holder{
-      height: 100%;
-      background: white;
-    }
-  }
-`;
-
 export const SaveDropDownContainer = styled.div`
   padding: 8px;
   padding-right: 0;
