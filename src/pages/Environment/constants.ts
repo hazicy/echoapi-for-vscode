@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import i18next from '@/locale';
 
 import { IEnvDataItem } from './components/EnvManage/types';
 

@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import i18next from '@/locale';
 
 import Beautify from './content/Beautify';
 import Native from './content/Native';
