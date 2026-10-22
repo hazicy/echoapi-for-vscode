@@ -22,7 +22,6 @@ import { forEach, isBoolean, keys } from 'lodash';
 import produce from 'immer';
 import { ApiSendingDataSSE, ApiStreamResponseSSEItem } from '@/types/apis/send';
 import useShare from '@/store/useShare';
-import useInitApp from '@/hooks/useInit';
 import { ApiDetailsData } from '@/types/apis/api';
 import useWebsocket2 from '@/pages/Content/websocket2/useWebsocket2';
 import useSocketIo from '@/pages/Content/socketio/useWebsocket2';
@@ -30,8 +29,6 @@ import useGraphQLQuery from '@/components/business/GraphQLQuery/hooks';
 
 function TagPanel() {
   const customTheme = useGlobalTheme();
-
-  useInitApp();
 
   const updateCurrentSendingData = useApis(store => store.updateCurrentSendingData);
   const updateCurrentSseSendingData = useApis(store => store.updateCurrentSseSendingData);

@@ -28,6 +28,23 @@ separately when checking types.
 Watch mode tracks imported source and styles. Restart it after editing files in
 `public/` so the copied assets are refreshed.
 
+## Embedded editors
+
+All embedded editors use CodeMirror 6 through `src/components/business/CodeEditor`.
+Language parsers and Prettier formatters load on demand. JSON formatting uses
+`jsonc-parser` to preserve comments, trailing commas, and large numeric literals.
+Environment history comparisons use the read-only CodeMirror merge view.
+
+Run `yarn playwright install chromium` once, then `yarn test:editor` for browser
+regressions covering controlled edits, undo, variable insertion/hover, script
+completion, formatting, read-only views, theme changes, and history comparisons.
+The test fixture uses the production editor components with isolated settings and
+variable lookup, without starting VS Code or connecting to an API server.
+
+Response metadata still uses the existing `fit_for_show: 'Monaco'` discriminator
+from the response-processing dependency. This identifies text responses and keeps
+existing saved data compatible; no Monaco runtime or assets are loaded.
+
 Packaging still checks production dependencies through `vsce`. Changing bundlers does
 not bypass Yarn registry or dependency-resolution failures.
 

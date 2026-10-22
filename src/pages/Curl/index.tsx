@@ -1,5 +1,5 @@
 import { CurlWrap } from './style';
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
 import { useSafeState } from 'ahooks';
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +23,7 @@ const Curl = () => {
 
   return (
     <CurlWrap vertical>
-      <MonacoEditor className='curl-monaco-editor' onChange={setValue} value={value} />
+      <CodeEditor className='curl-code-editor' onChange={setValue} value={value} />
       <Button type="primary" onClick={handleImportCurl}>
         {t('supplement.import')}
       </Button>

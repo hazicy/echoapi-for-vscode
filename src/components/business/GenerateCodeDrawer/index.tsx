@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import Har2languages from 'har2languages';
 import { cloneDeep, isArray, isEmpty, isObject, isString, map } from 'lodash';
 
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
 import Button from '@/components/ui/Button';
 import Drawer from '@/components/ui/Drawer';
 import IconFont from '@/components/ui/IconFont';
@@ -36,7 +36,7 @@ const GenerateCodeDrawer: React.FC<Props> = (props) => {
 
   const [menuKey, setMenuKey] = useSafeState<string>('shell.curl');
   const [codeText, setCodeText] = useSafeState<string>('');
-  const [monacoLanguage, setMonacoLanguage] = useSafeState<string>('javascript');
+  const [editorLanguage, setEditorLanguage] = useSafeState<string>('javascript');
   const [genLoading, setGenLoading] = useSafeState<boolean>(false);
 
   const { varReplace } = useVarReplaces();
@@ -121,7 +121,7 @@ const GenerateCodeDrawer: React.FC<Props> = (props) => {
 
         setCodeText(languagesRes.data || '');
         setMenuKey(`${language}.${subclass}`);
-        setMonacoLanguage(isString(language) && language === 'node' ? 'javascript' : language);
+        setEditorLanguage(isString(language) && language === 'node' ? 'javascript' : language);
         // Record selected code type
         window?.vscode.postMessage({
           action: 'setSystemConfig',
@@ -169,7 +169,7 @@ const GenerateCodeDrawer: React.FC<Props> = (props) => {
           <Flex>
             <div className="menu">{generateMenuDom}</div>
             <div className="edit">
-              <MonacoEditor readOnly language={monacoLanguage} value={codeText} />
+              <CodeEditor readOnly language={editorLanguage} value={codeText} />
             </div>
           </Flex>
         </Spin>

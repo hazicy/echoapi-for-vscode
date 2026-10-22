@@ -6,7 +6,7 @@ import { Flex, SegmentedProps, Typography } from 'antd';
 import { useMemoizedFn, useSafeState } from 'ahooks';
 import { includes, isEqual } from 'lodash';
 
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
 import SegmentedTabs from '@/components/business/SegmentedTabs';
 import ApisTypeTag from '@/components/ui/ApisTypeTag';
 import { APIS_TARGET_TYPE_ENUM } from '@/constants/apis';
@@ -105,7 +105,7 @@ const BodyParameter = ({ request }: { request?: ApiSendingData['request'] }) => 
   if (includes(['json', 'xml', 'javascript', 'plain', 'html', 'msgpack'], mode)) {
     return (
       <div style={{ height: 300 }}>
-        <MonacoEditor
+        <CodeEditor
           language={mode === 'msgpack' ? 'json' : mode}
           height="100%"
           value={request?.body as string}

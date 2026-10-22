@@ -2,7 +2,7 @@ import React,{useEffect} from 'react';
 import { DocWrap } from './style';
 import { Button, Flex, Input, message } from 'antd';
 import { IconFont } from '@/components/ui';
-import { MonacoEditor } from '@/components/business';
+import { CodeEditor } from '@/components/business';
 import { useSafeState } from 'ahooks';
 import useShare from '@/store/useShare';
 import { copyStringToClipboard, download } from '@/utils/common';
@@ -60,7 +60,7 @@ const Doc = () => {
         <Button size="small" type='text' icon={<IconFont type="icon-copy" />} onClick={duplicate}>Copy</Button>
       </Flex>
       </Flex>
-      <MonacoEditor onChange={setValue} value={value} />
+      <CodeEditor onChange={setValue} value={value} />
     </DocWrap>
   )
 }

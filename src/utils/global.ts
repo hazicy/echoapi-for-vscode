@@ -4,7 +4,7 @@ import { useProjectConfig } from '@/store';
 import { entries, find, has, merge } from 'lodash';
 import { convertVarFormat } from './common';
 
-export const getMonacoVariable = async (originKey: string) => {
+export const getEditorVariable = async (originKey: string) => {
   try {
     const { t } = getI18n();
     const keyName = originKey.substring(2, originKey.length - 2);

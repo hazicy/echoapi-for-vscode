@@ -7,7 +7,7 @@ import $RefParser from '@apidevtools/json-schema-ref-parser';
 import { XMLParser } from 'fast-xml-parser';
 import { isObject, isPlainObject, isString } from 'lodash';
 
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
 import Modal from '@/components/ui/Modal';
 import { recursionSetSchemaOrder } from '@/events/export';
 import { ThemeToken } from '@/hooks/useTheme';
@@ -88,9 +88,8 @@ const ImportModal = (props: ImportModalProps) => {
             options={SCHEMA_TAB_LIST}
           />
         </div>
-        <div className="monaco-container-wapper">
-          <MonacoEditor
-            showFullScreenBtn={false}
+        <div className="code-editor-container">
+          <CodeEditor
             height={400}
             value={importValue}
             language={SCHEMA_LANGUAGES[activeKey]}

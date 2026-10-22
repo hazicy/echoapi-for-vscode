@@ -6,7 +6,7 @@ import { Flex } from 'antd';
 import { useSafeState } from 'ahooks';
 import i18next from 'i18next';
 
-import { MonacoEditor, VarInsertPop } from '@/components/business';
+import { CodeEditor, VarInsertPop } from '@/components/business';
 import { Button, IconFont } from '@/components/ui';
 import { ApisBaseRequestBody } from '@/types/apis/request';
 import { ChangeFuncType } from '@/types/common';
@@ -16,7 +16,7 @@ import VisualizationContext from './visualizationContext';
 import { ParamsFieldEditorContainer, RawEditorContainer } from './style';
 import JsonSchema from '../JsonSchema';
 import { useSchemas } from '@/store';
-import { EditorProps } from '@monaco-editor/react';
+import type { EditorOptions } from '@/components/business/CodeEditor';
 import { VAR_OPTIONS_KEY } from '@/constants/variable';
 import { InsertAction } from '@/types/apis/variable';
 
@@ -29,7 +29,7 @@ interface Props {
   value: Partial<ApisBaseRequestBody>;
   onChange: (val: any, key?: string) => void;
   customAutoGeneration?: (val?: Props['value']) => void;
-  editorOptions?: EditorProps['options'];
+  editorOptions?: EditorOptions;
   regularValueHeight?: number;
 }
 
@@ -46,7 +46,7 @@ const RawEditor = ({
 }: Props) => {
   const { t } = useTranslation();
 
-  const monacoEditorRef = useRef<any>(null);
+  const codeEditorRef = useRef<any>(null);
 
   const { isDebugArea = false } = useContext(VisualizationContext);
   const { schemasBaseData } = useSchemas((state) => state);
@@ -78,7 +78,7 @@ const RawEditor = ({
   };
 
   const valueChange = (str: string, _operation: VAR_OPTIONS_KEY, _action: InsertAction) => {
-    monacoEditorRef?.current?.insertText(str);
+    codeEditorRef?.current?.insertText(str);
     setVarOpen(false);
   };
 
@@ -122,7 +122,7 @@ const RawEditor = ({
                 <Button
                   style={{ height: '14px' }}
                   onClick={() => {
-                    monacoEditorRef?.current?.formatEditor();
+                    codeEditorRef?.current?.formatEditor();
                   }}
                   mode='light'
                   type="text"
@@ -147,8 +147,8 @@ const RawEditor = ({
           )}
           {tabsValue === 'paramValue' && (
           <ParamsFieldEditorContainer style={regularStyle}>
-            <MonacoEditor
-              ref={monacoEditorRef}
+            <CodeEditor
+              ref={codeEditorRef}
               language={mode}
               height={'100%'}
               onMountAutoFormat={onMountAutoFormat}

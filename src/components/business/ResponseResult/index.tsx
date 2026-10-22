@@ -91,7 +91,7 @@ const ResponseResult = forwardRef((props: Props, ref) => {
 
   const beautifyProps = {
     mode: rawType,
-    monacoOptions: warp ? {} : { wordWrap: 'off' },
+    editorOptions: warp ? {} : { wordWrap: 'off' },
   };
 
   const segmentedOptions =

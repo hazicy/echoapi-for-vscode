@@ -26,7 +26,7 @@ export const PathPickModalContainer = styled(Modal)`
       resize: none;
       color: var(--color-bg-gray);
 
-      .monaco-editor-value {
+      .code-editor-value {
         overflow: visible !important;
         border: 1px solid var(--color-border);
       }

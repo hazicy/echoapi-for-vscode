@@ -1,4 +1,5 @@
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
+import type { EditorOptions } from '@/components/business/CodeEditor';
 import { EditFormat, isJSONString } from '@/utils/common';
 import { isString } from 'lodash';
 import { Empty } from '@/components/ui';
@@ -10,12 +11,13 @@ interface Props {
   mode?: string;
   isSSE?: boolean;
   data?: any;
+  editorOptions?: EditorOptions;
 }
 
 const Beautify = (props: Props) => {
   const { t } = useTranslation();
 
-  const { mode, rawHtml, isSSE=false, data } = props || {};
+  const { mode, rawHtml, isSSE=false, data, editorOptions } = props || {};
   const { mode: language, value: editValue } = useMemo(() => {
     let originData = rawHtml || '';
     if (isSSE) {
@@ -37,7 +39,7 @@ const Beautify = (props: Props) => {
     return <Empty description={t('supplement.file_big')} />;
   }
 
-  return <MonacoEditor readOnly language={mode || language} value={editValue} />;
+  return <CodeEditor readOnly language={mode || language} value={editValue} options={editorOptions} />;
 };
 
 export default Beautify;

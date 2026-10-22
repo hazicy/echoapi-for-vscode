@@ -17,7 +17,6 @@ export const onThemeChange = () => {
     .getConfiguration("workbench")
     .get("colorTheme");
 
-  // updateMonacoTheme();
   // Notify tabs
   forEach(openedPanels, (openedPanel, key) => {
     openedPanel.webview.postMessage({

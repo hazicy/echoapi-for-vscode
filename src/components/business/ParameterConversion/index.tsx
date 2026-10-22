@@ -8,7 +8,7 @@ import ASideTools from 'apipost-inside-tools';
 import { snowflakeId } from 'apipost-tools';
 import { hasIn, includes, isArray, isString } from 'lodash';
 
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
 import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';
 import { copyStringToClipboard } from '@/utils/common';
@@ -190,10 +190,9 @@ const ParameterConversion = (props: Props) => {
     <Modal footer={footer} width={880} onCancel={onCancel} title={parameterInfo?.title} open={open}>
       <ParameterContainer>
         <Segmented value={typeValue} options={parameterInfo?.options} onChange={onChange} />
-        <MonacoEditor
+        <CodeEditor
           height={400}
           value={editValue}
-          showFullScreenBtn={false}
           readOnly={parameterType === PARAMETER_TYPE.EXPORT}
           language={typeValue === EXPORT_ENUM.KEY ? 'text' : 'json'}
           onChange={(e: string) => setEditValue(e)}

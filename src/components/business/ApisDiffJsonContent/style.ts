@@ -14,8 +14,9 @@ export const VersionEditWrap = styled.div`
   flex-direction: column;
   height: 320px;
 
-  /* stylelint-disable-next-line selector-class-pattern */
-  .diffOverview {
-    display: none;
-  }
+  .code-diff-host { height: 100%; min-height: 0; }
+  .cm-mergeView { height: 100%; }
+  .cm-mergeViewEditors { height: 100%; }
+  .cm-mergeViewEditor { min-width: 0; overflow: hidden; }
+  .cm-editor { height: 100%; }
 `;

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import MonacoEditor from "@/components/business/MonacoEditor";
+import CodeEditor from "@/components/business/CodeEditor";
 
 
 import {
@@ -259,8 +259,8 @@ const Index = ({
     <>
       {fileType === IMPORT_TYPE_ENUM.CURL && (
         <Flex flex={1} style={{minHeight:0}}>
-          <MonacoEditor
-            className="curl-monaco-editor"
+          <CodeEditor
+            className="curl-code-editor"
             onChange={setValue}
             value={value}
           />

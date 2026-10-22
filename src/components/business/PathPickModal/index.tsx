@@ -12,7 +12,7 @@ import X2JS from 'x2js';
 import { DOMParser, XMLSerializer } from 'xmldom';
 import xpath from 'xpath';
 
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
 
 import { PathPickModalContainer } from './style';
 
@@ -168,10 +168,10 @@ const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) =>
         <div className="layout-item ">
           <div className="item-title">{computedInfo.title}</div>
           <div className="item-content">
-            <MonacoEditor
+            <CodeEditor
               ref={refEditor}
               language={computedInfo.language}
-              className="monaco-editor-value"
+              className="code-editor-value"
               value={value}
               onChange={setValue}
             />
@@ -180,9 +180,9 @@ const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) =>
         <div className="layout-item ">
           <div className="item-title">{t('supplement.pick_result')}</div>
           <div className="item-content">
-            <MonacoEditor
+            <CodeEditor
               language="text"
-              className="monaco-editor-value"
+              className="code-editor-value"
               readOnly
               value={computedInfo.computedPathValue}
             />

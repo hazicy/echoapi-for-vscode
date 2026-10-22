@@ -67,7 +67,7 @@ const Realtime: FC<Props> = ({ sendingDataSSE }) => {
   /**
    *
    * @param params Each item returned by SSE
-   * @param parseToJsonStr DOM displays plain strings, MonacoEditor displays JSON strings
+   * @param parseToJsonStr DOM displays plain strings, CodeEditor displays JSON strings
    * @returns string | JSON string
    */
   const calcContent = (params?: ApiStreamResponseSSEItem, parseToJsonStr = false) => {

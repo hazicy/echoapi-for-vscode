@@ -6,7 +6,7 @@ import { message } from 'antd';
 import { useMemoizedFn } from 'ahooks';
 import { isObject, isString } from 'lodash';
 
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
 import Modal from '@/components/ui/Modal';
 import { EditFormat, isJSON } from '@/utils/common';
 
@@ -53,9 +53,8 @@ const EditRow: React.FC<any> = (props) => {
     >
       <EditRawContainer>
         {isString(tempText) && (
-          <MonacoEditor
+          <CodeEditor
             language="json"
-            showFullScreenBtn={false}
             value={tempText}
             onChange={setTempText}
           />

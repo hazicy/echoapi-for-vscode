@@ -40,7 +40,7 @@ import {
 
 import GraphQLQueryContext from '@/components/business/GraphQLQuery/context/GraphQLQueryContext';
 import GraphQLSchemaProvider from '@/components/business/GraphQLQuery/context/GraphQLSchemaProvider';
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
 import { Button, Empty, IconFont } from '@/components/ui';
 import { useApis } from '@/store';
 import { ApiDetailsData } from '@/types/apis/api';
@@ -83,8 +83,8 @@ const Main = forwardRef((props: Props, ref) => {
   const [filterData, setFilterData] = useState<FilterDataType>({});
   const [treeData, setTreeData] = useState<any>([]);
 
-  const monacoEditorGraphqlRef = useRef<any>();
-  const monacoEditorJsonRef = useRef<any>();
+  const codeEditorGraphqlRef = useRef<any>();
+  const codeEditorJsonRef = useRef<any>();
   const variablesPanelRef = useRef<any>();
   const searchData =
     data.query_list.find((e) => isEqual(e.param_id, apiData.search_id)) ||
@@ -640,12 +640,12 @@ const Main = forwardRef((props: Props, ref) => {
                           </Button>
                         </Flex>
                         <Flex flex={1} style={{ height: 0 }}>
-                          <MonacoEditor
+                          <CodeEditor
                             onChange={(v) => {
                               onChangeQueryItem('query', v);
                               rawToTree(v);
                             }}
-                            ref={monacoEditorGraphqlRef}
+                            ref={codeEditorGraphqlRef}
                             language="graphql"
                             value={searchData.query}
                           />
@@ -659,7 +659,7 @@ const Main = forwardRef((props: Props, ref) => {
                         <Flex className="edit-header" align="center" justify="space-between">
                           Variables
                           <Button
-                            onClick={() => monacoEditorJsonRef?.current?.formatEditor()}
+                            onClick={() => codeEditorJsonRef?.current?.formatEditor()}
                             type="text"
                             size="small"
                             icon={<IconFont type="icon-clean" />}
@@ -668,9 +668,9 @@ const Main = forwardRef((props: Props, ref) => {
                           </Button>
                         </Flex>
                         <Flex flex={1} style={{ height: 0 }}>
-                          <MonacoEditor
+                          <CodeEditor
                             onChange={(v) => onChangeQueryItem('variables', v)}
-                            ref={monacoEditorJsonRef}
+                            ref={codeEditorJsonRef}
                             language="json"
                             value={searchData.variables}
                           />

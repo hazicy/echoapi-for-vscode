@@ -6,7 +6,7 @@ import { map } from 'lodash';
 import Tooltip from '@/components/ui/Tooltip';
 import useTheme from '@/hooks/useTheme';
 
-import MonacoEditor from '../MonacoEditor';
+import CodeEditor from '../CodeEditor';
 import { ASSERT_LIST, SCRIPT_LIST, SCRIPT_TYPE } from './constants';
 
 import { CustomScriptWrapper } from './style';
@@ -74,8 +74,8 @@ const CustomScript = ({ mode, value, onChange }: CustomScriptProps) => {
   return (
     <CustomScriptWrapper $token={themeToken}>
       <div className="custom-script-container">
-        <div className="monaco-editor-container">
-          <MonacoEditor language="javascript" value={value} onChange={onChange} />
+        <div className="code-editor-container">
+          <CodeEditor language="javascript" value={value} onChange={onChange} />
         </div>
         <div className="right-var-list">
           {map(mode === SCRIPT_TYPE.ASSERT ? ASSERT_LIST : SCRIPT_LIST, (item) => {

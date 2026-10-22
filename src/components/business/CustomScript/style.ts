@@ -9,7 +9,7 @@ export const CustomScriptWrapper = styled.div<{ $token: Partial<GlobalThemeToken
     border: 1px solid var(--color-border);
 
     ${flexStyles('row', 'flex-start', 'flex-start')};
-    .monaco-editor-container {
+    .code-editor-container {
       flex: 1;
       width: 10px;
       height: 280px;

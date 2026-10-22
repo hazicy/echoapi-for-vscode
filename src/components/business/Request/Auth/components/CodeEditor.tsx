@@ -1,11 +1,11 @@
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
 
 import { CodeContainer } from '../style';
 
-const CodeEditor = (props: any) => {
+const AuthCodeEditor = (props: any) => {
   return (
     <CodeContainer>
-      <MonacoEditor
+      <CodeEditor
         language="json"
         height="100%"
         value={props?.value || ''}
@@ -15,4 +15,4 @@ const CodeEditor = (props: any) => {
   );
 };
 
-export default CodeEditor;
+export default AuthCodeEditor;

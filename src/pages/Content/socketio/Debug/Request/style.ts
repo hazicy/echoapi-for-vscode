@@ -22,7 +22,7 @@ export const SettingWrap = styled.div<{ $token: Partial<GlobalThemeToken> }>`
 export const RawEditorWrap =  styled.div`
   flex: 1;
   height: 0;
-  .monaco-wrapper{
+  .code-editor-wrapper{
     width: 97%;
   }
 `;

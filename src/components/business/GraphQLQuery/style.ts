@@ -17,7 +17,7 @@ export const MainContainer = styled.div`
   border: 1px solid var(--color-table-border);
   background-color: var(--color-bg-right);
 
-  .monaco-wrapper {
+  .code-editor-wrapper {
     border-bottom: none;
   }
 

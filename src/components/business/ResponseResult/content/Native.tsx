@@ -1,19 +1,19 @@
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
+import type { EditorOptions } from '@/components/business/CodeEditor';
 
 interface Props {
   rawHtml?: string;
+  editorOptions?: EditorOptions;
 }
 const Native = (props: Props) => {
-  const { rawHtml } = props || {};
+  const { rawHtml, editorOptions } = props || {};
 
   return (
-    <MonacoEditor
+    <CodeEditor
       language="text"
       readOnly
       value={rawHtml || ''}
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      lineNumbers="off"
+      options={{ ...editorOptions, lineNumbers: 'off' }}
     />
   );
 };

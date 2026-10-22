@@ -6,7 +6,7 @@ import { message } from 'antd';
 import { useMemoizedFn } from 'ahooks';
 import { cloneDeep, isObject } from 'lodash';
 
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
 import Button from '@/components/ui/Button';
 import IconFont from '@/components/ui/IconFont';
 import Modal from '@/components/ui/Modal';
@@ -72,7 +72,7 @@ const PreviewModal: React.FC<any> = (props) => {
       footer={null}
     >
       <PreviewContainer $token={themeToken}>
-        <MonacoEditor readOnly height={400} language="json" value={viewText || ''} />
+        <CodeEditor readOnly height={400} language="json" value={viewText || ''} />
       </PreviewContainer>
     </Modal>
   );

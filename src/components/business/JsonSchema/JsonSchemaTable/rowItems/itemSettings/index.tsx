@@ -7,7 +7,7 @@ import { useSafeState } from 'ahooks';
 import classNames from 'classnames';
 import { isNumber, isObject, isUndefined, toLower } from 'lodash';
 
-import MonacoEditor from '@/components/business/MonacoEditor';
+import CodeEditor from '@/components/business/CodeEditor';
 import Button from '@/components/ui/Button';
 import IconFont from '@/components/ui/IconFont';
 import Tooltip from '@/components/ui/Tooltip';
@@ -196,9 +196,8 @@ const ItemSettings = (props: any, ref: any) => {
               )}
               {computedActiveTab === 'schema' && (
                 <div className="source-setting">
-                  <MonacoEditor
+                  <CodeEditor
                     height={230}
-                    showFullScreenBtn={false}
                     value={beautifyText}
                     onChange={(e: string) => {
                       handleChangeRaw(e);

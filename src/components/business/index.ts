@@ -4,7 +4,7 @@ export { default as ResizablePanels } from './ResizablePanels';
 export { default as RequestTable } from './RequestTable';
 export { default as BasicTable } from './BasicTable';
 
-export { default as MonacoEditor } from './MonacoEditor';
+export { default as CodeEditor } from './CodeEditor';
 
 export { default as RawEditor } from './RawEditor';
 

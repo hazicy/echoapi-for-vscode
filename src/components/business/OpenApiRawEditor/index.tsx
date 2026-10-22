@@ -8,7 +8,7 @@ import Mock from 'mockjs';
 import { XMLBuilder } from 'fast-xml-parser';
 import i18next from 'i18next';
 
-import { MonacoEditor } from '@/components/business';
+import { CodeEditor } from '@/components/business';
 import useSchemasHook from '@/hooks/useSchemas';
 import HeaderAction from '@/components/business/JsonSchema/HeaderAction';
 import { Button, IconFont } from '@/components/ui';
@@ -44,7 +44,7 @@ const RawEditor = ({
 }: Props) => {
   const { t } = useTranslation();
 
-  const monacoEditorRef = useRef<any>(null);
+  const codeEditorRef = useRef<any>(null);
 
   const { isDebugArea = false } = useContext(VisualizationContext);
   const { schemasBaseData } = useSchemas((state) => state);
@@ -194,7 +194,7 @@ const RawEditor = ({
                 <Button
                   style={{ height: '14px' }}
                   onClick={() => {
-                    monacoEditorRef?.current?.formatEditor();
+                    codeEditorRef?.current?.formatEditor();
                   }}
                   type="text"
                   icon={<IconFont type="icon-beautify" />}
@@ -238,8 +238,8 @@ const RawEditor = ({
             />
           )}
           {tabsValue === 'paramValue' && (
-            <MonacoEditor
-              ref={monacoEditorRef}
+            <CodeEditor
+              ref={codeEditorRef}
               language={mode}
               height="100%"
               onMountAutoFormat={onMountAutoFormat}

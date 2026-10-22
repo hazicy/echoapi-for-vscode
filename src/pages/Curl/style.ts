@@ -11,7 +11,7 @@ export const CurlWrap = styled(Flex)`
     width: 120px;
     margin: 20px 10px;
     }
-  .curl-monaco-editor{
+  .curl-code-editor{
     height: calc(100% - 70px);
   }
 `;

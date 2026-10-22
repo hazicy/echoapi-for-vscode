@@ -1,8 +1,8 @@
-import { DiffEditor, loader } from '@monaco-editor/react';
-import { isEqual } from 'lodash';
-
-import { useSystemConfig } from '@/store';
-
+import { useEffect, useRef } from 'react';
+import { EditorState } from '@codemirror/state';
+import { EditorView, lineNumbers } from '@codemirror/view';
+import { useGlobal, useSystemConfig } from '@/store';
+import { editorTheme, isDarkTheme } from '../CodeEditor/theme';
 import { VersionEditWrap } from './style';
 
 interface Props {
@@ -11,45 +11,60 @@ interface Props {
   activeKey?: string;
   isAutoHeight?: boolean;
 }
-const Edit = (props: Props) => {
-  const { prevValue, nextValue, activeKey, isAutoHeight } = props || {};
-  const systemConfig = useSystemConfig((state) => state.systemConfig);
-  const { bg_color } = systemConfig || {};
-  const file_url = '/monaco-editor/vs';
-  loader.config({
-    paths: { vs: file_url },
-    'vs/nls': {
-      availableLanguages: { '*': 'en' },
-    },
-  });
-  const handleString = (string: string) => {
-    try {
-      return isEqual(activeKey, 'description') ? JSON.parse(string || '') : string || '';
-    } catch (error) {
-      return string;
-    }
-  };
+
+const Edit = ({ prevValue, nextValue, activeKey, isAutoHeight }: Props) => {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const vscodeTheme = useGlobal((state) => state.vscodeTheme);
+  const { font_size, font_family } = useSystemConfig((state) => state.systemConfig);
+
+  useEffect(() => {
+    let cancelled = false;
+    let destroy: (() => void) | undefined;
+    void Promise.all([import('@codemirror/merge'), import('@codemirror/lang-json')])
+      .then(([{ MergeView }, { json }]) => {
+        if (cancelled) {
+          return;
+        }
+        const content = (value: string) => {
+          if (activeKey !== 'description') {
+            return value || '';
+          }
+          try {
+            const parsed = JSON.parse(value);
+            return typeof parsed === 'string' ? parsed : value;
+          } catch {
+            return value || '';
+          }
+        };
+        const extensions = [
+          json(),
+          lineNumbers(),
+          EditorView.lineWrapping,
+          EditorState.readOnly.of(true),
+          EditorView.editable.of(false),
+          editorTheme(isDarkTheme(vscodeTheme || ''), font_size, font_family),
+        ];
+        const merge = new MergeView({
+          parent: hostRef.current!,
+          a: { doc: content(prevValue), extensions },
+          b: { doc: content(nextValue), extensions },
+          highlightChanges: true,
+          gutter: true,
+        });
+        destroy = () => merge.destroy();
+      })
+      .catch((error) => {
+        console.error('Failed to load diff editor', error);
+      });
+    return () => {
+      cancelled = true;
+      destroy?.();
+    };
+  }, [prevValue, nextValue, activeKey, vscodeTheme, font_size, font_family]);
 
   return (
     <VersionEditWrap style={{ height: isAutoHeight ? 460 : 320 }}>
-      <DiffEditor
-        theme={['white', 'orange'].includes(bg_color) ? 'vs' : 'vs-dark'}
-        options={{
-          wordWrap: 'on',
-          readOnly: true,
-          minimap: { enabled: false },
-          automaticLayout: true,
-          formatOnPaste: true,
-          formatOnType: true,
-          scrollBeyondLastLine: false,
-          scrollbar: {
-            verticalScrollbarSize: 10,
-          },
-        }}
-        language="json"
-        original={handleString(prevValue)}
-        modified={handleString(nextValue)}
-      />
+      <div ref={hostRef} className="code-diff-host" />
     </VersionEditWrap>
   );
 };
