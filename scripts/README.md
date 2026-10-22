@@ -39,12 +39,16 @@ separately. Existing third-party dependency/type errors may still require follow
 The target component library is `@base-ui/react`, with CSS Modules for styles.
 The parameter description picker now uses Base UI Popover and Tooltip, including
 keyboard selection, focus restoration, and immediate project-setting updates.
+Drawer now uses Base UI Dialog with CSS Modules, preserving the custom and named
+export defaults, controlled closing, content retention/destruction, and nested
+focus management. Legacy popup controls mount inside the nearest drawer so they
+remain reachable while its modal focus boundary is active.
 The remaining components still depend on Ant Design and styled-components until
 their APIs, theme use, and styles have been migrated; these dependencies remain
 installed intentionally.
 
 Run `yarn playwright install chromium` once, then `yarn test:ui` after a full build
-for picker interaction tests and production module-loading smoke tests of all nine
+for picker/drawer interaction tests and production module-loading smoke tests of all nine
 Webviews. The smoke tests provide a minimal VS Code bridge and check initial render;
 they do not emulate the extension's backend or exercise every screen workflow.
 

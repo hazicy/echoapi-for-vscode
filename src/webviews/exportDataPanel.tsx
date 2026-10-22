@@ -1,3 +1,4 @@
+import { getPopupContainer } from '@/utils/popupContainer';
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { App as AntdApp, ConfigProvider, Skeleton } from 'antd';
@@ -58,6 +59,7 @@ function ExportDataPanel() {
 
   return (
     <ConfigProvider
+      getPopupContainer={getPopupContainer}
       prefixCls={'beautify'}
       // theme={{ ...customTheme, cssVar: true }}
       theme={{

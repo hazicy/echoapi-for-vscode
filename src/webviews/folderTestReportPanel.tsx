@@ -1,3 +1,4 @@
+import { getPopupContainer } from '@/utils/popupContainer';
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { App as AntdApp, ConfigProvider, Spin } from 'antd';
@@ -70,6 +71,7 @@ function FolderTestPanel() {
 
   return (
     <ConfigProvider
+      getPopupContainer={getPopupContainer}
       prefixCls={'beautify'}
       // theme={{ ...customTheme, cssVar: true }}
       theme={{

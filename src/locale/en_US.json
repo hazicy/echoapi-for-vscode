@@ -1,5 +1,6 @@
 {
   "base": {
+    "drawer": "Drawer",
     "close": "Close",
     "refresh": "Refresh",
     "create": "Create",

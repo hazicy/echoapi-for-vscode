@@ -1,3 +1,4 @@
+import { getPopupContainer } from '@/utils/popupContainer';
 import { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { App as AntdApp, ConfigProvider } from 'antd';
@@ -54,6 +55,7 @@ function CurlPanel() {
 
   return (
     <ConfigProvider
+      getPopupContainer={getPopupContainer}
       prefixCls={'beautify'}
       theme={{
         token: customTheme.token,

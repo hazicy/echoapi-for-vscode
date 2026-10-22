@@ -4,6 +4,7 @@ import '@/locale';
 import AiDescription from '@/components/business/AiDescription';
 import useProjectSetting from '@/store/useProjectSetting';
 import useUserConfig from '@/store/useUserConfig';
+import DrawerFixture from './DrawerFixture';
 
 useProjectSetting.setState({
   descriptionList: [
@@ -33,4 +34,6 @@ function Fixture() {
   );
 }
 
-createRoot(document.getElementById('root')!).render(<Fixture />);
+createRoot(document.getElementById('root')!).render(
+  new URLSearchParams(location.search).has('drawer') ? <DrawerFixture /> : <Fixture />
+);
