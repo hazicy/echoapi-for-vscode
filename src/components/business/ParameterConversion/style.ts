@@ -1,25 +1,14 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { ellipsisStyle } from '@/assets/css/style';
+export const ParameterContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ParameterContainer"],
+  { selector: "ui_50cd73b9_ParameterContainer" },
+);
 
-export const ParameterContainer = styled.div`
-  width: 100%;
-
-  .beautify-segmented {
-    margin-bottom: 16px;
-    width: 100%;
-    height: 32px;
-
-    .beautify-segmented-item {
-      ${ellipsisStyle}
-      flex: 1;
-    }
-  }
-`;
-
-export const TipContainer = styled.span`
-  font-size: 14px;
-  font-weight: 400;
-  text-align: left;
-  color: var(--font-light-color);
-`;
+export const TipContainer = withStyles<"span", {}>(
+  "span",
+  moduleStyles["TipContainer"],
+  { selector: "ui_50cd73b9_TipContainer" },
+);

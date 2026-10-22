@@ -1,0 +1,133 @@
+.ImportExportWrap {
+  padding: 0;
+  height: 100%;
+}
+.ImportExportWrap :global(.import-project-item) {
+  margin-top: 16px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-14);
+}
+.ImportExportWrap :global(.import-project-item-title) {
+  margin-bottom: 16px;
+}
+.ImportExportWrap :global(.import-project-item-content) {
+  /* display:flex;flex-direction:row;align-items:center;justify-content:flex-start;; */
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.margin-bottom-20) {
+  margin-bottom: 20px;
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) {
+  flex-wrap: wrap;
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) {
+  margin: 0 16px 20px 0;
+  width: 170px;
+  height: 48px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) > div {
+  height: 100%;
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card):hover :global(.beautify-radio-inner) {
+  border: 1px solid var(--color-border);
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card):global(.active) {
+  border-color: var(--color-primary);
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card):global(.active) :global(.beautify-radio-inner) {
+  border: 1px solid var(--color-primary);
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) :global(.beautify-radio-wrapper)::after {
+  display: none !important;
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) :global(.beautify-radio-wrapper) {
+  flex-direction: row-reverse !important;
+  height: 100%;
+  justify-content: space-between;
+  padding: 0 12px;
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) :global(.beautify-radio-wrapper) span:global(.beautify-radio) + * {
+  padding-inline: 0;
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) :global(.beautify-radio-wrapper) :global(.radio-card-content) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-right: 12px;
+  padding: 0;
+}
+.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) :global(.beautify-radio-wrapper) :global(.radio-card-content) svg {
+  margin-right: 12px;
+  width: 20px;
+  height: 20px;
+}
+.ImportExportWrap :global(.import-project-curl) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 218px;
+  background-color: var(--color-bg-page);
+}
+.ImportExportWrap :global(.import-project-curl) :global(.import-project-curl-tip) {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--font-content-color);
+}
+.ImportExportWrap :global(.import-export-now) {
+  margin-top: 20px;
+  font-size: var(--font-size-14);
+}
+.ImportExportWrap :global(.switch-panel) {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-top: 20px;
+  font-size: var(--font-size-14);
+}
+.ImportExportWrap :global(.switch-panel) :global(.switch-panel-title) {
+  margin-bottom: 16px;
+  /* font-size: var(--font-size-14); */
+  color: var(--font-content-color);
+}
+.ImportExportWrap :global(.import-project-full) :global(.beautify-tabs-nav) {
+  margin-bottom: 16px;
+}
+.ImportExportWrap :global(.import-project-full) :global(.import-project-full-select) :global(.beautify-select-tree-node-content-wrapper) {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ImportExportWrap :global(.import-project-full) :global(.import-project-full-title) {
+  display: flex;
+  min-width: 120px;
+  font-size: var(--font-size-14);
+  color: var(--font-content-color);
+}
+.ImportExportWrap :global(.import-project-full) :global(.import-project-full-tip) {
+  margin-left: 10px;
+  font-size: var(--font-size-14);
+  color: var(--font-light-color);
+}
+.ImportExportWrap :global(.import-project-upload-content) :global(.beautify-upload-list) {
+  padding-bottom: 20px;
+}

@@ -36,21 +36,20 @@ separately. Existing third-party dependency/type errors may still require follow
 
 ## UI migration
 
-The target component library is `@base-ui/react`, with CSS Modules for styles.
-The parameter description picker now uses Base UI Popover and Tooltip, including
-keyboard selection, focus restoration, and immediate project-setting updates.
-Drawer now uses Base UI Dialog with CSS Modules, preserving the custom and named
-export defaults, controlled closing, content retention/destruction, and nested
-focus management. Legacy popup controls mount inside the nearest drawer so they
-remain reachable while its modal focus boundary is active.
-The remaining components still depend on Ant Design and styled-components until
-their APIs, theme use, and styles have been migrated; these dependencies remain
-installed intentionally.
+All application components now use the local `src/components/ui/base` layer.
+Interactive primitives use `@base-ui/react`; tables, trees, forms, and uploads use
+headless rc packages where Base UI has no corresponding component. Ant Design and
+styled-components are no longer direct dependencies or source imports.
 
+Styles live in CSS Modules, with shared global CSS and theme custom properties.
+The `withStyles` helper preserves existing wrapper exports, refs, and dynamic
+custom properties; it does not generate or inject CSS rules at runtime.
+
+Run `yarn check:ui` to guard against reintroducing the removed libraries.
 Run `yarn playwright install chromium` once, then `yarn test:ui` after a full build
-for picker/drawer interaction tests and production module-loading smoke tests of all nine
-Webviews. The smoke tests provide a minimal VS Code bridge and check initial render;
-they do not emulate the extension's backend or exercise every screen workflow.
+for controls, forms, menus, dialogs, uploads, themes, picker/drawer interactions,
+and initial/data-loaded render checks of all nine production Webviews. Fixtures
+provide a minimal VS Code bridge; they do not emulate every backend workflow.
 
 ## Embedded editors
 

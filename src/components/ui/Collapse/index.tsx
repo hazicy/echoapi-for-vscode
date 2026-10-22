@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Collapse as AntdCollapse, ConfigProvider } from 'antd';
+import { Collapse as AntdCollapse, ConfigProvider } from '@/components/ui/base';
 
 import IconFont from '@/components/ui/IconFont';
 import useTheme from '@/hooks/useTheme';

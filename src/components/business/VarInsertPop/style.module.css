@@ -1,0 +1,103 @@
+.ContentContainer {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  width: 320px;
+  /* min-height: 220px; */
+  /* max-height: 265px; */
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+  pointer-events: none;
+}
+.ContentContainer :global(.beautify-input) {
+  background-color: var(--search-big-select-color);
+  box-shadow: none;
+}
+.ContentContainer :global(.beautify-select) {
+  background-color: var(--search-big-select-color);
+}
+.ContentContainer :global(.beautify-select) * {
+  box-shadow: none !important;
+}
+.ContentContainer :global(.beautify-select-selector) {
+  box-shadow: none;
+}
+.ContentContainer:global(.active) {
+  opacity: 1;
+  pointer-events: unset;
+}
+.ContentContainer :global(.var-tabs) :global(.beautify-segmented-item) {
+  flex: 1;
+}
+.ContentContainer :global(.segmented-tabs-content) {
+  min-height: 180px;
+}
+.ContentContainer :global(.options-list) {
+  width: 100%;
+}
+.ContentContainer :global(.options-list) :global(.icon-content) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.ContentContainer :global(.options-list) :global(.icon-content) :global(.anticon) {
+  font-size: 16px;
+}
+.ContentContainer :global(.options-list) :global(.icon-content):global(.var) {
+  background: #af711a;
+}
+.ContentContainer :global(.options-list) :global(.icon-content):global(.var) :global(.anticon) {
+  color: #b071ff;
+}
+.ContentContainer :global(.options-list) :global(.icon-content):global(.mock) {
+  background: #067c18;
+}
+.ContentContainer :global(.options-list) :global(.icon-content):global(.mock) :global(.anticon) {
+  color: #067ced;
+}
+.ContentContainer :global(.options-list) :global(.icon-content):global(.fixed) {
+  background: #43bf16;
+}
+.ContentContainer :global(.options-list) :global(.icon-content):global(.fixed) :global(.anticon) {
+  color: #43bfb0;
+}
+.ContentContainer :global(.options-list) :global(.icon-content):global(.desc) {
+  background: #00ac0a;
+}
+.ContentContainer :global(.options-list) :global(.icon-content):global(.desc) :global(.anticon) {
+  color: #00ac64;
+}
+.ContentContainer :global(.options-list) :global(.icon-content):global(.aiDesc) {
+  background: #ee5608;
+}
+.ContentContainer :global(.options-list) :global(.icon-content):global(.aiDesc) :global(.anticon) {
+  color: #ee564c;
+}
+.ContentContainer :global(.options-list) :global(.icon-content):global(.aiValue) {
+  background: #ff9c14;
+}
+.ListItemContainer {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  width: 100%;
+  min-height: 55px;
+  box-sizing: border-box;
+  gap: 12px;
+}
+.ListItemContainer :global(.label) {
+  font-size: 14px;
+  color: var(--font-title-color);
+}
+.ListItemContainer :global(.desc) {
+  color: var(--font-light-color);
+}
+.ListItemContainer:hover {
+  border-radius: 4px;
+  background-color: var(--popover-select-bg-hover-color);
+  cursor: pointer;
+}

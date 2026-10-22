@@ -1,5 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const ArrowWrapper = styled.div`
-  width: 22px;
-`;
+export const ArrowWrapper = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ArrowWrapper"],
+  { selector: "ui_2ec9b299_ArrowWrapper" },
+);

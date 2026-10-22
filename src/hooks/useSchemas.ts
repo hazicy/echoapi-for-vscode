@@ -2,7 +2,7 @@ import useProjectSetting from '@/store/useProjectSetting';
 import { EditFormat } from '@/utils/common';
 import { parseModelToJsonSchema } from '@/utils/dataModel';
 import { useMemoizedFn } from 'ahooks';
-import { message } from 'antd';
+import { message } from '@/components/ui/base';
 import { cloneDeep, isObject } from 'lodash';
 import { useTranslation } from 'react-i18next';
 

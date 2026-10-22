@@ -1,0 +1,15 @@
+.RequestContainer {
+  padding: 0;
+  /* padding-bottom: var(--style-bfdb18be-RequestContainer-0); */
+  width: 100%;
+  height: 100%;
+}
+.RequestContainer :global(.beautify-tabs),
+.RequestContainer :global(.beautify-tabs-content),
+.RequestContainer :global(.beautify-tabs-tabpane) {
+  width: 100%;
+  height: 100%;
+}
+.RequestContainer :global(.beautify-tabs-top) > :global(.beautify-tabs-nav) {
+  margin-bottom: 8px;
+}

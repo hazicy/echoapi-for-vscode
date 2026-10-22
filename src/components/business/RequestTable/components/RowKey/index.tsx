@@ -1,7 +1,7 @@
 import { FC, memo, useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { AutoComplete, Checkbox, CheckboxProps, Flex, Select } from 'antd';
+import { AutoComplete, Checkbox, CheckboxProps, Flex, Select } from '@/components/ui/base';
 
 import classnames from 'classnames';
 import { concat, isEqual, map } from 'lodash';

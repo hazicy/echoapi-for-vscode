@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { message } from 'antd';
+import { message } from '@/components/ui/base';
 
 import classNames from 'classnames';
 import { isObject, isUndefined, omit } from 'lodash';

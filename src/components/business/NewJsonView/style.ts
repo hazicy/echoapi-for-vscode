@@ -1,65 +1,20 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const NewJsonViewContainer = styled.div`
-  height: 100%;
-  max-height: 400px;
-  overflow: auto;
+export const NewJsonViewContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["NewJsonViewContainer"],
+  { selector: "ui_658c9b94_NewJsonViewContainer" },
+);
 
-  .string-value {
-    word-break: break-all;
-  }
+export const JsonViewWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["JsonViewWrap"],
+  { selector: "ui_658c9b94_JsonViewWrap" },
+);
 
-  .object-key {
-    > span {
-      word-break: break-all;
-    }
-  }
-`;
-
-export const JsonViewWrap = styled.div`
-  .react-json-view {
-    padding: 12px;
-    min-height: 200px;
-    background-color: var(--background-color-primary) !important;
-    word-break: break-all;
-  }
-
-  .object-key {
-    color: var(--content-color-primary) !important;
-  }
-
-  .object-size {
-    color: var(--content-color-secondary) !important;
-  }
-
-  .variable-row,
-  .object-key-val {
-    border-left-color: var(--border-color-default) !important;
-  }
-
-  .object-key-val > span {
-    &:first-child {
-      span:last-child {
-        color: '#5AB8D1' !important;
-      }
-    }
-  }
-
-  .brace-row {
-    /* stylelint-disable-next-line no-descending-specificity */
-    span {
-      color: '#5AB8D1' !important;
-    }
-  }
-`;
-
-export const OtherPreViewWrap = styled.div`
-  padding: 12px;
-  min-height: 200px;
-  overflow: hidden;
-  background-color: var(--background-color-primary);
-
-  pre {
-    overflow-x: auto;
-  }
-`;
+export const OtherPreViewWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["OtherPreViewWrap"],
+  { selector: "ui_658c9b94_OtherPreViewWrap" },
+);

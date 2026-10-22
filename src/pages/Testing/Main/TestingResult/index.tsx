@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { TestingResultWrapper } from "./style";
 import useTheme from "@/hooks/useTheme";
-import { Flex, Progress, Spin, Typography } from "antd";
+import { Flex, Progress, Spin, Typography } from '@/components/ui/base';
 import {
   chunk,
   floor,

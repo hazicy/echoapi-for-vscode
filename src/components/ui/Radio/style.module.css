@@ -1,0 +1,51 @@
+.RadioWrap label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.RadioWrap :global(.beautify-radio) :global(.beautify-radio-inner) {
+  /* width: 16px; */
+  /* height: 16px; */
+  background-color: transparent;
+}
+.RadioWrap :global(.beautify-radio) :global(.beautify-radio-inner)::after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-primary);
+}
+.RadioGroupWrap {
+  /* 1 */
+}
+.RadioGroupWrap :global(.beautify-radio-group) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.RadioGroupWrap :global(.beautify-radio-group) label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.RadioGroupWrap :global(.beautify-radio-group) :global(.beautify-radio) :global(.beautify-radio-inner) {
+  /* width: 16px; */
+  /* height: 16px; */
+  background-color: transparent;
+}
+.RadioGroupWrap :global(.beautify-radio-group) :global(.beautify-radio) :global(.beautify-radio-inner)::after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-primary);
+}

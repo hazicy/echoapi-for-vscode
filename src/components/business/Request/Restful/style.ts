@@ -1,29 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const RestfulQueryContainer = styled.div`
-  .beautify-table-thead {
-    .beautify-table-cell {
-      padding: 4px 10px;
-    }
-  }
-
-  .beautify-table-tbody {
-    tr {
-      .row-description-operation {
-        visibility: hidden;
-      }
-
-      &:hover {
-        .row-description-operation {
-          visibility: visible;
-        }
-      }
-    }
-  }
-
-  .table-custom-empty-wrap {
-    .beautify-table-tbody {
-      display: none;
-    }
-  }
-`;
+export const RestfulQueryContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["RestfulQueryContainer"],
+  { selector: "ui_80cd432f_RestfulQueryContainer" },
+);

@@ -1,31 +1,10 @@
-import { Flex } from 'antd';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import { Flex } from "@/components/ui/base";
 
-import styled from 'styled-components';
-
-export const SegmentedTabsContainer = styled(Flex)<{ $token: Partial<GlobalThemeToken> }>`
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-
-  .segmented-tabs-header {
-    margin-bottom: 12px;
-    width: 100%;
-
-    .tab-bar-extra-content-wrap {
-      flex: 1;
-      overflow: hidden;
-    }
-  }
-
-  .segmented-tabs-content {
-    flex: 1;
-    min-height: 400px;
-
-    /* overflow-y: auto; */
-
-    &-item {
-      width: 100%;
-      height: 100%;
-    }
-  }
-`;
+export const SegmentedTabsContainer = withStyles<
+  typeof Flex,
+  { $token: Partial<GlobalThemeToken> }
+>(Flex, moduleStyles["SegmentedTabsContainer"], {
+  selector: "ui_1ce84259_SegmentedTabsContainer",
+});

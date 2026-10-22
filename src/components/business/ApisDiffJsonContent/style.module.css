@@ -1,0 +1,29 @@
+.ContentWrap {
+  height: 500px;
+  overflow: auto;
+}
+.ContentWrap :global(.beautify-collapse-content-box) {
+  padding: 0 !important;
+}
+.VersionEditWrap {
+  display: flex;
+  flex-direction: column;
+  height: 320px;
+}
+.VersionEditWrap :global(.code-diff-host) {
+  height: 100%;
+  min-height: 0;
+}
+.VersionEditWrap :global(.cm-mergeView) {
+  height: 100%;
+}
+.VersionEditWrap :global(.cm-mergeViewEditors) {
+  height: 100%;
+}
+.VersionEditWrap :global(.cm-mergeViewEditor) {
+  min-width: 0;
+  overflow: hidden;
+}
+.VersionEditWrap :global(.cm-editor) {
+  height: 100%;
+}

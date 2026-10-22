@@ -1,4 +1,4 @@
-import { Input as AntdInput, InputProps } from 'antd';
+import { Input as AntdInput, InputProps } from '@/components/ui/base';
 
 import { MAX_INPUT_LENGTH } from '@/constants/form';
 

@@ -9,7 +9,7 @@ import {
   PanelResizeHandleProps,
 } from 'react-resizable-panels';
 
-import { Flex, Space } from 'antd';
+import { Flex, Space } from '@/components/ui/base';
 
 import { useDebounceFn, useSafeState } from 'ahooks';
 import cn from 'classnames';

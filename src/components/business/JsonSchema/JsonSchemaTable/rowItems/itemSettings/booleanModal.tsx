@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Select, Switch } from 'antd';
+import { Flex, Select, Switch } from '@/components/ui/base';
 
 const Option = Select.Option;
 const BooleanModal = (props: any) => {

@@ -1,7 +1,7 @@
 import { memo, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Flex, Switch, SwitchProps } from "antd";
+import { Flex, Switch, SwitchProps } from '@/components/ui/base';
 
 import { useMount, useSafeState } from "ahooks";
 import {

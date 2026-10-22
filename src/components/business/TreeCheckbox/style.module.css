@@ -1,0 +1,29 @@
+.TreeCheckboxContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 4px;
+}
+.TreeCheckboxContainer :global(.beautify-tree) {
+  background-color: transparent;
+}
+.TreeCheckboxContainer :global(.tree-wrap) {
+  flex: 1;
+  overflow: hidden;
+  /* background-color: var(--search-big-select-color); */
+  /* padding: 0 12px 12px 12px; */
+  border-radius: 0 0 4px 4px;
+}
+.TreeCheckboxContainer :global(.tree-wrap) :global(.beautify-tree-checkbox) {
+  align-self: center;
+  margin-top: 0;
+}
+.TreeCheckboxContainer :global(.tree-wrap) :global(.beautify-tree-checkbox-checked) :global(.beautify-tree-checkbox-inner) {
+  /* background-color: #835dff !important; */
+  /* border-color: #835dff; */
+}
+.TreeCheckboxContainer :global(.tree-wrap) :global(.beautify-tree-checkbox-inner) {
+  /* background: var(--vscode-editor-background,#121212); */
+  /* border: 1px solid var(--vscode-editorWidget-border, #353535); */
+}

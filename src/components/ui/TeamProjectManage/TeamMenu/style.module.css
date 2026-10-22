@@ -1,0 +1,85 @@
+.TeamMenuWrapper {
+  padding: 0 20px;
+  height: 290px;
+  overflow-y: auto;
+}
+.TeamMenuWrapper::-webkit-scrollbar {
+  display: none;
+}
+.TeamMenuWrapper :global(.title) :global(.count) {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  font-size: var(--font-size-12);
+  line-height: 22px;
+  font-weight: 400;
+  text-align: center;
+  color: var(--font-content-color);
+  background-color: var(--color-bg-page);
+}
+.TeamMenuWrapper :global(.beautify-menu-inline) {
+  border-right: none !important;
+}
+.TeamMenuWrapper :global(.beautify-menu-submenu-title) {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.TeamMenuWrapper :global(.beautify-menu-item) {
+  margin: 0;
+  padding-left: 36px;
+  width: 100%;
+}
+.TeamMenuWrapper :global(.beautify-menu-submenu-selected) :global(.beautify-menu-submenu-title) {
+  font-weight: 600;
+  color: var(--font-content-color);
+}
+.TeamMenuWrapper :global(.beautify-menu-submenu-active) :global(.beautify-menu-submenu-title) {
+  color: var(--color-primary);
+}
+.TeamMenuWrapper :global(.beautify-menu-title-content) {
+  margin-left: 14px;
+}
+.TeamMenuWrapper :global(.beautify-menu-title-content) :global(.name) {
+  max-width: 190px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.TeamMenuWrapper :global(.beautify-menu-item-selected) {
+  color: var(--color-primary);
+}
+.MenuItemContainer :global(.project-name) {
+  max-width: 240px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.MenuItemContainer :global(.logout-project) {
+  display: none;
+  color: #ff583e;
+}
+.MenuItemContainer:hover :global(.logout-project) {
+  display: block;
+}
+.MenuItemContainer :global(.fail) {
+  font-size: var(--font-size-12);
+  color: #ff3b27;
+}
+.MenuItemContainer :global(.pending) {
+  font-size: var(--font-size-12);
+  color: #26cea4;
+}
+.MigrateItemWrapper {
+  padding: 0 20px;
+}
+.MigrateItemWrapper :global(.migrate-item) {
+  margin-top: 12px;
+  padding-left: 12px;
+  height: 32px;
+  cursor: pointer;
+}
+.MigrateItemWrapper :global(.migrate-item) :global(.migrate-text) {
+  font-size: var(--font-size-14);
+  color: var(--color-primary);
+}

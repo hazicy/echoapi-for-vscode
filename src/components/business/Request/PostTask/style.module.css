@@ -1,0 +1,22 @@
+.RequestPostTaskContainer {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+.RequestPostTaskContainer > :global(.beautify-btn) {
+  width: 100%;
+  font-size: var(--font-size-14);
+}
+.RequestPostTaskContainer :global(.item-container) :global(.beautify-typography) {
+  font-size: var(--font-size-14);
+  white-space: nowrap;
+}
+.RequestPostTaskContainer :global(.item-container) :global(.beautify-input) {
+  font-size: var(--font-size-14);
+}
+.RequestPostTaskContainer :global(.item-container) :global(.beautify-collapse-header) :global(.beautify-input) {
+  height: 24px;
+}
+.RequestPostTaskContainer :global(.item-container) :global(.beautify-select-selector) {
+  font-size: var(--font-size-14);
+}

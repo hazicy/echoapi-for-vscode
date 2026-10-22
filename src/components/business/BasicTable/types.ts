@@ -1,4 +1,4 @@
-import type { TableProps as AntdTableProps, SelectProps, TableColumnType } from 'antd';
+import type { TableProps as AntdTableProps, SelectProps, TableColumnType } from '@/components/ui/base';
 
 import type { DragEndEvent } from '@dnd-kit/core';
 

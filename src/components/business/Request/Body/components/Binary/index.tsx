@@ -1,10 +1,10 @@
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Flex, UploadProps, message } from 'antd';
-import { UploadFileStatus } from 'antd/es/upload/interface';
+import { Button, Flex, UploadProps, message } from '@/components/ui/base';
+import { UploadFileStatus } from '@/components/ui/base';
 
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@/components/ui/base/icons';
 import { snowflakeId } from 'apipost-tools';
 import produce from 'immer';
 import { isEmpty, isObject } from 'lodash';

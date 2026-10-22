@@ -1,0 +1,50 @@
+.VariableContainer {
+  width: 100%;
+  height: 100%;
+}
+.VariableContainer :global(.variable-flex) {
+  height: 100%;
+}
+.VariableContainer :global(.variable-content) {
+  flex: 1;
+  overflow-y: auto;
+}
+.VariableContainer :global(.variable-content) :global(.beautify-table-tbody) tr:hover :global(.anticon) {
+  visibility: visible;
+}
+.VariableContainer :global(.variable-content) :global(.beautify-table-tbody) :global(.beautify-table-cell),
+.VariableContainer :global(.variable-content) :global(.beautify-table-thead) :global(.beautify-table-cell) {
+  padding: 0;
+  /* height: 32px; */
+}
+.VariableContainer :global(.variable-content) :global(.beautify-table-tbody) :global(.beautify-table-cell) input,
+.VariableContainer :global(.variable-content) :global(.beautify-table-thead) :global(.beautify-table-cell) input,
+.VariableContainer :global(.variable-content) :global(.beautify-table-tbody) :global(.beautify-table-cell) textarea,
+.VariableContainer :global(.variable-content) :global(.beautify-table-thead) :global(.beautify-table-cell) textarea {
+  height: 36px;
+  border-color: transparent;
+}
+.VariableContainer :global(.variable-content) :global(.beautify-table-tbody) :global(.beautify-table-cell) input:hover,
+.VariableContainer :global(.variable-content) :global(.beautify-table-thead) :global(.beautify-table-cell) input:hover,
+.VariableContainer :global(.variable-content) :global(.beautify-table-tbody) :global(.beautify-table-cell) textarea:hover,
+.VariableContainer :global(.variable-content) :global(.beautify-table-thead) :global(.beautify-table-cell) textarea:hover,
+.VariableContainer :global(.variable-content) :global(.beautify-table-tbody) :global(.beautify-table-cell) input:focus,
+.VariableContainer :global(.variable-content) :global(.beautify-table-thead) :global(.beautify-table-cell) input:focus,
+.VariableContainer :global(.variable-content) :global(.beautify-table-tbody) :global(.beautify-table-cell) textarea:focus,
+.VariableContainer :global(.variable-content) :global(.beautify-table-thead) :global(.beautify-table-cell) textarea:focus {
+  border-color: var(--color-primary);
+  background-color: var(--highlight-change-color);
+}
+.VariableContainer :global(.variable-content) :global(.beautify-table-thead) :global(.beautify-table-cell) {
+  padding: 0 12px;
+}
+.VariableOpContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.VariableOpContainer :global(.anticon) {
+  visibility: hidden;
+  color: var(--icon-color);
+}

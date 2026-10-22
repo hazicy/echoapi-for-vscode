@@ -2,7 +2,7 @@ import { MouseEvent, useEffect, useMemo } from 'react';
 import type { ResizeCallbackData } from 'react-resizable';
 import { Resizable } from 'react-resizable';
 
-import { Table as AntdTable, TableColumnsType } from 'antd';
+import { Table as AntdTable, TableColumnsType } from '@/components/ui/base';
 
 import { useMemoizedFn, useSafeState } from 'ahooks';
 import produce from 'immer';

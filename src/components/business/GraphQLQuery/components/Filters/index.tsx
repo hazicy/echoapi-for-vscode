@@ -1,7 +1,7 @@
 import { forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, ConfigProvider, Flex, Form, Input, Select, message } from 'antd';
+import { Button, ConfigProvider, Flex, Form, Input, Select, message } from '@/components/ui/base';
 
 import {
   PropertyPath,

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Input, InputNumber, Select, Switch } from 'antd';
+import { Flex, Input, InputNumber, Select, Switch } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import { isEmpty, isNumber, trim } from 'lodash';

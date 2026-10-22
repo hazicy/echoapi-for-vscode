@@ -1,4 +1,4 @@
-import { TabPaneProps } from 'antd';
+import { TabPaneProps } from '@/components/ui/base';
 import React, { FC, lazy, ReactNode, useEffect, useMemo } from 'react';
 import { RequestProps } from './types';
 import produce from 'immer';

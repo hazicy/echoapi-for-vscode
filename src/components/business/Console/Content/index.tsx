@@ -1,6 +1,6 @@
 import ReactJson from "react-json-view";
 
-import { Flex } from "antd";
+import { Flex } from '@/components/ui/base';
 
 import aptTools from "apipost-tools";
 import {

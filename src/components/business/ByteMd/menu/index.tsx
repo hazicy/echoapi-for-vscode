@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Dropdown } from 'antd';
+import { Dropdown } from '@/components/ui/base';
 
 import { some } from 'lodash';
 

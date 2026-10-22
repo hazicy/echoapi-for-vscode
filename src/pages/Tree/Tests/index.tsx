@@ -1,5 +1,5 @@
 import useFolders from '@/hooks/useFolders';
-import { Button, Flex, message, TreeSelect } from 'antd';
+import { Button, Flex, message, TreeSelect } from '@/components/ui/base';
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { TestsWrapper } from './style';

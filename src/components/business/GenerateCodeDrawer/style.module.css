@@ -1,0 +1,49 @@
+.GenerateCodeWrap {
+  height: 100%;
+}
+.GenerateCodeWrap :global(.beautify-spin-nested-loading) {
+  height: 100%;
+}
+.GenerateCodeWrap :global(.beautify-spin-nested-loading) :global(.beautify-spin-container) {
+  height: 100%;
+}
+.GenerateCodeWrap :global(.beautify-spin-nested-loading) :global(.beautify-spin-container) > :global(.beautify-flex) {
+  height: 100%;
+}
+.GenerateCodeWrap :global(.menu) {
+  padding: 16px 8px;
+  width: 212px;
+  min-width: 212px;
+  max-height: 100%;
+  overflow: auto;
+  border-right: 1px solid var(--color-border);
+  overflow-y: auto;
+  color: var(--font-content-color);
+  background-color: var(--color-bg-page);
+}
+.GenerateCodeWrap :global(.menu-item) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 4px;
+  padding: 0 8px;
+  height: 32px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+.GenerateCodeWrap :global(.menu-item):hover,
+.GenerateCodeWrap :global(.menu-item):global(.active) {
+  /* color: var(--color-primary); */
+  background-color: var(--vscode-list-inactiveSelectionBackground);
+}
+.GenerateCodeWrap :global(.edit) {
+  flex: 1;
+  height: 100%;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+.LanguagesIcon {
+  margin-right: 8px;
+  font-size: var(--font-size-16);
+}

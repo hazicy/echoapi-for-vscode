@@ -5,7 +5,7 @@ import PrefixIcon from "@/components/ui/PrefixIcon";
 import useTheme from "@/hooks/useTheme";
 import { RuntimeResponse } from "@/types/testing";
 import CustomPopover from "@/components/ui/Popover";
-import { Checkbox, Flex, Tooltip, Typography } from "antd";
+import { Checkbox, Flex, Tooltip, Typography } from '@/components/ui/base';
 import { Drawer } from "@/components/ui/Drawer";
 import { isArray, isEmpty, isString, toUpper } from "lodash";
 import { useState } from "react";

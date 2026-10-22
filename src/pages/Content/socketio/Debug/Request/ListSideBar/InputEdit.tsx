@@ -7,7 +7,7 @@ import {
   Input,
   Popconfirm, // Popconfirm,
   Typography,
-} from 'antd';
+} from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import classnames from 'classnames';

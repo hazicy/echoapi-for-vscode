@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Input, Space } from 'antd';
+import { Flex, Input, Space } from '@/components/ui/base';
 
 import { useThrottle } from 'ahooks';
 

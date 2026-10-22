@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Switch } from 'antd';
+import { Flex, Switch } from '@/components/ui/base';
 
 const StringModal = (props: any) => {
   const { t } = useTranslation();

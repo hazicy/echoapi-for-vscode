@@ -1,6 +1,7 @@
-import { GlobalToken } from 'antd/es/theme/interface';
+import type { GlobalToken } from '@/components/ui/base/tokens';
 
 export interface ThemeToken extends GlobalToken {
+  colorHeaderBorder: string;
   colorFontLightHover: string;
   colorBgLightHover: string;
   colorPrimaryOpacity: string;

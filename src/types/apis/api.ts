@@ -1,4 +1,4 @@
-import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import { ItemType } from '@/components/ui/base';
 
 import {
   APIS_CREATE_ITEM_OTHER_ENUM,

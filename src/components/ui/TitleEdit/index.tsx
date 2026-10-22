@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { InputProps } from 'antd';
+import { InputProps } from '@/components/ui/base';
 
 import { TitleEditInput } from './style';
 

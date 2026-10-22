@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Input, message } from 'antd';
+import { Input, message } from '@/components/ui/base';
 
 import { snowflakeId } from 'apipost-tools';
 import produce from 'immer';

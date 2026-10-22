@@ -1,16 +1,9 @@
-import { Flex } from 'antd';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import { Flex } from "@/components/ui/base";
 
-import styled from 'styled-components';
-
-export const GraphqlDebugContainer = styled(Flex)`
-  width: 100%;
-  height: 100%;
-
-  > header {
-    padding: 0 16px;
-  }
-
-  > main {
-    flex: 1;
-  }
-`;
+export const GraphqlDebugContainer = withStyles<typeof Flex, {}>(
+  Flex,
+  moduleStyles["GraphqlDebugContainer"],
+  { selector: "ui_e8caf18d_GraphqlDebugContainer" },
+);

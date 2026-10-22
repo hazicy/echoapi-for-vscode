@@ -1,4 +1,4 @@
-import { Form, Input, Select } from 'antd';
+import { Form, Input, Select } from '@/components/ui/base';
 
 import i18next from 'i18next';
 import { isEqual, map } from 'lodash';

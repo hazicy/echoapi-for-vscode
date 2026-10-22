@@ -1,0 +1,13 @@
+.DropdownMenuWrap :global(.beautify-dropdown-menu) {
+  background-color: var(--color-bg-right);
+}
+.DropdownMenuWrap :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item) {
+  color: var(--font-content-color);
+}
+.DropdownMenuWrap :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item):hover {
+  color: var(--color-primary);
+  background: var(--color-primary-opacity);
+}
+.DropdownMenuWrap :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item) :global(.beautify-btn-text) {
+  color: var(--font-content-color);
+}

@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Checkbox, Flex, Form, Select, Typography, message } from 'antd';
+import { Checkbox, Flex, Form, Select, Typography, message } from '@/components/ui/base';
 
 import { DragEndEvent } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';

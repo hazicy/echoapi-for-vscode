@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Form } from 'antd';
+import { Form } from '@/components/ui/base';
 
 import VarInput from '@/components/business/VarInput';
 import { AUTH_ENUM } from '@/constants/apis/auth';

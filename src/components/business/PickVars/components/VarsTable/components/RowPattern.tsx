@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, memo } from 'react';
 
-import { Flex, Input } from 'antd';
+import { Flex, Input } from '@/components/ui/base';
 
 import IconFont from '@/components/ui/IconFont';
 

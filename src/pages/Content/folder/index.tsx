@@ -1,7 +1,7 @@
 import { FC, FunctionComponent, memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { SegmentedProps } from 'antd';
+import { SegmentedProps } from '@/components/ui/base';
 
 import { useMemoizedFn, useSafeState } from 'ahooks';
 import { find, head, includes, isArray, last, map } from 'lodash';

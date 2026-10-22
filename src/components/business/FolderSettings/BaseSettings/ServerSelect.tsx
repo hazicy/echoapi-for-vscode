@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Select } from 'antd';
+import { Flex, Select } from '@/components/ui/base';
 
 import { useMemoizedFn } from 'ahooks';
 import { find, isEqual, map } from 'lodash';

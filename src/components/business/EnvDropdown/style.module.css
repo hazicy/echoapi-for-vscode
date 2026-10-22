@@ -1,0 +1,152 @@
+.EnvDropdownWrapper {
+  width: 100%;
+  height: 100%;
+}
+.EnvDropdownWrapper :global(.line) {
+  width: 1px;
+  height: 8px;
+  background: var(--color-border);
+}
+.EnvDropdownWrapper :global(.env-select-wrap) {
+  padding: 4px 8px;
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+  border-right: 1px solid var(--color-table-border);
+  background-color: var(--search-big-bg-color);
+  cursor: pointer;
+}
+.EnvDropdownWrapper :global(.env-select-wrap) :global(.anticon) {
+  font-size: var(--font-size-14);
+  color: var(--font-light-color);
+}
+.EnvDropdownWrapper :global(.env-select-wrap) :global(.title) {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 176px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: var(--font-size-14);
+  color: var(--font-content-color);
+}
+.EnvDropdownWrapper :global(.env-select-wrap) :global(.title) i {
+  font-style: normal;
+}
+.EnvDropdownWrapper :global(.env-select-wrap) :global(.title) :global(.icon) {
+  display: inline-block;
+  margin: 0 4px;
+  padding: 0 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  font-size: var(--font-size-12);
+  text-align: center;
+  color: #067ced !important;
+  background-color: #7fc50d;
+}
+.EnvDropdownWrapper :global(.env-select-wrap) :global(.title) :global(.name) {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.EnvDropdownWrapper :global(.icon-manage-env) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  width: 24px;
+  /* height: 26px; */
+  height: 100%;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  /* border: 1px solid var(--color-table-border); */
+  border: 1px solid transparent;
+  border-left: none;
+  background-color: var(--search-big-bg-color);
+  cursor: pointer;
+}
+.EnvDropdownWrapper :global(.icon-manage-env):hover {
+  border-color: var(--color-primary);
+  border-left: 1px solid var(--color-primary);
+}
+.EnvDropdownWrapper :global(.icon-manage-env) :global(.anticon) {
+  font-size: 16px;
+  color: var(--icon-color);
+}
+.EnvDropdownWrapper:global(.env-dropdown-disabled) {
+  opacity: 0.3;
+}
+.EnvDropdownWrapper:global(.env-dropdown-disabled),
+.EnvDropdownWrapper:global(.env-dropdown-disabled) :global(.icon-manage-env),
+.EnvDropdownWrapper:global(.env-dropdown-disabled) :global(.env-select-wrap),
+.EnvDropdownWrapper:global(.env-dropdown-disabled) :global(.env-select-setting) {
+  cursor: not-allowed;
+}
+.EnvDropdownRenderContainer {
+  padding: 8px;
+  min-width: 240px;
+  border-radius: 8px;
+  /* border: 1px solid var(--color-border); */
+  background-color: var(--popover-select-bg-color);
+  box-shadow: 0 12px 18px -4px var(--box-shadow-modal-color);
+}
+.EnvDropdownRenderContainer :global(.beautify-dropdown-menu) {
+  margin-top: 8px;
+  padding: 0;
+  box-shadow: none;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.EnvDropdownRenderContainer :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item) {
+  padding: 4px 8px;
+  height: 32px;
+}
+.EnvDropdownRenderContainer :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item) :global(.anticon) {
+  visibility: hidden;
+}
+.EnvDropdownRenderContainer :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item):hover :global(.anticon) {
+  visibility: visible;
+}
+.EnvDropdownRenderContainer :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item) :global(.operate-wrap) :global(.anticon) {
+  font-size: var(--font-size-14);
+  color: var(--icon-color);
+}
+.EnvDropdownRenderContainer :global(.env-popover-input) {
+  background: var(--vscode-input-background);
+  border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
+}
+.EnvDropdownRenderContainer :global(.env-popover-input) svg {
+  color: var(--vscode-input-placeholderForeground);
+}
+.EnvDropdownRenderContainer :global(.add-env-btn) {
+  padding: 0;
+  height: auto;
+}
+.EnvLabel {
+  max-width: 300px;
+}
+.EnvLabel :global(.name) {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.EnvLabel :global(.private) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  display: inline-block;
+  margin-left: 4px;
+  padding: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #22c55e;
+  background-color: rgba(34, 197, 94, 0.1);
+}

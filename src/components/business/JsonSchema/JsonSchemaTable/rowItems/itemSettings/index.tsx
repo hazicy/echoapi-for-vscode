@@ -1,7 +1,7 @@
 import React, { useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Popconfirm, Segmented, Select, message } from 'antd';
+import { Flex, Popconfirm, Segmented, Select, message } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import classNames from 'classnames';

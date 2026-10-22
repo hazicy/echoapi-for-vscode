@@ -1,0 +1,152 @@
+.TreeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+}
+.TreeContainer :global(.beautify-tree) {
+  width: 100%;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) {
+  align-items: center;
+  /* margin: 2px 0; */
+  padding: 0 8px 0 0;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):global(.drag-over)::before {
+  border-radius: var(--border-radius);
+  background-color: var(--color-primary);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):global(.drag-over) :global(.beautify-tree-drop-indicator) {
+  display: none;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):global(.drag-over-gap-top) {
+  padding-top: 8px;
+  box-sizing: border-box;
+  height: auto !important;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* line-height: 30px; */
+  /* stylelint-disable-next-line selector-class-pattern */
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  width: auto;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods) {
+  width: 30px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--color-success);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.post) {
+  color: var(--color-warning);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.get) {
+  color: var(--color-success);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.put),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.socket-service) {
+  color: var(--color-info);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.socket-service) {
+  width: auto;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.socket),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.doc) {
+  color: var(--color-info);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.delete) {
+  color: var(--color-error);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.grpc),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.ws),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.patch) {
+  color: var(--color-success);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.notes) {
+  width: auto;
+  color: #f7b300;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-title) {
+  width: 100%;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-switcher) {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):global(.beautify-tree-treenode-selected) :global(.beautify-tree-title) :global(.title) {
+  /* color: var(--color-primary); */
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode)::before {
+  height: 100%;
+  border-radius: var(--border-radius);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.folder-add-operate-wrap),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.more-operate-wrap) {
+  font-size: var(--font-size-12);
+  color: var(--font-light-color);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):hover :global(.more-operate-wrap),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):hover :global(.folder-add-operate-wrap),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):hover :global(.node-item-del) {
+  display: block;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-bottom-node-wrap),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-top-node-wrap) {
+  padding-right: 0;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-bottom-node-wrap):hover::before,
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-top-node-wrap):hover::before {
+  background-color: transparent;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-bottom-node-wrap) :global(.beautify-tree-switcher),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-top-node-wrap) :global(.beautify-tree-switcher) {
+  display: none;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-bottom-node-wrap) :global(.beautify-tree-node-content-wrapper),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-top-node-wrap) :global(.beautify-tree-node-content-wrapper) {
+  padding: 0;
+  width: 100%;
+  cursor: default;
+  /* stylelint-disable-next-line selector-class-pattern */
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-bottom-node-wrap) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-top-node-wrap) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) {
+  display: none;
+}
+.TreeContainer :global(.root-context-menu-holder-placeholder) {
+  flex: 1;
+  width: 100%;
+}
+.ItemTitleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+.ItemTitleContainer > :global(.title) {
+  flex: 1;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ItemTitleContainer > :global(.title) > :global(.children-num) {
+  margin-left: 8px;
+  font-size: var(--font-size-12);
+  letter-spacing: 0.5px;
+  color: var(--font-light-color);
+}

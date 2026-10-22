@@ -1,0 +1,25 @@
+.NewBtnsContainer {
+  display: flex;
+  /* height: 32px; */
+}
+.NewBtnsContainer :global(.beautify-new-http-more) {
+  width: 100% !important;
+}
+.NewBtnsContainer :global(.beautify-new-http-more) > button:first-child {
+  flex: 1;
+  font-weight: 600;
+}
+.NewBtnsContainer :global(.beautify-new-http-more) > button {
+  height: 28px;
+}
+.NewBtnsContainer :global(.beautify-new-http-more) > button:global(.beautify-btn-compact-last-item) {
+  width: 28px;
+}
+.NewBtnsContainer :global(.beautify-space-compact) {
+  width: auto;
+}
+.NewBtnsContainer :global(.add-btn) {
+  margin-left: 4px;
+  width: 32px;
+  height: 32px;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { List } from 'antd';
+import { List } from '@/components/ui/base';
 
 import { useMount, useSafeState } from 'ahooks';
 import classnames from 'classnames';

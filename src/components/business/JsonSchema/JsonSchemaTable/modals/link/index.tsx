@@ -1,7 +1,7 @@
 import React, { memo, useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Checkbox, Input, Tree } from 'antd';
+import { Checkbox, Input, Tree } from '@/components/ui/base';
 
 import { useMemoizedFn, useSafeState } from 'ahooks';
 import { isPlainObject, isUndefined } from 'lodash';

@@ -4,7 +4,7 @@ import {
   Flex,
   InputNumber,
   Switch,
-} from 'antd';
+} from '@/components/ui/base';
 
 import { useMemoizedFn } from 'ahooks';
 import produce from 'immer';

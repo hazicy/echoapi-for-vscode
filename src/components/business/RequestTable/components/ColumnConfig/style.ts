@@ -1,32 +1,21 @@
-import { Flex } from 'antd';
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import { Flex } from "@/components/ui/base";
 
-export const DescMoreItemWrap = styled(Flex).attrs({
-  align: 'center',
-  justify: 'space-between',
-})`
-  height: 26px;
+export const DescMoreItemWrap = withStyles<typeof Flex, {}>(
+  Flex,
+  moduleStyles["DescMoreItemWrap"],
+  {
+    selector: "ui_42e19a8d_DescMoreItemWrap",
+    attrs: {
+      align: "center",
+      justify: "space-between",
+    },
+  },
+);
 
-  &.tips-item-wrap {
-    color: var(--font-light-color);
-  }
-`;
-
-export const ColumnConfigContainer = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 36px;
-  padding-inline: 8px;
-  background-color: transparent;
-  .raw-parameter-pilot-bubble-tooltip{
-    max-width: 320px;
-  }
-  .icon-navi-more{
-    cursor: pointer;
-    color: var(--font-light-color);
-    &:hover{
-      color: var(--color-primary);
-    }
-  }
-`;
+export const ColumnConfigContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ColumnConfigContainer"],
+  { selector: "ui_42e19a8d_ColumnConfigContainer" },
+);

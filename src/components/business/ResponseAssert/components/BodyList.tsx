@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Space } from 'antd';
+import { Space } from '@/components/ui/base';
 
 import IconFont from '@/components/ui/IconFont';
 import { openUrl } from '@/utils/open';

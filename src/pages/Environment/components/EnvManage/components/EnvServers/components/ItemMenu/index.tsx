@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Dropdown, Flex } from 'antd';
+import { Dropdown, Flex } from '@/components/ui/base';
 
 import Button from '@/components/ui/Button';
 import IconFont from '@/components/ui/IconFont';

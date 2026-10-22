@@ -1,9 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const ReportListHeaderWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  svg:hover{
-    color: var(--color-primary);
-  }
-`;
+export const ReportListHeaderWrapper = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ReportListHeaderWrapper"],
+  { selector: "ui_b47be08c_ReportListHeaderWrapper" },
+);

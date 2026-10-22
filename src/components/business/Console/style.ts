@@ -1,13 +1,14 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const ConsoleWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
+export const ConsoleWrapper = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ConsoleWrapper"],
+  { selector: "ui_9f9653f1_ConsoleWrapper" },
+);
 
-export const ConsoleContainer = styled.div`
-  padding: 0 8px;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-`;
+export const ConsoleContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ConsoleContainer"],
+  { selector: "ui_9f9653f1_ConsoleContainer" },
+);

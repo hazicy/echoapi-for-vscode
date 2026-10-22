@@ -1,10 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const ReportDetailsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background: var(--color-bg-right);
-  padding: 16px;
- 
-`;
+export const ReportDetailsContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ReportDetailsContainer"],
+  { selector: "ui_6a28d021_ReportDetailsContainer" },
+);

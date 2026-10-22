@@ -3,7 +3,7 @@ import { PushRightWrap } from './style';
 import { useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';
 import TeamProjectManage from '@/components/ui/TeamProjectManage';
-import { Button, Flex } from 'antd';
+import { Button, Flex } from '@/components/ui/base';
 import { useUserConfig } from '@/store';
 import { Project, TeamItem } from '@/types/user';
 import { getTeamAndProjectByProjectId } from '@/events/project';

@@ -1,0 +1,65 @@
+.FlexSegmented {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+.FlexSegmented :global(.custom-segmented-tabs-wrap) {
+  padding-top: 12px;
+}
+.FlexSegmented :global(.custom-segmented-tabs-wrap) :global(.segmented-tabs-header) {
+  padding: 0 16px;
+}
+.ApiDebugContainer {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-right);
+  padding-top: 12px;
+  overflow: auto;
+}
+.ApiDebugContainer > header {
+  padding: 0 16px;
+}
+.ApiDebugContainer > header :global(.beautify-btn) {
+  height: 32px;
+  width: 70px;
+}
+.ApiDebugContainer > main {
+  flex: 1;
+  height: 0;
+}
+.SaveDropDownContainer {
+  padding: 8px;
+  padding-right: 0;
+  width: 200px;
+  height: 100%;
+  border-radius: 4px;
+  background-color: var(--popover-select-bg-color);
+  box-shadow: 0 6px 16px 0 #000000, 0 3px 6px -4px #000000, 0 9px 28px 8px #000000;
+}
+.SaveDropDownContainer :global(.beautify-tree) {
+  width: 100%;
+  background-color: var(--popover-select-bg-color);
+}
+.SaveDropDownContainer :global(.beautify-tree) :global(.beautify-tree-list) {
+  padding-right: 12px;
+}
+.SaveDropDownContainer :global(.beautify-tree) :global(.beautify-tree-node-content-wrapper) {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 0;
+  height: 100%;
+}
+.SaveDropDownContainer :global(.beautify-tree) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-title) {
+  display: flex;
+  width: 100%;
+}
+.SaveDropDownContainer :global(.beautify-tree) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-title) :global(.dropdown-tree-title) {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

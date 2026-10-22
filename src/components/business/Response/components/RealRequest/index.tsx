@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, SegmentedProps, Typography } from 'antd';
+import { Flex, SegmentedProps, Typography } from '@/components/ui/base';
 
 import { useMemoizedFn, useSafeState } from 'ahooks';
 import { includes, isEqual } from 'lodash';

@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, MouseEvent, useEffect, useRef } from 'react';
 
-import { Flex, Input, InputRef, Typography } from 'antd';
+import { Flex, Input, InputRef, Typography } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 

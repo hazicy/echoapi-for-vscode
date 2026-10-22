@@ -1,0 +1,163 @@
+.EnvironmentContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg-right);
+}
+.EnvironmentContainer :global(.env-menu-top) {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  border-right: 1px solid var(--color-table-border);
+}
+.EnvironmentContainer :global(.env-menu-top) :global(.beautify-menu) {
+  border-inline-end: none;
+}
+.EnvironmentContainer :global(.title) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 16px;
+  line-height: normal;
+  font-weight: 400;
+  color: var(--font-title-color);
+  font-style: normal;
+}
+.EnvironmentContainer :global(.tip) {
+  padding: 8px 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--font-content-color);
+  background-color: var(--color-bg-page);
+  border-radius: 4px;
+}
+.EnvironmentContainer :global(.column) {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.Render {
+  padding: 20px 20px;
+  width: 100%;
+  height: 100%;
+}
+.EnvLabel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.EnvLabel :global(.operation) {
+  visibility: hidden;
+  color: var(--icon-color);
+}
+.EnvLabel :global(.operation) :global(.anticon):hover {
+  color: var(--color-primary);
+}
+.EnvLabel :global(.operation) :global(.anticon):last-child {
+  margin-inline-start: 10px;
+}
+.EnvLabel:hover :global(.operation) {
+  visibility: visible;
+}
+.EnvLabel :global(.name) {
+  width: auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.EnvLabel :global(.private) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  /* width: 16px; */
+  height: 16px;
+  border-radius: 2px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #22c55e;
+  background-color: rgba(34, 197, 94, 0.1);
+}
+.LeftMenuContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 16px;
+  border-radius: 4px 0 0 4px;
+  padding-right: 0;
+  /* background-color: var(--color-bg-page); */
+}
+.LeftMenuContainer :global(.beautify-menu-item) {
+  display: flex;
+  align-items: center;
+}
+.LeftMenuContainer :global(.beautify-menu-item) :global(.beautify-menu-title-content) {
+  flex: 1;
+}
+.LeftMenuContainer :global(.env-menu-new) {
+  background-color: transparent;
+}
+.MenuTitle {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--font-light-color);
+  font-style: normal;
+}
+.MenuChildTitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--font-content-color);
+}
+.MenuIconContainer :global(.icon-cookie),
+.MenuIconContainer :global(.icon-global-param),
+.MenuIconContainer :global(.icon-global-var) {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+}
+.MenuIconContainer :global(.icon-cookie) {
+  background-color: rgba(255, 140, 0, 0.1);
+}
+.MenuIconContainer :global(.icon-cookie) > :global(.anticon) {
+  color: #ff8c00;
+}
+.MenuIconContainer :global(.icon-global-param) {
+  background-color: rgba(34, 162, 255, 0.1);
+}
+.MenuIconContainer :global(.icon-global-param) > :global(.anticon) {
+  color: #22a2ff;
+}
+.MenuIconContainer :global(.icon-global-var) {
+  background-color: rgba(175, 113, 255, 0.1);
+}
+.MenuIconContainer :global(.icon-global-var) > :global(.anticon) {
+  color: #b071ff;
+}
+.EnvIconContainer {
+  display: flex;
+  text-transform: uppercase;
+  justify-content: center;
+  align-items: center;
+  padding: 1.8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  font-size: var(--font-size-12) !important;
+  line-height: 18px !important;
+  font-weight: 500;
+  color: #067ced !important;
+  background-color: rgba(127, 197, 255, 0.2);
+  box-sizing: border-box;
+}

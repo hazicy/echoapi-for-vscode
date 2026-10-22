@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Select, SelectProps, Typography } from 'antd';
+import { Flex, Select, SelectProps, Typography } from '@/components/ui/base';
 
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined } from '@/components/ui/base/icons';
 import { find, map } from 'lodash';
 
 import useTheme from '@/hooks/useTheme';

@@ -1,5 +1,5 @@
-import { theme } from 'antd';
-import type { ButtonProps as AntdBUttonProps } from 'antd';
+import { theme } from '@/components/ui/base';
+import type { ButtonProps as AntdBUttonProps } from '@/components/ui/base';
 
 import classNames from 'classnames';
 

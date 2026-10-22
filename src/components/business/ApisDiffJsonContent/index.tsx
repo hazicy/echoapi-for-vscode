@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Collapse } from 'antd';
+import { Collapse } from '@/components/ui/base';
 
 import { forEach, size } from 'lodash';
 

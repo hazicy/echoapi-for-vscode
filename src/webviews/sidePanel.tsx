@@ -1,7 +1,7 @@
 import { getPopupContainer } from '@/utils/popupContainer';
 import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { App as AntdApp, ConfigProvider, Skeleton } from 'antd';
+import { App as AntdApp, ConfigProvider, Skeleton } from '@/components/ui/base';
 import useGlobalTheme from '@/theme';
 import antdLocale from '@/locale/antd';
 
@@ -9,7 +9,7 @@ import '@/assets/css/reset.css';
 
 import '@/locale';
 import Tree from '@/pages/Tree';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from '@/components/ui/base/theme';
 import GlobalThemeStyle from '../theme/global';
 import GlobalStyle from '../theme/globalStyle';
 import { trim } from 'lodash';

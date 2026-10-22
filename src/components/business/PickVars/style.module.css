@@ -1,0 +1,12 @@
+.PickVarWrapper :global(.label) {
+  flex-shrink: 0;
+  width: 56px;
+  font-size: var(--font-size-14);
+}
+.PickVarWrapper :global(.beautify-select-arrow) {
+  font-size: var(--font-size-12);
+}
+.DescWrapper {
+  font-size: 12px;
+  color: var(--font-light-color);
+}

@@ -1,0 +1,98 @@
+.TestingMainWarp {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+  gap: 12px;
+}
+.TestingMainWarp :global(.segmented-tabs-content) {
+  min-height: 100px !important;
+}
+.TestingMainWarp :global(.beautify-progress-outer) {
+  width: 99% !important;
+}
+.TestingMainWarp :global(.event-btns) :global(.beautify-btn) {
+  padding: 0px 12px;
+  height: 24px;
+}
+.TestingMainWarp :global(.event-btns) :global(.select-all) {
+  padding: 0px !important;
+}
+.TestingConfigWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.FunctionalWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--table-header-bg-color);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+}
+.FunctionalWrap :global(.switch-name) {
+  cursor: pointer;
+}
+.FunctionalWrap :global(.beautify-input-number) :global(.beautify-input-number-input),
+.FunctionalWrap :global(.beautify-upload-wrapper) {
+  background: var(--search-bg-color);
+}
+.FunctionalWrap :global(.beautify-upload-wrapper) {
+  border-radius: 4px;
+  border: 1px solid var(--color-table-border);
+  height: 32px;
+}
+.FunctionalWrap :global(.beautify-upload-wrapper):global(.disabled) {
+  cursor: not-allowed;
+}
+.FunctionalWrap :global(.beautify-upload) :global(.beautify-btn-text) {
+  color: var(--font-content-color);
+}
+.FunctionalWrap :global(.env-select-wrap),
+.FunctionalWrap :global(.icon-manage-env) {
+  background-color: var(--search-bg-color) !important;
+}
+.FunctionalWrap :global(.icon-manage-env) :global(.anticon),
+.FunctionalWrap :global(.env-select-wrap) :global(.anticon) {
+  color: var(--font-content-color) !important;
+}
+.FunctionalWrap :global(.file-name-wrap) {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 30px;
+  background: var(--search-bg-color);
+  white-space: nowrap;
+  padding: 0 4px;
+  border-radius: 4px;
+  border: 1px solid var(--vscode-editor-lineHighlightBorder, #262628);
+}
+.FunctionalWrap :global(.file-name-wrap):hover {
+  border: 1px solid var(--color-primary);
+}
+.FunctionalWrap :global(.file-name-wrap) :global(.name) {
+  max-width: 180px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.FunctionalWrap :global(.file-name-wrap):global(.disabled) {
+  cursor: not-allowed;
+}
+.FunctionalWrap :global(.beautify-input-number-outlined) {
+  width: 100%;
+}
+.ResultListWarp {
+  /* overflow: hidden; */
+}
+.ResultListWarp :global(.beautify-tabs) {
+  height: 100%;
+}
+.ResultListWarp :global(.beautify-tabs) :global(.beautify-tabs-content-holder) {
+  /* overflow-y: auto; */
+}
+.ResultListWarp :global(.beautify-tabs) :global(.beautify-tabs-tab) {
+  padding: 10px 8px !important;
+}

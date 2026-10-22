@@ -1,0 +1,45 @@
+.NewJsonViewContainer {
+  height: 100%;
+  max-height: 400px;
+  overflow: auto;
+}
+.NewJsonViewContainer :global(.string-value) {
+  word-break: break-all;
+}
+.NewJsonViewContainer :global(.object-key) > span {
+  word-break: break-all;
+}
+.JsonViewWrap :global(.react-json-view) {
+  padding: 12px;
+  min-height: 200px;
+  background-color: var(--background-color-primary) !important;
+  word-break: break-all;
+}
+.JsonViewWrap :global(.object-key) {
+  color: var(--content-color-primary) !important;
+}
+.JsonViewWrap :global(.object-size) {
+  color: var(--content-color-secondary) !important;
+}
+.JsonViewWrap :global(.variable-row),
+.JsonViewWrap :global(.object-key-val) {
+  border-left-color: var(--border-color-default) !important;
+}
+.JsonViewWrap :global(.object-key-val) > span:first-child span:last-child {
+  color: '#5AB8D1' !important;
+}
+.JsonViewWrap :global(.brace-row) {
+  /* stylelint-disable-next-line no-descending-specificity */
+}
+.JsonViewWrap :global(.brace-row) span {
+  color: '#5AB8D1' !important;
+}
+.OtherPreViewWrap {
+  padding: 12px;
+  min-height: 200px;
+  overflow: hidden;
+  background-color: var(--background-color-primary);
+}
+.OtherPreViewWrap pre {
+  overflow-x: auto;
+}

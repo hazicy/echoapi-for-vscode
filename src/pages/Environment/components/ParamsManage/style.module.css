@@ -1,0 +1,14 @@
+.ParamsManageContainer {
+  width: 100%;
+  height: 100%;
+}
+.ParamsManageContainer :global(.params-flex) {
+  height: 100%;
+}
+.ParamsManageContainer :global(.params-content) {
+  flex: 1;
+  overflow-y: auto;
+}
+.ParamsManageContainer :global(.params-content) > div {
+  padding: 0;
+}

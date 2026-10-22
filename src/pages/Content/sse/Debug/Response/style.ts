@@ -1,6 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const ResponseContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`;
+export const ResponseContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ResponseContainer"],
+  { selector: "ui_d782346c_ResponseContainer" },
+);

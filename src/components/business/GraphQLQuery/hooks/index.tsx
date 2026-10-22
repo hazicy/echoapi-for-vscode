@@ -1,6 +1,6 @@
 import { useApis } from '@/store';
 import { GraphQLDetailsData } from '@/types/apis/graphql';
-import { message } from 'antd';
+import { message } from '@/components/ui/base';
 import produce from 'immer';
 import {
   useState,

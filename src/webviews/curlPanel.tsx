@@ -1,7 +1,7 @@
 import { getPopupContainer } from '@/utils/popupContainer';
 import { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { App as AntdApp, ConfigProvider } from 'antd';
+import { App as AntdApp, ConfigProvider } from '@/components/ui/base';
 import useGlobalTheme from '@/theme';
 import antdLocale from '@/locale/antd';
 
@@ -9,7 +9,7 @@ import '@/assets/css/reset.css';
 
 import '@/locale';
 import Curl from '@/pages/Curl';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from '@/components/ui/base/theme';
 import GlobalThemeStyle from '../theme/global';
 import GlobalStyle from '../theme/globalStyle';
 import { useGlobal, useSystemConfig } from '../store';

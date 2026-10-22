@@ -1,37 +1,10 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { flexStyles } from '@/assets/css/style';
+const DefaultStyle = withStyles<"div", {}>(
+  "div",
+  moduleStyles["DefaultStyle"],
+  { selector: "ui_b5e82c6a_DefaultStyle" },
+);
 
-export default styled.div`
-  width: 100%;
-  height: 36px;
-  ${flexStyles('row', 'flex-start', 'space-between')};
-
-  .value-input-textarea {
-    position: relative;
-    width: 100%;
-
-    .beautify-input {
-      padding: 4px 12px;
-      overflow: hidden;
-      border: 1px solid transparent;
-      resize: none;
-
-      &:hover {
-        border: 1px solid var(--color-primary);
-        background-color: var(--highlight-change-color);
-      }
-    }
-
-    .beautify-input:focus {
-      z-index: 700;
-      border: 1px solid var(--color-primary);
-      color: var(--font-content-color);
-      background-color: var(--highlight-change-color);
-    }
-
-    .beautify-input::placeholder {
-      line-height: 28px;
-    }
-  }
-`;
+export default DefaultStyle;

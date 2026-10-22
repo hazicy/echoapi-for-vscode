@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { message } from 'antd';
+import { message } from '@/components/ui/base';
 
 import type { DragEndEvent } from '@dnd-kit/core';
 import { useMemoizedFn } from 'ahooks';

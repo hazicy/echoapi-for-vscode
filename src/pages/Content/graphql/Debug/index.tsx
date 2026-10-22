@@ -14,7 +14,7 @@ import UrlPanel from './UrlPanel';
 import { GraphqlDebugContainer } from './style';
 import ToolBar from '../../api/Debug/ToolBar';
 import { ApiDetailsData } from '@/types/apis/api';
-import {  Flex } from 'antd';
+import {  Flex } from '@/components/ui/base';
 import { Button } from '@/components/ui';
 import { useApis } from '@/store';
 import GenerateCodeDrawer from '@/components/business/GenerateCodeDrawer';

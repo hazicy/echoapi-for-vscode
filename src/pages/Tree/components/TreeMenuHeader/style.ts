@@ -1,22 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const TreeMenuHeaderWarp= styled.div`
-   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  /* margin-left: 14px; */
-  margin-bottom: 6px;
-  .upload,
-  .pull{
-    cursor: pointer;
-    svg{
-      fill:var(--font-title-color);
-      &:hover{
-        fill:var(--color-primary);
-      }
-      &:hover path{
-        fill:var(--color-primary) !important;
-      }
-    }
-  }
-`;
+export const TreeMenuHeaderWarp = withStyles<"div", {}>(
+  "div",
+  moduleStyles["TreeMenuHeaderWarp"],
+  { selector: "ui_ae7fdda1_TreeMenuHeaderWarp" },
+);

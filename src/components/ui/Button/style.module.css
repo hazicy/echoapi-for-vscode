@@ -1,0 +1,112 @@
+.ButtonWrap {
+  box-shadow: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 16px;
+  font-size: var(--font-size-14);
+  line-height: 1;
+}
+.ButtonWrap:global(.beautify-btn-default) {
+  /* color: var(--font-content-color); */
+  background: transparent;
+}
+.ButtonWrap:has(:global(.beautify-btn-icon)) {
+  padding: 4px 8px;
+}
+.ButtonWrap > div {
+  /* remove ripple */
+  display: none;
+}
+.ButtonWrap:global(.large) {
+  height: 40px;
+  font-size: var(--font-size-14);
+}
+.ButtonWrap:global(.middle) {
+  height: 32px;
+  font-size: var(--font-size-14);
+}
+.ButtonWrap:global(.small) {
+  height: 26px;
+  font-size: var(--font-size-12);
+}
+.ButtonWrap:global(.mini) {
+  padding-right: 8px;
+  padding-left: 8px;
+  height: 24px;
+  font-size: var(--font-size-12);
+}
+.ButtonWrap:global(.beautify-btn-dashed) {
+  border-color: var(--color-dashed);
+  box-shadow: none;
+}
+.ButtonWrap:global(.beautify-btn-dashed):global(.normal) {
+  color: var(--font-content-color);
+  background: transparent;
+}
+.ButtonWrap:global(.beautify-btn-dashed):global(.normal):global(.solid) {
+  border-style: solid;
+}
+.ButtonWrap:global(.beautify-btn-dashed):hover {
+  border-color: var(--selected-border-color);
+  color: var(--color-primary);
+}
+.ButtonWrap:global(.beautify-btn-dashed):hover:global(.solid) {
+  border-style: solid;
+}
+.ButtonWrap:global(.beautify-btn-primary):global(.light):global(.beautify-btn-primary) {
+  color: var(--color-primary);
+  background-color: var(--color-primary-opacity);
+}
+.ButtonWrap:global(.beautify-btn-primary):global(.light):hover {
+  color: var(--color-font-light-hover);
+  background-color: var(--color-bg-light-hover);
+}
+.ButtonWrap:global(.beautify-btn-primary):global(.success) {
+  color: #26cea4;
+  background-color: #26ce10;
+}
+.ButtonWrap:global(.beautify-btn-primary):global(.error) {
+  color: #ff583e;
+  background-color: #ff5806;
+}
+.ButtonWrap:global(.beautify-btn-primary):global(.error),
+.ButtonWrap:global(.beautify-btn-primary):global(.success) {
+  border: none;
+}
+.ButtonWrap:global(.beautify-btn-primary):global(.error):hover,
+.ButtonWrap:global(.beautify-btn-primary):global(.success):hover {
+  /* background: initial; */
+}
+.ButtonWrap:global(.beautify-btn-text) {
+  color: var(--vscode-tab-inactiveForeground);
+}
+.ButtonWrap:global(.beautify-btn-text):global(.background) {
+  color: var(--font-title-color);
+  background-color: var(--color-bg-gray);
+}
+.ButtonWrap:global(.beautify-btn-text):global(.background):hover {
+  color: var(--color-primary);
+  background-color: var(--color-primary-opacity);
+}
+.ButtonWrap:global(.beautify-btn-text):global(.light):hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+  /* background-color: var(--color-primary-opacity); */
+}
+.ButtonWrap:global(.beautify-btn-text):global(.menu-item) {
+  color: var(--font-title-color);
+}
+.ButtonWrap:global(.beautify-btn-text):global(.menu-item):hover {
+  /* color: var(--color-primary); */
+  background-color: var(--vscode-list-inactiveSelectionBackground);
+}
+.ButtonWrap:global(.beautify-btn-text):active {
+  background: none !important;
+}
+.ButtonWrap:global(.beautify-btn-text):hover {
+  color: var(--color-primary);
+  background-color: none;
+  text-decoration: underline;
+}

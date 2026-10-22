@@ -1,0 +1,3 @@
+.DragContainer :global(.drag-icon) {
+  visibility: hidden;
+}

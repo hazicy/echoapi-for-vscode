@@ -1,5 +1,5 @@
-import { Radio as AntdRadio } from 'antd';
-import type { RadioGroupProps, RadioProps } from 'antd/es/radio';
+import { Radio as AntdRadio } from '@/components/ui/base';
+import type { RadioGroupProps, RadioProps } from '@/components/ui/base';
 
 import { RadioGroupWrap, RadioWrap } from './style';
 

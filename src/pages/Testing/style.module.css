@@ -1,0 +1,25 @@
+.TestingContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--color-bg-right);
+  padding: 16px;
+  gap: 12px;
+}
+.TestingContainer :global(.folder-name) {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--font-title-color);
+}
+.TestingContainer :global(.history-report) {
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--font-light-color);
+  text-decoration: underline;
+}
+.TestingContainer :global(.history-report):hover {
+  color: var(--color-primary);
+}
+.TestingContainer :global(.folder-sending-btn) {
+  background: var(--icon-color);
+}

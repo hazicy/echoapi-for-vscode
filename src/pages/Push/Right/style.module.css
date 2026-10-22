@@ -1,0 +1,39 @@
+.PushRightWrap {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--search-big-select-color);
+  width: 400px;
+  padding: 20px;
+  border-left: 1px solid var(--color-table-border);
+  font-size: 14px;
+  gap: 16px;
+}
+.PushRightWrap :global(.title) {
+  font-size: 16px;
+  font-family: 600;
+  line-height: 28px;
+  color: var(--font-title-color);
+}
+.PushRightWrap :global(.team-project-manage-space) {
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 5px 8px;
+  width: 100%;
+}
+.PushRightWrap :global(.team-project-manage-space) :global(.beautify-space-item) {
+  width: 100%;
+}
+.PushRightWrap :global(.team-project-manage-space):hover {
+  border: 1px solid var(--color-primary);
+}
+.PushRightWrap :global(.team-project-manage-space) :global(.project-name),
+.PushRightWrap :global(.team-project-manage-space) :global(.team-name) {
+  max-width: 150px;
+}
+.PushRightWrap :global(.beautify-radio-group) {
+  padding: 12px;
+  background: var(--color-bg-right);
+  border-top: 1px solid var(--color-table-border);
+  border-bottom: 1px solid var(--color-table-border);
+}

@@ -1,16 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const AllListWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  /* overflow-y: auto; */
-  flex:1;
-  .item-container{
-    padding: 12px 16px;
-    background: var(--table-header-bg-color);
-    border: 1px solid var(--color-border);
-    white-space: nowrap;
-    border-radius: 4px;
-  }
-`;
+export const AllListWrapper = withStyles<"div", {}>(
+  "div",
+  moduleStyles["AllListWrapper"],
+  { selector: "ui_5c1c2bc9_AllListWrapper" },
+);

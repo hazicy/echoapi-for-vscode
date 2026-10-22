@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ConfigProvider, Select } from "antd";
+import { ConfigProvider, Select } from "@/components/ui/base";
 import CustomDrawer, { Drawer } from "@/components/ui/Drawer";
 import { getPopupContainer } from "@/utils/popupContainer";
 
@@ -44,6 +44,7 @@ export default function DrawerFixture() {
           <input aria-label="Draft" defaultValue="initial" />
         </label>
         <Select
+          showSearch
           aria-label="Legacy select"
           placeholder="Choose option"
           value={selected || undefined}

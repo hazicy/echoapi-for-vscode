@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Input, message, Tooltip } from 'antd';
+import { Flex, Input, message, Tooltip } from '@/components/ui/base';
 
 import { useLatest, useUpdateEffect } from 'ahooks';
 import produce from 'immer';

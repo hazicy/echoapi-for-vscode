@@ -1,29 +1,10 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export default styled.div`
-  width: 100%;
-  height: 100%;
+const DefaultStyle = withStyles<"div", {}>(
+  "div",
+  moduleStyles["DefaultStyle"],
+  { selector: "ui_1c3730ae_DefaultStyle" },
+);
 
-  .cookie-flex {
-    height: 100%;
-  }
-
-  .cookie-title {
-    width: 100%;
-  }
-
-  .cookie-content {
-    flex: 1;
-    overflow-y: auto;
-    /* padding-right: 10px; */
-
-    .beautify-collapse {
-      background-color: transparent;
-
-      .beautify-collapse-item {
-        margin-bottom: 8px !important;
-        overflow: hidden;
-      }
-    }
-  }
-`;
+export default DefaultStyle;

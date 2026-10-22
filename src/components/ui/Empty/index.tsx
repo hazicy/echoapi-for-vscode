@@ -1,8 +1,8 @@
 import { CSSProperties, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Empty as AntEmpty } from 'antd';
-import type { EmptyProps } from 'antd';
+import { Empty as AntEmpty } from '@/components/ui/base';
+import type { EmptyProps } from '@/components/ui/base';
 
 import EmptyIcon from '@/assets/icon/empty.svg?react';
 

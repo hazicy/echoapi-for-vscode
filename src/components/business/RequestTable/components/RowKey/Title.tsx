@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Checkbox, CheckboxProps, Flex } from 'antd';
+import { Checkbox, CheckboxProps, Flex } from '@/components/ui/base';
 
 import cn from 'classnames';
 import { isEqual, isNumber } from 'lodash';

@@ -1,16 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const PushLeftWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  padding: 20px 16px;
-  flex: 1;
-  gap: 12px;
-
-  .beautify-input-affix-wrapper{
-    background: var(--vscode-input-background);
-    border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
-  }
-
-`;
+export const PushLeftWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["PushLeftWrap"],
+  { selector: "ui_54e5adff_PushLeftWrap" },
+);

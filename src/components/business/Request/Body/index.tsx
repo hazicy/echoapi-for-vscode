@@ -1,7 +1,7 @@
 import { FC, lazy, useMemo } from 'react';
 
-import { Flex, message, Select, Tooltip, Typography } from 'antd';
-import type { RadioChangeEvent, SelectProps } from 'antd';
+import { Flex, message, Select, Tooltip, Typography } from '@/components/ui/base';
+import type { RadioChangeEvent, SelectProps } from '@/components/ui/base';
 
 import produce from 'immer';
 import { cloneDeep, includes, isArray, isEmpty, isEqual, isPlainObject, isString, map, toUpper, values } from 'lodash';

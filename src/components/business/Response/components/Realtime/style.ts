@@ -1,6 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const RealtimeContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`;
+export const RealtimeContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["RealtimeContainer"],
+  { selector: "ui_fb1e28c9_RealtimeContainer" },
+);

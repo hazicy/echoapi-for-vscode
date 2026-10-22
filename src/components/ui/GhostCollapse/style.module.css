@@ -1,0 +1,20 @@
+.GhostCollapseWrapper :global(.beautify-collapse) :global(.beautify-collapse-item):not(:first-child) {
+  margin-top: 16px;
+}
+.GhostCollapseWrapper :global(.beautify-collapse) :global(.beautify-collapse-header) {
+  margin-bottom: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.GhostCollapseWrapper :global(.beautify-collapse) :global(.beautify-collapse-header) :global(.beautify-collapse-header-text) {
+  font-size: var(--font-size-14);
+}
+.GhostCollapseWrapper :global(.beautify-collapse) :global(.beautify-collapse-content) :global(.beautify-collapse-content-box) {
+  padding: 0;
+}
+.GhostCollapseWrapper :global(.beautify-collapse):global(.fit-content) :global(.beautify-collapse-header) {
+  width: fit-content;
+}

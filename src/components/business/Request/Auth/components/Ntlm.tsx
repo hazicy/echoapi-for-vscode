@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Checkbox, Form, Input } from 'antd';
+import { Checkbox, Form, Input } from '@/components/ui/base';
 
 import { map } from 'lodash';
 

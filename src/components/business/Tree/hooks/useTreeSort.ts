@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { TreeProps } from 'antd';
-import { DataNode } from 'antd/es/tree';
+import { TreeProps } from '@/components/ui/base';
+import { DataNode } from '@/components/ui/base';
 
 import produce from 'immer';
 import { assign, concat, forEach, includes, isEqual, last } from 'lodash';

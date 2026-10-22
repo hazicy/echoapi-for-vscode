@@ -1,0 +1,111 @@
+.ListSideBarContainer > :global(.side-tree-wrap) {
+  width: 180px;
+  background: var(--color-bg-page);
+  transition: width 0.1s linear;
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) {
+  flex: 1;
+  padding-top: 8px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) ul {
+  width: 100%;
+  height: 100%;
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.icon-close) {
+  visibility: hidden;
+  transform: rotate(90deg);
+  font-size: var(--font-size-14);
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 8px;
+  margin-bottom: 4px;
+  padding: 0 12px;
+  height: 32px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar-active) {
+  background-color: var(--color-bg-folder-hover);
+  color: var(--vscode-foreground);
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar-active) :global(.beautify-typography) {
+  color: var(--vscode-foreground);
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar):hover {
+  background-color: var(--color-bg-folder-hover);
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar):hover :global(.beautify-typography) {
+  color: var(--color-primary);
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar):hover :global(.icon-close) {
+  visibility: visible;
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar) :global(.beautify-input) {
+  box-shadow: none;
+  border-radius: 0;
+  border-color: transparent;
+  cursor: pointer;
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar) :global(.beautify-input):global(.edit-input) {
+  border-color: var(--color-primary);
+  cursor: text;
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar) :global(.beautify-dropdown-menu-item) {
+  padding: 0;
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar) :global(.item-label) {
+  padding: 8px 12px;
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar) :global(.item-label) :global(.anticon) {
+  font-size: 16px;
+  margin-inline-end: 8px;
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.add-btn-con) {
+  padding: 12px 10px;
+}
+.ListSideBarContainer > :global(.side-tree-wrap) :global(.add-btn-con) button {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.ListSideBarContainer > :global(.side-tree-wrap):global(.expand) {
+  width: 0;
+  overflow: hidden;
+  transition: width 0.1s linear;
+}
+.ListSideBarContainer > :global(.side-tree-wrap):global(.expand) :global(.beautify-input-affix-wrapper) {
+  display: none;
+}
+.ListSideBarContainer > :global(.side-tree-wrap):global(.expand) :global(.beautify-tree) {
+  overflow: hidden;
+}
+.ListSideBarContainer > :global(.side-tree-wrap):global(.expand) :global(.beautify-empty) {
+  display: none;
+}
+.ListSideBarContainer :global(.expand-divider) {
+  display: flex;
+  align-items: center;
+  width: 8px;
+  border-radius: 78px;
+  background-color: var(--color-bg-page);
+}
+.ListSideBarContainer :global(.expand-divider) :global(.icon-wrap) {
+  width: 8px;
+  height: 24px;
+  border-radius: 65px;
+  line-height: 24px;
+  text-align: center;
+  background-color: var(--vscode-badge-background);
+  cursor: pointer;
+}
+.ListSideBarContainer :global(.expand-divider) :global(.icon-wrap) :global(.anticon) {
+  margin-left: -2px;
+  font-size: var(--font-size-12);
+  color: var(--white-color);
+}

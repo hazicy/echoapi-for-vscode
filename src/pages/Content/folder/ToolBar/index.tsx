@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, MenuProps } from 'antd';
+import { Flex, MenuProps } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import { cloneDeep, isEqual } from 'lodash';

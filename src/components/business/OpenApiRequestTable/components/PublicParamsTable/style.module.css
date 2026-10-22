@@ -1,0 +1,57 @@
+.BasicTableContainer :global(.beautify-table-thead) :global(.beautify-table-cell) {
+  padding: 10px;
+}
+.BasicTableContainer :global(.beautify-select) :global(.beautify-select-selector) {
+  padding-right: 42px;
+  border-radius: 0;
+  border-color: transparent;
+  color: var(--color-primary);
+}
+.BasicTableContainer :global(.beautify-select) :global(.beautify-select-arrow) {
+  font-size: 16px;
+}
+.BasicTableContainer :global(.beautify-select) :global(.beautify-select-arrow) > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.BasicTableContainer :global(.beautify-select) :global(.beautify-select-arrow) > div :global(.required) {
+  /* display:flex;flex-direction:row;align-items:center;justify-content:center; */
+  margin-left: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  color: var(--font-content-color);
+  background-color: var(--color-bg-gray);
+}
+.BasicTableContainer :global(.beautify-select) :global(.beautify-select-arrow) > div :global(.required):global(.checked) {
+  color: #ff4c4c;
+}
+.BasicTableContainer :global(.beautify-select) :global(.beautify-select-arrow) > div :global(.required) span {
+  display: inline-block;
+  margin-top: 1px;
+}
+.BasicTableContainer :global(.beautify-select) :global(.beautify-select-arrow) > div :global(.required) span svg {
+  font-size: 14px;
+}
+.BasicTableContainer :global(.table-collapse) :global(.beautify-collapse-content-box) {
+  padding-top: 0 !important;
+}
+.BasicTableContainer :global(.table-collapse-public) :global(.beautify-collapse-header) {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  background-color: inherit;
+}
+.BasicTableContainer :global(.table-collapse-public) > :global(.beautify-collapse-item) :global(.beautify-collapse-content) {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+.BasicTableContainer :global(.global-param-edit) {
+  color: var(--font-light-color);
+  cursor: pointer;
+}
+.BasicTableContainer :global(.global-param-edit):hover {
+  color: var(--color-primary);
+}

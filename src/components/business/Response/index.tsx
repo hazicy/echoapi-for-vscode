@@ -1,7 +1,7 @@
 import { FC, lazy, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { TabPaneProps, TabsProps } from "antd";
+import { TabPaneProps, TabsProps } from '@/components/ui/base';
 
 import { useMemoizedFn, useSafeState, useUpdateEffect } from "ahooks";
 import produce from "immer";

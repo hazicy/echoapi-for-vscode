@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { Flex, Space, Switch, SwitchProps } from 'antd';
+import { Flex, Space, Switch, SwitchProps } from '@/components/ui/base';
 
 import produce from 'immer';
 import { isArray } from 'lodash';

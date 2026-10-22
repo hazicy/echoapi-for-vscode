@@ -5,6 +5,8 @@ import AiDescription from '@/components/business/AiDescription';
 import useProjectSetting from '@/store/useProjectSetting';
 import useUserConfig from '@/store/useUserConfig';
 import DrawerFixture from './DrawerFixture';
+import BaseFixture from './BaseFixture';
+import ThemeFixture from './ThemeFixture';
 
 useProjectSetting.setState({
   descriptionList: [
@@ -35,5 +37,5 @@ function Fixture() {
 }
 
 createRoot(document.getElementById('root')!).render(
-  new URLSearchParams(location.search).has('drawer') ? <DrawerFixture /> : <Fixture />
+  new URLSearchParams(location.search).has('theme') ? <ThemeFixture /> : new URLSearchParams(location.search).has('base') ? <BaseFixture /> : new URLSearchParams(location.search).has('drawer') ? <DrawerFixture /> : <Fixture />
 );

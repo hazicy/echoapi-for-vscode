@@ -1,7 +1,7 @@
 import { FC, memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { CheckboxProps } from 'antd';
+import { CheckboxProps } from '@/components/ui/base';
 
 import { useMemoizedFn, useSafeState } from 'ahooks';
 import produce from 'immer';

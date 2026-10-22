@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { IconFont } from "@/components/ui";
-import { Dropdown, Flex, Input, MenuProps, message, Typography } from "antd";
+import { Dropdown, Flex, Input, MenuProps, message, Typography } from '@/components/ui/base';
 import { ShareContainer } from "./style";
 import { useSafeState } from "ahooks";
 import useDocsData from "./hooks/useDocsData";

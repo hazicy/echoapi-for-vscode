@@ -1,6 +1,6 @@
 import PrefixIcon from "@/components/ui/PrefixIcon";
 import { STATUS_CODE } from "@/constants/common";
-import { Checkbox, Flex, Tooltip, Typography } from "antd";
+import { Checkbox, Flex, Tooltip, Typography } from '@/components/ui/base';
 
 type EventItemProps = {
   value: {

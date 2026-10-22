@@ -1,4 +1,4 @@
-import { theme } from 'antd';
+import { theme } from '@/components/ui/base';
 
 const { useToken } = theme;
 const useTheme = (): { themeToken: Partial<GlobalThemeToken> } => {

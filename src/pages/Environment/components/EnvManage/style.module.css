@@ -1,0 +1,76 @@
+.TitleContainer {
+  padding-bottom: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--font-title-color);
+}
+.EnvManageContainer {
+  width: 100%;
+  height: 100%;
+}
+.EnvManageContainer :global(.env-manage-flex) {
+  height: 100%;
+}
+.EnvManageContainer :global(.beautify-table-tbody) :global(.beautify-table-cell),
+.EnvManageContainer :global(.beautify-table-thead) :global(.beautify-table-cell) {
+  padding: 0;
+  /* height: 32px; */
+}
+.EnvManageContainer :global(.beautify-table-tbody) :global(.beautify-table-cell) input,
+.EnvManageContainer :global(.beautify-table-thead) :global(.beautify-table-cell) input,
+.EnvManageContainer :global(.beautify-table-tbody) :global(.beautify-table-cell) textarea,
+.EnvManageContainer :global(.beautify-table-thead) :global(.beautify-table-cell) textarea {
+  height: 36px;
+  border-color: transparent;
+}
+.EnvManageContainer :global(.beautify-table-tbody) :global(.beautify-table-cell) input:hover,
+.EnvManageContainer :global(.beautify-table-thead) :global(.beautify-table-cell) input:hover,
+.EnvManageContainer :global(.beautify-table-tbody) :global(.beautify-table-cell) textarea:hover,
+.EnvManageContainer :global(.beautify-table-thead) :global(.beautify-table-cell) textarea:hover,
+.EnvManageContainer :global(.beautify-table-tbody) :global(.beautify-table-cell) input:focus,
+.EnvManageContainer :global(.beautify-table-thead) :global(.beautify-table-cell) input:focus,
+.EnvManageContainer :global(.beautify-table-tbody) :global(.beautify-table-cell) textarea:focus,
+.EnvManageContainer :global(.beautify-table-thead) :global(.beautify-table-cell) textarea:focus {
+  border-color: var(--color-primary);
+  background-color: var(--highlight-change-color);
+}
+.EnvManageContainer :global(.env-manage-content) {
+  flex: 1;
+  overflow-y: auto;
+}
+.EnvManageContainer :global(.env-manage-content) :global(.env-manage-input) {
+  margin-bottom: 12px;
+}
+.EnvManageContainer :global(.env-manage-content) :global(.env-var-name):global(.beautify-input-disabled) {
+  background-color: transparent;
+}
+.EnvManageContainer :global(.env-manage-content) :global(.beautify-table-tbody) tr:hover :global(.anticon) {
+  visibility: visible;
+}
+.EnvManageContainer :global(.beautify-table-thead) :global(.beautify-table-cell) {
+  padding: 0 12px;
+}
+.EnvOpContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.EnvOpContainer :global(.anticon) {
+  visibility: hidden;
+  color: var(--icon-color);
+}
+.VariableVarsOpContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 4px;
+}
+.VariableVarsOpContainer :global(.anticon) {
+  visibility: hidden;
+  font-size: 16px;
+  color: var(--icon-color);
+  cursor: pointer;
+}

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Spin, message } from 'antd';
+import { Flex, Spin, message } from '@/components/ui/base';
 
 import { useDebounceFn, useSafeState } from 'ahooks';
 import classNames from 'classnames';

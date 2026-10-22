@@ -1,0 +1,25 @@
+.PreviewContainer :global(.preview-tree) {
+  background: transparent;
+}
+.PreviewContainer :global(.beautify-table-body) {
+  overflow-y: auto !important;
+}
+.PreviewContainer :global(.import-project-full-tip) {
+  font-size: var(--font-size-12);
+  color: var(--font-light-color);
+}
+.PreviewContainer :global(.beautify-tree) :global(.beautify-tree-checkbox) {
+  margin-top: 0;
+  align-self: auto;
+}
+.PreviewContainer :global(.import-project-append-config) :global(.beautify-select-outlined):not(:global(.beautify-select-customize-input)) :global(.beautify-select-selector) {
+  /* background: var(--color-bg-right); */
+}
+.LoadingContainer {
+  width: 100%;
+  min-height: 500px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

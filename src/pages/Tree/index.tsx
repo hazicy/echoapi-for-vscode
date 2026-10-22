@@ -5,8 +5,8 @@ import {
   message,
   Skeleton,
   Tree,
-} from 'antd';
-import type { GetProps, MenuItemProps, MenuProps, TreeProps } from 'antd';
+} from '@/components/ui/base';
+import type { GetProps, MenuItemProps, MenuProps, TreeProps } from '@/components/ui/base';
 import { TreeMenuContainer, CreateOtherIcon, TreeContainer } from './style';
 import Search from './components/Search';
 import {
@@ -47,7 +47,7 @@ import ItemIcon from './components/ItemIcon';
 import ItemTitle from './components/ItemTitle';
 
 import { TreeDataItem as ApiTreeDataItem } from '@/types/apis/api';
-import { DataNode } from 'antd/es/tree';
+import { DataNode } from '@/components/ui/base';
 import { DEFAULT_CALC_CHILDREN_COUNT_TYPES } from './constants';
 import { ApisBaseData } from '@/types/apis/base';
 import ApisColorPrefixIcon from '@/components/ui/ApisColorPrefixIcon';

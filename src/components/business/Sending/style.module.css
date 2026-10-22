@@ -1,0 +1,36 @@
+@keyframes animation_56ec475e_lineLoading {
+  form {
+    left: 0;
+  }
+  to {
+    left: 100%;
+  }
+}
+.ResponseSendContainer {
+  position: absolute;
+  inset: 0;
+  z-index: 101;
+  color: var(--font-content-color);
+  background-color: var(--color-bg-right);
+  opacity: 0.9;
+}
+.ResponseSendContainer :global(.sending-loading-bar) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  width: 189px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-primary), #ffffff 100%);
+  animation: animation_56ec475e_lineLoading 2s linear infinite;
+}
+.ResponseSendContainer :global(.sending-loading-content) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.ResponseSendContainer :global(.sending-loading-content) :global(.sending-loading-content-text) {
+  margin-bottom: 22px;
+}

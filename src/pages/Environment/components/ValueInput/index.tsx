@@ -1,4 +1,4 @@
-import { Input } from 'antd';
+import { Input } from '@/components/ui/base';
 
 import ValueInputContainer from './style';
 

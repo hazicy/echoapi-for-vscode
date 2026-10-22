@@ -1,7 +1,7 @@
 import { FC, Key, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Checkbox, CheckboxProps } from 'antd';
+import { Checkbox, CheckboxProps } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import { includes, reduce, size } from 'lodash';

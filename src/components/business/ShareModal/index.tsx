@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { ConfigProvider, Flex, Input, Typography, message } from 'antd';
+import { ConfigProvider, Flex, Input, Typography, message } from '@/components/ui/base';
 
 import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';

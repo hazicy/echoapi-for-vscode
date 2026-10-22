@@ -1,53 +1,9 @@
-import { Tag } from 'antd';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import { Tag } from "@/components/ui/base";
 
-import styled from 'styled-components';
-
-import { flexStyles } from '@/assets/css/style';
-
-export const ApisTypeTag = styled(Tag)`
-  height: 24px;
-  font-size: 12px;
-  ${flexStyles('row', 'center', 'space-between')}
-
-  &.post {
-    color: var(--color-warning);
-    background-color: var(--color-warning-bg);
-  }
-
-  &.get,
-  &.api-extra,
-  &.socket,
-  &.socket-service {
-    color: var(--color-success);
-    background-color: var(--color-success-bg);
-  }
-
-  &.put {
-    color: var(--color-info);
-    background-color: var(--color-info-bg);
-  }
-
-  &.socket,
-  &.testing,
-  &.kit {
-    width: auto;
-  }
-
-  &.socket-method,
-  &.doc {
-    color: var(--color-info);
-    background-color: var(--color-info-bg);
-  }
-
-  &.delete {
-    color: var(--color-error);
-    background-color: var(--color-error-bg);
-  }
-
-  &.grpc,
-  &.ws,
-  &.patch {
-    color: var(--color-success);
-    background-color: var(--color-success-bg);
-  }
-`;
+export const ApisTypeTag = withStyles<typeof Tag, {}>(
+  Tag,
+  moduleStyles["ApisTypeTag"],
+  { selector: "ui_b2e93a14_ApisTypeTag" },
+);

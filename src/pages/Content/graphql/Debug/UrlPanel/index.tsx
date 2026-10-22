@@ -1,7 +1,7 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Dropdown, Flex, MenuProps, Tree } from 'antd';
+import { Dropdown, Flex, MenuProps, Tree } from '@/components/ui/base';
 import Button from '@/components/ui/Button';
 import i18next from 'i18next';
 import produce from 'immer';

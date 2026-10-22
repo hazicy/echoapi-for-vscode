@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-import { ConfigProvider, Form, Spin, Typography } from "antd";
-import type { RcFile } from "antd/es/upload";
+import { ConfigProvider, Form, Spin, Typography } from '@/components/ui/base';
+import type { RcFile } from '@/components/ui/base';
 
 import { useSafeState } from "ahooks";
 import classnames from "classnames";

@@ -1,13 +1,9 @@
-import { Flex } from 'antd';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import { Flex } from "@/components/ui/base";
 
-import styled from 'styled-components';
-
-export const SelectOtherItemWrapper = styled(Flex)`
-  padding: 6px 8px;
-  cursor: pointer;
-
-  .text {
-    margin-left: 4px;
-    line-height: 14px;
-  }
-`;
+export const SelectOtherItemWrapper = withStyles<typeof Flex, {}>(
+  Flex,
+  moduleStyles["SelectOtherItemWrapper"],
+  { selector: "ui_30b93478_SelectOtherItemWrapper" },
+);

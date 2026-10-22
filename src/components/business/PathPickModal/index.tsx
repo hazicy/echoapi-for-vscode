@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Input, ModalProps } from 'antd';
+import { Input, ModalProps } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import { isJson, isXml } from 'apipost-tools';

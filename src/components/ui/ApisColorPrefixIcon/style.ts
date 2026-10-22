@@ -1,16 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { flexStyles } from '@/assets/css/style';
-
-export const ApisColorPrefixIconContainer = styled.div`
-  ${flexStyles('row', 'center', 'center')};
-  width: 16px;
-  height: 16px;
-
-  border-radius: 4px;
-
-  .anticon {
-    font-size: var(--font-size-12);
-    color: var(--highlight-change-color);
-  }
-`;
+export const ApisColorPrefixIconContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ApisColorPrefixIconContainer"],
+  { selector: "ui_3e888631_ApisColorPrefixIconContainer" },
+);

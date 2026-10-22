@@ -1,0 +1,63 @@
+.RequestAuthContainer {
+  width: 100%;
+  /* .beautify-collapse-header {
+    background-color: transparent;
+  } */
+}.RequestAuthContainer :global(.beautify-form-item) {
+  margin-bottom: 12px;
+}.RequestAuthContainer :global(.beautify-form-item) input,
+.RequestAuthContainer :global(.beautify-form-item) :global(.beautify-select-selector) {
+  font-size: var(--font-size-14) !important;
+}.RequestAuthContainer :global(.beautify-form-item) :global(.mini-editor) {
+  padding: 5.2px 11px;
+  background: var(--vscode-input-background);
+  border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
+}.RequestAuthContainer :global(.beautify-collapse-ghost) :global(.beautify-collapse-header) {
+  margin-bottom: 4px;
+  background: transparent;
+}.RequestAuthContainer :global(.beautify-collapse-ghost) :global(.beautify-collapse-header):hover {
+  color: var(--color-primary);
+}.RequestAuthContainer :global(.beautify-collapse-ghost) :global(.beautify-collapse-expand-icon) svg {
+  color: var(--color-primary);
+}.MoreTipContainer {
+  display: flex;
+  font-size: 14px;
+  color: var(--color-primary);
+}.CodeContainer {
+  height: 150px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+}
+.Oauth2Container :global(.tag-env):global(.oauth-tag) {
+  color: #26cea4 !important;
+}
+.Oauth2Container :global(.tag-env):not(.Oauth2Container :global(.tag-env):global(.oauth-tag)) {
+  font-size: 12px;
+  font-weight: 300;
+  text-decoration: line-through;
+  color: #ff4c4c;
+  background-color: #e452521a;
+}
+.Oauth2Container :global(.beautify-form-item-label) > label :global(.beautify-form-item-tooltip) {
+  font-size: 12px;
+  color: var(--font-light-color);
+  cursor: pointer;
+}
+.Oauth2Container :global(.beautify-form-item-label) > label:global(.beautify-form-item-required):not(:global(.beautify-form-item-required-mark-optional))::before {
+  display: none;
+}
+.Oauth2Container :global(.divider) {
+  margin-bottom: 20px;
+  width: 100%;
+  border-bottom: 1px solid var(--color-border);
+}
+.Oauth2Container :global(.beautify-table-cell) {
+  padding: 0 !important;
+}
+.Oauth2Container :global(.beautify-table-cell) :global(.beautify-select) {
+  width: 100%;
+  height: 36px !important;
+}
+.Oauth2Container :global(.beautify-table-cell) :global(.beautify-select) :global(.beautify-select-selector) {
+  border: none !important;
+}

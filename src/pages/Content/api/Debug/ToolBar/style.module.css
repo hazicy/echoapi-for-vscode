@@ -1,0 +1,26 @@
+.ToolBarContainer {
+  margin-bottom: 12px;
+  padding: 0 16px;
+}
+.ToolBarContainer :global(.tab-bar-extra-content-wrap) {
+  /* margin-left: 6px; */
+}
+.ToolBarContainer :global(.tab-bar-extra-content-wrap) :global(.edit-wrap) :global(.apis-title-edit) {
+  border-color: transparent;
+  border-bottom-color: var(--color-table-border);
+  font-size: var(--font-size-14);
+  background: transparent;
+}
+.ToolBarContainer :global(.tab-bar-extra-content-wrap) :global(.edit-wrap) :global(.apis-title-edit):hover {
+  border-bottom-color: var(--selected-border-color);
+}
+.ToolBarContainer :global(.tab-bar-extra-content-wrap) :global(.edit-wrap) :global(.edit-description) {
+  padding: 0;
+  font-size: var(--font-size-16);
+}
+.ToolBarContainer :global(.tab-bar-extra-content-wrap) :global(.action-wrap) :global(.beautify-btn) {
+  padding: 0;
+}
+.ToolBarContainer :global(.tab-bar-extra-content-wrap) :global(.action-wrap) :global(.beautify-btn) :global(.beautify-btn-icon) {
+  margin-inline-end: 4px;
+}

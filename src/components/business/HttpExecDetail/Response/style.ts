@@ -1,19 +1,14 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const ResponseWrapper = styled.div`
-  width: 100%;
+export const ResponseWrapper = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ResponseWrapper"],
+  { selector: "ui_7291bf63_ResponseWrapper" },
+);
 
-  .beautify-tabs-tabpane {
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
-`;
-
-export const EmptyWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 240px;
-`;
+export const EmptyWrapper = withStyles<"div", {}>(
+  "div",
+  moduleStyles["EmptyWrapper"],
+  { selector: "ui_7291bf63_EmptyWrapper" },
+);

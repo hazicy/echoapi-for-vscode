@@ -1,5 +1,5 @@
-import type { ModalFuncProps, ModalProps } from 'antd';
-import { Flex, Modal } from 'antd';
+import type { ModalFuncProps, ModalProps } from '@/components/ui/base';
+import { Flex, Modal } from '@/components/ui/base';
 
 import { map, size } from 'lodash';
 

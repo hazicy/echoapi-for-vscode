@@ -1,7 +1,7 @@
 import React, { Ref, forwardRef, memo, useEffect, useMemo, useRef } from 'react';
 
-import { Tree as AntdTree, Dropdown, MenuProps } from 'antd';
-import type { DataNode, TreeProps } from 'antd/es/tree';
+import { Tree as AntdTree, Dropdown, MenuProps } from '@/components/ui/base';
+import type { DataNode, TreeProps } from '@/components/ui/base';
 
 import { useDebounceFn, useMemoizedFn, useSafeState } from 'ahooks';
 import { includes, isEqual, isFunction, map, reduce } from 'lodash';

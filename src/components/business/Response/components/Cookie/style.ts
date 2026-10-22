@@ -1,10 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const CookieContainer = styled.div`
-  width: 100%;
-  height: 100%;
-
-  .table-cell-span {
-    word-break: break-all;
-  }
-`;
+export const CookieContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["CookieContainer"],
+  { selector: "ui_4fbbf3c3_CookieContainer" },
+);

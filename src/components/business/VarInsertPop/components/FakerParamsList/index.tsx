@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 import { useTranslation } from 'react-i18next';
 
-import { DatePicker, Flex, Input, InputNumber, Select } from 'antd';
+import { DatePicker, Flex, Input, InputNumber, Select } from '@/components/ui/base';
 
 import cn from 'classnames';
 import dayjs from 'dayjs';
@@ -138,7 +138,7 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
         <Flex vertical gap={2}>
           <InputNumber
             size="small"
-            onChange={(e) => coordinatesChange(0, key, e)}
+            onChange={(e) => coordinatesChange(0, key, e ?? latitude)}
             value={latitude}
             min={-180}
             max={180}
@@ -148,7 +148,7 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
           />
           <InputNumber
             size="small"
-            onChange={(e) => coordinatesChange(1, key, e)}
+            onChange={(e) => coordinatesChange(1, key, e ?? longitude)}
             value={longitude}
             min={-180}
             max={180}

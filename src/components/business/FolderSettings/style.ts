@@ -1,10 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const FolderSettingsContainer = styled.div`
-  width: 100%;
-  height: 100%;
-
-  .segmented-tabs-content {
-    min-height: 220px;
-  }
-`;
+export const FolderSettingsContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["FolderSettingsContainer"],
+  { selector: "ui_c5aaa083_FolderSettingsContainer" },
+);

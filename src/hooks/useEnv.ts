@@ -1,6 +1,6 @@
 import { useProjectConfig, useStorage, useUserConfig } from "@/store";
 import { AuthOauth2 } from "@/types/apis/auth";
-import { message } from "antd";
+import { message } from '@/components/ui/base';
 import produce from "immer";
 import { cloneDeep, isPlainObject, isString, setWith } from "lodash";
 import { useTranslation } from "react-i18next";

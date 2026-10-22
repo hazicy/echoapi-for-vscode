@@ -1,22 +1,14 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const ContentWrap = styled.div`
-  height: 500px;
-  overflow: auto;
+export const ContentWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ContentWrap"],
+  { selector: "ui_9639ada5_ContentWrap" },
+);
 
-  .beautify-collapse-content-box {
-    padding: 0 !important;
-  }
-`;
-
-export const VersionEditWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 320px;
-
-  .code-diff-host { height: 100%; min-height: 0; }
-  .cm-mergeView { height: 100%; }
-  .cm-mergeViewEditors { height: 100%; }
-  .cm-mergeViewEditor { min-width: 0; overflow: hidden; }
-  .cm-editor { height: 100%; }
-`;
+export const VersionEditWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["VersionEditWrap"],
+  { selector: "ui_9639ada5_VersionEditWrap" },
+);

@@ -1,0 +1,24 @@
+.HttpExecDetailWrapper {
+  width: 100%;
+}
+.HttpExecDetailWrapper :global(.url-container) :global(.icon) {
+  width: auto;
+}
+.HttpExecDetailWrapper :global(.url-container) :global(.url) {
+  margin-left: 8px;
+  font-size: var(--font-size-14);
+  color: var(--font-content-color);
+  word-break: break-all;
+}
+.HttpExecDetailWrapper :global(.beautify-tabs-tab) {
+  padding: 4px 8px 12px;
+}
+.HttpExecDetailWrapper :global(.assert-item) {
+  padding: 2px 12px;
+  padding-left: 16px;
+  border-radius: 4px;
+  font-size: var(--font-size-14);
+}
+.HttpExecDetailWrapper :global(.assert-item) :global(.beautify-alert-message) {
+  max-width: 510px;
+}

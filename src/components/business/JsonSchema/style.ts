@@ -1,35 +1,10 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export default styled.div`
-  width: 100%;
-  // border: #ccc 1px solid;
-  border-radius: 4px;
-  padding: 8px;
-  border: 1px solid var(--color-border);
-  // /* border: 1px solid var(--color-border); */
+const DefaultStyle = withStyles<"div", {}>(
+  "div",
+  moduleStyles["DefaultStyle"],
+  { selector: "ui_13943ea7_DefaultStyle" },
+);
 
-  /* border-right: 0; */
-
-  /* border-left: 0; */
-
-  .beautify-input{
-    background: transparent;
-  }
-
-  .template-table {
-    .table-tr {
-      &.data-item {
-        .schema-td:last-child {
-          flex: 1;
-        }
-      }
-      .table-td {
-        border-right: none;
-      }
-    }
-  }
-
-  .action-right {
-    display: block !important;
-  }
-`;
+export default DefaultStyle;

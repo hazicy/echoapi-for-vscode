@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Divider, Flex, Popconfirm, message } from 'antd';
+import { Divider, Flex, Popconfirm, message } from '@/components/ui/base';
 
 import { cloneDeep, isArray, map, pullAt, size } from 'lodash';
 

@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex } from 'antd';
+import { Flex } from '@/components/ui/base';
 
 import { isEqual } from 'lodash';
 

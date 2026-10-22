@@ -1,6 +1,6 @@
 import { FC, ReactNode, Suspense } from 'react';
 
-import { Skeleton, SkeletonProps } from 'antd';
+import { Skeleton, SkeletonProps } from '@/components/ui/base';
 
 interface Props {
   children: ReactNode;

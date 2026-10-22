@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { AutoComplete } from 'antd';
+import { AutoComplete } from '@/components/ui/base';
 
 import { map } from 'lodash';
 

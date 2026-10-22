@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Input, Select } from 'antd';
+import { Flex, Input, Select } from '@/components/ui/base';
 
 import Button from '@/components/ui/Button';
 import IconFont from '@/components/ui/IconFont';

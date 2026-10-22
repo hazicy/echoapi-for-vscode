@@ -1,0 +1,26 @@
+.ResponseEmptyContainer {
+  height: 100%;
+}
+.ResponseEmptyContainer:global(.mask-mode) {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  height: calc(100% - 44px);
+  background-color: var(--color-bg-right);
+}
+.ResponseEmptyContainer:global(.mask-error-mode) {
+  height: calc(100% - 56px);
+}
+.ResponseEmptyContainer :global(.response-empty-wrap) :global(.beautify-empty-image) {
+  margin-bottom: 16px;
+}
+.ResponseEmptyContainer :global(.response-empty-wrap) :global(.beautify-empty-image) :global(.icon-empty-wrap) {
+  font-size: 80px;
+  color: var(--vscode-settings-headerBorder);
+}
+.ResponseEmptyContainer :global(.response-empty-wrap) :global(.beautify-empty-description) {
+  font-size: var(--font-size-12);
+  color: var(--vscode-tab-unfocusedInactiveForeground);
+}

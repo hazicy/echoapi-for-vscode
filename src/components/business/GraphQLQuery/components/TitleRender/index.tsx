@@ -1,8 +1,8 @@
 import { memo, useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Badge, Flex } from 'antd';
-import { DataNode } from 'antd/es/tree';
+import { Badge, Flex } from '@/components/ui/base';
+import { DataNode } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import classNames from 'classnames';

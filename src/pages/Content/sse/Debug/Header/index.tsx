@@ -1,7 +1,7 @@
 import { API_METHODS } from "@/constants/common";
 import { ApiComponentType } from "@/types/apis/api";
 import { AnyObject } from "@/types/common";
-import { Button, Flex } from "antd";
+import { Button, Flex } from '@/components/ui/base';
 import produce from "immer";
 import React, { FC, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";

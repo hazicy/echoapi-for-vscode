@@ -1,6 +1,6 @@
 import { FC, forwardRef, FunctionComponent, ReactNode, Ref, useEffect, useImperativeHandle } from 'react';
 
-import { Flex, Segmented, SegmentedProps } from 'antd';
+import { Flex, Segmented, SegmentedProps } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import { isEqual, map } from 'lodash';

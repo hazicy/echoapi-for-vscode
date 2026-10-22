@@ -15,7 +15,7 @@ import { DirectionType } from '@/types/common';
 import { TIME_FORMAT, formatTime } from '@/utils/time';
 
 import { FlowResponseRenderTitleWrap, PanelsWrap, RealtimeContainer } from './style';
-import { Flex, Tooltip } from 'antd';
+import { Flex, Tooltip } from '@/components/ui/base';
 
 const panelProps = {
   defaultSize: 50,

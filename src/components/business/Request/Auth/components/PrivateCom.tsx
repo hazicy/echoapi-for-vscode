@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Input, Upload, message } from 'antd';
+import { Flex, Input, Upload, message } from '@/components/ui/base';
 
 import Button from '@/components/ui/Button';
 

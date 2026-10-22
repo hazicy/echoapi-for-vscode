@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex} from 'antd';
+import { Flex} from '@/components/ui/base';
 import { useApis } from '@/store';
 import TreeCheckbox from '@/components/business/TreeCheckbox';
 import { APIS_TARGET_TYPE_ENUM } from '@/constants/apis';

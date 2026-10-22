@@ -1,16 +1,9 @@
-import { Flex } from 'antd';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import { Flex } from "@/components/ui/base";
 
-import styled from 'styled-components';
-
-export const ImportDataWrap = styled(Flex)`
-  height: 100vh;
-  align-items: center;
-  background: var(--color-bg-right);
-  .beautify-spin-nested-loading{
-    height: 100%;
-    width: 100%;
-    .beautify-spin-container{
-    height: 100%;
-    }
-  }
-`;
+export const ImportDataWrap = withStyles<typeof Flex, {}>(
+  Flex,
+  moduleStyles["ImportDataWrap"],
+  { selector: "ui_ad16818e_ImportDataWrap" },
+);

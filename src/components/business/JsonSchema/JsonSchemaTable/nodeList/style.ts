@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const DragContainer = styled.div`
-  .drag-icon {
-    visibility: hidden;
-  }
-`;
+export const DragContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["DragContainer"],
+  { selector: "ui_dbb139c3_DragContainer" },
+);

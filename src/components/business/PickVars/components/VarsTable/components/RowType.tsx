@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 
-import { Select } from 'antd';
+import { Select } from '@/components/ui/base';
 
 import i18next from 'i18next';
 

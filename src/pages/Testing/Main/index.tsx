@@ -14,7 +14,7 @@ import {
   InputNumber,
   Skeleton,
   Tooltip,
-} from "antd";
+} from '@/components/ui/base';
 import { Button, IconFont, Upload } from "@/components/ui";
 import {
   EventItem,

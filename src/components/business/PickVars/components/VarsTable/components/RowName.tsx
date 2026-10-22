@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, memo } from 'react';
 
-import { Input } from 'antd';
+import { Input } from '@/components/ui/base';
 
 import { DataSource } from '../../../types';
 

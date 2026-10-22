@@ -1,6 +1,6 @@
 import React,{useEffect} from 'react';
 import { DocWrap } from './style';
-import { Button, Flex, Input, message } from 'antd';
+import { Button, Flex, Input, message } from '@/components/ui/base';
 import { IconFont } from '@/components/ui';
 import { CodeEditor } from '@/components/business';
 import { useSafeState } from 'ahooks';

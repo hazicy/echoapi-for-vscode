@@ -1,17 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const TestingResultWrapper = styled.div`
-display: flex;
-justify-content: space-between;
-    border: 1px solid var(--color-border);
-    background: var(--table-header-bg-color);
-    padding: 16px;
-    margin-top: 12px;
-    border-radius: 4px;
-    .content{
-      color: #111827;
-    }
-    .title{
-      color: #667085;
-    }
-`;
+export const TestingResultWrapper = withStyles<"div", {}>(
+  "div",
+  moduleStyles["TestingResultWrapper"],
+  { selector: "ui_dd4e379b_TestingResultWrapper" },
+);

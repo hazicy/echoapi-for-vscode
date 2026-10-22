@@ -1,39 +1,13 @@
-import styled, { css } from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { flexStyles } from '@/assets/css/style';
-
-export const RadioCss = css`
-  label {
-    ${flexStyles('row', 'center', 'center')}
-    line-height: 1;
-  }
-
-  .beautify-radio {
-    .beautify-radio-inner {
-      /* width: 16px; */
-
-      /* height: 16px; */
-      background-color: transparent;
-
-      &::after {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        margin: 0;
-        width: 8px;
-        height: 8px;
-        background-color: var(--color-primary);
-      }
-    }
-  }
-`;
-export const RadioWrap = styled.div`
-  ${RadioCss}
-`;
-export const RadioGroupWrap = styled.div`
-  /* 1 */
-  .beautify-radio-group {
-    ${flexStyles('row', 'center', 'flex-start')}
-    ${RadioCss}
-  }
-`;
+export const RadioWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["RadioWrap"],
+  { selector: "ui_0e81683d_RadioWrap" },
+);
+export const RadioGroupWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["RadioGroupWrap"],
+  { selector: "ui_0e81683d_RadioGroupWrap" },
+);

@@ -1,17 +1,9 @@
-import { Flex } from 'antd';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import { Flex } from "@/components/ui/base";
 
-import styled from 'styled-components';
-
-export const DocWrap = styled(Flex)`
-  height: 100vh;
-  background: var(--color-bg-right);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  header{
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--font-title-color);
-  }
-`;
+export const DocWrap = withStyles<typeof Flex, {}>(
+  Flex,
+  moduleStyles["DocWrap"],
+  { selector: "ui_2c3d295d_DocWrap" },
+);

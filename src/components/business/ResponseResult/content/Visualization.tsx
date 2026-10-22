@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex } from 'antd';
+import { Flex } from '@/components/ui/base';
 
 import { isString } from 'lodash';
 

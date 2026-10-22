@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Tag } from 'antd';
+import { Tag } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import aptTools from 'apipost-tools';

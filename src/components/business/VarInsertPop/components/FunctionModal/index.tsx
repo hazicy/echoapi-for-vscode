@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Select } from 'antd';
+import { Flex, Select } from '@/components/ui/base';
 
 import classNames from 'classnames';
 import { has, size } from 'lodash';

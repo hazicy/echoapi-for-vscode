@@ -1,6 +1,6 @@
 import { useProjectConfig } from "@/store";
 import { EnvListItem, ServerItem } from "@/types/envManage";
-import { message } from "antd";
+import { message } from '@/components/ui/base';
 import { snowflakeId } from "apipost-tools";
 import i18next from "i18next";
 import produce from "immer";

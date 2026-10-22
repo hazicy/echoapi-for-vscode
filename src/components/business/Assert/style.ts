@@ -1,45 +1,15 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const AssertWrapper = styled.div<{ $token: Partial<GlobalThemeToken> }>`
-  .label {
-    flex-shrink: 0;
-    font-size: var(--font-size-14);
-  }
-  .beautify-input-affix-wrapper,
-  .mini-editor{
-    border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
-    background: var(--vscode-input-background);
-  }
-  .beautify-select-arrow {
-    font-size: var(--font-size-12);
-  }
+export const AssertWrapper = withStyles<
+  "div",
+  { $token: Partial<GlobalThemeToken> }
+>("div", moduleStyles["AssertWrapper"], {
+  selector: "ui_47182b93_AssertWrapper",
+});
 
-  .assert-input,
-  .collection-variable-select {
-    flex: auto;
-  }
-
-  .collection-variable-select {
-    width: 100%;
-
-    .beautify-select-selector {
-      height: 100%;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .beautify-select-selection-search {
-      .beautify-select-selection-search-mirror {
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-      }
-    }
-  }
-`;
-
-export const DescWrapper = styled.span`
-  font-size: 12px;
-  color: var(--font-light-color);
-`;
-
+export const DescWrapper = withStyles<"span", {}>(
+  "span",
+  moduleStyles["DescWrapper"],
+  { selector: "ui_47182b93_DescWrapper" },
+);

@@ -1,6 +1,6 @@
 import { FC, Key, ReactNode, useEffect } from 'react';
 
-import { ConfigProvider, TreeProps } from 'antd';
+import { ConfigProvider, TreeProps } from '@/components/ui/base';
 
 import { useMemoizedFn, useSafeState } from 'ahooks';
 

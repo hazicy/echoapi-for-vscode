@@ -1,5 +1,16 @@
 
 export const generateToken = (antdThemeConfig: { token: Partial<GlobalThemeToken> }) => ({
+  padding: 16,
+  paddingMD: 20,
+  paddingSM: 12,
+  paddingXS: 8,
+  margin: 16,
+  marginMD: 20,
+  marginSM: 12,
+  marginXS: 8,
+  controlHeight: 32,
+  controlHeightSM: 24,
+  controlHeightLG: 40,
   ...antdThemeConfig.token,
   // Partial overrides
   colorText: antdThemeConfig.token.fontContentColor,

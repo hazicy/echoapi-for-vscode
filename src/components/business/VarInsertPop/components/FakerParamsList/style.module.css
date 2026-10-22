@@ -1,0 +1,85 @@
+.FakerParamsContainer {
+  padding: 6px;
+  border-radius: 4px;
+  background-color: var(--color-primary-opacity);
+  box-sizing: border-box;
+}
+.FakerParamsContainer :global(.param) {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6px;
+  padding: 6px;
+  border-radius: 4px;
+  background-color: var(--popover-select-bg-color);
+  box-sizing: border-box;
+}
+.FakerParamsContainer :global(.param):global(.footer) {
+  margin-bottom: 0;
+}
+.FakerParamsContainer :global(.param) :global(.param-item) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px;
+  min-height: 28px;
+  border-radius: 4px;
+  gap: 4px;
+  box-sizing: border-box;
+}
+.FakerParamsContainer :global(.param) :global(.param-item) :global(.param-item-del) {
+  visibility: hidden;
+}
+.FakerParamsContainer :global(.param) :global(.param-item):hover {
+  background-color: var(--form-hover-color);
+}
+.FakerParamsContainer :global(.param) :global(.param-item):hover :global(.param-item-del) {
+  visibility: visible;
+}
+.FakerParamsContainer :global(.param) :global(.param-item) :global(.param-content) {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 4px;
+}
+.FakerParamsContainer :global(.param) :global(.param-item) :global(.param-item-desc) {
+  width: 120px;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.FakerParamsContainer :global(.param) :global(.param-item) :global(.param-item-com) {
+  flex: 1;
+  width: 0;
+}
+.FakerParamsContainer :global(.param) :global(.param-item) :global(.param-item-com) > * {
+  width: 100%;
+}
+.FakerParamsContainer :global(.param) :global(.param-item) :global(.param-item-com) :global(.beautify-select) {
+  min-width: 88px;
+}
+.FakerParamsContainer :global(.selection) {
+  display: flex;
+  flex-wrap: wrap;
+}
+.FakerParamsContainer :global(.selection) :global(.select-item) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 5px;
+  min-height: 24px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--font-content-color);
+  box-sizing: border-box;
+  gap: 4px;
+}
+.FakerParamsContainer :global(.selection) :global(.select-item):hover {
+  border: 1px solid var(--selected-border-color);
+  color: var(--color-primary);
+  background-color: var(--popover-select-bg-color);
+  cursor: pointer;
+}

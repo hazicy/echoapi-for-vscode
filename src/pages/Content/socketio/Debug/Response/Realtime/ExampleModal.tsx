@@ -1,7 +1,7 @@
 import { forwardRef, useImperativeHandle, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Select, Space, message } from 'antd';
+import { Flex, Select, Space, message } from '@/components/ui/base';
 
 import { useMemoizedFn } from 'ahooks';
 import produce from 'immer';

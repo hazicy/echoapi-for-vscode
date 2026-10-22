@@ -1,7 +1,7 @@
 import { FC, memo, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { CheckboxProps, Flex } from 'antd';
+import { CheckboxProps, Flex } from '@/components/ui/base';
 
 import { DragEndEvent } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';

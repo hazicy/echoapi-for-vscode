@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Segmented, SegmentedProps, Tooltip } from 'antd';
+import { Flex, Segmented, SegmentedProps, Tooltip } from '@/components/ui/base';
 
 import { useMemoizedFn, useSafeState } from 'ahooks';
 import Mock from 'mockjs';

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Flex } from 'antd';
+import { Flex } from '@/components/ui/base';
 
 import classNames from 'classnames';
 

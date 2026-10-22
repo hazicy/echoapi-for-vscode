@@ -1,0 +1,54 @@
+.KeyWarperContainer {
+  /* padding-left: 5px; */
+  position: relative;
+}
+.KeyWarperContainer :global(.item-mock) {
+  float: left;
+  width: 100%;
+}
+.KeyWarperContainer :global(.item-mock) :global(.beautify-input-inner-wrapper) {
+  display: flex;
+  /* width: calc(100% - 10px); */
+  float: left;
+  height: 33px;
+  border-radius: 0;
+  /* border-color: transparent; */
+}
+.KeyWarperContainer :global(.item-mock) :global(.beautify-input-inner-wrapper) input {
+  flex: 1;
+  margin-right: 10px;
+}
+.KeyWarperContainer :global(.item-mock) :global(.beautify-input-inner-wrapper-disabled) {
+  /* border-bottom: 1px solid transparent; */
+}
+.KeyWarperContainer :global(.spn-require) {
+  margin: 0 5px;
+  width: 16px;
+  height: 16px;
+  /* display: flex;
+        justify-content: center;
+        align-items: center; */
+  border-radius: 2px;
+  font-size: var(--size-18px);
+  line-height: 20px;
+  text-align: center;
+  color: var(--content-color-fourth);
+  background-color: transparent;
+  cursor: pointer;
+}
+.KeyWarperContainer :global(.spn-require):global(.checked) {
+  color: var(--base-color-brand);
+}
+.KeyWarperContainer :global(.mock-auto-vars) {
+  height: 100%;
+}
+.KeyWarperContainer :global(.mock-auto-vars) :global(.beautify-select-selector) {
+  height: 32px;
+  border-radius: var(--border-radius);
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.KeyWarperContainer :global(.mock-auto-vars) :global(.beautify-select-selector):hover,
+.KeyWarperContainer :global(.mock-auto-vars) :global(.beautify-select-selector):focus {
+  box-shadow: none;
+}

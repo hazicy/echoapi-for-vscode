@@ -1,13 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const RequestContainer = styled.div`
-  padding: 0 16px 12px;
-  width: 100%;
-  height: 100%;
-  .beautify-text-btn-highlight{
-    color: var(--color-primary) !important;
-    &:hover {
-      color: var(--color-primary) !important;
-    }
-  }
-`;
+export const RequestContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["RequestContainer"],
+  { selector: "ui_7b1bb3e8_RequestContainer" },
+);

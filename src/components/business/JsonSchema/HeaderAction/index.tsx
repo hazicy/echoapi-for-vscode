@@ -1,7 +1,7 @@
 import React, { memo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Flex, Tooltip } from "antd";
+import { Flex, Tooltip } from '@/components/ui/base';
 
 import { isObject } from "lodash";
 

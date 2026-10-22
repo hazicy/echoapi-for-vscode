@@ -8,7 +8,7 @@ async function main() {
   const root = path.resolve(__dirname, '../..');
   await fs.writeFile(
     path.join(temporary, 'index.html'),
-    '<!doctype html><html><head><meta charset="utf-8"><style>body{--color-bg-right:#fff;--color-border:#ddd} .code-diff-host{width:900px}</style></head><body><div id="root"></div><script type="module" src="/fixture.js"></script></body></html>'
+    '<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="/fixture.css"><style>body{--color-bg-right:#fff;--color-border:#ddd} .code-diff-host{width:900px}</style></head><body><div id="root"></div><script type="module" src="/fixture.js"></script></body></html>'
   );
   const context = await esbuild.context({
     absWorkingDir: root,

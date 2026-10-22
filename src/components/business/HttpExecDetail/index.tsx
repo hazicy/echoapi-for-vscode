@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Alert, Flex } from 'antd';
+import { Alert, Flex } from '@/components/ui/base';
 
 import { isEmpty, map, size } from 'lodash';
 

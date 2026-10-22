@@ -1,6 +1,6 @@
 import useTesting from '@/store/useTesting';
 import cn from 'classnames';
-import { Button, Flex } from 'antd';
+import { Button, Flex } from '@/components/ui/base';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 

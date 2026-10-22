@@ -1,0 +1,73 @@
+.EmptyWarper {
+  position: relative;
+  font-size: var(--font-size-12);
+}
+.EmptyWarper :global(.beautify-input) {
+  font-size: var(--font-size-12) !important;
+}
+.EmptyWarper:global(.schema-td-warper) :global(.indent-panel) {
+  margin-right: 8px;
+  margin-left: 8px;
+  width: 18px;
+  height: 32px;
+  border: var(--color-border) 0 solid;
+  border-left-width: 1px;
+}
+.EmptyWarper :global(.schema-text-box) {
+  width: 200px;
+  border-radius: 0;
+  border: none;
+  border: transparent 1px solid;
+  /* stylelint-disable-next-line selector-class-pattern */
+}
+.EmptyWarper :global(.schema-text-box) input {
+  min-width: 0;
+}
+.EmptyWarper :global(.schema-text-box):not(:global(.items),:global( .NodeRoot)):hover {
+  border-bottom: var(--base-color-brand) 1px solid;
+}
+.EmptyWarper :global(.schema-text-box):global(.item):hover {
+  border-bottom: transparent 1px solid;
+}
+.EmptyWarper :global(.text-panel) {
+  flex: 1;
+  padding-left: 6px;
+  font-size: var(--font-size-12);
+  color: var(--font-title-color);
+}
+.EmptyWarper :global(.text-panel) :global(.spn-import-model) {
+  margin-left: 5px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+.EmptyWarper :global(.text-panel) :global(.spn-import-model):hover {
+  color: var(--font-light-color);
+}
+.EmptyWarper :global(.btn-list) {
+  padding-right: 10px;
+}
+.EmptyWarper :global(.btn-list) :global(.btn-item) {
+  margin-left: 10px;
+}
+.EmptyWarper :global(.schema-td-warper) {
+  display: flex;
+  float: left;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 0;
+  width: 100%;
+  height: 100%;
+  line-height: 32px;
+}
+.EmptyWarper :global(.schema-td-warper) :global(.indent-panel) {
+  margin-right: 8px;
+  margin-left: 8px;
+  width: 18px;
+  height: 32px;
+  border: var(--color-border) 0 solid;
+  border-left-width: 1px;
+}
+.EmptyWarper :global(.schema-td-warper):global(.schema-width-auto) {
+  width: auto !important;
+}

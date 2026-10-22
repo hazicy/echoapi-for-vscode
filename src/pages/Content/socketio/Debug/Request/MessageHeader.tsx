@@ -6,7 +6,7 @@ import {
   Checkbox,
   Flex,
   Select,
-} from 'antd';
+} from '@/components/ui/base';
 
 import {
   useSafeState,

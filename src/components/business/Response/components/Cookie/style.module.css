@@ -1,0 +1,7 @@
+.CookieContainer {
+  width: 100%;
+  height: 100%;
+}
+.CookieContainer :global(.table-cell-span) {
+  word-break: break-all;
+}

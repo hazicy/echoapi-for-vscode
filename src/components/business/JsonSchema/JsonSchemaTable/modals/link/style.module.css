@@ -1,0 +1,44 @@
+.LinkWarper {
+  width: 100%;
+}
+.LinkWarper :global(.tree-panel) {
+  margin-top: 12px;
+  min-height: 360px;
+  max-height: 360px;
+  background-color: transparent;
+}
+.LinkWarper :global(.tree-panel) :global(.beautify-tree-node-selected) {
+  /* color: red; */
+  background-color: var(--color-bg-page);
+}
+.LinkWarper :global(.tree-panel) :global(.model-node-item) {
+  display: flex;
+  flex-direction: row;
+}
+.LinkWarper :global(.tree-panel) :global(.model-node-item) :global(.icon-panel) {
+  padding: 0 5px;
+}
+.LinkWarper :global(.tree-panel) :global(.model-node-item) :global(.icon-panel) :global(.icon-model) {
+  padding: 0 3px 0 8px;
+  color: #30d4ad;
+}
+.LinkWarper :global(.tree-panel) :global(.model-node-item) :global(.node-text) {
+  flex: 1;
+  width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.LinkWarper :global(.empty-list) {
+  margin-top: 12px;
+  height: 404px;
+  text-align: center;
+  box-sizing: border-box;
+}
+.Footer {
+  display: flex;
+  justify-content: flex-end;
+}
+.Footer button {
+  width: 60px;
+  height: 32px;
+}

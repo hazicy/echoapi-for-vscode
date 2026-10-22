@@ -1,0 +1,189 @@
+.GraphQLContainer {
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+}
+.MainContainer {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--color-table-border);
+  background-color: var(--color-bg-right);
+}
+.MainContainer :global(.code-editor-wrapper) {
+  border-bottom: none;
+}
+.MainContainer :global(.edit-header) {
+  padding: 0 16px;
+  width: 100%;
+  height: 32px;
+  border-bottom: 1px solid var(--color-table-border);
+}
+.MainContainer :global(.schema-loading) {
+  width: 100%;
+  height: 100%;
+}
+.MainContainer :global(.schema-loading) :global(.beautify-spin-container) {
+  width: 100%;
+  height: 100%;
+}
+.MainContainer :global(.schema-loading) :global(.beautify-empty-description) {
+  font-size: 12px;
+}
+.MainContainer :global(.schema-loading) :global(.beautify-empty-image) {
+  margin-bottom: 12px;
+}
+.MainContainer :global(.schema-loading) :global(.beautify-empty-footer) {
+  margin-top: 12px;
+}
+.SchemaTreeContainer {
+  display: flex;
+  flex-direction: column;
+  /* padding: 12px; */
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-right);
+  /* box-sizing: border-box; */
+}
+.SchemaTreeContainer :global(.search) {
+  padding: 12px 12px 4px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.SchemaTreeContainer :global(.search) :global(.beautify-input-affix-wrapper) {
+  background-color: var(--vscode-input-background);
+  border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
+}
+.SchemaTreeContainer :global(.schema-tree) {
+  flex: 1;
+  width: 100%;
+  height: 0;
+}
+.SchemaTreeContainer :global(.schema-tree) :global(.beautify-tree-switcher-icon) {
+  color: var(--icon-color);
+}
+.SchemaTreeContainer :global(.schema-tree) :global(.beautify-tree) :global(.beautify-tree-checkbox) :global(.beautify-tree-checkbox-inner) {
+  border-color: var(--check-box-border-color);
+  background-color: transparent;
+}
+.SchemaTreeContainer :global(.schema-tree) :global(.beautify-tree) :global(.beautify-tree-checkbox-checked) :global(.beautify-tree-checkbox-inner) {
+  border-color: var(--check-box-border-color);
+  background-color: var(--color-primary);
+}
+.SchemaTreeContainer :global(.beautify-tree) {
+  /* padding: 8px 0; */
+  background-color: transparent;
+}
+.SchemaTreeContainer :global(.beautify-tree) :global(.beautify-tree-list-holder) {
+  padding: 0 12px;
+}
+.SchemaTreeContainer :global(.beautify-tree) :global(.beautify-tree-switcher):hover {
+  background-color: transparent;
+}
+.SchemaTreeContainer :global(.beautify-tree) :global(.beautify-tree-indent-unit)::before {
+  border-color: var(--color-border);
+}
+.SchemaTreeContainer :global(.beautify-tree) :global(.beautify-tree-switcher-leaf-line)::before {
+  border-color: var(--color-border);
+}
+.SchemaTreeContainer :global(.beautify-tree) :global(.beautify-tree-switcher-leaf-line)::after {
+  border-color: var(--color-border);
+}
+.SchemaTreeContainer :global(.beautify-tree) :global(.beautify-tree-treenode) {
+  align-items: center;
+  height: 32px;
+}
+.SchemaTreeContainer :global(.beautify-tree) :global(.beautify-tree-treenode):hover::before {
+  border-radius: 4px;
+  background-color: var(--form-hover-color);
+}
+.SchemaTreeContainer :global(.beautify-tree) :global(.beautify-tree-treenode):global(.beautify-tree-treenode-selected)::before {
+  border-radius: 4px;
+  background-color: var(--form-hover-color);
+}
+.SchemaTreeContainer :global(.beautify-tree) :global(.beautify-tree-treenode) :global(.action-outer) {
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  background-color: var(--color-primary-opacity);
+}
+.SchemaTreeContainer :global(.beautify-tree) :global(.beautify-tree-treenode) :global(.action-outer):global(.primary) {
+  color: var(--color-primary);
+}
+.TitleRenderContainer {
+  padding-right: 8px;
+  gap: 8px;
+  width: 100%;
+  /* width: 100%;
+  height: 100%;
+  overflow: auto; */
+  /* background-color: var(--color-bg-right); */
+}
+.TitleRenderContainer :global(.title-container) {
+  flex: 1;
+  width: 0;
+}
+.TitleRenderContainer :global(.title-container) :global(.input) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.TitleRenderContainer :global(.title-container) :global(.input):global(.noDesc) {
+  max-width: 90%;
+}
+.TitleRenderContainer :global(.title-container) :global(.type) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 30%;
+  color: #22c55e;
+}
+.TitleRenderContainer :global(.title-container) :global(.type):global(.null),
+.TitleRenderContainer :global(.title-container) :global(.type):global(.array) {
+  color: #1787ee;
+}
+.TitleRenderContainer :global(.title-container) :global(.type):global(.noDesc) {
+  flex: 1;
+  max-width: none;
+}
+.TitleRenderContainer :global(.title-container) :global(.desc) {
+  flex: 1;
+  min-width: 10%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--font-light-color);
+}
+.TitleRenderContainer :global(.beautify-badge) :global(.beautify-badge-multiple-words) {
+  padding: 0 4px;
+}
+.TitleRenderContainer :global(.beautify-badge-count) {
+  box-shadow: none;
+}
+.PopoverAddContainer {
+  width: 330px;
+  height: 410px;
+}
+.PopoverAddContainer :global(.beautify-input-affix-wrapper) {
+  background-color: var(--color-bg-right);
+}
+.PopoverAddContainer :global(.beautify-tree) {
+  background-color: var(--popover-select-bg-color);
+}
+.PopoverFilterContainer {
+  width: 600px;
+  max-height: 500px;
+}
+.PopoverFilterContainer :global(.filter-remove) {
+  color: var(--icon-color);
+}
+.PopoverFilterContainer :global(.filter-remove):hover {
+  color: var(--color-error);
+}
+.FilterContainer :global(.clear-btn) {
+  color: var(--font-light-color);
+}
+.FilterContainer :global(.clear-btn):hover {
+  color: var(--font-content-color);
+}

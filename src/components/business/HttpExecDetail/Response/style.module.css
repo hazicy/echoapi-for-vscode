@@ -1,0 +1,13 @@
+.ResponseWrapper {
+  width: 100%;
+}
+.ResponseWrapper :global(.beautify-tabs-tabpane) ::-webkit-scrollbar {
+  display: none;
+}
+.EmptyWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 240px;
+}

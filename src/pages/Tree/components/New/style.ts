@@ -1,29 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const NewBtnsContainer = styled.div`
-  display: flex;
-  /* height: 32px; */
-  .beautify-new-http-more{
-    width: 100% !important;
-    & > button:first-child{
-      flex: 1;
-      font-weight: 600;
-    }
-    & > button{
-      height: 28px;
-    }
-    & > button.beautify-btn-compact-last-item{
-      width: 28px;
-    }
-  }
-
-  .beautify-space-compact{
-    width: auto;
-  }
- 
-  .add-btn {
-    margin-left: 4px;
-    width: 32px;
-    height: 32px;
-  }
-`;
+export const NewBtnsContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["NewBtnsContainer"],
+  { selector: "ui_205b0abc_NewBtnsContainer" },
+);

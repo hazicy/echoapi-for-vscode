@@ -1,7 +1,7 @@
 import { CurlWrap } from './style';
 import CodeEditor from '@/components/business/CodeEditor';
 import { useSafeState } from 'ahooks';
-import { Button } from 'antd';
+import { Button } from '@/components/ui/base';
 import { useTranslation } from 'react-i18next';
 import { parseSafeBash } from '@/utils/curl';
 

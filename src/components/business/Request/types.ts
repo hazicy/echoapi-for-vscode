@@ -1,4 +1,4 @@
-import { TabsProps } from 'antd';
+import { TabsProps } from '@/components/ui/base';
 
 import { ApisBaseDataItem } from '@/types/apis/base';
 import { ApiRequest } from '@/types/apis/request';

@@ -1,6 +1,6 @@
 import { saveProjectConfig } from '@/events/apis/env';
 import { FC } from 'react';
-import { Flex, MenuProps } from 'antd';
+import { Flex, MenuProps } from '@/components/ui/base';
 import { useMemoizedFn } from 'ahooks';
 import produce from 'immer';
 import TitleEdit from '@/components/ui/TitleEdit';

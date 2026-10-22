@@ -1,0 +1,54 @@
+.TabContainer {
+  padding: 16px;
+  width: 100%;
+  border-radius: 0 0 4px 4px;
+  border: 1px solid var(--color-table-border);
+}
+.TabContainer :global(.cookie-item-add) {
+  border: 1px dashed var(--color-border);
+}
+.BtnListContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+  margin-top: 8px;
+  gap: 8px;
+}
+.BtnListContainer :global(.apipost-btn) {
+  margin-top: 8px;
+  margin-left: 8px;
+}
+.TabItemContainer {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 0 8px;
+  height: 22px;
+  border-radius: 2px;
+  border: 1px solid var(--color-table-border);
+  font-size: 12px;
+  line-height: 26px;
+  color: var(--font-content-color);
+  background-color: var(--color-bg-page);
+  cursor: pointer;
+}
+.TabItemContainer :global(.cookie-name) {
+  padding: 0 5px;
+}
+.TabItemContainer :global(.cookie-item-close) :global(.anticon) {
+  width: 8px;
+  height: 8px;
+}
+.TabItemContainer:hover {
+  border-color: var(--selected-border-color);
+  color: var(--color-primary);
+  background-color: var(--highlight-background-color-tertiary);
+}
+.TabItemContainer:global(.active) {
+  border-color: var(--selected-border-color);
+  color: var(--color-primary);
+  background-color: var(--highlight-background-color-tertiary);
+}

@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 
-import { Dropdown, Flex, MenuProps } from 'antd';
+import { Dropdown, Flex, MenuProps } from '@/components/ui/base';
 
 import { useMemoizedFn } from 'ahooks';
 import { includes } from 'lodash';

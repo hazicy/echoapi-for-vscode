@@ -1,0 +1,55 @@
+.RequestBodyContainer {
+  width: 100%;
+  height: 100%;
+}
+.RequestBodyContainer :global(.other-btn) :global(.beautify-btn):hover {
+  opacity: 0.6;
+}
+.RequestBodyContainer > :global(.beautify-flex) {
+  height: 100%;
+}
+.RequestBodyContainer > :global(.beautify-flex) :global(.request-body-header) {
+  display: flex;
+  /* height: 28px; */
+  height: 24px;
+  /* padding-left: 8px; */
+}
+.RequestBodyContainer > :global(.beautify-flex) :global(.request-body-content-wrap) {
+  flex: 1;
+  margin-top: 8px;
+  height: 0;
+}
+.RequestBodyContainer :global(.beautify-radio-group) :global(.beautify-radio-wrapper) {
+  font-size: var(--font-size-14);
+}
+.RequestBodyContainer :global(.request-body-header) :global(.beautify-radio-inner) {
+  transform: scale(0.7);
+}
+.RequestBodyContainer :global(.request-body-header) :global(.beautify-radio) {
+  margin-top: 3px;
+}
+.RequestBodyContainer :global(.request-body-header) :global(.beautify-radio-wrapper) span:global(.beautify-radio) + * {
+  padding-inline-start: 4px;
+}
+.RequestBodyContainer :global(.request-body-header) :global(.beautify-select) :global(.beautify-select-selector) {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  background: transparent;
+  font-size: 12px;
+  padding: 0 4px;
+  padding-left: 6px;
+}
+.RequestBodyContentContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  width: 100%;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+}
+.RequestBodyContentContainer :global(.beautify-upload-wrapper) {
+  text-align: center;
+}

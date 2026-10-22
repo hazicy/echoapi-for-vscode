@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { ConfigProvider } from 'antd';
+import { ConfigProvider } from '@/components/ui/base';
 
 import classNames from 'classnames';
 

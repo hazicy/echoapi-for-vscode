@@ -1,9 +1,9 @@
 import { FC, ReactNode, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Input, Select, SelectProps } from 'antd';
+import { Flex, Input, Select, SelectProps } from '@/components/ui/base';
 
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined } from '@/components/ui/base/icons';
 import produce from 'immer';
 import { find, get, includes, isEqual, map } from 'lodash';
 

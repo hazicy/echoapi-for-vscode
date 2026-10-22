@@ -1,17 +1,9 @@
-import { Flex } from 'antd';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import { Flex } from "@/components/ui/base";
 
-import styled from 'styled-components';
-
-export const CurlWrap = styled(Flex)`
-  height: 100vh;
-  align-items: end;
-  background: var(--color-bg-right);
-  padding-top: 8px;
-  .beautify-btn{
-    width: 120px;
-    margin: 20px 10px;
-    }
-  .curl-code-editor{
-    height: calc(100% - 70px);
-  }
-`;
+export const CurlWrap = withStyles<typeof Flex, {}>(
+  Flex,
+  moduleStyles["CurlWrap"],
+  { selector: "ui_8df0fbee_CurlWrap" },
+);

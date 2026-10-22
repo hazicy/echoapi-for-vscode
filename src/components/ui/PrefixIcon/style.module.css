@@ -1,0 +1,70 @@
+.PrefixIconContainer {
+  display: inline-flex;
+  align-items: center;
+  width: 36px;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: var(--font-size-12);
+  font-weight: 700;
+  text-align: left;
+  color: var(--color-success);
+}
+.PrefixIconContainer svg {
+  font-size: var(--font-size-14);
+}
+.PrefixIconContainer:global(.post) {
+  color: var(--color-warning);
+}
+.PrefixIconContainer:global(.DEFAULT) {
+  color: var(--color-success);
+}
+.PrefixIconContainer:global(.get) {
+  color: var(--color-success);
+}
+.PrefixIconContainer:global(.put),
+.PrefixIconContainer:global(.socket) {
+  color: var(--color-info);
+}
+.PrefixIconContainer:global(.socket),
+.PrefixIconContainer:global(.testing),
+.PrefixIconContainer:global(.kit) {
+  width: auto;
+}
+.PrefixIconContainer:global(.socket-method),
+.PrefixIconContainer:global(.doc) {
+  color: var(--color-info);
+}
+.PrefixIconContainer:global(.delete) {
+  color: var(--color-error);
+}
+.PrefixIconContainer:global(.gql) {
+  color: #f80ba0;
+}
+.PrefixIconContainer:global(.grpc),
+.PrefixIconContainer:global(.ws),
+.PrefixIconContainer:global(.patch) {
+  color: var(--color-success);
+}
+.PrefixIconContainer:global(.notes) {
+  width: auto;
+  color: #f7b300;
+}
+.PrefixIconContainer:global(.testing) {
+  color: #067ced;
+}
+.PrefixIconContainer:global(.kit) {
+  color: #7879f1;
+}
+.PrefixIconContainer:global(.data-model),
+.PrefixIconContainer:global(.api-sample) {
+  width: auto;
+}
+.PrefixIconContainer:global(.data-model) {
+  color: #30d4ad;
+}
+.PrefixIconContainer:global(.api-sample) {
+  color: #4c80ff;
+}
+.PrefixIconContainer:global(.sse) {
+  color: #65e0ff;
+}

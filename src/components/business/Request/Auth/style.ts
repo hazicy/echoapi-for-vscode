@@ -1,111 +1,29 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import "./style.css";
 
-import { flexStyles } from '@/assets/css/style';
+export const RequestAuthContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["RequestAuthContainer"],
+  { selector: "ui_a48315f8_RequestAuthContainer" },
+);
 
-export const RequestAuthContainer = styled.div`
-  width: 100%;
+export const MoreTipContainer = withStyles<"span", {}>(
+  "span",
+  moduleStyles["MoreTipContainer"],
+  { selector: "ui_a48315f8_MoreTipContainer" },
+);
 
-  .beautify-form-item {
-    margin-bottom: 12px;
+export const CodeContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["CodeContainer"],
+  { selector: "ui_a48315f8_CodeContainer" },
+);
 
-    input,
-    .beautify-select-selector {
-      font-size: var(--font-size-14) !important;
-    }
+export const CheckedStyles = () => null;
 
-    .mini-editor {
-       padding: 5.2px 11px;
-        background: var(--vscode-input-background);
-        border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
-    }
-  }
-
-  .beautify-collapse-ghost {
-    .beautify-collapse-header {
-      margin-bottom: 4px;
-      background: transparent;
-
-      &:hover {
-        color: var(--color-primary);
-      }
-    }
-
-    .beautify-collapse-expand-icon {
-      svg {
-        color: var(--color-primary);
-      }
-    }
-  }
-
-  /* .beautify-collapse-header {
-    background-color: transparent;
-  } */
-`;
-
-export const MoreTipContainer = styled.span`
-  display: flex;
-  font-size: 14px;
-  color: var(--color-primary);
-`;
-
-export const CodeContainer = styled.div`
-  height: 150px;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--color-border);
-`;
-
-export const CheckedStyles = createGlobalStyle`
-  .auth-checked {
-    height: 31px;
-    ${flexStyles('row', 'center', 'flex-start')}
-  }
-
-  .auth-tips {
-    font-size: 14px;
-    line-height: 30px;
-    color: var(--font-light-color)
-  }
-`;
-
-export const Oauth2Container = styled.div`
-  .tag-env {
-    &.oauth-tag {
-      color: #26cea4 !important;
-    }
-
-    &:not(&.oauth-tag) {
-      font-size: 12px;
-      font-weight: 300;
-      text-decoration: line-through;
-      color: #ff4c4c;
-      background-color: #e452521a;
-    }
-  }
-
-  .beautify-form-item-label > label .beautify-form-item-tooltip {
-    font-size: 12px;
-    color: var(--font-light-color);
-    cursor: pointer;
-  }
-
-  .beautify-form-item-label
-    > label.beautify-form-item-required:not(.beautify-form-item-required-mark-optional)::before {
-    display: none;
-  }
-
-  .divider {
-    margin-bottom: 20px;
-    width: 100%;
-    border-bottom: 1px solid var(--color-border);
-  }
-  .beautify-table-cell{
-    padding: 0 !important;
-    .beautify-select{
-      width: 100%;
-      height: 36px !important;
-      .beautify-select-selector{
-        border: none !important;
-      }
-    }
-  }
-`;
+export const Oauth2Container = withStyles<"div", {}>(
+  "div",
+  moduleStyles["Oauth2Container"],
+  { selector: "ui_a48315f8_Oauth2Container" },
+);

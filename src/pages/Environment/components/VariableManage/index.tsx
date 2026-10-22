@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { Flex, Input, message } from 'antd';
+import { Flex, Input, message } from '@/components/ui/base';
 
 import { cloneDeep, isPlainObject, keyBy, keys, mapValues } from 'lodash';
 

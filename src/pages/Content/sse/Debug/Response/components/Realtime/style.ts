@@ -1,60 +1,23 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const RealtimeContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`;
+export const RealtimeContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["RealtimeContainer"],
+  { selector: "ui_42227ec2_RealtimeContainer" },
+);
 
-export const FlowResponseRenderTitleWrap = styled.div.attrs({ className: 'title' })`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  display: flex;
-  align-items: center;
-  &.complete {
-    color: var(--color-warning);
-  }
-  .event-message{
-    border-radius: 4px;
-    color: #0DA4A1;
-    background: #0DA4A11A;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 8px;
-    &.connected{
-      color:#12B76A;
-      background:#12B76A1A;
-    }
+export const FlowResponseRenderTitleWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["FlowResponseRenderTitleWrap"],
+  {
+    selector: "ui_42227ec2_FlowResponseRenderTitleWrap",
+    attrs: { className: "title" },
+  },
+);
 
-    &.error{
-      color:#FF583E;
-      background:#FF583E1A;
-    }
-
-    &.message{
-      color: #0787FF;
-      background: #0787FF1A;
-    }
-    &.completed{
-      color: #6941C6;
-      background: #6941C61A;
-    }
-    &.reconnecting{
-      color: #FA8C16;
-      background: #FACC151A;
-    }
-    &.close{
-      color: #33363966;
-      background: #F6F8FA;
-    }
-  
-  }
-`;
-
-export const PanelsWrap = styled.div`
-  padding: 8px;
-  padding-left: 0;
-  height: 100%;
-`;
+export const PanelsWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["PanelsWrap"],
+  { selector: "ui_42227ec2_PanelsWrap" },
+);

@@ -1,21 +1,10 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { flexStyles } from '@/assets/css/style';
-
-export const EmptyWrap = styled.div`
-  height: 100%;
-  width: 100%;
-  .beautify-empty {
-    height: 100%;
-    color:var(--vscode-settings-headerBorder);
-    ${flexStyles('column', 'center', 'center')}
-    &> * {
-      height: auto;
-    }
-    .beautify-empty-description{
-      color: var(--vscode-tab-unfocusedInactiveForeground);
-    }
-  }
-`;
+export const EmptyWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["EmptyWrap"],
+  { selector: "ui_5dfcc5ec_EmptyWrap" },
+);
 
 export default EmptyWrap;

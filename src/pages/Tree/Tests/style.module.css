@@ -1,0 +1,18 @@
+.TestsWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.TestsWrapper :global(.beautify-select) {
+  background: var(--vscode-input-background);
+  border-radius: 4px;
+  height: 28px;
+  overflow: hidden !important;
+}
+.TestsWrapper :global(.import-project-full-select) {
+  background-color: var(--color-bg-page) !important;
+}
+.TestsWrapper :global(.beautify-btn) {
+  height: 28px;
+  padding: 0 15px;
+}

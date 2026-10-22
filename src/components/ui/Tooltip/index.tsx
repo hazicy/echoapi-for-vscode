@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Tooltip as AntdTooltip, TooltipProps } from 'antd';
+import { Tooltip as AntdTooltip, TooltipProps } from '@/components/ui/base';
 
 type Props = TooltipProps;
 

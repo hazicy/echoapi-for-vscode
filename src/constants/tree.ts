@@ -7,7 +7,7 @@ import {
 } from "@/constants/apis";
 
 import { ApisCreateList, ApisCreateListItem } from "@/types/apis/api";
-import { MenuProps } from "antd";
+import { MenuProps } from '@/components/ui/base';
 
 const TREE_TITLE = [
   i18next.t("common.folder_operate.new_http_request"),

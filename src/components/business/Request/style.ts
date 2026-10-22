@@ -1,19 +1,17 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { DirectionType } from '@/types/common';
+import { DirectionType } from "@/types/common";
 
-export const RequestContainer = styled.div<{ $direction: DirectionType }>`
-  padding: 0;
-  /* padding-bottom: ${({ $direction }) => ($direction === 'vertical' ? 12 : 6)}px; */
-  width: 100%;
-  height: 100%;
-  .beautify-tabs,
-  .beautify-tabs-content,
-  .beautify-tabs-tabpane{
-    width: 100%;
-    height: 100%;
-  }
-  .beautify-tabs-top >.beautify-tabs-nav{
-    margin-bottom: 8px;
-  }
-`;
+export const RequestContainer = withStyles<
+  "div",
+  { $direction: DirectionType }
+>("div", moduleStyles["RequestContainer"], {
+  selector: "ui_bfdb18be_RequestContainer",
+  variables: {
+    "--style-bfdb18be-RequestContainer-0": (props) =>
+      String(
+        (({ $direction }) => ($direction === "vertical" ? 12 : 6))(props),
+      ) + "px",
+  },
+});

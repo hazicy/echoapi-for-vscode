@@ -1,0 +1,22 @@
+.DefaultStyle {
+  width: 100%;
+  height: 100%;
+}
+.DefaultStyle :global(.cookie-flex) {
+  height: 100%;
+}
+.DefaultStyle :global(.cookie-title) {
+  width: 100%;
+}
+.DefaultStyle :global(.cookie-content) {
+  flex: 1;
+  overflow-y: auto;
+  /* padding-right: 10px; */
+}
+.DefaultStyle :global(.cookie-content) :global(.beautify-collapse) {
+  background-color: transparent;
+}
+.DefaultStyle :global(.cookie-content) :global(.beautify-collapse) :global(.beautify-collapse-item) {
+  margin-bottom: 8px !important;
+  overflow: hidden;
+}

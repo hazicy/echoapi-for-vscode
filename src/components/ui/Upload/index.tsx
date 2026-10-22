@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Upload as AntdUpload, UploadProps } from 'antd';
+import { Upload as AntdUpload, UploadProps } from '@/components/ui/base';
 import { APIPOST_MACHINE, APIPOST_PLATFORM, APIPOST_TERMINAL, APIPOST_VERSION } from '@/constants/user';
 
 type Props = UploadProps;

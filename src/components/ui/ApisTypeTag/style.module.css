@@ -1,0 +1,43 @@
+.ApisTypeTag {
+  height: 24px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.ApisTypeTag:global(.post) {
+  color: var(--color-warning);
+  background-color: var(--color-warning-bg);
+}
+.ApisTypeTag:global(.get),
+.ApisTypeTag:global(.api-extra),
+.ApisTypeTag:global(.socket),
+.ApisTypeTag:global(.socket-service) {
+  color: var(--color-success);
+  background-color: var(--color-success-bg);
+}
+.ApisTypeTag:global(.put) {
+  color: var(--color-info);
+  background-color: var(--color-info-bg);
+}
+.ApisTypeTag:global(.socket),
+.ApisTypeTag:global(.testing),
+.ApisTypeTag:global(.kit) {
+  width: auto;
+}
+.ApisTypeTag:global(.socket-method),
+.ApisTypeTag:global(.doc) {
+  color: var(--color-info);
+  background-color: var(--color-info-bg);
+}
+.ApisTypeTag:global(.delete) {
+  color: var(--color-error);
+  background-color: var(--color-error-bg);
+}
+.ApisTypeTag:global(.grpc),
+.ApisTypeTag:global(.ws),
+.ApisTypeTag:global(.patch) {
+  color: var(--color-success);
+  background-color: var(--color-success-bg);
+}

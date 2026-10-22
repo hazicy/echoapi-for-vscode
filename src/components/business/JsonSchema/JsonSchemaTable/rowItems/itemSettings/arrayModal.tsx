@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Flex, InputNumber, Switch } from 'antd';
+import { Flex, InputNumber, Switch } from '@/components/ui/base';
 
 import { isNumber } from 'lodash';
 

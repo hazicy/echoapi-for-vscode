@@ -1,6 +1,6 @@
 import { FC, ReactNode, memo, useMemo } from 'react';
 
-import { Dropdown, MenuProps } from 'antd';
+import { Dropdown, MenuProps } from '@/components/ui/base';
 
 import { isNumber } from 'lodash';
 

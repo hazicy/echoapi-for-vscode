@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Typography } from 'antd';
+import { Typography } from '@/components/ui/base';
 
 import IconFont from '@/components/ui/IconFont';
 

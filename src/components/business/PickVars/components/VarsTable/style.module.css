@@ -1,0 +1,25 @@
+.VarsTableWrap :global(.beautify-table-thead) :global(.beautify-table-cell) {
+  padding: 4px 10px;
+}
+.VarsTableWrap :global(.beautify-table-tbody) :global(.beautify-table-cell) :global(.beautify-input-outlined),
+.VarsTableWrap :global(.beautify-table-tbody) :global(.beautify-table-cell) :global(.beautify-select-selector) {
+  border-radius: 0;
+  border-color: transparent;
+}
+.VarsTableWrap :global(.beautify-table-tbody) :global(.beautify-table-cell) :global(.beautify-input-outlined):hover,
+.VarsTableWrap :global(.beautify-table-tbody) :global(.beautify-table-cell) :global(.beautify-input-outlined):focus {
+  border-color: var(--color-primary);
+}
+.VarsTableWrap :global(.tool-icon):hover {
+  color: var(--color-primary);
+}
+.VarsTableWrap :global(.delete-vars-params-icon):hover {
+  color: #ff583e;
+}
+.PopoverContentWrap {
+  padding: 10px;
+  background-color: var(--color-bg-folder);
+}
+.PopoverContentWrap pre {
+  color: #fa7600;
+}

@@ -1,180 +1,40 @@
-import { flexStyles } from "@/assets/css/style";
-import styled from "styled-components";
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const ShareContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 16px;
-  background-color: var(--color-bg-right);
-  .response-empty-wrap {
-    .beautify-empty-image {
-      margin-bottom: 16px;
+export const ShareContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ShareContainer"],
+  { selector: "ui_ab585b0c_ShareContainer" },
+);
 
-      .icon-empty-wrap {
-        font-size: 80px;
-        color: var(--vscode-settings-headerBorder);
-      }
-    }
+export const DocListContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["DocListContainer"],
+  { selector: "ui_ab585b0c_DocListContainer" },
+);
+
+export const ItemTitleContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ItemTitleContainer"],
+  { selector: "ui_ab585b0c_ItemTitleContainer" },
+);
+
+export const TabsWrap = withStyles<
+  "div",
+  { $token: Partial<GlobalThemeToken> }
+>("div", moduleStyles["TabsWrap"], { selector: "ui_ab585b0c_TabsWrap" });
+
+export const ControlExtraContentStyles = withStyles<
+  "div",
+  {
+    $token: Partial<GlobalThemeToken>;
   }
-  .beautify-spin-nested-loading {
-    flex: 1;
-    .beautify-spin-container {
-      height: 100%;
-    }
-  }
-`;
+>("div", moduleStyles["ControlExtraContentStyles"], {
+  selector: "ui_ab585b0c_ControlExtraContentStyles",
+});
 
-export const DocListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 4px;
-  overflow-y: hidden;
-`;
-
-export const ItemTitleContainer = styled.div`
-  ${flexStyles("row", "center", "space-between")}
-  padding: 16px 8px;
-  overflow: hidden;
-  border-bottom: 1px solid var(--color-border);
-  .more-operate-wrap {
-    display: flex;
-    margin-left: 4px;
-    flex: 1;
-    justify-content: flex-end;
-    visibility: hidden;
-  }
-  .panel-icon {
-    width: 28px;
-    height: 28px;
-  }
-  &:hover {
-    .more-operate-wrap {
-      display: flex;
-      visibility: visible;
-    }
-  }
-
-  &:hover,
-  &.select-item {
-    background: var(--vscode-list-hoverBackground, #303030);
-  }
-
-  .time {
-    font-size: 10px;
-    flex: 1;
-  }
-  .name {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 14px;
-    flex: 1;
-    overflow: hidden;
-    svg {
-      font-size: 14px;
-    }
-  }
-`;
-
-export const TabsWrap = styled.div<{ $token: Partial<GlobalThemeToken> }>`
-  position: relative;
-  flex: 1;
-  overflow-y: auto;
-  .share-list-delete-btn {
-    display: none;
-  }
-  .share-list-delete-btn.show {
-    display: flex;
-  }
-  .beautify-flex {
-    .beautify-btn {
-      margin-left: 12px;
-      padding: 4px 8px;
-      height: 28px;
-
-      &.beautify-btn-link {
-        color: var(--font-light-color);
-
-        &:hover {
-          color: var(--font-content-color);
-        }
-      }
-    }
-  }
-
-  .beautify-tabs {
-    height: 100%;
-
-    .beautify-flex {
-      /* margin-bottom: 16px; */
-    }
-
-    .beautify-tabs-content {
-      height: 100%;
-
-      .beautify-tabs-tabpane {
-        height: 100%;
-      }
-    }
-  }
-
-  .beautify-tabs-tab {
-    padding: 10px;
-
-    .beautify-tabs-tab-btn {
-      font-size: var(--font-size-14);
-    }
-  }
-
-  .beautify-checkbox-group {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-export const ControlExtraContentStyles = styled.div<{
-  $token: Partial<GlobalThemeToken>;
-}>`
-  ${flexStyles("row", "center", "flex-start")};
-  position: absolute;
-  left: 0;
-  z-index: 2;
-  padding: 0 16px;
-  width: 100%;
-  height: 36px;
-  background-color: var(--color-bg-right);
-  box-shadow: 0 2px 16px 0 var(--box-shadow-modal-color);
-
-  .beautify-btn {
-    margin-left: 12px;
-    width: 82px;
-    height: 28px;
-  }
-
-  .beautify-checkbox-wrapper {
-    align-items: center;
-
-    .beautify-checkbox-indeterminate {
-      .beautify-checkbox-inner {
-        border-color: var(--color-primary);
-        background-color: var(--color-bg-right);
-      }
-    }
-
-    span {
-      span {
-        color: var(--color-primary);
-      }
-    }
-  }
-`;
-
-export const ShareListWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-  flex: 1;
-`;
+export const ShareListWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ShareListWrap"],
+  { selector: "ui_ab585b0c_ShareListWrap" },
+);

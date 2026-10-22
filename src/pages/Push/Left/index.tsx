@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { PushLeftWrap } from './style';
 import { useTranslation } from 'react-i18next';
-import { Flex, Input, Segmented } from 'antd';
+import { Flex, Input, Segmented } from '@/components/ui/base';
 import { IconFont } from '@/components/ui';
 import { PushApiData, PushEnvData } from '../type';
 import ApiCheckBox from './ApiCheckBox';

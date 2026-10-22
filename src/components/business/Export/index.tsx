@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Typography } from 'antd';
+import { Typography } from '@/components/ui/base';
 
 import { EXPORT_TYPE_ENUM } from '@/constants/settings';
 import ExportComponent from './ExportComponent';

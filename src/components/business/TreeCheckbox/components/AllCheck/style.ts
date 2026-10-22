@@ -1,38 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { flexStyles } from '@/assets/css/style';
-
-export const AllCheckContainer = styled.div`
-  ${flexStyles('row', 'center', 'flex-start')}
-  /* margin-top: 16px; */
-  padding: 8px;
-  width: 100%;
-  height: 30px;
-  background-color: var(--search-big-select-color);
-  /* border-radius: 4px 4px 0 0; */
-  border-bottom: 1px solid var(--color-table-border);
-  flex-wrap: nowrap;
-  label{
-    span{
-      white-space: nowrap;
-    }
-  }
-  .beautify-checkbox-wrapper {
-    ${flexStyles('row', 'center', 'flex-start')};
-    /* .beautify-checkbox-inner {
-      background-color: var(--color-bg-tree-page);
-    } */
-  }
-  .all-check-desc{
-    font-size: 12px;
-    color: var(--font-light-color);
-    margin-left: 8px;
-  }
-  .all-check-text {
-    font-size: 14px;
-
-    .all-check-num {
-      color: var(--color-primary);
-    }
-  }
-`;
+export const AllCheckContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["AllCheckContainer"],
+  { selector: "ui_15a16141_AllCheckContainer" },
+);

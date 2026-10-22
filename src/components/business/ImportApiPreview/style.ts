@@ -1,37 +1,15 @@
-import { Modal, Spin } from 'antd';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import { Modal, Spin } from "@/components/ui/base";
 
-import styled from 'styled-components';
+export const PreviewContainer = withStyles<typeof Modal, {}>(
+  Modal,
+  moduleStyles["PreviewContainer"],
+  { selector: "ui_848512ea_PreviewContainer" },
+);
 
-import { flexStyles } from '@/assets/css/style';
-
-export const PreviewContainer = styled(Modal)`
-  .preview-tree {
-    background: transparent;
-  }
-
-  .beautify-table-body {
-    overflow-y: auto !important;
-  }
-
-  .import-project-full-tip {
-    font-size: var(--font-size-12);
-    color: var(--font-light-color);
-  }
-
-  .beautify-tree .beautify-tree-checkbox {
-    margin-top: 0;
-    align-self: auto;
-  }
-
-  .import-project-append-config {
-    .beautify-select-outlined:not(.beautify-select-customize-input) .beautify-select-selector {
-      /* background: var(--color-bg-right); */
-    }
-  }
-`;
-
-export const LoadingContainer = styled(Spin)`
-  width: 100%;
-  min-height: 500px;
-  ${flexStyles('row', 'center', 'center')}
-`;
+export const LoadingContainer = withStyles<typeof Spin, {}>(
+  Spin,
+  moduleStyles["LoadingContainer"],
+  { selector: "ui_848512ea_LoadingContainer" },
+);

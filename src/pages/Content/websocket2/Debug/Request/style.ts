@@ -1,33 +1,13 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const SettingWrap = styled.div<{ $token: Partial<GlobalThemeToken> }>`
-  .beautify-input {
-    /* width: 120px; */
-    width: 100%;
-  }
+export const SettingWrap = withStyles<
+  "div",
+  { $token: Partial<GlobalThemeToken> }
+>("div", moduleStyles["SettingWrap"], { selector: "ui_41311e70_SettingWrap" });
 
-  .beautify-input-number {
-    width: 100%;
-  }
-
-  .beautify-select {
-    width: 100%;
-  }
-
-  .setting-desc {
-    color: var(--font-light-color);
-  }
-`;
-
-export const MessageHeaderWrap = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 7px;
-  .beautify-select-selector{
-    font-size: 12px !important;
-  }
-  .beautify-select .beautify-select-arrow{
-    font-size: 10px;
-  }
-`;
+export const MessageHeaderWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["MessageHeaderWrap"],
+  { selector: "ui_41311e70_MessageHeaderWrap" },
+);

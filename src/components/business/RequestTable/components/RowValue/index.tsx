@@ -1,7 +1,7 @@
 import { memo, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { UploadProps, message } from 'antd';
+import { UploadProps, message } from '@/components/ui/base';
 
 import { includes, isEqual } from 'lodash';
 import classNames from 'classnames';

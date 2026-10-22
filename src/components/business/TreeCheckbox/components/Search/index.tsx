@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 
-import { Flex, Input } from 'antd';
+import { Flex, Input } from '@/components/ui/base';
 
 import { useDebounce, useSafeState } from 'ahooks';
 import i18next from 'i18next';

@@ -1,0 +1,269 @@
+.TreeMenuContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  /* -webkit-font-smoothing: antialiased; */
+  padding: 0 10px;
+}
+.TreeMenuContainer :global(.beautify-dropdown-trigger) {
+  border: none !important;
+  border-radius: 4px;
+}
+.TreeMenuContainer :global(.beautify-dropdown-trigger):hover {
+  border-color: transparent;
+}
+.TreeMenuContainer :global(.segmented-tabs-content-item) {
+  /* display: flex; */
+  flex-direction: column;
+  /* padding-bottom: 60px; */
+}
+.TreeMenuContainer :global(.tab-container):global(.beautify-segmented) {
+  margin-top: 12px;
+  width: 100%;
+  /* background: var(--search-bg-color); */
+  border-bottom: 1px solid var(--vscode-settings-headerBorder);
+  border-radius: 0;
+  padding-bottom: 0;
+  font-size: 14px;
+}
+.TreeMenuContainer :global(.tab-container):global(.beautify-segmented) :global(.beautify-segmented-group) {
+  justify-content: space-around;
+}
+.TreeMenuContainer :global(.tab-container):global(.beautify-segmented) :global(.beautify-segmented-item-label) {
+  padding: 0 4px;
+}
+.TreeMenuContainer :global(.tab-container):global(.beautify-segmented) :global(.beautify-segmented-item) {
+  /* flex:1 ; */
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+}
+.TreeMenuContainer :global(.tab-container):global(.beautify-segmented) :global(.beautify-segmented-item-selected) {
+  border-color: var(--color-primary);
+  /* font-weight: 600; */
+  background: transparent;
+}
+.TreeMenuContainer :global(.tree-node-item-title-action-wrap) > :global(.mark-wrap) {
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+.TreeMenuContainer :global(.tree-node-item-title-action-wrap) > :global(.mark-wrap)::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #26cea4;
+  content: '';
+}
+.TreeMenuContainer :global(.tree-node-item-title-action-wrap) > :global(.anticon) {
+  font-size: 14px;
+  cursor: pointer;
+}
+.TreeMenuContainer :global(.tree-node-item-title-action-wrap) > :global(.icon-archive) {
+  color: #ffc01e;
+}
+.TreeMenuContainer :global(.tree-node-item-title-action-wrap) > :global(.more-operate-wrap),
+.TreeMenuContainer :global(.tree-node-item-title-action-wrap) > :global(.folder-add-operate-wrap) {
+  /* font-size: 20px; */
+  display: none;
+}
+.TreeMenuContainer :global(.response-empty-wrap) :global(.beautify-empty-image) {
+  margin-bottom: 16px;
+}
+.TreeMenuContainer :global(.response-empty-wrap) :global(.beautify-empty-image) :global(.icon-empty-wrap) {
+  font-size: 80px;
+  color: var(--vscode-settings-headerBorder);
+}
+.TreeMenuContainer :global(.response-empty-wrap) :global(.beautify-empty-description) {
+  font-size: var(--font-size-12);
+  color: var(--vscode-tab-unfocusedInactiveForeground);
+}
+.TreeMenuContainer :global(.response-empty-wrap) :global(.beautify-empty-description) :global(.beautify-btn) {
+  color: var(--color-primary);
+  padding: 0;
+}
+.TreeMenuContainer :global(.tree-wrap) {
+  flex: 1;
+  margin-top: 8px;
+  overflow: hidden;
+  height: calc(100% - 38px);
+}
+.TreeMenuContainer :global(.tree-wrap) :global(.beautify-tree-list-holder) {
+  /* padding-right: 10px; */
+}
+.TreeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+}
+.TreeContainer :global(.beautify-tree) {
+  width: 100%;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) {
+  align-items: center;
+  /* margin: 2px 0; */
+  padding: 0 8px 0 0;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):global(.drag-over)::before {
+  border-radius: var(--border-radius);
+  background-color: var(--color-primary);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):global(.drag-over) :global(.beautify-tree-drop-indicator) {
+  display: none;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):global(.drag-over-gap-top) {
+  padding-top: 8px;
+  box-sizing: border-box;
+  height: auto !important;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* line-height: 30px; */
+  /* stylelint-disable-next-line selector-class-pattern */
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  width: auto;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods) {
+  width: 30px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--color-success);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.post) {
+  color: var(--color-warning);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.get) {
+  color: var(--color-success);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.put),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.socket-service) {
+  color: var(--color-info);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.socket-service) {
+  width: auto;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.socket),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.doc) {
+  color: var(--color-info);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.delete) {
+  color: var(--color-error);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.grpc),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.ws),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.patch) {
+  color: var(--color-success);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) :global(.methods):global(.notes) {
+  width: auto;
+  color: #f7b300;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-title) {
+  width: 100%;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.beautify-tree-switcher) {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):global(.beautify-tree-treenode-selected) :global(.beautify-tree-title) :global(.title) {
+  /* color: var(--color-primary); */
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode)::before {
+  height: 100%;
+  border-radius: var(--border-radius);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.folder-add-operate-wrap),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode) :global(.more-operate-wrap) {
+  font-size: var(--font-size-12);
+  color: var(--font-light-color);
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):hover :global(.more-operate-wrap),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):hover :global(.folder-add-operate-wrap),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.beautify-tree-treenode):hover :global(.node-item-del) {
+  display: block;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-bottom-node-wrap),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-top-node-wrap) {
+  padding-right: 0;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-bottom-node-wrap):hover::before,
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-top-node-wrap):hover::before {
+  background-color: transparent;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-bottom-node-wrap) :global(.beautify-tree-switcher),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-top-node-wrap) :global(.beautify-tree-switcher) {
+  display: none;
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-bottom-node-wrap) :global(.beautify-tree-node-content-wrapper),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-top-node-wrap) :global(.beautify-tree-node-content-wrapper) {
+  padding: 0;
+  width: 100%;
+  cursor: default;
+  /* stylelint-disable-next-line selector-class-pattern */
+}
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-bottom-node-wrap) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle),
+.TreeContainer :global(.beautify-tree) :global(.beautify-tree-list) :global(.tree-top-node-wrap) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-iconEle) {
+  display: none;
+}
+.TreeContainer :global(.root-context-menu-holder-placeholder) {
+  flex: 1;
+  width: 100%;
+}
+.DefaultButtonNodeWrap {
+  margin-top: 4px;
+  padding-bottom: 100px;
+}
+.DefaultButtonNodeWrap :global(.footer-add-btn) {
+  width: 100%;
+  height: 28px;
+}
+.CreateOtherIcon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+.CreateOtherIcon :global(.anticon) {
+  font-size: var(--font-size-16);
+  color: var(--color-primary);
+}
+.ItemTitleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+.ItemTitleContainer > :global(.title) {
+  flex: 1;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ItemTitleContainer > :global(.title) > :global(.children-num) {
+  margin-left: 8px;
+  font-size: var(--font-size-12);
+  letter-spacing: 0.5px;
+  color: var(--font-light-color);
+}

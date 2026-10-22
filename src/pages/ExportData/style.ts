@@ -1,9 +1,9 @@
-import { Flex } from 'antd';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import { Flex } from "@/components/ui/base";
 
-import styled from 'styled-components';
-
-export const ExportDataWrap = styled(Flex)`
-  height: 100vh;
-  align-items: center;
-  background: var(--color-bg-right);
-`;
+export const ExportDataWrap = withStyles<typeof Flex, {}>(
+  Flex,
+  moduleStyles["ExportDataWrap"],
+  { selector: "ui_f28d9eee_ExportDataWrap" },
+);

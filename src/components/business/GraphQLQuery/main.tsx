@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Spin, TreeProps, message } from 'antd';
+import { Flex, Spin, TreeProps, message } from '@/components/ui/base';
 
 import { useDebounceFn, useDeepCompareEffect, useMemoizedFn, useMount } from 'ahooks';
 import { ASTNode, Kind, parse, print } from 'graphql';

@@ -1,4 +1,4 @@
-import { ThemeConfig } from 'antd';
+import { ThemeConfig } from '@/components/ui/base';
 
 export const generateComponents = (antdThemeConfig: {
   token: Partial<GlobalThemeToken>;

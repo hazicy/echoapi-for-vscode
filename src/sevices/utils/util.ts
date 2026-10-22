@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { message } from '@/components/ui/base';
 
 import i18next from 'i18next';
 

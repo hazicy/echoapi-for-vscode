@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Form, Input, Select } from 'antd';
+import { Form, Input, Select } from '@/components/ui/base';
 
 import { map } from 'lodash';
 

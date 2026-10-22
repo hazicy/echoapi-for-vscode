@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 
-import { Flex, Input, Tooltip } from 'antd';
+import { Flex, Input, Tooltip } from '@/components/ui/base';
 
 import { useDebounce, useSafeState } from 'ahooks';
 import i18next from 'i18next';

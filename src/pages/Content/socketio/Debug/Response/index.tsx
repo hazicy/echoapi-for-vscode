@@ -1,7 +1,7 @@
 import React, { lazy, memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex } from 'antd';
+import { Flex } from '@/components/ui/base';
 
 import { useMemoizedFn } from 'ahooks';
 import { isEmpty, isEqual, map, size } from 'lodash';

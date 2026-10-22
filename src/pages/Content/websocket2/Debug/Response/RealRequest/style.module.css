@@ -1,0 +1,41 @@
+.RealRequestContainer {
+  height: 100%;
+}
+.RequestItem {
+  margin-bottom: 16px;
+}
+.RequestItem :global(.content-warp):global(.base-info-wrap) {
+  padding: 12px;
+  border: 1px solid var(--color-border);
+}
+.RequestItem :global(.content-warp):global(.base-info-wrap) :global(.url) {
+  flex: 1;
+  margin-left: 8px;
+  word-break: break-all;
+}
+.RequestItem :global(.content-warp) :global(.beautify-table-cell) {
+  word-break: break-all;
+}
+.RequestItem :global(.content-warp) :global(.segmented-tabs-header) {
+  padding: 0;
+}
+.RequestItem :global(.content-warp):global(.content-request) :global(.segmented-tabs-header) {
+  padding: 0;
+}
+.TabBarExtraContentWrap {
+  margin-left: 12px;
+  height: 100%;
+}
+.TabBarExtraContentWrap :global(.title) {
+  font-size: var(--font-size-14);
+  color: var(--font-content-color);
+}
+.TabBarExtraContentWrap :global(.content) {
+  margin-left: 8px;
+  padding: 4px;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-12);
+  font-weight: 500;
+  color: var(--color-primary);
+  background-color: var(--color-primary-opacity);
+}

@@ -1,7 +1,7 @@
 import { FC, lazy, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Dropdown, Flex, Tree } from 'antd';
+import { Dropdown, Flex, Tree } from '@/components/ui/base';
 
 import { useMemoizedFn, useSafeState } from 'ahooks';
 import { cloneDeep, find, head, isArray } from 'lodash';

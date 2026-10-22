@@ -1,0 +1,22 @@
+.SegmentedTabsContainer {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+.SegmentedTabsContainer :global(.segmented-tabs-header) {
+  margin-bottom: 12px;
+  width: 100%;
+}
+.SegmentedTabsContainer :global(.segmented-tabs-header) :global(.tab-bar-extra-content-wrap) {
+  flex: 1;
+  overflow: hidden;
+}
+.SegmentedTabsContainer :global(.segmented-tabs-content) {
+  flex: 1;
+  min-height: 400px;
+  /* overflow-y: auto; */
+}
+.SegmentedTabsContainer :global(.segmented-tabs-content-item) {
+  width: 100%;
+  height: 100%;
+}

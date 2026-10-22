@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { Flex, Input, Popconfirm } from 'antd';
+import { Flex, Input, Popconfirm } from '@/components/ui/base';
 
 import { snowflakeId } from 'apipost-tools';
 import cn from 'classnames';

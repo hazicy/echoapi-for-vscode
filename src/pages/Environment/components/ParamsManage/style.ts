@@ -1,20 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const ParamsManageContainer = styled.div`
-  width: 100%;
-  height: 100%;
-
-  .params-flex {
-    height: 100%;
-  }
-
-  .params-content {
-    flex: 1;
-    overflow-y: auto;
-  }
-  .params-content{
-    &>div{
-      padding: 0;
-    }
-  }
-`;
+export const ParamsManageContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ParamsManageContainer"],
+  { selector: "ui_deb81f0b_ParamsManageContainer" },
+);

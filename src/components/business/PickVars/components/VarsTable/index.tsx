@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Space, Typography } from 'antd';
+import { Flex, Space, Typography } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import { find, isEmpty, isEqual, isUndefined } from 'lodash';

@@ -1,33 +1,9 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const HttpExecDetailWrapper = styled.div<{ $token: Partial<GlobalThemeToken> }>`
-  width: 100%;
-
-  .url-container {
-    .icon {
-      width: auto;
-    }
-
-    .url {
-      margin-left: 8px;
-      font-size: var(--font-size-14);
-      color: var(--font-content-color);
-      word-break: break-all;
-    }
-  }
-
-  .beautify-tabs-tab {
-    padding: 4px 8px 12px;
-  }
-
-  .assert-item {
-    padding: 2px 12px;
-    padding-left: 16px;
-    border-radius: 4px;
-    font-size: var(--font-size-14);
-
-    .beautify-alert-message {
-      max-width: 510px;
-    }
-  }
-`;
+export const HttpExecDetailWrapper = withStyles<
+  "div",
+  { $token: Partial<GlobalThemeToken> }
+>("div", moduleStyles["HttpExecDetailWrapper"], {
+  selector: "ui_ac1c9a30_HttpExecDetailWrapper",
+});

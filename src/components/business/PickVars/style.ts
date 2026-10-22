@@ -1,18 +1,15 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const PickVarWrapper = styled.div<{ $token: Partial<GlobalThemeToken> }>`
-  .label {
-    flex-shrink: 0;
-    width: 56px;
-    font-size: var(--font-size-14);
-  }
+export const PickVarWrapper = withStyles<
+  "div",
+  { $token: Partial<GlobalThemeToken> }
+>("div", moduleStyles["PickVarWrapper"], {
+  selector: "ui_a29906e0_PickVarWrapper",
+});
 
-  .beautify-select-arrow {
-    font-size: var(--font-size-12);
-  }
-`;
-
-export const DescWrapper = styled.span`
-  font-size: 12px;
-  color: var(--font-light-color);
-`;
+export const DescWrapper = withStyles<"span", {}>(
+  "span",
+  moduleStyles["DescWrapper"],
+  { selector: "ui_a29906e0_DescWrapper" },
+);

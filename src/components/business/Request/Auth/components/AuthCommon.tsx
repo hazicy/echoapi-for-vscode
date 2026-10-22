@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Form, Input } from 'antd';
+import { Form, Input } from '@/components/ui/base';
 
 import { isObject, keys, map } from 'lodash';
 

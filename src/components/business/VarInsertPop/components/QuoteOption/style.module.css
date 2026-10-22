@@ -1,0 +1,72 @@
+.QuoteOptionContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 304px;
+  height: 200px;
+  overflow-y: auto;
+}
+.QuoteOptionContainer :global(.list) {
+  flex: 1;
+  overflow-y: auto;
+  border-right: 1px solid var(--color-border);
+}
+.QuoteOptionContainer :global(.list) :global(.list-item) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 8px;
+  box-sizing: border-box;
+  min-height: 32px;
+  cursor: pointer;
+  gap: 10px;
+}
+.QuoteOptionContainer :global(.list) :global(.list-item):hover,
+.QuoteOptionContainer :global(.list) :global(.list-item):global(.active) {
+  background: var(--popover-select-bg-hover-color);
+}
+.QuoteOptionContainer :global(.list) :global(.list-item-icon) {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--border-radius);
+  line-height: 18px;
+  text-align: center;
+  color: #fff;
+  background: #3a86ff;
+}
+.QuoteOptionContainer :global(.list) :global(.list-item-icon):global(.e) {
+  background: #3cc071;
+}
+.QuoteOptionContainer :global(.list) :global(.list-item-icon):global(.g) {
+  background: #fa8c16;
+}
+.QuoteOptionContainer :global(.list) :global(.list-item-key) {
+  width: 0;
+  color: var(--font-content-color);
+  /* stylelint-disable-next-line order/properties-order */
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.QuoteOptionContainer :global(.content) {
+  display: flex;
+  flex: 1;
+  overflow-y: auto;
+  flex-direction: column;
+  padding-left: 8px;
+  box-sizing: border-box;
+  gap: 12px;
+  max-width: 173px;
+}
+.QuoteOptionContainer :global(.content) :global(.label) {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--font-light-color);
+}
+.QuoteOptionContainer :global(.content) :global(.value) {
+  font-size: 14px;
+  font-weight: 400;
+  word-wrap: break-word;
+  word-break: break-all;
+  color: var(--font-content-color);
+}

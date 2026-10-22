@@ -11,8 +11,8 @@ import {
   Switch,
   Upload,
   message,
-} from "antd";
-import type { RcFile, UploadChangeParam } from "antd/es/upload";
+} from '@/components/ui/base';
+import type { RcFile, UploadChangeParam } from '@/components/ui/base';
 
 import { isJson5 } from "apipost-tools";
 import JSON5 from "json5";

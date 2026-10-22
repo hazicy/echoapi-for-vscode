@@ -1,0 +1,33 @@
+.HeaderContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 4px;
+}
+.HeaderContainer > :global(.url-group-wrap) {
+  flex: 1;
+}
+.HeaderContainer :global(.url-group-container) {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 28px;
+}
+.HeaderContainer :global(.url-group-container) :global(.env-desc) {
+  max-width: 50%;
+  overflow: hidden;
+  font-size: var(--font-size-14);
+  line-height: 36px;
+  white-space: nowrap;
+  color: var(--font-light-color);
+  text-overflow: ellipsis;
+}
+.HeaderContainer :global(.url-group-container) :global(.beautify-input) {
+  flex: 1;
+  height: 100%;
+}
+.HeaderContainer :global(.beautify-btn) {
+  height: 36px !important;
+}

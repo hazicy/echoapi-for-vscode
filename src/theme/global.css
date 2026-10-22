@@ -1,0 +1,8 @@
+:root {
+  --color-error: #f92814;
+
+  /* --color-success: #0cbb52; */
+  --color-success: #26cea4;
+  --color-warning: #ffb400;
+  --color-info: #097bed;
+}

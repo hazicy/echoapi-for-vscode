@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { HistoryReportListWrapper, HistoryReportListItem } from './style';
 import { TestingReportList } from '@/types/testing/res';
 import { isArray, last } from 'lodash';
-import { Dropdown, Flex, MenuProps, Tooltip, Typography } from 'antd';
+import { Dropdown, Flex, MenuProps, Tooltip, Typography } from '@/components/ui/base';
 import cn from 'classnames';
 import { IconFont } from '@/components/ui';
 import { formatTimeToDateTimeLong } from '@/utils/time';

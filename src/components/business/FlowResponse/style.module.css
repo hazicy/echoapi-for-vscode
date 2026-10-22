@@ -1,0 +1,45 @@
+.FlowResponseWrap {
+  height: 100%;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  overflow-y: auto;
+}
+.FlowResponseWrap :global(.icon-span) {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  border-radius: 2px;
+}
+.FlowResponseWrap :global(.icon-span):global(.message) {
+  background-color: #219011;
+}
+.FlowResponseWrap :global(.icon-span):global(.send) {
+  background-color: #ffc700;
+}
+.FlowResponseWrap :global(.icon) {
+  font-size: var(--font-size-14);
+}
+.FlowResponseWrap :global(.beautify-list-item) {
+  cursor: pointer;
+}
+.FlowResponseWrap :global(.beautify-list-item) :global(.flow-icon) {
+  display: none;
+  font-size: 16px;
+  color: var(--icon-color);
+}
+.FlowResponseWrap :global(.beautify-list-item) :global(.flow-icon):hover {
+  color: var(--color-primary);
+}
+.FlowResponseWrap :global(.beautify-list-item):global(.active) {
+  background: var(--form-hover-color);
+}
+.FlowResponseWrap :global(.beautify-list-item):global(.active) :global(.flow-icon) {
+  display: inline-block;
+}
+.FlowResponseWrap :global(.beautify-list-item):hover {
+  background: var(--form-hover-color);
+}
+.FlowResponseWrap :global(.beautify-list-item):hover :global(.flow-icon) {
+  display: inline-block;
+}

@@ -1,6 +1,6 @@
 import { FC, ReactNode, useMemo } from 'react';
 
-import { TabPaneProps, Tabs, TabsProps } from 'antd';
+import { TabPaneProps, Tabs, TabsProps } from '@/components/ui/base';
 
 import { map } from 'lodash';
 

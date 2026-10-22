@@ -1,10 +1,17 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { DirectionType } from '@/types/common';
+import { DirectionType } from "@/types/common";
 
-export const RequestContainer = styled.div<{ $direction: DirectionType }>`
-  /* padding: 0 var(--padding16); */
-  padding-bottom: ${({ $direction }) => ($direction === 'vertical' ? 12 : 0)}px;
-  width: 100%;
-  height: 100%;
-`;
+export const RequestContainer = withStyles<
+  "div",
+  { $direction: DirectionType }
+>("div", moduleStyles["RequestContainer"], {
+  selector: "ui_fa30f745_RequestContainer",
+  variables: {
+    "--style-fa30f745-RequestContainer-0": (props) =>
+      String(
+        (({ $direction }) => ($direction === "vertical" ? 12 : 0))(props),
+      ) + "px",
+  },
+});

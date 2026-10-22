@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { Flex, message } from 'antd';
+import { Flex, message } from '@/components/ui/base';
 
 import RequestGlobal from '@/components/business/RequestGlobal';
 import Button from '@/components/ui/Button';

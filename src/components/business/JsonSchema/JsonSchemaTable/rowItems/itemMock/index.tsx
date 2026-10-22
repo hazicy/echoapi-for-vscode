@@ -1,7 +1,7 @@
 import React, { memo, useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { AutoComplete } from 'antd';
+import { AutoComplete } from '@/components/ui/base';
 
 import { useMemoizedFn } from 'ahooks';
 import cn from 'classnames';

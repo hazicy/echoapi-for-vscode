@@ -1,6 +1,7 @@
-import type { MessageInstance } from 'antd/es/message/interface';
-import type { ModalStaticFunctions } from 'antd/es/modal/confirm';
-import type { NotificationInstance } from 'antd/es/notification/interface';
+import { message as messageApi, notification as notificationApi, modal as modalApi } from '@/components/ui/base/feedback';
+import type { MessageInstance } from '@/components/ui/base';
+import type { ModalStaticFunctions } from '@/components/ui/base';
+import type { NotificationInstance } from '@/components/ui/base';
 
 import { create } from 'zustand';
 
@@ -19,9 +20,9 @@ type Action = {
 };
 
 const useAntdApp = create<State & Action>()((set) => ({
-  message: undefined,
-  modal: undefined,
-  notification: undefined,
+  message: messageApi,
+  modal: modalApi,
+  notification: notificationApi,
   updateAntdStaticFunctions: (staticFunctions) =>
     set({
       message: staticFunctions.message,

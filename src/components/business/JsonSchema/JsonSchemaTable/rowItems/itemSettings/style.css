@@ -1,0 +1,21 @@
+.setting-confirm-container .beautify-popconfirm-message {
+  width: 100%;
+}
+.setting-confirm-container .beautify-popconfirm-message-text {
+  width: 100%;
+}
+.setting-confirm-container .beautify-btn {
+  padding: 1px 7px;
+  width: auto;
+  height: 24px;
+}
+.setting-confirm-container .schema-setting {
+  padding: 16px 0;
+}
+.setting-confirm-container .schema-setting .item-all-line {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}

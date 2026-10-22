@@ -1,6 +1,6 @@
 import React, { FC, useMemo, useState } from 'react';
 import { useSafeState } from 'ahooks';
-import { Flex } from 'antd';
+import { Flex } from '@/components/ui/base';
 import produce from 'immer';
 import { DirectionType } from '@/types/common';
 import { ResizablePanels, SuspenseContent } from '@/components/business';

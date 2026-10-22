@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 
-import { Flex, Switch } from 'antd';
+import { Flex, Switch } from '@/components/ui/base';
 
 import { isEqual } from 'lodash';
 

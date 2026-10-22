@@ -1,26 +1,12 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const PushWrap = styled.div`
-  display: flex;
-  align-items: center;
-  height: 100vh;
-  background: var(--color-bg-right);
-`;
+export const PushWrap = withStyles<"div", {}>("div", moduleStyles["PushWrap"], {
+  selector: "ui_211fb877_PushWrap",
+});
 
-
-export const PushWrapContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-top: 40px;
-  min-width: 90%;
-  max-width: 90%;
-  min-height: 80%;
-  &>.title{
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--font-title-color);
-    margin-bottom: 20px;
-  }
- 
- 
-`;
+export const PushWrapContent = withStyles<"div", {}>(
+  "div",
+  moduleStyles["PushWrapContent"],
+  { selector: "ui_211fb877_PushWrapContent" },
+);

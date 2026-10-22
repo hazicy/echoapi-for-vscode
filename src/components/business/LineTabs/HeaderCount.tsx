@@ -3,7 +3,7 @@ import { Children, FC, useMemo } from 'react';
 import { isArray, isPlainObject, keys, size } from 'lodash';
 
 import { TabsHeaderCountContainer, TabsHeaderDotContainer } from './style';
-import { Badge } from 'antd';
+import { Badge } from '@/components/ui/base';
 
 interface Props {
   dataSource?: any;

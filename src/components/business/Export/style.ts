@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const ExportWrap = styled.div`
-    padding: 0px;
-    height: 100%;
-    width: 100%;
-    padding: 16px;
-`;
+export const ExportWrap = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ExportWrap"],
+  { selector: "ui_b9998105_ExportWrap" },
+);

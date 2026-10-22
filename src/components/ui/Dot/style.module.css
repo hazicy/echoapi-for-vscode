@@ -1,0 +1,9 @@
+.DotWrapper :global(.dot) {
+  border-radius: 50%;
+}
+.DotWrapper :global(.dot):global(.success) {
+  background-color: var(--color-success);
+}
+.DotWrapper :global(.dot):global(.error) {
+  background-color: var(--color-error);
+}

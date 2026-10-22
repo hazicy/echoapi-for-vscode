@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { message } from 'antd';
+import { message } from '@/components/ui/base';
 
 import breaks from '@bytemd/plugin-breaks';
 import gemoji from '@bytemd/plugin-gemoji';

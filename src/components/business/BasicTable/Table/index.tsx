@@ -1,4 +1,4 @@
-import { Table as AntdTable } from 'antd';
+import { Table as AntdTable } from '@/components/ui/base';
 
 import ResizableTable from '../ResizableTable';
 import { AnyObject, TableProps } from '../types';

@@ -1,7 +1,7 @@
 import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {Flex, SegmentedProps, Select, message } from 'antd';
+import {Flex, SegmentedProps, Select, message } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import classNames from 'classnames';

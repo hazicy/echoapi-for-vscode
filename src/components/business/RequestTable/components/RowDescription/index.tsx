@@ -1,7 +1,7 @@
 import { FC, memo, useRef, useState } from 'react';
 
-import { Input } from 'antd';
-import { TextAreaProps } from 'antd/es/input';
+import { Input } from '@/components/ui/base';
+import { TextAreaProps } from '@/components/ui/base';
 
 import { useUpdateEffect } from 'ahooks';
 import { isString, trim } from 'lodash';

@@ -1,4 +1,4 @@
-import { Popover as AntdPopover, PopoverProps as AntdPopoverProps } from 'antd';
+import { Popover as AntdPopover, PopoverProps as AntdPopoverProps } from '@/components/ui/base';
 
 export type PopoverProps = AntdPopoverProps;
 

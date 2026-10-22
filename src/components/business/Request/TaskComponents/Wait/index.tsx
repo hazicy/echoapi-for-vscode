@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { InputNumberProps } from 'antd';
+import { InputNumberProps } from '@/components/ui/base';
 
 import InputNumber from '@/components/ui/InputNumber';
 import { TaskBaseItem } from '@/types/apis/request';

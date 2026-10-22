@@ -15,7 +15,7 @@ import { isEqual } from 'lodash';
 import { genUrlByQuery } from '@/utils/apis';
 import produce from 'immer';
 import { Button } from '@/components/ui';
-import { Flex } from 'antd';
+import { Flex } from '@/components/ui/base';
 import { openEnvPage } from '@/events/apis/env';
 import { RequestContainer } from './style';
 

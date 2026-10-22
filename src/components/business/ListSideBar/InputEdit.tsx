@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Dropdown, Flex, Input, Popconfirm, Typography } from 'antd';
+import { Dropdown, Flex, Input, Popconfirm, Typography } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import classnames from 'classnames';

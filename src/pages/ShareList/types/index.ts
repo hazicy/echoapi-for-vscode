@@ -1,5 +1,5 @@
 import { ApiDetailsData } from '@/types/apis/api';
-import type { TabPaneProps } from 'antd';
+import type { TabPaneProps } from '@/components/ui/base';
 
 export type PanelProps = {
   token?: Partial<GlobalThemeToken>;

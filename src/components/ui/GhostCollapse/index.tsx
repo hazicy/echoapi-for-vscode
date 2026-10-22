@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
-import type { CollapseProps as AntdCollapseProps } from 'antd';
-import { Collapse as AntdCollapse, ConfigProvider } from 'antd';
+import type { CollapseProps as AntdCollapseProps } from '@/components/ui/base';
+import { Collapse as AntdCollapse, ConfigProvider } from '@/components/ui/base';
 
 import classNames from 'classnames';
 

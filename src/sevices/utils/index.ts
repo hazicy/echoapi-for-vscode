@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { message } from 'antd';
+import { message } from '@/components/ui/base';
 import { version } from '@/../package.json';
 import axios, { AxiosRequestConfig } from 'axios';
 import { includes, omit, values } from 'lodash';

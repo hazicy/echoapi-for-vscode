@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'antd';
+import { Button } from '@/components/ui/base';
 import { IconFont } from '@/components/ui';
 import { useTranslation } from 'react-i18next';
 import { LeftMenuContainer, Render, EnvironmentContainer } from './style.ts';

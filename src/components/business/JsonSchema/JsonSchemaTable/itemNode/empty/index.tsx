@@ -1,7 +1,7 @@
 import React, { memo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Input } from 'antd';
+import { Input } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import cn from 'classnames';

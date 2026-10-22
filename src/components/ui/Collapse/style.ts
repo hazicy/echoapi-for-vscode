@@ -1,19 +1,9 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { flexStyles } from '@/assets/css/style';
-
-export const CollapseWrapper = styled.div<{ $token: Partial<GlobalThemeToken> }>`
-  width: 100%;
-
-  .beautify-collapse {
-    .beautify-collapse-header {
-      font-size: var(--font-size-14);
-      ${flexStyles('row', 'center', 'space-between')}
-      background-color: var(--table-header-bg-color);
-    }
-
-    .beautify-collapse-content {
-      background-color: var(--color-bg-right);
-    }
-  }
-`;
+export const CollapseWrapper = withStyles<
+  "div",
+  { $token: Partial<GlobalThemeToken> }
+>("div", moduleStyles["CollapseWrapper"], {
+  selector: "ui_0d5d536e_CollapseWrapper",
+});

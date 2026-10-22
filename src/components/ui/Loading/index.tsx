@@ -1,4 +1,4 @@
-import { Spin } from 'antd';
+import { Spin } from '@/components/ui/base';
 
 import { LoadingWrapper } from './style';
 

@@ -1,0 +1,24 @@
+.DescMoreItemWrap {
+  height: 26px;
+}
+.DescMoreItemWrap:global(.tips-item-wrap) {
+  color: var(--font-light-color);
+}
+.ColumnConfigContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 36px;
+  padding-inline: 8px;
+  background-color: transparent;
+}
+.ColumnConfigContainer :global(.raw-parameter-pilot-bubble-tooltip) {
+  max-width: 320px;
+}
+.ColumnConfigContainer :global(.icon-navi-more) {
+  cursor: pointer;
+  color: var(--font-light-color);
+}
+.ColumnConfigContainer :global(.icon-navi-more):hover {
+  color: var(--color-primary);
+}

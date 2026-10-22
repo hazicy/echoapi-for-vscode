@@ -1,0 +1,46 @@
+.SortRowWrapper {
+  display: flex;
+  height: 28px;
+  background-color: var(--highlight-background-color-tertiary);
+}
+.SortRowWrapper :global(.table-tr) {
+  display: flex;
+  width: 100%;
+  height: 28px;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+}
+.SortRowWrapper :global(.expand-btn) {
+  display: flex;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+}
+.SortRowWrapper :global(.table-td) {
+  flex: 1;
+  height: 28px;
+  border: 1px solid transparent;
+  border-top: none;
+  border-left: none;
+}
+.SortRowWrapper :global(.schema-td-warper) {
+  display: flex;
+  float: left;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 0;
+  width: 100%;
+  height: 100%;
+  line-height: 32px;
+}
+.SortRowWrapper :global(.schema-td-warper):global(.schema-width-auto) {
+  width: auto !important;
+}
+.SortRowWrapper :global(.settings-td) {
+  flex: 2;
+  margin-right: 0;
+}
+.SortRowWrapper :global(.settings-td) :global(.txt-description) {
+  flex: 1;
+}

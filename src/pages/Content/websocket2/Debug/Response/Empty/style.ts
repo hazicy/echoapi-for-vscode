@@ -1,40 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const ResponseEmptyContainer = styled.div`
-  height: 100%;
-
-  &.mask-mode {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 10;
-    height: calc(100% - 44px);
-    background-color: var(--color-bg-right);
-  }
-
-  .response-empty-wrap {
-    .beautify-empty-image {
-      margin-bottom: 30px;
-
-      .icon-empty-wrap {
-        font-size: 80px;
-        color: var(--vscode-settings-headerBorder);
-      }
-    }
-
-    .beautify-empty-description {
-      font-size: var(--font-size-12);
-      color: var(--font-light-color);
-
-      .empty-desc-download {
-        color: var(--color-primary);
-        cursor: pointer;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-`;
+export const ResponseEmptyContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["ResponseEmptyContainer"],
+  { selector: "ui_d855c28c_ResponseEmptyContainer" },
+);

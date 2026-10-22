@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import type { MenuProps } from 'antd';
-import { Flex, Menu } from 'antd';
+import type { MenuProps } from '@/components/ui/base';
+import { Flex, Menu } from '@/components/ui/base';
 
 import { filter, isEmpty, map, size } from 'lodash';
 

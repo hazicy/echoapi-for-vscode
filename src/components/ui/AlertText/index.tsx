@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { AlertProps } from 'antd';
+import { AlertProps } from '@/components/ui/base';
 
 import { AlertTextWrap } from './style';
 

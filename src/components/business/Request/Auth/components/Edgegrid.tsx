@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Form, Input } from 'antd';
+import { Form, Input } from '@/components/ui/base';
 
 import { map } from 'lodash';
 

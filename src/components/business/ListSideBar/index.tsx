@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, Flex } from 'antd';
+import { Button, Flex } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import classNames from 'classnames';

@@ -1,15 +1,7 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const DotWrapper = styled.div<{ $token: Partial<GlobalThemeToken> }>`
-  .dot {
-    border-radius: 50%;
-
-    &.success {
-      background-color: var(--color-success);
-    }
-
-    &.error {
-      background-color: var(--color-error);
-    }
-  }
-`;
+export const DotWrapper = withStyles<
+  "div",
+  { $token: Partial<GlobalThemeToken> }
+>("div", moduleStyles["DotWrapper"], { selector: "ui_36d11b71_DotWrapper" });

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex } from 'antd';
+import { Flex } from '@/components/ui/base';
 
 import { useMemoizedFn } from 'ahooks';
 import { snowflakeId } from 'apipost-tools';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TagProps } from 'antd';
+import { TagProps } from '@/components/ui/base';
 
 import { APIS_TARGET_TYPE_ENUM } from '@/constants/apis';
 import { ColorMap } from '@/constants/apis/common';

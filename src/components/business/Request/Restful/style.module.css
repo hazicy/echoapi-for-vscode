@@ -1,0 +1,12 @@
+.RestfulQueryContainer :global(.beautify-table-thead) :global(.beautify-table-cell) {
+  padding: 4px 10px;
+}
+.RestfulQueryContainer :global(.beautify-table-tbody) tr :global(.row-description-operation) {
+  visibility: hidden;
+}
+.RestfulQueryContainer :global(.beautify-table-tbody) tr:hover :global(.row-description-operation) {
+  visibility: visible;
+}
+.RestfulQueryContainer :global(.table-custom-empty-wrap) :global(.beautify-table-tbody) {
+  display: none;
+}

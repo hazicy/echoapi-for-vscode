@@ -6,7 +6,7 @@ import { divide, format, round } from 'mathjs';
 import FileSaver from 'file-saver';
 import { concat, countBy, forEach, includes, isArray, isObject, isPlainObject, isString, size, toUpper, trim } from 'lodash';
 import { ComponentType } from 'react';
-import { message } from 'antd';
+import { message } from '@/components/ui/base';
 import { APIS_TARGET_TYPE_ENUM } from '@/constants/apis';
 import { ApisBaseData, ApisBaseDataItem } from '@/types/apis/base';
 /**

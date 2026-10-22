@@ -1,20 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const LoadingWrapper = styled.div`
-  display: flex;
-  z-index: 99999;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  background: var(--color-bg-right);
-  flex-flow: row nowrap;
-
-  img,
-  svg {
-    margin: 0 auto;
-    width: 128px;
-    height: 128px;
-  }
-`;
+export const LoadingWrapper = withStyles<"div", {}>(
+  "div",
+  moduleStyles["LoadingWrapper"],
+  { selector: "ui_e1b00ec5_LoadingWrapper" },
+);

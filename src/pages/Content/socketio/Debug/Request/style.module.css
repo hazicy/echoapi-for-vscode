@@ -1,0 +1,32 @@
+.SettingWrap :global(.beautify-input) {
+  /* width: 120px; */
+  width: 100%;
+}
+.SettingWrap :global(.beautify-input-number) {
+  width: 100%;
+}
+.SettingWrap :global(.beautify-select) {
+  width: 100%;
+}
+.SettingWrap :global(.setting-desc) {
+  color: var(--font-light-color);
+}
+.RawEditorWrap {
+  flex: 1;
+  height: 0;
+}
+.RawEditorWrap :global(.code-editor-wrapper) {
+  width: 97%;
+}
+.MessageHeaderWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 7px;
+}
+.MessageHeaderWrap :global(.beautify-select-selector) {
+  font-size: 12px !important;
+}
+.MessageHeaderWrap :global(.beautify-select) :global(.beautify-select-arrow) {
+  font-size: 10px;
+}

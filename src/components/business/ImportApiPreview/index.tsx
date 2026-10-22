@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Checkbox, CheckboxProps, Flex, Form, Select, Tabs, TreeSelect, Typography } from 'antd';
+import { Checkbox, CheckboxProps, Flex, Form, Select, Tabs, TreeSelect, Typography } from '@/components/ui/base';
 
 import { filter, map, isArray } from 'lodash';
 

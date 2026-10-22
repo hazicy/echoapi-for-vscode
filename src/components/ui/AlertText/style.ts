@@ -1,14 +1,9 @@
-import { Alert } from 'antd';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import { Alert } from "@/components/ui/base";
 
-import styled from 'styled-components';
-
-export const AlertTextWrap = styled(Alert)`
-  padding: 4px 8px;
-  border: none;
-  line-height: 22px;
-  background-color: var(--color-bg-page);
-
-  .beautify-alert-message {
-    color: var(--font-content-color);
-  }
-`;
+export const AlertTextWrap = withStyles<typeof Alert, {}>(
+  Alert,
+  moduleStyles["AlertTextWrap"],
+  { selector: "ui_82de3bbb_AlertTextWrap" },
+);

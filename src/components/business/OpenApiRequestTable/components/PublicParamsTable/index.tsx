@@ -1,7 +1,7 @@
 import { FC, memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Checkbox, Collapse, Flex, Input, Select, Space, Tag } from 'antd';
+import { Checkbox, Collapse, Flex, Input, Select, Space, Tag } from '@/components/ui/base';
 
 import cn from 'classnames';
 import { concat, filter, isEqual, map, size, trim } from 'lodash';
@@ -59,7 +59,7 @@ const PublicParamsTable: FC<Props> = memo(
         commonParameters = concat(commonParameters, newGlobalParams);
       }
 
-      commonParameters = concat(commonParameters, newFolderParams);
+      commonParameters = [...commonParameters, ...newFolderParams] as typeof commonParameters;
       if (tabType === 'header') {
         commonParameters = concat(
           commonParameters,

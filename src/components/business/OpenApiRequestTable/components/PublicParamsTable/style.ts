@@ -1,43 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { selectRequestStyle } from '../../style';
-
-export const BasicTableContainer = styled.div`
-  .beautify-table-thead {
-    .beautify-table-cell {
-      padding: 10px;
-    }
-  }
-
-  ${selectRequestStyle}
-  .table-collapse {
-    .beautify-collapse-content-box {
-      padding-top: 0 !important;
-    }
-  }
-
-  .table-collapse-public {
-    .beautify-collapse-header {
-      display: flex;
-      align-items: center;
-      font-size: 12px;
-      background-color: inherit;
-    }
-
-    & > .beautify-collapse-item {
-      .beautify-collapse-content {
-        padding-right: 0 !important;
-        padding-left: 0 !important;
-      }
-    }
-  }
-
-  .global-param-edit {
-    color: var(--font-light-color);
-    cursor: pointer;
-
-    &:hover {
-      color: var(--color-primary);
-    }
-  }
-`;
+export const BasicTableContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["BasicTableContainer"],
+  { selector: "ui_e7a9c4c0_BasicTableContainer" },
+);

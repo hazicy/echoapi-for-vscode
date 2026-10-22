@@ -1,0 +1,11 @@
+.RequestContainer {
+  padding: 0 16px 12px;
+  width: 100%;
+  height: 100%;
+}
+.RequestContainer :global(.beautify-text-btn-highlight) {
+  color: var(--color-primary) !important;
+}
+.RequestContainer :global(.beautify-text-btn-highlight):hover {
+  color: var(--color-primary) !important;
+}

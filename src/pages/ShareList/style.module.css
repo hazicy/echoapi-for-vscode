@@ -1,0 +1,150 @@
+.ShareContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  background-color: var(--color-bg-right);
+}
+.ShareContainer :global(.response-empty-wrap) :global(.beautify-empty-image) {
+  margin-bottom: 16px;
+}
+.ShareContainer :global(.response-empty-wrap) :global(.beautify-empty-image) :global(.icon-empty-wrap) {
+  font-size: 80px;
+  color: var(--vscode-settings-headerBorder);
+}
+.ShareContainer :global(.beautify-spin-nested-loading) {
+  flex: 1;
+}
+.ShareContainer :global(.beautify-spin-nested-loading) :global(.beautify-spin-container) {
+  height: 100%;
+}
+.DocListContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 4px;
+  overflow-y: hidden;
+}
+.ItemTitleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 8px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+}
+.ItemTitleContainer :global(.more-operate-wrap) {
+  display: flex;
+  margin-left: 4px;
+  flex: 1;
+  justify-content: flex-end;
+  visibility: hidden;
+}
+.ItemTitleContainer :global(.panel-icon) {
+  width: 28px;
+  height: 28px;
+}
+.ItemTitleContainer:hover :global(.more-operate-wrap) {
+  display: flex;
+  visibility: visible;
+}
+.ItemTitleContainer:hover,
+.ItemTitleContainer:global(.select-item) {
+  background: var(--vscode-list-hoverBackground, #303030);
+}
+.ItemTitleContainer :global(.time) {
+  font-size: 10px;
+  flex: 1;
+}
+.ItemTitleContainer :global(.name) {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  flex: 1;
+  overflow: hidden;
+}
+.ItemTitleContainer :global(.name) svg {
+  font-size: 14px;
+}
+.TabsWrap {
+  position: relative;
+  flex: 1;
+  overflow-y: auto;
+}
+.TabsWrap :global(.share-list-delete-btn) {
+  display: none;
+}
+.TabsWrap :global(.share-list-delete-btn):global(.show) {
+  display: flex;
+}
+.TabsWrap :global(.beautify-flex) :global(.beautify-btn) {
+  margin-left: 12px;
+  padding: 4px 8px;
+  height: 28px;
+}
+.TabsWrap :global(.beautify-flex) :global(.beautify-btn):global(.beautify-btn-link) {
+  color: var(--font-light-color);
+}
+.TabsWrap :global(.beautify-flex) :global(.beautify-btn):global(.beautify-btn-link):hover {
+  color: var(--font-content-color);
+}
+.TabsWrap :global(.beautify-tabs) {
+  height: 100%;
+}
+.TabsWrap :global(.beautify-tabs) :global(.beautify-flex) {
+  /* margin-bottom: 16px; */
+}
+.TabsWrap :global(.beautify-tabs) :global(.beautify-tabs-content) {
+  height: 100%;
+}
+.TabsWrap :global(.beautify-tabs) :global(.beautify-tabs-content) :global(.beautify-tabs-tabpane) {
+  height: 100%;
+}
+.TabsWrap :global(.beautify-tabs-tab) {
+  padding: 10px;
+}
+.TabsWrap :global(.beautify-tabs-tab) :global(.beautify-tabs-tab-btn) {
+  font-size: var(--font-size-14);
+}
+.TabsWrap :global(.beautify-checkbox-group) {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.ControlExtraContentStyles {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  left: 0;
+  z-index: 2;
+  padding: 0 16px;
+  width: 100%;
+  height: 36px;
+  background-color: var(--color-bg-right);
+  box-shadow: 0 2px 16px 0 var(--box-shadow-modal-color);
+}
+.ControlExtraContentStyles :global(.beautify-btn) {
+  margin-left: 12px;
+  width: 82px;
+  height: 28px;
+}
+.ControlExtraContentStyles :global(.beautify-checkbox-wrapper) {
+  align-items: center;
+}
+.ControlExtraContentStyles :global(.beautify-checkbox-wrapper) :global(.beautify-checkbox-indeterminate) :global(.beautify-checkbox-inner) {
+  border-color: var(--color-primary);
+  background-color: var(--color-bg-right);
+}
+.ControlExtraContentStyles :global(.beautify-checkbox-wrapper) span span {
+  color: var(--color-primary);
+}
+.ShareListWrap {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  flex: 1;
+}

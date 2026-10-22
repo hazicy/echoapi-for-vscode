@@ -1,92 +1,26 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { flexStyles } from '@/assets/css/style';
+export const TitleContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["TitleContainer"],
+  { selector: "ui_119c839c_TitleContainer" },
+);
 
-export const TitleContainer = styled.div`
-  padding-bottom: 12px;
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--font-title-color);
-`;
+export const EnvManageContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["EnvManageContainer"],
+  { selector: "ui_119c839c_EnvManageContainer" },
+);
 
-export const EnvManageContainer = styled.div`
-  width: 100%;
-  height: 100%;
+export const EnvOpContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["EnvOpContainer"],
+  { selector: "ui_119c839c_EnvOpContainer" },
+);
 
-  .env-manage-flex {
-    height: 100%;
-  }
-
-  .beautify-table-tbody,
-  .beautify-table-thead {
-    .beautify-table-cell {
-      padding: 0;
-
-      /* height: 32px; */
-
-      input,
-      textarea {
-        height: 36px;
-        border-color: transparent;
-
-        &:hover,
-        &:focus {
-          border-color: var(--color-primary);
-          background-color: var(--highlight-change-color);
-        }
-      }
-    }
-  }
-
-  .env-manage-content {
-    flex: 1;
-    overflow-y: auto;
-
-    .env-manage-input {
-      margin-bottom: 12px;
-    }
-
-    .env-var-name {
-      &.beautify-input-disabled {
-        background-color: transparent;
-      }
-    }
-
-    .beautify-table-tbody {
-      tr {
-        &:hover {
-          .anticon {
-            visibility: visible;
-          }
-        }
-      }
-    }
-  }
-
-  .beautify-table-thead {
-    .beautify-table-cell {
-      padding: 0 12px;
-    }
-  }
-`;
-
-export const EnvOpContainer = styled.div`
-  ${flexStyles('row', 'center', 'center')}
-  .anticon {
-    visibility: hidden;
-    color: var(--icon-color);
-  }
-`;
-
-export const VariableVarsOpContainer = styled.div`
-  ${flexStyles('row', 'center', 'center')}
-  gap: 4px;
-  padding: 0 4px;
-
-  .anticon {
-    visibility: hidden;
-    font-size: 16px;
-    color: var(--icon-color);
-    cursor: pointer;
-  }
-`;
+export const VariableVarsOpContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["VariableVarsOpContainer"],
+  { selector: "ui_119c839c_VariableVarsOpContainer" },
+);

@@ -1,66 +1,35 @@
-import styled, { css } from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { ellipsisStyle, flexStyles } from '@/assets/css/style';
+export const HeaderActionWrap = withStyles<
+  "div",
+  { $token: Partial<GlobalThemeToken> }
+>("div", moduleStyles["HeaderActionWrap"], {
+  selector: "ui_aa6c879e_HeaderActionWrap",
+});
 
-export const HeaderActionWrap = styled.div<{ $token: Partial<GlobalThemeToken> }>`
-  padding-left: 17px;
-  width: 100%;
-  ${flexStyles('row', 'center', 'flex-end')}
-  height: 32px;
-  line-height: 32px;
+export const ImportContainer = withStyles<
+  "div",
+  { $token: Partial<GlobalThemeToken> }
+>("div", moduleStyles["ImportContainer"], {
+  selector: "ui_aa6c879e_ImportContainer",
+});
 
-  .preview-btn {
-    margin-right: 10px;
-  }
+export const EditRawContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["EditRawContainer"],
+  { selector: "ui_aa6c879e_EditRawContainer" },
+);
 
-  .action-right {
-    .beautify-btn {
-      height: 26px;
-    }
-  }
-`;
+export const PreviewContainer = withStyles<
+  "div",
+  { $token: Partial<GlobalThemeToken> }
+>("div", moduleStyles["PreviewContainer"], {
+  selector: "ui_aa6c879e_PreviewContainer",
+});
 
-export const ImportModalWrapper = css<{ $token: Partial<GlobalThemeToken> }>`
-  margin: 0 8px;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--color-border);
-`;
-
-export const ImportContainer = styled.div<{ $token: Partial<GlobalThemeToken> }>`
-  height: 400px;
-  overflow-y: scroll;
-
-  .import-header {
-    .beautify-segmented {
-      margin-bottom: 16px;
-      width: 100%;
-      height: 32px;
-
-      .beautify-segmented-item {
-        ${ellipsisStyle}
-        flex: 1;
-      }
-    }
-  }
-
-  ${ImportModalWrapper}
-`;
-
-export const EditRawContainer = styled.div`
-  margin-top: 10px;
-  height: 400px;
-`;
-
-export const PreviewContainer = styled.div<{ $token: Partial<GlobalThemeToken> }>`
-  ${ImportModalWrapper}
-  margin-top: 10px;
-  height: 432px;
-`;
-
-export const PreviewTitleContainer = styled.div`
-  ${flexStyles('row', 'center', 'flex-start')}
-  > button {
-    ${flexStyles('row', 'center', 'center')}
-    margin-left: 5px;
-  }
-`;
+export const PreviewTitleContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["PreviewTitleContainer"],
+  { selector: "ui_aa6c879e_PreviewTitleContainer" },
+);

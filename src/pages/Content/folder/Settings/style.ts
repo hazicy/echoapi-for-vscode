@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const SettingsContainer = styled.div`
-  padding: 0 16px 12px;
-  width: 100%;
-  height: 100%;
-`;
+export const SettingsContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["SettingsContainer"],
+  { selector: "ui_67e3057d_SettingsContainer" },
+);

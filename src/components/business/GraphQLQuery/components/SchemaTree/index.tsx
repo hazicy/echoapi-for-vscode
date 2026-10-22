@@ -1,8 +1,8 @@
 import React, { Key, useEffect, useMemo, useRef, useState } from 'react';
 
-import { Tree } from 'antd';
-import { DataNode } from 'antd/es/tree';
-import { TreeProps } from 'antd/lib';
+import { Tree } from '@/components/ui/base';
+import { DataNode } from '@/components/ui/base';
+import { TreeProps } from '@/components/ui/base';
 
 import { t } from 'i18next';
 import ResizeObserver from 'resize-observer-polyfill';

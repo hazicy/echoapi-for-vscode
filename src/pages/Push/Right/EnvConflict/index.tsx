@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Flex, Radio, Space, Typography } from 'antd';
+import { Button, Flex, Radio, Space, Typography } from '@/components/ui/base';
 import { PushEnvData } from '../../type';
 
 type PushRightProps = {

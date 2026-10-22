@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { PopoverProps } from 'antd';
+import { PopoverProps } from '@/components/ui/base';
 
 import { mockExp } from 'exp-mock';
 

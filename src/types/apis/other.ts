@@ -1,4 +1,4 @@
-import { HookAPI } from 'antd/es/modal/useModal';
+import { HookAPI } from '@/components/ui/base';
 
 import { APIS_TARGET_TYPE_ENUM } from '@/constants/apis';
 

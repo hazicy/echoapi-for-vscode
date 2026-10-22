@@ -7,7 +7,7 @@ import useTesting from '@/store/useTesting';
 import ReportListHeader from './ReportListHeader';
 import ReportList from './ReportList';
 import { STATUS_CODE } from '@/constants/common';
-import { message } from 'antd';
+import { message } from '@/components/ui/base';
 
 
 const Testing = () => {

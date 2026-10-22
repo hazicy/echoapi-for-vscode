@@ -1,7 +1,7 @@
 import { FC, memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Form, Select } from 'antd';
+import { Flex, Form, Select } from '@/components/ui/base';
 
 import { concat, isEqual } from 'lodash';
 

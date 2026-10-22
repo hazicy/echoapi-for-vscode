@@ -1,7 +1,7 @@
 import { FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Input, InputRef, TreeSelect } from 'antd';
+import { Flex, Input, InputRef, TreeSelect } from '@/components/ui/base';
 
 import { useDebounceEffect } from 'ahooks';
 import produce from 'immer';

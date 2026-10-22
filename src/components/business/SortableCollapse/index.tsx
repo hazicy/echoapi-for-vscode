@@ -2,7 +2,7 @@ import { memo, useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Popconfirm, Switch } from 'antd';
+import { Flex, Popconfirm, Switch } from '@/components/ui/base';
 
 import { useDeepCompareEffect, useMemoizedFn } from 'ahooks';
 import classNames from 'classnames';

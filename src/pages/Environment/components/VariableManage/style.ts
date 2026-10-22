@@ -1,62 +1,14 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { flexStyles } from '@/assets/css/style';
+export const VariableContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["VariableContainer"],
+  { selector: "ui_b0bacb24_VariableContainer" },
+);
 
-export const VariableContainer = styled.div`
-  width: 100%;
-  height: 100%;
-
-  .variable-flex {
-    height: 100%;
-  }
-
-  .variable-content {
-    flex: 1;
-    overflow-y: auto;
-
-    .beautify-table-tbody {
-      tr {
-        &:hover {
-          .anticon {
-            visibility: visible;
-          }
-        }
-      }
-    }
-
-    .beautify-table-tbody,
-    .beautify-table-thead {
-      .beautify-table-cell {
-        padding: 0;
-
-        /* height: 32px; */
-
-        input,
-        textarea {
-          height: 36px;
-          border-color: transparent;
-
-          &:hover,
-          &:focus {
-            border-color: var(--color-primary);
-            background-color: var(--highlight-change-color);
-          }
-        }
-      }
-    }
-
-    .beautify-table-thead {
-      .beautify-table-cell {
-        padding: 0 12px;
-      }
-    }
-  }
-`;
-
-export const VariableOpContainer = styled.div`
-  ${flexStyles('row', 'center', 'center')}
-  .anticon {
-    visibility: hidden;
-    color: var(--icon-color);
-  }
-`;
+export const VariableOpContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["VariableOpContainer"],
+  { selector: "ui_b0bacb24_VariableOpContainer" },
+);

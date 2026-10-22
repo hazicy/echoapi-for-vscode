@@ -1,4 +1,4 @@
-import { Flex } from 'antd';
+import { Flex } from '@/components/ui/base';
 import TreeCheckbox from '@/components/business/TreeCheckbox';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';

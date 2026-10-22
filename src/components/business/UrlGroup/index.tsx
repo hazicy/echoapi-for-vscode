@@ -1,7 +1,7 @@
 import React, { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, ConfigProvider, Divider, Flex, Input, Select, SelectProps, Space, Typography } from 'antd';
+import { Button, ConfigProvider, Divider, Flex, Input, Select, SelectProps, Space, Typography } from '@/components/ui/base';
 
 import classnames from 'classnames';
 import { find, includes, isArray, isString, toLower, toUpper } from 'lodash';

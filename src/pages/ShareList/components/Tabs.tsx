@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Tabs, theme, Tooltip, Typography } from "antd";
+import { Checkbox, Flex, Tabs, theme, Tooltip, Typography } from '@/components/ui/base';
 
 import { SHARE_TAB_LIST } from "../constants";
 import { TabsProps } from "../types";

@@ -1,29 +1,15 @@
-import { Flex } from 'antd';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
+import { Flex } from "@/components/ui/base";
 
-import styled from 'styled-components';
+export const ApiDebugContainer = withStyles<typeof Flex, {}>(
+  Flex,
+  moduleStyles["ApiDebugContainer"],
+  { selector: "ui_fac039fb_ApiDebugContainer" },
+);
 
-export const ApiDebugContainer = styled(Flex)`
-  width: 100%;
-  height: 100%;
-
-  > header {
-    padding: 0 16px;
-  }
-
-  > main {
-    flex: 1;
-  }
-`;
-
-export const RequestContainer = styled.div`
-  padding: 0 16px 12px;
-  width: 100%;
-  height: 100%;
-  .beautify-text-btn-highlight{
-    color: var(--color-primary) !important;
-    &:hover {
-      color: var(--color-primary) !important;
-    }
-  }
-`;
-
+export const RequestContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["RequestContainer"],
+  { selector: "ui_fac039fb_RequestContainer" },
+);

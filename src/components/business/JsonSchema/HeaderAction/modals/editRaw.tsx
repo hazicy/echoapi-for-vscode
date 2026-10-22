@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { message } from 'antd';
+import { message } from '@/components/ui/base';
 
 import { useMemoizedFn } from 'ahooks';
 import { isObject, isString } from 'lodash';

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Flex,
   Select,
-} from 'antd';
+} from '@/components/ui/base';
 
 import {
   useSafeState,

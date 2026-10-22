@@ -1,0 +1,56 @@
+.ServerNameContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 10px;
+  width: 100%;
+}
+.ServerNameContainer :global(.env-name) {
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ServerNameContainer :global(.env-name) :global(.icon-default) {
+  margin-left: 10px;
+  padding: 0 5px;
+  height: 20px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--color-primary);
+  background-color: var(--color-primary-opacity);
+}
+.ServerNameContainer :global(.env-more) {
+  cursor: pointer;
+  padding: 0 2px;
+}
+.EnvAddContainer :global(.anticon) {
+  color: #22c55e;
+}
+.EnvServerTitleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--font-content-color);
+}
+.EnvServerTitleContainer :global(.anticon) {
+  font-size: 16px;
+}
+.EnvServerTitleContainer :global(.server-add) {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--font-light-color);
+  font-style: normal;
+}
+.EnvServerContainer {
+  padding-bottom: 12px;
+}

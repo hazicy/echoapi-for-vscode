@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Segmented, message } from 'antd';
+import { Segmented, message } from '@/components/ui/base';
 
 import $RefParser from '@apidevtools/json-schema-ref-parser';
 import { XMLParser } from 'fast-xml-parser';

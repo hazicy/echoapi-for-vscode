@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Flex } from 'antd';
+import { Flex } from '@/components/ui/base';
 import { useApis, useProjectConfig } from '@/store';
 import TreeCheckbox from '@/components/business/TreeCheckbox';
 import { APIS_TARGET_TYPE_ENUM } from '@/constants/apis';

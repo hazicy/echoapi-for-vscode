@@ -1,16 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-import { flexStyles } from '@/assets/css/style';
-
-export const AddDomainContainer = styled.div`
-  ${flexStyles('row', 'center', 'flex-start')}
-  /* margin-bottom: 15px; */
-
-  .domin {
-    margin-right: 12px;
-    width: 100%;
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--font-content-color);
-  }
-`;
+export const AddDomainContainer = withStyles<"div", {}>(
+  "div",
+  moduleStyles["AddDomainContainer"],
+  { selector: "ui_f8a4346f_AddDomainContainer" },
+);

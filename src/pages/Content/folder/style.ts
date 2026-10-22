@@ -1,16 +1,8 @@
-import styled from 'styled-components';
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/components/ui/base/withStyles";
 
-export const FlexSegmented = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-
-  .custom-segmented-tabs-wrap {
-    padding-top: 12px;
-
-    .segmented-tabs-header {
-      padding: 0 16px;
-    }
-  }
-`;
+export const FlexSegmented = withStyles<"div", {}>(
+  "div",
+  moduleStyles["FlexSegmented"],
+  { selector: "ui_0b9fdce8_FlexSegmented" },
+);

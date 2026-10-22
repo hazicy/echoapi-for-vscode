@@ -2,7 +2,7 @@ import i18next from 'i18next';
 
 import { ApisItemActionType } from '@/types/apis/other';
 import useShare from '@/store/useShare';
-import { message } from 'antd';
+import { message } from '@/components/ui/base';
 import { copyStringToClipboard } from '@/utils/common';
 
 export const shareApi = (params: ApisItemActionType) => {

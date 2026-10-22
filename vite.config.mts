@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => {
     esbuild: { drop: mode === 'production' ? ['console', 'debugger'] : [] },
     plugins: [
       react(),
-      svgr({ include: '**/*.svg' }),
+      svgr({ include: /\.svg(?:\?react)?$/ }),
       nodePolyfills(),
       viteStaticCopy({ targets: [{
         src: 'node_modules/web-curl-to-har/assets/*.wasm', dest: '.', rename: { stripBase: true },

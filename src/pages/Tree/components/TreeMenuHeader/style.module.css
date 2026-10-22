@@ -1,0 +1,23 @@
+.TreeMenuHeaderWarp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* margin-left: 14px; */
+  margin-bottom: 6px;
+}
+.TreeMenuHeaderWarp :global(.upload),
+.TreeMenuHeaderWarp :global(.pull) {
+  cursor: pointer;
+}
+.TreeMenuHeaderWarp :global(.upload) svg,
+.TreeMenuHeaderWarp :global(.pull) svg {
+  fill: var(--font-title-color);
+}
+.TreeMenuHeaderWarp :global(.upload) svg:hover,
+.TreeMenuHeaderWarp :global(.pull) svg:hover {
+  fill: var(--color-primary);
+}
+.TreeMenuHeaderWarp :global(.upload) svg:hover path,
+.TreeMenuHeaderWarp :global(.pull) svg:hover path {
+  fill: var(--color-primary) !important;
+}

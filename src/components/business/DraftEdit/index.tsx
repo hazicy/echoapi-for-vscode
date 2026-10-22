@@ -1,7 +1,7 @@
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ConfigProvider, message } from 'antd';
+import { ConfigProvider, message } from '@/components/ui/base';
 
 import { useMemoizedFn, useSafeState, useUpdateEffect } from 'ahooks';
 import cn from 'classnames';

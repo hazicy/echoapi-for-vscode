@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { Flex, Popconfirm, message } from 'antd';
+import { Flex, Popconfirm, message } from '@/components/ui/base';
 
 import type { DragEndEvent } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';

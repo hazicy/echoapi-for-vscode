@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Segmented, SegmentedProps, message } from 'antd';
+import { Flex, Segmented, SegmentedProps, message } from '@/components/ui/base';
 
 import { useMemoizedFn, useSafeState } from 'ahooks';
 import ASideTools from 'apipost-inside-tools';

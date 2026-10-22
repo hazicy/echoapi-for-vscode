@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Divider, Dropdown, DropdownProps, Flex, Input, MenuProps, Skeleton } from 'antd';
+import { Divider, Dropdown, DropdownProps, Flex, Input, MenuProps, Skeleton } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import classNames from 'classnames';

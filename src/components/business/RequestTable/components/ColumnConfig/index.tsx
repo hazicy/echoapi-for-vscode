@@ -1,7 +1,7 @@
 import { FC, memo, useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Switch, Typography } from 'antd';
+import { Flex, Switch, Typography } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import produce from 'immer';

@@ -1,4 +1,4 @@
-import { Table as AntdTable } from 'antd';
+import { Table as AntdTable } from '@/components/ui/base';
 
 import { DndContext } from '@dnd-kit/core';
 import type { DragEndEvent } from '@dnd-kit/core';
