@@ -4,7 +4,7 @@ export const ContentWrap = styled.div`
   height: 500px;
   overflow: auto;
 
-  .apipost-collapse-content-box {
+  .beautify-collapse-content-box {
     padding: 0 !important;
   }
 `;

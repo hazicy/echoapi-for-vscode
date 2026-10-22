@@ -91,7 +91,7 @@ export const ResizablePanelsContainer = styled.div<{ $token: Partial<GlobalTheme
       background-color: var(--vscode-sideBar-background);
       cursor: pointer;
 
-      .apipost-flex {
+      .beautify-flex {
         height: 100%;
 
         > .anticon {
@@ -132,8 +132,8 @@ export const ResizablePanelsContainer = styled.div<{ $token: Partial<GlobalTheme
       width: 40px;
       height: 40px;
 
-      > .apipost-popover {
-        .apipost-popover-inner {
+      > .beautify-popover {
+        .beautify-popover-inner {
           padding: 8px;
 
           .direction-item-btn {
@@ -159,7 +159,7 @@ export const ResizablePanelsContainer = styled.div<{ $token: Partial<GlobalTheme
         }
       }
 
-      .apipost-btn {
+      .beautify-btn {
         z-index: 500;
         width: 32px;
         height: 32px;

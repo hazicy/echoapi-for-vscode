@@ -84,7 +84,7 @@ export const ItemWrapper = styled.div`
       width: 100%;
     }
 
-    .apipost-input {
+    .beautify-input {
       margin: 0 8px;
       padding: 2px 4px;
       width: calc(100% - 100px);
@@ -107,7 +107,7 @@ export const ItemWrapper = styled.div`
       }
     }
 
-    .apipost-input:focus {
+    .beautify-input:focus {
       z-index: 700;
       width: calc(100% - 100px);
       height: 32px;
@@ -119,7 +119,7 @@ export const ItemWrapper = styled.div`
       background-color: var(--highlight-change-color);
     }
 
-    .apipost-input::placeholder {
+    .beautify-input::placeholder {
       line-height: 26px;
     }
 

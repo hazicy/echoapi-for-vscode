@@ -349,7 +349,7 @@ export const ByteMdWrap = styled.div<{ $token: Partial<GlobalThemeToken> }>`
     }
   }
 
-  .apipost-mark-down {
+  .beautify-mark-down {
     & > div {
       height: 100%;
     }

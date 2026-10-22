@@ -50,13 +50,13 @@ export const ChildrenContainer = styled.div`
     color: var(--font-title-color);
   }
 
-  .apipost-collapse-item {
-    .apipost-collapse-header {
+  .beautify-collapse-item {
+    .beautify-collapse-header {
       margin-bottom: 0;
     }
   }
 
-  .apipost-collapse-header-text {
+  .beautify-collapse-header-text {
     font-size: 14px;
     color: var(--font-title-color);
   }

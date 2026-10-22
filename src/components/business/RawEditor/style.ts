@@ -6,7 +6,7 @@ export const RawEditorContainer = styled.div`
   height: 100%;
   min-height: 100px;
 
-  > .apipost-flex {
+  > .beautify-flex {
     flex: 1;
 
     > main {
@@ -51,7 +51,7 @@ export const ParamsFieldEditorContainer = styled.div`
     }
   }
 
-  .apipost-segmented {
+  .beautify-segmented {
     font-size: var(--font-size-14);
   }
 
@@ -60,7 +60,7 @@ export const ParamsFieldEditorContainer = styled.div`
     padding: 0 6px !important;
     height: auto;
 
-    & > .apipost-flex {
+    & > .beautify-flex {
       justify-content: space-between;
       align-items: center;
 

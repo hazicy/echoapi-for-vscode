@@ -20,7 +20,7 @@ export const ResponseAssertionContainer = styled.div`
     color: ${hexToRGBA('#333639', 0.8)};
   }
 
-  .apipost-space-item {
+  .beautify-space-item {
     /* color: var(--font-content-color); */
     .content-title {
       color: var(--font-content-color);

@@ -9,7 +9,7 @@ export const LinkWarper = styled.div`
     max-height: 360px;
     background-color: transparent;
 
-    .apipost-tree-node-selected {
+    .beautify-tree-node-selected {
       /* color: red; */
       background-color: var(--color-bg-page);
     }

@@ -6,7 +6,7 @@ export const ResponseContainer = styled.div`
   width: 100%;
   height: 100%;
 
-  .apipost-tabs {
+  .beautify-tabs {
     width: 100%;
     height: 100%;
   }

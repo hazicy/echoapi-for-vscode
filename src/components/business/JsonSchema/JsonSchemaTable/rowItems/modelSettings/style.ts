@@ -58,7 +58,7 @@ export const itemModelWarper = css`
 
 export const ItemModelWarperContainer = styled.div`
   ${itemModelWarper}
-  .apipost-btn {
+  .beautify-btn {
     padding: 0 5px !important;
     width: auto !important;
   }

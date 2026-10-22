@@ -8,7 +8,7 @@ export const AlertTextWrap = styled(Alert)`
   line-height: 22px;
   background-color: var(--color-bg-page);
 
-  .apipost-alert-message {
+  .beautify-alert-message {
     color: var(--font-content-color);
   }
 `;

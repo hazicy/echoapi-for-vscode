@@ -4,7 +4,7 @@ export const EmptyWarper = styled.div<{ $token: Partial<GlobalThemeToken> }>`
   position: relative;
   font-size: var(--font-size-12);
 
-.apipost-input {
+.beautify-input {
   font-size: var(--font-size-12) !important;
 }
 

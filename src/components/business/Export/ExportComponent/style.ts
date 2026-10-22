@@ -25,7 +25,7 @@ export const ImportExportWrap = styled.div<{ $token: Partial<GlobalThemeToken> }
         margin-bottom: 20px;
       }
 
-      .apipost-radio-group {
+      .beautify-radio-group {
         flex-wrap: wrap;
 
         .radio-card {
@@ -40,7 +40,7 @@ export const ImportExportWrap = styled.div<{ $token: Partial<GlobalThemeToken> }
           }
 
           &:hover {
-            .apipost-radio-inner {
+            .beautify-radio-inner {
               border: 1px solid var(--color-border);
             }
           }
@@ -48,7 +48,7 @@ export const ImportExportWrap = styled.div<{ $token: Partial<GlobalThemeToken> }
           &.active {
             border-color: var(--color-primary);
 
-            .apipost-radio-inner {
+            .beautify-radio-inner {
               border: 1px solid var(--color-primary);
             }
           }
@@ -60,16 +60,16 @@ export const ImportExportWrap = styled.div<{ $token: Partial<GlobalThemeToken> }
             height: 100%;
           }
 
-          .apipost-radio-wrapper::after{
+          .beautify-radio-wrapper::after{
               display: none !important;
             }
 
-          .apipost-radio-wrapper {
+          .beautify-radio-wrapper {
             flex-direction: row-reverse !important;
             height: 100%;
             justify-content: space-between;
             padding: 0 12px;
-            span.apipost-radio + * {
+            span.beautify-radio + * {
               padding-inline: 0;
             }
 
@@ -124,12 +124,12 @@ export const ImportExportWrap = styled.div<{ $token: Partial<GlobalThemeToken> }
   }
 
   .import-project-full {
-    .apipost-tabs-nav {
+    .beautify-tabs-nav {
       margin-bottom: 16px;
     }
 
     .import-project-full-select {
-      .apipost-select-tree-node-content-wrapper {
+      .beautify-select-tree-node-content-wrapper {
         display: inline-block;
         ${ellipsisStyle}
       }
@@ -150,7 +150,7 @@ export const ImportExportWrap = styled.div<{ $token: Partial<GlobalThemeToken> }
   }
 
   .import-project-upload-content {
-    .apipost-upload-list {
+    .beautify-upload-list {
       padding-bottom: 20px;
     }
   }

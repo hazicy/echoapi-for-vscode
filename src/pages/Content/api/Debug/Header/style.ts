@@ -24,7 +24,7 @@ export const HeaderContainer = styled.div`
       color: var(--font-light-color);
       text-overflow: ellipsis;
     }
-    .apipost-input{
+    .beautify-input{
       flex: 1;
       height: 100%;
     }

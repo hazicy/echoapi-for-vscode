@@ -19,21 +19,21 @@ export const UrrGroupWrap = styled.div<{ $token: Partial<GlobalThemeToken> }>`
     background: var(--color-border);
     margin-right: 4px;
   }
-  .apipost-select-arrow {
+  .beautify-select-arrow {
     transform: rotate(0deg);
     font-size: var(--font-size-14);
     transition: all 0.3s linear;
   }
   
-  .apipost-btn{
+  .beautify-btn{
     height: 36px !important;
   }
 
-  .apipost-select {
+  .beautify-select {
     height: 30px
   }
 
-  .apipost-select-selector {
+  .beautify-select-selector {
     box-shadow: none !important;
     .beautify-select-selection-search{
       input{
@@ -42,75 +42,75 @@ export const UrrGroupWrap = styled.div<{ $token: Partial<GlobalThemeToken> }>`
     }
   }
 
-  .apipost-select-open {
-    .apipost-select-arrow {
+  .beautify-select-open {
+    .beautify-select-arrow {
       transform: rotate(180deg);
       transition: all 0.3s linear;
     }
   }
 
   .right-select-http {
-    .apipost-select-selector {
+    .beautify-select-selector {
       width: 100px;
       border: none !important;
     }
   }
 
-  .apipost-select:not(.right-select) {
+  .beautify-select:not(.right-select) {
     /* margin-right: 8px; */
 
-    .apipost-select-selector {
+    .beautify-select-selector {
       background: transparent !important;
       max-width: 110px;
       border: none;
       border-radius: 0;
     }
 
-    .apipost-select-selection-item {
+    .beautify-select-selection-item {
       padding-right: 16px;
       font-weight: 600;
       color: ${() => API_METHODS_COLOR['default']};
     }
 
     &.post {
-      .apipost-select-selection-item {
+      .beautify-select-selection-item {
         color: ${() => API_METHODS_COLOR['POST']};
       }
     }
 
     &.get {
-      .apipost-select-selection-item {
+      .beautify-select-selection-item {
         color: ${() => API_METHODS_COLOR['GET']};
       }
     }
 
     &.put {
-      .apipost-select-selection-item {
+      .beautify-select-selection-item {
         color: #ff0;
         color: ${() => API_METHODS_COLOR['PUT']};
       }
     }
 
     &.delete {
-      .apipost-select-selection-item {
+      .beautify-select-selection-item {
         color: ${() => API_METHODS_COLOR['DELETE']};
       }
     }
 
     &.patch {
-      .apipost-select-selection-item {
+      .beautify-select-selection-item {
         color: ${() => API_METHODS_COLOR['PATCH']};
       }
     }
 
     &.raw {
-      .apipost-select-selection-item {
+      .beautify-select-selection-item {
         color: ${() => API_METHODS_COLOR['POST']};
       }
     }
 
     &.socket.io {
-      .apipost-select-selection-item {
+      .beautify-select-selection-item {
         color: ${() => API_METHODS_COLOR['POST']};
       }
     }
@@ -129,18 +129,18 @@ export const UrrGroupWrap = styled.div<{ $token: Partial<GlobalThemeToken> }>`
 
   .right-select {
     position: relative;
-    .apipost-select-selector{
+    .beautify-select-selector{
       background: transparent !important;
       border-radius: 0;
     }
     &:hover {
-      .apipost-select-selector {
+      .beautify-select-selector {
         /* background-color: var(--popover-select-bg-color) !important; */
       }
     }
 
-    &.apipost-select-focused {
-      .apipost-select-selector {
+    &.beautify-select-focused {
+      .beautify-select-selector {
         /* background-color: var(--popover-select-bg-color) !important; */
       }
     }

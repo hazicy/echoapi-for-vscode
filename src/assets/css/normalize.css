@@ -349,14 +349,14 @@ template {
 [hidden] {
   display: none;
 }
-.apipost-tabs-dropdown {
+.beautify-tabs-dropdown {
   z-index: 2222;
 }
 
-.apipost-tabs-dropdown .apipost-tabs-dropdown-menu {
+.beautify-tabs-dropdown .beautify-tabs-dropdown-menu {
   background-color: var(--popover-select-bg-color);
 }
 
-.apipost-dropdown-menu-submenu-expand-icon svg {
+.beautify-dropdown-menu-submenu-expand-icon svg {
   color: var(--icon-color);
 }

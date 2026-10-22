@@ -10,7 +10,7 @@ export const AssertWrapper = styled.div<{ $token: Partial<GlobalThemeToken> }>`
     border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
     background: var(--vscode-input-background);
   }
-  .apipost-select-arrow {
+  .beautify-select-arrow {
     font-size: var(--font-size-12);
   }
 
@@ -22,14 +22,14 @@ export const AssertWrapper = styled.div<{ $token: Partial<GlobalThemeToken> }>`
   .collection-variable-select {
     width: 100%;
 
-    .apipost-select-selector {
+    .beautify-select-selector {
       height: 100%;
       max-height: 200px;
       overflow-y: auto;
     }
 
-    .apipost-select-selection-search {
-      .apipost-select-selection-search-mirror {
+    .beautify-select-selection-search {
+      .beautify-select-selection-search-mirror {
         width: 100%;
         height: 100%;
         overflow: auto;

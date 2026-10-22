@@ -5,12 +5,12 @@ import { ellipsisStyle } from '@/assets/css/style';
 export const ParameterContainer = styled.div`
   width: 100%;
 
-  .apipost-segmented {
+  .beautify-segmented {
     margin-bottom: 16px;
     width: 100%;
     height: 32px;
 
-    .apipost-segmented-item {
+    .beautify-segmented-item {
       ${ellipsisStyle}
       flex: 1;
     }

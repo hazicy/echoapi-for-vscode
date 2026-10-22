@@ -32,20 +32,20 @@ export const MainContainer = styled.div`
     width: 100%;
     height: 100%;
 
-    .apipost-spin-container {
+    .beautify-spin-container {
       width: 100%;
       height: 100%;
     }
 
-    .apipost-empty-description {
+    .beautify-empty-description {
       font-size: 12px;
     }
 
-    .apipost-empty-image {
+    .beautify-empty-image {
       margin-bottom: 12px;
     }
 
-    .apipost-empty-footer {
+    .beautify-empty-footer {
       margin-top: 12px;
     }
   }
@@ -75,16 +75,16 @@ export const SchemaTreeContainer = styled.div`
     width: 100%;
     height: 0;
 
-    .apipost-tree-switcher-icon {
+    .beautify-tree-switcher-icon {
       color: var(--icon-color);
     }
 
-    .apipost-tree .apipost-tree-checkbox .apipost-tree-checkbox-inner {
+    .beautify-tree .beautify-tree-checkbox .beautify-tree-checkbox-inner {
       border-color: var(--check-box-border-color);
       background-color: transparent;
     }
 
-    .apipost-tree .apipost-tree-checkbox-checked .apipost-tree-checkbox-inner {
+    .beautify-tree .beautify-tree-checkbox-checked .beautify-tree-checkbox-inner {
       border-color: var(--check-box-border-color);
       background-color: var(--color-primary);
     }
@@ -92,25 +92,25 @@ export const SchemaTreeContainer = styled.div`
 
   /* box-sizing: border-box; */
 
-  .apipost-tree {
+  .beautify-tree {
     /* padding: 8px 0; */
     background-color: transparent;
 
-    .apipost-tree-list-holder {
+    .beautify-tree-list-holder {
       padding: 0 12px;
     }
 
-    .apipost-tree-switcher {
+    .beautify-tree-switcher {
       &:hover {
         background-color: transparent;
       }
     }
 
-    .apipost-tree-indent-unit::before {
+    .beautify-tree-indent-unit::before {
       border-color: var(--color-border);
     }
 
-    .apipost-tree-switcher-leaf-line {
+    .beautify-tree-switcher-leaf-line {
       &::before {
         border-color: var(--color-border);
       }
@@ -120,7 +120,7 @@ export const SchemaTreeContainer = styled.div`
       }
     }
 
-    .apipost-tree-treenode {
+    .beautify-tree-treenode {
       align-items: center;
       height: 32px;
 
@@ -129,7 +129,7 @@ export const SchemaTreeContainer = styled.div`
         background-color: var(--form-hover-color);
       }
 
-      &.apipost-tree-treenode-selected {
+      &.beautify-tree-treenode-selected {
         &::before {
           border-radius: 4px;
           background-color: var(--form-hover-color);
@@ -196,11 +196,11 @@ export const TitleRenderContainer = styled(Flex)`
 
   /* background-color: var(--color-bg-right); */
 
-  .apipost-badge .apipost-badge-multiple-words {
+  .beautify-badge .beautify-badge-multiple-words {
     padding: 0 4px;
   }
 
-  .apipost-badge-count {
+  .beautify-badge-count {
     box-shadow: none;
   }
 `;
@@ -209,11 +209,11 @@ export const PopoverAddContainer = styled(Flex)`
   width: 330px;
   height: 410px;
 
-  .apipost-input-affix-wrapper {
+  .beautify-input-affix-wrapper {
     background-color: var(--color-bg-right);
   }
 
-  .apipost-tree {
+  .beautify-tree {
     background-color: var(--popover-select-bg-color);
   }
 `;

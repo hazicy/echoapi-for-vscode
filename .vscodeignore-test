@@ -6,6 +6,11 @@ src/**
 .gitignore
 .yarnrc
 webpack.config.js
+vite.config.mts
+tsup.config.ts
+index.html
+scripts/**
+tests/**
 vsc-extension-quickstart.md
 **/tsconfig.json
 **/.eslintrc.json

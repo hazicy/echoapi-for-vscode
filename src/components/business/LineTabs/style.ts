@@ -8,18 +8,18 @@ export const LineTabsContainer = styled.div`
     color: #26cea4;
   }
 
-  .apipost-tabs-nav-wrap {
-    .apipost-tabs-tab {
+  .beautify-tabs-nav-wrap {
+    .beautify-tabs-tab {
       font-size: var(--font-size-14);
     }
   }
 
-  > .apipost-tabs {
-    > .apipost-tabs-content-holder {
-      > .apipost-tabs-content {
+  > .beautify-tabs {
+    > .beautify-tabs-content-holder {
+      > .beautify-tabs-content {
         height: 100%;
 
-        .apipost-tabs-tabpane {
+        .beautify-tabs-tabpane {
           height: 100%;
           overflow: auto;
         }

@@ -58,7 +58,7 @@ export const CustomPopoverWrap = styled.div`
     }
   }
 
-  .apipost-row {
+  .beautify-row {
     &.prepare,
     &.process,
     &.empty {
@@ -107,7 +107,7 @@ export const CustomProxyWrap = styled(Flex)`
   }
 
   .right-wrapper {
-    > .apipost-flex {
+    > .beautify-flex {
       width: 100%;
     }
   }

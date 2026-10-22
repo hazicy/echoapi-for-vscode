@@ -284,15 +284,15 @@ export const KeyWarperContainer = styled.div`
   }
 
   /* .setting-confirm-container {
-    .apipost-popconfirm-message {
+    .beautify-popconfirm-message {
       width: 100%;
     }
 
-    .apipost-popconfirm-message-text {
+    .beautify-popconfirm-message-text {
       width: 100%;
     }
 
-    .apipost-btn {
+    .beautify-btn {
       padding: 1px 7px;
       width: auto;
       height: 24px;

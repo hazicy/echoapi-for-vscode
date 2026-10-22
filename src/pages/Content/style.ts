@@ -52,15 +52,15 @@ export const SaveDropDownContainer = styled.div`
     0 3px 6px -4px rgb(0 0 0 / 12%),
     0 9px 28px 8px rgb(0 0 0 / 5%);
 
-  .apipost-tree {
+  .beautify-tree {
     width: 100%;
     background-color: var(--popover-select-bg-color);
 
-    .apipost-tree-list {
+    .beautify-tree-list {
       padding-right: 12px;
     }
 
-    .apipost-tree-node-content-wrapper {
+    .beautify-tree-node-content-wrapper {
       display: flex;
       flex: 1;
       flex-direction: row;
@@ -69,7 +69,7 @@ export const SaveDropDownContainer = styled.div`
       width: 0;
       height: 100%;
 
-      .apipost-tree-title {
+      .beautify-tree-title {
         display: flex;
         width: 100%;
 

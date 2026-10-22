@@ -4,17 +4,17 @@ export const ExternalContainer = styled.div`
   display: flex;
   width: 100%;
   height: 32px;
-  .apipost-input {
+  .beautify-input {
     flex: 1;
   }
 
-  > .apipost-input-affix-wrapper {
-    .apipost-input {
+  > .beautify-input-affix-wrapper {
+    .beautify-input {
       color: var(--font-light-color);
     }
   }
 
-  .apipost-input-affix-wrapper {
+  .beautify-input-affix-wrapper {
     padding: 0;
   }
 

@@ -82,7 +82,7 @@ export const TreeMenuContainer = styled.div`
     }
   }
   .response-empty-wrap {
-    .apipost-empty-image {
+    .beautify-empty-image {
       margin-bottom: 16px;
 
       .icon-empty-wrap {
@@ -91,7 +91,7 @@ export const TreeMenuContainer = styled.div`
       }
     }
 
-    .apipost-empty-description {
+    .beautify-empty-description {
       font-size: var(--font-size-12);
       color: var(--vscode-tab-unfocusedInactiveForeground);
       .beautify-btn{
@@ -106,7 +106,7 @@ export const TreeMenuContainer = styled.div`
     margin-top: 8px;
     overflow: hidden;
     height: calc(100% - 38px);
-    .apipost-tree-list-holder {
+    .beautify-tree-list-holder {
       /* padding-right: 10px; */
     }
   }
@@ -117,11 +117,11 @@ export const TreeContainer = styled.div`
   width: 100%;
   height: 100%;
 
-  .apipost-tree {
+  .beautify-tree {
     width: 100%;
 
-    .apipost-tree-list {
-      .apipost-tree-treenode {
+    .beautify-tree-list {
+      .beautify-tree-treenode {
         align-items: center;
 
         /* margin: 2px 0; */
@@ -133,7 +133,7 @@ export const TreeContainer = styled.div`
             background-color: var(--color-primary);
           }
 
-          .apipost-tree-drop-indicator {
+          .beautify-tree-drop-indicator {
             display: none;
           }
         }
@@ -144,13 +144,13 @@ export const TreeContainer = styled.div`
           height: auto !important;
         }
 
-        .apipost-tree-node-content-wrapper {
+        .beautify-tree-node-content-wrapper {
           height: 100%;
 
           ${flexStyles('row', 'center', 'center')};
           /* line-height: 30px; */
           /* stylelint-disable-next-line selector-class-pattern */
-          .apipost-tree-iconEle {
+          .beautify-tree-iconEle {
             display: inline-flex;
             align-items: center;
             margin-right: 8px;
@@ -201,18 +201,18 @@ export const TreeContainer = styled.div`
             }
           }
 
-          .apipost-tree-title {
+          .beautify-tree-title {
             width: 100%;
           }
         }
 
-        .apipost-tree-switcher {
+        .beautify-tree-switcher {
           height: 100%;
           ${flexStyles('row', 'center', 'center')};
         }
 
-        &.apipost-tree-treenode-selected {
-          .apipost-tree-title .title {
+        &.beautify-tree-treenode-selected {
+          .beautify-tree-title .title {
             /* color: var(--color-primary); */
           }
         }
@@ -245,17 +245,17 @@ export const TreeContainer = styled.div`
           background-color: transparent;
         }
 
-        .apipost-tree-switcher {
+        .beautify-tree-switcher {
           display: none;
         }
 
-        .apipost-tree-node-content-wrapper {
+        .beautify-tree-node-content-wrapper {
           padding: 0;
           width: 100%;
           cursor: default;
 
           /* stylelint-disable-next-line selector-class-pattern */
-          .apipost-tree-iconEle {
+          .beautify-tree-iconEle {
             display: none;
           }
         }

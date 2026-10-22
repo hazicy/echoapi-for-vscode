@@ -26,10 +26,10 @@ export const ToolBarContainer = styled.div`
     }
 
     .action-wrap {
-      .apipost-btn {
+      .beautify-btn {
         padding: 0;
 
-        .apipost-btn-icon {
+        .beautify-btn-icon {
           margin-inline-end: 4px;
         }
       }

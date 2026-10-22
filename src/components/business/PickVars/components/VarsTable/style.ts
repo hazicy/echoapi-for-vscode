@@ -1,22 +1,22 @@
 import styled from 'styled-components';
 
 export const VarsTableWrap = styled.div`
-  .apipost-table-thead {
-    .apipost-table-cell {
+  .beautify-table-thead {
+    .beautify-table-cell {
       padding: 4px 10px;
     }
   }
 
-  .apipost-table-tbody {
-    .apipost-table-cell {
-      .apipost-input-outlined,
-      .apipost-select-selector {
+  .beautify-table-tbody {
+    .beautify-table-cell {
+      .beautify-input-outlined,
+      .beautify-select-selector {
         border-radius: 0;
         border-color: transparent;
       }
 
-      .apipost-input-outlined:hover,
-      .apipost-input-outlined:focus {
+      .beautify-input-outlined:hover,
+      .beautify-input-outlined:focus {
         border-color: var(--color-primary);
       }
     }

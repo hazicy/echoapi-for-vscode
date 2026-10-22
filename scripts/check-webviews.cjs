@@ -1,9 +1,15 @@
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const esbuild = require('esbuild');
+const assert = require('node:assert/strict');
 
 async function main() {
   const output = path.resolve(__dirname, '../dist');
+  assert.ok((await fs.stat(path.join(output, 'webviews.css'))).size > 0,
+    'Webview HTML requires the extracted stylesheet.');
+  for (const filename of ['tree-sitter.wasm', 'tree-sitter-bash.wasm', 'fonts/iconfont.js']) {
+    await fs.access(path.join(output, filename));
+  }
   const entries = (await fs.readdir(output)).filter(name => /Panel(?:\.bundle)?\.js$/.test(name));
   const chunks = (await fs.readdir(path.join(output, 'chunks')))
     .filter(name => name.endsWith('.js')).map(name => `chunks/${name}`);

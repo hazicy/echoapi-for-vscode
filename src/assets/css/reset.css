@@ -83,7 +83,7 @@ body {
   background-color: var(--color-bg-page);
 }
 
-#root > .apipost-app {
+#root > .beautify-app {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -106,11 +106,11 @@ body {
   border-radius: var(--border-radius);
 }
 
-.apipost-tree-list-scrollbar-thumb {
+.beautify-tree-list-scrollbar-thumb {
   background: var(--scrollbar-thumb-bg-color) !important;
 }
 
-.apipost-tree-list-scrollbar-thumb:hover {
+.beautify-tree-list-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover-bg-color) !important;
 }
 

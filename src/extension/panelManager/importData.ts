@@ -41,8 +41,8 @@ export const createImportDataPanel = (data: any, context: vscode.ExtensionContex
 
   panel.iconPath = iconPath;
   let scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', `${panelOptions.viewType}.js`)));
-  if(process?.env?.NODE_ENV ==="development"){
-    scriptUri = `http://localhost:${LOCAL_PORT}/${panelOptions.viewType}.bundle.js`;
+  if(process.env.ECHOAPI_DEV_SERVER === "true"){
+    scriptUri = `http://localhost:${LOCAL_PORT}/src/webviews/${panelOptions.viewType}.tsx`;
   }
   
   const resourceBaseUrl = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist')));

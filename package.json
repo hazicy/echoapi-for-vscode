@@ -11,10 +11,10 @@
   },
   "scripts": {
     "vscode:prepublish": "yarn run package",
-    "compile": "node scripts/build.cjs",
-    "watch": "node scripts/build.cjs --watch",
-    "package": "node scripts/build.cjs --production && node scripts/check-extension.cjs && node scripts/check-webviews.cjs",
-    "package:test": "node scripts/build.cjs",
+    "compile": "yarn build:webviews --mode development && yarn build:extension",
+    "watch": "concurrently --kill-others \"tsup --watch\" \"vite build --watch --mode development\"",
+    "package": "vite build && tsup --minify && node scripts/check-extension.cjs && node scripts/check-webviews.cjs",
+    "package:test": "yarn compile",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
@@ -22,8 +22,11 @@
     "test": "vscode-test",
     "test:editor": "playwright test --config tests/editor/playwright.config.ts",
     "build": "vsce package",
-    "start": "node scripts/build.cjs --serve",
-    "debug": "code --extensionDevelopmentPath=./path/to/your/extension"
+    "start": "concurrently --kill-others \"tsup --watch --env.ECHOAPI_DEV_SERVER true\" \"vite --host 127.0.0.1\"",
+    "debug": "code --extensionDevelopmentPath=./path/to/your/extension",
+    "build:extension": "tsup",
+    "build:webviews": "vite build",
+    "test:ui": "playwright test --config tests/ui/playwright.config.ts"
   },
   "engines": {
     "vscode": "^1.74.3"
@@ -153,8 +156,6 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",
-    "@svgr/core": "^8.1.0",
-    "@svgr/plugin-jsx": "^8.1.0",
     "@types/draft-js": "^0.11.17",
     "@types/file-saver": "^2.0.7",
     "@types/jsonpath": "^0.2.4",
@@ -172,16 +173,23 @@
     "@types/xmldom": "^0.1.34",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.11.0",
+    "@vitejs/plugin-react": "^5",
     "@vscode/test-cli": "^0.0.9",
     "@vscode/test-electron": "^2.4.0",
+    "concurrently": "^10.0.6",
     "esbuild": "^0.28.2",
-    "esbuild-plugins-node-modules-polyfill": "^1.8.3",
     "eslint": "^8.57.0",
+    "tsup": "^9.0.0",
     "type-fest": "^4.8.3",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vite": "^7",
+    "vite-plugin-node-polyfills": "^0.28.0",
+    "vite-plugin-static-copy": "^4.1.1",
+    "vite-plugin-svgr": "^5.2.0"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.9",
+    "@base-ui/react": "^1.9.0",
     "@bytemd/plugin-breaks": "^1.21.0",
     "@bytemd/plugin-gemoji": "^1.21.0",
     "@bytemd/plugin-gfm": "^1.20.2",

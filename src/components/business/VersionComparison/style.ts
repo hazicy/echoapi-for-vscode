@@ -12,15 +12,15 @@ export const VersionModalWrap = styled.div`
     flex:1;
   }
 
-  .apipost-select {
+  .beautify-select {
     height: 40px;
 
-    .apipost-select-selector {
+    .beautify-select-selector {
       font-size: var(--font-size-14);
     }
   }
 
-  .apipost-collapse-header {
+  .beautify-collapse-header {
     font-size: var(--font-size-14);
   }
 

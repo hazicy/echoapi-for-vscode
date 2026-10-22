@@ -24,17 +24,17 @@ export const WsDebugContainer = styled.div`
   }
 
   .url-panel {
-    .apipost-flex {
+    .beautify-flex {
       .url-group {
         flex: 1;
       }
     }
 
-    /* .apipost-btn {
+    /* .beautify-btn {
       margin-left: 8px;
 
       &:last-child,
-      .apipost-dropdown-open {
+      .beautify-dropdown-open {
         margin-left: 0;
         width: 24px;
       }
@@ -42,19 +42,19 @@ export const WsDebugContainer = styled.div`
     .actions-btn-wrap {
       margin-left: 8px;
 
-      .apipost-dropdown-menu {
-        .apipost-dropdown-menu-item,
-        .apipost-dropdown-menu-submenu {
+      .beautify-dropdown-menu {
+        .beautify-dropdown-menu-item,
+        .beautify-dropdown-menu-submenu {
           font-size: 14px;
 
-          .apipost-dropdown-menu-title-content {
+          .beautify-dropdown-menu-title-content {
             font-size: 14px;
           }
         }
       }
     }
 
-    .apipost-btn {
+    .beautify-btn {
       height: 36px;
       font-size: var(--font-size-14);
 
@@ -64,7 +64,7 @@ export const WsDebugContainer = styled.div`
     }
   }
 
-  .apipost-tabs-content {
+  .beautify-tabs-content {
     height: 100%;
 
     /* height: calc(100% - 60px); */
@@ -80,14 +80,14 @@ export const WsDebugContainer = styled.div`
       color: var(--icon-color);
     }
 
-    .apipost-input-outlined {
+    .beautify-input-outlined {
       height: 32px;
       font-size: var(--font-size-12);
       background: var(--vscode-input-background);
       border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
     }
 
-    .apipost-select {
+    .beautify-select {
       height: 32px;
 
       &-selector {
@@ -95,8 +95,8 @@ export const WsDebugContainer = styled.div`
       }
     }
 
-    .apipost-select-dropdown {
-      .apipost-select-item {
+    .beautify-select-dropdown {
+      .beautify-select-item {
         font-size: var(--font-size-12) !important;
       }
     }
@@ -106,7 +106,7 @@ export const WsDebugContainer = styled.div`
 export const LineBarContainer = styled.div`
   height: 100%;
 
-  .apipost-tabs-nav {
+  .beautify-tabs-nav {
     margin-bottom: 0;
   }
 `;
@@ -133,15 +133,15 @@ export const SaveDropDownContainer = styled.div`
     0 3px 6px -4px rgb(0 0 0 / 12%),
     0 9px 28px 8px rgb(0 0 0 / 5%);
 
-  .apipost-tree {
+  .beautify-tree {
     width: 100%;
     background-color: var(--popover-select-bg-color);
 
-    .apipost-tree-list {
+    .beautify-tree-list {
       padding-right: 12px;
     }
 
-    .apipost-tree-node-content-wrapper {
+    .beautify-tree-node-content-wrapper {
       display: flex;
       flex: 1;
       flex-direction: row;
@@ -150,7 +150,7 @@ export const SaveDropDownContainer = styled.div`
       width: 0;
       height: 100%;
 
-      .apipost-tree-title {
+      .beautify-tree-title {
         display: flex;
         width: 100%;
 
@@ -183,7 +183,7 @@ export const ExampleListContainer = styled.div`
   background-color: var(--popover-select-bg-color);
   box-shadow: 0 12px 18px -4px var(--box-shadow-modal-color);
 
-  .apipost-dropdown-menu {
+  .beautify-dropdown-menu {
     margin-top: 8px;
     padding: 0;
     box-shadow: none;

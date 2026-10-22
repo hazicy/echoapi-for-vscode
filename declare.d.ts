@@ -8,3 +8,8 @@ declare module 'auto-json-faker';
 
 /** Selected by the extension and Webview build. */
 declare const __ECHOAPI_LANGUAGE__: 'auto' | 'en' | 'zh-cn';
+
+declare module '*.module.css' {
+  const classes: Readonly<Record<string, string>>;
+  export default classes;
+}

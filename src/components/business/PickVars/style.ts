@@ -7,7 +7,7 @@ export const PickVarWrapper = styled.div<{ $token: Partial<GlobalThemeToken> }>`
     font-size: var(--font-size-14);
   }
 
-  .apipost-select-arrow {
+  .beautify-select-arrow {
     font-size: var(--font-size-12);
   }
 `;

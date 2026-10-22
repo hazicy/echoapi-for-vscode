@@ -28,7 +28,7 @@ export const BaseSettingsContainer = styled.div`
     }
 
     .folder-save-wrap {
-      .apipost-btn {
+      .beautify-btn {
         margin-left: 20px;
       }
     }
@@ -49,7 +49,7 @@ export const BaseSettingsContainer = styled.div`
           margin-left: 12px;
         }
 
-        .apipost-select {
+        .beautify-select {
           margin-top: 12px;
         }
       }

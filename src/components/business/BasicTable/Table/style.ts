@@ -9,7 +9,7 @@ export const TableWrapper = styled.div`
     background-color: transparent;
   }
 
-  .apipost-table {
+  .beautify-table {
     height: 100%;
     border-radius: var(--border-radius);
     border: 1px solid var(--color-table-border);
@@ -24,7 +24,7 @@ export const TableWrapper = styled.div`
       padding: 4px 10px;
       border-right: none !important;
 
-      .apipost-input {
+      .beautify-input {
         font-size: var(--font-size-14);
         background: transparent;
       }
@@ -36,11 +36,11 @@ export const TableWrapper = styled.div`
 
     .action {
       ${flexStyles('row', 'center', 'flex-start')}
-      .apipost-divider {
+      .beautify-divider {
         margin-top: 4px;
       }
 
-      .apipost-btn {
+      .beautify-btn {
         padding: 0;
         height: auto;
         font-size: var(--font-size-14);
@@ -48,25 +48,25 @@ export const TableWrapper = styled.div`
       }
     }
 
-    .apipost-table-container {
+    .beautify-table-container {
       border: none !important;
     }
 
-    .apipost-table-column-sorter {
+    .beautify-table-column-sorter {
       color: var(--font-content-color);
     }
 
-    .apipost-table-thead {
+    .beautify-table-thead {
       th {
-        &.apipost-table-column-has-sorters {
+        &.beautify-table-column-has-sorters {
           transition: none;
         }
       }
     }
   }
 
-  .apipost-pagination {
-    .apipost-pagination-item {
+  .beautify-pagination {
+    .beautify-pagination-item {
       width: 32px;
       height: 32px;
       border-radius: var(--border-radius);
@@ -74,13 +74,13 @@ export const TableWrapper = styled.div`
       color: var(--font-content-color);
     }
 
-    .apipost-pagination-item-active {
+    .beautify-pagination-item-active {
       border: 1px solid var(--color-primary);
       color: var(--color-primary);
       background-color: transparent;
     }
 
-    .apipost-pagination-item:not(.apipost-pagination-item-active):hover {
+    .beautify-pagination-item:not(.beautify-pagination-item-active):hover {
       background-color: transparent;
     }
   }
@@ -133,7 +133,7 @@ export const TableContainer = styled.div`
   }
 
   .reset-padding {
-    .apipost-table-cell {
+    .beautify-table-cell {
       padding: 0;
     }
   }

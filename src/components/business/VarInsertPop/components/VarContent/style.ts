@@ -20,13 +20,13 @@ export const ContentContainer = styled.div`
     color: var(--font-light-color);
   }
 
-  .apipost-input,
-  .apipost-input-number-input {
+  .beautify-input,
+  .beautify-input-number-input {
     background-color: var(--search-big-select-color);
     box-shadow: none;
   }
 
-  .apipost-select {
+  .beautify-select {
     background-color: var(--search-big-select-color);
 
     * {
@@ -247,12 +247,12 @@ export const TreeDropDownContainer = styled.div`
   padding: 4px;
   box-sizing: border-box;
 
-  .apipost-tabs {
+  .beautify-tabs {
     padding: 0 8px;
     box-sizing: border-box;
   }
 
-  .apipost-select-tree-indent {
+  .beautify-select-tree-indent {
     width: 0;
   }
 `;

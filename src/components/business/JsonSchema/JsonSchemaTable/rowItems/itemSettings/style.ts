@@ -35,19 +35,19 @@ export const settingsWrapper = css`
       align-items: center;
       padding-bottom: 10px;
 
-      .apipost-input-number {
+      .beautify-input-number {
         display: flex;
         align-items: center;
         box-sizing: border-box;
 
-        .apipost-input-inner-wrapper {
+        .beautify-input-inner-wrapper {
           height: 28px !important;
           border: none !important;
         }
       }
 
-      .apipost-input,
-      .apipost-select-selector {
+      .beautify-input,
+      .beautify-select-selector {
         font-size: 12px;
       }
 
@@ -62,7 +62,7 @@ export const settingsWrapper = css`
         text-align: right;
         white-space: nowrap;
 
-        .apipost-checkbox {
+        .beautify-checkbox {
           margin-right: 8px;
         }
       }
@@ -74,36 +74,36 @@ export const settingsWrapper = css`
         border-radius: 4px;
         line-height: 28px;
 
-        .apipost-input,
-        .apipost-textarea {
+        .beautify-input,
+        .beautify-textarea {
           min-width: 100px !important;
           height: 28px;
 
           /* border-radius: 4px; */
         }
 
-        .apipost-input-inner-wrapper,
-        .apipost-input-number {
+        .beautify-input-inner-wrapper,
+        .beautify-input-number {
           min-width: 100px;
           height: 28px;
         }
 
-        .apipost-textarea-wrapper {
+        .beautify-textarea-wrapper {
           min-width: 100px;
           height: 60px !important;
           border-color: transparent;
 
-          .apipost-textarea {
+          .beautify-textarea {
             height: 100%;
             overflow-y: auto;
           }
         }
 
-        .apipost-textarea:focus {
+        .beautify-textarea:focus {
           background-color: transparent;
         }
 
-        .apipost-select {
+        .beautify-select {
           min-width: 100px;
           height: 28px;
         }
@@ -138,21 +138,21 @@ export const SettingsWrapperContainer = styled.div`
   /* height: 300px; */
   font-size: 12px;
 
-  .apipost-popconfirm-description {
+  .beautify-popconfirm-description {
     position: relative;
   }
 
-  .apipost-input {
+  .beautify-input {
     background-color: var(--search-big-select-color);
     box-shadow: none;
   }
 
-  .apipost-input-number {
+  .beautify-input-number {
     background-color: var(--search-big-select-color);
     box-shadow: none;
   }
 
-  .apipost-select {
+  .beautify-select {
     background-color: var(--search-big-select-color);
 
     * {
@@ -183,10 +183,10 @@ export const SettingsWrapperContainer = styled.div`
     }
   }
 
-  .apipost-segmented {
+  .beautify-segmented {
     width: 100%;
 
-    .apipost-segmented-item {
+    .beautify-segmented-item {
       flex: 1;
     }
   }
@@ -204,15 +204,15 @@ export const SettingContent = styled.div`
 
 export const SchemasPopStyle = createGlobalStyle`
 .setting-confirm-container {
-    .apipost-popconfirm-message {
+    .beautify-popconfirm-message {
       width: 100%;
     }
 
-    .apipost-popconfirm-message-text {
+    .beautify-popconfirm-message-text {
       width: 100%;
     }
 
-    .apipost-btn {
+    .beautify-btn {
       padding: 1px 7px;
       width: auto;
       height: 24px;

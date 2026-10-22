@@ -14,7 +14,7 @@ export const VariableContainer = styled.div`
     flex: 1;
     overflow-y: auto;
 
-    .apipost-table-tbody {
+    .beautify-table-tbody {
       tr {
         &:hover {
           .anticon {
@@ -24,9 +24,9 @@ export const VariableContainer = styled.div`
       }
     }
 
-    .apipost-table-tbody,
-    .apipost-table-thead {
-      .apipost-table-cell {
+    .beautify-table-tbody,
+    .beautify-table-thead {
+      .beautify-table-cell {
         padding: 0;
 
         /* height: 32px; */
@@ -45,8 +45,8 @@ export const VariableContainer = styled.div`
       }
     }
 
-    .apipost-table-thead {
-      .apipost-table-cell {
+    .beautify-table-thead {
+      .beautify-table-cell {
         padding: 0 12px;
       }
     }

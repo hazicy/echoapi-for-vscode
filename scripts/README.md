@@ -1,32 +1,52 @@
 # Building the extension
 
-The extension host and all nine Webviews are bundled with esbuild.
+Use Node.js 22.12+ (or 20.19+) and Yarn Classic. The extension host uses tsup;
+all nine React Webviews use Vite. Build behavior lives in the root configuration
+files, with no custom build runner.
 
-- `yarn package`: minified production bundles in `dist/`, with console/debugger removed, followed by extension module-loading and Webview output parsing checks.
-- `yarn compile` / `yarn package:test`: development bundles and source maps.
-- `yarn watch`: rebuild extension and Webview bundles on source changes.
-- `yarn start`: watch both targets and serve Webviews on port 8080, using the existing `*.bundle.js` development URLs. Reload the panel to see changes; this server does not provide React HMR.
-- `yarn build`: run the production build and package the VSIX using `vsce`.
-- `node scripts/build.cjs --production --analyze`: print total Webview output size, each entry's initial dependency graph size, and its largest dependencies. Initial graph size includes shared static imports but excludes dynamically imported features.
+- `yarn compile` / `yarn package:test`: development bundles with source maps.
+- `yarn package`: production bundles, then extension module-loading and Webview output checks.
+- `yarn watch`: watch both targets and rebuild local files.
+- `yarn start`: watch the extension and run the Vite development server on port 8080.
+  Launch the extension after its first build; React Webviews then use Vite HMR.
+- `yarn build`: create the production VSIX using `vsce`.
+- `yarn build:extension`: build only the CommonJS extension host.
+- `yarn build:webviews`: build only the Webviews. This clears `dist/` before building,
+  so run `yarn build:extension` afterwards if you need a complete extension.
 
-Webviews use ESM and share hashed files in `dist/chunks/`. Keep that directory
-alongside the entry files when packaging or copying the build. Webview HTML loads
-entries with `type="module"`; relative chunk imports work with VS Code resource
-URLs and the development server. The extension host remains a CommonJS bundle.
+Full builds run Vite before tsup so stale Webview chunks are removed without
+removing the extension bundle. Watch mode preserves the shared output directory.
+Run a full build before packaging or copying output.
 
-PDF previews, variable-insertion popovers, schema Mock generation, request-body
-Mock generation, and expression parsing load on demand. Existing dynamic Mermaid
-and other feature imports now produce separate chunks too. These features still
-contribute to the package size, but their code is deferred until requested.
+Webviews use ESM with shared/lazy files in `dist/chunks/`, assets in `dist/assets/`,
+and extracted styles in `dist/webviews.css`. Keep these alongside the entry files.
+The extension-generated HTML explicitly loads the stylesheet in local mode and
+Vite's client/React refresh runtime in development server mode. `yarn compile`
+and `yarn watch` use local bundles; only `yarn start` enables the server URLs.
 
-The build keeps CSS inside JavaScript, converts imported SVGs into React components,
-copies `public/` and the curl parser WASM files, and preserves the existing CSS class
-renaming and browser Node polyfills. Assets referenced by CSS are embedded; absolute
-public URLs remain unchanged. esbuild does not type-check TypeScript; use `yarn tsc --noEmit`
-separately when checking types.
+Vite handles CSS Modules (`*.module.css`), regular CSS, Less, SVG React components,
+and public assets. Its plugins provide browser Node polyfills and copy the curl
+parser WASM files. Public files are served directly in development and copied into
+`dist/` for builds. Selector prefixes are stored explicitly in source rather than
+rewritten during bundling. tsup also copies `public/` so extension icons and fonts
+are available when using `yarn start`.
 
-Watch mode tracks imported source and styles. Restart it after editing files in
-`public/` so the copied assets are refreshed.
+Both tools transpile TypeScript without checking types. Use `yarn tsc --noEmit`
+separately. Existing third-party dependency/type errors may still require follow-up.
+
+## UI migration
+
+The target component library is `@base-ui/react`, with CSS Modules for styles.
+The parameter description picker now uses Base UI Popover and Tooltip, including
+keyboard selection, focus restoration, and immediate project-setting updates.
+The remaining components still depend on Ant Design and styled-components until
+their APIs, theme use, and styles have been migrated; these dependencies remain
+installed intentionally.
+
+Run `yarn playwright install chromium` once, then `yarn test:ui` after a full build
+for picker interaction tests and production module-loading smoke tests of all nine
+Webviews. The smoke tests provide a minimal VS Code bridge and check initial render;
+they do not emulate the extension's backend or exercise every screen workflow.
 
 ## Embedded editors
 
@@ -35,31 +55,28 @@ Language parsers and Prettier formatters load on demand. JSON formatting uses
 `jsonc-parser` to preserve comments, trailing commas, and large numeric literals.
 Environment history comparisons use the read-only CodeMirror merge view.
 
-Run `yarn playwright install chromium` once, then `yarn test:editor` for browser
-regressions covering controlled edits, undo, variable insertion/hover, script
-completion, formatting, read-only views, theme changes, and history comparisons.
-The test fixture uses the production editor components with isolated settings and
-variable lookup, without starting VS Code or connecting to an API server.
-
-Response metadata still uses the existing `fit_for_show: 'Monaco'` discriminator
-from the response-processing dependency. This identifies text responses and keeps
-existing saved data compatible; no Monaco runtime or assets are loaded.
-
-Packaging still checks production dependencies through `vsce`. Changing bundlers does
-not bypass Yarn registry or dependency-resolution failures.
+Run `yarn test:editor` for existing browser regressions covering controlled edits,
+undo, variables, completion, formatting, read-only views, themes, and comparisons.
+The editor fixture has isolated settings and variable lookup and needs no API server.
 
 ## Build language
 
-By default (`--language auto`), one build follows the VS Code display language at
-runtime using `vscode.env.language`. The extension host initializes translations
-synchronously before translated constants are evaluated. Webviews receive the
-resolved language through the HTML `lang` attribute before their modules run;
-Ant Design controls use the same language. Simplified Chinese (`zh-CN`, `zh-Hans`,
-`zh-SG`) selects Chinese; other locales fall back to English. Changing the VS Code
-display language takes effect after the editor restarts.
+By default, one build follows the VS Code display language at runtime. The extension
+initializes translations before translated constants are evaluated. Webviews receive
+the resolved language through their HTML `lang` attribute. Simplified Chinese
+(`zh-CN`, `zh-Hans`, `zh-SG`) selects Chinese; other locales fall back to English.
 
-For development, `--serve` uses the browser language. To override the application
-language, use `node scripts/build.cjs --production --language zh-cn` or
-`--language en`. The `--language=zh-cn` form is also accepted, including in watch
-and serve modes. Native command titles and settings descriptions use VS Code
-`package.nls` localization and always follow the editor language.
+To force a build language, create an untracked `.env.local` file at the project root:
+
+```dotenv
+ECHOAPI_LANGUAGE=zh-cn
+```
+
+Supported values are `auto`, `en`, and `zh-cn`. Both build configurations use the
+same value. Restart watchers after changing it. Vite also supports mode-specific
+files such as `.env.production.local`. Direct browser development follows the
+browser language when no forced language is configured. Native command titles and
+settings descriptions use VS Code `package.nls` localization.
+
+Packaging still checks production dependencies through `vsce`; changing bundlers
+does not bypass registry or dependency-resolution failures.

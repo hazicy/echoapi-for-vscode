@@ -66,7 +66,7 @@ export const FakerParamsContainer = styled(Flex)`
           width: 100%;
         }
 
-        .apipost-select {
+        .beautify-select {
           min-width: 88px;
         }
       }

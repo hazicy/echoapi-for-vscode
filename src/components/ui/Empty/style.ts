@@ -5,7 +5,7 @@ import { flexStyles } from '@/assets/css/style';
 export const EmptyWrap = styled.div`
   height: 100%;
   width: 100%;
-  .apipost-empty {
+  .beautify-empty {
     height: 100%;
     color:var(--vscode-settings-headerBorder);
     ${flexStyles('column', 'center', 'center')}

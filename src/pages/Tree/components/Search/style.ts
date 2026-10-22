@@ -17,20 +17,20 @@ export const SearchContainer = styled.div`
       height: 28px;
     }
   }
-  .apipost-flex {
+  .beautify-flex {
     height: 100%;
 
-    .apipost-input-affix-wrapper {
+    .beautify-input-affix-wrapper {
       padding: 4px 8px;
       height: 100%;
       background-color: var(--search-bg-color);
 
-      .apipost-input-suffix {
+      .beautify-input-suffix {
         min-width: 80px;
       }
     }
   }
-  .apipost-space-compact{
+  .beautify-space-compact{
     width: auto;
   }
   .search-wrap {
@@ -38,19 +38,19 @@ export const SearchContainer = styled.div`
     align-items: center;
     flex: 1;
     gap: 4px;
-    .apipost-input {
+    .beautify-input {
       font-size: var(--font-size-12);
     }
     .beautify-input-outlined{
       background: var(--vscode-input-background);
     }
-    .apipost-select {
+    .beautify-select {
       position: relative;
       right: -12px;
     }
 
     .apis-mark-select-wrap {
-      .apipost-select-selector {
+      .beautify-select-selector {
         padding-left: 0;
       }
     }

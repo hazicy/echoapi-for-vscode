@@ -6,13 +6,13 @@ import IconFont from '@/components/ui/IconFont';
 export const GenerateCodeWrap = styled.div`
   height: 100%;
 
-  .apipost-spin-nested-loading {
+  .beautify-spin-nested-loading {
     height: 100%;
 
-    .apipost-spin-container {
+    .beautify-spin-container {
       height: 100%;
 
-      > .apipost-flex {
+      > .beautify-flex {
         height: 100%;
       }
     }

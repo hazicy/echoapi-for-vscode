@@ -5,11 +5,11 @@ import { flexStyles } from '@/assets/css/style';
 export const RequestAuthContainer = styled.div`
   width: 100%;
 
-  .apipost-form-item {
+  .beautify-form-item {
     margin-bottom: 12px;
 
     input,
-    .apipost-select-selector {
+    .beautify-select-selector {
       font-size: var(--font-size-14) !important;
     }
 
@@ -20,8 +20,8 @@ export const RequestAuthContainer = styled.div`
     }
   }
 
-  .apipost-collapse-ghost {
-    .apipost-collapse-header {
+  .beautify-collapse-ghost {
+    .beautify-collapse-header {
       margin-bottom: 4px;
       background: transparent;
 
@@ -30,14 +30,14 @@ export const RequestAuthContainer = styled.div`
       }
     }
 
-    .apipost-collapse-expand-icon {
+    .beautify-collapse-expand-icon {
       svg {
         color: var(--color-primary);
       }
     }
   }
 
-  /* .apipost-collapse-header {
+  /* .beautify-collapse-header {
     background-color: transparent;
   } */
 `;
@@ -82,14 +82,14 @@ export const Oauth2Container = styled.div`
     }
   }
 
-  .apipost-form-item-label > label .apipost-form-item-tooltip {
+  .beautify-form-item-label > label .beautify-form-item-tooltip {
     font-size: 12px;
     color: var(--font-light-color);
     cursor: pointer;
   }
 
-  .apipost-form-item-label
-    > label.apipost-form-item-required:not(.apipost-form-item-required-mark-optional)::before {
+  .beautify-form-item-label
+    > label.beautify-form-item-required:not(.beautify-form-item-required-mark-optional)::before {
     display: none;
   }
 

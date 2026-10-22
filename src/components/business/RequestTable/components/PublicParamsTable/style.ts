@@ -6,8 +6,8 @@ export const BasicTableContainer = styled.div`
 .beautify-collapse>.beautify-collapse-item >.beautify-collapse-header .beautify-collapse-expand-icon{
   padding-inline-end:4px;
 }
-  .apipost-table-thead {
-    .apipost-table-cell {
+  .beautify-table-thead {
+    .beautify-table-cell {
       padding: 10px;
     }
   }
@@ -16,21 +16,21 @@ export const BasicTableContainer = styled.div`
   }
   ${selectRequestStyle}
   .table-collapse {
-    .apipost-collapse-content-box {
+    .beautify-collapse-content-box {
       padding-top: 0 !important;
     }
   }
 
   .table-collapse-public {
-    .apipost-collapse-header {
+    .beautify-collapse-header {
       display: flex;
       align-items: center;
       font-size: 12px;
       background-color: inherit;
     }
 
-    & > .apipost-collapse-item {
-      .apipost-collapse-content {
+    & > .beautify-collapse-item {
+      .beautify-collapse-content {
         padding-right: 0 !important;
         padding-left: 0 !important;
       }

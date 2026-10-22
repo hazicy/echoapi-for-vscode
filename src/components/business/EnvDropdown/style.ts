@@ -104,14 +104,14 @@ export const EnvDropdownRenderContainer = styled.div`
   background-color: var(--popover-select-bg-color);
   box-shadow: 0 12px 18px -4px var(--box-shadow-modal-color);
 
-  .apipost-dropdown-menu {
+  .beautify-dropdown-menu {
     margin-top: 8px;
     padding: 0;
     box-shadow: none;
     max-height: 260px;
     overflow-y: auto;
 
-    .apipost-dropdown-menu-item {
+    .beautify-dropdown-menu-item {
       padding: 4px 8px;
       height: 32px;
 

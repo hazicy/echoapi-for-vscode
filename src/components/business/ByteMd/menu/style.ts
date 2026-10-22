@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const DropDownWrap = styled.div`
-  .apipost-menu {
+  .beautify-menu {
     /* background-color: red; */
   }
 `;

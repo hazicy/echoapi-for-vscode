@@ -24,7 +24,7 @@ export const RequestItem = styled(Flex).attrs({
       }
     }
 
-    .apipost-table-cell {
+    .beautify-table-cell {
       word-break: break-all;
     }
 

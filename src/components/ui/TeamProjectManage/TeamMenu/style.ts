@@ -25,36 +25,36 @@ export const TeamMenuWrapper = styled.div`
     }
   }
 
-  .apipost-menu-inline {
+  .beautify-menu-inline {
     border-right: none !important;
   }
 
-  .apipost-menu-submenu-title {
+  .beautify-menu-submenu-title {
     margin: 0;
     padding: 0;
     width: 100%;
   }
 
-  .apipost-menu-item {
+  .beautify-menu-item {
     margin: 0;
     padding-left: 36px;
     width: 100%;
   }
 
-  .apipost-menu-submenu-selected {
-    .apipost-menu-submenu-title {
+  .beautify-menu-submenu-selected {
+    .beautify-menu-submenu-title {
       font-weight: 600;
       color: var(--font-content-color);
     }
   }
 
-  .apipost-menu-submenu-active {
-    .apipost-menu-submenu-title {
+  .beautify-menu-submenu-active {
+    .beautify-menu-submenu-title {
       color: var(--color-primary);
     }
   }
 
-  .apipost-menu-title-content {
+  .beautify-menu-title-content {
     margin-left: 14px;
 
     .name {
@@ -63,7 +63,7 @@ export const TeamMenuWrapper = styled.div`
     }
   }
 
-  .apipost-menu-item-selected {
+  .beautify-menu-item-selected {
     color: var(--color-primary);
   }
 `;

@@ -907,7 +907,7 @@ export const getUserConfig = (context: vscode.ExtensionContext): { currentTeam: 
 };
 
 export const getHtmlForWebview = (webviewUri: vscode.Uri, resourceBaseUrl: vscode.Uri, data?: any, script?: Boolean) => {
-
+  const devServer = /^http:\/\/localhost:8080\//.test(String(webviewUri));
   return `
     <!DOCTYPE html>
     <html lang="${language}">
@@ -915,6 +915,16 @@ export const getHtmlForWebview = (webviewUri: vscode.Uri, resourceBaseUrl: vscod
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>My View</title>
+      ${devServer ? `
+      <script type="module">
+        import RefreshRuntime from 'http://localhost:8080/@react-refresh';
+        RefreshRuntime.injectIntoGlobalHook(window);
+        window.$RefreshReg$ = () => {};
+        window.$RefreshSig$ = () => (type) => type;
+        window.__vite_plugin_react_preamble_installed__ = true;
+      </script>
+      <script type="module" src="http://localhost:8080/@vite/client"></script>
+      ` : `<link rel="stylesheet" href="${resourceBaseUrl}/webviews.css">`}
       <style>
         #loading {
             position: fixed;

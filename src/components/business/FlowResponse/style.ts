@@ -26,7 +26,7 @@ export const FlowResponseWrap = styled.div<{ $token: Partial<GlobalThemeToken> }
     font-size: var(--font-size-14);
   }
 
-  .apipost-list-item {
+  .beautify-list-item {
     cursor: pointer;
 
     .flow-icon {

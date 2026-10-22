@@ -13,7 +13,7 @@ export const EnvironmentContainer = styled.div`
     overflow-y: auto;
     margin-bottom: 20px;
     border-right: 1px solid var(--color-table-border);
-    .apipost-menu {
+    .beautify-menu {
       border-inline-end: none;
     }
   }
@@ -103,11 +103,11 @@ export const LeftMenuContainer = styled.div`
   padding-right: 0;
   /* background-color: var(--color-bg-page); */
 
-  .apipost-menu-item {
+  .beautify-menu-item {
     display: flex;
     align-items: center;
 
-    .apipost-menu-title-content {
+    .beautify-menu-title-content {
       flex: 1;
     }
   }

@@ -14,7 +14,7 @@ export const HeaderActionWrap = styled.div<{ $token: Partial<GlobalThemeToken> }
   }
 
   .action-right {
-    .apipost-btn {
+    .beautify-btn {
       height: 26px;
     }
   }
@@ -31,12 +31,12 @@ export const ImportContainer = styled.div<{ $token: Partial<GlobalThemeToken> }>
   overflow-y: scroll;
 
   .import-header {
-    .apipost-segmented {
+    .beautify-segmented {
       margin-bottom: 16px;
       width: 100%;
       height: 32px;
 
-      .apipost-segmented-item {
+      .beautify-segmented-item {
         ${ellipsisStyle}
         flex: 1;
       }

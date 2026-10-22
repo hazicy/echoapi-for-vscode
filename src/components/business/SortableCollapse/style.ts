@@ -49,7 +49,7 @@ export const SortableCollapseWrapper = styled.div`
       cursor: move;
     }
 
-    .apipost-collapse-expand-icon {
+    .beautify-collapse-expand-icon {
       display: none !important;
     }
   }

@@ -8,7 +8,7 @@ export const keyWarper = css`
     float: left;
     width: 100%;
 
-    .apipost-input-inner-wrapper {
+    .beautify-input-inner-wrapper {
       display: flex;
 
       /* width: calc(100% - 10px); */
@@ -24,7 +24,7 @@ export const keyWarper = css`
       }
     }
 
-    .apipost-input-inner-wrapper-disabled {
+    .beautify-input-inner-wrapper-disabled {
       /* border-bottom: 1px solid transparent; */
     }
   }
@@ -53,7 +53,7 @@ export const keyWarper = css`
   .mock-auto-vars {
     height: 100%;
 
-    .apipost-select-selector {
+    .beautify-select-selector {
       height: 32px;
       border-radius: var(--border-radius);
       background: transparent !important;

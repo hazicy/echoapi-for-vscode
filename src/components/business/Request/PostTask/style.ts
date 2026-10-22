@@ -5,28 +5,28 @@ export const RequestPostTaskContainer = styled.div`
   height: 100%;
   overflow-y: auto;
 
-  > .apipost-btn {
+  > .beautify-btn {
     width: 100%;
     font-size: var(--font-size-14);
   }
 
   .item-container {
-    .apipost-typography {
+    .beautify-typography {
       font-size: var(--font-size-14);
       white-space: nowrap;
     }
 
-    .apipost-input {
+    .beautify-input {
       font-size: var(--font-size-14);
     }
 
-    .apipost-collapse-header {
-      .apipost-input {
+    .beautify-collapse-header {
+      .beautify-input {
         height: 24px;
       }
     }
 
-    .apipost-select-selector {
+    .beautify-select-selector {
       font-size: var(--font-size-14);
     }
   }

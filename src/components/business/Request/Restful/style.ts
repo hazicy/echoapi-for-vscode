@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 export const RestfulQueryContainer = styled.div`
-  .apipost-table-thead {
-    .apipost-table-cell {
+  .beautify-table-thead {
+    .beautify-table-cell {
       padding: 4px 10px;
     }
   }
 
-  .apipost-table-tbody {
+  .beautify-table-tbody {
     tr {
       .row-description-operation {
         visibility: hidden;
@@ -22,7 +22,7 @@ export const RestfulQueryContainer = styled.div`
   }
 
   .table-custom-empty-wrap {
-    .apipost-table-tbody {
+    .beautify-table-tbody {
       display: none;
     }
   }

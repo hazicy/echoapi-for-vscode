@@ -9,7 +9,7 @@ export const PreviewContainer = styled(Modal)`
     background: transparent;
   }
 
-  .apipost-table-body {
+  .beautify-table-body {
     overflow-y: auto !important;
   }
 
@@ -18,13 +18,13 @@ export const PreviewContainer = styled(Modal)`
     color: var(--font-light-color);
   }
 
-  .apipost-tree .apipost-tree-checkbox {
+  .beautify-tree .beautify-tree-checkbox {
     margin-top: 0;
     align-self: auto;
   }
 
   .import-project-append-config {
-    .apipost-select-outlined:not(.apipost-select-customize-input) .apipost-select-selector {
+    .beautify-select-outlined:not(.beautify-select-customize-input) .beautify-select-selector {
       /* background: var(--color-bg-right); */
     }
   }

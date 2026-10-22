@@ -5,7 +5,7 @@ export const ReportWrapper = styled.div`
   height: 100%;
 
   .operate {
-    .apipost-btn {
+    .beautify-btn {
       padding: 0;
       font-size: var(--font-size-14);
     }
@@ -16,7 +16,7 @@ export const ReportWrapper = styled.div`
     }
   }
 
-  .apipost-pagination {
+  .beautify-pagination {
     position: fixed;
     bottom: 22px;
     left: 50%;

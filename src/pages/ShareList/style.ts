@@ -8,7 +8,7 @@ export const ShareContainer = styled.div`
   padding: 16px;
   background-color: var(--color-bg-right);
   .response-empty-wrap {
-    .apipost-empty-image {
+    .beautify-empty-image {
       margin-bottom: 16px;
 
       .icon-empty-wrap {
@@ -88,13 +88,13 @@ export const TabsWrap = styled.div<{ $token: Partial<GlobalThemeToken> }>`
   .share-list-delete-btn.show {
     display: flex;
   }
-  .apipost-flex {
-    .apipost-btn {
+  .beautify-flex {
+    .beautify-btn {
       margin-left: 12px;
       padding: 4px 8px;
       height: 28px;
 
-      &.apipost-btn-link {
+      &.beautify-btn-link {
         color: var(--font-light-color);
 
         &:hover {
@@ -104,31 +104,31 @@ export const TabsWrap = styled.div<{ $token: Partial<GlobalThemeToken> }>`
     }
   }
 
-  .apipost-tabs {
+  .beautify-tabs {
     height: 100%;
 
-    .apipost-flex {
+    .beautify-flex {
       /* margin-bottom: 16px; */
     }
 
-    .apipost-tabs-content {
+    .beautify-tabs-content {
       height: 100%;
 
-      .apipost-tabs-tabpane {
+      .beautify-tabs-tabpane {
         height: 100%;
       }
     }
   }
 
-  .apipost-tabs-tab {
+  .beautify-tabs-tab {
     padding: 10px;
 
-    .apipost-tabs-tab-btn {
+    .beautify-tabs-tab-btn {
       font-size: var(--font-size-14);
     }
   }
 
-  .apipost-checkbox-group {
+  .beautify-checkbox-group {
     display: block;
     width: 100%;
     height: 100%;
@@ -148,17 +148,17 @@ export const ControlExtraContentStyles = styled.div<{
   background-color: var(--color-bg-right);
   box-shadow: 0 2px 16px 0 var(--box-shadow-modal-color);
 
-  .apipost-btn {
+  .beautify-btn {
     margin-left: 12px;
     width: 82px;
     height: 28px;
   }
 
-  .apipost-checkbox-wrapper {
+  .beautify-checkbox-wrapper {
     align-items: center;
 
-    .apipost-checkbox-indeterminate {
-      .apipost-checkbox-inner {
+    .beautify-checkbox-indeterminate {
+      .beautify-checkbox-inner {
         border-color: var(--color-primary);
         background-color: var(--color-bg-right);
       }

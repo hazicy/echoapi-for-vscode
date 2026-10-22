@@ -17,10 +17,10 @@ export default styled.div`
     overflow-y: auto;
     /* padding-right: 10px; */
 
-    .apipost-collapse {
+    .beautify-collapse {
       background-color: transparent;
 
-      .apipost-collapse-item {
+      .beautify-collapse-item {
         margin-bottom: 8px !important;
         overflow: hidden;
       }

@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
 export const SettingWrap = styled.div<{ $token: Partial<GlobalThemeToken> }>`
-  .apipost-input {
+  .beautify-input {
     /* width: 120px; */
     width: 100%;
   }
 
-  .apipost-input-number {
+  .beautify-input-number {
     width: 100%;
   }
 
-  .apipost-select {
+  .beautify-select {
     width: 100%;
   }
 

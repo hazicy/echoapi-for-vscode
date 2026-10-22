@@ -10,23 +10,23 @@ export const UrlPanelContainer = styled.div`
     background-color: transparent;
   }
 
-    .apipost-flex {
+    .beautify-flex {
       .url-group {
         flex: 1;
       }
     }
 
-    /* .apipost-btn {
+    /* .beautify-btn {
       margin-left: 8px;
 
       &:last-child,
-      .apipost-dropdown-open {
+      .beautify-dropdown-open {
         margin-left: 0;
         width: 24px;
       }
     } */
 
-    .apipost-btn {
+    .beautify-btn {
       height: 36px;
       font-size: var(--font-size-14);
     }

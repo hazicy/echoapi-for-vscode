@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ResponseWrapper = styled.div`
   width: 100%;
 
-  .apipost-tabs-tabpane {
+  .beautify-tabs-tabpane {
     ::-webkit-scrollbar {
       display: none;
     }

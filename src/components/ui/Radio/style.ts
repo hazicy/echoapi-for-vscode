@@ -8,8 +8,8 @@ export const RadioCss = css`
     line-height: 1;
   }
 
-  .apipost-radio {
-    .apipost-radio-inner {
+  .beautify-radio {
+    .beautify-radio-inner {
       /* width: 16px; */
 
       /* height: 16px; */
@@ -32,7 +32,7 @@ export const RadioWrap = styled.div`
 `;
 export const RadioGroupWrap = styled.div`
   /* 1 */
-  .apipost-radio-group {
+  .beautify-radio-group {
     ${flexStyles('row', 'center', 'flex-start')}
     ${RadioCss}
   }

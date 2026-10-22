@@ -13,12 +13,12 @@ export const ContentContainer = styled.div`
   transition: opacity 0.1s ease-in-out;
   pointer-events: none;
 
-  .apipost-input {
+  .beautify-input {
     background-color: var(--search-big-select-color);
     box-shadow: none;
   }
 
-  .apipost-select {
+  .beautify-select {
     background-color: var(--search-big-select-color);
 
     * {
@@ -36,7 +36,7 @@ export const ContentContainer = styled.div`
   }
 
   .var-tabs {
-    .apipost-segmented-item {
+    .beautify-segmented-item {
       flex: 1;
     }
   }

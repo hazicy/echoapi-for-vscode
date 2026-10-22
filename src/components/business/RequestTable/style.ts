@@ -3,15 +3,15 @@ import styled, { css } from 'styled-components';
 import { ellipsisStyle, flexStyles } from '@/assets/css/style';
 
 export const selectRequestStyle = css`
-  .apipost-select {
-    .apipost-select-selector {
+  .beautify-select {
+    .beautify-select-selector {
       padding-right: 42px;
       border-radius: 0;
       border-color: transparent;
       color: var(--color-primary);
     }
 
-    .apipost-select-arrow {
+    .beautify-select-arrow {
       font-size: 16px;
 
       & > div {
@@ -126,7 +126,7 @@ export const RowItemWrap = styled.div`
   }
 
   ${selectRequestStyle}
-  .apipost-select {
+  .beautify-select {
     height: 36px;
   }
 
@@ -134,7 +134,7 @@ export const RowItemWrap = styled.div`
     position: relative;
     width: 100%;
 
-    .apipost-input {
+    .beautify-input {
       padding: 4px 12px;
       overflow: hidden;
       border: 1px solid transparent;
@@ -146,14 +146,14 @@ export const RowItemWrap = styled.div`
       }
     }
 
-    .apipost-input:focus {
+    .beautify-input:focus {
       z-index: 700;
       border: 1px solid var(--color-primary);
       color: var(--font-content-color);
       background-color: var(--highlight-change-color);
     }
 
-    .apipost-input::placeholder {
+    .beautify-input::placeholder {
       line-height: 28px;
     }
   }
@@ -171,7 +171,7 @@ export const RowItemWrap = styled.div`
     display: inline-flex;
     align-items: center;
 
-    .apipost-btn {
+    .beautify-btn {
       width: 26px;
       border: none !important;
       background: none !important;
@@ -181,10 +181,10 @@ export const RowItemWrap = styled.div`
   .upload-wrapper {
     width: 100%;
 
-    .apipost-upload {
+    .beautify-upload {
       width: 100%;
 
-      .apipost-btn {
+      .beautify-btn {
         justify-content: start;
         width: 100%;
       }
@@ -213,10 +213,10 @@ export const RowItemWrap = styled.div`
     }
   }
 
-  .apipost-select.apipost-select-auto-complete {
+  .beautify-select.beautify-select-auto-complete {
     width: 100%;
 
-    > .apipost-select-selector {
+    > .beautify-select-selector {
       color: var(--font-content-color);
     }
   }
@@ -226,8 +226,8 @@ export const BasicTableWrap = styled.div`
  position: relative;
   width: 100%;
   height: 100%;
-  .apipost-table-thead {
-    .apipost-table-cell {
+  .beautify-table-thead {
+    .beautify-table-cell {
       padding: 4px 10px;
       ${ellipsisStyle}
     }
@@ -258,7 +258,7 @@ export const BasicTableWrap = styled.div`
     }
   }
 
-  .apipost-table-tbody {
+  .beautify-table-tbody {
     .insert-icon {
       visibility: hidden;
       color: var(--font-light-color);
@@ -288,11 +288,11 @@ export const BasicTableWrap = styled.div`
 
   ${selectRequestStyle}
   .table-collapse {
-    .apipost-collapse-header {
+    .beautify-collapse-header {
       padding: 12px;
     }
 
-    .apipost-collapse-content-box {
+    .beautify-collapse-content-box {
       margin-bottom: 12px;
       padding: 0;
       padding-top: 0 !important;
@@ -326,8 +326,8 @@ export const SelectFieldTypeOptionItem = styled.span`
 `;
 
 export const RequestTableContainer = styled.div`
-  .apipost-table-thead {
-    .apipost-table-cell {
+  .beautify-table-thead {
+    .beautify-table-cell {
       padding: 4px;
       padding-left: 12px;
       ${ellipsisStyle}
@@ -359,7 +359,7 @@ export const RequestTableContainer = styled.div`
     }
   }
 
-  .apipost-table-tbody {
+  .beautify-table-tbody {
     tr {
       .row-description-operation {
         visibility: hidden;
@@ -384,11 +384,11 @@ export const RequestTableContainer = styled.div`
 
   ${selectRequestStyle}
   .table-collapse {
-    .apipost-collapse-header {
+    .beautify-collapse-header {
       padding: 12px;
     }
 
-    .apipost-collapse-content-box {
+    .beautify-collapse-content-box {
       margin-bottom: 12px;
       padding: 0;
       padding-top: 0 !important;

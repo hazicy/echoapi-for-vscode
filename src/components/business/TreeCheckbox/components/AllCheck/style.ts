@@ -17,9 +17,9 @@ export const AllCheckContainer = styled.div`
       white-space: nowrap;
     }
   }
-  .apipost-checkbox-wrapper {
+  .beautify-checkbox-wrapper {
     ${flexStyles('row', 'center', 'flex-start')};
-    /* .apipost-checkbox-inner {
+    /* .beautify-checkbox-inner {
       background-color: var(--color-bg-tree-page);
     } */
   }

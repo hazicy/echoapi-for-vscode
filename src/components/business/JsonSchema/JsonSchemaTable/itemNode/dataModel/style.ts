@@ -17,7 +17,7 @@ export const modelWarper = css`
   }
 
   .desc-row-description {
-    .apipost-input {
+    .beautify-input {
       pointer-events: none;
       caret-color: transparent;
     }
@@ -85,11 +85,11 @@ export const modelWarper = css`
     .data-item {
       cursor: not-allowed;
 
-      .apipost-btn {
+      .beautify-btn {
         z-index: 1000;
       }
 
-      .apipost-input {
+      .beautify-input {
         cursor: not-allowed;
       }
 

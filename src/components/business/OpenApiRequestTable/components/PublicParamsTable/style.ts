@@ -3,29 +3,29 @@ import styled from 'styled-components';
 import { selectRequestStyle } from '../../style';
 
 export const BasicTableContainer = styled.div`
-  .apipost-table-thead {
-    .apipost-table-cell {
+  .beautify-table-thead {
+    .beautify-table-cell {
       padding: 10px;
     }
   }
 
   ${selectRequestStyle}
   .table-collapse {
-    .apipost-collapse-content-box {
+    .beautify-collapse-content-box {
       padding-top: 0 !important;
     }
   }
 
   .table-collapse-public {
-    .apipost-collapse-header {
+    .beautify-collapse-header {
       display: flex;
       align-items: center;
       font-size: 12px;
       background-color: inherit;
     }
 
-    & > .apipost-collapse-item {
-      .apipost-collapse-content {
+    & > .beautify-collapse-item {
+      .beautify-collapse-content {
         padding-right: 0 !important;
         padding-left: 0 !important;
       }

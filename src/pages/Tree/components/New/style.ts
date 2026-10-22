@@ -17,7 +17,7 @@ export const NewBtnsContainer = styled.div`
     }
   }
 
-  .apipost-space-compact{
+  .beautify-space-compact{
     width: auto;
   }
  

@@ -6,7 +6,7 @@ export const TreeCheckboxContainer = styled.div`
   width: 100%;
   height: 100%;
   gap: 4px;
-  .apipost-tree {
+  .beautify-tree {
     background-color: transparent;
   }
 
@@ -16,7 +16,7 @@ export const TreeCheckboxContainer = styled.div`
     /* background-color: var(--search-big-select-color); */
     /* padding: 0 12px 12px 12px; */
     border-radius: 0 0 4px 4px;
-    .apipost-tree-checkbox {
+    .beautify-tree-checkbox {
       align-self: center;
       margin-top: 0;
     }
@@ -26,7 +26,7 @@ export const TreeCheckboxContainer = styled.div`
         /* border-color: #835dff; */
       }
     }
-    .apipost-tree-checkbox-inner{
+    .beautify-tree-checkbox-inner{
       /* background: var(--vscode-editor-background,#121212); */
       /* border: 1px solid var(--vscode-editorWidget-border, #353535); */
     }

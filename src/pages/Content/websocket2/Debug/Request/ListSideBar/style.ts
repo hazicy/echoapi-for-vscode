@@ -41,7 +41,7 @@ export const ListSideBarContainer = styled(Flex)`
         &-active {
           background-color: var(--color-bg-folder-hover);
           color: var(--vscode-foreground);
-          .apipost-typography {
+          .beautify-typography {
             color: var(--vscode-foreground);
           }
         }
@@ -49,7 +49,7 @@ export const ListSideBarContainer = styled(Flex)`
         &:hover {
           background-color: var(--color-bg-folder-hover);
 
-          .apipost-typography {
+          .beautify-typography {
             color: var(--color-primary);
           }
 
@@ -58,7 +58,7 @@ export const ListSideBarContainer = styled(Flex)`
           }
         }
 
-        .apipost-input {
+        .beautify-input {
           box-shadow: none;
           border-radius: 0;
           border-color: transparent;
@@ -86,15 +86,15 @@ export const ListSideBarContainer = styled(Flex)`
       overflow: hidden;
       transition: width 0.1s linear;
 
-      .apipost-input-affix-wrapper {
+      .beautify-input-affix-wrapper {
         display: none;
       }
 
-      .apipost-tree {
+      .beautify-tree {
         overflow: hidden;
       }
 
-      .apipost-empty {
+      .beautify-empty {
         display: none;
       }
     }

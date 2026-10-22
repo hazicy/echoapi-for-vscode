@@ -11,12 +11,12 @@ const ButtonWrap = styled(Button)<{ $token: Partial<GlobalThemeToken> }>`
   font-size: var(--font-size-14);
   line-height: 1;
 
-  &.apipost-btn-default {
+  &.beautify-btn-default {
     /* color: var(--font-content-color); */
     background: transparent;
   }
 
-  &:has(.apipost-btn-icon) {
+  &:has(.beautify-btn-icon) {
     padding: 4px 8px;
   }
 
@@ -47,7 +47,7 @@ const ButtonWrap = styled(Button)<{ $token: Partial<GlobalThemeToken> }>`
     font-size: var(--font-size-12);
   }
 
-  &.apipost-btn-dashed {
+  &.beautify-btn-dashed {
     border-color: var(--color-dashed);
     box-shadow: none;
     &.normal {
@@ -69,9 +69,9 @@ const ButtonWrap = styled(Button)<{ $token: Partial<GlobalThemeToken> }>`
     }
   }
 
-  &.apipost-btn-primary {
+  &.beautify-btn-primary {
     &.light {
-      &.apipost-btn-primary {
+      &.beautify-btn-primary {
         color: var(--color-primary);
         background-color: var(--color-primary-opacity);
       }
@@ -102,7 +102,7 @@ const ButtonWrap = styled(Button)<{ $token: Partial<GlobalThemeToken> }>`
     }
   }
 
-  &.apipost-btn-text {
+  &.beautify-btn-text {
     color: var(--vscode-tab-inactiveForeground);
     &.background {
       color: var(--font-title-color);

@@ -16,7 +16,7 @@ export const HttpExecDetailWrapper = styled.div<{ $token: Partial<GlobalThemeTok
     }
   }
 
-  .apipost-tabs-tab {
+  .beautify-tabs-tab {
     padding: 4px 8px 12px;
   }
 
@@ -26,7 +26,7 @@ export const HttpExecDetailWrapper = styled.div<{ $token: Partial<GlobalThemeTok
     border-radius: 4px;
     font-size: var(--font-size-14);
 
-    .apipost-alert-message {
+    .beautify-alert-message {
       max-width: 510px;
     }
   }

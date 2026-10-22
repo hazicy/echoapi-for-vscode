@@ -10,7 +10,7 @@ export const RequestBodyContainer = styled.div`
       opacity: 0.6;
     }
   }
-  > .apipost-flex {
+  > .beautify-flex {
     height: 100%;
 
     .request-body-header {
@@ -28,8 +28,8 @@ export const RequestBodyContainer = styled.div`
     }
   }
 
-  .apipost-radio-group {
-    .apipost-radio-wrapper {
+  .beautify-radio-group {
+    .beautify-radio-wrapper {
       font-size: var(--font-size-14);
     }
   }
@@ -64,7 +64,7 @@ export const RequestBodyContentContainer = styled.div`
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border);
 
-  .apipost-upload-wrapper {
+  .beautify-upload-wrapper {
     text-align: center;
   }
 `;

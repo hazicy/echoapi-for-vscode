@@ -13,17 +13,17 @@ export const flexStyles = (
 `;
 // Unified menu style in Dropdown
 export const DropdownMenuWrap = styled.div<{ $token: Partial<GlobalThemeToken> }>`
-  .apipost-dropdown-menu {
+  .beautify-dropdown-menu {
     background-color: var(--color-bg-right);
 
-    .apipost-dropdown-menu-item {
+    .beautify-dropdown-menu-item {
       color: var(--font-content-color);
 
       &:hover {
         color: var(--color-primary);
         background: var(--color-primary-opacity);
       }
-      .apipost-btn-text{
+      .beautify-btn-text{
         color: var(--font-content-color);
       }
     }

@@ -14,7 +14,7 @@ export const ResponseEmptyContainer = styled.div`
   }
 
   .response-empty-wrap {
-    .apipost-empty-image {
+    .beautify-empty-image {
       margin-bottom: 30px;
 
       .icon-empty-wrap {
@@ -23,7 +23,7 @@ export const ResponseEmptyContainer = styled.div`
       }
     }
 
-    .apipost-empty-description {
+    .beautify-empty-description {
       font-size: var(--font-size-12);
       color: var(--font-light-color);
 

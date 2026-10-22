@@ -4,7 +4,7 @@ export const SchemaWrapper = styled.div<{ $token: Partial<GlobalThemeToken> }>`
   display: flex;
   flex-direction: column;
 
-  .apipost-btn {
+  .beautify-btn {
     padding: 0;
     width: 20px;
     height: 20px;
@@ -158,7 +158,7 @@ export const SchemaWrapper = styled.div<{ $token: Partial<GlobalThemeToken> }>`
       }
     }
 
-    .apipost-select-single {
+    .beautify-select-single {
       &:hover {
         .item-key-types {
           text-decoration: underline;
@@ -170,7 +170,7 @@ export const SchemaWrapper = styled.div<{ $token: Partial<GlobalThemeToken> }>`
       .schema-text-box,
       .sel-title,
       .item-key-types,
-      .apipost-input {
+      .beautify-input {
         text-decoration: line-through !important;
         font-size: var(--font-size-12) !important;
         &:hover {

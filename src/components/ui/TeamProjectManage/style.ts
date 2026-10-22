@@ -18,7 +18,7 @@ export const TeamWrapper = styled.div`
     color: var(--font-light-color);
     ${ellipsisStyle}
   }
-  .apipost-popover{
+  .beautify-popover{
     max-width: 80%;
   }
   .team-project-manage-popover{

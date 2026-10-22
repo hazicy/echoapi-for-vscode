@@ -1,54 +1,33 @@
-import { useSafeState } from "ahooks";
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Popover } from '@base-ui/react/popover';
 
-import IconFont from "@/components/ui/IconFont";
-import CustomPopover from "@/components/ui/Popover";
-
-import DropContent from "./DropContent";
-
-import { AiWrap } from "./style";
+import IconFont from '@/components/ui/IconFont';
+import DropContent from './DropContent';
+import styles from './AiDescription.module.css';
 
 interface Props {
   onChange?: (val: string) => void;
   filterKey?: string;
 }
-const AiDescription = (props: Props) => {
-  const { onChange, filterKey } = props || {};
 
-  const [open, setOpen] = useSafeState(false);
-  const handleSelect = () => {
-    setOpen(false);
-  };
+const AiDescription = ({ onChange, filterKey }: Props) => {
+  const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
 
   return (
-    <>
-      <CustomPopover
-        trigger={"click"}
-        open={open}
-        onOpenChange={(open: boolean) => setOpen(open)}
-        placement="bottomRight"
-        overlayInnerStyle={{ padding: "8px 0" }}
-        content={
-          <>
-            <div className="params-desc-wrapper" style={{ padding: "4px 8px" }}>
-              <DropContent
-                handleSelect={handleSelect}
-                onChange={(val: string) => onChange?.(val)}
-                filterKey={filterKey}
-              />
-            </div>
-          </>
-        }
-        style={{ zIndex: 1050 }}
-      >
-        <AiWrap>
-          <IconFont
-            className="ai-icon"
-            onClick={() => setOpen(true)}
-            type="icon-parameter-lib-change"
-          />
-        </AiWrap>
-      </CustomPopover>
-    </>
+    <Popover.Root open={open} onOpenChange={setOpen}>
+      <Popover.Trigger className={styles.trigger} aria-label={t('settings.description.title')}>
+        <IconFont type="icon-parameter-lib-change" aria-hidden="true" />
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Positioner className={styles.positioner} side="bottom" align="end" sideOffset={4}>
+          <Popover.Popup className={styles.popup}>
+            <DropContent handleSelect={() => setOpen(false)} onChange={onChange} filterKey={filterKey} />
+          </Popover.Popup>
+        </Popover.Positioner>
+      </Popover.Portal>
+    </Popover.Root>
   );
 };
 

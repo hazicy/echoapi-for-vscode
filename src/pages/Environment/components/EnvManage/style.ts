@@ -17,9 +17,9 @@ export const EnvManageContainer = styled.div`
     height: 100%;
   }
 
-  .apipost-table-tbody,
-  .apipost-table-thead {
-    .apipost-table-cell {
+  .beautify-table-tbody,
+  .beautify-table-thead {
+    .beautify-table-cell {
       padding: 0;
 
       /* height: 32px; */
@@ -47,12 +47,12 @@ export const EnvManageContainer = styled.div`
     }
 
     .env-var-name {
-      &.apipost-input-disabled {
+      &.beautify-input-disabled {
         background-color: transparent;
       }
     }
 
-    .apipost-table-tbody {
+    .beautify-table-tbody {
       tr {
         &:hover {
           .anticon {
@@ -63,8 +63,8 @@ export const EnvManageContainer = styled.div`
     }
   }
 
-  .apipost-table-thead {
-    .apipost-table-cell {
+  .beautify-table-thead {
+    .beautify-table-cell {
       padding: 0 12px;
     }
   }

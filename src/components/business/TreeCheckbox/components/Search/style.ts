@@ -4,15 +4,15 @@ export const SearchContainer = styled.div`
   width: 100%;
   height: 32px;
   
-  .apipost-flex {
+  .beautify-flex {
     height: 100%;
 
-    .apipost-input-affix-wrapper {
+    .beautify-input-affix-wrapper {
       padding: 6px 8px;
       height: 100%;
       background-color: var(--search-bg-color);
 
-      .apipost-input-suffix {
+      .beautify-input-suffix {
         min-width: 80px;
       }
     }
@@ -26,7 +26,7 @@ export const SearchContainer = styled.div`
     }
 
     .apis-mark-select-wrap {
-      .apipost-select-selector {
+      .beautify-select-selector {
         padding-left: 0;
       }
     }
