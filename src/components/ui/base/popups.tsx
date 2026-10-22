@@ -419,15 +419,39 @@ Dropdown.Button = ({
   type,
   loading,
   disabled,
+  className,
+  style,
+  size,
+  icon,
   ...props
 }: DropdownProps) => (
-  <div className={css.inputGroup}>
-    <Button type={type} loading={loading} disabled={disabled} onClick={onClick}>
+  <div
+    className={cx(
+      css.splitButton,
+      "beautify-dropdown-button",
+      "beautify-space-compact",
+      className,
+    )}
+    style={style}
+  >
+    <Button
+      type={type}
+      size={size}
+      loading={loading}
+      disabled={disabled}
+      onClick={onClick}
+    >
       {children}
     </Button>
     <Dropdown {...props} disabled={disabled} trigger={["click"]}>
-      <Button disabled={disabled} aria-label="More actions">
-        ⌄
+      <Button
+        type={type}
+        size={size}
+        disabled={disabled}
+        className="beautify-btn-compact-last-item"
+        aria-label="More actions"
+      >
+        {icon ?? "⌄"}
       </Button>
     </Dropdown>
   </div>

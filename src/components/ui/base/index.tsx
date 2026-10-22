@@ -23,6 +23,17 @@ export function ConfigProvider({
         ...parent,
         ...theme,
         token: { ...parent.token, ...theme.token },
+        components: Object.fromEntries(
+          Array.from(
+            new Set([
+              ...Object.keys(parent.components ?? {}),
+              ...Object.keys(theme.components ?? {}),
+            ]),
+          ).map((name) => [
+            name,
+            { ...parent.components?.[name], ...theme.components?.[name] },
+          ]),
+        ),
       }}
     >
       {children}

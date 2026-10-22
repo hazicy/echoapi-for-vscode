@@ -17,6 +17,7 @@ import type {
 } from "./types";
 import css from "./base.module.css";
 import { getPopupContainer } from "@/utils/popupContainer";
+import { useThemeConfig } from "./theme";
 const SELECTION_COLUMN = { key: "__selection__" };
 export function Table<T extends object = Record<string, unknown>>({
   dataSource = [],
@@ -33,8 +34,12 @@ export function Table<T extends object = Record<string, unknown>>({
   sortDirections,
   showSorterTooltip,
   tableLayout,
+  bordered,
+  style,
   ...props
 }: TableProps<T>) {
+  const { components } = useThemeConfig();
+  const tableTheme = components?.Table;
   const [selected, setSelected] = useState<React.Key[]>(
     rowSelection?.defaultSelectedRowKeys ?? [],
   );
@@ -180,15 +185,27 @@ export function Table<T extends object = Record<string, unknown>>({
       className={cx(
         css.table,
         "beautify-table-wrapper",
+        bordered && "beautify-table-bordered",
         className,
         rootClassName,
       )}
       aria-busy={!!loading}
+      style={
+        {
+          "--ui-table-header-bg": tableTheme?.headerBg,
+          "--ui-table-padding":
+            typeof tableTheme?.padding === "number"
+              ? `${tableTheme.padding}px`
+              : tableTheme?.padding,
+          ...style,
+        } as React.CSSProperties
+      }
     >
       {loading && <div role="status">Loading…</div>}
       <RcTable
         {...props}
         prefixCls="beautify-table"
+        tableLayout={tableLayout}
         rowKey={rowKey as any}
         columns={finalColumns as any}
         data={rows}
@@ -298,7 +315,7 @@ const TreeControl = forwardRef<
       switcherIcon={
         switcherIcon ??
         ((node: any) =>
-          node.isLeaf ? null : (
+          node.isLeaf || (!props.loadData && !node.children?.length) ? null : (
             <span aria-hidden="true">{node.expanded ? "⌄" : "›"}</span>
           ))
       }

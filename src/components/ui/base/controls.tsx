@@ -66,7 +66,11 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
         css.button,
         "beautify-btn",
         `beautify-btn-${type}`,
-        size,
+        size === "small"
+          ? "beautify-btn-sm"
+          : size === "large"
+            ? "beautify-btn-lg"
+            : undefined,
         className,
         rootClassName,
         { [css.danger]: danger, [css.block]: block, [css.ghost]: ghost },
@@ -112,6 +116,7 @@ const InputControl = forwardRef<InputRef, InputProps>(
       status,
       variant,
       size,
+      style,
       ...props
     },
     ref,
@@ -127,9 +132,11 @@ const InputControl = forwardRef<InputRef, InputProps>(
       <BaseInput
         {...props}
         ref={input}
+        style={!(addonBefore || addonAfter || prefix || suffix || allowClear) ? style : undefined}
         className={cx(
           css.input,
           "beautify-input",
+          bordered && variant !== "borderless" && "beautify-input-outlined",
           !prefix && !suffix && !allowClear && className,
           { [css.borderless]: !bordered || variant === "borderless" },
         )}
@@ -145,10 +152,12 @@ const InputControl = forwardRef<InputRef, InputProps>(
       <span
         className={cx(
           css.inputGroup,
+          css.affix,
           "beautify-input-affix-wrapper",
           className,
           rootClassName,
         )}
+        style={style}
       >
         {addonBefore}
         {prefix}
@@ -525,12 +534,16 @@ export function Tabs({
   rootClassName,
   ...props
 }: TabsProps) {
+  const [selected, setSelected] = useState(defaultActiveKey ?? items[0]?.key);
+  const current = activeKey ?? selected;
   return (
     <BaseTabs.Root
       {...props}
-      value={activeKey}
-      defaultValue={defaultActiveKey ?? items[0]?.key}
-      onValueChange={(key) => onChange?.(String(key))}
+      value={current}
+      onValueChange={(key) => {
+        setSelected(String(key));
+        onChange?.(String(key));
+      }}
       className={cx(
         css.tabs,
         "beautify-tabs",
@@ -545,48 +558,58 @@ export function Tabs({
         typeof tabBarExtraContent === "object"
           ? tabBarExtraContent.left
           : null}
-        <BaseTabs.List className={cx(css.tabList, "beautify-tabs-nav-list")}>
-          {items.map((item) => (
-            <span key={item.key} className="beautify-tabs-tab">
-              <BaseTabs.Tab
-                value={item.key}
-                disabled={item.disabled}
-                className={css.tab}
+        <div className="beautify-tabs-nav-wrap">
+          <BaseTabs.List className={cx(css.tabList, "beautify-tabs-nav-list")}>
+            {items.map((item) => (
+              <span
+                key={item.key}
+                className={cx(
+                  "beautify-tabs-tab",
+                  current === item.key && "beautify-tabs-tab-active",
+                )}
               >
-                {item.label}
-              </BaseTabs.Tab>
-              {type === "editable-card" && item.closable !== false && (
-                <button
-                  type="button"
-                  aria-label="Close tab"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onEdit?.(item.key, "remove");
-                  }}
+                <BaseTabs.Tab
+                  value={item.key}
+                  disabled={item.disabled}
+                  className={css.tab}
                 >
-                  ×
-                </button>
-              )}
-            </span>
-          ))}
-        </BaseTabs.List>
+                  {item.label}
+                </BaseTabs.Tab>
+                {type === "editable-card" && item.closable !== false && (
+                  <button
+                    type="button"
+                    aria-label="Close tab"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEdit?.(item.key, "remove");
+                    }}
+                  >
+                    ×
+                  </button>
+                )}
+              </span>
+            ))}
+          </BaseTabs.List>
+        </div>
         {tabBarExtraContent &&
         !React.isValidElement(tabBarExtraContent) &&
         typeof tabBarExtraContent === "object"
           ? tabBarExtraContent.right
           : tabBarExtraContent}
       </div>
-      <div className="beautify-tabs-content">
-        {items.map((item) => (
-          <BaseTabs.Panel
-            key={item.key}
-            value={item.key}
-            keepMounted={!destroyInactiveTabPane && !item.destroyOnHidden}
-            className={cx(css.tabPanel, "beautify-tabs-tabpane")}
-          >
-            {item.children}
-          </BaseTabs.Panel>
-        ))}
+      <div className="beautify-tabs-content-holder">
+        <div className="beautify-tabs-content">
+          {items.map((item) => (
+            <BaseTabs.Panel
+              key={item.key}
+              value={item.key}
+              keepMounted={!destroyInactiveTabPane && !item.destroyOnHidden}
+              className={cx(css.tabPanel, "beautify-tabs-tabpane")}
+            >
+              {item.children}
+            </BaseTabs.Panel>
+          ))}
+        </div>
       </div>
     </BaseTabs.Root>
   );
@@ -612,7 +635,7 @@ export function Segmented<V extends string | number = string | number>({
       onValueChange={(v) => onChange?.(v as V)}
       className={cx(css.segmented, "beautify-segmented", className)}
     >
-      <BaseTabs.List className={css.tabList}>
+      <BaseTabs.List className={cx(css.tabList, "beautify-segmented-group")}>
         {options.map((raw: any) => {
           const o = typeof raw === "object" ? raw : { value: raw, label: raw };
           return (
@@ -620,10 +643,18 @@ export function Segmented<V extends string | number = string | number>({
               key={o.value}
               value={o.value}
               disabled={o.disabled}
-              className={css.tab}
+              className={(state) =>
+                cx(
+                  css.tab,
+                  "beautify-segmented-item",
+                  state.active && "beautify-segmented-item-selected",
+                )
+              }
             >
-              {o.icon}
-              {o.label}
+              <span className="beautify-segmented-item-label">
+                {o.icon}
+                {o.label}
+              </span>
             </BaseTabs.Tab>
           );
         })}

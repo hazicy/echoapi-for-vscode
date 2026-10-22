@@ -54,7 +54,7 @@ for (const panel of [
     await page.route("**/loaded.html", (route) =>
       route.fulfill({
         contentType: "text/html",
-        body: `<!doctype html><html lang="en"><head><link rel="stylesheet" href="/webviews.css"></head><body><div id="root"></div><script>window.vscode={postMessage(){}};window.vscodeData=null;window.resourceBaseUrl=location.origin;</script><script type="module" src="/${panel}.js"></script></body></html>`,
+        body: `<!doctype html><html lang="en" style="--vscode-foreground:#ccc;--vscode-icon-foreground:#aaa;--vscode-button-background:#78c4c0;--vscode-editor-background:#222;--vscode-sideBar-background:#222;--vscode-settings-headerBorder:#383838;--vscode-settings-focusedRowBackground:#282828;--vscode-toolbar-hoverBackground:#333;--vscode-gitDecoration-ignoredResourceForeground:#777;--vscode-input-placeholderForeground:#777;--vscode-input-background:#2e2e2e;--vscode-editorWidget-border:#333"><head><meta charset="utf-8"><link rel="stylesheet" href="/webviews.css"></head><body><div id="root"></div><script>window.vscode={postMessage(){}};window.vscodeData=null;window.resourceBaseUrl=location.origin;</script><script type="module" src="/${panel}.js"></script></body></html>`,
       }),
     );
     await page.goto("http://127.0.0.1:4180/loaded.html");
@@ -75,7 +75,7 @@ for (const panel of [
         userInfo: {},
       });
       send("setProjectConfig", {});
-      send("setSystemConfig", {});
+      send("setSystemConfig", { raw_parameter_pilot_bubble_switch: false });
       if (["sidePanel", "shareListPanel", "importDataPanel"].includes(panel))
         send("setApiList", []);
       if (panel === "pushPanel")
@@ -125,7 +125,7 @@ for (const panel of [
               binary: null,
             },
             header: { parameter: [] },
-            query: { parameter: [], query_add_equal: 1 },
+            query: { parameter: [{param_id:"query-1",key:"search",value:"hello",field_type:"String",is_checked:1}], query_add_equal: 1 },
             restful: { parameter: [] },
             cookie: { parameter: [] },
             pre_tasks: [],
@@ -148,6 +148,38 @@ for (const panel of [
           requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
         ),
     );
+    if (panel === "sidePanel") {
+      for (const width of [280, 380]) {
+        await page.setViewportSize({width, height:900});
+        const group = page.locator('.beautify-new-http-more');
+        const main = group.locator('button').first();
+        const groupBox = await group.boundingBox();
+        const mainBox = await main.boundingBox();
+        expect(groupBox!.width).toBeGreaterThan(width - 40);
+        expect(mainBox!.height).toBeLessThanOrEqual(32);
+        expect(mainBox!.width).toBeGreaterThan(180);
+        await expect(group.getByRole('button', {name:'More actions'})).toBeVisible();
+      }
+      await page.screenshot({path: test.info().outputPath('sidebar.png')});
+    }
+    if (panel === "tagPanel") {
+      for (const width of [760, 1024]) {
+        await page.setViewportSize({width, height:900});
+        await page.getByRole('tab', {name:'Params', exact:true}).click();
+        const table = page.getByRole('tabpanel', {name:'Params', exact:true}).locator('table');
+        await expect(table).toHaveCSS('table-layout', 'fixed');
+        const key = table.locator('[contenteditable=true]').filter({hasText:'search'});
+        const value = table.locator('[contenteditable=true]').filter({hasText:'hello'});
+        await expect(key).toBeVisible();
+        await expect(value).toBeVisible();
+        for (const editor of [key, value]) {
+          const box = await editor.boundingBox();
+          expect(box!.width).toBeGreaterThan(100);
+          expect(box!.height).toBeGreaterThan(10);
+        }
+      }
+      await page.screenshot({path: test.info().outputPath('request.png')});
+    }
     expect(errors).toEqual([]);
   });
 }
