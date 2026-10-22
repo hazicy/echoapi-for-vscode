@@ -5,7 +5,6 @@ import {
   message,
   Skeleton,
   Tree,
-  Typography,
 } from 'antd';
 import type { GetProps, MenuItemProps, MenuProps, TreeProps } from 'antd';
 import { TreeMenuContainer, CreateOtherIcon, TreeContainer } from './style';
@@ -810,17 +809,6 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
           gap={4}
         >
           {t('menu.test')}
-          <Typography.Text
-            style={{
-              padding: '0 2px',
-              background: 'var(--color-primary-opacity)',
-              color: 'var(--color-primary)',
-              borderRadius: '2px',
-              fontSize: '10px',
-            }}
-          >
-            {t('common.no_limit')}
-          </Typography.Text>
         </Flex>
       ),
       value: 'tests',
