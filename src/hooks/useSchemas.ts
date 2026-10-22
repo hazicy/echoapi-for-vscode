@@ -3,7 +3,6 @@ import { EditFormat } from '@/utils/common';
 import { parseModelToJsonSchema } from '@/utils/dataModel';
 import { useMemoizedFn } from 'ahooks';
 import { message } from 'antd';
-import MockSchema from 'apipost-mock-schema';
 import { cloneDeep, isObject } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
@@ -34,6 +33,7 @@ const Index = () => {
     }
     const mock_rules = getProxyMockRulesList();
     try {
+      const { default: MockSchema } = await import('apipost-mock-schema');
       const mockData = await new (MockSchema as any)({ app: 'echoapi' }).mock(schemaData, mock_rules);
 
       if (isObject(mockData)) {

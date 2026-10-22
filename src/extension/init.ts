@@ -6,6 +6,11 @@ import { getDataFromGlobalStorage, setDataToGlobalStorage } from "./db";
 import { getVscodeFontFamily, getVscodeFontSize } from "./utils";
 
 export const initializePlugin = async (context: vscode.ExtensionContext) => {
+  // Retire account credentials while preserving cached project selection and data.
+  const userConfig = context.globalState.get<Record<string, any>>('userConfig');
+  if (userConfig?.token || (userConfig?.userInfo && Object.keys(userConfig.userInfo).length)) {
+    await context.globalState.update('userConfig', { ...userConfig, token: '', userInfo: {} });
+  }
   // First time entering the plugin and no API data in local project, add sample APIs
   let extension_config: any = context.globalState.get("extensionConfig") || {};
   const apiList = getDataFromGlobalStorage(context, "apiList", []);

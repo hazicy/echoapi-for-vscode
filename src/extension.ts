@@ -7,12 +7,10 @@ import {
   createImportDataPanel,
   createEnvironmentPanel,
   createPushPanel,
-  createLoginPanel,
   createFolderTestPanel,
   createfolderTestReportDataPanel,
   createExportDataPanel
 } from '@/extension/panelManager';
-import { userSingOut } from '@/extension/user';
 import { onThemeChange, onFontSizeChange } from '@/extension/theme';
 import { initializePlugin } from '@/extension/init';
 import { restartServer, startDocsServer } from '@/extension/swaggerUi';
@@ -101,12 +99,6 @@ export async function activate(context: vscode.ExtensionContext) {
     })
   );
 
-  // Login page
-  context.subscriptions.push(
-    vscode.commands.registerCommand('echoapi.login', (data) => {
-      createLoginPanel(data, context);
-    })
-  );
 
   // Share list page
   context.subscriptions.push(
@@ -155,12 +147,6 @@ export async function activate(context: vscode.ExtensionContext) {
     })
   );
 
-  // User sign out
-  context.subscriptions.push(
-    vscode.commands.registerCommand('echoapi.userSingOut', (data) => {
-      userSingOut(data, context);
-    })
-  );
 }
 
 // This method is called when your extension is deactivated

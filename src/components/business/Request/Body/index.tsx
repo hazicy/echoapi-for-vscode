@@ -18,7 +18,6 @@ import { RequestBodyContentType } from '@/types/apis/request';
 import { RequestBodyProps } from './types';
 import { RequestBodyContainer } from './style';
 import { Button, IconFont } from '@/components/ui';
-import autoJsonFaker from 'auto-json-faker'
 import { useSystemConfig } from '@/store';
 import { useTranslation } from 'react-i18next';
 
@@ -101,7 +100,7 @@ const RequestBody: FC<RequestBodyProps> = (props) => {
     };
 
     const handleGenerateParameterByAi = () => {
-      autoJsonFaker(value?.raw).then((mockData: any) => {
+      import('auto-json-faker').then(({ default: autoJsonFaker }) => autoJsonFaker(value?.raw)).then((mockData: any) => {
         if (!value) return;
         const newRequestData = produce(value, (draft) => {
           if (isString(mockData) && mockData?.length > 0) {

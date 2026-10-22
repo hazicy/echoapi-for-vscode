@@ -7,7 +7,6 @@ import { useMemoizedFn, useSafeState, useUpdateEffect } from 'ahooks';
 import cn from 'classnames';
 import { ContentState, Editor, EditorProps, EditorState, Modifier } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { parseExp } from 'exp-mock';
 import { entries, find, head, isEqual, isFunction, isNumber, isPlainObject, isString, mapKeys, merge, pick } from 'lodash';
 
 import { VarInsertPop } from '@/components/business';
@@ -325,6 +324,8 @@ const VariableInput = (props: Props, refForward: React.Ref<any>) => {
         {} as Record<string, any>
       );
       const systemMap = mapKeys(SYSTEM_VARS, (_value, key) => `$${key}`);
+      const { default: expressionMock } = await import('exp-mock');
+      const { parseExp } = expressionMock;
       const data = await parseExp(
         props?.decoratedText,
         merge(systemMap, globals, environmentMap),

@@ -6,7 +6,6 @@ interface GlobalConfigType {
   openedFolderTestReportDataPanels:{ [key: string]: vscode.WebviewPanel };
   sidePanelWebView:vscode.WebviewPanel | null;
   environmentWebView:vscode.WebviewPanel | null;
-  loginWebView:vscode.WebviewPanel | null;
   pushWebView:vscode.WebviewPanel | null;
   curlWebView:vscode.WebviewPanel | null;
   importDataWebView:vscode.WebviewPanel | null;
@@ -23,7 +22,6 @@ enum PanelNameEnum {
   IMPORTDATA = 'IMPORTDATA',
   SHARELIST = 'SHARELIST',
   PUSH = 'PUSH',
-  LOGIN = 'LOGIN',
   ENVIRONMENT = 'ENVIRONMENT',
   SIDEPANEL = 'SIDEPANEL',
   FOLDER_TEST_REPORT= 'FOLDER_TEST_REPORT',
@@ -54,8 +52,6 @@ export const globalConfig:GlobalConfigType = {
   sidePanelWebView : null,
   // Global parameters webview object
   environmentWebView : null,
-  // Login page webview object
-  loginWebView : null,
   // Push data webview object
   pushWebView : null,
   // cURL import webview object
@@ -106,11 +102,6 @@ export const PANEL_OPTIONS:PanelOptionsType = {
     viewType: 'pushPanel',
     title: i18next.t('common.push_to_echoapi'),
     iconName: 'push.png'
-  },
-  [PanelNameEnum.LOGIN]: {
-    viewType: 'loginPanel',
-    title: i18next.t('common.manage_account'),
-    iconName: 'login.png'
   },
   [PanelNameEnum.ENVIRONMENT]: {
     viewType: 'environmentPanel',

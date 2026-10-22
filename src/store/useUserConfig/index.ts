@@ -6,8 +6,6 @@ import { Project, TeamItem, UserInfo, UserListRes } from '@/types/user';
 type State = {
   /**current user readonly permission */
   isReadonly: boolean;
-  /**login status */
-  token: string;
   /**user info */
   userInfo: UserInfo;
   /**team project list */
@@ -26,7 +24,6 @@ type State = {
 
 type Action = {
   updateIsReadonly: (isReadonly: State['isReadonly']) => void;
-  updateToken: (isLogin: State['token']) => void;
   updateCurrentProject: (currentProject: State['currentProject']) => void;
   updateCurrentTeam: (currentTeam: State['currentTeam']) => void;
   updateTeamProjectList: (teamProjectList: State['teamProjectList']) => void;
@@ -41,7 +38,6 @@ const useUserConfig = create<State & Action>()(
   devtools(
     (set) => ({
       isReadonly: false,
-      token: '',
       userInfo: {} as UserInfo,
       teamProjectList: [] as TeamItem[],
       currentTeam: {} as TeamItem,
@@ -51,7 +47,6 @@ const useUserConfig = create<State & Action>()(
       streamliningMode: -1,
 
       updateIsReadonly: (isReadonly) => set(() => ({ isReadonly })),
-      updateToken: (token) => set(() => ({ token })),
       updateCurrentProject: (currentProject) => set(() => ({ currentProject })),
       updateCurrentTeam: (currentTeam) => set(() => ({ currentTeam })),
       updateTeamProjectList: (teamProjectList) => set(() => ({ teamProjectList })),

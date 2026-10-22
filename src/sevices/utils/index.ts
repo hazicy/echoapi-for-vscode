@@ -12,11 +12,10 @@ import {
   APIPOST_MACHINE,
   APIPOST_PLATFORM,
   APIPOST_TERMINAL,
-  APIPOST_TOKEN,
   APIPOST_VERSION,
 } from '@/constants/user';
 
-import { useAntdApp, useGlobal, useSystemConfig, useUserConfig } from '@/store';
+import { useAntdApp, useGlobal, useSystemConfig } from '@/store';
 
 import {
   HTTP_METHODS,
@@ -54,7 +53,6 @@ const request = ({
   const { token, cancel } = axios.CancelToken.source();
   const { clientId, updateCancelToken } = useGlobal.getState();
 
-  const { token : echoapiToken, updateToken } = useUserConfig.getState();
 
   const { modal } = useAntdApp.getState();
 
@@ -70,9 +68,8 @@ const request = ({
       ...headers,
       ...(clientId ? { [APIPOST_CLIENT_ID]: clientId } : {}),
       [APIPOST_LANGUAGE]: useSystemConfig.getState()?.systemConfig?.language || 'en',
-      [APIPOST_TOKEN]: echoapiToken,
     },
-    withCredentials: true,
+    withCredentials: false,
     ...options,
   };
 
@@ -109,7 +106,6 @@ const request = ({
           omit(RESPONSE_ERROR_CODES, ['ERR_CANCELED', 'DATA_CONFLICTED', 'GUEST_NEED_LOGIN_SCENE'])
         ).includes(err.code)
       ) {
-        // NOTE: Restore if login page is no longer needed
         // Prompt logged in from another device
         if (
           includes(
@@ -124,10 +120,8 @@ const request = ({
           responseError(err);
         }
 
-        // Sign out
-        updateToken('');
 
-        window?.vscode.postMessage({action:'showSingOutConfirmation'});
+
 
         // NOTE: Temporarily hide restore default config
         // useSystemConfig.getState().updateSystemConfig(SYS_CONFIG);

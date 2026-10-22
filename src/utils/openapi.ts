@@ -7,9 +7,7 @@ import { snowflakeId } from 'apipost-tools';
 import { forEach, isArray, isEmpty, isPlainObject, isString, toLower, upperCase } from 'lodash';
 import { capitalizeFirstLetter } from './apis';
 import { parseModelToJsonSchema } from '@/utils/dataModel';
-import MockSchema from 'apipost-mock-schema';
 import { areKeysOneToOne, EditFormat, isJSON } from '@/utils/common';
-import { Mockjs } from 'mockjs5-pro';
 import { useProjectSetting } from '@/store';
 import { JSONSchemaType } from '@/types/jsonSchema';
 import Type from 'type-of-is';
@@ -34,6 +32,7 @@ const getProxyMockRulesList = () => {
 
 export const handleAutoGeneration = async (json: any) => {
   try {
+    const { default: MockSchema } = await import('apipost-mock-schema');
     const jsonSchema = await parseModelToJsonSchema(
       json?.schema || {},
       [],
@@ -75,8 +74,10 @@ export const handleAutoGeneration = async (json: any) => {
   }
 };
 
-export const tryMock = (val: string) => {
+export const tryMock = async (val: string) => {
   try {
+    const { default: mockModule } = await import('mockjs5-pro');
+    const { Mockjs } = mockModule;
     let replaceStr = val.replace(/\$/g, '@');
     let mockStr = Mockjs.mock(replaceStr);
     if (mockStr !== replaceStr) {
@@ -86,7 +87,7 @@ export const tryMock = (val: string) => {
   return val;
 };
 
-function createEmptyObject(obj:any) {
+async function createEmptyObject(obj:any) {
   const result:any = {};
   
   for (const key in obj.properties) {
@@ -94,9 +95,9 @@ function createEmptyObject(obj:any) {
       const property = obj.properties[key];
       
       if (property.type === "string") {
-        result[key] = property?.mock?.mock ? tryMock(property?.mock?.mock) : property?.example || property?.default || '';
+        result[key] = property?.mock?.mock ? await tryMock(property?.mock?.mock) : property?.example || property?.default || '';
       } else if (property.type === "object") {
-        result[key] = createEmptyObject(property); // recursive call
+        result[key] = await createEmptyObject(property); // recursive call
       }
     }
   }

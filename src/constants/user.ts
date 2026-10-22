@@ -5,7 +5,6 @@ export const WECHAT_TOKEN_STATUS = {
   UN_REGISTER: -1,
 } as const;
 
-export const APIPOST_TOKEN = 'echoapi-token';
 export const APIPOST_MACHINE = 'echoapi-machine';
 export const APIPOST_TERMINAL = 'echoapi-terminal';
 export const APIPOST_VERSION = 'echoapi-version';

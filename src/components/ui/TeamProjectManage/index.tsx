@@ -1,38 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Flex, Input, Space } from 'antd';
 
 import { useThrottle } from 'ahooks';
-import { useShallow } from 'zustand/react/shallow';
 
 import IconFont from '@/components/ui/IconFont';
 import Popover from '@/components/ui/Popover';
-import { fetchTeamProjectList } from '@/events/user';
 import useTheme from '@/hooks/useTheme';
-import { useApis, useUserConfig } from '@/store';
+import { useUserConfig } from '@/store';
 
 import TeamMenu from './TeamMenu';
 
 import { ProjectContainer, TeamWrapper } from './style';
 import { DEFAULT_TEAM_PROJECT } from '@/constants/project';
-import { userLogoutService } from '@/sevices/user';
 import { Project, TeamItem } from '@/types/user';
 
 const TeamProjectManage = (props: { currentTeam: TeamItem; currentProject: Project; onProjectChange?: any, from?: string }) => {
   const { currentTeam, currentProject, from, onProjectChange } = props;
   const { themeToken } = useTheme();
   const { t } = useTranslation();
-  const { teamProjectList, token, updateToken, updateTeamProjectList } = useUserConfig(
-    useShallow(({ teamProjectList, token, updateToken, updateTeamProjectList }) => {
-      return {
-        teamProjectList,
-        token,
-        updateToken,
-        updateTeamProjectList
-      };
-    })
-  );
+  const teamProjectList = useUserConfig(store => store.teamProjectList);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -47,40 +35,6 @@ const TeamProjectManage = (props: { currentTeam: TeamItem; currentProject: Proje
   const handleOpenChange = (newOpen: boolean) => {
     setIsOpen(newOpen);
   };
-
-  const signBtnClick = async () => {
-    if (token) {
-      // logout
-      // notify main program to clear opened tabs, clear local token storage, and switch to local project
-      window?.vscode.postMessage({
-        action: 'userSingOut',
-      });
-      try {
-        // call API
-        await userLogoutService();
-      } catch (error) { }
-      // clear user team project list
-      updateTeamProjectList([]);
-      // clear token
-      updateToken('');
-
-      // close project list
-      setIsOpen(false);
-    } else {
-      // open login page
-      window?.vscode.postMessage({
-        action: 'openLogin',
-      });
-      // close project list
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isOpen && token) {
-      fetchTeamProjectList();
-    }
-  }, [isOpen]);
 
   const renderPopoverContent = () => {
     return (
@@ -113,9 +67,7 @@ const TeamProjectManage = (props: { currentTeam: TeamItem; currentProject: Proje
             setIsOpen={setIsOpen}
             handleMenuChange={onProjectChange}
           />
-          {from !== 'push' && <Flex align='center' gap={4} justify='center'>
-            <div className="sign-btn" onClick={() => signBtnClick()}>{token ? t('own.sign_out') : t('own.sign_in')} </div>
-          </Flex>}
+
 
         </Flex>
       </ProjectContainer>

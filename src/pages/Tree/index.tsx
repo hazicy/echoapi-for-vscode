@@ -26,11 +26,9 @@ import {
 } from '@/constants/tree';
 import { APIS_TARGET_TYPE_ENUM } from '@/constants/apis';
 import { useDebounceFn, useMemoizedFn, useSafeState } from 'ahooks';
-import { getApisDetailsRequest, getApisListService } from '@/sevices/apis';
 import apisActionMap from '@/events/apis/action';
 import { TreeDataFilterParams } from '@/types/tree';
 import {
-  chunk,
   cloneDeep,
   concat,
   forEach,
@@ -61,7 +59,7 @@ import useTreeSort from '@/hooks/useTreeSort';
 
 import TitleExtraContent from './TitleExtraContent';
 import { useTranslation } from 'react-i18next';
-import { useApis, useProjectConfig, useUserConfig } from '@/store';
+import { useApis } from '@/store';
 import TreeMenuHeader from './components/TreeMenuHeader';
 import { Empty } from '@/components/ui';
 import { SegmentedTabs } from '@/components/business';
@@ -69,14 +67,6 @@ import NewBtns from './components/New';
 import Tests from './Tests';
 import { openUrl } from '@/utils/open';
 import { SCHEMAS_MODEL_TYPE_ENUM } from '@/constants/schemas';
-import { VSCODE_VERSION } from '@/constants/vscode';
-import {
-  getEnvListService,
-  getProjectGlobalParamService,
-  getProjectGlobalVarService,
-  getServiceList,
-} from '@/sevices/project';
-import { forEachDependencies } from 'mathjs';
 
 type TreeDataItem = ApiTreeDataItem & DataNode;
 
@@ -122,7 +112,6 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
   const treeLoading = useApis((stroe) => stroe.treeLoading);
   const apiOriginDetailsList = useApis((store) => store.apiOriginDetailsList);
   const apisActiveKey = useApis((stroe) => stroe.apisActiveKey);
-  const token = useUserConfig((store) => store.token);
   const updateApisActiveKey = useApis((stroe) => stroe.updateApisActiveKey);
 
   useEffect(() => {
@@ -657,224 +646,6 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
     type: 'target_type',
   });
 
-  const currentProject = useUserConfig((store) => store.currentProject);
-  const { envList, globalVars, serverList } = useProjectConfig(
-    (store) => store,
-  );
-
-  async function handlePull() {
-    try {
-      // If not logged in, open login page
-      if (!token) {
-        // Open login tab
-        window?.vscode.postMessage({
-          action: 'openLogin',
-        });
-      }
-
-      // Local project prompt
-      if (
-        !currentProject?.project_id ||
-        currentProject?.project_id === '-1' ||
-        !token
-      ) {
-        message.error(
-          <>
-            <p style={{ textAlign: 'left' }}> {t('common.please')}:</p>
-            <p style={{ textAlign: 'left' }}>
-              {' '}
-              1. {t('own.sign_cloud_account')}
-            </p>
-            <p style={{ textAlign: 'left' }}>
-              {' '}
-              2. {t('own.switch_team_project')}
-            </p>
-            <p style={{ textAlign: 'left' }}> {t('own.pull_tip')}</p>
-          </>,
-        );
-        return;
-      }
-
-      // Loading state
-      updateTreeLoading(true);
-
-      // Fetch project data
-      const res = await getApisListService({
-        project_id: currentProject.project_id,
-      });
-      if (isArray(res?.list) && res.list.length > 0) {
-        const newApiList = cloneDeep(apiOriginDetailsList);
-        const chunk_list = chunk(res.list, 100);
-
-        const replaceIds: string[] = [];
-
-        for (let index = 0; index < chunk_list.length; index++) {
-          const chunk = chunk_list[index];
-          const chunk_ids = chunk.reduce((pre: any, cur) => {
-            if (
-              cur?.target_id &&
-              [
-                'api',
-                'sse',
-                'folder',
-                'websocket2',
-                'socketio',
-                'graphql',
-              ].includes(cur?.target_type)
-            ) {
-              pre.push(cur.target_id);
-            }
-            return pre;
-          }, []);
-          const apiRes = await getApisDetailsRequest({
-            project_id: currentProject.project_id,
-            target_ids: chunk_ids,
-          });
-          if (isArray(apiRes?.list) && apiRes.list.length > 0) {
-            forEach(apiRes.list, (target) => {
-              // Add VS Code version number
-              target.vscode_version = VSCODE_VERSION;
-              const index = newApiList.findIndex(
-                (i: any) => i?.target_id === target?.target_id,
-              );
-              if (index > -1) {
-                newApiList[index] = target;
-                // Record IDs of replaced local data (update share time)
-                replaceIds.push(target.target_id);
-              } else {
-                newApiList.push(target);
-              }
-            });
-          }
-        }
-
-        updateApiOriginDetailsList(newApiList);
-
-        // Save data to local cloud project list
-        window?.vscode.postMessage({
-          action: 'setApiList',
-          data: newApiList,
-        });
-
-        if (replaceIds.length > 0) {
-          // Update share time for local records with share history
-          window?.vscode.postMessage({
-            action: 'updateShareTime',
-            data: replaceIds,
-          });
-        }
-      }
-
-      // Fetch environment info
-      if (currentProject?.project_id !== '-1') {
-        const project_config: any = {
-          serverList: serverList,
-        };
-        // Fetch cloud service list
-        const serviceList = await getServiceList({
-          project_id: currentProject?.project_id,
-        });
-        if (isArray(serviceList) && serviceList.length > 0) {
-          const newServerList = cloneDeep(serverList);
-          // Merge local services
-          forEach(serviceList, (i) => {
-            let localServiceIndex = newServerList.findIndex(
-              (f) => f?.server_id == i?.server_id,
-            );
-            if (localServiceIndex > -1) {
-              newServerList[localServiceIndex] = i;
-            } else {
-              newServerList.push(i);
-            }
-          });
-          project_config.serverList = newServerList;
-        }
-        // Fetch project config info
-        const envRes = await getEnvListService({
-          project_id: currentProject?.project_id,
-        });
-        if (isArray(envRes) && envRes.length > 0) {
-          const localEnvList = cloneDeep(envList);
-          // Merge local environments
-          forEach(envRes, (i) => {
-            let localItemIndex = localEnvList.findIndex(
-              (a) => a?.env_id === i?.env_id,
-            );
-            if (localItemIndex > -1) {
-              // Correct service list under environment
-              i.server_list = project_config.serverList.map((s: any) => {
-                if (isArray(i?.server_list)) {
-                  let cloudServer = i.server_list.find(
-                    (a: any) => a?.server_id == s?.server_id,
-                  );
-                  // Cloud service exists
-                  if (cloudServer != undefined) {
-                    return cloudServer;
-                  }
-                }
-
-                let localServer = localEnvList[localItemIndex].server_list.find(
-                  (a: any) => a?.server_id == s?.server_id,
-                );
-
-                if (localServer != undefined) {
-                  // Local service exists
-                  return localServer;
-                }
-                return s;
-              });
-              // Merge environment variables
-              i.env_var_list = {
-                ...(localEnvList[localItemIndex]?.env_var_list || {}),
-                ...(i?.env_var_list || {}),
-              };
-              localEnvList[localItemIndex] = i;
-            } else {
-              // Correct service list under environment
-              i.server_list = project_config.serverList.map((s: any) => {
-                if (isArray(i?.server_list)) {
-                  let cloudServer = i.server_list.find(
-                    (a: any) => a?.server_id == s?.server_id,
-                  );
-                  if (cloudServer != undefined) {
-                    return cloudServer;
-                  }
-                }
-                return s;
-              });
-              localEnvList.push(i);
-            }
-          });
-          project_config.envList = localEnvList;
-        }
-        const globalVar = await getProjectGlobalVarService({
-          project_id: currentProject?.project_id,
-        });
-        if (isPlainObject(globalVar?.global_var_list)) {
-          // Merge local vars
-          project_config.globalVars = {
-            ...globalVars,
-            ...globalVar.global_var_list,
-          };
-        }
-
-        const globalParam = await getProjectGlobalParamService({
-          project_id: currentProject?.project_id,
-        });
-        if (isPlainObject(globalParam?.global_param)) {
-          // Merge local globalParams
-          project_config.globalParams = globalParam.global_param;
-        }
-
-        window?.vscode.postMessage({
-          action: 'setProjectConfig',
-          data: project_config,
-        });
-      }
-    } catch (error) {}
-    // Loading state
-    updateTreeLoading(false);
-  }
 
   const createApi = async () => {
     const result = await createOpensItem({
@@ -986,22 +757,14 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
                             align="center"
                           >
                             You can{' '}
-                            {currentProject?.project_id !== '-1' && (
-                              <Button
-                                style={{ height: '24' }}
-                                type="text"
-                                onClick={handlePull}
-                              >
-                                Pull cloud data
-                              </Button>
-                            )}
+
                             &nbsp;{' '}
                           </Flex>
                           <Flex
                             gap={4}
                             align="center"
                           >
-                            {currentProject?.project_id !== '-1' && 'or'}{' '}
+
                             <Button
                               style={{ height: '24' }}
                               type="text"
@@ -1071,7 +834,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
   return (
     <>
       <TreeMenuContainer>
-        <TreeMenuHeader handlePull={handlePull} />
+        <TreeMenuHeader />
 
         <NewBtns createMenus={createMenus} />
 

@@ -201,9 +201,6 @@ export const handleMessage = async (
     case "openExportDataPanel":
       vscode.commands.executeCommand("openExportDataPanel", message.data);
       break;
-    case "openLogin":
-      vscode.commands.executeCommand("echoapi.login");
-      break;
     case "setProjectConfig":
       // Local stored data collection
       const project_config = getCurrentProjectConfig(context);
@@ -213,11 +210,6 @@ export const handleMessage = async (
         });
       }
       setProjectConfig(context, project_config);
-      break;
-    case "userSingOut":
-      vscode.commands.executeCommand("echoapi.userSingOut", {
-        form: "sidebar",
-      });
       break;
     case "switchProject":
       try {
@@ -569,32 +561,6 @@ export const handleMessage = async (
 
         vscode.window.showInformationMessage("Move Success");
       }
-      break;
-    case "showSingOutConfirmation":
-      vscode.window
-        .showInformationMessage(
-          `Session expired 
-            To protect your data, please choose:
-            `,
-          { modal: true },
-          "Sign In Again",
-          "Sign Out - Exit",
-        )
-        .then((res) => {
-          if ((res = "Sign In Again")) {
-            vscode.commands.executeCommand("echoapi.userSingOut", {
-              form: "sidebar",
-              clearApiData: "-1",
-            });
-            // Open login page
-            vscode.commands.executeCommand("echoapi.login");
-          } else {
-            // Sign out
-            vscode.commands.executeCommand("echoapi.userSingOut", {
-              form: "sidebar",
-            });
-          }
-        });
       break;
     case "runFolder":
       // Open folderTest page

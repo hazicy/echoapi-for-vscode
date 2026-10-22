@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
 
 import { useMemoizedFn } from 'ahooks';
-import MockSchema from 'apipost-mock-schema';
 import { cloneDeep, isObject } from 'lodash';
 
 import MonacoEditor from '@/components/business/MonacoEditor';
@@ -38,8 +37,9 @@ const PreviewModal: React.FC<any> = (props) => {
       return;
     }
     const mock_rules = getProxyMockRulesList();
-    new (MockSchema as any)({ app: 'echoapi' })
+    import('apipost-mock-schema').then(({ default: MockSchema }) => new (MockSchema as any)({ app: 'echoapi' })
       .mock(schemaData, mock_rules)
+    )
       .then((mockData: any) => {
         if (isObject(mockData)) {
           const beautifyText = EditFormat(JSON.stringify(mockData)).value;

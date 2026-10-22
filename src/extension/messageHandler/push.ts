@@ -36,25 +36,6 @@ export const handelPushMessage = (message: { action: string, data: any }, contex
       // Record project API versions for later conflict comparison
       setProjectApisVersion(context, message.data);
       break;
-    case 'showSingOutConfirmation':
-      vscode.window.showInformationMessage(
-        'The login session has expired. Would you like to log in again?',
-        { modal: true },
-        'Yes',
-        'No'
-      ).then(res => {
-        if (res = 'Yes') {
-          vscode.commands.executeCommand('echoapi.userSingOut', { form: 'sidebar', clearApiData: '-1' });
-          // Open login page
-          vscode.commands.executeCommand('echoapi.login');
-
-
-        } else {
-          // Sign out
-          vscode.commands.executeCommand('echoapi.userSingOut', { form: 'sidebar' });
-        }
-      });
-      break;
     case 'getSystemConfig':
       pushWebView?.webview.postMessage({ action: 'setSystemConfig', data: context.globalState.get('systemConfig') || {} });
       break;

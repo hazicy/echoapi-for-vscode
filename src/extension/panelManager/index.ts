@@ -10,7 +10,6 @@ export { createEnvironmentPanel } from './environment';
 
 export { createPushPanel } from './push';
 
-export { createLoginPanel } from './login';
 
 export { createFolderTestPanel } from './folderTest';
 

@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Flex, Segmented, SegmentedProps, Tooltip } from 'antd';
 
 import { useMemoizedFn, useSafeState } from 'ahooks';
-import MockSchema from 'apipost-mock-schema';
 import Mock from 'mockjs';
 import { XMLBuilder } from 'fast-xml-parser';
 import i18next from 'i18next';
@@ -98,6 +97,7 @@ const RawEditor = ({
     }
 
     try {
+      const { default: MockSchema } = await import('apipost-mock-schema');
       const jsonSchema = await parseModelToJsonSchema(
         value?.schema || {},
         [],

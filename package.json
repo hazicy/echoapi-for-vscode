@@ -13,7 +13,7 @@
     "vscode:prepublish": "yarn run package",
     "compile": "node scripts/build.cjs",
     "watch": "node scripts/build.cjs --watch",
-    "package": "node scripts/build.cjs --production",
+    "package": "node scripts/build.cjs --production && node scripts/check-extension.cjs && node scripts/check-webviews.cjs",
     "package:test": "node scripts/build.cjs",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
@@ -103,11 +103,6 @@
     "menus": {
       "view/title": [
         {
-          "command": "echoapi.login",
-          "when": "view == myView",
-          "group": "@1"
-        },
-        {
           "command": "echoapi.openEnv",
           "when": "view == myView",
           "group": "@2",
@@ -134,10 +129,6 @@
       ]
     },
     "commands": [
-      {
-        "command": "echoapi.login",
-        "title": "Manage Account"
-      },
       {
         "command": "echoapi.openEnv",
         "title": "Environment"

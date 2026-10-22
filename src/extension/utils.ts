@@ -940,7 +940,7 @@ export const getHtmlForWebview = (webviewUri: vscode.Uri, resourceBaseUrl: vscod
       window.vscodeData = ${data && JSON.stringify(data)};
       window.resourceBaseUrl = "${resourceBaseUrl}";
     </script>
-      <script src="${webviewUri}"></script>
+      <script type="module" src="${webviewUri}"></script>
       ${script && '<script async src="https://www.echoapi.cloud/analytics/analyticsv2.min.js"></script>'}
     </body>
     </html>

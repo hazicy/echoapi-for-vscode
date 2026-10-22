@@ -8,11 +8,25 @@ const root = path.resolve(__dirname, '..');
 const production = process.argv.includes('--production');
 const serve = process.argv.includes('--serve');
 const watch = serve || process.argv.includes('--watch');
-const panels = ['sidePanel', 'tagPanel', 'environmentPanel', 'loginPanel', 'pushPanel',
+const analyze = process.argv.includes('--analyze');
+const panels = ['sidePanel', 'tagPanel', 'environmentPanel', 'pushPanel',
   'importDataPanel', 'folderTestPanel', 'folderTestReportPanel', 'shareListPanel', 'exportDataPanel'];
 const renameClasses = source => source.replace(/\.apipost-/g, '.beautify-');
 const assets = { '.png': 'dataurl', '.jpg': 'dataurl', '.jpeg': 'dataurl', '.gif': 'dataurl',
   '.ico': 'dataurl', '.woff': 'dataurl', '.woff2': 'dataurl', '.ttf': 'dataurl', '.txt': 'text' };
+
+const jsoncEsm = {
+  name: 'jsonc-parser-esm',
+  setup(build) {
+    // Its UMD wrapper hides require calls from esbuild. Prefer ESM only for
+    // this package; other Node dependencies must retain their CommonJS entry.
+    build.onResolve({ filter: /^jsonc-parser$/ }, async args => {
+      const manifest = require.resolve('jsonc-parser/package.json', { paths: [args.resolveDir] });
+      const metadata = JSON.parse(await fs.readFile(manifest, 'utf8'));
+      return { path: path.resolve(path.dirname(manifest), metadata.module) };
+    });
+  },
+};
 
 const webviewAssets = {
   name: 'webview-assets',
@@ -77,15 +91,19 @@ async function main() {
   const extension = {
     ...common, entryPoints: ['src/extension.ts'], outfile: 'dist/extension.js',
     platform: 'node', format: 'cjs', target: 'node16', external: ['vscode'],
-    mainFields: ['module', 'main'],
+    mainFields: ['main', 'module'], plugins: [jsoncEsm],
   };
   const webviews = {
     ...common, entryPoints: Object.fromEntries(panels.map(name => [name, `src/webviews/${name}.tsx`])),
+    metafile: analyze,
     outdir: 'dist', entryNames: serve ? '[name].bundle' : '[name]',
-    platform: 'browser', format: 'iife', target: 'es2020', loader: assets,
+    platform: 'browser', format: 'esm', splitting: true,
+    chunkNames: 'chunks/[name]-[hash]', assetNames: 'assets/[name]-[hash]',
+    target: 'es2020', loader: assets,
     mainFields: ['browser', 'module', 'main'],
+    define: { ...common.define, process: '__echoApiProcess', Buffer: '__echoApiBuffer' },
+    inject: [path.join(root, 'scripts/browser-globals.mjs')],
     plugins: [webviewAssets, nodeModulesPolyfillPlugin({
-      globals: { Buffer: true, process: true },
       modules: {
         ...Object.fromEntries(['assert', 'buffer', 'console', 'constants', 'crypto', 'domain',
           'events', 'http', 'https', 'os', 'punycode', 'process', 'querystring', 'stream',
@@ -101,7 +119,7 @@ async function main() {
     await Promise.all(contexts.map(context => context.watch()));
     if (serve) {
       const html = (await fs.readFile(path.join(root, 'src/index.html'), 'utf8'))
-        .replace('</body>', '<script src="/sidePanel.bundle.js"></script></body>');
+        .replace('</body>', '<script type="module" src="/sidePanel.bundle.js"></script></body>');
       await fs.writeFile(path.join(root, 'dist/sidePanel.html'), html);
       await contexts[1].serve({ servedir: path.join(root, 'dist'), port: 8080, cors: { origin: '*' } });
     }
@@ -109,7 +127,50 @@ async function main() {
     process.on('SIGINT', stop);
     process.on('SIGTERM', stop);
   } else {
-    await Promise.all([esbuild.build(extension), esbuild.build(webviews)]);
+    const [, webviewResult] = await Promise.all([esbuild.build(extension), esbuild.build(webviews)]);
+    if (analyze) {
+      const outputs = webviewResult.metafile.outputs;
+      const total = Object.values(outputs).reduce((sum, output) => sum + output.bytes, 0);
+      console.log(`\nAll Webview entries and chunks: ${(total / 1024 / 1024).toFixed(2)} MiB`);
+      for (const [filename, output] of Object.entries(outputs)) {
+        if (!output.entryPoint?.startsWith('src/webviews/')) { continue; }
+        const visited = new Set();
+        const packages = new Map();
+        const visit = name => {
+          if (visited.has(name) || !outputs[name]) { return; }
+          visited.add(name);
+          for (const [input, info] of Object.entries(outputs[name].inputs)) {
+            const match = input.match(/node_modules\/((?:@[^/]+\/)?[^/]+)/);
+            const pkg = match ? match[1] : 'Application code and styles';
+            packages.set(pkg, (packages.get(pkg) || 0) + info.bytesInOutput);
+          }
+          for (const dependency of outputs[name].imports) {
+            if (!dependency.external && dependency.kind !== 'dynamic-import') { visit(dependency.path); }
+          }
+        };
+        visit(filename);
+        const initialBytes = [...visited].reduce((sum, name) => sum + outputs[name].bytes, 0);
+        console.log(`\n${filename}: entry ${(output.bytes / 1024).toFixed(1)} KiB, initial graph ${(initialBytes / 1024 / 1024).toFixed(2)} MiB`);
+        const queue = [[output.entryPoint]];
+        const seenInputs = new Set();
+        while (queue.length) {
+          const chain = queue.shift();
+          const input = chain[chain.length - 1];
+          if (seenInputs.has(input)) { continue; }
+          seenInputs.add(input);
+          if (/node_modules\/mockjs5-pro\//.test(input)) {
+            console.log(`  Static Mock dependency: ${chain.join(' -> ')}`);
+            break;
+          }
+          for (const dependency of webviewResult.metafile.inputs[input]?.imports || []) {
+            if (!dependency.external && dependency.kind !== 'dynamic-import') { queue.push([...chain, dependency.path]); }
+          }
+        }
+        for (const [name, bytes] of [...packages].sort((a, b) => b[1] - a[1]).slice(0, 8)) {
+          console.log(`  ${(bytes / 1024 / 1024).toFixed(2)} MiB  ${name}`);
+        }
+      }
+    }
     console.log(`Build completed in ${((performance.now() - started) / 1000).toFixed(2)}s`);
   }
 }
