@@ -90,7 +90,9 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       className={cx(css.input, "beautify-input", className, rootClassName)}
       onKeyDown={(event) => {
         props.onKeyDown?.(event);
-        if (event.key === "Enter") onPressEnter?.(event);
+        if (event.key === "Enter") {
+          onPressEnter?.(event);
+        }
       }}
     />
   ),
@@ -133,7 +135,9 @@ const InputControl = forwardRef<InputRef, InputProps>(
         )}
         onKeyDown={(e) => {
           props.onKeyDown?.(e);
-          if (e.key === "Enter") onPressEnter?.(e);
+          if (e.key === "Enter") {
+            onPressEnter?.(e);
+          }
         }}
       />
     );

@@ -32,7 +32,9 @@ function showToast(
     type,
     timeout: (config.duration ?? duration) * 1000,
     onClose: () => {
-      if (config.key !== undefined) toastKeys.delete(config.key);
+      if (config.key !== undefined) {
+        toastKeys.delete(config.key);
+      }
       (config.onClose ?? onClose)?.();
     },
   };
@@ -40,10 +42,14 @@ function showToast(
   const id = old
     ? (toastManager.update(old, data), old)
     : toastManager.add(data);
-  if (config.key !== undefined) toastKeys.set(config.key, id);
+  if (config.key !== undefined) {
+    toastKeys.set(config.key, id);
+  }
   return () => {
     toastManager.close(id);
-    if (config.key !== undefined) toastKeys.delete(config.key);
+    if (config.key !== undefined) {
+      toastKeys.delete(config.key);
+    }
   };
 }
 export const message: MessageInstance = {
@@ -55,8 +61,11 @@ export const message: MessageInstance = {
   open: (c) => showToast(c.type ?? "info", c),
   destroy: (key) => {
     toastManager.close(key === undefined ? undefined : toastKeys.get(key));
-    if (key === undefined) toastKeys.clear();
-    else toastKeys.delete(key);
+    if (key === undefined) {
+      toastKeys.clear();
+    } else {
+      toastKeys.delete(key);
+    }
   },
 };
 export const notification: NotificationInstance = {
@@ -133,7 +142,9 @@ function ModalControl({
   const [busy, setBusy] = useState(false);
   const [visited, setVisited] = useState(open);
   React.useEffect(() => {
-    if (open) setVisited(true);
+    if (open) {
+      setVisited(true);
+    }
   }, [open]);
   const cancel = (e?: any) => onCancel?.(e);
   const buttons = (
@@ -166,7 +177,9 @@ function ModalControl({
       modal={mask}
       disablePointerDismissal={!maskClosable}
       onOpenChange={(v, d) => {
-        if (v) return;
+        if (v) {
+          return;
+        }
         if (d.reason === "escape-key" && !keyboard) {
           d.cancel();
           return;
@@ -175,7 +188,9 @@ function ModalControl({
       }}
       onOpenChangeComplete={(v) => {
         afterOpenChange?.(v);
-        if (!v) afterClose?.();
+        if (!v) {
+          afterClose?.();
+        }
       }}
     >
       <Dialog.Portal
@@ -311,7 +326,9 @@ function ModalHost({
           open
           onOk={async (e) => {
             const result = await config.onOk?.(e);
-            if (result !== false) source.remove(id, true);
+            if (result !== false) {
+              source.remove(id, true);
+            }
           }}
           onCancel={(e) => {
             config.onCancel?.(e);

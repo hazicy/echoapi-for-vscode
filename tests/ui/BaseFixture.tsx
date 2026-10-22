@@ -146,12 +146,48 @@ function Content() {
         <Button>Open menu</Button>
       </Dropdown>
       <output aria-label="Menu result">{menu}</output>
-      <Dropdown trigger={['contextMenu']} menu={{items:[{key:'context',label:'Run context action'}],onClick:info=>setMenu(info.key)}}>
+      <Dropdown
+        trigger={["contextMenu"]}
+        menu={{
+          items: [{ key: "context", label: "Run context action" }],
+          onClick: (info) => setMenu(info.key),
+        }}
+      >
         <Button>Context target</Button>
       </Dropdown>
-      <Select aria-label="Tag values" mode="tags" tokenSeparators={[',']} value={selected} onChange={setSelected}/>
-      <TreeSelect aria-label="Tree choice" treeDefaultExpandAll treeData={[{value:'parent',title:'Parent choice',children:[{value:'leaf',title:'Leaf choice'}]}]} onChange={setValue}/>
-      <Button onClick={async()=>setMenu(String(await Modal.confirm({title:'Await confirmation',content:'Resolve confirmation'})))}>Await confirmation</Button>
+      <Select
+        aria-label="Tag values"
+        mode="tags"
+        tokenSeparators={[","]}
+        value={selected}
+        onChange={setSelected}
+      />
+      <TreeSelect
+        aria-label="Tree choice"
+        treeDefaultExpandAll
+        treeData={[
+          {
+            value: "parent",
+            title: "Parent choice",
+            children: [{ value: "leaf", title: "Leaf choice" }],
+          },
+        ]}
+        onChange={setValue}
+      />
+      <Button
+        onClick={async () =>
+          setMenu(
+            String(
+              await Modal.confirm({
+                title: "Await confirmation",
+                content: "Resolve confirmation",
+              }),
+            ),
+          )
+        }
+      >
+        Await confirmation
+      </Button>
       <Button
         onClick={() =>
           Modal.confirm({

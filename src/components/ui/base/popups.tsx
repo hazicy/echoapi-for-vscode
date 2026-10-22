@@ -50,7 +50,9 @@ export function Tooltip({
   trigger,
   ...rest
 }: TooltipProps) {
-  if (title === undefined || title === null || title === "") return children;
+  if (title === undefined || title === null || title === "") {
+    return children;
+  }
   return (
     <BaseTooltip.Provider>
       <BaseTooltip.Root
@@ -232,7 +234,9 @@ export function Dropdown({
   destroyPopupOnHide = true,
   ...rest
 }: DropdownProps) {
-  if (disabled) return children;
+  if (disabled) {
+    return children;
+  }
   const context = trigger.includes("contextMenu");
   const Root = context ? BaseContextMenu.Root : BaseMenu.Root;
   const body = (
@@ -359,7 +363,9 @@ export function Popconfirm({
     setOpen(v);
     onOpenChange?.(v);
   };
-  if (disabled) return children;
+  if (disabled) {
+    return children;
+  }
   return (
     <Popover
       {...props}

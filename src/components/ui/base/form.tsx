@@ -38,7 +38,9 @@ function Item({
                     control.id ?? (props.name ? String(props.name) : undefined),
                 })
               : children;
-        if (noStyle) return body;
+        if (noStyle) {
+          return body;
+        }
         const errors = meta.errors;
         return (
           <div

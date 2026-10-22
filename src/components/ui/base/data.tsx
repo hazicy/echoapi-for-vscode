@@ -58,7 +58,9 @@ export function Table<T extends object = Record<string, unknown>>({
     setSelected(next);
     const rows = dataSource.filter((r) => next.includes(getKey(r)));
     rowSelection?.onChange?.(next, rows, { type: "single" });
-    if (record) rowSelection?.onSelect?.(record, !!checked, rows);
+    if (record) {
+      rowSelection?.onSelect?.(record, !!checked, rows);
+    }
   };
   const selectable = dataSource.filter(
     (r) => !rowSelection?.getCheckboxProps?.(r)?.disabled,
@@ -117,8 +119,9 @@ export function Table<T extends object = Record<string, unknown>>({
   let finalColumns: TableColumnType<T>[] = columns.map((col) =>
     col === SELECTION_COLUMN || col.key === "__selection__" ? selection : col,
   );
-  if (rowSelection && !finalColumns.some((c) => c.key === "__selection__"))
+  if (rowSelection && !finalColumns.some((c) => c.key === "__selection__")) {
     finalColumns = [selection, ...finalColumns];
+  }
   const sorted = useMemo(() => {
     const col = columns.find(
       (c) => (c.key ?? String(c.dataIndex)) === sort.key,
@@ -358,7 +361,9 @@ function UploadControl({
   const files = fileList ?? internal;
   const update = (file: UploadFile) => {
     let list = [...files.filter((f) => f.uid !== file.uid), file];
-    if (maxCount) list = list.slice(-maxCount);
+    if (maxCount) {
+      list = list.slice(-maxCount);
+    }
     setInternal(list);
     onChange?.({ file, fileList: list });
   };
@@ -368,7 +373,9 @@ function UploadControl({
         {...props}
         beforeUpload={async (file, list) => {
           const result = await beforeUpload?.(file as RcFile, list as RcFile[]);
-          if (result === IGNORE) return false;
+          if (result === IGNORE) {
+            return false;
+          }
           if (result === false) {
             update({
               uid: file.uid,
@@ -417,7 +424,9 @@ function UploadControl({
               type="button"
               aria-label={`Remove ${file.name}`}
               onClick={async () => {
-                if ((await onRemove?.(file)) === false) return;
+                if ((await onRemove?.(file)) === false) {
+                  return;
+                }
                 const next = files.filter((f) => f.uid !== file.uid);
                 setInternal(next);
                 onChange?.({

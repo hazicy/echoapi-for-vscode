@@ -116,8 +116,9 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
       mode === "tags" &&
       search &&
       !options.some((o) => String(o.value) === search)
-    )
+    ) {
       filtered = [...filtered, { label: search, value: search }];
+    }
     const update = (next: any) => {
       const arr = multiple ? next : next ? [next] : [];
       const nextValue = multiple
@@ -131,7 +132,7 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
           : undefined;
       setInternal(nextValue);
       onChange?.(nextValue, multiple ? arr : next);
-      for (const o of arr)
+      for (const o of arr) {
         if (
           !(
             multiple
@@ -140,12 +141,18 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
                 ? [selectedOptions]
                 : []
           ).some((old: Option) => old.value === o.value)
-        )
+        ) {
           onSelect?.(o.value, o);
-      for (const o of multiple ? (selectedOptions ?? []) : [])
-        if (!arr.some((n: Option) => n.value === o.value))
+        }
+      }
+      for (const o of multiple ? (selectedOptions ?? []) : []) {
+        if (!arr.some((n: Option) => n.value === o.value)) {
           onDeselect?.(o.value, o);
-      if (autoClearSearchValue !== false) setSearch("");
+        }
+      }
+      if (autoClearSearchValue !== false) {
+        setSearch("");
+      }
     };
     const list = (
       <Combobox.List className="beautify-select-item-list">
@@ -178,7 +185,7 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
     const renderPopup = popupRender ?? dropdownRender;
     return (
       <Combobox.Root
-      modal={false}
+        modal={false}
         items={filtered}
         filter={null}
         multiple={multiple}
@@ -190,13 +197,12 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
             mode === "tags" &&
             tokenSeparators?.some((separator: string) => s.includes(separator))
           ) {
-            const parts = tokenSeparators.reduce(
-              (parts: string[], separator: string) => parts.flatMap(part => part.split(separator)),
+            const parts: string[] = tokenSeparators.reduce(
+              (parts: string[], separator: string) =>
+                parts.flatMap((part) => part.split(separator)),
               [s],
             );
-            const tags = parts
-              .filter(Boolean)
-              .map((value) => current(value));
+            const tags = parts.filter(Boolean).map((value) => current(value));
             update([
               ...(selectedOptions ?? []),
               ...tags.filter(

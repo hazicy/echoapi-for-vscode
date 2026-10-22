@@ -134,8 +134,10 @@ for (const panel of [
           response: { is_check_result: 1, example: [] },
         });
     }, panel);
-    if (panel === 'folderTestReportPanel') {
-      await expect(page.locator('#root .beautify-spin-container').first()).toHaveAttribute('aria-busy', 'false');
+    if (panel === "folderTestReportPanel") {
+      await expect(
+        page.locator("#root .beautify-spin-container").first(),
+      ).toHaveAttribute("aria-busy", "false");
     } else {
       await expect(page.locator("#root .beautify-skeleton")).toHaveCount(0);
     }
