@@ -24,7 +24,7 @@ export const getAntdTheme = (
   // Default token
   const defaultToken = {
     fontFamily:
-      '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+      'var(--vscode-font-family, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", sans-serif)',
     lineHeight: 1.4,
     borderRadius: 4,
     colorPrimary: vscodeBtnBgColor || PRIMARY_COLOR_MAP[primaryColor],

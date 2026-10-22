@@ -35,7 +35,7 @@ export async function activate(context: vscode.ExtensionContext) {
       onThemeChange();
     }
     // Monitor font size changes
-    if (event.affectsConfiguration('editor.fontSize')) {
+    if (event.affectsConfiguration('editor.fontSize') || event.affectsConfiguration('editor.fontFamily')) {
       onFontSizeChange(context);
     }
     // Monitor document service port changes
