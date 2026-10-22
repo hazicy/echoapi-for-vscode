@@ -16,34 +16,6 @@ export const TreeMenuContainer = styled.div`
     border-color: transparent;
   }
  }
-  .help-us-improve-echoapi{
-    position: fixed;
-    right: 12px;
-    bottom: 15px;
-    width: 38px;
-    height: 38px;
-    background: var(--color-bg-right);
-    border-radius: 65px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--color-primary);
-    &:hover{
-      .icon-client-close{
-        display: block;
-      }
-    }
-    .icon-client-close{
-      display: none;
-      position: absolute;
-      top: 0;
-      right: 0;
-      font-size: 12px;
-      cursor: pointer;
-    }
-  }
-
   .segmented-tabs-content-item{
     /* display: flex; */
     flex-direction: column;

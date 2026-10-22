@@ -4,7 +4,6 @@ import {
   Flex,
   message,
   Skeleton,
-  Tooltip,
   Tree,
   Typography,
 } from 'antd';
@@ -65,7 +64,6 @@ import { Empty } from '@/components/ui';
 import { SegmentedTabs } from '@/components/business';
 import NewBtns from './components/New';
 import Tests from './Tests';
-import { openUrl } from '@/utils/open';
 import { SCHEMAS_MODEL_TYPE_ENUM } from '@/constants/schemas';
 
 type TreeDataItem = ApiTreeDataItem & DataNode;
@@ -103,7 +101,6 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
     useSafeState<TreeDataFilterParams>({
       value: '',
     });
-  const [improveShow, setImproveShow] = useSafeState(true);
   const [treeExpandedKeys, setTreeExpandedKeys] = useSafeState<string[]>([]);
   const [tabValue, setTabValue] = useSafeState<string>('requests');
   const [scrollIng, setScrollIng] = useSafeState(false);
@@ -846,31 +843,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
             setTabValue(val as string);
           }}
         />
-        {improveShow && (
-          <Tooltip title={'Help Us Improve EchoAPI'}>
-            <div
-              onClick={() => {
-                openUrl(
-                  'https://docs.google.com/forms/d/e/1FAIpQLSd_xkxxnKgfh0GCMLXzHcKHcqT1cow2xXBXxGmqA-Z7GDyKkw/viewform?usp=sf_link',
-                );
-              }}
-              className="help-us-improve-echoapi"
-            >
-              <IconFont
-                type="icon-edit2"
-                style={{ color: 'var(--color-primary)', fontSize: '20px' }}
-              />
-              <IconFont
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setImproveShow(false);
-                }}
-                className="icon-client-close"
-                type="icon-client-close"
-              ></IconFont>
-            </div>
-          </Tooltip>
-        )}
+
       </TreeMenuContainer>
     </>
   );
