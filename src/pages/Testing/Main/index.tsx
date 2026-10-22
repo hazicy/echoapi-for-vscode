@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import {
   TestingConfigWrap,
   FunctionalWrap,
-  LoadTestingWrap,
   ResultListWarp,
   TestingMainWarp,
 } from "./style";
@@ -301,26 +300,6 @@ const Main = ({
             </Flex>
           </Flex>
         </FunctionalWrap>
-      ),
-    },
-    {
-      label: t("common.load_testing"),
-      value: "load-testing",
-      children: (
-        <LoadTestingWrap>
-          <div className="title">{t("common.test_your_apis_tips")}</div>
-          <div className="desc">
-            {t("common.performance_apis_echoapi_tips")}
-          </div>
-          <Button
-            type="primary"
-            onClick={() => {
-              openUrl("https://www.echoapi.com/download");
-            }}
-          >
-            {t("common.download_desktop_app")}
-          </Button>
-        </LoadTestingWrap>
       ),
     },
   ];

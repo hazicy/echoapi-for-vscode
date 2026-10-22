@@ -96,31 +96,6 @@ border-radius: 4px;
 }
 `;
 
-export const LoadTestingWrap = styled.div`
-display: flex;
-flex-direction: column;
-gap: 6px;
-padding: 12px 16px;
-background: linear-gradient(0deg, var(---, var(--table-header-bg-color)), var(---, var(--table-header-bg-color))),
-linear-gradient(89.36deg, rgba(255, 255, 255, 0) 0%, rgba(131, 92, 255, 0.2) 100%);
-
-border-radius: 4px;
-border:1px solid var(--color-border);
-.title{
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--font-title-color);
-}
-.desc{
-  font-size: 12px;
-  color: var(--font-content-color);
-}
-.beautify-btn{
-  width: 190px;
-  margin-top: 6px;
-}
-`;
-
 export const ResultListWarp = styled.div`
   /* overflow: hidden; */
   .beautify-tabs{
