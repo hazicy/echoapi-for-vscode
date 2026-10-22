@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
 import i18next from 'i18next';
-import { find, includes, isArray, isEqual, isUndefined, map, size, sortBy } from 'lodash';
+import { find, includes, isArray, isDate, isEqual, isUndefined, map, size, sortBy } from 'lodash';
 
 import useProjectSetting from '@/store/useProjectSetting';
 import { CustomAttributeItem } from '@/types/project';
-import { isDate, isJSON } from '@/utils/common';
+import { isJSON } from '@/utils/common';
 import { EnvListItem } from '@/types/envManage';
 
 // Authentication methods
