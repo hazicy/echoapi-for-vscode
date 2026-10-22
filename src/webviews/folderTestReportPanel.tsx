@@ -16,13 +16,14 @@ import useTesting from '@/store/useTesting';
 import { TestingReportList } from '@/types/testing/res';
 import { useTranslation } from 'react-i18next';
 
-
 function FolderTestPanel() {
   const customTheme = useGlobalTheme();
   const { t } = useTranslation();
 
-  const updateProjectConfig = useProjectConfig((state) => state.updateProjectConfig);
-  const testingSendingData = useTesting(store => store?.testingSendingData);
+  const updateProjectConfig = useProjectConfig(
+    (state) => state.updateProjectConfig,
+  );
+  const testingSendingData = useTesting((store) => store?.testingSendingData);
 
   const [reportDetails, setReportDetails] = useState<TestingReportList>();
 
@@ -43,7 +44,7 @@ function FolderTestPanel() {
   }, []);
 
   useEffect(() => {
-    const messageHandler = async (event: { data: any; }) => {
+    const messageHandler = async (event: { data: any }) => {
       const message = event.data; // The JSON data our extension sent
 
       switch (message.action) {
@@ -54,12 +55,13 @@ function FolderTestPanel() {
           setReportDetails(message.data);
           break;
         case 'setSystemConfig':
-          const { systemConfig, updateSystemConfig } = useSystemConfig.getState();
+          const { systemConfig, updateSystemConfig } =
+            useSystemConfig.getState();
 
           updateSystemConfig({ ...systemConfig, ...message.data });
           break;
       }
-    }
+    };
     window.addEventListener('message', messageHandler);
     return () => {
       window.removeEventListener('message', messageHandler);
@@ -80,7 +82,10 @@ function FolderTestPanel() {
         <ThemeProvider theme={customTheme}>
           <GlobalThemeStyle />
           <GlobalStyle />
-          <Spin tip={t('common.loading')} spinning={!Boolean(reportDetails)}>
+          <Spin
+            tip={t('common.loading')}
+            spinning={!Boolean(reportDetails)}
+          >
             {reportDetails && <ReportDetails reportDetails={reportDetails} />}
           </Spin>
         </ThemeProvider>
@@ -89,4 +94,6 @@ function FolderTestPanel() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')!).render(<FolderTestPanel />);
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <FolderTestPanel />,
+);

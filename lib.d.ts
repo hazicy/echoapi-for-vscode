@@ -7,7 +7,6 @@ declare module '*.png' {
 declare global {
   declare module 'remark-admonitions';
   declare module 'mockjs5-pro';
-  declare module 'js-yaml';
   declare module 'type-of-is';
   declare module 'auto-json-faker';
   declare module 'exp-mock';
