@@ -36,7 +36,7 @@ separately. Existing third-party dependency/type errors may still require follow
 
 ## UI migration
 
-All application components now use the local `src/components/ui/base` layer.
+All application components now use the local `src/shared/ui/base` layer.
 Interactive primitives use `@base-ui/react`; tables, trees, forms, and uploads use
 headless rc packages where Base UI has no corresponding component. Ant Design and
 styled-components are no longer direct dependencies or source imports.
@@ -53,7 +53,7 @@ provide a minimal VS Code bridge; they do not emulate every backend workflow.
 
 ## Embedded editors
 
-All embedded editors use CodeMirror 6 through `src/components/business/CodeEditor`.
+All embedded editors use CodeMirror 6 through `src/shared/components/CodeEditor`.
 Language parsers and Prettier formatters load on demand. JSON formatting uses
 `jsonc-parser` to preserve comments, trailing commas, and large numeric literals.
 Environment history comparisons use the read-only CodeMirror merge view.

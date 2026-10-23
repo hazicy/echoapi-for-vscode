@@ -1,4 +1,4 @@
-import { getSubstring } from "@/utils/common";
+import { getSubstring } from "@/shared/utils/common";
 import { snowflakeId } from "apipost-tools";
 import { has } from "lodash";
 import {
@@ -6,7 +6,7 @@ import {
   completionEnv,
   completionSamples,
   completionServers,
-} from "@/utils/exportutils/apiToSelf";
+} from "@/features/export/utils/exportutils/apiToSelf";
 
 export const apiConverFormat = (json: any, project_id: string) => {
   const {

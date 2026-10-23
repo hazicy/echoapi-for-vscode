@@ -3,8 +3,8 @@ import * as vscode from 'vscode';
 import { globalConfig } from '../constants';
 import { sendAutoTest, stopWorker } from '../apis';
 import { getAllApiChildren, getCurrentProjectConfig, getProjectReportList, getTestingFolderData, getTestingFolderName, setTestingFolderData } from '../utils';
-import { ApiDetailsData } from '@/types/apis/api';
-import { ADD_CASE_DEFAULT } from '@/constants/testing/default';
+import { ApiDetailsData } from '@/features/requests/types/api';
+import { ADD_CASE_DEFAULT } from '@/features/testing/constants/default';
 
 export const handelFolderTestMessage = (message: { action: string, data: any }, context: vscode.ExtensionContext, panel: vscode.WebviewPanel, folderData: ApiDetailsData, openHistoryReport: boolean) => {
   const { environmentWebView, sidePanelWebView } = globalConfig;

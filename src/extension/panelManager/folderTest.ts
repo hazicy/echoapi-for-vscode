@@ -3,8 +3,8 @@ import * as vscode from 'vscode';
 import path from 'path';
 import { getAllApiChildren, getHtmlForWebview, getCurrentProjectConfig, getTestingFolderData, getTestingFolderName, showTabName } from '../utils';
 import { handelFolderTestMessage } from '../messageHandler/folderTest';
-import { ApiDetailsData } from '@/types/apis/api';
-import { ADD_CASE_DEFAULT } from '@/constants/testing/default';
+import { ApiDetailsData } from '@/features/requests/types/api';
+import { ADD_CASE_DEFAULT } from '@/features/testing/constants/default';
 import { cloneDeep } from 'lodash';
 
 export const createFolderTestPanel = (data: ApiDetailsData, context: vscode.ExtensionContext, option?:any) => {
@@ -58,7 +58,7 @@ export const createFolderTestPanel = (data: ApiDetailsData, context: vscode.Exte
   panel.iconPath = iconPath;
   let scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', `${panelOptions.viewType}.js`)));
   if(process.env.ECHOAPI_DEV_SERVER === "true"){
-    scriptUri = `http://localhost:${LOCAL_PORT}/src/webviews/${panelOptions.viewType}.tsx`;
+    scriptUri = `http://localhost:${LOCAL_PORT}/src/app/webviews/${panelOptions.viewType[0].toUpperCase()}${panelOptions.viewType.slice(1)}.tsx`;
   }
   const resourceBaseUrl = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist')));
 

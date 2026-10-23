@@ -1,8 +1,0 @@
-import moduleStyles from "./style.module.css";
-import { withStyles } from "@/components/ui/base/withStyles";
-
-export const ReportDetailsContainer = withStyles<"div", {}>(
-  "div",
-  moduleStyles["ReportDetailsContainer"],
-  { selector: "ui_6a28d021_ReportDetailsContainer" },
-);

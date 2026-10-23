@@ -9,15 +9,15 @@ import {
   setApiList,
   setProjectConfig,
 } from "../utils";
-import { importMethod } from "@/utils/export";
-import { createBatchApi } from "@/utils/apis";
-import { IMPORT_TYPE_ENUM, ImportLocationEnum } from "@/constants/settings";
+import { importMethod } from "@/features/export/utils/export";
+import { createBatchApi } from "@/features/requests/utils/apis";
+import { IMPORT_TYPE_ENUM, ImportLocationEnum } from "@/features/settings/constants/settings";
 import { find, forEach, has, isArray, isString } from "lodash";
 import { validate } from "jsonschema";
 import { apiConverFormat } from "../utils/import";
-import echoapiSchemaRule from "@/constants/import/echoapi_schema";
+import echoapiSchemaRule from "@/features/import/constants/import/echoapi_schema";
 import { snowflakeId } from "apipost-tools";
-import { swaggerConverFormat } from "@/events/export";
+import { swaggerConverFormat } from "@/shared/events/export";
 
 export const handelImportDataMessage = async (
   message: { action: string; data: any },

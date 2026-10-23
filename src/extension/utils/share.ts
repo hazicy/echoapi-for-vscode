@@ -1,14 +1,14 @@
 import { forEach } from "lodash";
-import { ApiDetailsData } from "@/types/apis/api";
-import { ShareInfoData } from "@/types/share";
-import { exportMethod } from "@/utils/export";
+import { ApiDetailsData } from "@/features/requests/types/api";
+import { ShareInfoData } from "@/features/sharing/types/share";
+import { exportMethod } from "@/features/export/utils/export";
 import { isPlainObject } from "lodash";
 import * as vscode from "vscode";
-import { DEFAULT_PROJECT } from "@/constants/project";
-import { getCurrentProjectConfig } from "../utils";
-import { EnvList } from "@/types/envManage";
-import { AnyObject } from "@/types/common";
-import { Project } from "@/types/user";
+import { DEFAULT_PROJECT } from "@/features/project/constants/project";
+import { getCurrentProjectConfig } from '../utils';
+import { EnvList } from "@/features/environment/types";
+import { AnyObject } from "@/shared/types/common";
+import { Project } from "@/features/auth/types";
 import { globalConfig } from "../constants";
 
 export const createShare = (

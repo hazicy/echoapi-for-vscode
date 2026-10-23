@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import * as vscode from 'vscode';
 import { completeOpenApiData, getExportData, getProjectShareData, setApiDocsBaseUrl } from '../utils/share';
 import { getApiList, getLocalIPv4 } from '../utils';
-import { exportMethod } from '@/utils/export';
+import { exportMethod } from '@/features/export/utils/export';
 import { isEmpty, isPlainObject } from 'lodash';
 
 const PORT_START = 3000; // Starting port

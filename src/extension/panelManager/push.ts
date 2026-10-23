@@ -35,7 +35,7 @@ export const createPushPanel = (data:any, context: vscode.ExtensionContext) => {
   panel.iconPath = iconPath;
   let scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', `${panelOptions.viewType}.js`)));
   if(process.env.ECHOAPI_DEV_SERVER === "true"){
-    scriptUri = `http://localhost:${LOCAL_PORT}/src/webviews/${panelOptions.viewType}.tsx`;
+    scriptUri = `http://localhost:${LOCAL_PORT}/src/app/webviews/${panelOptions.viewType[0].toUpperCase()}${panelOptions.viewType.slice(1)}.tsx`;
   }
   const resourceBaseUrl = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist')));
 

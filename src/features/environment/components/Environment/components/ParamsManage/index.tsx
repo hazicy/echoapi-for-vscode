@@ -1,0 +1,62 @@
+import slots from "@/shared/ui/base/slots.module.css";
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+
+import { Flex, message } from '@/shared/ui/base';
+
+import RequestGlobal from '@/features/requests/components/RequestGlobal';
+import Button from '@/shared/ui/Button';
+import { RequestGlobalParams } from '@/features/project/types';
+
+import { ParamsManageContainer } from './style';
+import useProjectConfig from '@/features/project/store/useProjectConfig';
+import { saveProjectConfig } from '@/features/requests/events/env';
+import { FC } from 'react';
+
+const Index:FC<{defaultTabKey?:string}> = ({defaultTabKey='Headers'}) => {
+  const { t } = useTranslation();
+  const { projectId } = useParams();
+
+  const globalParams = useProjectConfig((state) => state.globalParams);
+  const updateGlobalParams = useProjectConfig((state) => state.updateGlobalParams);
+
+  const onOk = () => {
+    try {
+      saveProjectConfig('globalParams', globalParams);
+      message.success('Success');
+    } catch (err) {
+      /* empty */
+    }
+  };
+
+  return (
+    <ParamsManageContainer>
+      <Flex className={slots["params-flex"]} vertical gap={15}>
+        <Flex vertical gap={15}>
+          <span className={slots.title}>{t('global_setting.key_detail.title')}</span>
+          <span className={slots.tip}>{t('global_setting.key_detail.tips')}</span>
+        </Flex>
+        <div className={slots["params-content"]}>
+          <RequestGlobal
+            defaultTabKey={defaultTabKey}
+            isSystem={true}
+            requestData={globalParams}
+            onRequestDataChange={(e) => {
+              updateGlobalParams(e);
+
+            // Auto-save logic
+            // onOk(e);
+            }}
+          />
+        </div>
+        <Flex justify="flex-end">
+          <Button onClick={onOk} type="primary">
+            {t('global_setting.key_detail.save')}
+          </Button>
+        </Flex>
+      </Flex>
+    </ParamsManageContainer>
+  );
+};
+
+export default Index;

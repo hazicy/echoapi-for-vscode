@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import path from 'path';
 import { getHtmlForWebview, getProjectConfig } from '../utils';
 import { handelEnvMessage } from '../messageHandler/environment';
-import { ENV_MANAGE_ENUM } from '@/pages/Environment/constants';
+import { ENV_MANAGE_ENUM } from '@/features/environment/components/Environment/constants';
 
 export const createEnvironmentPanel = (data:any, context: vscode.ExtensionContext) => {
   let { environmentWebView }= globalConfig;
@@ -52,7 +52,7 @@ export const createEnvironmentPanel = (data:any, context: vscode.ExtensionContex
   panel.iconPath = iconPath;
   let scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', `${panelOptions.viewType}.js`)));
   if(process.env.ECHOAPI_DEV_SERVER === "true"){
-    scriptUri = `http://localhost:${LOCAL_PORT}/src/webviews/${panelOptions.viewType}.tsx`;
+    scriptUri = `http://localhost:${LOCAL_PORT}/src/app/webviews/${panelOptions.viewType[0].toUpperCase()}${panelOptions.viewType.slice(1)}.tsx`;
   }
   const resourceBaseUrl = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist')));
 

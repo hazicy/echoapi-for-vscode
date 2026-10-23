@@ -21,8 +21,8 @@ async function main() {
     jsx: 'automatic',
     alias: {
       '@': path.join(root, 'src'),
-      '@/store': path.join(__dirname, 'store.ts'),
-      '@/utils/global': path.join(__dirname, 'global.ts'),
+      '@/app/store': path.join(__dirname, 'store.ts'),
+      '@/shared/utils/global': path.join(__dirname, 'global.ts'),
     },
     define: { 'process.env.NODE_ENV': '"development"' },
   });

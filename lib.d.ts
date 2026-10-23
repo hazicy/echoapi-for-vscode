@@ -1,4 +1,4 @@
-import { ThemeToken } from './src/types/theme';
+import { ThemeToken } from './src/shared/types/theme';
 // src/typings.d.ts
 declare module '*.png' {
   const src: string

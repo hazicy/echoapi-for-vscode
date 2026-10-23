@@ -3,7 +3,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const forbidden = /(?:from\s*|import\s*\(?\s*|require\(\s*)['"](?:antd(?:\/[^'"]*)?|styled-components|@ant-design\/[^'"]*)['"]/;
 const failures = [];
-const slots = new Set([...fs.readFileSync(path.join(root, 'src/components/ui/base/slots.module.css'), 'utf8').matchAll(/^\.([\w-]+)\s*\{/gm)].map(match => match[1]));
+const slots = new Set([...fs.readFileSync(path.join(root, 'src/shared/ui/base/slots.module.css'), 'utf8').matchAll(/^\.([\w-]+)\s*\{/gm)].map(match => match[1]));
 let modules = 0;
 function visit(directory) {
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {

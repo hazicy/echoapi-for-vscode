@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@/locale';
-import AiDescription from '@/components/business/AiDescription';
-import useProjectSetting from '@/store/useProjectSetting';
-import useUserConfig from '@/store/useUserConfig';
+import '@/shared/locale';
+import AiDescription from '@/features/requests/components/AiDescription';
+import useProjectSetting from '@/features/project/store/useProjectSetting';
+import useUserConfig from '@/features/auth/store/useUserConfig';
 import DrawerFixture from './DrawerFixture';
 import BaseFixture from './BaseFixture';
 import ThemeFixture from './ThemeFixture';

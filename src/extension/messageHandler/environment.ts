@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { getCurrentProjectConfig, setProjectConfig } from '../utils';
 import { globalConfig } from '../constants';
 import { forEach, isPlainObject } from 'lodash';
-import { ENV_MANAGE_ENUM } from '@/pages/Environment/constants';
+import { ENV_MANAGE_ENUM } from '@/features/environment/components/Environment/constants';
 import { proxyFetch } from '../utils/fetch';
 
 export const handelEnvMessage = async (message: { action: string, data: any }, context: vscode.ExtensionContext, data: any, panel: vscode.WebviewPanel) => {

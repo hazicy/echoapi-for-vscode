@@ -1,7 +1,7 @@
-import { ApiDetailsData } from '@/types/apis/api';
-import { AnyObject, CustomNumberBooleanType } from '@/types/common';
-import { ProjectConfigType } from '@/types/project';
-import { SysConfig } from '@/types/settings';
+import { ApiDetailsData } from '@/features/requests/types/api';
+import { AnyObject, CustomNumberBooleanType } from '@/shared/types/common';
+import { ProjectConfigType } from '@/features/project/types';
+import { SysConfig } from '@/features/settings/types/settings';
 
 export type GenSendBaseOptionsType = (params: {
   envId?: string;

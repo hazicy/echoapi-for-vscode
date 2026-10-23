@@ -1,4 +1,4 @@
-import { INIT_DEFAULT_API_DATAS } from "@/constants/apis/default";
+import { INIT_DEFAULT_API_DATAS } from "@/features/requests/constants/default";
 import { snowflakeId } from "apipost-tools";
 import { cloneDeep, forEach, isArray } from "lodash";
 import * as vscode from "vscode";

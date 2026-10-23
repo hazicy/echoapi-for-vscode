@@ -32,7 +32,7 @@ export default defineConfig(options => {
       build.drop = production ? ['console', 'debugger'] : [];
       build.alias = {
         '@': path.resolve('src'),
-        '@/locale/runtime': path.resolve('src/locale/runtime.extension.ts'),
+        '@/shared/locale/runtime': path.resolve('src/shared/locale/runtime.extension.ts'),
         'jsonc-parser': path.resolve('node_modules/jsonc-parser/lib/esm/main.js'),
       };
     },

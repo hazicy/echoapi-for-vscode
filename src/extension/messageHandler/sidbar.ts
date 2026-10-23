@@ -26,8 +26,8 @@ import {
   isPlainObject,
 } from "lodash";
 import { getCodeHarRequest, updateOpenData } from "../apis";
-import { DEFAULT_TEAM } from "@/constants/team";
-import { DEFAULT_PROJECT } from "@/constants/project";
+import { DEFAULT_TEAM } from "@/features/project/constants/team";
+import { DEFAULT_PROJECT } from "@/features/project/constants/project";
 import {
   createShare,
   deleteShare,
@@ -37,7 +37,7 @@ import {
   setProjectShareData,
 } from "../utils/share";
 import { snowflakeId } from "apipost-tools";
-import { ApiDetailsData } from "@/types/apis/api";
+import { ApiDetailsData } from "@/features/requests/types/api";
 import { isWin } from "../db";
 import path from "path";
 import os from "os";

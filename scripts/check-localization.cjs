@@ -7,12 +7,12 @@ const root = path.resolve(__dirname, '..');
 function bundle(host, language = 'auto') {
   return esbuild.buildSync({
     absWorkingDir: root,
-    entryPoints: ['src/locale/index.ts'],
+    entryPoints: ['src/shared/locale/index.ts'],
     bundle: true, write: false, platform: 'node', format: 'cjs',
     external: ['vscode'],
     alias: {
       '@': path.join(root, 'src'),
-      ...(host ? { '@/locale/runtime': path.join(root, 'src/locale/runtime.extension.ts') } : {}),
+      ...(host ? { '@/shared/locale/runtime': path.join(root, 'src/shared/locale/runtime.extension.ts') } : {}),
     },
     define: {
       __ECHOAPI_LANGUAGE__: JSON.stringify(language),

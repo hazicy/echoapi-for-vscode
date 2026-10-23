@@ -24,7 +24,7 @@ import {
   getProjectShareData,
   setProjectShareData,
 } from "../utils/share";
-import { ApiDetailsData } from "@/types/apis/api";
+import { ApiDetailsData } from "@/features/requests/types/api";
 import {
   getWebsocketOption,
   wsConnect,

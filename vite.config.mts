@@ -39,7 +39,7 @@ export default defineConfig(({ mode }) => {
       minify: mode === 'production',
       cssCodeSplit: false,
       rollupOptions: {
-        input: Object.fromEntries(panels.map(name => [name, `src/webviews/${name}.tsx`])),
+        input: Object.fromEntries(panels.map(name => [name, `src/app/webviews/${name[0].toUpperCase()}${name.slice(1)}.tsx`])),
         output: {
           entryFileNames: '[name].js',
           chunkFileNames: 'chunks/[name]-[hash].js',

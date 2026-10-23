@@ -37,7 +37,7 @@ class MySidebarView {
         ),
       );
       if (process.env.ECHOAPI_DEV_SERVER === "true") {
-        scriptUri = `http://localhost:${LOCAL_PORT}/src/webviews/${panelOptions.viewType}.tsx`;
+        scriptUri = `http://localhost:${LOCAL_PORT}/src/app/webviews/${panelOptions.viewType[0].toUpperCase()}${panelOptions.viewType.slice(1)}.tsx`;
       }
 
       const resourceBaseUrl = webviewView.webview.asWebviewUri(

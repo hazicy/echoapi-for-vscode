@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { ConfigProvider, Select } from "@/components/ui/base";
-import CustomDrawer, { Drawer } from "@/components/ui/Drawer";
-import { getPopupContainer } from "@/utils/popupContainer";
+import { ConfigProvider, Select } from "@/shared/ui/base";
+import CustomDrawer, { Drawer } from "@/shared/ui/Drawer";
+import { getPopupContainer } from "@/shared/utils/popupContainer";
 
 export default function DrawerFixture() {
   const query = new URLSearchParams(location.search);

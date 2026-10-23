@@ -1,4 +1,4 @@
-import { EnvListItem, ServerItem } from "@/types/envManage";
+import { EnvListItem, ServerItem } from "@/features/environment/types";
 import {
   cloneDeep,
   concat,
@@ -19,10 +19,10 @@ import {
   values,
 } from "lodash";
 import { Cookies, Env } from "../type";
-import { DomainInfoProps } from "@/types/project/cookie";
-import { SysConfig } from "@/types/settings";
-import { getCollectionServerId } from "@/utils/apis";
-import { ApiDetailsData } from "@/types/apis/api";
+import { DomainInfoProps } from "@/features/project/types/cookie";
+import { SysConfig } from "@/features/settings/types/settings";
+import { getCollectionServerId } from "@/features/requests/utils/apis";
+import { ApiDetailsData } from "@/features/requests/types/api";
 
 // Get project related information
 export const getProjectOptions = (

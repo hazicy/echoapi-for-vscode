@@ -1,8 +1,0 @@
-import moduleStyles from "./style.module.css";
-import { withStyles } from "@/components/ui/base/withStyles";
-
-export const HeaderContainer = withStyles<"div", {}>(
-  "div",
-  moduleStyles["HeaderContainer"],
-  { selector: "ui_56bab6ef_HeaderContainer" },
-);

@@ -1,13 +1,13 @@
 global.IS_ECHOAPI = true;
 
-import { Websocket2DetailsData } from '@/types/apis/websocket2';
+import { Websocket2DetailsData } from '@/features/requests/types/websocket2';
 import { globalConfig, websocketStore } from '../constants';
 import { WSClient } from 'websocket-client-pro';
 import * as vscode from 'vscode';
-import { ProjectConfigType } from '@/types/project';
+import { ProjectConfigType } from '@/features/project/types';
 import { genSendBaseOptions, getApiList, getCurrentProjectConfig } from '../utils';
-import { getAboutCollections } from '@/utils/send/utils';
-import { SysConfig } from '@/types/settings';
+import { getAboutCollections } from '@/features/requests/utils/send/utils';
+import { SysConfig } from '@/features/settings/types/settings';
 
 export const wsDisconnect = (target_id: string) => {
   if (websocketStore[target_id]) {

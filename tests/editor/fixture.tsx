@@ -4,11 +4,11 @@ import { EditorView } from '@codemirror/view';
 import CodeEditor, {
   type CodeEditorRef,
   type Props,
-} from '../../src/components/business/CodeEditor';
-import DiffEditor from '../../src/components/business/ApisDiffJsonContent/Edit';
-import { formatDocument } from '../../src/components/business/CodeEditor/format';
-import { jsonDiagnostics } from '../../src/components/business/CodeEditor/jsonDiagnostics';
-import { loadLanguage } from '../../src/components/business/CodeEditor/languages';
+} from '../../src/shared/components/CodeEditor';
+import DiffEditor from '../../src/features/sync/components/ApisDiffJsonContent/Edit';
+import { formatDocument } from '../../src/shared/components/CodeEditor/format';
+import { jsonDiagnostics } from '../../src/shared/components/CodeEditor/jsonDiagnostics';
+import { loadLanguage } from '../../src/shared/components/CodeEditor/languages';
 import { EditorState } from '@codemirror/state';
 import { setTheme } from './store';
 
@@ -44,7 +44,7 @@ function Fixture() {
   };
   return (
     <>
-      <div style={{ height: 280, width: 700 }}>
+      <div className="code-editor-host" style={{ height: 280, width: 700 }}>
         {mounted && (
           <CodeEditor
             {...props}

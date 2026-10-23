@@ -2,7 +2,7 @@ import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from '../constants';
 import * as vscode from 'vscode';
 import path from 'path';
 import { getHtmlForWebview, getProjectConfig, showTabName } from '../utils';
-import { TestingReportList } from '@/types/testing/res';
+import { TestingReportList } from '@/features/testing/types/res';
 import { handelFolderTestReportDataMessage } from '../messageHandler/folderTestReport';
 
 export const createfolderTestReportDataPanel = (data: TestingReportList, context: vscode.ExtensionContext) => {
@@ -37,7 +37,7 @@ export const createfolderTestReportDataPanel = (data: TestingReportList, context
   panel.iconPath = iconPath;
   let scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', `${panelOptions.viewType}.js`)));
   if(process.env.ECHOAPI_DEV_SERVER === "true"){
-    scriptUri = `http://localhost:${LOCAL_PORT}/src/webviews/${panelOptions.viewType}.tsx`;
+    scriptUri = `http://localhost:${LOCAL_PORT}/src/app/webviews/${panelOptions.viewType[0].toUpperCase()}${panelOptions.viewType.slice(1)}.tsx`;
   }
   const resourceBaseUrl = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist')));
 

@@ -33,6 +33,7 @@ yarn package
 ```
 
 See [the development guide](./scripts/README.md) for webview builds, localization, and browser tests.
+See [the source layout guide](./src/README.md) for feature ownership and component naming.
 
 ## Brand assets
 

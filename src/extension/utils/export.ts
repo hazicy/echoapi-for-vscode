@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { getApiList, getCurrentProjectConfig, getUserConfig } from '../utils';
-import { EXPORT_TYPE_ENUM } from '@/constants/settings';
-import { exportMethod } from '@/utils/export';
+import { EXPORT_TYPE_ENUM } from '@/features/settings/constants/settings';
+import { exportMethod } from '@/features/export/utils/export';
 import { getExportData as getExportApiData  } from '@/extension/utils/share';
 
 export const getExportData =async (option:{type:string,version:string}, context: vscode.ExtensionContext)=>{

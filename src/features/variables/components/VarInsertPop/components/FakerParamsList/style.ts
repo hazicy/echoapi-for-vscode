@@ -1,0 +1,9 @@
+import moduleStyles from "./style.module.css";
+import { withStyles } from "@/shared/ui/base/withStyles";
+import { Flex } from "@/shared/ui/base";
+
+export const FakerParamsContainer = withStyles<typeof Flex, {}>(
+  Flex,
+  moduleStyles["FakerParamsContainer"],
+  { selector: "ui_f425c604_FakerParamsContainer" },
+);

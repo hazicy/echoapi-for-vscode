@@ -1,14 +1,14 @@
 global.IS_ECHOAPI = true;
 
-import { Websocket2DetailsData } from '@/types/apis/websocket2';
+import { Websocket2DetailsData } from '@/features/requests/types/websocket2';
 import { globalConfig, socketIoStore } from '../constants';
 import { SocketClient } from 'socket.io-client-pro';
 import * as vscode from 'vscode';
-import { SocketIoDetailsData } from '@/types/apis/socketio';
-import { createTargetIdMap, getAboutCollections } from '@/utils/send/utils';
-import { SysConfig } from '@/types/settings';
+import { SocketIoDetailsData } from '@/features/requests/types/socketio';
+import { createTargetIdMap, getAboutCollections } from '@/features/requests/utils/send/utils';
+import { SysConfig } from '@/features/settings/types/settings';
 import { genSendBaseOptions, getApiList, getCurrentProjectConfig } from '../utils';
-import { ProjectConfigType } from '@/types/project';
+import { ProjectConfigType } from '@/features/project/types';
 import { find, isEqual } from 'lodash';
 
 export const socketioDisconnect = (target_id: string) => {

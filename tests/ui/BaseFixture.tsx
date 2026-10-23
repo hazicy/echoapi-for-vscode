@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from "react";
-import { EmptyWrap } from "@/components/ui/Empty/style";
+import { EmptyWrap } from "@/shared/ui/Empty/style";
 import {
   App,
   Button,
@@ -20,7 +20,7 @@ import {
   Modal,
   Upload,
   message,
-} from "@/components/ui/base";
+} from "@/shared/ui/base";
 
 function Content() {
   const [value, setValue] = useState("");

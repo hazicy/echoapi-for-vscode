@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import '@/locale';
+import '@/shared/locale';
 import {
   MySidebarView,
   createOpenPanel,
