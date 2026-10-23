@@ -712,7 +712,14 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
 
   const TESTING_CONFIG_TAB_LIST = [
     {
-      label: t('common.api_tab.run'),
+      label: (
+        <span className={styles.workspaceTabLabel} title={t('common.api_tab.run')}>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M4 6h12l-1 11H5L4 6Zm-1-3h14M7 3V1.5h6V3" />
+          </svg>
+          <span className={styles.workspaceTabText}>{t('common.api_tab.run')}</span>
+        </span>
+      ),
       value: 'requests',
       children: (
         <>
@@ -805,13 +812,12 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
     },
     {
       label: (
-        <Flex
-          justify="center"
-          align="center"
-          gap={4}
-        >
-          {t('menu.test')}
-        </Flex>
+        <span className={styles.workspaceTabLabel} title={t('menu.test')}>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M3 2.5h14v11H3zM6 6h5v4H6zM7 17h6M10 13.5V17M14 6h.01M14 9h.01" />
+          </svg>
+          <span className={styles.workspaceTabText}>{t('menu.test')}</span>
+        </span>
       ),
       value: 'tests',
       children: <Tests />,

@@ -143,7 +143,10 @@
       {
         "command": "echoapi.switchWorkspace",
         "title": "%command.switchWorkspace%",
-        "icon": "$(window)"
+        "icon": {
+          "light": "dist/images/workspace-switch-light.svg",
+          "dark": "dist/images/workspace-switch-dark.svg"
+        }
       },
       {
         "command": "echoapi.openEnv",
