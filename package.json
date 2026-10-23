@@ -268,7 +268,6 @@
     "react-resizable": "^3.0.5",
     "react-resizable-panels": "^1.0.9",
     "react-router-dom": "6.21.0",
-    "resize-observer-polyfill": "^1.5.1",
     "socket.io-client-pro": "^1.0.20",
     "sql-ddl-to-json-schema": "^4.1.0",
     "type-of-is": "^3.5.1",

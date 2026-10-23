@@ -2,7 +2,6 @@ import slots from "@/components/ui/base/slots.module.css";
 import React, { MouseEventHandler, memo, useEffect, useRef, useState } from 'react';
 
 import cn from 'classnames';
-import ResizeObserver from 'resize-observer-polyfill';
 
 interface Props {
   width?: number;

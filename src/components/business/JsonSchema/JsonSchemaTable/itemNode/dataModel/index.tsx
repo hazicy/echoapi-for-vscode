@@ -6,7 +6,6 @@ import { useMemoizedFn, useSafeState } from 'ahooks';
 import cn from 'classnames';
 import produce from 'immer';
 import { assign, has, isArray, isEmpty, isPlainObject, isString, values } from 'lodash';
-import ResizeObserver from 'resize-observer-polyfill';
 
 import ItemNode from '..';
 import context from '../../context';

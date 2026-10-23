@@ -6,7 +6,6 @@ import { DataNode } from '@/components/ui/base';
 import { TreeProps } from '@/components/ui/base';
 
 import { t } from 'i18next';
-import ResizeObserver from 'resize-observer-polyfill';
 
 import { IconFont, Input } from '@/components/ui';
 import { getChildTree } from '@/utils/graphql/schema2tree';

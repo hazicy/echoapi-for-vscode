@@ -11,7 +11,6 @@ import cn from 'classnames';
 import classNames from 'classnames';
 import produce from 'immer';
 import { isObject, isString, isUndefined } from 'lodash';
-import ResizeObserver from 'resize-observer-polyfill';
 
 import { IconFont, Tooltip } from '@/components/ui';
 import Button from '@/components/ui/Button';
