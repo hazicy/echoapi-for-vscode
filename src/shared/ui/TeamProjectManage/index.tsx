@@ -18,7 +18,7 @@ import { DEFAULT_TEAM_PROJECT } from '@/features/project/constants/project';
 import { Project, TeamItem } from '@/features/auth/types';
 
 const TeamProjectManage = (props: { currentTeam: TeamItem; currentProject: Project; onProjectChange?: any, from?: string }) => {
-  const { currentTeam, currentProject, from, onProjectChange } = props;
+  const { currentProject, from, onProjectChange } = props;
   const { themeToken } = useTheme();
   const { t } = useTranslation();
   const teamProjectList = useUserConfig(store => store.teamProjectList);
@@ -92,8 +92,6 @@ const TeamProjectManage = (props: { currentTeam: TeamItem; currentProject: Proje
               <Space>
                 {currentProject?.name ?
                   <>
-                    <div className={slots["team-name"]}>{currentTeam?.name || t('supplement.no_team')} </div>
-                    <span style={{ color: themeToken.fontLightColor }}>/</span>
                     <div className={slots["project-name"]}>
                       {currentProject?.name || t('supplement.no_project')}
                     </div>
