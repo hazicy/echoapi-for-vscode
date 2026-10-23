@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import {
   DndContext,
   KeyboardSensor,
@@ -33,7 +34,7 @@ export const SortableItem = ({ index, nodeProps }: any) => {
   const DragHandle = (click: any) => (
     <DragContainer>
       <IconFont
-        className="drag-icon"
+        className={slots["drag-icon"]}
         onMouseDown={click}
         type="icon-drag"
         ref={setActivatorNodeRef}
@@ -49,7 +50,7 @@ export const SortableItem = ({ index, nodeProps }: any) => {
     </DragContainer>
   );
   return (
-    <div className="object-item" ref={setNodeRef} style={style} {...attributes}>
+    <div className={slots["object-item"]} ref={setNodeRef} style={style} {...attributes}>
       <ItemNode DragHandle={DragHandle} key={index} {...nodeProps} />
     </div>
   );
@@ -65,7 +66,7 @@ export const SortableList = ({ listData, nodeProps, onDragEnd }: any) => {
   );
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd} sensors={sensors}>
-      <div className="object-list">
+      <div className={slots["object-list"]}>
         <SortableContext
           strategy={verticalListSortingStrategy}
           items={listData?.map(([itemKey]: any) => itemKey)}

@@ -83,7 +83,7 @@ body {
   background-color: var(--color-bg-page);
 }
 
-#root > .beautify-app {
+#root > .slot-beautify-app {
   display: flex;
   flex-direction: column;
   height: 100%;

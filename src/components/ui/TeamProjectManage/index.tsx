@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -40,17 +41,17 @@ const TeamProjectManage = (props: { currentTeam: TeamItem; currentProject: Proje
     return (
       <ProjectContainer>
         <Flex vertical gap={12} style={{ width: '100%' }}>
-          <div className="header">
+          <div className={slots.header}>
             <Flex justify="space-between" align="center">
-              <div className="header-left">{t('header.switch.team_project')}</div>
-              <div className="header-right">
+              <div className={slots["header-left"]}>{t('header.switch.team_project')}</div>
+              <div className={slots["header-right"]}>
 
               </div>
             </Flex>
           </div>
-          <div className="search">
+          <div className={slots.search}>
             <Input
-              className="search-input-wrap"
+              className={slots["search-input-wrap"]}
               style={{ height: 32 }}
               value={searchValue}
               onChange={onSearchProject}
@@ -76,7 +77,7 @@ const TeamProjectManage = (props: { currentTeam: TeamItem; currentProject: Proje
 
   return (
     <TeamWrapper>
-      <Space className='team-project-manage-space'>
+      <Space className={slots["team-project-manage-space"]}>
         <Popover
           open={isOpen}
           placement="bottomLeft"
@@ -84,26 +85,26 @@ const TeamProjectManage = (props: { currentTeam: TeamItem; currentProject: Proje
           overlayInnerStyle={{ padding: '16px 0' }}
           onOpenChange={handleOpenChange}
           trigger="click"
-          overlayClassName='team-project-manage-popover'
+          overlayClassName={slots["team-project-manage-popover"]}
         >
           <>
             <Flex justify='space-between'>
               <Space>
                 {currentProject?.name ?
                   <>
-                    <div className="team-name">{currentTeam?.name || t('supplement.no_team')} </div>
+                    <div className={slots["team-name"]}>{currentTeam?.name || t('supplement.no_team')} </div>
                     <span style={{ color: themeToken.fontLightColor }}>/</span>
-                    <div className="project-name">
+                    <div className={slots["project-name"]}>
                       {currentProject?.name || t('supplement.no_project')}
                     </div>
                   </>
                   :
                   <>
-                    <div className="no-select-project">{t('common.select_tip')}</div>
+                    <div className={slots["no-select-project"]}>{t('common.select_tip')}</div>
                   </>
                 }
               </Space>
-              <div className="project-icon">
+              <div className={slots["project-icon"]}>
                       <IconFont
                         type="icon-arrow-down"
                         style={{ color: themeToken.iconColor, fontSize: themeToken.fontSize }}

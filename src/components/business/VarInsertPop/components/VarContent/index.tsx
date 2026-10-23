@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import {
   ReactNode,
   forwardRef,
@@ -451,10 +452,10 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
     if (has(props, 'isLeaf')) {
       return (
         <TreeTitleContainer>
-          <span className="label">
+          <span className={slots.label}>
             <Tooltip title={props?.title}>{props?.title}</Tooltip>
           </span>
-          <span className="desc">
+          <span className={slots.desc}>
             <Tooltip title={props?.desc}>{props?.desc}</Tooltip>
           </span>
         </TreeTitleContainer>
@@ -464,7 +465,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
       const prefix = mockTabsKey === MOCK_TABS_KEY.mock ? '$mockjs.' : '$fakerjs.';
       return (
         <TreeValueContainer>
-          <span className="value">
+          <span className={slots.value}>
             {prefix}
             {props?.value || ''}
           </span>
@@ -687,10 +688,10 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
     value,
     label: (
       <TreeTitleContainer>
-        <span style={{ maxWidth: 200 }} className="label">
+        <span style={{ maxWidth: 200 }} className={slots.label}>
           <Tooltip title={value}>{value}</Tooltip>
         </span>
-        <span className="desc">
+        <span className={slots.desc}>
           <Tooltip title={label}>{label}</Tooltip>
         </span>
       </TreeTitleContainer>
@@ -724,19 +725,19 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
         <Flex justify="space-between" align="center">
           <Flex
             onClick={() => stepChange({ step: 1, key: optionKey })}
-            className="title cursor"
+            className={[slots.title, slots.cursor].join(" ")}
             gap={8}
             align="center"
           >
             <IconFont rotate={90} type="icon-download" />
             <span>{OPTIONS_KEY_MAP[optionKey]}</span>
           </Flex>
-          <IconFont onClick={() => setOpen?.(false)} className="cursor" type="icon-client-close" />
+          <IconFont onClick={() => setOpen?.(false)} className={slots.cursor} type="icon-client-close" />
         </Flex>
         {[VAR_OPTIONS_KEY.desc, VAR_OPTIONS_KEY.ai_desc].includes(optionKey) ? (
           <Flex flex={1} style={{ width: '100%', overflowY: 'auto' }}>
             {optionKey === VAR_OPTIONS_KEY.desc ? (
-              <Flex vertical className="desc-list">
+              <Flex vertical className={slots["desc-list"]}>
                 {size(descriptionList) ? (
                   descriptionList.map((item) => (
                     <div
@@ -744,7 +745,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                         setDescHoverIndex(item.id);
                         setValue(item.description);
                       }}
-                      className={classNames('desc-item', { active: item.id === descHoverIndex })}
+                      className={classNames(slots["desc-item"], { [slots.active]: item.id === descHoverIndex })}
                       key={item.id}
                     >
                       {item.description}
@@ -755,15 +756,15 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                 )}
               </Flex>
             ) : (
-              <Flex gap={8} vertical className="desc-ai">
+              <Flex gap={8} vertical className={slots["desc-ai"]}>
                 <Flex gap={4} vertical>
-                  <span className="desc-ai-title">{t('var_insert.current_key')}</span>
-                  <span className="desc-ai-key">''</span>
+                  <span className={slots["desc-ai-title"]}>{t('var_insert.current_key')}</span>
+                  <span className={slots["desc-ai-key"]}>''</span>
                 </Flex>
                 <Flex gap={4} vertical>
-                  <span className="desc-ai-title refresh">
+                  <span className={[slots["desc-ai-title"], slots.refresh].join(" ")}>
                     <span>{t('settings.description.param_desc')}</span>
-                    <span onClick={fixedRefresh} className="params-refresh">
+                    <span onClick={fixedRefresh} className={slots["params-refresh"]}>
                       <IconFont type="icon-refresh" />
                       {t('base.refresh')}
                     </span>
@@ -781,7 +782,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
         ) : (
           <Flex gap={8} style={{ overflowY: 'auto' }} flex={1} vertical>
             <Flex gap={8} vertical>
-              <span className="input-label">{OPTIONS_KEY_LABEL_MAP[optionKey]}</span>
+              <span className={slots["input-label"]}>{OPTIONS_KEY_LABEL_MAP[optionKey]}</span>
               {inputRender()}
             </Flex>
             {optionKey === VAR_OPTIONS_KEY.mock &&
@@ -852,13 +853,13 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
             )}
 
             {value ? (
-              <Flex gap={4} className="fn-list" vertical>
+              <Flex gap={4} className={slots["fn-list"]} vertical>
                 {size(fnList) ? (
-                  <div className="list-content">
+                  <div className={slots["list-content"]}>
                     {map(fnList, (item, index) => (
                       <Flex
                         gap={4}
-                        className={classNames('list-content-item')}
+                        className={classNames(slots["list-content-item"])}
                         justify="space-between"
                         onMouseOver={() => setHoverIndex(index)}
                         onMouseOut={() => setHoverIndex(null)}
@@ -870,11 +871,11 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                             setEditFn({ ...item });
                             setFuncOpen(true);
                           }}
-                          className={classNames('name', { del: !has(fnKeyMap, item.func_name) })}
+                          className={classNames(slots.name, { [slots.del]: !has(fnKeyMap, item.func_name) })}
                         >
                           {transFuncName(item.func_name, item.paras)}
                         </div>
-                        <Flex gap={4} className="desc" align="center">
+                        <Flex gap={4} className={slots.desc} align="center">
                           <span>
                             {item?.func_desc || fnKeyMap?.[item.func_name]?.func_desc || ''}
                           </span>
@@ -926,14 +927,14 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
           </Flex>
         )}
         <FunctionModal editFn={editFn} onCancel={funcCancel} open={funcOpen} />
-        <Flex gap={16} vertical className="footer">
+        <Flex gap={16} vertical className={slots.footer}>
           {value && ![VAR_OPTIONS_KEY.desc, VAR_OPTIONS_KEY.ai_desc].includes(optionKey) && (
-            <Flex gap={8} className="footer-preview" vertical>
-              <span className="preview-tip">
+            <Flex gap={8} className={slots["footer-preview"]} vertical>
+              <span className={slots["preview-tip"]}>
                 <span>{t('common.assertion.expression.title')}</span>
               </span>
-              <div className="preview-content">
-                <span className="preview-content-text">
+              <div className={slots["preview-content"]}>
+                <span className={slots["preview-content-text"]}>
                   <Tooltip placement="topLeft" title={expression}>
                     {expression}
                   </Tooltip>
@@ -947,17 +948,17 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                   type="icon-copy"
                 />
               </div>
-              <span className="preview-tip">
+              <span className={slots["preview-tip"]}>
                 <Flex gap={4}>
                   {t('common.api_tab.preview')}
-                  <span onClick={updatePreviewText} className="preview-refresh">
+                  <span onClick={updatePreviewText} className={slots["preview-refresh"]}>
                     <IconFont type="icon-refresh" />
                   </span>
                 </Flex>
               </span>
               <Spin spinning={previewLoading}>
-                <div className="preview-content">
-                  <span className="preview-content-text">
+                <div className={slots["preview-content"]}>
+                  <span className={slots["preview-content-text"]}>
                     <Tooltip placement="topLeft" title={previewText}>
                       {previewText}
                     </Tooltip>
@@ -974,7 +975,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
               </Spin>
             </Flex>
           )}
-          <Flex gap={12} className="footer-bth">
+          <Flex gap={12} className={slots["footer-bth"]}>
             {optionKey === VAR_OPTIONS_KEY.desc && (
               <></>
             )}

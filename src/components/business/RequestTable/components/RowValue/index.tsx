@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { memo, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -93,7 +94,7 @@ const RowValue = memo((props: ItemProps) => {
   const suffix = valueSuffix ? (
     <VarInsertPop placement="right" onChange={valueChange} setOpen={setOpen} open={open}>
       <IconFont
-        className={classNames('insert-icon', { active: open })}
+        className={classNames(slots["insert-icon"], { [slots.active]: open })}
         type="icon-a-Dynamicvalue"
       />
     </VarInsertPop>
@@ -104,12 +105,12 @@ const RowValue = memo((props: ItemProps) => {
       {isEqual(rowData?.field_type, 'File') && isEqual(bodyMode, 'form-data') ? (
         <>
           {rowData?.file_name ? (
-            <div className="file-name-wrap">
-              <span className="name">{rowData?.file_name}</span>
+            <div className={slots["file-name-wrap"]}>
+              <span className={slots.name}>{rowData?.file_name}</span>
               <IconFont type="icon-delete" onClick={handleRemoveFile} />
             </div>
           ) : (
-            <Upload disabled={readOnly} customRequest={customRequest} className="upload-wrapper">
+            <Upload disabled={readOnly} customRequest={customRequest} className={slots["upload-wrapper"]}>
               <Button type="text">{t('common.request_table.upload')}</Button>
             </Upload>
           )}

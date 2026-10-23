@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { Ref, forwardRef, memo, useEffect, useMemo, useRef } from 'react';
 
 import { Tree as AntdTree, Dropdown, MenuProps } from '@/components/ui/base';
@@ -172,7 +173,7 @@ const Tree = forwardRef((props: Props, treeRef: Ref<any>) => {
     if (topNode) {
       result.unshift({
         key: 'tree-top-node-key',
-        className: 'tree-top-node-wrap',
+        className: slots["tree-top-node-wrap"],
         title: topNode,
         isLeaf: true,
         icon: <div />,
@@ -182,7 +183,7 @@ const Tree = forwardRef((props: Props, treeRef: Ref<any>) => {
 
     if (bottomNode) {
       result.push({
-        className: 'tree-bottom-node-wrap',
+        className: slots["tree-bottom-node-wrap"],
         title: bottomNode,
         key: 'tree-bottom-node-key',
         isLeaf: true,
@@ -226,7 +227,7 @@ const Tree = forwardRef((props: Props, treeRef: Ref<any>) => {
         disabled={!rootDropdownContextMenu}
         menu={rootDropdownContextMenu}
       >
-        <div className="root-context-menu-holder-placeholder" />
+        <div className={slots["root-context-menu-holder-placeholder"]} />
       </Dropdown>}
     </TreeContainer>
   );

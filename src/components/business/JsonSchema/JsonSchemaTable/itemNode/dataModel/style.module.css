@@ -1,28 +1,28 @@
 .ModelWarper {
   position: relative;
 }
-.ModelWarper :global(.item-manage) {
+.ModelWarper .slot-item-manage {
   display: none !important;
 }
-.ModelWarper :global(.drag-icon) {
+.ModelWarper .slot-drag-icon {
   visibility: hidden !important;
 }
-.ModelWarper :global(.item-key-input) {
+.ModelWarper .slot-item-key-input {
   pointer-events: none;
   caret-color: transparent;
 }
-.ModelWarper :global(.desc-row-description) :global(.beautify-input) {
+.ModelWarper .slot-desc-row-description .slot-beautify-input {
   pointer-events: none;
   caret-color: transparent;
 }
-.ModelWarper :global(.outer-box) {
+.ModelWarper .slot-outer-box {
   position: absolute;
   top: 0;
   left: 0;
   width: calc(100% - 2px);
   border: 1px solid transparent;
 }
-.ModelWarper :global(.outer-box) :global(.edit-form) {
+.ModelWarper .slot-outer-box .slot-edit-form {
   display: none;
   position: absolute;
   top: -26px;
@@ -35,7 +35,7 @@
   border-radius: 4px 4px 0 0;
   background-color: var(--color-primary);
 }
-.ModelWarper :global(.outer-box) :global(.edit-form) :global(.btn-item) {
+.ModelWarper .slot-outer-box .slot-edit-form .slot-btn-item {
   display: flex;
   align-items: center;
   padding: 0 4px;
@@ -47,52 +47,52 @@
   color: #fff;
   cursor: pointer;
 }
-.ModelWarper :global(.outer-box) :global(.edit-form) :global(.btn-item) svg {
+.ModelWarper .slot-outer-box .slot-edit-form .slot-btn-item svg {
   margin-right: 3px;
   width: 15px;
   height: 15px;
   fill: #fff;
 }
-.ModelWarper :global(.outer-box) :global(.edit-form) :global(.btn-item):hover {
+.ModelWarper .slot-outer-box .slot-edit-form .slot-btn-item:hover {
   background-color: var(--highlight-background-color-brand);
 }
-.ModelWarper:hover :global(.outer-box) {
+.ModelWarper:hover .slot-outer-box {
   z-index: 999;
   border-radius: 4px;
   border-color: var(--color-primary);
   background: #cccccc26;
   cursor: not-allowed;
 }
-.ModelWarper:hover :global(.outer-box) :global(.edit-form) {
+.ModelWarper:hover .slot-outer-box .slot-edit-form {
   display: flex;
 }
-.ModelWarper:hover :global(.data-item) {
+.ModelWarper:hover .slot-data-item {
   cursor: not-allowed;
 }
-.ModelWarper:hover :global(.data-item) :global(.beautify-btn) {
+.ModelWarper:hover .slot-data-item .slot-beautify-btn {
   z-index: 1000;
 }
-.ModelWarper:hover :global(.data-item) :global(.beautify-input) {
+.ModelWarper:hover .slot-data-item .slot-beautify-input {
   cursor: not-allowed;
 }
-.ModelWarper:hover :global(.data-item):hover :global(.btn-hide) {
+.ModelWarper:hover .slot-data-item:hover .slot-btn-hide {
   display: flex;
 }
-.ModelWarper:hover :global(.data-item):hover :global(.set-icon) {
+.ModelWarper:hover .slot-data-item:hover .slot-set-icon {
   visibility: visible !important;
 }
-.ModelWarper:hover :global(.is-model-item) {
+.ModelWarper:hover .slot-is-model-item {
   z-index: 202;
 }
-.ModelWarper :global(.expand-btn) {
+.ModelWarper .slot-expand-btn {
   position: relative;
   z-index: 202;
 }
-.ModelWarper :global(.loop-link-item) {
+.ModelWarper .slot-loop-link-item {
   padding: 5px 0 5px 20px;
   height: 28px;
 }
-.ModelWarper :global(.loop-empty-model) {
+.ModelWarper .slot-loop-empty-model {
   display: flex;
   z-index: 100;
   flex: 1;

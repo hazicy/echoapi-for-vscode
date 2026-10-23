@@ -2,6 +2,12 @@ import { expect, test } from "@playwright/test";
 test.beforeEach(async ({ page }) => {
   await page.goto("/?base");
 });
+test("module slots preserve component overrides, size variants, and wrapper scope", async ({ page }) => {
+  await expect(page.getByRole("button", { name: "Small module button" })).toHaveCSS("min-height", "24px");
+  await expect(page.getByRole("button", { name: "Large module button" })).toHaveCSS("min-height", "40px");
+  await expect(page.getByText("Styled empty description", { exact: true })).toHaveCSS("color", "rgb(10, 20, 30)");
+  await expect(page.getByText("Plain empty description", { exact: true })).toHaveCSS("color", "rgb(4, 5, 6)");
+});
 test("controls propagate values and support keyboard selection", async ({
   page,
 }) => {

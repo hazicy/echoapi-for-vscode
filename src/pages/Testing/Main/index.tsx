@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useMemo } from "react";
 import {
   TestingConfigWrap,
@@ -194,12 +195,12 @@ const Main = ({
               <>
                 {testingConfig?.file_name ? (
                   <div
-                    className={classNames("file-name-wrap", {
-                      disabled: sendingOrOver,
+                    className={classNames(slots["file-name-wrap"], {
+                      [slots.disabled]: sendingOrOver,
                     })}
                   >
                     <Tooltip title={testingConfig?.file_name}>
-                      <span className="name">{testingConfig?.file_name}</span>
+                      <span className={slots.name}>{testingConfig?.file_name}</span>
                     </Tooltip>
                     {!sendingOrOver && (
                       <IconFont type="icon-delete" onClick={handleRemoveFile} />
@@ -209,8 +210,8 @@ const Main = ({
                   <Upload
                     disabled={sendingOrOver}
                     customRequest={customRequest}
-                    className={classNames("upload-wrapper", {
-                      disabled: sendingOrOver,
+                    className={classNames(slots["upload-wrapper"], {
+                      [slots.disabled]: sendingOrOver,
                     })}
                     accept="text/plain,text/csv,application/json"
                   >
@@ -262,7 +263,7 @@ const Main = ({
                 }}
               >
                 <Flex
-                  className="switch-name"
+                  className={slots["switch-name"]}
                   gap={8}
                   align="center"
                   onClick={() => {
@@ -284,7 +285,7 @@ const Main = ({
                 }}
               >
                 <Flex
-                  className="switch-name"
+                  className={slots["switch-name"]}
                   gap={8}
                   align="center"
                   onClick={() => {
@@ -341,7 +342,7 @@ const Main = ({
     <TestingMainWarp>
       <TestingConfigWrap>
         <SegmentedTabs
-          className="tab-container"
+          className={slots["tab-container"]}
           options={TESTING_CONFIG_TAB_LIST}
           value={tabValue}
           onChange={(val) => {
@@ -369,11 +370,11 @@ const Main = ({
         </Skeleton>
       ) : (
         <>
-          <Flex className="event-btns" justify="flex-end">
+          <Flex className={slots["event-btns"]} justify="flex-end">
             <Button type="text" onClick={onRefresh}>
               {t("base.refresh")}
             </Button>
-            <Button className="select-all" type="text" onClick={onSelectAll}>
+            <Button className={slots["select-all"]} type="text" onClick={onSelectAll}>
               {t("common.deselect_all")}
             </Button>
           </Flex>

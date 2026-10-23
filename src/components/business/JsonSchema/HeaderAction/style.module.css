@@ -8,10 +8,10 @@
   height: 32px;
   line-height: 32px;
 }
-.HeaderActionWrap :global(.preview-btn) {
+.HeaderActionWrap .slot-preview-btn {
   margin-right: 10px;
 }
-.HeaderActionWrap :global(.action-right) :global(.beautify-btn) {
+.HeaderActionWrap .slot-action-right .slot-beautify-btn {
   height: 26px;
 }
 .ImportContainer {
@@ -21,12 +21,12 @@
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border);
 }
-.ImportContainer :global(.import-header) :global(.beautify-segmented) {
+.ImportContainer .slot-import-header .slot-beautify-segmented {
   margin-bottom: 16px;
   width: 100%;
   height: 32px;
 }
-.ImportContainer :global(.import-header) :global(.beautify-segmented) :global(.beautify-segmented-item) {
+.ImportContainer .slot-import-header .slot-beautify-segmented .slot-beautify-segmented-item {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

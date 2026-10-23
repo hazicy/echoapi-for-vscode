@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -20,7 +21,7 @@ const BodyList: React.FC<BodyListProps> = (props) => {
     <BodyListContainer>
       <div className="assert-list">
         {errList?.map((item, index) => (
-          <ResponseAssertItemContainer key={index} $status={item.status} className="content-item">
+          <ResponseAssertItemContainer key={index} $status={item.status} className={slots["content-item"]}>
             <Space>
               {item.status === 'success' ? (
                 <IconFont type="icon-checked" />

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, memo, useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -76,7 +77,7 @@ const ColumnConfig: FC<Props> = memo(
             onOpenChange={(open) => setPopoverOpen(open)}
             content={
               <Flex vertical>
-                <DescMoreItemWrap className="tips-item-wrap">
+                <DescMoreItemWrap className={slots["tips-item-wrap"]}>
                   <span>{t('common.request_table.display_column')}</span>
                   <Tooltip title={t('common.request_table.display_column_tips')}>
                     <IconFont type="icon-tips" />
@@ -105,7 +106,7 @@ const ColumnConfig: FC<Props> = memo(
               </Flex>
             }
           >
-            <Tooltip overlayClassName='raw-parameter-pilot-bubble-tooltip' placement='bottomRight' open={isBoolean(systemConfig?.raw_parameter_pilot_bubble_switch) ? systemConfig?.raw_parameter_pilot_bubble_switch : false} title={<Flex vertical gap={12} style={{ padding: 10 }}>
+            <Tooltip overlayClassName={slots["raw-parameter-pilot-bubble-tooltip"]} placement='bottomRight' open={isBoolean(systemConfig?.raw_parameter_pilot_bubble_switch) ? systemConfig?.raw_parameter_pilot_bubble_switch : false} title={<Flex vertical gap={12} style={{ padding: 10 }}>
               <Typography.Text style={{ color: 'var(--font-title-color)', fontSize: '14px' }}>
                 Parameter types/requirements and descriptions are hidden by default in '...'. Click '...' to toggle their visibility.
               </Typography.Text>
@@ -139,7 +140,7 @@ const ColumnConfig: FC<Props> = memo(
                 }}>Confirm</Button>
               </Flex>
             </Flex>}>
-              <IconFont className='icon-navi-more' type="icon-navi-more" />
+              <IconFont className={slots["icon-navi-more"]} type="icon-navi-more" />
             </Tooltip>
           </Popover>
           <Button

@@ -1,3 +1,4 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .flex {
   display: flex;
 }
@@ -45,12 +46,12 @@
   color: var(--color-primary, #1677ff);
   border-color: var(--color-primary, #1677ff);
 }
-.button:global(.beautify-btn-sm) {
+.button.slot-beautify-btn-sm {
   min-height: 24px;
   padding: 2px 7px;
   font-size: var(--font-size-12, 12px);
 }
-.button:global(.beautify-btn-lg) {
+.button.slot-beautify-btn-lg {
   min-height: 40px;
   padding-inline: 15px;
 }
@@ -58,19 +59,19 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
-.button:global(.beautify-btn-primary) {
+.button.slot-beautify-btn-primary {
   background: var(--color-primary, #1677ff);
   color: #fff;
   border-color: transparent;
 }
-.button:global(.beautify-btn-text),
-.button:global(.beautify-btn-link) {
+.button.slot-beautify-btn-text,
+.button.slot-beautify-btn-link {
   border-color: transparent;
 }
-.button:global(.beautify-btn-link) {
+.button.slot-beautify-btn-link {
   color: var(--color-primary, #1677ff);
 }
-.button:global(.beautify-btn-dashed) {
+.button.slot-beautify-btn-dashed {
   border-style: dashed;
 }
 .danger,
@@ -352,11 +353,11 @@
   flex-direction: column;
   min-width: 0;
 }
-.tabs > :global(.beautify-tabs-nav) {
+.tabs > .slot-beautify-tabs-nav {
   flex: 0 0 auto;
   min-width: 0;
 }
-.tabs > :global(.beautify-tabs-content-holder) {
+.tabs > .slot-beautify-tabs-content-holder {
   flex: 1;
   min-height: 0;
   min-width: 0;
@@ -457,11 +458,11 @@
   flex: 1;
   min-width: 0;
 }
-:global(.beautify-form-vertical) > .formItem {
+.slot-beautify-form-vertical > .formItem {
   flex-direction: column;
   gap: 4px;
 }
-.formItem :global(.beautify-form-item-control) > .input {
+.formItem .slot-beautify-form-item-control > .input {
   width: 100%;
 }
 .separator {
@@ -594,8 +595,8 @@
     var(--table-header-bg-color, transparent)
   );
 }
-.table:global(.beautify-table-bordered) td,
-.table:global(.beautify-table-bordered) th {
+.table.slot-beautify-table-bordered td,
+.table.slot-beautify-table-bordered th {
   border-inline-end: 1px solid
     var(--color-table-border, var(--color-border, #ddd));
 }
@@ -609,29 +610,29 @@
   font: inherit;
   cursor: pointer;
 }
-.tree :global(.beautify-tree-list) {
+.tree [class~="beautify-tree-list"] {
   position: relative;
 }
-.tree :global(.beautify-tree-treenode) {
+.tree [class~="beautify-tree-treenode"] {
   display: flex;
   align-items: center;
   min-height: 28px;
 }
-.tree :global(.beautify-tree-indent) {
+.tree [class~="beautify-tree-indent"] {
   display: inline-flex;
 }
-.tree :global(.beautify-tree-indent-unit) {
+.tree [class~="beautify-tree-indent-unit"] {
   display: inline-block;
   width: 18px;
 }
-.tree :global(.beautify-tree-switcher) {
+.tree [class~="beautify-tree-switcher"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 20px;
   cursor: pointer;
 }
-.tree :global(.beautify-tree-node-content-wrapper) {
+.tree [class~="beautify-tree-node-content-wrapper"] {
   display: inline-flex;
   align-items: center;
   flex: 1;
@@ -639,11 +640,11 @@
   padding: 2px 4px;
   cursor: pointer;
 }
-.tree :global(.beautify-tree-title) {
+.tree [class~="beautify-tree-title"] {
   flex: 1;
   min-width: 0;
 }
-.tree :global(.beautify-tree-checkbox) {
+.tree [class~="beautify-tree-checkbox"] {
   display: inline-block;
   width: 14px;
   height: 14px;
@@ -652,33 +653,33 @@
   border-radius: 3px;
   cursor: pointer;
 }
-.tree :global(.beautify-tree-checkbox-checked) {
+.tree [class~="beautify-tree-checkbox-checked"] {
   background: var(--color-primary, #1677ff);
 }
-.tree :global(.beautify-tree-checkbox-indeterminate) {
+.tree [class~="beautify-tree-checkbox-indeterminate"] {
   background: var(--color-primary-opacity, #ddd);
 }
-.tree :global(.beautify-tree-node-selected) {
+.tree [class~="beautify-tree-node-selected"] {
   background: var(--color-bg-folder-hover, #eee);
 }
-.tree :global(.beautify-tree-drop-indicator) {
+.tree [class~="beautify-tree-drop-indicator"] {
   position: absolute;
   height: 2px;
   background: var(--color-primary, #1677ff);
 }
-.tree :global(.beautify-select-tree-list) {
+.tree [class~="beautify-select-tree-list"] {
   max-height: 360px;
   overflow: auto;
 }
-.tree :global(.beautify-select-tree-treenode) {
+.tree [class~="beautify-select-tree-treenode"] {
   display: flex;
   min-height: 28px;
   align-items: center;
 }
-.tree :global(.beautify-select-tree-switcher) {
+.tree [class~="beautify-select-tree-switcher"] {
   width: 20px;
 }
-.tree :global(.beautify-select-tree-indent-unit) {
+.tree [class~="beautify-select-tree-indent-unit"] {
   display: inline-block;
   width: 16px;
 }

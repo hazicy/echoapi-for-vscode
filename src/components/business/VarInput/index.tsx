@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { KeyboardEvent, useMemo } from 'react';
 
 import { useMemoizedFn, useSafeState } from 'ahooks';
@@ -116,7 +117,7 @@ export default function VarInput(props: Partial<VarInputProps>) {
 
   return (
     <VarInputContainer
-      className={cn({ 'has-border': hasBorder }, wrapClassName)}
+      className={cn({ [slots["has-border"]]: hasBorder }, wrapClassName)}
       onBlur={handleBlur}
       onKeyDown={handleKeyDown}
     >

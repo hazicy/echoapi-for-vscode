@@ -7,7 +7,7 @@
   padding-top: 5px;
   padding-right: 0;
 }
-.ResponseAssertionContainer :global(.assert-title) {
+.ResponseAssertionContainer .slot-assert-title {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -18,32 +18,32 @@
   font-weight: 400;
   color: rgba(51, 54, 57, 0.8);
 }
-.ResponseAssertionContainer :global(.beautify-space-item) {
+.ResponseAssertionContainer .slot-beautify-space-item {
   /* color: var(--font-content-color); */
 }
-.ResponseAssertionContainer :global(.beautify-space-item) :global(.content-title) {
+.ResponseAssertionContainer .slot-beautify-space-item .slot-content-title {
   color: var(--font-content-color);
 }
-.ResponseAssertionContainer :global(.assert-pot) {
+.ResponseAssertionContainer .slot-assert-pot {
   display: flex;
   flex: 1;
   flex-direction: column;
   overflow: auto;
 }
-.ResponseAssertionContainer :global(.assert-pot) :global(.assert-content) {
+.ResponseAssertionContainer .slot-assert-pot .slot-assert-content {
   flex-direction: column;
   justify-content: center;
 }
-.ResponseAssertionContainer :global(.assert-pot) :global(.assert-content) :global(.content-title) {
+.ResponseAssertionContainer .slot-assert-pot .slot-assert-content .slot-content-title {
   padding: 8px 0;
   font-size: 14px;
   font-weight: 400;
   color: var(--font-content-color);
 }
-.ResponseAssertionContainer :global(.assert-pot) :global(.assert-content) :global(.content-title):first-child {
+.ResponseAssertionContainer .slot-assert-pot .slot-assert-content .slot-content-title:first-child {
   padding-top: 12px;
 }
-.ResponseAssertionContainer :global(.assert-pot) :global(.assert-content) :global(.content-item) {
+.ResponseAssertionContainer .slot-assert-pot .slot-assert-content .slot-content-item {
   padding: 2px 16px;
   width: 100%;
   border-radius: 4px;
@@ -55,23 +55,23 @@
   color: var(--style-f9a1fed8-ResponseAssertItemContainer-0);
   background-color: var(--style-f9a1fed8-ResponseAssertItemContainer-1);
 }
-.ResponseAssertItemContainer :global(.anticon) {
+.ResponseAssertItemContainer .slot-anticon {
   font-size: var(--font-size-16);
 }
 .ResponseAssertItemContainer:not(:last-child) {
   margin-bottom: 4px;
 }
-.BodyListContainer :global(.big-title) {
+.BodyListContainer .slot-big-title {
   height: 30px;
   line-height: 30px;
 }
-.BodyListContainer :global(.big-title) :global(.test-success) {
+.BodyListContainer .slot-big-title .slot-test-success {
   color: #26cea4;
 }
-.BodyListContainer :global(.big-title) :global(.test-error) {
+.BodyListContainer .slot-big-title .slot-test-error {
   color: #ff4c4c;
 }
-.BodyListContainer :global(.big-title) :global(.link-more) {
+.BodyListContainer .slot-big-title .slot-link-more {
   margin-left: 10px;
   color: var(--font-title-color);
   cursor: pointer;
@@ -80,6 +80,6 @@
   font-size: var(--font-size-14);
   background-color: rgba(255, 88, 62, 0.1);
 }
-.ScriptErrorContainer :global(.runtime-script-error) {
+.ScriptErrorContainer .slot-runtime-script-error {
   color: #ff4c4c;
 }

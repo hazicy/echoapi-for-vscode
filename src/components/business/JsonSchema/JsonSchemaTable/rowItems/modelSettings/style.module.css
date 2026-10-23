@@ -10,7 +10,7 @@
   height: 100%;
   box-sizing: border-box;
 }
-.ItemModelWarperContainer :global(.btn-hide) {
+.ItemModelWarperContainer .slot-btn-hide {
   display: none;
   flex-direction: row;
   align-items: center;
@@ -25,16 +25,16 @@
   cursor: pointer;
   word-break: keep-all;
 }
-.ItemModelWarperContainer :global(.btn-hide):last-child {
+.ItemModelWarperContainer .slot-btn-hide:last-child {
   margin-left: 10px;
 }
-.ItemModelWarperContainer :global(.txt-box) {
+.ItemModelWarperContainer .slot-txt-box {
   flex: 1;
   height: 100%;
   border: none;
   font-size: var(--font-size-12);
 }
-.ItemModelWarperContainer :global(.txt-description) {
+.ItemModelWarperContainer .slot-txt-description {
   flex: 1;
   margin: 0 10px;
   width: 0;
@@ -46,7 +46,7 @@
 .ItemModelWarperContainer input {
   cursor: text !important;
 }
-.ItemModelWarperContainer :global(.beautify-btn) {
+.ItemModelWarperContainer .slot-beautify-btn {
   padding: 0 5px !important;
   width: auto !important;
 }

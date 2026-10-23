@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import useFolders from '@/hooks/useFolders';
 import { Button, Flex, message, TreeSelect } from '@/components/ui/base';
 import React, { useEffect, useState } from 'react'
@@ -45,7 +46,7 @@ const Tests = () => {
     <TestsWrapper>
     <Flex gap={4}>
       <TreeSelect
-        popupClassName="import-project-full-select"
+        popupClassName={slots["import-project-full-select"]}
         // getPopupContainer={(triggerNode: HTMLElement) =>
         //   triggerNode.parentNode as HTMLElement
         // }

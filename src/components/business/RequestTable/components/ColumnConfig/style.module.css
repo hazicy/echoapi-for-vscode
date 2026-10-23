@@ -1,7 +1,7 @@
 .DescMoreItemWrap {
   height: 26px;
 }
-.DescMoreItemWrap:global(.tips-item-wrap) {
+.DescMoreItemWrap.slot-tips-item-wrap {
   color: var(--font-light-color);
 }
 .ColumnConfigContainer {
@@ -12,13 +12,13 @@
   padding-inline: 8px;
   background-color: transparent;
 }
-.ColumnConfigContainer :global(.raw-parameter-pilot-bubble-tooltip) {
+.ColumnConfigContainer .slot-raw-parameter-pilot-bubble-tooltip {
   max-width: 320px;
 }
-.ColumnConfigContainer :global(.icon-navi-more) {
+.ColumnConfigContainer .slot-icon-navi-more {
   cursor: pointer;
   color: var(--font-light-color);
 }
-.ColumnConfigContainer :global(.icon-navi-more):hover {
+.ColumnConfigContainer .slot-icon-navi-more:hover {
   color: var(--color-primary);
 }

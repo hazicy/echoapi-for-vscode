@@ -6,15 +6,15 @@
   /* border-right: 0; */
   /* border-left: 0; */
 }
-.DefaultStyle :global(.beautify-input) {
+.DefaultStyle .slot-beautify-input {
   background: transparent;
 }
-.DefaultStyle :global(.template-table) :global(.table-tr):global(.data-item) :global(.schema-td):last-child {
+.DefaultStyle .slot-template-table .slot-table-tr.slot-data-item .slot-schema-td:last-child {
   flex: 1;
 }
-.DefaultStyle :global(.template-table) :global(.table-tr) :global(.table-td) {
+.DefaultStyle .slot-template-table .slot-table-tr .slot-table-td {
   border-right: none;
 }
-.DefaultStyle :global(.action-right) {
+.DefaultStyle .slot-action-right {
   display: block !important;
 }

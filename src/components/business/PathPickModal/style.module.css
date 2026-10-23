@@ -1,25 +1,25 @@
-.PathPickModalContainer :global(.json-path-content) {
+.PathPickModalContainer .slot-json-path-content {
   display: flex;
   height: 400px;
   gap: 10px;
 }
-.PathPickModalContainer :global(.json-path-content) :global(.layout-item) {
+.PathPickModalContainer .slot-json-path-content .slot-layout-item {
   display: flex;
   flex: 1;
   flex-direction: column;
 }
-.PathPickModalContainer :global(.json-path-content) :global(.item-title) {
+.PathPickModalContainer .slot-json-path-content .slot-item-title {
   padding: 10px 0;
   height: 26px;
   font-weight: 400;
   box-sizing: content-box;
 }
-.PathPickModalContainer :global(.json-path-content) :global(.item-content) {
+.PathPickModalContainer .slot-json-path-content .slot-item-content {
   flex: 1;
   resize: none;
   color: var(--color-bg-gray);
 }
-.PathPickModalContainer :global(.json-path-content) :global(.item-content) :global(.code-editor-value) {
+.PathPickModalContainer .slot-json-path-content .slot-item-content .slot-code-editor-value {
   overflow: visible !important;
   border: 1px solid var(--color-border);
 }

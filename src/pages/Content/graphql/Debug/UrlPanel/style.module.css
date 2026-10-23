@@ -14,24 +14,24 @@
       }
     } */
 }
-.UrlPanelContainer :global(.url-group-input) {
+.UrlPanelContainer .slot-url-group-input {
   border-radius: 0;
   background-color: transparent;
 }
-.UrlPanelContainer :global(.beautify-flex) :global(.url-group) {
+.UrlPanelContainer .slot-beautify-flex .slot-url-group {
   flex: 1;
 }
-.UrlPanelContainer :global(.beautify-btn) {
+.UrlPanelContainer .slot-beautify-btn {
   height: 36px;
   font-size: var(--font-size-14);
 }
-.UrlPanelContainer > :global(.url-group-wrap) {
+.UrlPanelContainer > .slot-url-group-wrap {
   flex: 1;
   padding: 3px;
 }
-.UrlPanelContainer :global(.beautify-btn) {
+.UrlPanelContainer .slot-beautify-btn {
   height: 36px !important;
 }
-.UrlPanelContainer :global(.beautify-dropdown-trigger) {
+.UrlPanelContainer .slot-beautify-dropdown-trigger {
   border-color: var(--vscode-settings-headerBorder);
 }

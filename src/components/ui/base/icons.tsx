@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { forwardRef } from "react";
 import type { SVGProps } from "react";
 type Props = SVGProps<SVGSVGElement> & { rotate?: number; spin?: boolean };
@@ -11,7 +12,7 @@ const icon = (path: string) =>
       aria-hidden="true"
       {...props}
       ref={ref}
-      className={["anticon", props.className].filter(Boolean).join(" ")}
+      className={[slots.anticon, props.className].filter(Boolean).join(" ")}
       style={{
         transform: rotate ? `rotate(${rotate}deg)` : undefined,
         ...style,

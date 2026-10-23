@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React from 'react';
 
 import { List } from '@/components/ui/base';
@@ -34,7 +35,7 @@ const FlowResponse = (props: Props) => {
           <List.Item
             key={item.id}
             className={classnames({
-              active: active === item.id,
+              [slots.active]: active === item.id,
             })}
             onClick={() => {
               setActive(item.id);

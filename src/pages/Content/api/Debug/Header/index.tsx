@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { ApiComponentType } from '@/types/apis/api';
 import { AnyObject } from '@/types/common';
 import { Button, Flex } from '@/components/ui/base';
@@ -83,7 +84,7 @@ const Header: FC<ApiComponentType> = ({ apisData, onApisDataChange, type }) => {
   return (
     <HeaderContainer>
       <UrlGroup
-        className="url-group-wrap"
+        className={slots["url-group-wrap"]}
         type={type || 'api'}
         maxLength={10240}
         data={urlGroupData}

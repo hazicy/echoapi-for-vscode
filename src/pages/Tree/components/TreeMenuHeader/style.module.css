@@ -5,19 +5,19 @@
   /* margin-left: 14px; */
   margin-bottom: 6px;
 }
-.TreeMenuHeaderWarp :global(.upload),
-.TreeMenuHeaderWarp :global(.pull) {
+.TreeMenuHeaderWarp .slot-upload,
+.TreeMenuHeaderWarp .slot-pull {
   cursor: pointer;
 }
-.TreeMenuHeaderWarp :global(.upload) svg,
-.TreeMenuHeaderWarp :global(.pull) svg {
+.TreeMenuHeaderWarp .slot-upload svg,
+.TreeMenuHeaderWarp .slot-pull svg {
   fill: var(--font-title-color);
 }
-.TreeMenuHeaderWarp :global(.upload) svg:hover,
-.TreeMenuHeaderWarp :global(.pull) svg:hover {
+.TreeMenuHeaderWarp .slot-upload svg:hover,
+.TreeMenuHeaderWarp .slot-pull svg:hover {
   fill: var(--color-primary);
 }
-.TreeMenuHeaderWarp :global(.upload) svg:hover path,
-.TreeMenuHeaderWarp :global(.pull) svg:hover path {
+.TreeMenuHeaderWarp .slot-upload svg:hover path,
+.TreeMenuHeaderWarp .slot-pull svg:hover path {
   fill: var(--color-primary) !important;
 }

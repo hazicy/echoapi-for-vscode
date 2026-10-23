@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useEffect, useRef, useState } from 'react';
 
 import classNames from 'classnames';
@@ -46,7 +47,7 @@ const VarItem = ({ item, value, onClick }: VarItem) => {
   return (
     <div
       ref={itemRef}
-      className={classNames('var-item', { active: item.value === value })}
+      className={classNames(slots["var-item"], { [slots.active]: item.value === value })}
       onClick={onClick}
     >
       {isEllipsis ? (
@@ -73,11 +74,11 @@ const CustomScript = ({ mode, value, onChange }: CustomScriptProps) => {
 
   return (
     <CustomScriptWrapper $token={themeToken}>
-      <div className="custom-script-container">
-        <div className="code-editor-container">
+      <div className={slots["custom-script-container"]}>
+        <div className={slots["code-editor-container"]}>
           <CodeEditor language="javascript" value={value} onChange={onChange} />
         </div>
-        <div className="right-var-list">
+        <div className={slots["right-var-list"]}>
           {map(mode === SCRIPT_TYPE.ASSERT ? ASSERT_LIST : SCRIPT_LIST, (item) => {
             return (
               <VarItem

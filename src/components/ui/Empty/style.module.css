@@ -2,7 +2,7 @@
   height: 100%;
   width: 100%;
 }
-.EmptyWrap :global(.beautify-empty) {
+.EmptyWrap .slot-beautify-empty {
   height: 100%;
   color: var(--vscode-settings-headerBorder);
   display: flex;
@@ -10,9 +10,9 @@
   align-items: center;
   justify-content: center;
 }
-.EmptyWrap :global(.beautify-empty) > * {
+.EmptyWrap .slot-beautify-empty > * {
   height: auto;
 }
-.EmptyWrap :global(.beautify-empty) :global(.beautify-empty-description) {
+.EmptyWrap .slot-beautify-empty .slot-beautify-empty-description {
   color: var(--vscode-tab-unfocusedInactiveForeground);
 }

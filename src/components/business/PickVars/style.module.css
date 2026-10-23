@@ -1,9 +1,9 @@
-.PickVarWrapper :global(.label) {
+.PickVarWrapper .slot-label {
   flex-shrink: 0;
   width: 56px;
   font-size: var(--font-size-14);
 }
-.PickVarWrapper :global(.beautify-select-arrow) {
+.PickVarWrapper .slot-beautify-select-arrow {
   font-size: var(--font-size-12);
 }
 .DescWrapper {

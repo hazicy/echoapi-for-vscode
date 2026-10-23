@@ -5,7 +5,7 @@
   padding: 0 10px;
   width: 100%;
 }
-.ServerNameContainer :global(.env-name) {
+.ServerNameContainer .slot-env-name {
   display: flex;
   flex: 1;
   justify-content: flex-start;
@@ -14,7 +14,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.ServerNameContainer :global(.env-name) :global(.icon-default) {
+.ServerNameContainer .slot-env-name .slot-icon-default {
   margin-left: 10px;
   padding: 0 5px;
   height: 20px;
@@ -25,11 +25,11 @@
   color: var(--color-primary);
   background-color: var(--color-primary-opacity);
 }
-.ServerNameContainer :global(.env-more) {
+.ServerNameContainer .slot-env-more {
   cursor: pointer;
   padding: 0 2px;
 }
-.EnvAddContainer :global(.anticon) {
+.EnvAddContainer .slot-anticon {
   color: #22c55e;
 }
 .EnvServerTitleContainer {
@@ -42,10 +42,10 @@
   font-weight: 400;
   color: var(--font-content-color);
 }
-.EnvServerTitleContainer :global(.anticon) {
+.EnvServerTitleContainer .slot-anticon {
   font-size: 16px;
 }
-.EnvServerTitleContainer :global(.server-add) {
+.EnvServerTitleContainer .slot-server-add {
   font-size: 12px;
   font-weight: 400;
   color: var(--font-light-color);

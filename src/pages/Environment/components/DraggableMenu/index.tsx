@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC } from 'react';
 
 import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
@@ -35,22 +36,22 @@ const Item: FC<ItemProps> = ({
   return (
     <DraggableMenuItemContainer ref={setNodeRef} style={style} {...attributes}>
       <div
-        className={cn('draggable-menu-item', {
-          'draggable-menu-item-selected': includes(selectedKeys, id),
+        className={cn(slots["draggable-menu-item"], {
+          [slots["draggable-menu-item-selected"]]: includes(selectedKeys, id),
         })}
         onClick={() => onItemClick?.(`${id}`)}
       >
         {!disableDraggable && (
           <IconFont
             type="icon-drag"
-            className="icon-drag"
+            className={slots["icon-drag"]}
             ref={setActivatorNodeRef}
             style={{ touchAction: 'none', cursor: 'move', fontSize: 10 }}
             {...listeners}
           />
         )}
         <span className="draggable-menu-item-icon">{icon}</span>
-        <div className="draggable-menu-title-content">{children}</div>
+        <div className={slots["draggable-menu-title-content"]}>{children}</div>
       </div>
     </DraggableMenuItemContainer>
   );
@@ -59,7 +60,7 @@ const Item: FC<ItemProps> = ({
 const Group: FC<GroupProps> = ({ title, children }) => {
   return (
     <DraggableMenuGroupContainer>
-      <div className="draggable-menu-item-group-title">{title}</div>
+      <div className={slots["draggable-menu-item-group-title"]}>{title}</div>
       <ul className="draggable-menu-item-group-list">{children}</ul>
     </DraggableMenuGroupContainer>
   );

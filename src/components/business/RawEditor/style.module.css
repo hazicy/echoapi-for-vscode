@@ -4,18 +4,18 @@
   height: 100%;
   min-height: 100px;
 }
-.RawEditorContainer > :global(.beautify-flex) {
+.RawEditorContainer > .slot-beautify-flex {
   flex: 1;
 }
-.RawEditorContainer > :global(.beautify-flex) > main {
+.RawEditorContainer > .slot-beautify-flex > main {
   flex: 1;
   margin-top: 8px;
   height: 0;
 }
-.RawEditorContainer :global(.beautify-text-btn-highlight) {
+.RawEditorContainer .slot-beautify-text-btn-highlight {
   color: var(--color-primary) !important;
 }
-.RawEditorContainer :global(.beautify-text-btn-highlight):hover {
+.RawEditorContainer .slot-beautify-text-btn-highlight:hover {
   color: var(--color-primary) !important;
 }
 .ParamsFieldEditorContainer {
@@ -23,45 +23,45 @@
   height: 100%;
   border: 1px solid var(--color-border);
 }
-.ParamsFieldEditorContainer :global(.right-panel) > div {
+.ParamsFieldEditorContainer .slot-right-panel > div {
   overflow: hidden;
   /* main {
         flex: auto;
         height: 100%;
       } */
 }
-.ParamsFieldEditorContainer :global(.how-use-desc) {
+.ParamsFieldEditorContainer .slot-how-use-desc {
   padding-right: 4px;
   font-size: var(--font-size-12);
   text-decoration: underline;
   color: var(--font-light-color);
   cursor: pointer;
 }
-.ParamsFieldEditorContainer :global(.how-use-desc):hover {
+.ParamsFieldEditorContainer .slot-how-use-desc:hover {
   color: var(--color-primary);
 }
-.ParamsFieldEditorContainer :global(.beautify-segmented) {
+.ParamsFieldEditorContainer .slot-beautify-segmented {
   font-size: var(--font-size-14);
 }
-.ParamsFieldEditorContainer :global(.segmented-tabs-header) {
+.ParamsFieldEditorContainer .slot-segmented-tabs-header {
   margin-bottom: 0;
   padding: 0 6px !important;
   height: auto;
 }
-.ParamsFieldEditorContainer :global(.segmented-tabs-header) > :global(.beautify-flex) {
+.ParamsFieldEditorContainer .slot-segmented-tabs-header > .slot-beautify-flex {
   justify-content: space-between;
   align-items: center;
 }
-.ParamsFieldEditorContainer :global(.segmented-tabs-header) > :global(.beautify-flex) :global(.tab-bar-extra-content-wrap) {
+.ParamsFieldEditorContainer .slot-segmented-tabs-header > .slot-beautify-flex .slot-tab-bar-extra-content-wrap {
   flex: none;
   margin-right: 8px;
   font-size: 10px;
   color: var(--font-light-color);
 }
-.ParamsFieldEditorContainer :global(.segmented-tabs-content-item) {
+.ParamsFieldEditorContainer .slot-segmented-tabs-content-item {
   border: none !important;
 }
-.ParamsFieldEditorContainer :global(.icon-content) {
+.ParamsFieldEditorContainer .slot-icon-content {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,45 +70,45 @@
   border-radius: 4px;
   box-sizing: border-box;
 }
-.ParamsFieldEditorContainer :global(.icon-content) :global(.anticon):global(.link) {
+.ParamsFieldEditorContainer .slot-icon-content .slot-anticon.slot-link {
   font-size: var(--font-size-12);
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.var) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-var {
   background: #af711a;
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.var) :global(.anticon) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-var .slot-anticon {
   color: #b071ff;
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.mock) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-mock {
   background: #067c18;
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.mock) :global(.anticon) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-mock .slot-anticon {
   color: #067ced;
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.fixed) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-fixed {
   background: #43bf16;
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.fixed) :global(.anticon) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-fixed .slot-anticon {
   color: #43bfb0;
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.desc) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-desc {
   background: #00ac0a;
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.desc) :global(.anticon) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-desc .slot-anticon {
   color: #00ac64;
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.aiDesc) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-aiDesc {
   background: #ee5608;
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.aiDesc) :global(.anticon) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-aiDesc .slot-anticon {
   color: #ee564c;
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.fn) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-fn {
   background: #ff4711;
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.fn) :global(.anticon) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-fn .slot-anticon {
   color: #ff47a5;
 }
-.ParamsFieldEditorContainer :global(.icon-content):global(.aiValue) {
+.ParamsFieldEditorContainer .slot-icon-content.slot-aiValue {
   background: #ff9c14;
 }

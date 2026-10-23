@@ -2,36 +2,36 @@
   width: 100%;
   height: 100%;
 }
-.RequestBodyContainer :global(.other-btn) :global(.beautify-btn):hover {
+.RequestBodyContainer .slot-other-btn .slot-beautify-btn:hover {
   opacity: 0.6;
 }
-.RequestBodyContainer > :global(.beautify-flex) {
+.RequestBodyContainer > .slot-beautify-flex {
   height: 100%;
 }
-.RequestBodyContainer > :global(.beautify-flex) :global(.request-body-header) {
+.RequestBodyContainer > .slot-beautify-flex .slot-request-body-header {
   display: flex;
   /* height: 28px; */
   height: 24px;
   /* padding-left: 8px; */
 }
-.RequestBodyContainer > :global(.beautify-flex) :global(.request-body-content-wrap) {
+.RequestBodyContainer > .slot-beautify-flex .slot-request-body-content-wrap {
   flex: 1;
   margin-top: 8px;
   height: 0;
 }
-.RequestBodyContainer :global(.beautify-radio-group) :global(.beautify-radio-wrapper) {
+.RequestBodyContainer .slot-beautify-radio-group .slot-beautify-radio-wrapper {
   font-size: var(--font-size-14);
 }
-.RequestBodyContainer :global(.request-body-header) :global(.beautify-radio-inner) {
+.RequestBodyContainer .slot-request-body-header .slot-beautify-radio-inner {
   transform: scale(0.7);
 }
-.RequestBodyContainer :global(.request-body-header) :global(.beautify-radio) {
+.RequestBodyContainer .slot-request-body-header .slot-beautify-radio {
   margin-top: 3px;
 }
-.RequestBodyContainer :global(.request-body-header) :global(.beautify-radio-wrapper) span:global(.beautify-radio) + * {
+.RequestBodyContainer .slot-request-body-header .slot-beautify-radio-wrapper span.slot-beautify-radio + * {
   padding-inline-start: 4px;
 }
-.RequestBodyContainer :global(.request-body-header) :global(.beautify-select) :global(.beautify-select-selector) {
+.RequestBodyContainer .slot-request-body-header .slot-beautify-select .slot-beautify-select-selector {
   display: flex;
   gap: 4px;
   align-items: center;
@@ -50,6 +50,6 @@
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border);
 }
-.RequestBodyContentContainer :global(.beautify-upload-wrapper) {
+.RequestBodyContentContainer .slot-beautify-upload-wrapper {
   text-align: center;
 }

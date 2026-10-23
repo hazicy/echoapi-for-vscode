@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useTranslation } from 'react-i18next';
 
 import { Typography } from '@/components/ui/base';
@@ -14,8 +15,8 @@ export const InvalidUrl = ({ url }: InvalidUrlProps) => {
   const { t } = useTranslation();
   return (
     <InvalidUrlWrapper vertical gap={12} align="center" justify="center">
-      <IconFont className="icon" type="icon-qingqiucuowu" />
-      <Typography.Text className="text">
+      <IconFont className={slots.icon} type="icon-qingqiucuowu" />
+      <Typography.Text className={slots.text}>
         {t('supplement.invalid_url')} {url}
       </Typography.Text>
     </InvalidUrlWrapper>

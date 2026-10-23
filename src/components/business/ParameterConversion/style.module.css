@@ -1,12 +1,12 @@
 .ParameterContainer {
   width: 100%;
 }
-.ParameterContainer :global(.beautify-segmented) {
+.ParameterContainer .slot-beautify-segmented {
   margin-bottom: 16px;
   width: 100%;
   height: 32px;
 }
-.ParameterContainer :global(.beautify-segmented) :global(.beautify-segmented-item) {
+.ParameterContainer .slot-beautify-segmented .slot-beautify-segmented-item {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -159,7 +160,7 @@ const Index = ({
                 onCheck={(checkedKeys: string[], e: any) => setApiCheckedKeys(checkedKeys, e)}
                 checkedKeys={apiCheckedKeys}
                 height={410}
-                className="preview-tree"
+                className={slots["preview-tree"]}
                 treeData={arrayToTreeObject(data?.apis)}
                 defaultExpandAll
                 selectable={false}
@@ -180,15 +181,15 @@ const Index = ({
                   background: 'var(--color-bg-page)',
                   borderRadius: '4px',
                 }}
-                className="import-project-append-config"
+                className={slots["import-project-append-config"]}
                 gap={16}
                 vertical
               >
                 <Flex vertical gap={8}>
-                  <span className="import-project-full-title">{t('supplement.select_folder')}</span>
+                  <span className={slots["import-project-full-title"]}>{t('supplement.select_folder')}</span>
                   <Form.Item noStyle name="chooseFolder">
                     <TreeSelect
-                      popupClassName="import-project-full-select"
+                      popupClassName={slots["import-project-full-select"]}
                       getPopupContainer={(triggerNode: HTMLElement) =>
                         triggerNode.parentNode as HTMLElement
                       }
@@ -235,7 +236,7 @@ const Index = ({
                 onCheck={(keys: string[], e: any) => setModelCheckedKeys(keys, e)}
                 checkedKeys={modelCheckedKeys}
                 height={460}
-                className="preview-tree"
+                className={slots["preview-tree"]}
                 treeData={arrayToTreeObject(data?.models, 'model_id')}
                 defaultExpandAll
                 selectable={false}
@@ -258,11 +259,11 @@ const Index = ({
                   background: 'var(--color-bg-page)',
                   borderRadius: '4px',
                 }}
-                className="import-project-append-config"
+                className={slots["import-project-append-config"]}
                 gap={16}
                 vertical
               >
-                <span className="import-project-full-title">{t('supplement.overwrite_mode')}</span>
+                <span className={slots["import-project-full-title"]}>{t('supplement.overwrite_mode')}</span>
                 <Form.Item noStyle name="model_cover_modal">
                   <Select
                     style={{ width: '100%' }}
@@ -270,7 +271,7 @@ const Index = ({
                     options={SWAGGER_FULL_MODAL_OPTIONS}
                   />
                 </Form.Item>
-                <span className="import-project-full-tip">{t('supplement.same_model_name')}</span>
+                <span className={slots["import-project-full-tip"]}>{t('supplement.same_model_name')}</span>
               </Flex>
             )}
           </Flex>
@@ -323,11 +324,11 @@ const Index = ({
                     background: 'var(--color-bg-page)',
                     borderRadius: '4px',
                   }}
-                  className="import-project-append-config"
+                  className={slots["import-project-append-config"]}
                   gap={16}
                   vertical
                 >
-                  <span className="import-project-full-title">
+                  <span className={slots["import-project-full-title"]}>
                     {t('supplement.overwrite_mode')}
                   </span>
                   <Form.Item noStyle name="env_cover_modal">

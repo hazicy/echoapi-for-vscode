@@ -1,4 +1,5 @@
 /* eslint-disable quotes */
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -58,19 +59,19 @@ const EnvTag = (props: { decoratedText: string; children: React.ReactNode }) => 
     <ContainerWrap $token={themeToken}>
       {!isUndefined(envInfo) && (
         <>
-          <div className="item-title">
-            <div className="pop-var-icon">
+          <div className={slots["item-title"]}>
+            <div className={slots["pop-var-icon"]}>
               <IconFont type="icon-label-environment" />
             </div>
-            <div className="pop-var-title green">
+            <div className={[slots["pop-var-title"], slots.green].join(" ")}>
               <Tooltip title={varName}>{varName}</Tooltip>
             </div>
           </div>
-          <div className="item-var">{t('global_setting.variables_table.cloud_value')}</div>
-          <div className="item-content">
-            <div className="var-value">{calcValue(envInfo?.value)}</div>
+          <div className={slots["item-var"]}>{t('global_setting.variables_table.cloud_value')}</div>
+          <div className={slots["item-content"]}>
+            <div className={slots["var-value"]}>{calcValue(envInfo?.value)}</div>
             <div
-              className="btn-copy"
+              className={slots["btn-copy"]}
               onClick={() =>
                 copyStringToClipboard(calcValue(envInfo?.value) || '', () => {
                   message.success(t('supplement.copy_success'));
@@ -80,12 +81,12 @@ const EnvTag = (props: { decoratedText: string; children: React.ReactNode }) => 
               <IconFont type="icon-copy" />
             </div>
           </div>
-          <div className="item-var">{t('global_setting.variables_table.local_value')}</div>
-          <div className="item-content">
-            <div className="var-value">{calcValue(envInfo?.current_value)}</div>
+          <div className={slots["item-var"]}>{t('global_setting.variables_table.local_value')}</div>
+          <div className={slots["item-content"]}>
+            <div className={slots["var-value"]}>{calcValue(envInfo?.current_value)}</div>
 
             <div
-              className="btn-copy"
+              className={slots["btn-copy"]}
               onClick={() =>
                 copyStringToClipboard(calcValue(envInfo?.current_value) || '', () => {
                   message.success(t('supplement.copy_success'));
@@ -95,10 +96,10 @@ const EnvTag = (props: { decoratedText: string; children: React.ReactNode }) => 
               <IconFont type="icon-copy" />
             </div>
           </div>
-          <div className="item-var">{t('supplement.scope')}</div>
-          <div className="item-desc">{t('supplement.env_var')}</div>
+          <div className={slots["item-var"]}>{t('supplement.scope')}</div>
+          <div className={slots["item-desc"]}>{t('supplement.env_var')}</div>
           {!both && (
-            <div className="item-edit">
+            <div className={slots["item-edit"]}>
               <Button
                 size="small"
                 type="primary"
@@ -112,19 +113,19 @@ const EnvTag = (props: { decoratedText: string; children: React.ReactNode }) => 
       )}
       {!isUndefined(globalInfo) && (
         <>
-          <div className={classNames('item-title', both && 'margin')}>
-            <div className="pop-var-icon">
+          <div className={classNames(slots["item-title"], both && slots.margin)}>
+            <div className={slots["pop-var-icon"]}>
               <IconFont type="icon-label-global-var" />
             </div>
-            <div className="pop-var-title global">
+            <div className={[slots["pop-var-title"], slots.global].join(" ")}>
               <Tooltip title={varName}>{varName}</Tooltip>
             </div>
           </div>
-          <div className="item-var">{t('global_setting.variables_table.cloud_value')}</div>
-          <div className="item-content">
-            <div className="var-value">{calcValue(globalInfo?.value)}</div>
+          <div className={slots["item-var"]}>{t('global_setting.variables_table.cloud_value')}</div>
+          <div className={slots["item-content"]}>
+            <div className={slots["var-value"]}>{calcValue(globalInfo?.value)}</div>
             <div
-              className="btn-copy"
+              className={slots["btn-copy"]}
               onClick={() =>
                 copyStringToClipboard(calcValue(globalInfo?.value) || '', () => {
                   message.success(t('supplement.copy_success'));
@@ -134,12 +135,12 @@ const EnvTag = (props: { decoratedText: string; children: React.ReactNode }) => 
               <IconFont type="icon-copy" />
             </div>
           </div>
-          <div className="item-var">{t('global_setting.variables_table.local_value')}</div>
-          <div className="item-content">
-            <div className="var-value">{calcValue(globalInfo?.current_value)}</div>
+          <div className={slots["item-var"]}>{t('global_setting.variables_table.local_value')}</div>
+          <div className={slots["item-content"]}>
+            <div className={slots["var-value"]}>{calcValue(globalInfo?.current_value)}</div>
 
             <div
-              className="btn-copy"
+              className={slots["btn-copy"]}
               onClick={() =>
                 copyStringToClipboard(calcValue(globalInfo?.current_value) || '', () => {
                   message.success(t('supplement.copy_success'));
@@ -149,9 +150,9 @@ const EnvTag = (props: { decoratedText: string; children: React.ReactNode }) => 
               <IconFont type="icon-copy" />
             </div>
           </div>
-          <div className="item-var">{t('supplement.scope')}</div>
-          <div className="item-desc">{t('supplement.global')}</div>
-          <div className="item-edit">
+          <div className={slots["item-var"]}>{t('supplement.scope')}</div>
+          <div className={slots["item-desc"]}>{t('supplement.global')}</div>
+          <div className={slots["item-edit"]}>
             <Button
               size="small"
               type="primary"
@@ -172,7 +173,7 @@ const EnvTag = (props: { decoratedText: string; children: React.ReactNode }) => 
       <CustomPopover placement="bottomLeft" content={tipsElement}>
         <span
           ref={targetRef}
-          className={classNames('tag-env', !isUndefined(globalInfo) && !both && 'global')}
+          className={classNames(slots["tag-env"], !isUndefined(globalInfo) && !both && slots.global)}
         >
           {props.children}
         </span>

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, useEffect } from 'react';
 
 import { Flex, Input } from '@/components/ui/base';
@@ -51,7 +52,7 @@ const Search: FC<Props> = ({
   return (
     <SearchContainer>
       <Flex>
-        <div className="search-wrap">
+        <div className={slots["search-wrap"]}>
           <Input
             prefix={<IconFont type="icon-search-line" />}
             placeholder={searchInputPlaceholder}

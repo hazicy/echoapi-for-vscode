@@ -4,7 +4,7 @@
   border-radius: 0 0 4px 4px;
   border: 1px solid var(--color-table-border);
 }
-.TabContainer :global(.cookie-item-add) {
+.TabContainer .slot-cookie-item-add {
   border: 1px dashed var(--color-border);
 }
 .BtnListContainer {
@@ -16,7 +16,7 @@
   margin-top: 8px;
   gap: 8px;
 }
-.BtnListContainer :global(.apipost-btn) {
+.BtnListContainer .slot-apipost-btn {
   margin-top: 8px;
   margin-left: 8px;
 }
@@ -35,10 +35,10 @@
   background-color: var(--color-bg-page);
   cursor: pointer;
 }
-.TabItemContainer :global(.cookie-name) {
+.TabItemContainer .slot-cookie-name {
   padding: 0 5px;
 }
-.TabItemContainer :global(.cookie-item-close) :global(.anticon) {
+.TabItemContainer .slot-cookie-item-close .slot-anticon {
   width: 8px;
   height: 8px;
 }
@@ -47,7 +47,7 @@
   color: var(--color-primary);
   background-color: var(--highlight-background-color-tertiary);
 }
-.TabItemContainer:global(.active) {
+.TabItemContainer.slot-active {
   border-color: var(--selected-border-color);
   color: var(--color-primary);
   background-color: var(--highlight-background-color-tertiary);

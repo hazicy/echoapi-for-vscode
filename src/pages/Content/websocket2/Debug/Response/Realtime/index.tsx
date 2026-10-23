@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -121,7 +122,7 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
     const { action } = data || {};
     return (
       <div
-        className="title"
+        className={slots.title}
         style={{
           whiteSpace: 'nowrap',
           maxWidth: '100%',
@@ -146,7 +147,7 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
     return map(value?.message, (item: MessageItem) => ({
       label: (
         <ExampleLabelContainer>
-          <span className="name">
+          <span className={slots.name}>
             <Tooltip title={item.name}>{item.name}</Tooltip>
           </span>
         </ExampleLabelContainer>
@@ -176,7 +177,7 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
       }}
     >
       <Tooltip title={t('api.response_labels.save_response')}>
-        <IconFont type="icon-save" className="icon-copy" />
+        <IconFont type="icon-save" className={slots["icon-copy"]} />
       </Tooltip>
     </Dropdown>
   );

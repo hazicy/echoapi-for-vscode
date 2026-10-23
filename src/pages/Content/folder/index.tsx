@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, FunctionComponent, memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -100,7 +101,7 @@ const Content: FC<ApiComponentType> = ({ apisData }) => {
         <FlexSegmented>
           <SegmentedTabs
             options={segmentedOptions}
-            wrapClassName="custom-segmented-tabs-wrap"
+            wrapClassName={slots["custom-segmented-tabs-wrap"]}
             value={tabsValue}
             onChange={handleOptionsChange}
             tabBarExtraContent={<ToolBar />}

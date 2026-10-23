@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { memo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -55,7 +56,7 @@ const EmptyItem: React.FC<Props> = (props) => {
   const IndentPanel = (deepIndex: any) => {
     // Generate indent array based on deepIndex
     const indents = Array.from({ length: deepIndex }, (_, index) => (
-      <div key={index} className="indent-panel"></div>
+      <div key={index} className={slots["indent-panel"]}></div>
     ));
 
     return indents;
@@ -63,9 +64,9 @@ const EmptyItem: React.FC<Props> = (props) => {
   return (
     <>
       <LinkModal open={showModal} onLinkSchema={handleLinkSchema} />
-      <div className={cn('schema-td', 'table-td')}>
+      <div className={cn(slots["schema-td"], slots["table-td"])}>
         <EmptyWarper $token={themeToken}>
-          <div className={cn('schema-td-warper', 'schema-width-auto')}>
+          <div className={cn(slots["schema-td-warper"], slots["schema-width-auto"])}>
             {IndentPanel(deepIndex)}
             <Input
               size="small"
@@ -79,9 +80,9 @@ const EmptyItem: React.FC<Props> = (props) => {
               onCompositionUpdate={onCompositionEnd}
               onCompositionEnd={onCompositionEnd}
             />
-            <div className="text-panel">
+            <div className={slots["text-panel"]}>
             </div>
-            <div className="btn-list ">
+            <div className={slots["btn-list"]}>
               <Button
                 icon={<IconFont type="icon-delete" />}
                 type="text"

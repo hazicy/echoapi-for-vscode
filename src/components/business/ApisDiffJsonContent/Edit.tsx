@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useEffect, useRef } from 'react';
 import { EditorState } from '@codemirror/state';
 import { EditorView, lineNumbers } from '@codemirror/view';
@@ -64,7 +65,7 @@ const Edit = ({ prevValue, nextValue, activeKey, isAutoHeight }: Props) => {
 
   return (
     <VersionEditWrap style={{ height: isAutoHeight ? 460 : 320 }}>
-      <div ref={hostRef} className="code-diff-host" />
+      <div ref={hostRef} className={slots["code-diff-host"]} />
     </VersionEditWrap>
   );
 };

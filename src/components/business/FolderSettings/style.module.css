@@ -2,6 +2,6 @@
   width: 100%;
   height: 100%;
 }
-.FolderSettingsContainer :global(.segmented-tabs-content) {
+.FolderSettingsContainer .slot-segmented-tabs-content {
   min-height: 220px;
 }

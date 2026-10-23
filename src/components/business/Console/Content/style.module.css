@@ -4,25 +4,25 @@
 .LabelContainer {
   margin-bottom: var(--margin8);
 }
-.LabelContainer :global(.text) {
+.LabelContainer .slot-text {
   font-size: 14px;
   color: var(--font-title-color);
 }
-.LabelContainer :global(.text):hover {
+.LabelContainer .slot-text:hover {
   color: var(--color-primary);
 }
-.LabelContainer :global(.label-right) {
+.LabelContainer .slot-label-right {
   flex-shrink: 0;
   margin-left: 30px;
 }
-.LabelContainer :global(.label-right) :global(.cons-response-title) {
+.LabelContainer .slot-label-right .slot-cons-response-title {
   font-size: 12px;
   color: var(--font-content-color);
 }
-.LabelContainer :global(.label-right) :global(.cons-response-code) {
+.LabelContainer .slot-label-right .slot-cons-response-code {
   color: #3cc071;
 }
-.LabelContainer :global(.cons-time) {
+.LabelContainer .slot-cons-time {
   /* width: 58px; */
   display: flex;
   flex-shrink: 0;
@@ -33,14 +33,14 @@
 .ChildrenContainer {
   padding-left: 16px;
 }
-.ChildrenContainer :global(.child-text) {
+.ChildrenContainer .slot-child-text {
   font-size: var(--font-size-14);
   color: var(--font-title-color);
 }
-.ChildrenContainer :global(.beautify-collapse-item) :global(.beautify-collapse-header) {
+.ChildrenContainer .slot-beautify-collapse-item .slot-beautify-collapse-header {
   margin-bottom: 0;
 }
-.ChildrenContainer :global(.beautify-collapse-header-text) {
+.ChildrenContainer .slot-beautify-collapse-header-text {
   font-size: 14px;
   color: var(--font-title-color);
 }
@@ -50,27 +50,27 @@
   border-bottom: 1px solid var(--color-border);
   color: var(--font-title-color);
 }
-.ConsoleItemWrap :global(.time) {
+.ConsoleItemWrap .slot-time {
   margin-right: 32px;
   color: var(--font-light-color);
 }
-.ConsoleItemWrap :global(.console-item-content) {
+.ConsoleItemWrap .slot-console-item-content {
   padding: 0 8px;
   border-right: 1px solid var(--color-border);
   word-break: break-all;
 }
-.ConsoleItemWrap :global(.console-item-content):last-of-type {
+.ConsoleItemWrap .slot-console-item-content:last-of-type {
   border-right: none;
 }
-.ConsoleItemWrap:global(.error) {
+.ConsoleItemWrap.slot-error {
   background-color: #ff5806;
 }
-.ConsoleItemWrap:global(.error) :global(.anticon) {
+.ConsoleItemWrap.slot-error .slot-anticon {
   color: #ff583e;
 }
-.ConsoleItemWrap:global(.warn) {
+.ConsoleItemWrap.slot-warn {
   background-color: #ffc003;
 }
-.ConsoleItemWrap:global(.warn) :global(.anticon) {
+.ConsoleItemWrap.slot-warn .slot-anticon {
   color: #ff8a00;
 }

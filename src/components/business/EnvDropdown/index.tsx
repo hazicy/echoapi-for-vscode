@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -95,7 +96,7 @@ const EnvDropdown: React.FC<EnvDropdownProps> = ({
         ) : (
           <>
             <Input
-              className="env-popover-input"
+              className={slots["env-popover-input"]}
               placeholder={t('supplement.env_input_tip')}
               prefix={<IconFont type="icon-search-line" />}
               value={filterValue}
@@ -109,7 +110,7 @@ const EnvDropdown: React.FC<EnvDropdownProps> = ({
                 icon={<IconFont type="icon-circle-add" />}
                 type="link"
                 size="small"
-                className="add-env-btn"
+                className={slots["add-env-btn"]}
               >
                 {t('supplement.env_create')}
               </Button>
@@ -129,12 +130,12 @@ const EnvDropdown: React.FC<EnvDropdownProps> = ({
       <EnvLabel>
         <Flex className="menu-item-wrap" align="center" justify="space-between">
           <Tooltip placement="bottom" title={name}>
-            <span className="name">
+            <span className={slots.name}>
               {name}
-              {is_private === 1 && <span className="private">{t('supplement.pvt')}</span>}
+              {is_private === 1 && <span className={slots.private}>{t('supplement.pvt')}</span>}
             </span>
           </Tooltip>
-          <Flex gap={8} align="center" className="operate-wrap">
+          <Flex gap={8} align="center" className={slots["operate-wrap"]}>
             <IconFont
               onClick={(e) => {
                 e.stopPropagation();
@@ -155,7 +156,7 @@ const EnvDropdown: React.FC<EnvDropdownProps> = ({
   };
 
   return (
-    <EnvDropdownWrapper style={style} className={classNames(envDisabled && 'env-dropdown-disabled')} align="center">
+    <EnvDropdownWrapper style={style} className={classNames(envDisabled && slots["env-dropdown-disabled"])} align="center">
       <Dropdown
         disabled={envDisabled}
         menu={{
@@ -170,7 +171,7 @@ const EnvDropdown: React.FC<EnvDropdownProps> = ({
         onOpenChange={onOpenChange}
         open={open}
         dropdownRender={dropdownRender}
-        className="env-select-wrap"
+        className={slots["env-select-wrap"]}
         trigger={['click']}
       >
         <Flex
@@ -182,7 +183,7 @@ const EnvDropdown: React.FC<EnvDropdownProps> = ({
         >
           <Flex align="center" gap={4}>
             <IconFont
-              className="env-select-setting"
+              className={slots["env-select-setting"]}
               onClick={(e) => {
                 if (envDisabled) return;
                 e.stopPropagation();
@@ -196,9 +197,9 @@ const EnvDropdown: React.FC<EnvDropdownProps> = ({
               style={{ fontSize: 12, color: 'var(--icon-color)' }}
               type="icon-settings"
             />
-            <span className="title">
+            <span className={slots.title}>
               <Tooltip title={envDetails?.name}>
-                <i className="name">{envDetails?.name}</i>
+                <i className={slots.name}>{envDetails?.name}</i>
               </Tooltip>
             </span>
           </Flex>
@@ -213,7 +214,7 @@ const EnvDropdown: React.FC<EnvDropdownProps> = ({
           setOpen(false);
           openEnvPage({cookie:true});
         }}
-        className="icon-manage-env"
+        className={slots["icon-manage-env"]}
       >
         <IconFont type="icon-environment-control" />
       </div>

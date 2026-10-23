@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import {
   forwardRef,
   useContext,
@@ -577,7 +578,7 @@ const Main = forwardRef((props: Props, ref) => {
           leftPanel={
             <SuspenseContent>
               <Flex vertical style={{ height: '100%' }}>
-                <Flex className="edit-header" align="center" justify="space-between">
+                <Flex className={slots["edit-header"]} align="center" justify="space-between">
                   GraphQL Schema
                   <Button
                     onClick={refreshSchema}
@@ -626,7 +627,7 @@ const Main = forwardRef((props: Props, ref) => {
                   leftPanel={
                     <SuspenseContent>
                       <Flex vertical style={{ height: '100%' }}>
-                        <Flex className="edit-header" align="center" justify="space-between">
+                        <Flex className={slots["edit-header"]} align="center" justify="space-between">
                           Query
                           <Button
                             onClick={() => {
@@ -656,7 +657,7 @@ const Main = forwardRef((props: Props, ref) => {
                   rightPanel={
                     <SuspenseContent>
                       <Flex vertical style={{ height: '100%' }}>
-                        <Flex className="edit-header" align="center" justify="space-between">
+                        <Flex className={slots["edit-header"]} align="center" justify="space-between">
                           Variables
                           <Button
                             onClick={() => codeEditorJsonRef?.current?.formatEditor()}

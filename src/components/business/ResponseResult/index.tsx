@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -134,9 +135,9 @@ const ResponseResult = forwardRef((props: Props, ref) => {
         options={segmentedOptions}
         value={tabsValue}
         onChange={handleOptionsChange}
-        wrapClassName="response-result-tabs-wrap"
+        wrapClassName={slots["response-result-tabs-wrap"]}
         tabBarExtraContent={
-          <Flex className="tab-bar-extra-content-wrap" gap={8}>
+          <Flex className={slots["tab-bar-extra-content-wrap"]} gap={8}>
             <Select
               // style={{ width: 110 }}
               options={RESPONSE_TYPE.map(({ label, ext }) => ({
@@ -163,11 +164,11 @@ const ResponseResult = forwardRef((props: Props, ref) => {
               value={rawEncode || 'utf8'}
               onChange={(newVal: string) => setRawEncode(newVal)}
             />
-            <IconFont type="icon-copy" className="icon-copy" onClick={handleCopy} />
+            <IconFont type="icon-copy" className={slots["icon-copy"]} onClick={handleCopy} />
             {warpVisible && (
               <IconFont
                 type="icon-huanhang"
-                className={classNames('icon-copy', warp && 'wrap-show')}
+                className={classNames(slots["icon-copy"], warp && slots["wrap-show"])}
                 onClick={() => setWarp(!warp)}
               />
             )}

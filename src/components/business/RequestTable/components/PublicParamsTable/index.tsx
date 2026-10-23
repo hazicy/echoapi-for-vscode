@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -142,8 +143,8 @@ const PublicParamsTable: FC<Props> = memo(
                       <div
                         style={{ pointerEvents: 'visible' }}
                         className={cn({
-                          required: true,
-                          checked: rowData?.not_null == 1,
+                          [slots.required]: true,
+                          [slots.checked]: rowData?.not_null == 1,
                         })}
                       >
                         <Tooltip title={t('supplement.required')} placement="top">
@@ -206,7 +207,7 @@ const PublicParamsTable: FC<Props> = memo(
                         });
                       }
                     }}
-                    className="global-param-edit"
+                    className={slots["global-param-edit"]}
                     type="icon-edit"
                   />
                 )}
@@ -246,7 +247,7 @@ const PublicParamsTable: FC<Props> = memo(
                 </>
               );
             }}
-            className="table-collapse table-collapse-public"
+            className={[slots["table-collapse"], slots["table-collapse-public"]].join(" ")}
             style={{ marginTop: -12 }}
             items={[
               {

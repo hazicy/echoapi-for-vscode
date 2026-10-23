@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { forwardRef, useImperativeHandle, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -212,7 +213,7 @@ const Index = forwardRef((props: Props, ref) => {
             )}
           </Space>
         </Flex>
-        <div className="raw-editor-example">
+        <div className={slots["raw-editor-example"]}>
           <RawEditor
             responseParameterTitle={t('common.raw_input.body_value')}
             mode={exampleInfo?.[activeKey]?.mode}

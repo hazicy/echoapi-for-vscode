@@ -1,9 +1,10 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .ContainerWrap {
   width: 208px;
   max-height: 300px;
   overflow-y: auto;
 }
-.ContainerWrap :global(.item-title) {
+.ContainerWrap .slot-item-title {
   display: flex;
   align-items: center;
   padding: 0 10px;
@@ -11,22 +12,22 @@
   border-radius: var(--border-radius);
   background-color: var(--table-header-bg-color);
 }
-.ContainerWrap :global(.item-title):global(.margin) {
+.ContainerWrap .slot-item-title.slot-margin {
   margin-top: 10px;
 }
-.ContainerWrap :global(.item-title) :global(.pop-var-icon) {
+.ContainerWrap .slot-item-title .slot-pop-var-icon {
   width: 18px;
   height: 18px;
   font-size: var(--font-size-14);
   line-height: 18px;
 }
-.ContainerWrap :global(.item-title) :global(.pop-var-icon):global(.error) {
+.ContainerWrap .slot-item-title .slot-pop-var-icon.slot-error {
   color: var(--color-error);
 }
-.ContainerWrap :global(.item-title) :global(.pop-var-icon):global(.fixed) :global(.anticon) {
+.ContainerWrap .slot-item-title .slot-pop-var-icon.slot-fixed .slot-anticon {
   color: #26cea4;
 }
-.ContainerWrap :global(.item-title) :global(.pop-var-title) {
+.ContainerWrap .slot-item-title .slot-pop-var-title {
   flex: 1;
   width: 0;
   overflow: hidden;
@@ -34,42 +35,42 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.ContainerWrap :global(.item-title) :global(.pop-var-title):global(.green),
-.ContainerWrap :global(.item-title) :global(.pop-var-title):global(.fixed) {
+.ContainerWrap .slot-item-title .slot-pop-var-title.slot-green,
+.ContainerWrap .slot-item-title .slot-pop-var-title.slot-fixed {
   color: #26cea4;
 }
-.ContainerWrap :global(.item-title) :global(.pop-var-title):global(.blue) {
+.ContainerWrap .slot-item-title .slot-pop-var-title.slot-blue {
   color: #4c7cee;
 }
-.ContainerWrap :global(.item-title) :global(.pop-var-title):global(.global) {
+.ContainerWrap .slot-item-title .slot-pop-var-title.slot-global {
   color: #fa8c16;
 }
-.ContainerWrap :global(.item-title) :global(.pop-var-title):global(.red) {
+.ContainerWrap .slot-item-title .slot-pop-var-title.slot-red {
   color: var(--color-error);
 }
-.ContainerWrap :global(.item-var) {
+.ContainerWrap .slot-item-var {
   margin-top: 10px;
   color: var(--font-light-color);
 }
-.ContainerWrap :global(.item-var) :global(.var-name) {
+.ContainerWrap .slot-item-var .slot-var-name {
   width: 60px;
 }
-.ContainerWrap :global(.item-var) :global(.var-value) {
+.ContainerWrap .slot-item-var .slot-var-value {
   margin-top: 5px;
   color: var(--font-content-color);
 }
-.ContainerWrap :global(.item-content) {
+.ContainerWrap .slot-item-content {
   display: flex;
   justify-content: space-between;
   margin-top: 5px;
   gap: 10px;
 }
-.ContainerWrap :global(.item-content) :global(.var-value) {
+.ContainerWrap .slot-item-content .slot-var-value {
   flex: 1;
   word-wrap: break-word;
   word-break: break-all;
 }
-.ContainerWrap :global(.item-content) :global(.btn-copy) {
+.ContainerWrap .slot-item-content .slot-btn-copy {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,19 +79,19 @@
   border-radius: 3px;
   cursor: pointer;
 }
-.ContainerWrap :global(.item-content) :global(.btn-copy):hover {
+.ContainerWrap .slot-item-content .slot-btn-copy:hover {
   background-color: #000000;
 }
-.ContainerWrap :global(.item-desc) {
+.ContainerWrap .slot-item-desc {
   display: flex;
   align-items: center;
   margin-top: 5px;
 }
-.ContainerWrap :global(.item-edit) {
+.ContainerWrap .slot-item-edit {
   display: flex;
   justify-content: flex-end;
 }
-.DraftWrap:global(.mini-editor) {
+.DraftWrap.slot-mini-editor {
   display: flex;
   width: 100%;
   overflow: hidden;
@@ -101,7 +102,7 @@
   color: var(--font-content-color);
   word-break: break-all;
 }
-.DraftWrap:global(.mini-editor) :global(.DraftEditor-root) {
+.DraftWrap.slot-mini-editor [class~="DraftEditor-root"] {
   flex: 1;
   width: 0;
   overflow: hidden;
@@ -110,20 +111,20 @@
         margin: 4px;
       } */
 }
-.DraftWrap:global(.mini-editor) :global(.DraftEditor-root) :global(.DraftEditor-editorContainer) {
+.DraftWrap.slot-mini-editor [class~="DraftEditor-root"] [class~="DraftEditor-editorContainer"] {
   /* margin: 4px; */
   word-break: break-all;
 }
-.DraftWrap:global(.mini-editor) :global(.DraftEditor-root) :global(.public-DraftEditorPlaceholder-root) {
+.DraftWrap.slot-mini-editor [class~="DraftEditor-root"] .slot-public-DraftEditorPlaceholder-root {
   color: var(--font-light-color);
 }
-.DraftWrap:global(.mini-editor):global(.editor-no-wrap) :global(.DraftEditor-root) :global(.DraftEditor-editorContainer) {
+.DraftWrap.slot-mini-editor.slot-editor-no-wrap [class~="DraftEditor-root"] [class~="DraftEditor-editorContainer"] {
   white-space: nowrap;
 }
-.DraftWrap:global(.mini-editor):global(.editor-no-wrap) :global(.DraftEditor-root) :global(.DraftEditor-editorContainer) :global(.public-DraftStyleDefault-block) {
+.DraftWrap.slot-mini-editor.slot-editor-no-wrap [class~="DraftEditor-root"] [class~="DraftEditor-editorContainer"] .slot-public-DraftStyleDefault-block {
   white-space: nowrap;
 }
-.DraftWrap:global(.mini-editor) :global(.tag-env) {
+.DraftWrap.slot-mini-editor .slot-tag-env {
   margin: 0 4px;
   border-radius: 4px;
   font-weight: 500;
@@ -131,10 +132,10 @@
   color: #26cea4;
   cursor: pointer;
 }
-.DraftWrap:global(.mini-editor) :global(.tag-env):global(.global) {
+.DraftWrap.slot-mini-editor .slot-tag-env.slot-global {
   color: #fa8c16;
 }
-.DraftWrap:global(.mini-editor) :global(.tag-global) {
+.DraftWrap.slot-mini-editor .slot-tag-global {
   margin: 0 4px;
   border-radius: 4px;
   font-weight: 500;
@@ -142,7 +143,7 @@
   color: #fa8c16;
   cursor: pointer;
 }
-.DraftWrap:global(.mini-editor) :global(.tag-error) {
+.DraftWrap.slot-mini-editor .slot-tag-error {
   margin: 0 4px;
   border-radius: 4px;
   font-size: 12px;

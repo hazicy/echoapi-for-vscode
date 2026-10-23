@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useTranslation } from "react-i18next";
 
 import { Flex, message } from '@/components/ui/base';
@@ -24,8 +25,8 @@ const SharePanel = (props: PanelProps) => {
 
   const tabExtraContent = (
     <Flex
-      className={cn("share-list-delete-btn", {
-        show: checkedList.length > 0,
+      className={cn(slots["share-list-delete-btn"], {
+        [slots.show]: checkedList.length > 0,
       })}
     >
       <Button
@@ -72,7 +73,7 @@ const SharePanel = (props: PanelProps) => {
             });
           }}
           type="link"
-          className="delete"
+          className={slots.delete}
           icon={<IconFont type="icon-delete" />}
         ></Button>
       </Tooltip>

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { Dispatch } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -87,7 +88,7 @@ const Index = (props: Props) => {
     <AddDomainContainer>
       <Input
         onChange={(e) => handleChangeDomain('inputDomain', e.target.value)}
-        className="domin"
+        className={slots.domin}
         placeholder="example.com"
       />
       <Button onClick={addDomain} type="primary">

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -25,9 +26,9 @@ const NumberModal = (props: any) => {
 
   return (
     <>
-      <div className="base-setting">
-        <div className="item-line">{SelectTypeDom}</div>
-        <Flex gap={20} className="item-all-line item-necessarily">
+      <div className={slots["base-setting"]}>
+        <div className={slots["item-line"]}>{SelectTypeDom}</div>
+        <Flex gap={20} className={[slots["item-all-line"], slots["item-necessarily"]].join(" ")}>
           <Flex align="center" gap={8}>
             {t('common.schema.advanced_settings.required')}
             <Switch
@@ -43,16 +44,16 @@ const NumberModal = (props: any) => {
         </Flex>
         {ItemMockDom && (
           <Flex gap={20}>
-            <div className="item-line">
-              <div className="case-title">example</div>
-              <div className="case-value">{ItemMockDom}</div>
+            <div className={slots["item-line"]}>
+              <div className={slots["case-title"]}>example</div>
+              <div className={slots["case-value"]}>{ItemMockDom}</div>
             </div>
           </Flex>
         )}
         <Flex vertical>
-          <div className="item-line">
-            <div className="case-title">{t('common.schema.advanced_settings.default_values')}</div>
-            <div className="case-value">
+          <div className={slots["item-line"]}>
+            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.default_values')}</div>
+            <div className={slots["case-value"]}>
               <InputNumber
                 style={{ width: '100%' }}
                 size="small"
@@ -64,9 +65,9 @@ const NumberModal = (props: any) => {
           </div>
         </Flex>
         <Flex gap={20}>
-          <div className="item-line">
-            <div className="case-title">{t('common.schema.advanced_settings.min_value')}</div>
-            <div className="case-value">
+          <div className={slots["item-line"]}>
+            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.min_value')}</div>
+            <div className={slots["case-value"]}>
               <InputNumber
                 size="small"
                 style={{ width: '100%' }}
@@ -76,8 +77,8 @@ const NumberModal = (props: any) => {
               />
             </div>
           </div>
-          <div className="item-line">
-            <div className="case-title">{t('common.schema.advanced_settings.eq_min_value')}</div>
+          <div className={slots["item-line"]}>
+            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.eq_min_value')}</div>
             <Switch
               size="small"
               checked={value?.exclusiveMinimum}
@@ -86,9 +87,9 @@ const NumberModal = (props: any) => {
           </div>
         </Flex>
         <Flex gap={20}>
-          <div className="item-line">
-            <div className="case-title">{t('common.schema.advanced_settings.max_value')}</div>
-            <div className="case-value">
+          <div className={slots["item-line"]}>
+            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.max_value')}</div>
+            <div className={slots["case-value"]}>
               <InputNumber
                 size="small"
                 min={0}
@@ -98,8 +99,8 @@ const NumberModal = (props: any) => {
               />
             </div>
           </div>
-          <div className="item-line">
-            <div className="case-title">{t('common.schema.advanced_settings.eq_max_value')}</div>
+          <div className={slots["item-line"]}>
+            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.eq_max_value')}</div>
             <Switch
               size="small"
               checked={value?.exclusiveMaximum}
@@ -108,8 +109,8 @@ const NumberModal = (props: any) => {
           </div>
         </Flex>
 
-        <div className="item-line">
-          <div className="case-title">
+        <div className={slots["item-line"]}>
+          <div className={slots["case-title"]}>
             <span style={{ paddingRight: 5 }}>
               {t('common.schema.advanced_settings.enum_values')}
             </span>
@@ -119,7 +120,7 @@ const NumberModal = (props: any) => {
               onChange={onChange.bind(null, 'apipost_enable_enum', !value?.apipost_enable_enum)}
             />
           </div>
-          <div className="case-value">
+          <div className={slots["case-value"]}>
             <Select
               style={{ width: '100%' }}
               disabled={value?.apipost_enable_enum !== true}
@@ -140,9 +141,9 @@ const NumberModal = (props: any) => {
             />
           </div>
         </div>
-        <div className="item-line">
-          <div className="case-title">{t('common.schema.advanced_settings.remarks')}</div>
-          <div className="case-value">
+        <div className={slots["item-line"]}>
+          <div className={slots["case-title"]}>{t('common.schema.advanced_settings.remarks')}</div>
+          <div className={slots["case-value"]}>
             <Input.TextArea
               size="small"
               autoSize={{ minRows: 3, maxRows: 3 }}

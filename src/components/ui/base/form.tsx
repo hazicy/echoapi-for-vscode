@@ -1,3 +1,5 @@
+import slots from "@/components/ui/base/slots.module.css";
+import { moduleClassNames } from "@/components/ui/base/moduleClassNames";
 import React, { cloneElement, useContext } from "react";
 import { forwardRef } from "./forwardRef";
 import RcForm, { Field, FieldContext, useForm, useWatch } from "rc-field-form";
@@ -44,19 +46,19 @@ function Item({
         const errors = meta.errors;
         return (
           <div
-            className={cx(css.formItem, "beautify-form-item", className)}
+            className={cx(css.formItem, slots["beautify-form-item"], className)}
             style={style}
           >
             {label !== undefined && (
               <label
-                className="beautify-form-item-label"
+                className={slots["beautify-form-item-label"]}
                 htmlFor={props.name ? String(props.name) : undefined}
               >
                 {required && <span aria-hidden="true">*</span>}
                 {label}
               </label>
             )}
-            <div className="beautify-form-item-control">
+            <div className={slots["beautify-form-item-control"]}>
               {body}
               {(help || errors.length > 0) && (
                 <div role="alert" className={css.error}>
@@ -90,8 +92,8 @@ const FormControl = forwardRef<FormInstance, FormProps & UIProps>(
       ref={ref}
       className={cx(
         css.form,
-        "beautify-form",
-        `beautify-form-${layout ?? "horizontal"}`,
+        slots["beautify-form"],
+        moduleClassNames(slots, `beautify-form-${layout ?? "horizontal"}`),
         className,
       )}
     >

@@ -7,7 +7,7 @@
   height: 20px;
   color: var(--font-light-color);
 }
-.BthsPanelDiv :global(.item-required) {
+.BthsPanelDiv .slot-item-required {
   width: 16px;
   height: 16px;
   border-radius: 2px;
@@ -19,10 +19,10 @@
   background-color: var(--color-border);
   cursor: pointer;
 }
-.BthsPanelDiv :global(.item-required):global(.required) {
+.BthsPanelDiv .slot-item-required.slot-required {
   color: var(--color-primary);
 }
-.BthsPanelDiv :global(.item-empty) {
+.BthsPanelDiv .slot-item-empty {
   margin: 0 10px;
   width: 16px;
   height: 16px;
@@ -33,7 +33,7 @@
   color: var(--font-light-color);
   cursor: pointer;
 }
-.BthsPanelDiv :global(.item-empty):global(.empty) {
+.BthsPanelDiv .slot-item-empty.slot-empty {
   color: var(--color-primary);
 }
 .KeyWarperContainer {
@@ -67,26 +67,26 @@
     }
   } */
 }
-.KeyWarperContainer :global(.object),
-.KeyWarperContainer :global(.any),
-.KeyWarperContainer :global(.allOf),
-.KeyWarperContainer :global(.oneOf),
-.KeyWarperContainer :global(.anyOf) {
+.KeyWarperContainer .slot-object,
+.KeyWarperContainer .slot-any,
+.KeyWarperContainer .slot-allOf,
+.KeyWarperContainer .slot-oneOf,
+.KeyWarperContainer .slot-anyOf {
   color: #1890ff;
 }
-.KeyWarperContainer :global(.string),
-.KeyWarperContainer :global(.array) {
+.KeyWarperContainer .slot-string,
+.KeyWarperContainer .slot-array {
   color: #43a047;
 }
-.KeyWarperContainer :global(.null) {
+.KeyWarperContainer .slot-null {
   color: #fa7600;
 }
-.KeyWarperContainer :global(.boolean),
-.KeyWarperContainer :global(.integer),
-.KeyWarperContainer :global(.number) {
+.KeyWarperContainer .slot-boolean,
+.KeyWarperContainer .slot-integer,
+.KeyWarperContainer .slot-number {
   color: #eb2f96;
 }
-.KeyWarperContainer:global(.schema-td-warper) :global(.indent-panel) {
+.KeyWarperContainer.slot-schema-td-warper .slot-indent-panel {
   margin-right: 8px;
   margin-left: 8px;
   width: 18px;
@@ -94,13 +94,13 @@
   border: var(--color-border) 0 solid;
   border-left-width: 1px;
 }
-.KeyWarperContainer:global(.schema-td-warper):global(.schema-width-auto) {
+.KeyWarperContainer.slot-schema-td-warper.slot-schema-width-auto {
   /* width: auto !important; */
 }
-.KeyWarperContainer :global(.caret-icon) svg {
+.KeyWarperContainer .slot-caret-icon svg {
   font-size: 10px;
 }
-.KeyWarperContainer :global(.btn-sort) {
+.KeyWarperContainer .slot-btn-sort {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,25 +110,25 @@
   opacity: 0;
   cursor: move;
 }
-.KeyWarperContainer :global(.btn-sort) svg {
+.KeyWarperContainer .slot-btn-sort svg {
   width: 6px;
   height: 10px;
 }
-.KeyWarperContainer :global(.btn-sort):hover {
+.KeyWarperContainer .slot-btn-sort:hover {
   opacity: 1;
 }
-.KeyWarperContainer :global(.expand-btn) {
+.KeyWarperContainer .slot-expand-btn {
   display: flex;
   align-items: center;
   width: 24px;
   height: 24px;
 }
-.KeyWarperContainer :global(.expand-btn) svg {
+.KeyWarperContainer .slot-expand-btn svg {
   width: 8px;
   height: 8px;
   fill: var(--color-border);
 }
-.KeyWarperContainer :global(.empty-btn) {
+.KeyWarperContainer .slot-empty-btn {
   display: flex;
   position: relative;
   z-index: 9;
@@ -137,16 +137,16 @@
   width: 18px;
   height: 32px;
 }
-.KeyWarperContainer :global(.empty-btn) :global(.empty-btn-l) {
+.KeyWarperContainer .slot-empty-btn .slot-empty-btn-l {
   flex: 1;
   border-bottom: var(--color-border) 1px solid;
   border-left: var(--color-border) 1px solid;
 }
-.KeyWarperContainer :global(.empty-btn) :global(.empty-btn-r) {
+.KeyWarperContainer .slot-empty-btn .slot-empty-btn-r {
   flex: 1;
   border-left: var(--color-border) 1px solid;
 }
-.KeyWarperContainer :global(.hidden-input) {
+.KeyWarperContainer .slot-hidden-input {
   display: inline-block;
   padding: 0 8px !important;
   min-width: 80px;
@@ -158,17 +158,17 @@
   opacity: 0;
   box-sizing: border-box;
 }
-.KeyWarperContainer :global(.item-key-input-front) {
+.KeyWarperContainer .slot-item-key-input-front {
   position: static !important;
   border: none;
 }
-.KeyWarperContainer :global(.item-key-input-front) span {
+.KeyWarperContainer .slot-item-key-input-front span {
   padding: 4px 8px;
   border-radius: 4px;
   color: var(--color-primary);
   background-color: var(--color-primary-opacity);
 }
-.KeyWarperContainer :global(.item-key-input) {
+.KeyWarperContainer .slot-item-key-input {
   display: flex;
   position: absolute;
   top: 0;
@@ -184,26 +184,26 @@
   cursor: text;
   /* border-bottom: 1px solid var(--color-border); */
 }
-.KeyWarperContainer :global(.item-key-input):global(.readonly) {
+.KeyWarperContainer .slot-item-key-input.slot-readonly {
   position: static;
   width: auto !important;
 }
-.KeyWarperContainer :global(.item-key-input):global(.readonly) span {
+.KeyWarperContainer .slot-item-key-input.slot-readonly span {
   padding: 4px 8px;
   border-radius: 4px;
   color: var(--color-primary);
   background-color: var(--color-primary-opacity);
 }
-.KeyWarperContainer :global(.item-key-input-hover) {
+.KeyWarperContainer .slot-item-key-input-hover {
   border: none;
 }
-.KeyWarperContainer :global(.item-key-input-hover):hover,
-.KeyWarperContainer :global(.item-key-input-hover):focus {
+.KeyWarperContainer .slot-item-key-input-hover:hover,
+.KeyWarperContainer .slot-item-key-input-hover:focus {
   /* border-radius: 4px; */
   border-bottom: 1px solid var(--color-primary);
   background-color: transparent;
 }
-.KeyWarperContainer :global(.schema-text-box) {
+.KeyWarperContainer .slot-schema-text-box {
   flex: 1;
   margin-left: 8px;
   width: 0;
@@ -216,25 +216,25 @@
   background-color: transparent;
   /* stylelint-disable-next-line selector-class-pattern */
 }
-.KeyWarperContainer :global(.schema-text-box):not(:global(.items),:global( .NodeRoot)):hover {
+.KeyWarperContainer .slot-schema-text-box:not(.slot-items,.slot-NodeRoot):hover {
   border-bottom: var(--base-color-brand) 1px solid;
   color: var(--content-color-primary);
 }
-.KeyWarperContainer :global(.schema-text-box):global(.item):hover {
+.KeyWarperContainer .slot-schema-text-box.slot-item:hover {
   border-bottom: transparent 1px solid;
 }
-.KeyWarperContainer :global(.item-type) {
+.KeyWarperContainer .slot-item-type {
   display: flex;
   height: 27px !important;
   border-radius: 0;
   border-color: transparent;
   background-color: transparent;
 }
-.KeyWarperContainer :global(.item-type) :global(.sel-title) {
+.KeyWarperContainer .slot-item-type .slot-sel-title {
   margin-right: 10px;
   width: 45px;
 }
-.KeyWarperContainer :global(.item-type) :global(.spn-require) {
+.KeyWarperContainer .slot-item-type .slot-spn-require {
   width: 16px;
   height: 16px;
   /* display: flex; */
@@ -247,17 +247,17 @@
   color: var(--content-color-fourth);
   background-color: #ccc;
 }
-.KeyWarperContainer :global(.item-type) :global(.spn-require):global(.checked) {
+.KeyWarperContainer .slot-item-type .slot-spn-require.slot-checked {
   color: var(--base-color-brand);
 }
-.KeyWarperContainer :global(.item-type):hover {
+.KeyWarperContainer .slot-item-type:hover {
   border-color: var(--base-color-brand) !important;
 }
-.KeyWarperContainer :global(.btns-panel) {
+.KeyWarperContainer .slot-btns-panel {
   display: flex;
   align-items: center;
   width: 80px;
 }
-.KeyWarperContainer:hover :global(.drag-icon) {
+.KeyWarperContainer:hover .slot-drag-icon {
   visibility: visible;
 }

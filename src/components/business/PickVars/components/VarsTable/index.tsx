@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -95,7 +96,7 @@ const VarsTable: FC<Props> = ({ source, data, onChange }) => {
         title: () => (
           <Flex justify="space-between">
             {calcTableTitle(source)}
-            <IconFont className="tool-icon" type="icon-gongju" onClick={handlePickVar} />
+            <IconFont className={slots["tool-icon"]} type="icon-gongju" onClick={handlePickVar} />
           </Flex>
         ),
         dataIndex: 'expression',

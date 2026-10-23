@@ -2,23 +2,23 @@
   width: 100%;
   height: 100%;
 }
-.EnvDropdownWrapper :global(.line) {
+.EnvDropdownWrapper .slot-line {
   width: 1px;
   height: 8px;
   background: var(--color-border);
 }
-.EnvDropdownWrapper :global(.env-select-wrap) {
+.EnvDropdownWrapper .slot-env-select-wrap {
   padding: 4px 8px;
   border-radius: var(--border-radius) 0 0 var(--border-radius);
   border-right: 1px solid var(--color-table-border);
   background-color: var(--search-big-bg-color);
   cursor: pointer;
 }
-.EnvDropdownWrapper :global(.env-select-wrap) :global(.anticon) {
+.EnvDropdownWrapper .slot-env-select-wrap .slot-anticon {
   font-size: var(--font-size-14);
   color: var(--font-light-color);
 }
-.EnvDropdownWrapper :global(.env-select-wrap) :global(.title) {
+.EnvDropdownWrapper .slot-env-select-wrap .slot-title {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -29,10 +29,10 @@
   font-size: var(--font-size-14);
   color: var(--font-content-color);
 }
-.EnvDropdownWrapper :global(.env-select-wrap) :global(.title) i {
+.EnvDropdownWrapper .slot-env-select-wrap .slot-title i {
   font-style: normal;
 }
-.EnvDropdownWrapper :global(.env-select-wrap) :global(.title) :global(.icon) {
+.EnvDropdownWrapper .slot-env-select-wrap .slot-title .slot-icon {
   display: inline-block;
   margin: 0 4px;
   padding: 0 2px;
@@ -44,14 +44,14 @@
   color: #067ced !important;
   background-color: #7fc50d;
 }
-.EnvDropdownWrapper :global(.env-select-wrap) :global(.title) :global(.name) {
+.EnvDropdownWrapper .slot-env-select-wrap .slot-title .slot-name {
   display: inline-block;
   max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.EnvDropdownWrapper :global(.icon-manage-env) {
+.EnvDropdownWrapper .slot-icon-manage-env {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -67,21 +67,21 @@
   background-color: var(--search-big-bg-color);
   cursor: pointer;
 }
-.EnvDropdownWrapper :global(.icon-manage-env):hover {
+.EnvDropdownWrapper .slot-icon-manage-env:hover {
   border-color: var(--color-primary);
   border-left: 1px solid var(--color-primary);
 }
-.EnvDropdownWrapper :global(.icon-manage-env) :global(.anticon) {
+.EnvDropdownWrapper .slot-icon-manage-env .slot-anticon {
   font-size: 16px;
   color: var(--icon-color);
 }
-.EnvDropdownWrapper:global(.env-dropdown-disabled) {
+.EnvDropdownWrapper.slot-env-dropdown-disabled {
   opacity: 0.3;
 }
-.EnvDropdownWrapper:global(.env-dropdown-disabled),
-.EnvDropdownWrapper:global(.env-dropdown-disabled) :global(.icon-manage-env),
-.EnvDropdownWrapper:global(.env-dropdown-disabled) :global(.env-select-wrap),
-.EnvDropdownWrapper:global(.env-dropdown-disabled) :global(.env-select-setting) {
+.EnvDropdownWrapper.slot-env-dropdown-disabled,
+.EnvDropdownWrapper.slot-env-dropdown-disabled .slot-icon-manage-env,
+.EnvDropdownWrapper.slot-env-dropdown-disabled .slot-env-select-wrap,
+.EnvDropdownWrapper.slot-env-dropdown-disabled .slot-env-select-setting {
   cursor: not-allowed;
 }
 .EnvDropdownRenderContainer {
@@ -92,48 +92,48 @@
   background-color: var(--popover-select-bg-color);
   box-shadow: 0 12px 18px -4px var(--box-shadow-modal-color);
 }
-.EnvDropdownRenderContainer :global(.beautify-dropdown-menu) {
+.EnvDropdownRenderContainer .slot-beautify-dropdown-menu {
   margin-top: 8px;
   padding: 0;
   box-shadow: none;
   max-height: 260px;
   overflow-y: auto;
 }
-.EnvDropdownRenderContainer :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item) {
+.EnvDropdownRenderContainer .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item {
   padding: 4px 8px;
   height: 32px;
 }
-.EnvDropdownRenderContainer :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item) :global(.anticon) {
+.EnvDropdownRenderContainer .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item .slot-anticon {
   visibility: hidden;
 }
-.EnvDropdownRenderContainer :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item):hover :global(.anticon) {
+.EnvDropdownRenderContainer .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item:hover .slot-anticon {
   visibility: visible;
 }
-.EnvDropdownRenderContainer :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item) :global(.operate-wrap) :global(.anticon) {
+.EnvDropdownRenderContainer .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item .slot-operate-wrap .slot-anticon {
   font-size: var(--font-size-14);
   color: var(--icon-color);
 }
-.EnvDropdownRenderContainer :global(.env-popover-input) {
+.EnvDropdownRenderContainer .slot-env-popover-input {
   background: var(--vscode-input-background);
   border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
 }
-.EnvDropdownRenderContainer :global(.env-popover-input) svg {
+.EnvDropdownRenderContainer .slot-env-popover-input svg {
   color: var(--vscode-input-placeholderForeground);
 }
-.EnvDropdownRenderContainer :global(.add-env-btn) {
+.EnvDropdownRenderContainer .slot-add-env-btn {
   padding: 0;
   height: auto;
 }
 .EnvLabel {
   max-width: 300px;
 }
-.EnvLabel :global(.name) {
+.EnvLabel .slot-name {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.EnvLabel :global(.private) {
+.EnvLabel .slot-private {
   display: flex;
   flex-direction: row;
   align-items: center;

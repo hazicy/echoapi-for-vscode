@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -167,22 +168,22 @@ const DataModel: React.FC<Props> = (props) => {
         />
       )}
       <ModelWarper ref={refTable} className={cn('ref-table', 'model-tbody', 'table-tbody')}>
-        <div className="outer-box" style={{ height: warpHeight }}>
-          <div className="edit-form ">
-            <div className="btn-item" onClick={handleEditModel}>
+        <div className={slots["outer-box"]} style={{ height: warpHeight }}>
+          <div className={slots["edit-form"]}>
+            <div className={slots["btn-item"]} onClick={handleEditModel}>
               <span>{t('supplement.edit')}</span>
             </div>
-            <div className="btn-item" onClick={onCancelLinkSchema}>
+            <div className={slots["btn-item"]} onClick={onCancelLinkSchema}>
               <span>{t('supplement.disassociate')}</span>
             </div>
-            <div className="btn-item" onClick={onDeleteModel}>
+            <div className={slots["btn-item"]} onClick={onDeleteModel}>
               {t('supplement.delete')}
             </div>
           </div>
         </div>
 
         {isLoopLink ? (
-          <div className="loop-link-item">{t('supplement.link_schema_loop')}</div>
+          <div className={slots["loop-link-item"]}>{t('supplement.link_schema_loop')}</div>
         ) : isArray(listData) && listData.length ? (
           listData.map(([key, value], index) => {
             const mergedValue = assign({}, value, nodeValue.refData?.ECHOAPI_OVERRIDES?.[key]);
@@ -191,7 +192,7 @@ const DataModel: React.FC<Props> = (props) => {
             const properties = getProperties(refValue);
             if (isEmpty(value) || isEmpty(properties)) {
               return (
-                <div className="loop-empty-model">
+                <div className={slots["loop-empty-model"]}>
                   {t('supplement.sch')}
                   <span>{emptyModelInfo?.name}</span>
                   {t('supplement.no_field')}
@@ -237,7 +238,7 @@ const DataModel: React.FC<Props> = (props) => {
             );
           })
         ) : (
-          <div className="loop-empty-model">
+          <div className={slots["loop-empty-model"]}>
             {t('supplement.she')}
             <span>{emptyModelInfo?.name}</span>
             {t('supplement.no_field')}

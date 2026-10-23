@@ -1,3 +1,4 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .WsDebugContainer {
   width: 100%;
   height: 100%;
@@ -6,17 +7,17 @@
   flex-direction: column;
   flex: 1;
 }
-.WsDebugContainer :global(.beautify-dropdown-trigger) {
+.WsDebugContainer .slot-beautify-dropdown-trigger {
   border-color: var(--vscode-settings-headerBorder);
 }
 .WsDebugContainer > * {
   /* padding: 0 16px; */
 }
-.WsDebugContainer :global(.beautify-tabs) {
+.WsDebugContainer .slot-beautify-tabs {
   width: 100%;
   height: 100%;
 }
-.WsDebugContainer :global(.url-panel) {
+.WsDebugContainer .slot-url-panel {
   /* .beautify-btn {
       margin-left: 8px;
 
@@ -27,65 +28,65 @@
       }
     } */
 }
-.WsDebugContainer :global(.url-panel) :global(.beautify-flex) :global(.url-group) {
+.WsDebugContainer .slot-url-panel .slot-beautify-flex .slot-url-group {
   flex: 1;
 }
-.WsDebugContainer :global(.url-panel) :global(.actions-btn-wrap) {
+.WsDebugContainer .slot-url-panel .slot-actions-btn-wrap {
   margin-left: 8px;
 }
-.WsDebugContainer :global(.url-panel) :global(.actions-btn-wrap) :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item),
-.WsDebugContainer :global(.url-panel) :global(.actions-btn-wrap) :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-submenu) {
+.WsDebugContainer .slot-url-panel .slot-actions-btn-wrap .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item,
+.WsDebugContainer .slot-url-panel .slot-actions-btn-wrap .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-submenu {
   font-size: 14px;
 }
-.WsDebugContainer :global(.url-panel) :global(.actions-btn-wrap) :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item) :global(.beautify-dropdown-menu-title-content),
-.WsDebugContainer :global(.url-panel) :global(.actions-btn-wrap) :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-submenu) :global(.beautify-dropdown-menu-title-content) {
+.WsDebugContainer .slot-url-panel .slot-actions-btn-wrap .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item .slot-beautify-dropdown-menu-title-content,
+.WsDebugContainer .slot-url-panel .slot-actions-btn-wrap .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-submenu .slot-beautify-dropdown-menu-title-content {
   font-size: 14px;
 }
-.WsDebugContainer :global(.url-panel) :global(.beautify-btn) {
+.WsDebugContainer .slot-url-panel .slot-beautify-btn {
   height: 36px;
   font-size: var(--font-size-14);
 }
-.WsDebugContainer :global(.url-panel) :global(.beautify-btn):first-child {
+.WsDebugContainer .slot-url-panel .slot-beautify-btn:first-child {
   width: 70px;
 }
-.WsDebugContainer :global(.beautify-tabs-content) {
+.WsDebugContainer .slot-beautify-tabs-content {
   height: 100%;
   /* height: calc(100% - 60px); */
 }
-.WsDebugContainer :global(.ws-header) {
+.WsDebugContainer .slot-ws-header {
   margin-bottom: 16px;
 }
-.WsDebugContainer :global(.ws-header) :global(.icon-color) {
+.WsDebugContainer .slot-ws-header .slot-icon-color {
   margin-left: 4px;
   font-size: var(--font-size-12);
   line-height: 1;
   color: var(--icon-color);
 }
-.WsDebugContainer :global(.ws-header) :global(.beautify-input-outlined) {
+.WsDebugContainer .slot-ws-header .slot-beautify-input-outlined {
   height: 32px;
   font-size: var(--font-size-12);
   background: var(--vscode-input-background);
   border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
 }
-.WsDebugContainer :global(.ws-header) :global(.beautify-select) {
+.WsDebugContainer .slot-ws-header .slot-beautify-select {
   height: 32px;
 }
-.WsDebugContainer :global(.ws-header) :global(.beautify-select-selector) {
+.WsDebugContainer .slot-ws-header .slot-beautify-select-selector {
   font-size: var(--font-size-12);
 }
-.WsDebugContainer :global(.ws-header) :global(.beautify-select-dropdown) :global(.beautify-select-item) {
+.WsDebugContainer .slot-ws-header .slot-beautify-select-dropdown .slot-beautify-select-item {
   font-size: var(--font-size-12) !important;
 }
 .LineBarContainer {
   height: 100%;
 }
-.LineBarContainer :global(.beautify-tabs-nav) {
+.LineBarContainer .slot-beautify-tabs-nav {
   margin-bottom: 0;
 }
 .ExampleModalContainer {
   width: 100%;
 }
-.ExampleModalContainer :global(.raw-editor-example) {
+.ExampleModalContainer .slot-raw-editor-example {
   margin-top: 12px;
   min-height: 400px;
   /* overflow-y: auto; */
@@ -99,14 +100,14 @@
   background-color: var(--popover-select-bg-color);
   box-shadow: 0 6px 16px 0 #000000, 0 3px 6px -4px #000000, 0 9px 28px 8px #000000;
 }
-.SaveDropDownContainer :global(.beautify-tree) {
+.SaveDropDownContainer [class~="beautify-tree"] {
   width: 100%;
   background-color: var(--popover-select-bg-color);
 }
-.SaveDropDownContainer :global(.beautify-tree) :global(.beautify-tree-list) {
+.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-list"] {
   padding-right: 12px;
 }
-.SaveDropDownContainer :global(.beautify-tree) :global(.beautify-tree-node-content-wrapper) {
+.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] {
   display: flex;
   flex: 1;
   flex-direction: row;
@@ -115,11 +116,11 @@
   width: 0;
   height: 100%;
 }
-.SaveDropDownContainer :global(.beautify-tree) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-title) {
+.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] [class~="beautify-tree-title"] {
   display: flex;
   width: 100%;
 }
-.SaveDropDownContainer :global(.beautify-tree) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-title) :global(.dropdown-tree-title) {
+.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] [class~="beautify-tree-title"] .slot-dropdown-tree-title {
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
@@ -129,7 +130,7 @@
   display: flex;
   max-width: 200px;
 }
-.ExampleLabelContainer :global(.name) {
+.ExampleLabelContainer .slot-name {
   flex: 1;
   overflow: hidden;
   white-space: nowrap;
@@ -145,7 +146,7 @@
   background-color: var(--popover-select-bg-color);
   box-shadow: 0 12px 18px -4px var(--box-shadow-modal-color);
 }
-.ExampleListContainer :global(.beautify-dropdown-menu) {
+.ExampleListContainer .slot-beautify-dropdown-menu {
   margin-top: 8px;
   padding: 0;
   box-shadow: none;
@@ -157,11 +158,11 @@
   padding: 8px;
   padding-left: 0;
 }
-.SocketIoLeftPanelContainer :global(.beautify-btn) {
+.SocketIoLeftPanelContainer .slot-beautify-btn {
   border: none;
   padding: 4px 0;
 }
-.SocketIoLeftPanelContainer :global(.beautify-select) :global(.beautify-select-selector) {
+.SocketIoLeftPanelContainer .slot-beautify-select .slot-beautify-select-selector {
   display: flex;
   gap: 4px;
   align-items: center;

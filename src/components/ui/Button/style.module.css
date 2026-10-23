@@ -8,104 +8,104 @@
   font-size: var(--font-size-14);
   line-height: 1;
 }
-.ButtonWrap:global(.beautify-btn-default) {
+.ButtonWrap.slot-beautify-btn-default {
   /* color: var(--font-content-color); */
   background: transparent;
 }
-.ButtonWrap:has(:global(.beautify-btn-icon)) {
+.ButtonWrap:has(.slot-beautify-btn-icon) {
   padding: 4px 8px;
 }
 .ButtonWrap > div {
   /* remove ripple */
   display: none;
 }
-.ButtonWrap:global(.large) {
+.ButtonWrap.slot-large {
   height: 40px;
   font-size: var(--font-size-14);
 }
-.ButtonWrap:global(.middle) {
+.ButtonWrap.slot-middle {
   height: 32px;
   font-size: var(--font-size-14);
 }
-.ButtonWrap:global(.small) {
+.ButtonWrap.slot-small {
   height: 26px;
   font-size: var(--font-size-12);
 }
-.ButtonWrap:global(.mini) {
+.ButtonWrap.slot-mini {
   padding-right: 8px;
   padding-left: 8px;
   height: 24px;
   font-size: var(--font-size-12);
 }
-.ButtonWrap:global(.beautify-btn-dashed) {
+.ButtonWrap.slot-beautify-btn-dashed {
   border-color: var(--color-dashed);
   box-shadow: none;
 }
-.ButtonWrap:global(.beautify-btn-dashed):global(.normal) {
+.ButtonWrap.slot-beautify-btn-dashed.slot-normal {
   color: var(--font-content-color);
   background: transparent;
 }
-.ButtonWrap:global(.beautify-btn-dashed):global(.normal):global(.solid) {
+.ButtonWrap.slot-beautify-btn-dashed.slot-normal.slot-solid {
   border-style: solid;
 }
-.ButtonWrap:global(.beautify-btn-dashed):hover {
+.ButtonWrap.slot-beautify-btn-dashed:hover {
   border-color: var(--selected-border-color);
   color: var(--color-primary);
 }
-.ButtonWrap:global(.beautify-btn-dashed):hover:global(.solid) {
+.ButtonWrap.slot-beautify-btn-dashed:hover.slot-solid {
   border-style: solid;
 }
-.ButtonWrap:global(.beautify-btn-primary):global(.light):global(.beautify-btn-primary) {
+.ButtonWrap.slot-beautify-btn-primary.slot-light.slot-beautify-btn-primary {
   color: var(--color-primary);
   background-color: var(--color-primary-opacity);
 }
-.ButtonWrap:global(.beautify-btn-primary):global(.light):hover {
+.ButtonWrap.slot-beautify-btn-primary.slot-light:hover {
   color: var(--color-font-light-hover);
   background-color: var(--color-bg-light-hover);
 }
-.ButtonWrap:global(.beautify-btn-primary):global(.success) {
+.ButtonWrap.slot-beautify-btn-primary.slot-success {
   color: #26cea4;
   background-color: #26ce10;
 }
-.ButtonWrap:global(.beautify-btn-primary):global(.error) {
+.ButtonWrap.slot-beautify-btn-primary.slot-error {
   color: #ff583e;
   background-color: #ff5806;
 }
-.ButtonWrap:global(.beautify-btn-primary):global(.error),
-.ButtonWrap:global(.beautify-btn-primary):global(.success) {
+.ButtonWrap.slot-beautify-btn-primary.slot-error,
+.ButtonWrap.slot-beautify-btn-primary.slot-success {
   border: none;
 }
-.ButtonWrap:global(.beautify-btn-primary):global(.error):hover,
-.ButtonWrap:global(.beautify-btn-primary):global(.success):hover {
+.ButtonWrap.slot-beautify-btn-primary.slot-error:hover,
+.ButtonWrap.slot-beautify-btn-primary.slot-success:hover {
   /* background: initial; */
 }
-.ButtonWrap:global(.beautify-btn-text) {
+.ButtonWrap.slot-beautify-btn-text {
   color: var(--vscode-tab-inactiveForeground);
 }
-.ButtonWrap:global(.beautify-btn-text):global(.background) {
+.ButtonWrap.slot-beautify-btn-text.slot-background {
   color: var(--font-title-color);
   background-color: var(--color-bg-gray);
 }
-.ButtonWrap:global(.beautify-btn-text):global(.background):hover {
+.ButtonWrap.slot-beautify-btn-text.slot-background:hover {
   color: var(--color-primary);
   background-color: var(--color-primary-opacity);
 }
-.ButtonWrap:global(.beautify-btn-text):global(.light):hover {
+.ButtonWrap.slot-beautify-btn-text.slot-light:hover {
   color: var(--color-primary);
   text-decoration: underline;
   /* background-color: var(--color-primary-opacity); */
 }
-.ButtonWrap:global(.beautify-btn-text):global(.menu-item) {
+.ButtonWrap.slot-beautify-btn-text.slot-menu-item {
   color: var(--font-title-color);
 }
-.ButtonWrap:global(.beautify-btn-text):global(.menu-item):hover {
+.ButtonWrap.slot-beautify-btn-text.slot-menu-item:hover {
   /* color: var(--color-primary); */
   background-color: var(--vscode-list-inactiveSelectionBackground);
 }
-.ButtonWrap:global(.beautify-btn-text):active {
+.ButtonWrap.slot-beautify-btn-text:active {
   background: none !important;
 }
-.ButtonWrap:global(.beautify-btn-text):hover {
+.ButtonWrap.slot-beautify-btn-text:hover {
   color: var(--color-primary);
   background-color: none;
   text-decoration: underline;

@@ -1,78 +1,79 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .TableWrapper {
   height: 100%;
 }
 .TableWrapper table::-webkit-scrollbar-corner {
   background-color: transparent;
 }
-.TableWrapper :global(.beautify-table) {
+.TableWrapper .slot-beautify-table {
   height: 100%;
   border-radius: var(--border-radius);
   border: 1px solid var(--color-table-border);
   border-bottom: none;
 }
-.TableWrapper :global(.beautify-table) tr {
+.TableWrapper .slot-beautify-table tr {
   height: 36px;
 }
-.TableWrapper :global(.beautify-table) td,
-.TableWrapper :global(.beautify-table) th {
+.TableWrapper .slot-beautify-table td,
+.TableWrapper .slot-beautify-table th {
   padding: 4px 10px;
   border-right: none !important;
 }
-.TableWrapper :global(.beautify-table) td :global(.beautify-input),
-.TableWrapper :global(.beautify-table) th :global(.beautify-input) {
+.TableWrapper .slot-beautify-table td .slot-beautify-input,
+.TableWrapper .slot-beautify-table th .slot-beautify-input {
   font-size: var(--font-size-14);
   background: transparent;
 }
-.TableWrapper :global(.beautify-table) td :global(.beautify-select),
-.TableWrapper :global(.beautify-table) th :global(.beautify-select),
-.TableWrapper :global(.beautify-table) td :global(.beautify-select-selector),
-.TableWrapper :global(.beautify-table) th :global(.beautify-select-selector) {
+.TableWrapper .slot-beautify-table td .slot-beautify-select,
+.TableWrapper .slot-beautify-table th .slot-beautify-select,
+.TableWrapper .slot-beautify-table td .slot-beautify-select-selector,
+.TableWrapper .slot-beautify-table th .slot-beautify-select-selector {
   background: transparent;
 }
-.TableWrapper :global(.beautify-table) :global(.action) {
+.TableWrapper .slot-beautify-table .slot-action {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
 }
-.TableWrapper :global(.beautify-table) :global(.action) :global(.beautify-divider) {
+.TableWrapper .slot-beautify-table .slot-action .slot-beautify-divider {
   margin-top: 4px;
 }
-.TableWrapper :global(.beautify-table) :global(.action) :global(.beautify-btn) {
+.TableWrapper .slot-beautify-table .slot-action .slot-beautify-btn {
   padding: 0;
   height: auto;
   font-size: var(--font-size-14);
   color: var(--color-primary);
 }
-.TableWrapper :global(.beautify-table) :global(.beautify-table-container) {
+.TableWrapper .slot-beautify-table [class~="beautify-table-container"] {
   border: none !important;
 }
-.TableWrapper :global(.beautify-table) :global(.beautify-table-column-sorter) {
+.TableWrapper .slot-beautify-table [class~="beautify-table-column-sorter"] {
   color: var(--font-content-color);
 }
-.TableWrapper :global(.beautify-table) :global(.beautify-table-thead) th:global(.beautify-table-column-has-sorters) {
+.TableWrapper .slot-beautify-table [class~="beautify-table-thead"] th[class~="beautify-table-column-has-sorters"] {
   transition: none;
 }
-.TableWrapper :global(.beautify-pagination) :global(.beautify-pagination-item) {
+.TableWrapper .slot-beautify-pagination .slot-beautify-pagination-item {
   width: 32px;
   height: 32px;
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border);
   color: var(--font-content-color);
 }
-.TableWrapper :global(.beautify-pagination) :global(.beautify-pagination-item-active) {
+.TableWrapper .slot-beautify-pagination .slot-beautify-pagination-item-active {
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
   background-color: transparent;
 }
-.TableWrapper :global(.beautify-pagination) :global(.beautify-pagination-item):not(:global(.beautify-pagination-item-active)):hover {
+.TableWrapper .slot-beautify-pagination .slot-beautify-pagination-item:not(.slot-beautify-pagination-item-active):hover {
   background-color: transparent;
 }
-.TableWrapper :global(.react-resizable) {
+.TableWrapper [class~="react-resizable"] {
   position: relative;
   background-clip: padding-box;
 }
-.TableWrapper :global(.react-resizable-handle) {
+.TableWrapper [class~="react-resizable-handle"] {
   position: absolute;
   right: -5px;
   bottom: 0;
@@ -83,7 +84,7 @@
   user-select: none;
   touch-action: none;
 }
-.TableWrapper :global(.react-resizable-handle)::before {
+.TableWrapper [class~="react-resizable-handle"]::before {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -94,19 +95,19 @@
   content: '';
   transition: background-color 0.2s;
 }
-.TableWrapper :global(.react-resizable-handle):hover::before,
-.TableWrapper :global(.react-resizable-handle):active::before {
+.TableWrapper [class~="react-resizable-handle"]:hover::before,
+.TableWrapper [class~="react-resizable-handle"]:active::before {
   background-color: var(--color-primary) !important;
 }
 .TableContainer {
   flex: 1;
   height: 100%;
 }
-.TableContainer :global(.sort-handle) {
+.TableContainer .slot-sort-handle {
   width: 30px;
   min-width: 30px;
   text-align: center;
 }
-.TableContainer :global(.reset-padding) :global(.beautify-table-cell) {
+.TableContainer .slot-reset-padding [class~="beautify-table-cell"] {
   padding: 0;
 }

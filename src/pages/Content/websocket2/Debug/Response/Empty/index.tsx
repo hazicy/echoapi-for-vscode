@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useTranslation } from 'react-i18next';
 
 import { Flex } from '@/components/ui/base';
@@ -25,7 +26,7 @@ const ResponseEmpty = ({ description, maskMode = false }: ResponseEmpty) => {
       <span>{t('api.run.response_tip_cors')}</span>
       <span>
         {t('api.run.response_tip_local')}
-        <span className="empty-desc-download" onClick={() => openUrl(CLIENT_DOWNLOAD_URL)}>
+        <span className={slots["empty-desc-download"]} onClick={() => openUrl(CLIENT_DOWNLOAD_URL)}>
           {t('api.run.response_tip_down')}
         </span>
       </span>
@@ -33,11 +34,11 @@ const ResponseEmpty = ({ description, maskMode = false }: ResponseEmpty) => {
   );
 
   return (
-    <ResponseEmptyContainer className={cn({ 'mask-mode': maskMode })}>
+    <ResponseEmptyContainer className={cn({ [slots["mask-mode"]]: maskMode })}>
       <Empty
-        className="response-empty-wrap"
+        className={slots["response-empty-wrap"]}
         description={description || defaultDescription}
-        image={<IconFont type="icon-zanwu" className="icon-empty-wrap" />}
+        image={<IconFont type="icon-zanwu" className={slots["icon-empty-wrap"]} />}
       />
     </ResponseEmptyContainer>
   );

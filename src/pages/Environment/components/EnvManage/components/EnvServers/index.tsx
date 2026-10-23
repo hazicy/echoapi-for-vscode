@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -126,10 +127,10 @@ const Index = (props: Props) => {
       ellipsis:true,
       render: (text: any, rowData: any) => (
         <ServerNameContainer>
-          <div className="env-name">
+          <div className={slots["env-name"]}>
             <span>{text}</span>
             {rowData?.is_default === 1 && (
-              <span className="icon-default">
+              <span className={slots["icon-default"]}>
                 {t('global_setting.environment_detail.default_tag')}
               </span>
             )}
@@ -261,7 +262,7 @@ const Index = (props: Props) => {
               setOpen(true);
             }}
           >
-            <span className="server-add">{t('global_setting.environment_detail.add_server')}</span>
+            <span className={slots["server-add"]}>{t('global_setting.environment_detail.add_server')}</span>
           </Button>
         )}
       </EnvServerTitleContainer>

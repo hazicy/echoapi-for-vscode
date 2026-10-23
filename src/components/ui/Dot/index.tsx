@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import classNames from 'classnames';
 import { ValueOf } from 'type-fest';
 
@@ -26,7 +27,7 @@ const Dot = ({ size = 8, type = TYPE_MAP.success, className = '', color = '' }: 
   return (
     <DotWrapper $token={themeToken} className={className}>
       <div
-        className={classNames('dot', [{ [TYPE_MAP[type]]: true }])}
+        className={classNames(slots.dot, [{ [TYPE_MAP[type]]: true }])}
         style={{ width: size, height: size, backgroundColor: color }}
       ></div>
     </DotWrapper>

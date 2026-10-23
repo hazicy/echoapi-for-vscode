@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { memo, useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -85,17 +86,17 @@ const ItemMock: React.FC<Props> = (props) => {
   }, []);
 
   return (
-    <div className={cn('schema-td', 'table-td')} style={{ ...currentLayout, width: '100%' }}>
+    <div className={cn(slots["schema-td"], slots["table-td"])} style={{ ...currentLayout, width: '100%' }}>
       <KeyWarperContainer
-        className={cn('schema-td-warper', {
-          'is-model-item': isModelItem,
+        className={cn(slots["schema-td-warper"], {
+          [slots["is-model-item"]]: isModelItem,
         })}
       >
         <AutoComplete
           size="small"
           filterOption
           style={{ width: '100%' }}
-          className="mock-auto-vars"
+          className={slots["mock-auto-vars"]}
           placeholder={t('common.schema.mock')}
           disabled={disabled || (isModelItem && !isUnLinkState)}
           value={isString(value?.mock?.mock) ? value?.mock?.mock : ''}

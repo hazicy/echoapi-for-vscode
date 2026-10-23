@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, memo, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -297,7 +298,7 @@ const RequestTable: FC<RequestTableProps> = memo(
       <Flex align="center" style={{ height: '100%', width: '100%' }}>
         <Flex flex={1}>{colItem?.render(_, record, index)}</Flex>
         <Flex
-          className="row-description-operation"
+          className={slots["row-description-operation"]}
           style={{ height: '100%', padding: '0 8px' }}
           align="center"
           gap={12}
@@ -305,7 +306,7 @@ const RequestTable: FC<RequestTableProps> = memo(
           {showDelete && (
             <IconFont
               type="icon-delete"
-              className="delete-params-icon"
+              className={slots["delete-params-icon"]}
               onClick={() => onDelete?.(index)}
             />
           )}
@@ -326,6 +327,7 @@ const RequestTable: FC<RequestTableProps> = memo(
         />
         <BasicTableWrap>
           <BasicTable
+            tableLayout="fixed"
             rowKey="param_id"
             dragEnable
             cellPadding={0}

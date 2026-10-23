@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, memo, useRef, useState } from 'react';
 
 import { Input } from '@/components/ui/base';
@@ -82,7 +83,7 @@ export const RowDescription: FC<Props> = memo((props) => {
 
   return (
     <RowItemWrap>
-      <div className="row-description">
+      <div className={slots["row-description"]}>
         <Input.TextArea
           readOnly={readOnly}
           autoSize={false}

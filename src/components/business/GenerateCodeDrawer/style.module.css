@@ -1,16 +1,16 @@
 .GenerateCodeWrap {
   height: 100%;
 }
-.GenerateCodeWrap :global(.beautify-spin-nested-loading) {
+.GenerateCodeWrap .slot-beautify-spin-nested-loading {
   height: 100%;
 }
-.GenerateCodeWrap :global(.beautify-spin-nested-loading) :global(.beautify-spin-container) {
+.GenerateCodeWrap .slot-beautify-spin-nested-loading .slot-beautify-spin-container {
   height: 100%;
 }
-.GenerateCodeWrap :global(.beautify-spin-nested-loading) :global(.beautify-spin-container) > :global(.beautify-flex) {
+.GenerateCodeWrap .slot-beautify-spin-nested-loading .slot-beautify-spin-container > .slot-beautify-flex {
   height: 100%;
 }
-.GenerateCodeWrap :global(.menu) {
+.GenerateCodeWrap .slot-menu {
   padding: 16px 8px;
   width: 212px;
   min-width: 212px;
@@ -21,7 +21,7 @@
   color: var(--font-content-color);
   background-color: var(--color-bg-page);
 }
-.GenerateCodeWrap :global(.menu-item) {
+.GenerateCodeWrap .slot-menu-item {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -32,12 +32,12 @@
   border-radius: var(--border-radius);
   cursor: pointer;
 }
-.GenerateCodeWrap :global(.menu-item):hover,
-.GenerateCodeWrap :global(.menu-item):global(.active) {
+.GenerateCodeWrap .slot-menu-item:hover,
+.GenerateCodeWrap .slot-menu-item.slot-active {
   /* color: var(--color-primary); */
   background-color: var(--vscode-list-inactiveSelectionBackground);
 }
-.GenerateCodeWrap :global(.edit) {
+.GenerateCodeWrap .slot-edit {
   flex: 1;
   height: 100%;
   white-space: pre-wrap;

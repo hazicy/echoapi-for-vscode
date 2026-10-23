@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { FC, useMemo, useState } from 'react';
 import { useSafeState } from 'ahooks';
 import { Flex } from '@/components/ui/base';
@@ -76,7 +77,7 @@ const ApiDebug: FC<ApiComponentType> = ({ apisData, onApisDataChange }) => {
         mode="light"
         size="small"
         style={{ padding: '4px 6px' }}
-         className='beautify-text-btn-highlight'
+         className={slots["beautify-text-btn-highlight"]}
       >
         {t('system_settings.shortcuts.apis_detail.code')}
       </Button>
@@ -86,7 +87,7 @@ const ApiDebug: FC<ApiComponentType> = ({ apisData, onApisDataChange }) => {
         mode="light"
         size="small"
         style={{ padding: '4px 6px' }}
-         className='beautify-text-btn-highlight'
+         className={slots["beautify-text-btn-highlight"]}
       >
         {t('global_setting.global_title')} {requestTabActiveKey === 'Path' ? 'Para' : requestTabActiveKey}
       </Button>

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -56,28 +57,28 @@ const RealRequest: React.FC<Props> = ({ sendingData }) => {
 
   const tabBarExtraContent = isEqual(tabsValue, 'body') ? (
     <TabBarExtraContentWrap>
-      <div className="title">{t('supplement.type')}:</div>
-      <div className="content">{sendingData?.request?.mode}</div>
+      <div className={slots.title}>{t('supplement.type')}:</div>
+      <div className={slots.content}>{sendingData?.request?.mode}</div>
     </TabBarExtraContentWrap>
   ) : null;
 
   return (
     <RealRequestContainer>
       <RequestItem>
-        <Text className="title">{t('supplement.req_url')}</Text>
-        <div className="content-warp base-info-wrap">
+        <Text className={slots.title}>{t('supplement.req_url')}</Text>
+        <div className={[slots["content-warp"], slots["base-info-wrap"]].join(" ")}>
           <Flex align="flex-start">
             <ApisTypeTag
               targetType={APIS_TARGET_TYPE_ENUM.API}
               method={(sendingData?.request?.method as ApiTypeMethod) || 'GET'}
             />
-            <div className="url">{sendingData?.request?.url}</div>
+            <div className={slots.url}>{sendingData?.request?.url}</div>
           </Flex>
         </div>
       </RequestItem>
       <RequestItem>
-        <Text className="title">{t('supplement.req_param')}</Text>
-        <div className="content-warp content-request">
+        <Text className={slots.title}>{t('supplement.req_param')}</Text>
+        <div className={[slots["content-warp"], slots["content-request"]].join(" ")}>
           <SegmentedTabs
             options={segmentedOptions}
             tabBarExtraContent={tabBarExtraContent}

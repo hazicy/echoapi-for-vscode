@@ -1,7 +1,7 @@
 .ResponseEmptyContainer {
   height: 100%;
 }
-.ResponseEmptyContainer:global(.mask-mode) {
+.ResponseEmptyContainer.slot-mask-mode {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -10,21 +10,21 @@
   height: calc(100% - 44px);
   background-color: var(--color-bg-right);
 }
-.ResponseEmptyContainer :global(.response-empty-wrap) :global(.beautify-empty-image) {
+.ResponseEmptyContainer .slot-response-empty-wrap .slot-beautify-empty-image {
   margin-bottom: 30px;
 }
-.ResponseEmptyContainer :global(.response-empty-wrap) :global(.beautify-empty-image) :global(.icon-empty-wrap) {
+.ResponseEmptyContainer .slot-response-empty-wrap .slot-beautify-empty-image .slot-icon-empty-wrap {
   font-size: 80px;
   color: var(--vscode-settings-headerBorder);
 }
-.ResponseEmptyContainer :global(.response-empty-wrap) :global(.beautify-empty-description) {
+.ResponseEmptyContainer .slot-response-empty-wrap .slot-beautify-empty-description {
   font-size: var(--font-size-12);
   color: var(--font-light-color);
 }
-.ResponseEmptyContainer :global(.response-empty-wrap) :global(.beautify-empty-description) :global(.empty-desc-download) {
+.ResponseEmptyContainer .slot-response-empty-wrap .slot-beautify-empty-description .slot-empty-desc-download {
   color: var(--color-primary);
   cursor: pointer;
 }
-.ResponseEmptyContainer :global(.response-empty-wrap) :global(.beautify-empty-description) :global(.empty-desc-download):hover {
+.ResponseEmptyContainer .slot-response-empty-wrap .slot-beautify-empty-description .slot-empty-desc-download:hover {
   text-decoration: underline;
 }

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -27,13 +28,13 @@ const ResponseError: React.FC<ResponseErrorProps> = (props) => {
   return (
     <ResponseErrorContainer>
        {onClose && (
-        <IconFont type="icon-error" className="close-error-wrapper" onClick={handleClose} />
+        <IconFont type="icon-error" className={slots["close-error-wrapper"]} onClick={handleClose} />
       )}
-      <div className="container">
+      <div className={slots.container}>
         {t('supplement.intro_script')}
-        <p className="error-str">{errorMessage}</p>
+        <p className={slots["error-str"]}>{errorMessage}</p>
         {isRenderErrorMessage(errorMessage) && (
-          <p className="error-str proxy-error">{t('supplement.proxy_sys_tip')}</p>
+          <p className={[slots["error-str"], slots["proxy-error"]].join(" ")}>{t('supplement.proxy_sys_tip')}</p>
         )}
         <p className="err-desc-go-index">
           {t('supplement.go')}&nbsp;

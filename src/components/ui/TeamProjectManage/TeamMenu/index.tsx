@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -76,7 +77,7 @@ const TeamMenu = ({ searchValue, teamProjectList, setIsOpen, handleMenuChange }:
       return (
         <MenuItemContainer>
           <Flex align="center" justify="space-between">
-            <span className="project-name">{project.name}</span>
+            <span className={slots["project-name"]}>{project.name}</span>
           </Flex>
         </MenuItemContainer>
       );
@@ -99,10 +100,10 @@ const TeamMenu = ({ searchValue, teamProjectList, setIsOpen, handleMenuChange }:
         key: team.team_id,
         disabled,
         label: (
-          <Flex justify="space-between" className="title" align="center">
+          <Flex justify="space-between" className={slots.title} align="center">
             <Flex gap={12} align="center">
-              <div className="name">{team.name}</div>
-              {size(team.project) && <div className="count">{team.project?.length}</div>}
+              <div className={slots.name}>{team.name}</div>
+              {size(team.project) && <div className={slots.count}>{team.project?.length}</div>}
             </Flex>
           </Flex>
         ),

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CodeEditor from "@/components/business/CodeEditor";
@@ -260,7 +261,7 @@ const Index = ({
       {fileType === IMPORT_TYPE_ENUM.CURL && (
         <Flex flex={1} style={{minHeight:0}}>
           <CodeEditor
-            className="curl-code-editor"
+            className={slots["curl-code-editor"]}
             onChange={setValue}
             value={value}
           />
@@ -282,13 +283,13 @@ const Index = ({
             >
               {(fileType === IMPORT_TYPE_ENUM.SWAGGER ||
                 fileType === IMPORT_TYPE_ENUM.SWAGGERURL) && (
-                <div className="import-project-item">
+                <div className={slots["import-project-item"]}>
                   <Flex
                     style={{ lineHeight: "32px", marginBottom: "20px" }}
                     align="center"
                     gap={20}
                   >
-                    <Flex className="import-project-full-title" gap={8}>
+                    <Flex className={slots["import-project-full-title"]} gap={8}>
                       {t("supplement.path_handle")}
                       <Tooltip placement="top" title={t("supplement.swagger2")}>
                         <IconFont
@@ -318,22 +319,22 @@ const Index = ({
                 </div>
               )}
 
-              <div className="import-project-item">
+              <div className={slots["import-project-item"]}>
                 {!isEqual(fileType, IMPORT_TYPE_ENUM.CURL) && (
-                  <div className="import-project-item-title">
+                  <div className={slots["import-project-item-title"]}>
                     {(IMPORT_TIP_MAP as any)?.[fileType] ||
                       t("settings.import_project.data_format")}
                   </div>
                 )}
 
-                <div className="import-project-item-content">
+                <div className={slots["import-project-item-content"]}>
                   {!includes(
                     [IMPORT_TYPE_ENUM.SWAGGERURL, IMPORT_TYPE_ENUM.CURL],
                     fileType
                   ) && (
                     <Dragger
                       key={uploadKey}
-                      className="import-project-upload-content"
+                      className={slots["import-project-upload-content"]}
                       style={{
                         display: "block",
                       }}
@@ -344,7 +345,7 @@ const Index = ({
                       showUploadList={false}
                       iconRender={() => <IconFont type="icon-link" />}
                     >
-                      <p className="ant-upload-drag-icon">
+                      <p className={slots["ant-upload-drag-icon"]}>
                         <IconFont type="icon-export" style={{ fontSize: 20 }} />
                       </p>
                       <p className="ant-upload-text">
@@ -361,7 +362,7 @@ const Index = ({
                     </Dragger>
                   )}
                   {fileType === IMPORT_TYPE_ENUM.SWAGGERURL && (
-                    <div className="swagger-input" style={{ marginBottom: 24 }}>
+                    <div className={slots["swagger-input"]} style={{ marginBottom: 24 }}>
                       <Input
                         value={swaggerUrl}
                         onChange={(e) => {
@@ -396,7 +397,7 @@ const Index = ({
             loading={previewLoading}
             onClick={previewSwaggerUrlData}
             type="primary"
-            className="import-export-now"
+            className={slots["import-export-now"]}
           >
             {t("test.http_code.continue")}
           </Button>
@@ -409,7 +410,7 @@ const Index = ({
             loading={previewLoading}
             onClick={curlImportData}
             type="primary"
-            className="import-export-now"
+            className={slots["import-export-now"]}
           >
             {t("common.import_modal.title")}
           </Button>

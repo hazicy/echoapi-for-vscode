@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useTranslation } from 'react-i18next';
 
 import { ConfigProvider, Flex, Input, Typography, message } from '@/components/ui/base';
@@ -95,7 +96,7 @@ const ShareModal = (props: ShareModalProps) => {
             <ExternalContainer>
               <Input
                 prefix={
-                  <div onClick={(e) => e?.stopPropagation()} className="external-tips">
+                  <div onClick={(e) => e?.stopPropagation()} className={slots["external-tips"]}>
                     {t('docs.share_modal.external_network')}
                   </div>
                 }

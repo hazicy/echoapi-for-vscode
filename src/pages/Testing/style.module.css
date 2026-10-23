@@ -6,20 +6,20 @@
   padding: 16px;
   gap: 12px;
 }
-.TestingContainer :global(.folder-name) {
+.TestingContainer .slot-folder-name {
   font-weight: 600;
   font-size: 16px;
   color: var(--font-title-color);
 }
-.TestingContainer :global(.history-report) {
+.TestingContainer .slot-history-report {
   font-size: 12px;
   cursor: pointer;
   color: var(--font-light-color);
   text-decoration: underline;
 }
-.TestingContainer :global(.history-report):hover {
+.TestingContainer .slot-history-report:hover {
   color: var(--color-primary);
 }
-.TestingContainer :global(.folder-sending-btn) {
+.TestingContainer .slot-folder-sending-btn {
   background: var(--icon-color);
 }

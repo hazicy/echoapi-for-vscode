@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import moduleStyles from "./style.module.css";
 import { withStyles } from "@/components/ui/base/withStyles";
 
@@ -39,7 +40,7 @@ export const ScriptErrorContainer = withStyles<"div", {}>(
   {
     selector: "ui_f9a1fed8_ScriptErrorContainer",
     attrs: {
-      className: "content-item",
+      className: slots["content-item"],
     },
   },
 );

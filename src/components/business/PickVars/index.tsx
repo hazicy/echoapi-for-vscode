@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -66,7 +67,7 @@ const PickVars: FC<Props> = ({ value, onChange }) => {
     <PickVarWrapper $token={themeToken}>
       <Flex vertical gap={themeToken.padding12}>
         <Flex gap={themeToken.padding12} align="center">
-          <div className="label">{t('common.set_variables.resource')}</div>
+          <div className={slots.label}>{t('common.set_variables.resource')}</div>
           <Select
             placeholder=""
             style={{ width: '100%' }}

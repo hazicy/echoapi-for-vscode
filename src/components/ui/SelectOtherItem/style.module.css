@@ -2,7 +2,7 @@
   padding: 6px 8px;
   cursor: pointer;
 }
-.SelectOtherItemWrapper :global(.text) {
+.SelectOtherItemWrapper .slot-text {
   margin-left: 4px;
   line-height: 14px;
 }

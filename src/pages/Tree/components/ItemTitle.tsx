@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, ReactNode, memo, useMemo } from 'react';
 
 import { Dropdown, MenuProps } from '@/components/ui/base';
@@ -46,10 +47,10 @@ const ItemTitle: FC<Props> = memo((props) => {
         if(isFunction(onClick)){
           onClick();
         }
-      }} className="title" title={name}>
+      }} className={slots.title} title={name}>
         {name}
         {showChildrenCount && isNumber(childrenCount) && childrenCount > 0 && (
-          <span className="children-num">({childrenCount})</span>
+          <span className={slots["children-num"]}>({childrenCount})</span>
         )}
       </div>
       {extraContent}

@@ -1,40 +1,40 @@
 .SortableCollapseWrapper {
   width: 100%;
 }
-.SortableCollapseWrapper :global(.custom-header) {
+.SortableCollapseWrapper .slot-custom-header {
   flex: 1;
   margin-right: 12px;
 }
-.SortableCollapseWrapper :global(.custom-header) :global(.anticon) {
+.SortableCollapseWrapper .slot-custom-header .slot-anticon {
   opacity: 0;
 }
-.SortableCollapseWrapper :global(.header-container):hover :global(.hover-show-custom-header):global(.custom-header) :global(.anticon) {
+.SortableCollapseWrapper .slot-header-container:hover .slot-hover-show-custom-header.slot-custom-header .slot-anticon {
   opacity: 1;
 }
-.SortableCollapseWrapper :global(.item-container) {
+.SortableCollapseWrapper .slot-item-container {
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
 }
-.SortableCollapseWrapper :global(.item-container):global(.top) {
+.SortableCollapseWrapper .slot-item-container.slot-top {
   border-top: 2px solid var(--color-primary);
 }
-.SortableCollapseWrapper :global(.item-container):global(.inside) {
+.SortableCollapseWrapper .slot-item-container.slot-inside {
   background-color: var(--color-primary);
 }
-.SortableCollapseWrapper :global(.item-container):global(.bottom) {
+.SortableCollapseWrapper .slot-item-container.slot-bottom {
   border-bottom: 2px solid var(--color-primary);
 }
-.SortableCollapseWrapper :global(.item-container) :global(.icon) {
+.SortableCollapseWrapper .slot-item-container .slot-icon {
   margin-top: -8px;
   margin-right: 8px;
   cursor: move;
 }
-.SortableCollapseWrapper :global(.item-container) :global(.beautify-collapse-expand-icon) {
+.SortableCollapseWrapper .slot-item-container .slot-beautify-collapse-expand-icon {
   display: none !important;
 }
-.SortableCollapseWrapper :global(.children-container) {
+.SortableCollapseWrapper .slot-children-container {
   padding: 16px;
 }

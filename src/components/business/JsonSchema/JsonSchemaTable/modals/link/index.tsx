@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { memo, useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -77,9 +78,9 @@ const LinkPanel: React.FC<Props> = (props) => {
           if (item.model_type === 'folder' || item.key === model_id) return;
           onNodeClick(item.key);
         }}
-        className="model-node-item"
+        className={slots["model-node-item"]}
       >
-        <div className="icon-panel">
+        <div className={slots["icon-panel"]}>
           {item.model_type === 'model' && (
             <>
               <Checkbox
@@ -90,11 +91,11 @@ const LinkPanel: React.FC<Props> = (props) => {
                 checked={!isUndefined(value?.model_id) && item.key === value?.model_id}
                 disabled={item.key === model_id}
               />
-              <IconFont className="icon-model" type="icon-data-model" />
+              <IconFont className={slots["icon-model"]} type="icon-data-model" />
             </>
           )}
         </div>
-        <span className="node-text ">
+        <span className={slots["node-text"]}>
           {item.model_type === 'folder' && (
             <IconFont
               style={{ marginRight: 5 }}
@@ -137,7 +138,7 @@ const LinkPanel: React.FC<Props> = (props) => {
         />
 
         {filteredTreeList.length === 0 ? (
-          <div className="empty-list">
+          <div className={slots["empty-list"]}>
             <Empty />
           </div>
         ) : (
@@ -149,7 +150,7 @@ const LinkPanel: React.FC<Props> = (props) => {
             blockNode
             expandedKeys={expandedKeys}
             onExpand={(expandedKeys: any) => setExpandedKeys(expandedKeys)}
-            className="tree-panel"
+            className={slots["tree-panel"]}
             titleRender={renderNode}
           ></Tree>
         )}

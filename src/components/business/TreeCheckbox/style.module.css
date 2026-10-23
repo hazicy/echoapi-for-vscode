@@ -1,3 +1,4 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .TreeCheckboxContainer {
   display: flex;
   flex-direction: column;
@@ -5,25 +6,25 @@
   height: 100%;
   gap: 4px;
 }
-.TreeCheckboxContainer :global(.beautify-tree) {
+.TreeCheckboxContainer [class~="beautify-tree"] {
   background-color: transparent;
 }
-.TreeCheckboxContainer :global(.tree-wrap) {
+.TreeCheckboxContainer .slot-tree-wrap {
   flex: 1;
   overflow: hidden;
   /* background-color: var(--search-big-select-color); */
   /* padding: 0 12px 12px 12px; */
   border-radius: 0 0 4px 4px;
 }
-.TreeCheckboxContainer :global(.tree-wrap) :global(.beautify-tree-checkbox) {
+.TreeCheckboxContainer .slot-tree-wrap [class~="beautify-tree-checkbox"] {
   align-self: center;
   margin-top: 0;
 }
-.TreeCheckboxContainer :global(.tree-wrap) :global(.beautify-tree-checkbox-checked) :global(.beautify-tree-checkbox-inner) {
+.TreeCheckboxContainer .slot-tree-wrap [class~="beautify-tree-checkbox-checked"] [class~="beautify-tree-checkbox-inner"] {
   /* background-color: #835dff !important; */
   /* border-color: #835dff; */
 }
-.TreeCheckboxContainer :global(.tree-wrap) :global(.beautify-tree-checkbox-inner) {
+.TreeCheckboxContainer .slot-tree-wrap [class~="beautify-tree-checkbox-inner"] {
   /* background: var(--vscode-editor-background,#121212); */
   /* border: 1px solid var(--vscode-editorWidget-border, #353535); */
 }

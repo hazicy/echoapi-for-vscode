@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -41,16 +42,16 @@ const RealRequest: React.FC<Props> = ({ sendingData }) => {
   return (
     <RealRequestContainer>
       <RequestItem>
-        <Text className="title">{t('supplement.req_url')}</Text>
-        <div className="content-warp base-info-wrap">
+        <Text className={slots.title}>{t('supplement.req_url')}</Text>
+        <div className={[slots["content-warp"], slots["base-info-wrap"]].join(" ")}>
           <Flex align="flex-start">
-            <div className="url">{sendingData?.url}</div>
+            <div className={slots.url}>{sendingData?.url}</div>
           </Flex>
         </div>
       </RequestItem>
       <RequestItem>
-        <Text className="title">{t('supplement.req_param')}</Text>
-        <div className="content-warp content-request">
+        <Text className={slots.title}>{t('supplement.req_param')}</Text>
+        <div className={[slots["content-warp"], slots["content-request"]].join(" ")}>
           <SegmentedTabs
             options={segmentedOptions}
             value={tabsValue}

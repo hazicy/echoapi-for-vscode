@@ -14,7 +14,7 @@
   background-color: var(--color-bg-right);
   opacity: 0.9;
 }
-.ResponseSendContainer :global(.sending-loading-bar) {
+.ResponseSendContainer .slot-sending-loading-bar {
   position: absolute;
   top: 0;
   left: 0;
@@ -24,13 +24,13 @@
   background: linear-gradient(90deg, var(--color-primary), #ffffff 100%);
   animation: animation_56ec475e_lineLoading 2s linear infinite;
 }
-.ResponseSendContainer :global(.sending-loading-content) {
+.ResponseSendContainer .slot-sending-loading-content {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
 }
-.ResponseSendContainer :global(.sending-loading-content) :global(.sending-loading-content-text) {
+.ResponseSendContainer .slot-sending-loading-content .slot-sending-loading-content-text {
   margin-bottom: 22px;
 }

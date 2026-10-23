@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -303,7 +304,7 @@ const Filters = (props: Props, ref: any) => {
                         </Flex>
                         {fields.length > 1 ? (
                           <IconFont
-                            className="filter-remove"
+                            className={slots["filter-remove"]}
                             type="icon-error"
                             onClick={() => remove(name)}
                           />
@@ -334,7 +335,7 @@ const Filters = (props: Props, ref: any) => {
               style={{ padding: 0 }}
               type="text"
               size="small"
-              className="clear-btn"
+              className={slots["clear-btn"]}
               onClick={clearCondition}
               icon={<IconFont type="icon-clean" />}
             >

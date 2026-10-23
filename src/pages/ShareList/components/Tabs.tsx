@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { Checkbox, Flex, Tabs, theme, Tooltip, Typography } from '@/components/ui/base';
 
 import { SHARE_TAB_LIST } from "../constants";
@@ -32,16 +33,16 @@ const TabsPanel = (props: TabsProps) => {
         key={item.target_id}
         onClick={() => {}}
         className={cn({
-          "select-item": false,
+          [slots["select-item"]]: false,
         })}
       >
-        <div className="name">
+        <div className={slots.name}>
           <Checkbox
             onClick={(e) => e?.stopPropagation()}
             value={item.target_id}
           ></Checkbox>
           <ApisColorPrefixIcon
-            className="panel-icon"
+            className={slots["panel-icon"]}
             icon={getBaseIconOfTargetType(item.target_type).icon}
             gradientColor={
               getBaseIconOfTargetType(item.target_type).gradientColor
@@ -60,12 +61,12 @@ const TabsPanel = (props: TabsProps) => {
             </Typography.Text>
           </Tooltip>
         </div>
-        <div className="time">{formatTimeToDateTimeLong(item.share_time)}</div>
+        <div className={slots.time}>{formatTimeToDateTimeLong(item.share_time)}</div>
         <div
           onClick={(e) => {
             e.stopPropagation();
           }}
-          className="more-operate-wrap"
+          className={slots["more-operate-wrap"]}
         >
           {listExtraContent(item.target_id, item)}
         </div>

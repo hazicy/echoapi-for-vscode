@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -51,27 +52,27 @@ const BaseSettings: FC<Props> = ({ value, onChange }) => {
 
   return (
     <BaseSettingsContainer>
-      <div className="folder-base-config-wrap">
-        <Flex justify="space-between" align="center" className="folder-save-wrap">
+      <div className={slots["folder-base-config-wrap"]}>
+        <Flex justify="space-between" align="center" className={slots["folder-save-wrap"]}>
           <Input
             ref={inputRef}
-            className="folder-base-input"
+            className={slots["folder-base-input"]}
             maxLength={255}
             placeholder={t('supplement.folder')}
             value={value?.name}
             onChange={(event) => handleChange('name', event.target.value)}
           />
         </Flex>
-        <Flex align="center" className="folder-config-wrap">
-          <Flex className="folder-config-item-wrap" vertical>
-            <span className="label">{t('folder.folder_setting.service')}</span>
+        <Flex align="center" className={slots["folder-config-wrap"]}>
+          <Flex className={slots["folder-config-item-wrap"]} vertical>
+            <span className={slots.label}>{t('folder.folder_setting.service')}</span>
             <ServerSelect
               value={value?.server_id}
               onChange={(value) => handleChange('server_id', value)}
             />
           </Flex>
-          <Flex className="folder-config-item-wrap" vertical>
-            <span className="label">{t('supplement.folder')}</span>
+          <Flex className={slots["folder-config-item-wrap"]} vertical>
+            <span className={slots.label}>{t('supplement.folder')}</span>
             <TreeSelect
               showSearch
               treeDefaultExpandAll
@@ -98,8 +99,8 @@ const BaseSettings: FC<Props> = ({ value, onChange }) => {
           </Flex>
         </Flex>
       </div>
-      <Flex className="folder-content-wrap" flex={1} vertical gap={16}>
-        <div className="byte-md-wrap">
+      <Flex className={slots["folder-content-wrap"]} flex={1} vertical gap={16}>
+        <div className={slots["byte-md-wrap"]}>
           <ByteMD
             value={value?.description}
             onChange={(value) => handleChange('description', value)}

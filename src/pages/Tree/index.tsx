@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { ReactElement, useEffect, useMemo, useRef } from 'react';
 import {
   Button,
@@ -495,7 +496,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
 
       if (defaultBottomNode) {
         result.push({
-          className: 'tree-bottom-node-wrap',
+          className: slots["tree-bottom-node-wrap"],
           title: defaultBottomNode,
           key: 'tree-bottom-node-key',
           isLeaf: true,
@@ -728,11 +729,11 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
             paragraph={{ rows: 15, width: '100%' }}
             loading={treeLoading}
           >
-            <div className="tree-wrap">
+            <div className={slots["tree-wrap"]}>
               <TreeContainer ref={containerRef}>
                 {treeData.length <= 0 ? (
                   <Empty
-                    className="response-empty-wrap"
+                    className={slots["response-empty-wrap"]}
                     description={
                       <Flex
                         gap={6}
@@ -775,7 +776,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
                     image={
                       <IconFont
                         type="icon-zanwu"
-                        className="icon-empty-wrap"
+                        className={slots["icon-empty-wrap"]}
                       />
                     }
                   />
@@ -824,7 +825,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
         <NewBtns createMenus={createMenus} />
 
         <SegmentedTabs
-          className="tab-container"
+          className={slots["tab-container"]}
           options={TESTING_CONFIG_TAB_LIST}
           value={tabValue}
           onChange={(val) => {

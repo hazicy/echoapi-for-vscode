@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -139,7 +140,7 @@ const Index = (props: EnvModifyModalProps) => {
       enableResize: true,
       render: (text: any, rowData: any, rowIndex: number) => (
         <Input
-          className="env-var-name"
+          className={slots["env-var-name"]}
           value={text}
           disabled={readonly}
           onChange={(e) => {
@@ -303,10 +304,10 @@ const Index = (props: EnvModifyModalProps) => {
 
   return (
     <EnvManageContainer>
-      <Flex className="env-manage-flex" vertical gap={15}>
+      <Flex className={slots["env-manage-flex"]} vertical gap={15}>
         <Flex gap={15} vertical>
-          <span className="title"> {t('global_setting.environment_detail.title')}</span>
-          <div className="tip column">
+          <span className={slots.title}> {t('global_setting.environment_detail.title')}</span>
+          <div className={[slots.tip, slots.column].join(" ")}>
             <div>
               {t('global_setting.environment_detail.tips')}
               <a
@@ -319,10 +320,10 @@ const Index = (props: EnvModifyModalProps) => {
             <div>{t('global_setting.environment_detail.tips2')}</div>
           </div>
         </Flex>
-        <div className="env-manage-content">
+        <div className={slots["env-manage-content"]}>
           <TitleContainer>{t('global_setting.environment_detail.name')}</TitleContainer>
           <Input
-            className="env-manage-input"
+            className={slots["env-manage-input"]}
             maxLength={128}
             addonAfter={
               find(envMenus, ({ env_id }) => env_id === editEnvId)?.is_private === 1 ||

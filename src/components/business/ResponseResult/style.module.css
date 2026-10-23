@@ -2,13 +2,13 @@
   width: 100%;
   height: 100%;
 }
-.ResponseResultWrap :global(.response-result-tabs-wrap) {
+.ResponseResultWrap .slot-response-result-tabs-wrap {
   overflow-y: hidden;
 }
-.ResponseResultWrap :global(.response-result-tabs-wrap) :global(.tab-bar-extra-content-wrap) {
+.ResponseResultWrap .slot-response-result-tabs-wrap .slot-tab-bar-extra-content-wrap {
   margin-left: 6px;
 }
-.ResponseResultWrap :global(.response-result-tabs-wrap) :global(.tab-bar-extra-content-wrap) :global(.beautify-select-selector) {
+.ResponseResultWrap .slot-response-result-tabs-wrap .slot-tab-bar-extra-content-wrap .slot-beautify-select-selector {
   display: flex;
   gap: 4px;
   align-items: center;
@@ -17,33 +17,33 @@
   padding: 0 4px;
   padding-left: 6px;
 }
-.ResponseResultWrap :global(.response-result-tabs-wrap) :global(.tab-bar-extra-content-wrap) :global(.icon-copy) {
+.ResponseResultWrap .slot-response-result-tabs-wrap .slot-tab-bar-extra-content-wrap .slot-icon-copy {
   font-size: 16px;
   color: var(--icon-color);
   cursor: pointer;
 }
-.ResponseResultWrap :global(.response-result-tabs-wrap) :global(.tab-bar-extra-content-wrap) :global(.icon-copy):hover,
-.ResponseResultWrap :global(.response-result-tabs-wrap) :global(.tab-bar-extra-content-wrap) :global(.icon-copy):global(.wrap-show) {
+.ResponseResultWrap .slot-response-result-tabs-wrap .slot-tab-bar-extra-content-wrap .slot-icon-copy:hover,
+.ResponseResultWrap .slot-response-result-tabs-wrap .slot-tab-bar-extra-content-wrap .slot-icon-copy.slot-wrap-show {
   color: var(--color-primary);
 }
-.ResponseResultWrap :global(.response-result-tabs-wrap) :global(.segmented-tabs-content) {
+.ResponseResultWrap .slot-response-result-tabs-wrap .slot-segmented-tabs-content {
   height: 0;
   min-height: auto;
 }
-.ResponseResultWrap :global(.response-result) {
+.ResponseResultWrap .slot-response-result {
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow: hidden;
 }
-.ResponseResultWrap :global(.response-result-content) {
+.ResponseResultWrap .slot-response-result-content {
   height: calc(100% - 40px);
   overflow: auto;
 }
-.ResponseResultWrap :global(.response-result-content) :global(.content-item) {
+.ResponseResultWrap .slot-response-result-content .slot-content-item {
   height: 100%;
 }
-.ResponseResultWrap :global(.visualization-empty) {
+.ResponseResultWrap .slot-visualization-empty {
   position: absolute;
   top: 50%;
   left: 50%;

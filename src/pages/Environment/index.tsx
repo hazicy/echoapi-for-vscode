@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/base';
 import { IconFont } from '@/components/ui';
@@ -92,11 +93,11 @@ const Environment = (props: Props) => {
   return (
     <EnvironmentContainer>
       <LeftMenuContainer>
-        <div className="env-menu-top">
+        <div className={slots["env-menu-top"]}>
           <Menus selectedKeys={selectedKeys} setSelectedKeys={setSelectedKeys} />
         </div>
         <Button
-          className="env-menu-new"
+          className={slots["env-menu-new"]}
           onClick={envCreate}
           type="dashed"
           icon={<IconFont type="icon-add-line" />}

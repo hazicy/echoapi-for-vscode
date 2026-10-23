@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { memo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -52,7 +53,7 @@ const HeaderAction: React.FC<Props> = (props) => {
         />
       )}
 
-      <div className="action-right" style={style}>
+      <div className={slots["action-right"]} style={style}>
         <Flex gap={8}>
           <Tooltip title={t("common.schema.raw")}>
             <IconFont
@@ -74,7 +75,7 @@ const HeaderAction: React.FC<Props> = (props) => {
             icon={<IconFont type="icon-import-curl" />}
             mode="light"
             size="small"
-            className="preview-btn"
+            className={slots["preview-btn"]}
             type="primary"
             onClick={() => setModalType("import")}
           >

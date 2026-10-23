@@ -4,10 +4,10 @@
   background: var(--color-bg-right);
   padding-top: 8px;
 }
-.CurlWrap :global(.beautify-btn) {
+.CurlWrap .slot-beautify-btn {
   width: 120px;
   margin: 20px 10px;
 }
-.CurlWrap :global(.curl-code-editor) {
+.CurlWrap .slot-curl-code-editor {
   height: calc(100% - 70px);
 }

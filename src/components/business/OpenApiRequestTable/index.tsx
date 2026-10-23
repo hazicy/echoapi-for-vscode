@@ -223,6 +223,7 @@ const RequestTable: FC<RequestTableProps> = memo(
       <RequestTableContainer>
         <BasicTableWrap>
           <BasicTable
+            tableLayout="fixed"
             rowKey="param_id"
             cellPadding={0}
             dragLastDisabled

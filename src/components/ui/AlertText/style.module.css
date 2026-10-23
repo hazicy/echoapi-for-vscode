@@ -4,6 +4,6 @@
   line-height: 22px;
   background-color: var(--color-bg-page);
 }
-.AlertTextWrap :global(.beautify-alert-message) {
+.AlertTextWrap .slot-beautify-alert-message {
   color: var(--font-content-color);
 }

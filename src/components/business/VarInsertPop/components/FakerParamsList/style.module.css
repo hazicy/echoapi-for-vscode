@@ -4,7 +4,7 @@
   background-color: var(--color-primary-opacity);
   box-sizing: border-box;
 }
-.FakerParamsContainer :global(.param) {
+.FakerParamsContainer .slot-param {
   display: flex;
   flex-direction: column;
   margin-bottom: 6px;
@@ -13,10 +13,10 @@
   background-color: var(--popover-select-bg-color);
   box-sizing: border-box;
 }
-.FakerParamsContainer :global(.param):global(.footer) {
+.FakerParamsContainer .slot-param.slot-footer {
   margin-bottom: 0;
 }
-.FakerParamsContainer :global(.param) :global(.param-item) {
+.FakerParamsContainer .slot-param .slot-param-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,43 +26,43 @@
   gap: 4px;
   box-sizing: border-box;
 }
-.FakerParamsContainer :global(.param) :global(.param-item) :global(.param-item-del) {
+.FakerParamsContainer .slot-param .slot-param-item .slot-param-item-del {
   visibility: hidden;
 }
-.FakerParamsContainer :global(.param) :global(.param-item):hover {
+.FakerParamsContainer .slot-param .slot-param-item:hover {
   background-color: var(--form-hover-color);
 }
-.FakerParamsContainer :global(.param) :global(.param-item):hover :global(.param-item-del) {
+.FakerParamsContainer .slot-param .slot-param-item:hover .slot-param-item-del {
   visibility: visible;
 }
-.FakerParamsContainer :global(.param) :global(.param-item) :global(.param-content) {
+.FakerParamsContainer .slot-param .slot-param-item .slot-param-content {
   display: flex;
   flex: 1;
   align-items: center;
   gap: 4px;
 }
-.FakerParamsContainer :global(.param) :global(.param-item) :global(.param-item-desc) {
+.FakerParamsContainer .slot-param .slot-param-item .slot-param-item-desc {
   width: 120px;
   font-size: 14px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.FakerParamsContainer :global(.param) :global(.param-item) :global(.param-item-com) {
+.FakerParamsContainer .slot-param .slot-param-item .slot-param-item-com {
   flex: 1;
   width: 0;
 }
-.FakerParamsContainer :global(.param) :global(.param-item) :global(.param-item-com) > * {
+.FakerParamsContainer .slot-param .slot-param-item .slot-param-item-com > * {
   width: 100%;
 }
-.FakerParamsContainer :global(.param) :global(.param-item) :global(.param-item-com) :global(.beautify-select) {
+.FakerParamsContainer .slot-param .slot-param-item .slot-param-item-com .slot-beautify-select {
   min-width: 88px;
 }
-.FakerParamsContainer :global(.selection) {
+.FakerParamsContainer .slot-selection {
   display: flex;
   flex-wrap: wrap;
 }
-.FakerParamsContainer :global(.selection) :global(.select-item) {
+.FakerParamsContainer .slot-selection .slot-select-item {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -77,7 +77,7 @@
   box-sizing: border-box;
   gap: 4px;
 }
-.FakerParamsContainer :global(.selection) :global(.select-item):hover {
+.FakerParamsContainer .slot-selection .slot-select-item:hover {
   border: 1px solid var(--selected-border-color);
   color: var(--color-primary);
   background-color: var(--popover-select-bg-color);

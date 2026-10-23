@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useEffect, useMemo, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
@@ -182,35 +183,35 @@ const EnvVar = (props: EnvVarsProps) => {
         currentItem &&
         ReactDOM.createPortal(
           <VarMentionsWrap>
-            <div className="related-env-vars" style={offset}>
-              <div className="env-vars-list" id="scroll-env-vars">
+            <div className={slots["related-env-vars"]} style={offset}>
+              <div className={slots["env-vars-list"]} id="scroll-env-vars">
                 {map(markVarsList, (item: any, index) => (
                   <div
                     key={`${item.key} + ${index}`}
-                    className={cn('env-vars-default', { active: itemIndex === index })}
+                    className={cn(slots["env-vars-default"], { [slots.active]: itemIndex === index })}
                     onFocus={setItemIndex.bind(null, index)}
                     onMouseOver={setItemIndex.bind(null, index)}
                     onMouseDown={handleSelectMarkItem.bind(null, item.key)}
                   >
                     <div
-                      className={cn('default-type', {
-                        e: item?.envType === 'env',
+                      className={cn(slots["default-type"], {
+                        [slots.e]: item?.envType === 'env',
                       })}
                     >
                       {item?.envType === 'env' ? 'E' : 'G'}
                     </div>
-                    <div className="default-name text-ellipse2">{item.key}</div>
-                    <div className="default-icon"></div>
+                    <div className={[slots["default-name"], "text-ellipse2"].join(" ")}>{item.key}</div>
+                    <div className={slots["default-icon"]}></div>
                   </div>
                 ))}
               </div>
-              <div className="env-vars-desc">
+              <div className={slots["env-vars-desc"]}>
                 <div className="desc-title">{t('supplement.var_name')}</div>
-                <div className="var-name">{currentItem.key}</div>
+                <div className={slots["var-name"]}>{currentItem.key}</div>
                 <div className="desc-title" style={{ margin: '16px 0 0 0' }}>
                   {t('supplement.var_value')}
                 </div>
-                <div className="var-value">
+                <div className={slots["var-value"]}>
                   {calcValue(
                     currentItem?.envType === 'env'
                       ? currentItem?.current_value || currentItem?.value
@@ -220,7 +221,7 @@ const EnvVar = (props: EnvVarsProps) => {
                 <div className="desc-title" style={{ margin: '16px 0 0 0' }}>
                   {t('supplement.scope')}
                 </div>
-                <div className="var-value">
+                <div className={slots["var-value"]}>
                   {currentItem?.envType === 'env'
                     ? t('supplement.var_env')
                     : t('supplement.var_glo')}

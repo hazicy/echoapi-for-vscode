@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React from 'react';
 
 import { Flex } from '@/components/ui/base';
@@ -46,9 +47,9 @@ const RowItem = (props: Props) => {
       <Flex gap={12} align="center" style={{ maxWidth: '80%', overflow: 'hidden' }}>
         <span
           className={classNames({
-            'icon-span': true,
-            message: isEqual('message', data.action),
-            send: isEqual('send', data.action),
+            [slots["icon-span"]]: true,
+            [slots.message]: isEqual('message', data.action),
+            [slots.send]: isEqual('send', data.action),
           })}
         >
           <WsIcon action={data.action} />
@@ -60,7 +61,7 @@ const RowItem = (props: Props) => {
         {includes(['message', 'send'], data.action) && (
           <>
             <Tooltip title={calcTipsContent(data)}>
-              <IconFont className="flow-icon" type="icon-tips" />
+              <IconFont className={slots["flow-icon"]} type="icon-tips" />
             </Tooltip>
           </>
         )}

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { ResponseSize } from "@/components/business";
 import HttpExecDetail from "@/components/business/HttpExecDetail";
 import { IconFont } from "@/components/ui";
@@ -50,10 +51,10 @@ const EventItem = (props: EventItemProps) => {
     <CustomPopoverWrap style={{ width: 240 }}>
       {toUpper(status.http) !== "OK" && (
         <Flex vertical gap={8}>
-          <Typography.Text className="error-title">
+          <Typography.Text className={slots["error-title"]}>
             {t("common.request_error")}
           </Typography.Text>
-          <Typography.Text className="error-text">
+          <Typography.Text className={slots["error-text"]}>
             {status.http}
           </Typography.Text>
         </Flex>
@@ -61,11 +62,11 @@ const EventItem = (props: EventItemProps) => {
 
       {isArray(status.assert) && !isEmpty(status.assert) && (
         <Flex style={{ marginTop: 8 }} vertical gap={8}>
-          <Typography.Text className="error-title">
+          <Typography.Text className={slots["error-title"]}>
             Assertion Error
           </Typography.Text>
           {status.assert.map((i: any) => (
-            <Typography.Text className="error-text">
+            <Typography.Text className={slots["error-text"]}>
               {i?.error?.message}
             </Typography.Text>
           ))}
@@ -81,7 +82,7 @@ const EventItem = (props: EventItemProps) => {
           handleViewDetail(value);
         }}
         justify="space-between"
-        className="item-container"
+        className={slots["item-container"]}
       >
         <Flex style={{ marginRight: 16 }} gap={16}>
           <Checkbox

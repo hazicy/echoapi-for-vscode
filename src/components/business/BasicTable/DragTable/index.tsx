@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { Table as AntdTable } from '@/components/ui/base';
 
 import { DndContext } from '@dnd-kit/core';
@@ -34,7 +35,7 @@ const DragTable = <DataSource extends AnyObject>(props: BasicTableProps<DataSour
   // When draggable, add handle column
   nextColumns?.unshift({
     key: SORT_KEY,
-    className: 'sort-handle',
+    className: slots["sort-handle"],
     width: 30,
   });
 

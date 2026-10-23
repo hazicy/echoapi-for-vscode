@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, memo } from 'react';
 
 import dayjs from 'dayjs';
@@ -32,7 +33,7 @@ const Cookie: FC<Props> = memo(
     const renderItem = (text: string) => {
       return (
         <Tooltip placement="topLeft" title={text}>
-          <span className="table-cell-span">{text || '-'}</span>
+          <span className={slots["table-cell-span"]}>{text || '-'}</span>
         </Tooltip>
       );
     };

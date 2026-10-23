@@ -3,16 +3,16 @@
   width: 100%;
   height: 32px;
 }
-.ExternalContainer :global(.beautify-input) {
+.ExternalContainer .slot-beautify-input {
   flex: 1;
 }
-.ExternalContainer > :global(.beautify-input-affix-wrapper) :global(.beautify-input) {
+.ExternalContainer > .slot-beautify-input-affix-wrapper .slot-beautify-input {
   color: var(--font-light-color);
 }
-.ExternalContainer :global(.beautify-input-affix-wrapper) {
+.ExternalContainer .slot-beautify-input-affix-wrapper {
   padding: 0;
 }
-.ExternalContainer :global(.external-tips) {
+.ExternalContainer .slot-external-tips {
   display: flex;
   align-items: center;
   padding: 5px 8px;
@@ -22,6 +22,6 @@
   border-color: red !important;
   background-color: var(--color-bg-page);
 }
-.ExternalContainer :global(.external-tips):hover {
+.ExternalContainer .slot-external-tips:hover {
   border-color: var(--color-primary);
 }

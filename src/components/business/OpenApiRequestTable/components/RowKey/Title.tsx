@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -38,7 +39,7 @@ const RowKeyTitle: FC<Props> = memo(
                 </div>
               }
             >
-              <span className={cn('query-eq-icon-wrap', isEqual(queryAddEqual, 1) ? 'active' : '')}>
+              <span className={cn(slots["query-eq-icon-wrap"], isEqual(queryAddEqual, 1) ? slots.active : '')}>
                 <IconFont
                   type="icon-equal"
                   onClick={() => {

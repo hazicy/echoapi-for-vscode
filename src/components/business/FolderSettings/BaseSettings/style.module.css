@@ -4,7 +4,7 @@
   width: 100%;
   height: 100%;
 }
-.BaseSettingsContainer :global(.folder-base-config-wrap) :global(.folder-base-input) {
+.BaseSettingsContainer .slot-folder-base-config-wrap .slot-folder-base-input {
   /* padding-right: 0; */
   padding-left: 0;
   width: 100%;
@@ -16,37 +16,37 @@
       outline: none; */
   font-size: 16px;
 }
-.BaseSettingsContainer :global(.folder-base-config-wrap) :global(.folder-base-input):hover,
-.BaseSettingsContainer :global(.folder-base-config-wrap) :global(.folder-base-input):focus {
+.BaseSettingsContainer .slot-folder-base-config-wrap .slot-folder-base-input:hover,
+.BaseSettingsContainer .slot-folder-base-config-wrap .slot-folder-base-input:focus {
   border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
   background: var(--vscode-input-background);
   box-shadow: none;
 }
-.BaseSettingsContainer :global(.folder-base-config-wrap) :global(.folder-save-wrap) :global(.beautify-btn) {
+.BaseSettingsContainer .slot-folder-base-config-wrap .slot-folder-save-wrap .slot-beautify-btn {
   margin-left: 20px;
 }
-.BaseSettingsContainer :global(.folder-base-config-wrap) :global(.folder-config-wrap) {
+.BaseSettingsContainer .slot-folder-base-config-wrap .slot-folder-config-wrap {
   margin-top: 12px;
   width: 100%;
 }
-.BaseSettingsContainer :global(.folder-base-config-wrap) :global(.folder-config-wrap) :global(.folder-config-item-wrap) {
+.BaseSettingsContainer .slot-folder-base-config-wrap .slot-folder-config-wrap .slot-folder-config-item-wrap {
   overflow: hidden;
   flex: 1;
 }
-.BaseSettingsContainer :global(.folder-base-config-wrap) :global(.folder-config-wrap) :global(.folder-config-item-wrap) > :global(.label) {
+.BaseSettingsContainer .slot-folder-base-config-wrap .slot-folder-config-wrap .slot-folder-config-item-wrap > .slot-label {
   color: var(--font-light-color);
 }
-.BaseSettingsContainer :global(.folder-base-config-wrap) :global(.folder-config-wrap) :global(.folder-config-item-wrap):last-of-type {
+.BaseSettingsContainer .slot-folder-base-config-wrap .slot-folder-config-wrap .slot-folder-config-item-wrap:last-of-type {
   margin-left: 12px;
 }
-.BaseSettingsContainer :global(.folder-base-config-wrap) :global(.folder-config-wrap) :global(.folder-config-item-wrap) :global(.beautify-select) {
+.BaseSettingsContainer .slot-folder-base-config-wrap .slot-folder-config-wrap .slot-folder-config-item-wrap .slot-beautify-select {
   margin-top: 12px;
 }
-.BaseSettingsContainer :global(.folder-content-wrap) {
+.BaseSettingsContainer .slot-folder-content-wrap {
   overflow-y: auto;
   margin-top: 12px;
 }
-.BaseSettingsContainer :global(.folder-content-wrap) :global(.byte-md-wrap) {
+.BaseSettingsContainer .slot-folder-content-wrap .slot-byte-md-wrap {
   flex: 1;
   height: 0;
 }

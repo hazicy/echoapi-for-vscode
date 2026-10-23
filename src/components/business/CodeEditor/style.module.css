@@ -1,23 +1,24 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .EditorWrap {
   position: relative;
   width: 100%;
   min-width: 0;
   border-bottom: 1px solid var(--color-border);
 }
-.EditorWrap :global(.code-editor-host) {
+.EditorWrap .slot-code-editor-host {
   height: 100%;
   overflow: hidden;
 }
-.EditorWrap :global(.cm-editor) {
+.EditorWrap [class~="cm-editor"] {
   height: 100%;
 }
-.EditorWrap :global(.cm-scroller) {
+.EditorWrap [class~="cm-scroller"] {
   scrollbar-width: thin;
 }
-.EditorWrap :global(.cm-scroller)::-webkit-scrollbar {
+.EditorWrap [class~="cm-scroller"]::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-.EditorWrap :global(.cm-scroller)::-webkit-scrollbar-thumb {
+.EditorWrap [class~="cm-scroller"]::-webkit-scrollbar-thumb {
   background: var(--vscode-scrollbarSlider-background, #8886);
 }

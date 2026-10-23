@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { Key, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Tree } from '@/components/ui/base';
@@ -105,7 +106,7 @@ const SchemaTree = (props: TreeProps & { setTreeData: React.Dispatch<any>; query
 
   return (
     <SchemaTreeContainer>
-      <div className="search">
+      <div className={slots.search}>
         <Input
           placeholder={t('graphql.search_placeholder')}
           prefix={<IconFont type="icon-search-line" />}
@@ -113,7 +114,7 @@ const SchemaTree = (props: TreeProps & { setTreeData: React.Dispatch<any>; query
           onChange={onChange}
         />
       </div>
-      <div className="schema-tree" ref={treeRef}>
+      <div className={slots["schema-tree"]} ref={treeRef}>
         <DirectoryTree
           height={treeHeight}
           {...props}

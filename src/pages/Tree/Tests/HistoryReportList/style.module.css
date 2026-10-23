@@ -6,11 +6,11 @@
   overflow-y: auto;
   margin-top: 12px;
 }
-.HistoryReportListWrapper :global(.icon-ok) {
+.HistoryReportListWrapper .slot-icon-ok {
   width: 12px;
   color: #26CEA4;
 }
-.HistoryReportListWrapper :global(.icon-small-close) {
+.HistoryReportListWrapper .slot-icon-small-close {
   width: 12px;
   color: #EC3E3E;
 }
@@ -25,6 +25,6 @@
 .HistoryReportListItem:hover {
   background: var(--vscode-list-hoverBackground, #303030);
 }
-.HistoryReportListItem:global(.select-item) {
+.HistoryReportListItem.slot-select-item {
   background: var(--vscode-list-hoverBackground, #303030);
 }

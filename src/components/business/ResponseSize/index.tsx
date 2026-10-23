@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -141,59 +142,59 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
       isValidArray(['Certificate', 'Issuer', 'ValidUntil']);
     return (
       <CustomProxyWrap gap={8} style={{ width: 300 }}>
-        <Flex className="icon-wrapper">
+        <Flex className={slots["icon-wrapper"]}>
           <IconFont type="icon-network" />
         </Flex>
-        <Flex gap={4} className="right-wrapper" style={{ width: 0 }} flex={1} vertical>
-          <Flex justify="space-between" style={{ width: '100%' }} className="name" gap={8}>
+        <Flex gap={4} className={slots["right-wrapper"]} style={{ width: 0 }} flex={1} vertical>
+          <Flex justify="space-between" style={{ width: '100%' }} className={slots.name} gap={8}>
             <span>Network</span>
           </Flex>
           {isValidValue(get(network, 'HTTPVersion')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className="desc" gap={8}>
+            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={8}>
               <span>HTTP Version</span>
               <span>{get(network, 'HTTPVersion')}</span>
             </Flex>
           )}
           {isValidValue(get(network, 'LocalAddress')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className="desc" gap={8}>
+            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={8}>
               <span>Local Address</span>
               <span>{get(network, 'LocalAddress')}</span>
             </Flex>
           )}
           {isValidValue(get(network, 'RemoteAddress')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className="desc" gap={8}>
+            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={8}>
               <span>Remote Address</span>
               <span>{get(network, 'RemoteAddress')}</span>
             </Flex>
           )}
           {firstLine && <Divider style={{ margin: '8px 0' }} />}
           {isValidValue(get(network, 'TLSProtocol')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className="desc" gap={8}>
+            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={8}>
               <span>TLS Protocol</span>
               <span>{get(network, 'TLSProtocol')}</span>
             </Flex>
           )}
           {isValidValue(get(network, 'CipherName')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className="desc" gap={8}>
+            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={8}>
               <span>Cipher Name</span>
               <span>{get(network, 'CipherName')}</span>
             </Flex>
           )}
           {secondLine && <Divider style={{ margin: '8px 0' }} />}
           {isValidValue(get(network, 'Certificate')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className="desc" gap={4}>
+            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={4}>
               <span>Certificate CN</span>
               <span>{get(network, 'Certificate')}</span>
             </Flex>
           )}
           {isValidValue(get(network, 'Issuer')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className="desc" gap={4}>
+            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={4}>
               <span>Issuer CN</span>
               <span>{get(network, 'Issuer')}</span>
             </Flex>
           )}
           {isValidValue(get(network, 'ValidUntil')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className="desc" gap={4}>
+            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={4}>
               <span>Valid Until</span>
               <span>{get(network, 'ValidUntil')}</span>
             </Flex>
@@ -207,7 +208,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
     <CustomPopoverWrap style={{ width: 180 }}>
       <Row gutter={[0, 8]}>
         <Col span={24}>
-          <Flex justify="space-between" className="response-size-title">
+          <Flex justify="space-between" className={slots["response-size-title"]}>
             <span>{t('common.response_indicators.network')}</span>
           </Flex>
         </Col>
@@ -313,24 +314,24 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
     <CustomSizePopoverWrap vertical style={{ width: 300 }}>
       <Flex gap={4} vertical>
         <Flex style={{ width: '100%' }} gap={8}>
-          <Flex className="icon-wrapper">
+          <Flex className={slots["icon-wrapper"]}>
             <IconFont type="icon-download" />
           </Flex>
           <Flex flex={1} gap={4} vertical>
-            <Flex justify="space-between" className="name" gap={4}>
+            <Flex justify="space-between" className={slots.name} gap={4}>
               <span>Response Size</span>
               <span>{responseSizeFormat?.responseSize}</span>
             </Flex>
-            <Flex justify="space-between" className="desc" gap={4}>
+            <Flex justify="space-between" className={slots.desc} gap={4}>
               <span>Headers</span>
               <span>{responseSizeFormat?.responseHeaders}</span>
             </Flex>
-            <Flex justify="space-between" className="desc" gap={4}>
+            <Flex justify="space-between" className={slots.desc} gap={4}>
               <span>Body</span>
               <span>{responseSizeFormat?.responseBody}</span>
             </Flex>
             {has(formatSize, 'uncompressedResponseBody') && (
-              <Flex justify="space-between" className="desc" gap={4}>
+              <Flex justify="space-between" className={slots.desc} gap={4}>
                 <span>Uncompressed</span>
                 <span>{responseSizeFormat?.responseUnCompress}</span>
               </Flex>
@@ -339,19 +340,19 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
         </Flex>
         <Divider style={{ margin: '8px 0' }} />
         <Flex style={{ width: '100%' }} gap={8}>
-          <Flex className="icon-wrapper request">
+          <Flex className={[slots["icon-wrapper"], slots.request].join(" ")}>
             <IconFont rotate={180} type="icon-download" />
           </Flex>
           <Flex flex={1} gap={4} vertical>
-            <Flex justify="space-between" className="name" gap={4}>
+            <Flex justify="space-between" className={slots.name} gap={4}>
               <span>Request Size</span>
               <span>{responseSizeFormat?.requestSize}</span>
             </Flex>
-            <Flex justify="space-between" className="desc" gap={4}>
+            <Flex justify="space-between" className={slots.desc} gap={4}>
               <span>Headers</span>
               <span>{responseSizeFormat?.requestHeaders}</span>
             </Flex>
-            <Flex justify="space-between" className="desc" gap={4}>
+            <Flex justify="space-between" className={slots.desc} gap={4}>
               <span>Body</span>
               <span>{responseSizeFormat?.requestBody}</span>
             </Flex>
@@ -364,18 +365,18 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
   const responseCodeContent = (
     <CustomCodePopoverWrap gap={8} style={{ width: 240 }}>
       <Flex
-        className={classNames('icon-code', { success: String(responseCode).charAt(0) === '2' })}
+        className={classNames(slots["icon-code"], { [slots.success]: String(responseCode).charAt(0) === '2' })}
       >
         <IconFont
           type={String(responseCode).charAt(0) === '2' ? 'icon-row-checked' : 'icon-client-close'}
         />
       </Flex>
       <Flex gap={4} vertical>
-        <Flex className="name" gap={4}>
+        <Flex className={slots.name} gap={4}>
           <span>{responseCode}</span>
           <span>{responseCodeDesc?.name}</span>
         </Flex>
-        <Flex className="desc" wrap="wrap">
+        <Flex className={slots.desc} wrap="wrap">
           {responseCodeDesc?.desc}
         </Flex>
       </Flex>
@@ -392,7 +393,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
         <Flex flex={1} vertical>
           <Row gutter={[8, 8]}>
             <Col span={24}>
-              <Flex justify="space-between" className="new-response-size-title">
+              <Flex justify="space-between" className={slots["new-response-size-title"]}>
                 Response Time
                 <span>{`${toFixed(formatTimings?.total?.duration || 0)}ms`}</span>
               </Flex>
@@ -400,18 +401,18 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           </Row>
 
           {map(timeContentList, ({ key, name, lineLeftSize, lineRightSize, width, marginLeft }) => (
-            <Row className={classNames(key, { empty: isEqual(width, 0) })} gutter={[8, 8]}>
+            <Row className={classNames(slots[key] ?? key, { [slots.empty]: isEqual(width, 0) })} gutter={[8, 8]}>
               <Col style={{ lineHeight: '26px' }} span={8}>
                 {name}
               </Col>
               <Col style={{ height: 24 }} span={12}>
-                <div className="progress">
-                  <div style={{ left: `${lineLeftSize}%` }} className="progress-left"></div>
+                <div className={slots.progress}>
+                  <div style={{ left: `${lineLeftSize}%` }} className={slots["progress-left"]}></div>
                   <div
                     style={{ width: `${width}%`, marginLeft: `${marginLeft}%` }}
-                    className={classNames('progress-content', key)}
+                    className={classNames(slots["progress-content"], slots[key] ?? key)}
                   ></div>
-                  <div style={{ left: `${lineRightSize}%` }} className="progress-right"></div>
+                  <div style={{ left: `${lineRightSize}%` }} className={slots["progress-right"]}></div>
                 </div>
               </Col>
               <Col style={{ textAlign: 'right', lineHeight: '26px' }} span={4}>
@@ -428,7 +429,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
     <CustomPopoverWrap style={{ width: 240 }}>
       <Row gutter={[0, 8]}>
         <Col span={24}>
-          <Flex justify="space-between" className="response-size-title">
+          <Flex justify="space-between" className={slots["response-size-title"]}>
             <span>{t('common.response_indicators.event')}</span>
             <span>{t('common.response_indicators.use_time')}</span>
           </Flex>
@@ -437,7 +438,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           <Col span={24}>
             <Flex flex={1} justify="space-between">
               <span>Request</span>
-              <span className="time">{toFixed(timings.request)}ms</span>
+              <span className={slots.time}>{toFixed(timings.request)}ms</span>
             </Flex>
           </Col>
         )}
@@ -446,7 +447,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           <Col span={24}>
             <Flex justify="space-between">
               <span>Socket</span>
-              <span className="time">{toFixed(timings.socket)}ms</span>
+              <span className={slots.time}>{toFixed(timings.socket)}ms</span>
             </Flex>
           </Col>
         )}
@@ -454,7 +455,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           <Col span={24}>
             <Flex justify="space-between">
               <span>Lookup</span>
-              <span className="time">{toFixed(timings.lookup)}ms</span>
+              <span className={slots.time}>{toFixed(timings.lookup)}ms</span>
             </Flex>
           </Col>
         )}
@@ -463,7 +464,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           <Col span={24}>
             <Flex justify="space-between">
               <span>Connect</span>
-              <span className="time">{toFixed(timings.connect)}ms</span>
+              <span className={slots.time}>{toFixed(timings.connect)}ms</span>
             </Flex>
           </Col>
         )}
@@ -472,7 +473,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           <Col span={24}>
             <Flex justify="space-between">
               <span>SecureConnect</span>
-              <span className="time">{toFixed(timings.secure_connect)}ms</span>
+              <span className={slots.time}>{toFixed(timings.secure_connect)}ms</span>
             </Flex>
           </Col>
         )}
@@ -481,7 +482,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           <Col span={24}>
             <Flex justify="space-between">
               <span>Response</span>
-              <span className="time">{toFixed(timings.response)}ms</span>
+              <span className={slots.time}>{toFixed(timings.response)}ms</span>
             </Flex>
           </Col>
         )}
@@ -490,7 +491,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           <Col span={24}>
             <Flex justify="space-between">
               <span>End</span>
-              <span className="time">{toFixed(timings.end)}ms</span>
+              <span className={slots.time}>{toFixed(timings.end)}ms</span>
             </Flex>
           </Col>
         )}
@@ -498,7 +499,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           <Col span={24}>
             <Flex justify="space-between">
               <span>Done</span>
-              <span className="time">{toFixed(timings.done)}ms</span>
+              <span className={slots.time}>{toFixed(timings.done)}ms</span>
             </Flex>
           </Col>
         )}
@@ -556,7 +557,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
                 </svg>
                 {!isEmpty(timings) ? (
                   <CustomPopover content={isNewTimings ? newTimeContent : timeContent}>
-                    <span className="cur-pointer">{responseTimeStr}</span>
+                    <span className={slots["cur-pointer"]}>{responseTimeStr}</span>
                   </CustomPopover>
                 ) : (
                   <span>{responseTimeStr}</span>
@@ -606,7 +607,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           <CustomPopover content={isNewTimings ? newProxyContent : proxyContent}>
             <IconFont
               type="icon-network"
-              className="cur-pointer"
+              className={slots["cur-pointer"]}
               style={{
                 color: systemProxy === 2 ? themeToken.fontContentColor : themeToken.colorSuccess,
               }}
@@ -622,7 +623,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
         <Tooltip title={t('response.download_tip')}>
           <IconFont
             style={{ fontSize: 14 }}
-            className="cur-pointer"
+            className={slots["cur-pointer"]}
             onClick={handleDownload}
             type="icon-download-response"
           />

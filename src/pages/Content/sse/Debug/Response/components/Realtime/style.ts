@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import moduleStyles from "./style.module.css";
 import { withStyles } from "@/components/ui/base/withStyles";
 
@@ -12,7 +13,7 @@ export const FlowResponseRenderTitleWrap = withStyles<"div", {}>(
   moduleStyles["FlowResponseRenderTitleWrap"],
   {
     selector: "ui_42227ec2_FlowResponseRenderTitleWrap",
-    attrs: { className: "title" },
+    attrs: { className: slots.title },
   },
 );
 

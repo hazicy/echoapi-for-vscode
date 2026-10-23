@@ -1,34 +1,35 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .LinkWarper {
   width: 100%;
 }
-.LinkWarper :global(.tree-panel) {
+.LinkWarper .slot-tree-panel {
   margin-top: 12px;
   min-height: 360px;
   max-height: 360px;
   background-color: transparent;
 }
-.LinkWarper :global(.tree-panel) :global(.beautify-tree-node-selected) {
+.LinkWarper .slot-tree-panel [class~="beautify-tree-node-selected"] {
   /* color: red; */
   background-color: var(--color-bg-page);
 }
-.LinkWarper :global(.tree-panel) :global(.model-node-item) {
+.LinkWarper .slot-tree-panel .slot-model-node-item {
   display: flex;
   flex-direction: row;
 }
-.LinkWarper :global(.tree-panel) :global(.model-node-item) :global(.icon-panel) {
+.LinkWarper .slot-tree-panel .slot-model-node-item .slot-icon-panel {
   padding: 0 5px;
 }
-.LinkWarper :global(.tree-panel) :global(.model-node-item) :global(.icon-panel) :global(.icon-model) {
+.LinkWarper .slot-tree-panel .slot-model-node-item .slot-icon-panel .slot-icon-model {
   padding: 0 3px 0 8px;
   color: #30d4ad;
 }
-.LinkWarper :global(.tree-panel) :global(.model-node-item) :global(.node-text) {
+.LinkWarper .slot-tree-panel .slot-model-node-item .slot-node-text {
   flex: 1;
   width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.LinkWarper :global(.empty-list) {
+.LinkWarper .slot-empty-list {
   margin-top: 12px;
   height: 404px;
   text-align: center;

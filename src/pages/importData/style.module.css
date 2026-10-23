@@ -3,10 +3,10 @@
   align-items: center;
   background: var(--color-bg-right);
 }
-.ImportDataWrap :global(.beautify-spin-nested-loading) {
+.ImportDataWrap .slot-beautify-spin-nested-loading {
   height: 100%;
   width: 100%;
 }
-.ImportDataWrap :global(.beautify-spin-nested-loading) :global(.beautify-spin-container) {
+.ImportDataWrap .slot-beautify-spin-nested-loading .slot-beautify-spin-container {
   height: 100%;
 }

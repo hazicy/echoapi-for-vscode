@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -36,7 +37,7 @@ const HttpExecDetail = ({ httpExecDetail }: HttpExecDetailProps) => {
 
           return (
             <Alert
-              className="assert-item"
+              className={slots["assert-item"]}
               style={{
                 color: item.passed ? themeToken.colorSuccess : themeToken.colorError,
                 backgroundColor: item.passed
@@ -84,13 +85,13 @@ const HttpExecDetail = ({ httpExecDetail }: HttpExecDetailProps) => {
     <HttpExecDetailWrapper $token={themeToken}>
       <Flex vertical gap={12} style={{ marginBottom: 16 }} flex={1}>
         {request?.url && (
-          <Flex align="flex-start" className="url-container">
+          <Flex align="flex-start" className={slots["url-container"]}>
             <PrefixIcon
               type="api"
               method={request?.method}
               style={{ width: 'auto', marginTop: 4 }}
             />
-            <div className="url">{request?.url}</div>
+            <div className={slots.url}>{request?.url}</div>
           </Flex>
         )}
         {!isEmpty(response) && <ResponseSize response={response} showLine={false} showIcon={false} showProxy={true}/>}

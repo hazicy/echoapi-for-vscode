@@ -1,3 +1,5 @@
+import slots from "@/components/ui/base/slots.module.css";
+import { moduleClassNames } from "@/components/ui/base/moduleClassNames";
 import React from 'react';
 
 import { TagProps } from '@/components/ui/base';
@@ -17,7 +19,7 @@ type Props = TagProps & {
 const ApisTypeTag: React.FC<Props> = ({ targetType, method, ...resetProps }) => {
   return (
     <Tag
-      className={`${ColorMap(targetType, method)}`}
+      className={moduleClassNames(slots, `${ColorMap(targetType, method)}`)}
       style={{ fontWeight: 700 }}
       bordered={false}
       {...resetProps}

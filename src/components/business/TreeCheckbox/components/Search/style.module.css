@@ -2,27 +2,27 @@
   width: 100%;
   height: 32px;
 }
-.SearchContainer :global(.beautify-flex) {
+.SearchContainer .slot-beautify-flex {
   height: 100%;
 }
-.SearchContainer :global(.beautify-flex) :global(.beautify-input-affix-wrapper) {
+.SearchContainer .slot-beautify-flex .slot-beautify-input-affix-wrapper {
   padding: 6px 8px;
   height: 100%;
   background-color: var(--search-bg-color);
 }
-.SearchContainer :global(.beautify-flex) :global(.beautify-input-affix-wrapper) :global(.beautify-input-suffix) {
+.SearchContainer .slot-beautify-flex .slot-beautify-input-affix-wrapper .slot-beautify-input-suffix {
   min-width: 80px;
 }
-.SearchContainer :global(.search-wrap) {
+.SearchContainer .slot-search-wrap {
   flex: 1;
 }
-.SearchContainer :global(.search-wrap) svg {
+.SearchContainer .slot-search-wrap svg {
   color: var(--icon-color);
 }
-.SearchContainer :global(.search-wrap) :global(.apis-mark-select-wrap) :global(.beautify-select-selector) {
+.SearchContainer .slot-search-wrap .slot-apis-mark-select-wrap .slot-beautify-select-selector {
   padding-left: 0;
 }
-.SearchContainer :global(.add-btn) {
+.SearchContainer .slot-add-btn {
   margin-left: 4px;
   width: 32px;
   height: 32px;

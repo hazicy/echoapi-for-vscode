@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import useTheme from '@/hooks/useTheme';
 
 import IconFont from '../IconFont';
@@ -20,7 +21,7 @@ const SelectOtherItem = ({ styles, fontSize, children, onClick }: SelectOtherIte
         style={{ fontSize: fontSize || themeToken.fontSize14 }}
         type="icon-environment-control"
       />
-      <div className="text" style={{ fontSize: fontSize || themeToken.fontSize14 }}>
+      <div className={slots.text} style={{ fontSize: fontSize || themeToken.fontSize14 }}>
         {children}
       </div>
     </SelectOtherItemWrapper>

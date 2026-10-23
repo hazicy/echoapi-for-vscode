@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { forwardRef, useEffect } from "react";
 import type { HTMLAttributes } from "react";
 import css from "./IconFont.module.css";
@@ -26,7 +27,7 @@ const IconFont = forwardRef<
     <span
       {...props}
       ref={ref}
-      className={["anticon", css.icon, spin && css.spin, className]
+      className={[slots.anticon, css.icon, spin && css.spin, className]
         .filter(Boolean)
         .join(" ")}
       style={{

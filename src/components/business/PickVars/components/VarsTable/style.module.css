@@ -1,19 +1,20 @@
-.VarsTableWrap :global(.beautify-table-thead) :global(.beautify-table-cell) {
+/* Third-party DOM classes are matched only within the component selectors below. */
+.VarsTableWrap [class~="beautify-table-thead"] [class~="beautify-table-cell"] {
   padding: 4px 10px;
 }
-.VarsTableWrap :global(.beautify-table-tbody) :global(.beautify-table-cell) :global(.beautify-input-outlined),
-.VarsTableWrap :global(.beautify-table-tbody) :global(.beautify-table-cell) :global(.beautify-select-selector) {
+.VarsTableWrap [class~="beautify-table-tbody"] [class~="beautify-table-cell"] .slot-beautify-input-outlined,
+.VarsTableWrap [class~="beautify-table-tbody"] [class~="beautify-table-cell"] .slot-beautify-select-selector {
   border-radius: 0;
   border-color: transparent;
 }
-.VarsTableWrap :global(.beautify-table-tbody) :global(.beautify-table-cell) :global(.beautify-input-outlined):hover,
-.VarsTableWrap :global(.beautify-table-tbody) :global(.beautify-table-cell) :global(.beautify-input-outlined):focus {
+.VarsTableWrap [class~="beautify-table-tbody"] [class~="beautify-table-cell"] .slot-beautify-input-outlined:hover,
+.VarsTableWrap [class~="beautify-table-tbody"] [class~="beautify-table-cell"] .slot-beautify-input-outlined:focus {
   border-color: var(--color-primary);
 }
-.VarsTableWrap :global(.tool-icon):hover {
+.VarsTableWrap .slot-tool-icon:hover {
   color: var(--color-primary);
 }
-.VarsTableWrap :global(.delete-vars-params-icon):hover {
+.VarsTableWrap .slot-delete-vars-params-icon:hover {
   color: #ff583e;
 }
 .PopoverContentWrap {

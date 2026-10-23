@@ -3,16 +3,16 @@
   max-height: 500px;
   overflow-y: auto;
 }
-.FuncModalContainer :global(.inner-content) {
+.FuncModalContainer .slot-inner-content {
   width: 100%;
   gap: 2px;
 }
-.FuncModalContainer :global(.inner-content) :global(.tip-title) {
+.FuncModalContainer .slot-inner-content .slot-tip-title {
   font-size: 12px;
   font-weight: 400;
   color: var(--font-light-color);
 }
-.FuncModalContainer :global(.inner-content) :global(.item) {
+.FuncModalContainer .slot-inner-content .slot-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,16 +21,16 @@
   box-sizing: border-box;
   line-height: 32px;
 }
-.FuncModalContainer :global(.inner-content) :global(.item):hover {
+.FuncModalContainer .slot-inner-content .slot-item:hover {
   border-radius: 4px;
   background: var(--vscode-editorHoverWidget-statusBarBackground);
   cursor: pointer;
 }
-.FuncModalContainer :global(.inner-content) :global(.item):global(.active) {
+.FuncModalContainer .slot-inner-content .slot-item.slot-active {
   border-radius: 4px;
   background: var(--popover-select-bg-hover-color);
 }
-.FuncModalContainer :global(.inner-content) :global(.item) :global(.name) {
+.FuncModalContainer .slot-inner-content .slot-item .slot-name {
   flex: 1;
   width: 0;
   overflow: hidden;
@@ -40,7 +40,7 @@
   font-weight: 400;
   color: var(--font-content-color);
 }
-.FuncModalContainer :global(.inner-content) :global(.item) :global(.render) {
+.FuncModalContainer .slot-inner-content .slot-item .slot-render {
   display: flex;
   width: 190px;
   font-size: 12px;
@@ -48,7 +48,7 @@
   color: var(--font-light-color);
   gap: 8px;
 }
-.FuncModalContainer :global(.inner-content) :global(.item) :global(.render):global(.custom-desc) {
+.FuncModalContainer .slot-inner-content .slot-item .slot-render.slot-custom-desc {
   display: inline-block;
   max-width: 190px;
   text-align: right;

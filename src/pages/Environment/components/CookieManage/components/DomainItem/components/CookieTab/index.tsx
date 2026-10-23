@@ -1,3 +1,5 @@
+import slots from "@/components/ui/base/slots.module.css";
+import { moduleClassNames } from "@/components/ui/base/moduleClassNames";
 import { Dispatch } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -198,10 +200,10 @@ const Index = (props: Props) => {
         return (
           <TabItemContainer
             key={cookie_id}
-            className={`cookie-list-item ${value?.activeId === cookie_id ? 'active' : ''}`}
+            className={moduleClassNames(slots, `cookie-list-item ${value?.activeId === cookie_id ? 'active' : ''}`)}
           >
             <div
-              className="cookie-name"
+              className={slots["cookie-name"]}
               onClick={(e) => {
                 e.stopPropagation();
                 handleChangeEditorItem(item);
@@ -210,7 +212,7 @@ const Index = (props: Props) => {
               {key}
             </div>
             <div
-              className="cookie-item-close"
+              className={slots["cookie-item-close"]}
               onClick={(e) => {
                 e.stopPropagation();
                 handleRemoveCookieItem(item);
@@ -222,17 +224,17 @@ const Index = (props: Props) => {
         );
       })}
       <TabItemContainer
-        className={'cookie-list-item active cookie-item-add'}
+        className={["cookie-list-item", slots.active, slots["cookie-item-add"]].join(" ")}
         onClick={() => addCookieItem(domain)}
       >
-        <div className="cookie-name">{t('global_setting.cookie_detail.add_cookie')}</div>
+        <div className={slots["cookie-name"]}>{t('global_setting.cookie_detail.add_cookie')}</div>
         <IconFont type="icon-add-line" />
       </TabItemContainer>
       {value?.isShowArea === domain ? (
         <>
           <TextArea
             autoSize
-            className="beautify-scroll-bar"
+            className={slots["beautify-scroll-bar"]}
             value={value?.cookieText || getCookieText(value?.activeItem)}
             onChange={(e) => {
               handleChangeDomain('cookieText', e.target.value);

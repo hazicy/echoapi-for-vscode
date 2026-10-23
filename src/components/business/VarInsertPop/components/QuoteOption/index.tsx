@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -57,10 +58,10 @@ const Index = ({ value, onChange }: Props) => {
     <QuoteOptionContainer>
       {size(list) ? (
         <>
-          <div className="list">
+          <div className={slots.list}>
             {map(list, (item, index) => (
               <div
-                className="list-item"
+                className={slots["list-item"]}
                 onFocus={() => setIndex(index)}
                 onMouseOver={() => setIndex(index)}
                 onMouseDown={() => {
@@ -69,33 +70,33 @@ const Index = ({ value, onChange }: Props) => {
                 }}
               >
                 <div
-                  className={classNames('list-item-icon', {
-                    e: item?.type === ListType.env,
-                    g: item?.type === ListType.global,
+                  className={classNames(slots["list-item-icon"], {
+                    [slots.e]: item?.type === ListType.env,
+                    [slots.g]: item?.type === ListType.global,
                   })}
                 >
                   {item?.type === ListType.env ? 'E' : 'G'}
                 </div>
-                <div className="list-item-key">
+                <div className={slots["list-item-key"]}>
                   <Tooltip title={item.key}>{item.key}</Tooltip>
                 </div>
               </div>
             ))}
           </div>
-          <div className="content">
+          <div className={slots.content}>
             {list[index] && (
               <>
                 <Flex gap={4} vertical>
-                  <span className="label">{t('supplement.var_name')}</span>
-                  <span className="value">{list[index]?.key || ''}</span>
+                  <span className={slots.label}>{t('supplement.var_name')}</span>
+                  <span className={slots.value}>{list[index]?.key || ''}</span>
                 </Flex>
                 <Flex gap={4} vertical>
-                  <span className="label">{t('supplement.var_value')}</span>
-                  <span className="value">{list[index]?.value || ''}</span>
+                  <span className={slots.label}>{t('supplement.var_value')}</span>
+                  <span className={slots.value}>{list[index]?.value || ''}</span>
                 </Flex>
                 <Flex gap={4} vertical>
-                  <span className="label">{t('supplement.scope')}</span>
-                  <span className="value">
+                  <span className={slots.label}>{t('supplement.scope')}</span>
+                  <span className={slots.value}>
                     {list[index]?.type === ListType.env
                       ? t('supplement.var_env')
                       : t('supplement.var_glo')}

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, lazy, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -50,7 +51,7 @@ const Index: FC<ApiComponentType> = ({ apisData, onApisDataChange }) => {
         mode="light"
         size="small"
         style={{ padding: '4px 6px' }}
-         className='beautify-text-btn-highlight'
+         className={slots["beautify-text-btn-highlight"]}
       >
         {t('system_settings.shortcuts.apis_detail.code')}
       </Button>

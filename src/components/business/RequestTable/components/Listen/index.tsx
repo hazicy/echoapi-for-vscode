@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, memo } from 'react';
 
 import { Flex, Switch } from '@/components/ui/base';
@@ -23,7 +24,7 @@ export const RowDescription: FC<Props> = memo((props) => {
 
   return (
     <RowItemWrap>
-      <Flex align="center" className="row-listen">
+      <Flex align="center" className={slots["row-listen"]}>
         <Switch
           checked={isEqual(rowData?.value, '1')}
           onChange={(checked) => handleChange?.('value', checked ? '1' : '-1')}

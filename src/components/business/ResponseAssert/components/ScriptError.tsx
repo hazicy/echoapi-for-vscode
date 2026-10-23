@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React from 'react';
 
 import { isEqual, isUndefined } from 'lodash';
@@ -22,7 +23,7 @@ const ScriptError: React.FC<Props> = (props) => {
 
   return (
     <ScriptErrorContainer>
-      <span className="runtime-script-error">{sendingData?.responseError?.message}</span>
+      <span className={slots["runtime-script-error"]}>{sendingData?.responseError?.message}</span>
     </ScriptErrorContainer>
   );
 };

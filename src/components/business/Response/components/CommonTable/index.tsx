@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React from 'react';
 
 import { entries, isArray, isPlainObject } from 'lodash';
@@ -44,7 +45,7 @@ const CommonTable: React.FC<Props> = ({ value }) => {
       title: 'name',
       dataIndex: 'key',
       render: (_text: any, rowData: any, _rowIndex: number) => (
-        <span className="table-cell-span">{rowData.key || rowData.name}</span>
+        <span className={slots["table-cell-span"]}>{rowData.key || rowData.name}</span>
       ),
     },
     {
@@ -52,7 +53,7 @@ const CommonTable: React.FC<Props> = ({ value }) => {
       title: 'value',
       dataIndex: 'value',
       render: (text: any, _rowData: any, _rowIndex: number) => (
-        <span className="table-cell-span">{calcValue(text)}</span>
+        <span className={slots["table-cell-span"]}>{calcValue(text)}</span>
       ),
     },
   ];

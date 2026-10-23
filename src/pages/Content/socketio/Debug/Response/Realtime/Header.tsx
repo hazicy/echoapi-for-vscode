@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useTranslation } from 'react-i18next';
 
 import { Flex, Input, Select } from '@/components/ui/base';
@@ -23,10 +24,10 @@ const Header = (props: Props) => {
 
   return (
     <>
-      <Flex justify="space-between" className="ws-header">
+      <Flex justify="space-between" className={slots["ws-header"]}>
         <Flex align="center" gap={8} style={{ wordBreak: 'keep-all' }}>
           <Input
-            prefix={<IconFont type="icon-search-line" className="icon-color" />}
+            prefix={<IconFont type="icon-search-line" className={slots["icon-color"]} />}
             placeholder={t('ws.response.search_tip')}
             value={filterValue}
             onChange={(e) => setFilterValue(e?.target?.value || '')}

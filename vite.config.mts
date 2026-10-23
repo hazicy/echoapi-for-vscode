@@ -1,3 +1,4 @@
+import { generateScopedName, sharedSlots } from './scripts/css-modules.mjs';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -15,6 +16,7 @@ export default defineConfig(({ mode }) => {
     throw new Error('ECHOAPI_LANGUAGE must be auto, en, or zh-cn.');
   }
   return {
+    css: { modules: { generateScopedName }, postcss: { plugins: [sharedSlots()] } },
     base: './',
     resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
     define: { __ECHOAPI_LANGUAGE__: JSON.stringify(language) },

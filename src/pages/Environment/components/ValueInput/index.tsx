@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { Input } from '@/components/ui/base';
 
 import ValueInputContainer from './style';
@@ -31,7 +32,7 @@ const Index = (props: Props) => {
 
   return (
     <ValueInputContainer>
-      <div className="value-input-textarea">
+      <div className={slots["value-input-textarea"]}>
         <Input.TextArea
           disabled={disabled}
           autoSize={false}

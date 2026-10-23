@@ -1,8 +1,9 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .ContentWrap {
   height: 500px;
   overflow: auto;
 }
-.ContentWrap :global(.beautify-collapse-content-box) {
+.ContentWrap .slot-beautify-collapse-content-box {
   padding: 0 !important;
 }
 .VersionEditWrap {
@@ -10,20 +11,20 @@
   flex-direction: column;
   height: 320px;
 }
-.VersionEditWrap :global(.code-diff-host) {
+.VersionEditWrap .slot-code-diff-host {
   height: 100%;
   min-height: 0;
 }
-.VersionEditWrap :global(.cm-mergeView) {
+.VersionEditWrap [class~="cm-mergeView"] {
   height: 100%;
 }
-.VersionEditWrap :global(.cm-mergeViewEditors) {
+.VersionEditWrap [class~="cm-mergeViewEditors"] {
   height: 100%;
 }
-.VersionEditWrap :global(.cm-mergeViewEditor) {
+.VersionEditWrap [class~="cm-mergeViewEditor"] {
   min-width: 0;
   overflow: hidden;
 }
-.VersionEditWrap :global(.cm-editor) {
+.VersionEditWrap [class~="cm-editor"] {
   height: 100%;
 }

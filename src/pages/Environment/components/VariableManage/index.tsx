@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -172,12 +173,12 @@ const Index = () => {
 
   return (
     <VariableContainer>
-      <Flex className="variable-flex" vertical gap={15}>
+      <Flex className={slots["variable-flex"]} vertical gap={15}>
         <Flex vertical gap={15} className="variable-title">
-          <span className="title"> {t('global_setting.variables_detail.title')}</span>
-          <span className="tip">{t('global_setting.variables_detail.tips')}</span>
+          <span className={slots.title}> {t('global_setting.variables_detail.title')}</span>
+          <span className={slots.tip}>{t('global_setting.variables_detail.tips')}</span>
         </Flex>
-        <div className="variable-content">
+        <div className={slots["variable-content"]}>
           <Table
             rowKey={(_, i) => `${i}`}
             dataSource={getGlobalVarsList()}

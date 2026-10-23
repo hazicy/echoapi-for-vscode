@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-escape */
+import slots from "@/components/ui/base/slots.module.css";
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -693,7 +694,7 @@ const Oauth2 = (props: Props) => {
       >
         <VarInput suffix={refreshSuffix} hasBorder />
       </Form.Item>
-      <div className="divider"></div>
+      <div className={slots.divider}></div>
       <Flex style={{ marginBottom: 20 }} justify="space-between" align="center">
         <span style={{ color: 'var(--font-title-color)' }}>{t('common.auth.get_token')}</span>
         <Tooltip title={includes(

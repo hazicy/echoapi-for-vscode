@@ -1,13 +1,14 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .FlexSegmented {
   display: flex;
   width: 100%;
   height: 100%;
   overflow: auto;
 }
-.FlexSegmented :global(.custom-segmented-tabs-wrap) {
+.FlexSegmented .slot-custom-segmented-tabs-wrap {
   padding-top: 12px;
 }
-.FlexSegmented :global(.custom-segmented-tabs-wrap) :global(.segmented-tabs-header) {
+.FlexSegmented .slot-custom-segmented-tabs-wrap .slot-segmented-tabs-header {
   padding: 0 16px;
 }
 .ApiDebugContainer {
@@ -20,7 +21,7 @@
 .ApiDebugContainer > header {
   padding: 0 16px;
 }
-.ApiDebugContainer > header :global(.beautify-btn) {
+.ApiDebugContainer > header .slot-beautify-btn {
   height: 32px;
   width: 70px;
 }
@@ -37,14 +38,14 @@
   background-color: var(--popover-select-bg-color);
   box-shadow: 0 6px 16px 0 #000000, 0 3px 6px -4px #000000, 0 9px 28px 8px #000000;
 }
-.SaveDropDownContainer :global(.beautify-tree) {
+.SaveDropDownContainer [class~="beautify-tree"] {
   width: 100%;
   background-color: var(--popover-select-bg-color);
 }
-.SaveDropDownContainer :global(.beautify-tree) :global(.beautify-tree-list) {
+.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-list"] {
   padding-right: 12px;
 }
-.SaveDropDownContainer :global(.beautify-tree) :global(.beautify-tree-node-content-wrapper) {
+.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] {
   display: flex;
   flex: 1;
   flex-direction: row;
@@ -53,11 +54,11 @@
   width: 0;
   height: 100%;
 }
-.SaveDropDownContainer :global(.beautify-tree) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-title) {
+.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] [class~="beautify-tree-title"] {
   display: flex;
   width: 100%;
 }
-.SaveDropDownContainer :global(.beautify-tree) :global(.beautify-tree-node-content-wrapper) :global(.beautify-tree-title) :global(.dropdown-tree-title) {
+.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] [class~="beautify-tree-title"] .slot-dropdown-tree-title {
   width: 100%;
   overflow: hidden;
   white-space: nowrap;

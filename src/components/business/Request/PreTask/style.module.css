@@ -3,20 +3,20 @@
   height: 100%;
   overflow-y: auto;
 }
-.RequestPreTaskContainer > :global(.beautify-btn) {
+.RequestPreTaskContainer > .slot-beautify-btn {
   width: 100%;
   font-size: var(--font-size-14);
 }
-.RequestPreTaskContainer :global(.item-container) :global(.beautify-typography) {
+.RequestPreTaskContainer .slot-item-container .slot-beautify-typography {
   font-size: var(--font-size-14);
   white-space: nowrap;
 }
-.RequestPreTaskContainer :global(.item-container) :global(.beautify-input) {
+.RequestPreTaskContainer .slot-item-container .slot-beautify-input {
   font-size: var(--font-size-14);
 }
-.RequestPreTaskContainer :global(.item-container) :global(.beautify-collapse-header) :global(.beautify-input) {
+.RequestPreTaskContainer .slot-item-container .slot-beautify-collapse-header .slot-beautify-input {
   height: 24px;
 }
-.RequestPreTaskContainer :global(.beautify-select-selector) {
+.RequestPreTaskContainer .slot-beautify-select-selector {
   font-size: var(--font-size-14);
 }

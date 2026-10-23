@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -48,10 +49,10 @@ const VersionComparison = (props: Props) => {
       <VersionModalWrap>
         <Flex vertical gap={16}>
           <Flex align="center" gap={16} justify="space-between">
-            <span className="version-tip">
+            <span className={slots["version-tip"]}>
               {'Local Data'}
             </span>
-            <span className="version-tip">
+            <span className={slots["version-tip"]}>
               {'Cloud Data'}
             </span>
           </Flex>

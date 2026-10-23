@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useMemo } from 'react';
 
 import { Flex } from '@/components/ui/base';
@@ -36,14 +37,14 @@ const Index = ({ type, onChange }: Props) => {
   }, [type]);
 
   return (
-    <Flex vertical className="options-list">
+    <Flex vertical className={slots["options-list"]}>
       {list.map(({ label, desc, key, icon }) => {
         return (
           <ListItemContainer key={key} onClick={() => onChange({ key })}>
-            <div className={classNames('icon-content', key)}>{iconRender(key, icon)}</div>
+            <div className={classNames(slots["icon-content"], slots[key] ?? key)}>{iconRender(key, icon)}</div>
             <Flex flex={1} gap={4} vertical>
-              <span className="label">{label}</span>
-              <span className="desc">{desc}</span>
+              <span className={slots.label}>{label}</span>
+              <span className={slots.desc}>{desc}</span>
             </Flex>
             <IconFont rotate={-90} type="icon-arrow-down" />
           </ListItemContainer>

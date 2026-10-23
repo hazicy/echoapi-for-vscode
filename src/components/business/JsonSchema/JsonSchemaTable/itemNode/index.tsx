@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -283,17 +284,17 @@ const ItemNode: React.FC<ItemNodeProps> = (props) => {
     <>
       <div
         className={cn({
-          'table-tr': true,
-          'data-item': true,
-          'is-hidden': overrideData === null,
+          [slots["table-tr"]]: true,
+          [slots["data-item"]]: true,
+          [slots["is-hidden"]]: overrideData === null,
         })}
       >
         {renderRowItem(value)}
       </div>
       {isEmptyJson && (
-        <div className="empty-row-panel">
-          <span className="empty-row-tip">{t('common.schema.no_field')}</span>
-          <span onClick={handleAddNode} className="btn-add-item">
+        <div className={slots["empty-row-panel"]}>
+          <span className={slots["empty-row-tip"]}>{t('common.schema.no_field')}</span>
+          <span onClick={handleAddNode} className={slots["btn-add-item"]}>
             {t('common.schema.please_add')}
           </span>
         </div>

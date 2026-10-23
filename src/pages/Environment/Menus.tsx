@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -68,7 +69,7 @@ const Menus: FC<Props> = ({ selectedKeys, setSelectedKeys }) => {
 
   const getItem = ({ label, key, icon, children, type, isEnv }: MenuItem): MenuItem => {
     return {
-      label: <MenuChildTitle className="menu-item-name">{label}</MenuChildTitle>,
+      label: <MenuChildTitle className={slots["menu-item-name"]}>{label}</MenuChildTitle>,
       key,
       icon: icon ? (
         isEnv ? (
@@ -94,12 +95,12 @@ const Menus: FC<Props> = ({ selectedKeys, setSelectedKeys }) => {
         <EnvLabel>
           <Flex justify="start" align="center" flex={1} style={{ width: '10%' }}>
             <Tooltip title={name}>
-              <span className="name menu-item-name">{name}</span>
+              <span className={[slots.name, slots["menu-item-name"]].join(" ")}>{name}</span>
             </Tooltip>
-            {is_private === 1 && <span className="private">{t('global_setting.type')}</span>}
+            {is_private === 1 && <span className={slots.private}>{t('global_setting.type')}</span>}
           </Flex>
           <div className="operation-content">
-            <span className="operation">
+            <span className={slots.operation}>
               {env_id !== '2' && !isLocal && (
                 <IconFont
                   onClick={(e) => {

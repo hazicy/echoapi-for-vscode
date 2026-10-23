@@ -6,41 +6,41 @@
   justify-content: space-between;
   /* height: 300px; */
   font-size: 12px;
-}.SettingsWrapperContainer :global(.set-title) {
+}.SettingsWrapperContainer .slot-set-title {
   padding-left: 10px;
   height: 26px;
   line-height: 26px;
-}.SettingsWrapperContainer :global(.base-setting) {
+}.SettingsWrapperContainer .slot-base-setting {
   padding: 10px 0;
   /* padding-left: 5px; */
   position: relative;
-}.SettingsWrapperContainer :global(.base-setting) :global(.object),
-.SettingsWrapperContainer :global(.base-setting) :global(.any),
-.SettingsWrapperContainer :global(.base-setting) :global(.allOf),
-.SettingsWrapperContainer :global(.base-setting) :global(.oneOf),
-.SettingsWrapperContainer :global(.base-setting) :global(.anyOf) {
+}.SettingsWrapperContainer .slot-base-setting .slot-object,
+.SettingsWrapperContainer .slot-base-setting .slot-any,
+.SettingsWrapperContainer .slot-base-setting .slot-allOf,
+.SettingsWrapperContainer .slot-base-setting .slot-oneOf,
+.SettingsWrapperContainer .slot-base-setting .slot-anyOf {
   color: #1890ff;
-}.SettingsWrapperContainer :global(.base-setting) :global(.string),
-.SettingsWrapperContainer :global(.base-setting) :global(.array) {
+}.SettingsWrapperContainer .slot-base-setting .slot-string,
+.SettingsWrapperContainer .slot-base-setting .slot-array {
   color: #43a047;
-}.SettingsWrapperContainer :global(.base-setting) :global(.null) {
+}.SettingsWrapperContainer .slot-base-setting .slot-null {
   color: #fa7600;
-}.SettingsWrapperContainer :global(.base-setting) :global(.boolean),
-.SettingsWrapperContainer :global(.base-setting) :global(.integer),
-.SettingsWrapperContainer :global(.base-setting) :global(.number) {
+}.SettingsWrapperContainer .slot-base-setting .slot-boolean,
+.SettingsWrapperContainer .slot-base-setting .slot-integer,
+.SettingsWrapperContainer .slot-base-setting .slot-number {
   color: #eb2f96;
-}.SettingsWrapperContainer :global(.base-setting):global(.schema-td-warper) :global(.indent-panel) {
+}.SettingsWrapperContainer .slot-base-setting.slot-schema-td-warper .slot-indent-panel {
   margin-right: 8px;
   margin-left: 8px;
   width: 18px;
   height: 32px;
   border: var(--color-border) 0 solid;
   border-left-width: 1px;
-}.SettingsWrapperContainer :global(.base-setting):global(.schema-td-warper):global(.schema-width-auto) {
+}.SettingsWrapperContainer .slot-base-setting.slot-schema-td-warper.slot-schema-width-auto {
   /* width: auto !important; */
-}.SettingsWrapperContainer :global(.base-setting) :global(.caret-icon) svg {
+}.SettingsWrapperContainer .slot-base-setting .slot-caret-icon svg {
   font-size: 10px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.btn-sort) {
+}.SettingsWrapperContainer .slot-base-setting .slot-btn-sort {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,21 +49,21 @@
   background-color: transparent;
   opacity: 0;
   cursor: move;
-}.SettingsWrapperContainer :global(.base-setting) :global(.btn-sort) svg {
+}.SettingsWrapperContainer .slot-base-setting .slot-btn-sort svg {
   width: 6px;
   height: 10px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.btn-sort):hover {
+}.SettingsWrapperContainer .slot-base-setting .slot-btn-sort:hover {
   opacity: 1;
-}.SettingsWrapperContainer :global(.base-setting) :global(.expand-btn) {
+}.SettingsWrapperContainer .slot-base-setting .slot-expand-btn {
   display: flex;
   align-items: center;
   width: 24px;
   height: 24px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.expand-btn) svg {
+}.SettingsWrapperContainer .slot-base-setting .slot-expand-btn svg {
   width: 8px;
   height: 8px;
   fill: var(--color-border);
-}.SettingsWrapperContainer :global(.base-setting) :global(.empty-btn) {
+}.SettingsWrapperContainer .slot-base-setting .slot-empty-btn {
   display: flex;
   position: relative;
   z-index: 9;
@@ -71,14 +71,14 @@
   margin: 0 8px;
   width: 18px;
   height: 32px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.empty-btn) :global(.empty-btn-l) {
+}.SettingsWrapperContainer .slot-base-setting .slot-empty-btn .slot-empty-btn-l {
   flex: 1;
   border-bottom: var(--color-border) 1px solid;
   border-left: var(--color-border) 1px solid;
-}.SettingsWrapperContainer :global(.base-setting) :global(.empty-btn) :global(.empty-btn-r) {
+}.SettingsWrapperContainer .slot-base-setting .slot-empty-btn .slot-empty-btn-r {
   flex: 1;
   border-left: var(--color-border) 1px solid;
-}.SettingsWrapperContainer :global(.base-setting) :global(.hidden-input) {
+}.SettingsWrapperContainer .slot-base-setting .slot-hidden-input {
   display: inline-block;
   padding: 0 8px !important;
   min-width: 80px;
@@ -89,15 +89,15 @@
   background: inherit;
   opacity: 0;
   box-sizing: border-box;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-key-input-front) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input-front {
   position: static !important;
   border: none;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-key-input-front) span {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input-front span {
   padding: 4px 8px;
   border-radius: 4px;
   color: var(--color-primary);
   background-color: var(--color-primary-opacity);
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-key-input) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input {
   display: flex;
   position: absolute;
   top: 0;
@@ -112,22 +112,22 @@
   font-size: var(--font-size-12);
   cursor: text;
   /* border-bottom: 1px solid var(--color-border); */
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-key-input):global(.readonly) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input.slot-readonly {
   position: static;
   width: auto !important;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-key-input):global(.readonly) span {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input.slot-readonly span {
   padding: 4px 8px;
   border-radius: 4px;
   color: var(--color-primary);
   background-color: var(--color-primary-opacity);
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-key-input-hover) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input-hover {
   border: none;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-key-input-hover):hover,
-.SettingsWrapperContainer :global(.base-setting) :global(.item-key-input-hover):focus {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input-hover:hover,
+.SettingsWrapperContainer .slot-base-setting .slot-item-key-input-hover:focus {
   /* border-radius: 4px; */
   border-bottom: 1px solid var(--color-primary);
   background-color: transparent;
-}.SettingsWrapperContainer :global(.base-setting) :global(.schema-text-box) {
+}.SettingsWrapperContainer .slot-base-setting .slot-schema-text-box {
   flex: 1;
   margin-left: 8px;
   width: 0;
@@ -139,21 +139,21 @@
   color: var(--content-color-fourth);
   background-color: transparent;
   /* stylelint-disable-next-line selector-class-pattern */
-}.SettingsWrapperContainer :global(.base-setting) :global(.schema-text-box):not(:global(.items),:global( .NodeRoot)):hover {
+}.SettingsWrapperContainer .slot-base-setting .slot-schema-text-box:not(.slot-items,.slot-NodeRoot):hover {
   border-bottom: var(--base-color-brand) 1px solid;
   color: var(--content-color-primary);
-}.SettingsWrapperContainer :global(.base-setting) :global(.schema-text-box):global(.item):hover {
+}.SettingsWrapperContainer .slot-base-setting .slot-schema-text-box.slot-item:hover {
   border-bottom: transparent 1px solid;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-type) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-type {
   display: flex;
   height: 27px !important;
   border-radius: 0;
   border-color: transparent;
   background-color: transparent;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-type) :global(.sel-title) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-type .slot-sel-title {
   margin-right: 10px;
   width: 45px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-type) :global(.spn-require) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-type .slot-spn-require {
   width: 16px;
   height: 16px;
   /* display: flex; */
@@ -165,38 +165,38 @@
   text-align: center;
   color: var(--content-color-fourth);
   background-color: #ccc;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-type) :global(.spn-require):global(.checked) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-type .slot-spn-require.slot-checked {
   color: var(--base-color-brand);
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-type):hover {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-type:hover {
   border-color: var(--base-color-brand) !important;
-}.SettingsWrapperContainer :global(.base-setting) :global(.btns-panel) {
+}.SettingsWrapperContainer .slot-base-setting .slot-btns-panel {
   display: flex;
   align-items: center;
   width: 80px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-all-line) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-all-line {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   padding-bottom: 8px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-all-line):global(.item-necessarily) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-all-line.slot-item-necessarily {
   height: 28px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line {
   display: flex;
   flex: 1;
   flex-direction: row;
   align-items: center;
   padding-bottom: 10px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.beautify-input-number) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-beautify-input-number {
   display: flex;
   align-items: center;
   box-sizing: border-box;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.beautify-input-number) :global(.beautify-input-inner-wrapper) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-beautify-input-number .slot-beautify-input-inner-wrapper {
   height: 28px !important;
   border: none !important;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.beautify-input),
-.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.beautify-select-selector) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-beautify-input,
+.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-beautify-select-selector {
   font-size: 12px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.case-title) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-title {
   display: flex;
   /* justify-content: flex-end; */
   align-items: center;
@@ -205,9 +205,9 @@
   height: 28px;
   text-align: right;
   white-space: nowrap;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.case-title) :global(.beautify-checkbox) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-title .slot-beautify-checkbox {
   margin-right: 8px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.case-value) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value {
   display: flex;
   flex: 1;
   flex-direction: row-reverse;
@@ -217,51 +217,51 @@
           border: 1px solid transparent;
           height: 37px;
         } */
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.case-value) :global(.beautify-input),
-.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.case-value) :global(.beautify-textarea) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-input,
+.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-textarea {
   min-width: 100px !important;
   height: 28px;
   /* border-radius: 4px; */
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.case-value) :global(.beautify-input-inner-wrapper),
-.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.case-value) :global(.beautify-input-number) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-input-inner-wrapper,
+.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-input-number {
   min-width: 100px;
   height: 28px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.case-value) :global(.beautify-textarea-wrapper) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-textarea-wrapper {
   min-width: 100px;
   height: 60px !important;
   border-color: transparent;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.case-value) :global(.beautify-textarea-wrapper) :global(.beautify-textarea) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-textarea-wrapper .slot-beautify-textarea {
   height: 100%;
   overflow-y: auto;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.case-value) :global(.beautify-textarea):focus {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-textarea:focus {
   background-color: transparent;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.case-value) :global(.beautify-select) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-select {
   min-width: 100px;
   height: 28px;
-}.SettingsWrapperContainer :global(.base-setting) :global(.item-line) :global(.case-value-block) {
+}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value-block {
   flex: 1;
-}.SettingsWrapperContainer :global(.source-setting) {
+}.SettingsWrapperContainer .slot-source-setting {
   flex: 1;
   margin: 10px 0;
   padding-top: 10px;
   height: 0;
   border: 1px solid transparent;
   border: 1px solid var(--color-border);
-}.SettingsWrapperContainer :global(.beautify-popconfirm-description) {
+}.SettingsWrapperContainer .slot-beautify-popconfirm-description {
   position: relative;
-}.SettingsWrapperContainer :global(.beautify-input) {
+}.SettingsWrapperContainer .slot-beautify-input {
   background-color: var(--search-big-select-color);
   box-shadow: none;
-}.SettingsWrapperContainer :global(.beautify-input-number) {
+}.SettingsWrapperContainer .slot-beautify-input-number {
   background-color: var(--search-big-select-color);
   box-shadow: none;
-}.SettingsWrapperContainer :global(.beautify-select) {
+}.SettingsWrapperContainer .slot-beautify-select {
   background-color: var(--search-big-select-color);
-}.SettingsWrapperContainer :global(.beautify-select) * {
+}.SettingsWrapperContainer .slot-beautify-select * {
   box-shadow: none !important;
-}.SettingsWrapperContainer :global(.beautify-select-selector) {
+}.SettingsWrapperContainer .slot-beautify-select-selector {
   box-shadow: none;
-}.SettingsWrapperContainer :global(.source-help) {
+}.SettingsWrapperContainer .slot-source-help {
   position: absolute;
   bottom: -31px;
   left: 0;
@@ -269,18 +269,18 @@
   line-height: 24px;
   font-weight: 400;
   text-align: left;
-}.SettingsWrapperContainer :global(.source-help) :global(.source-tip) {
+}.SettingsWrapperContainer .slot-source-help .slot-source-tip {
   cursor: pointer;
-}.SettingsWrapperContainer :global(.source-help) button {
+}.SettingsWrapperContainer .slot-source-help button {
   margin-inline-start: 8px;
   height: 24px;
-}.SettingsWrapperContainer :global(.beautify-segmented) {
+}.SettingsWrapperContainer .slot-beautify-segmented {
   width: 100%;
-}.SettingsWrapperContainer :global(.beautify-segmented) :global(.beautify-segmented-item) {
+}.SettingsWrapperContainer .slot-beautify-segmented .slot-beautify-segmented-item {
   flex: 1;
 }.SettingContent {
   min-width: 14px;
-}.SettingContent :global(.set-icon) {
+}.SettingContent .slot-set-icon {
   visibility: hidden;
   color: var(--font-light-color);
   cursor: pointer;

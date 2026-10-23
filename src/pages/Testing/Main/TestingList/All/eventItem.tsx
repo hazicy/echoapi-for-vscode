@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import PrefixIcon from "@/components/ui/PrefixIcon";
 import { STATUS_CODE } from "@/constants/common";
 import { Checkbox, Flex, Tooltip, Typography } from '@/components/ui/base';
@@ -15,7 +16,7 @@ type EventItemProps = {
 const EventItem = (props: EventItemProps) => {
   const { value, onChange } = props;
   return (
-    <Flex justify="space-between" className="item-container">
+    <Flex justify="space-between" className={slots["item-container"]}>
       <Flex style={{ overflow: "hidden" }} gap={16}>
         <Checkbox
           checked={value.enabled === STATUS_CODE.ENABLE}

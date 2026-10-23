@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { Dispatch, useMemo } from 'react';
 
 import produce from 'immer';
@@ -43,9 +44,9 @@ const Index = (props: Props) => {
 
   const renderLabel = (key: string) => (
     <LabelContainer>
-      <div className="domin">{key}</div>
-      <span className="title-cookie">Cookie</span>
-      <span className="num">{Object.keys(value?.cookieObj[key]).length}</span>
+      <div className={slots.domin}>{key}</div>
+      <span className={slots["title-cookie"]}>Cookie</span>
+      <span className={slots.num}>{Object.keys(value?.cookieObj[key]).length}</span>
       <IconFont
         onClick={(e) => {
           e.stopPropagation();

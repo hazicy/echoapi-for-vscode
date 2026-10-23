@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useState } from "react";
 import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip";
 import { Popover as BasePopover } from "@base-ui/react/popover";
@@ -129,7 +130,7 @@ export function Popover({
           <BasePopover.Popup
             className={cx(
               css.popup,
-              "beautify-popover-inner",
+              slots["beautify-popover-inner"],
               overlayClassName,
             )}
             style={overlayInnerStyle}
@@ -164,7 +165,7 @@ function MenuItems({ items = [], onClick, selectedKeys = [] }: MenuProps) {
             <BaseMenu.SubmenuTrigger
               className={cx(
                 css.menuItem,
-                "beautify-dropdown-menu-submenu",
+                slots["beautify-dropdown-menu-submenu"],
                 item.className,
               )}
               disabled={item.disabled}
@@ -176,7 +177,7 @@ function MenuItems({ items = [], onClick, selectedKeys = [] }: MenuProps) {
             <BaseMenu.Portal>
               <BaseMenu.Positioner className={css.positioner} sideOffset={2}>
                 <BaseMenu.Popup
-                  className={cx(css.popup, "beautify-dropdown-menu")}
+                  className={cx(css.popup, slots["beautify-dropdown-menu"])}
                 >
                   <MenuItems
                     items={item.children ?? []}
@@ -193,9 +194,9 @@ function MenuItems({ items = [], onClick, selectedKeys = [] }: MenuProps) {
             disabled={item?.disabled}
             className={cx(
               css.menuItem,
-              "beautify-dropdown-menu-item",
+              slots["beautify-dropdown-menu-item"],
               selectedKeys.includes(String(item?.key)) &&
-                "beautify-dropdown-menu-item-selected",
+                slots["beautify-dropdown-menu-item-selected"],
               item?.className,
             )}
             style={item?.style}
@@ -241,7 +242,7 @@ export function Dropdown({
   const Root = context ? BaseContextMenu.Root : BaseMenu.Root;
   const body = (
     <BaseMenu.Popup
-      className={cx(css.popup, "beautify-dropdown-menu", overlayClassName)}
+      className={cx(css.popup, slots["beautify-dropdown-menu"], overlayClassName)}
       style={overlayStyle}
     >
       {overlay ?? <MenuItems {...menu} />}
@@ -294,7 +295,7 @@ export function Menu({
     props.defaultOpenKeys ?? [],
   );
   const render = (rows: MenuItemProps[]) => (
-    <ul role="menu" className={cx(css.menu, "beautify-menu", className)}>
+    <ul role="menu" className={cx(css.menu, slots["beautify-menu"], className)}>
       {rows.map((item, index) => (
         <li key={String(item.key ?? index)} role="none">
           {item.type === "divider" ? (
@@ -306,9 +307,9 @@ export function Menu({
               disabled={item.disabled}
               className={cx(
                 css.menuItem,
-                "beautify-menu-item",
+                slots["beautify-menu-item"],
                 selectedKeys.includes(String(item.key)) &&
-                  "beautify-menu-item-selected",
+                  slots["beautify-menu-item-selected"],
               )}
               onClick={(e) => {
                 if (item.children) {
@@ -428,8 +429,8 @@ Dropdown.Button = ({
   <div
     className={cx(
       css.splitButton,
-      "beautify-dropdown-button",
-      "beautify-space-compact",
+      slots["beautify-dropdown-button"],
+      slots["beautify-space-compact"],
       className,
     )}
     style={style}
@@ -448,7 +449,7 @@ Dropdown.Button = ({
         type={type}
         size={size}
         disabled={disabled}
-        className="beautify-btn-compact-last-item"
+        className={slots["beautify-btn-compact-last-item"]}
         aria-label="More actions"
       >
         {icon ?? "⌄"}

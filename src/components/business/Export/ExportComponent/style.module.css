@@ -1,47 +1,48 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .ImportExportWrap {
   padding: 0;
   height: 100%;
 }
-.ImportExportWrap :global(.import-project-item) {
+.ImportExportWrap .slot-import-project-item {
   margin-top: 16px;
   border-bottom: 1px solid var(--color-border);
   font-size: var(--font-size-14);
 }
-.ImportExportWrap :global(.import-project-item-title) {
+.ImportExportWrap .slot-import-project-item-title {
   margin-bottom: 16px;
 }
-.ImportExportWrap :global(.import-project-item-content) {
+.ImportExportWrap .slot-import-project-item-content {
   /* display:flex;flex-direction:row;align-items:center;justify-content:flex-start;; */
   width: 100%;
   height: 100%;
   border-radius: 4px;
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.margin-bottom-20) {
+.ImportExportWrap .slot-import-project-item-content .slot-margin-bottom-20 {
   margin-bottom: 20px;
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) {
+.ImportExportWrap .slot-import-project-item-content .slot-beautify-radio-group {
   flex-wrap: wrap;
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) {
+.ImportExportWrap .slot-import-project-item-content .slot-beautify-radio-group .slot-radio-card {
   margin: 0 16px 20px 0;
   width: 170px;
   height: 48px;
   border-radius: 4px;
   border: 1px solid var(--color-border);
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) > div {
+.ImportExportWrap .slot-import-project-item-content .slot-beautify-radio-group .slot-radio-card > div {
   height: 100%;
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card):hover :global(.beautify-radio-inner) {
+.ImportExportWrap .slot-import-project-item-content .slot-beautify-radio-group .slot-radio-card:hover .slot-beautify-radio-inner {
   border: 1px solid var(--color-border);
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card):global(.active) {
+.ImportExportWrap .slot-import-project-item-content .slot-beautify-radio-group .slot-radio-card.slot-active {
   border-color: var(--color-primary);
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card):global(.active) :global(.beautify-radio-inner) {
+.ImportExportWrap .slot-import-project-item-content .slot-beautify-radio-group .slot-radio-card.slot-active .slot-beautify-radio-inner {
   border: 1px solid var(--color-primary);
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) label {
+.ImportExportWrap .slot-import-project-item-content .slot-beautify-radio-group .slot-radio-card label {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -50,19 +51,19 @@
   width: 100%;
   height: 100%;
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) :global(.beautify-radio-wrapper)::after {
+.ImportExportWrap .slot-import-project-item-content .slot-beautify-radio-group .slot-radio-card .slot-beautify-radio-wrapper::after {
   display: none !important;
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) :global(.beautify-radio-wrapper) {
+.ImportExportWrap .slot-import-project-item-content .slot-beautify-radio-group .slot-radio-card .slot-beautify-radio-wrapper {
   flex-direction: row-reverse !important;
   height: 100%;
   justify-content: space-between;
   padding: 0 12px;
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) :global(.beautify-radio-wrapper) span:global(.beautify-radio) + * {
+.ImportExportWrap .slot-import-project-item-content .slot-beautify-radio-group .slot-radio-card .slot-beautify-radio-wrapper span.slot-beautify-radio + * {
   padding-inline: 0;
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) :global(.beautify-radio-wrapper) :global(.radio-card-content) {
+.ImportExportWrap .slot-import-project-item-content .slot-beautify-radio-group .slot-radio-card .slot-beautify-radio-wrapper .slot-radio-card-content {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -70,12 +71,12 @@
   margin-right: 12px;
   padding: 0;
 }
-.ImportExportWrap :global(.import-project-item-content) :global(.beautify-radio-group) :global(.radio-card) :global(.beautify-radio-wrapper) :global(.radio-card-content) svg {
+.ImportExportWrap .slot-import-project-item-content .slot-beautify-radio-group .slot-radio-card .slot-beautify-radio-wrapper .slot-radio-card-content svg {
   margin-right: 12px;
   width: 20px;
   height: 20px;
 }
-.ImportExportWrap :global(.import-project-curl) {
+.ImportExportWrap .slot-import-project-curl {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -85,16 +86,16 @@
   height: 218px;
   background-color: var(--color-bg-page);
 }
-.ImportExportWrap :global(.import-project-curl) :global(.import-project-curl-tip) {
+.ImportExportWrap .slot-import-project-curl .slot-import-project-curl-tip {
   margin-bottom: 12px;
   font-size: 14px;
   color: var(--font-content-color);
 }
-.ImportExportWrap :global(.import-export-now) {
+.ImportExportWrap .slot-import-export-now {
   margin-top: 20px;
   font-size: var(--font-size-14);
 }
-.ImportExportWrap :global(.switch-panel) {
+.ImportExportWrap .slot-switch-panel {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -103,31 +104,31 @@
   margin-top: 20px;
   font-size: var(--font-size-14);
 }
-.ImportExportWrap :global(.switch-panel) :global(.switch-panel-title) {
+.ImportExportWrap .slot-switch-panel .slot-switch-panel-title {
   margin-bottom: 16px;
   /* font-size: var(--font-size-14); */
   color: var(--font-content-color);
 }
-.ImportExportWrap :global(.import-project-full) :global(.beautify-tabs-nav) {
+.ImportExportWrap .slot-import-project-full .slot-beautify-tabs-nav {
   margin-bottom: 16px;
 }
-.ImportExportWrap :global(.import-project-full) :global(.import-project-full-select) :global(.beautify-select-tree-node-content-wrapper) {
+.ImportExportWrap .slot-import-project-full .slot-import-project-full-select [class~="beautify-select-tree-node-content-wrapper"] {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.ImportExportWrap :global(.import-project-full) :global(.import-project-full-title) {
+.ImportExportWrap .slot-import-project-full .slot-import-project-full-title {
   display: flex;
   min-width: 120px;
   font-size: var(--font-size-14);
   color: var(--font-content-color);
 }
-.ImportExportWrap :global(.import-project-full) :global(.import-project-full-tip) {
+.ImportExportWrap .slot-import-project-full .slot-import-project-full-tip {
   margin-left: 10px;
   font-size: var(--font-size-14);
   color: var(--font-light-color);
 }
-.ImportExportWrap :global(.import-project-upload-content) :global(.beautify-upload-list) {
+.ImportExportWrap .slot-import-project-upload-content .slot-beautify-upload-list {
   padding-bottom: 20px;
 }

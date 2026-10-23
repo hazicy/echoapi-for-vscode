@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useMemo } from 'react';
 
 import type { CollapseProps as AntdCollapseProps } from '@/components/ui/base';
@@ -25,7 +26,7 @@ const GhostCollapse = ({ fitContent = true, ...restProps }: GhostCollapseProps) 
     <ConfigProvider theme={theme}>
       <GhostCollapseWrapper $token={themeToken}>
         <AntdCollapse
-          rootClassName={classNames({ 'fit-content': fitContent })}
+          rootClassName={classNames({ [slots["fit-content"]]: fitContent })}
           expandIcon={({ isActive }) => (
             <IconFont
               type="icon-arrow-down"

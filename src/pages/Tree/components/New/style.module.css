@@ -2,23 +2,23 @@
   display: flex;
   /* height: 32px; */
 }
-.NewBtnsContainer :global(.beautify-new-http-more) {
+.NewBtnsContainer .slot-beautify-new-http-more {
   width: 100% !important;
 }
-.NewBtnsContainer :global(.beautify-new-http-more) > button:first-child {
+.NewBtnsContainer .slot-beautify-new-http-more > button:first-child {
   flex: 1;
   font-weight: 600;
 }
-.NewBtnsContainer :global(.beautify-new-http-more) > button {
+.NewBtnsContainer .slot-beautify-new-http-more > button {
   height: 28px;
 }
-.NewBtnsContainer :global(.beautify-new-http-more) > button:global(.beautify-btn-compact-last-item) {
+.NewBtnsContainer .slot-beautify-new-http-more > button.slot-beautify-btn-compact-last-item {
   width: 28px;
 }
-.NewBtnsContainer :global(.beautify-space-compact) {
+.NewBtnsContainer .slot-beautify-space-compact {
   width: auto;
 }
-.NewBtnsContainer :global(.add-btn) {
+.NewBtnsContainer .slot-add-btn {
   margin-left: 4px;
   width: 32px;
   height: 32px;

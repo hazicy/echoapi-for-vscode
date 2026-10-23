@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -34,7 +35,7 @@ const InputEdit = (props: Props) => {
       {
         key: 'edit',
         label: (
-          <Flex className="item-label">
+          <Flex className={slots["item-label"]}>
             <IconFont type="icon-edit" style={{ fontSize: 'var(--font-size-16)' }} />
             <span>{t('supplement.edit')}</span>
           </Flex>
@@ -56,7 +57,7 @@ const InputEdit = (props: Props) => {
             okText={t('supplement.confirm')}
             cancelText={t('supplement.cancel')}
           >
-            <Flex className="item-label">
+            <Flex className={slots["item-label"]}>
               <IconFont type="icon-delete" style={{ fontSize: 'var(--font-size-16)' }} />
               <span>{t('supplement.delete')}</span>
             </Flex>
@@ -70,8 +71,8 @@ const InputEdit = (props: Props) => {
   return (
     <li
       className={classnames({
-        'basic-tab-bar': true,
-        'basic-tab-bar-active': active,
+        [slots["basic-tab-bar"]]: true,
+        [slots["basic-tab-bar-active"]]: active,
       })}
       onDoubleClick={() => setEdit(false)}
       onClick={() => onSelect?.(curKey)}
@@ -80,7 +81,7 @@ const InputEdit = (props: Props) => {
         <Input
           size="small"
           className={classnames({
-            'edit-input': !edit,
+            [slots["edit-input"]]: !edit,
           })}
           style={{ width: 120 }}
           autoFocus
@@ -118,7 +119,7 @@ const InputEdit = (props: Props) => {
       >
         <IconFont
           type="icon-navi-more"
-          className="icon-close"
+          className={slots["icon-close"]}
           onClick={(e) => {
             e.stopPropagation();
           }}

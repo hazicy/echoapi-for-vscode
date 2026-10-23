@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -140,8 +141,8 @@ const Index = ({ open, onCancel, value: originValue = {}, editFn = defaultFnItem
     >
       <FuncModalContainer>
         {size(functionList) ? (
-          <div className="inner-content">
-            <span className="tip-title">{t('var_insert.custom_fn')}</span>
+          <div className={slots["inner-content"]}>
+            <span className={slots["tip-title"]}>{t('var_insert.custom_fn')}</span>
             {functionList.map((item) => {
               return (
                 <Tooltip title={item?.func_desc}>
@@ -150,12 +151,12 @@ const Index = ({ open, onCancel, value: originValue = {}, editFn = defaultFnItem
                     onClick={() =>
                       setSelectFunc({ func_name: item.func_name, func_desc: item.func_desc })
                     }
-                    className={classNames('item', {
-                      active: selectFunc.func_name === item.func_name,
+                    className={classNames(slots.item, {
+                      [slots.active]: selectFunc.func_name === item.func_name,
                     })}
                   >
-                    <div className="name">{item.func_name}</div>
-                    <div className="render custom-desc">{item.func_desc}</div>
+                    <div className={slots.name}>{item.func_name}</div>
+                    <div className={[slots.render, slots["custom-desc"]].join(" ")}>{item.func_desc}</div>
                   </div>
                 </Tooltip>
               );
@@ -164,8 +165,8 @@ const Index = ({ open, onCancel, value: originValue = {}, editFn = defaultFnItem
         ) : (
           ''
         )}
-        <div className="inner-content">
-          <span className="tip-title">{t('var_insert.inner_fn')}</span>
+        <div className={slots["inner-content"]}>
+          <span className={slots["tip-title"]}>{t('var_insert.inner_fn')}</span>
           {INNER_FUNC_LIST.map((item) => {
             return (
               <Tooltip title={item?.description}>
@@ -174,10 +175,10 @@ const Index = ({ open, onCancel, value: originValue = {}, editFn = defaultFnItem
                   onClick={() =>
                     setSelectFunc({ func_name: item.function, func_desc: item.description })
                   }
-                  className={classNames('item', { active: selectFunc.func_name === item.function })}
+                  className={classNames(slots.item, { [slots.active]: selectFunc.func_name === item.function })}
                 >
-                  <div className="name">{item.function}</div>
-                  <div className={classNames('render', !has(item, 'params') && 'custom-desc')}>
+                  <div className={slots.name}>{item.function}</div>
+                  <div className={classNames(slots.render, !has(item, 'params') && slots["custom-desc"])}>
                     {funcRender(item)}
                   </div>
                 </div>

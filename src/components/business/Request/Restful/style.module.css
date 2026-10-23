@@ -1,12 +1,13 @@
-.RestfulQueryContainer :global(.beautify-table-thead) :global(.beautify-table-cell) {
+/* Third-party DOM classes are matched only within the component selectors below. */
+.RestfulQueryContainer [class~="beautify-table-thead"] [class~="beautify-table-cell"] {
   padding: 4px 10px;
 }
-.RestfulQueryContainer :global(.beautify-table-tbody) tr :global(.row-description-operation) {
+.RestfulQueryContainer [class~="beautify-table-tbody"] tr .slot-row-description-operation {
   visibility: hidden;
 }
-.RestfulQueryContainer :global(.beautify-table-tbody) tr:hover :global(.row-description-operation) {
+.RestfulQueryContainer [class~="beautify-table-tbody"] tr:hover .slot-row-description-operation {
   visibility: visible;
 }
-.RestfulQueryContainer :global(.table-custom-empty-wrap) :global(.beautify-table-tbody) {
+.RestfulQueryContainer .slot-table-custom-empty-wrap [class~="beautify-table-tbody"] {
   display: none;
 }

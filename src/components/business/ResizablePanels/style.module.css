@@ -2,17 +2,17 @@
   width: 100%;
   height: 100%;
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle) {
+.ResizablePanelsContainer .slot-resizable-panel-handle {
   position: relative;
   transition: background-color 0.3s;
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle):global(.static-handle-border) {
+.ResizablePanelsContainer .slot-resizable-panel-handle.slot-static-handle-border {
   background-color: var(--divider-color);
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle):global(.resizable-line-hidden) {
+.ResizablePanelsContainer .slot-resizable-panel-handle.slot-resizable-line-hidden {
   display: none;
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle) :global(.right-collapse-btn) {
+.ResizablePanelsContainer .slot-resizable-panel-handle .slot-right-collapse-btn {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -27,127 +27,127 @@
   box-shadow: 0 2px 4px var(--box-shadow-modal-color);
   cursor: pointer;
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle) :global(.right-collapse-btn) > :global(.anticon) {
+.ResizablePanelsContainer .slot-resizable-panel-handle .slot-right-collapse-btn > .slot-anticon {
   font-size: 14px;
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle) :global(.right-collapse-btn):hover {
+.ResizablePanelsContainer .slot-resizable-panel-handle .slot-right-collapse-btn:hover {
   color: var(--color-primary);
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle) :global(.resizable-bar) {
+.ResizablePanelsContainer .slot-resizable-panel-handle .slot-resizable-bar {
   position: absolute;
   z-index: 2;
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle):global(.horizontal) {
+.ResizablePanelsContainer .slot-resizable-panel-handle.slot-horizontal {
   width: 2px;
   height: auto;
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle):global(.horizontal) :global(.resizable-bar) {
+.ResizablePanelsContainer .slot-resizable-panel-handle.slot-horizontal .slot-resizable-bar {
   left: -5px;
   width: 10px;
   height: 100%;
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle):global(.horizontal) :global(.right-collapse-btn) {
+.ResizablePanelsContainer .slot-resizable-panel-handle.slot-horizontal .slot-right-collapse-btn {
   top: 50%;
   left: 0;
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle):global(.vertical) {
+.ResizablePanelsContainer .slot-resizable-panel-handle.slot-vertical {
   width: 100%;
   height: 2px;
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle):global(.vertical) :global(.resizable-bar) {
+.ResizablePanelsContainer .slot-resizable-panel-handle.slot-vertical .slot-resizable-bar {
   top: -5px;
   width: 100%;
   height: 10px;
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle):global(.vertical) :global(.right-collapse-btn) {
+.ResizablePanelsContainer .slot-resizable-panel-handle.slot-vertical .slot-right-collapse-btn {
   top: 0;
   left: 50%;
 }
-.ResizablePanelsContainer :global(.resizable-panel-handle):hover,
-.ResizablePanelsContainer :global(.resizable-panel-handle):active {
+.ResizablePanelsContainer .slot-resizable-panel-handle:hover,
+.ResizablePanelsContainer .slot-resizable-panel-handle:active {
   background-color: var(--color-primary);
 }
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.left-collapse-wrap),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.left-collapse-wrap),
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.right-collapse-wrap),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.right-collapse-wrap) {
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-left-collapse-wrap,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-left-collapse-wrap,
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-right-collapse-wrap,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap {
   width: 100%;
   height: 100%;
   background-color: var(--vscode-sideBar-background);
   cursor: pointer;
 }
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.left-collapse-wrap) :global(.beautify-flex),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.left-collapse-wrap) :global(.beautify-flex),
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.right-collapse-wrap) :global(.beautify-flex),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.right-collapse-wrap) :global(.beautify-flex) {
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-left-collapse-wrap .slot-beautify-flex,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-left-collapse-wrap .slot-beautify-flex,
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-right-collapse-wrap .slot-beautify-flex,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap .slot-beautify-flex {
   height: 100%;
 }
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.left-collapse-wrap) :global(.beautify-flex) > :global(.anticon),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.left-collapse-wrap) :global(.beautify-flex) > :global(.anticon),
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.right-collapse-wrap) :global(.beautify-flex) > :global(.anticon),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.right-collapse-wrap) :global(.beautify-flex) > :global(.anticon) {
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-left-collapse-wrap .slot-beautify-flex > .slot-anticon,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-left-collapse-wrap .slot-beautify-flex > .slot-anticon,
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-right-collapse-wrap .slot-beautify-flex > .slot-anticon,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap .slot-beautify-flex > .slot-anticon {
   font-size: 12px;
 }
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.left-collapse-wrap) :global(.beautify-flex) :global(.collapse-title),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.left-collapse-wrap) :global(.beautify-flex) :global(.collapse-title),
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.right-collapse-wrap) :global(.beautify-flex) :global(.collapse-title),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.right-collapse-wrap) :global(.beautify-flex) :global(.collapse-title) {
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-left-collapse-wrap .slot-beautify-flex .slot-collapse-title,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-left-collapse-wrap .slot-beautify-flex .slot-collapse-title,
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-right-collapse-wrap .slot-beautify-flex .slot-collapse-title,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap .slot-beautify-flex .slot-collapse-title {
   font-size: var(--font-size-14);
   color: var(--font-content-color);
   word-break: keep-all;
 }
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.left-collapse-wrap) :global(.beautify-flex) :global(.collapse-title):global(.noSpacing),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.left-collapse-wrap) :global(.beautify-flex) :global(.collapse-title):global(.noSpacing),
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.right-collapse-wrap) :global(.beautify-flex) :global(.collapse-title):global(.noSpacing),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.right-collapse-wrap) :global(.beautify-flex) :global(.collapse-title):global(.noSpacing) {
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-left-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-noSpacing,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-left-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-noSpacing,
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-right-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-noSpacing,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-noSpacing {
   letter-spacing: 1px !important;
 }
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.left-collapse-wrap) :global(.beautify-flex) :global(.collapse-title):global(.vertical),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.left-collapse-wrap) :global(.beautify-flex) :global(.collapse-title):global(.vertical),
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.right-collapse-wrap) :global(.beautify-flex) :global(.collapse-title):global(.vertical),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.right-collapse-wrap) :global(.beautify-flex) :global(.collapse-title):global(.vertical) {
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-left-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-vertical,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-left-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-vertical,
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-right-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-vertical,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-vertical {
   margin-left: 4px;
   letter-spacing: 2px;
 }
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.left-collapse-wrap) :global(.beautify-flex) :global(.collapse-title):global(.horizontal),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.left-collapse-wrap) :global(.beautify-flex) :global(.collapse-title):global(.horizontal),
-.ResizablePanelsContainer :global(.resizable-panel-left-wrap) :global(.right-collapse-wrap) :global(.beautify-flex) :global(.collapse-title):global(.horizontal),
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.right-collapse-wrap) :global(.beautify-flex) :global(.collapse-title):global(.horizontal) {
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-left-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-horizontal,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-left-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-horizontal,
+.ResizablePanelsContainer .slot-resizable-panel-left-wrap .slot-right-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-horizontal,
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-horizontal {
   margin-top: 8px;
   letter-spacing: 4px;
   writing-mode: vertical-lr;
 }
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) {
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap {
   position: relative;
 }
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.direction-wrap) {
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-direction-wrap {
   position: absolute;
   right: 20px;
   bottom: 24px;
   width: 40px;
   height: 40px;
 }
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.direction-wrap) > :global(.beautify-popover) :global(.beautify-popover-inner) {
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-direction-wrap > .slot-beautify-popover .slot-beautify-popover-inner {
   padding: 8px;
 }
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.direction-wrap) > :global(.beautify-popover) :global(.beautify-popover-inner) :global(.direction-item-btn) {
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-direction-wrap > .slot-beautify-popover .slot-beautify-popover-inner .slot-direction-item-btn {
   padding: 0 8px;
   height: 32px;
   cursor: pointer;
   transition: all 0.3s;
 }
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.direction-wrap) > :global(.beautify-popover) :global(.beautify-popover-inner) :global(.direction-item-btn):global(.active) {
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-direction-wrap > .slot-beautify-popover .slot-beautify-popover-inner .slot-direction-item-btn.slot-active {
   color: var(--color-primary);
   background-color: var(--color-primary-opacity);
 }
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.direction-wrap) > :global(.beautify-popover) :global(.beautify-popover-inner) :global(.direction-item-btn) :global(.anticon) {
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-direction-wrap > .slot-beautify-popover .slot-beautify-popover-inner .slot-direction-item-btn .slot-anticon {
   font-size: var(--font-size-14);
 }
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.direction-wrap) > :global(.beautify-popover) :global(.beautify-popover-inner) :global(.direction-item-btn) :global(.title) {
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-direction-wrap > .slot-beautify-popover .slot-beautify-popover-inner .slot-direction-item-btn .slot-title {
   margin-left: 8px;
   font-size: var(--font-size-14);
 }
-.ResizablePanelsContainer :global(.resizable-panel-right-wrap) :global(.direction-wrap) :global(.beautify-btn) {
+.ResizablePanelsContainer .slot-resizable-panel-right-wrap .slot-direction-wrap .slot-beautify-btn {
   z-index: 500;
   width: 32px;
   height: 32px;

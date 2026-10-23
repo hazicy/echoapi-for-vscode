@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useTranslation } from 'react-i18next';
 
 import { Flex, message } from '@/components/ui/base';
@@ -39,17 +40,17 @@ const Export = (props: Props) => {
 
   return (
     <ImportExportWrap $token={themeToken}>
-      <div className="import-project-item">
-        <div className="import-project-item-title">{t('settings.export_project.data_format')}</div>
-        <div className="import-project-item-content">
+      <div className={slots["import-project-item"]}>
+        <div className={slots["import-project-item-title"]}>{t('settings.export_project.data_format')}</div>
+        <div className={slots["import-project-item-content"]}>
           <Radio.Group value={exportType}>
             {EXPORT_TYPE_LIST.map((item) => (
               <Tooltip title={item?.disabled ? t('supplement.will_online') : ''}>
                 <div
                   key={item.key}
                   className={classnames({
-                    'radio-card': true,
-                    active: item.key === exportType,
+                    [slots["radio-card"]]: true,
+                    [slots.active]: item.key === exportType,
                   })}
                 >
                   <Radio
@@ -60,7 +61,7 @@ const Export = (props: Props) => {
                       setExportType(item.key);
                     }}
                   >
-                    <span className="radio-card-content">
+                    <span className={slots["radio-card-content"]}>
                       <IconFont type={item.icon} />
                       {item.value}
                     </span>
@@ -72,13 +73,13 @@ const Export = (props: Props) => {
         </div>
       </div>
       {exportType === 'swagger' && (
-        <div className="import-project-item">
-          <div className="import-project-item-title">{t('settings.export_project.version')}</div>
-          <div className="import-project-item-content">
+        <div className={slots["import-project-item"]}>
+          <div className={slots["import-project-item-title"]}>{t('settings.export_project.version')}</div>
+          <div className={slots["import-project-item-content"]}>
             <Radio.Group
               value={version}
               onChange={(e) => setVersion(e?.target?.value)}
-              className="margin-bottom-20"
+              className={slots["margin-bottom-20"]}
             >
               <Radio value="3.0">3.0</Radio>
               <Radio value="2.0">2.0</Radio>
@@ -92,7 +93,7 @@ const Export = (props: Props) => {
           // disabled
           onClick={exportHandle}
           type="primary"
-          className="import-export-now"
+          className={slots["import-export-now"]}
         >
           {t('settings.export_project.export')}
         </Button>

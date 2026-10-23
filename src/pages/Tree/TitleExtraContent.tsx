@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, memo } from 'react';
 
 import { Dropdown, Flex, MenuProps } from '@/components/ui/base';
@@ -52,7 +53,7 @@ const TitleExtraContent: FC<Partial<Props>> = memo(({ nodeItem }) => {
 
   return (
     <div className="apis-tree-title-extra-content-container" onClick={handleStopPropagation}>
-      <Flex gap={8} align="center" className="tree-node-item-title-action-wrap">
+      <Flex gap={8} align="center" className={slots["tree-node-item-title-action-wrap"]}>
         {!includes(
           [APIS_TARGET_TYPE_ENUM.FOLDER, APIS_TARGET_TYPE_ENUM.SOCKET],
           nodeItem?.target_type
@@ -61,7 +62,7 @@ const TitleExtraContent: FC<Partial<Props>> = memo(({ nodeItem }) => {
           </>
         )}
         {!nodeItem?.scrollIng && (
-          <div className="more-operate-wrap">
+          <div className={slots["more-operate-wrap"]}>
             <Dropdown trigger={['click']} menu={nodeItem?.moreOperateMenu}>
               <IconFont type="icon-navi-more" className="more-operate" />
             </Dropdown>

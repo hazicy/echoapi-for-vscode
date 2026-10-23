@@ -1,25 +1,26 @@
-.ListSideBarContainer > :global(.side-tree-wrap) {
+/* Third-party DOM classes are matched only within the component selectors below. */
+.ListSideBarContainer > .slot-side-tree-wrap {
   width: 180px;
   background: var(--color-bg-page);
   transition: width 0.1s linear;
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con {
   flex: 1;
   padding-top: 8px;
   height: 100%;
   box-sizing: border-box;
   overflow-y: auto;
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) ul {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con ul {
   width: 100%;
   height: 100%;
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.icon-close) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-icon-close {
   visibility: hidden;
   transform: rotate(90deg);
   font-size: var(--font-size-14);
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -31,71 +32,71 @@
   border-radius: 4px;
   cursor: pointer;
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar-active) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar-active {
   background-color: var(--color-bg-folder-hover);
   color: var(--vscode-foreground);
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar-active) :global(.beautify-typography) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar-active .slot-beautify-typography {
   color: var(--vscode-foreground);
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar):hover {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar:hover {
   background-color: var(--color-bg-folder-hover);
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar):hover :global(.beautify-typography) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar:hover .slot-beautify-typography {
   color: var(--color-primary);
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar):hover :global(.icon-close) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar:hover .slot-icon-close {
   visibility: visible;
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar) :global(.beautify-input) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar .slot-beautify-input {
   box-shadow: none;
   border-radius: 0;
   border-color: transparent;
   cursor: pointer;
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar) :global(.beautify-input):global(.edit-input) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar .slot-beautify-input.slot-edit-input {
   border-color: var(--color-primary);
   cursor: text;
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar) :global(.beautify-dropdown-menu-item) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar .slot-beautify-dropdown-menu-item {
   padding: 0;
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar) :global(.item-label) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar .slot-item-label {
   padding: 8px 12px;
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.basic-tabs-con) :global(.basic-tab-bar) :global(.item-label) :global(.anticon) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar .slot-item-label .slot-anticon {
   font-size: 16px;
   margin-inline-end: 8px;
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.add-btn-con) {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-add-btn-con {
   padding: 12px 10px;
 }
-.ListSideBarContainer > :global(.side-tree-wrap) :global(.add-btn-con) button {
+.ListSideBarContainer > .slot-side-tree-wrap .slot-add-btn-con button {
   border-color: var(--color-primary);
   color: var(--color-primary);
 }
-.ListSideBarContainer > :global(.side-tree-wrap):global(.expand) {
+.ListSideBarContainer > .slot-side-tree-wrap.slot-expand {
   width: 0;
   overflow: hidden;
   transition: width 0.1s linear;
 }
-.ListSideBarContainer > :global(.side-tree-wrap):global(.expand) :global(.beautify-input-affix-wrapper) {
+.ListSideBarContainer > .slot-side-tree-wrap.slot-expand .slot-beautify-input-affix-wrapper {
   display: none;
 }
-.ListSideBarContainer > :global(.side-tree-wrap):global(.expand) :global(.beautify-tree) {
+.ListSideBarContainer > .slot-side-tree-wrap.slot-expand [class~="beautify-tree"] {
   overflow: hidden;
 }
-.ListSideBarContainer > :global(.side-tree-wrap):global(.expand) :global(.beautify-empty) {
+.ListSideBarContainer > .slot-side-tree-wrap.slot-expand .slot-beautify-empty {
   display: none;
 }
-.ListSideBarContainer :global(.expand-divider) {
+.ListSideBarContainer .slot-expand-divider {
   display: flex;
   align-items: center;
   width: 8px;
   border-radius: 78px;
   background-color: var(--color-bg-page);
 }
-.ListSideBarContainer :global(.expand-divider) :global(.icon-wrap) {
+.ListSideBarContainer .slot-expand-divider .slot-icon-wrap {
   width: 8px;
   height: 24px;
   border-radius: 65px;
@@ -104,7 +105,7 @@
   background-color: var(--vscode-badge-background);
   cursor: pointer;
 }
-.ListSideBarContainer :global(.expand-divider) :global(.icon-wrap) :global(.anticon) {
+.ListSideBarContainer .slot-expand-divider .slot-icon-wrap .slot-anticon {
   margin-left: -2px;
   font-size: var(--font-size-12);
   color: var(--white-color);

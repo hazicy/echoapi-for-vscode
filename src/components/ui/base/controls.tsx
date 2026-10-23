@@ -1,3 +1,5 @@
+import slots from "@/components/ui/base/slots.module.css";
+import { moduleClassNames } from "@/components/ui/base/moduleClassNames";
 import { forwardRef } from "./forwardRef";
 import React, {
   createContext,
@@ -64,12 +66,12 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
       disabled={props.disabled || !!loading}
       className={cx(
         css.button,
-        "beautify-btn",
-        `beautify-btn-${type}`,
+        slots["beautify-btn"],
+        moduleClassNames(slots, `beautify-btn-${type}`),
         size === "small"
-          ? "beautify-btn-sm"
+          ? slots["beautify-btn-sm"]
           : size === "large"
-            ? "beautify-btn-lg"
+            ? slots["beautify-btn-lg"]
             : undefined,
         className,
         rootClassName,
@@ -79,7 +81,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
       {loading ? (
         <span className={css.spinner} aria-label="Loading" />
       ) : (
-        icon && <span className="beautify-btn-icon">{icon}</span>
+        icon && <span className={slots["beautify-btn-icon"]}>{icon}</span>
       )}
       {children}
     </BaseButton>
@@ -91,7 +93,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       {...props}
       ref={ref}
       rows={props.rows ?? autoSize?.minRows ?? 2}
-      className={cx(css.input, "beautify-input", className, rootClassName)}
+      className={cx(css.input, slots["beautify-input"], className, rootClassName)}
       onKeyDown={(event) => {
         props.onKeyDown?.(event);
         if (event.key === "Enter") {
@@ -135,8 +137,8 @@ const InputControl = forwardRef<InputRef, InputProps>(
         style={!(addonBefore || addonAfter || prefix || suffix || allowClear) ? style : undefined}
         className={cx(
           css.input,
-          "beautify-input",
-          bordered && variant !== "borderless" && "beautify-input-outlined",
+          slots["beautify-input"],
+          bordered && variant !== "borderless" && slots["beautify-input-outlined"],
           !prefix && !suffix && !allowClear && className,
           { [css.borderless]: !bordered || variant === "borderless" },
         )}
@@ -153,7 +155,7 @@ const InputControl = forwardRef<InputRef, InputProps>(
         className={cx(
           css.inputGroup,
           css.affix,
-          "beautify-input-affix-wrapper",
+          slots["beautify-input-affix-wrapper"],
           className,
           rootClassName,
         )}
@@ -220,7 +222,7 @@ const CheckboxControl = forwardRef<HTMLElement, CheckboxProps>(
     <label
       className={cx(
         css.checkLabel,
-        "beautify-checkbox-wrapper",
+        slots["beautify-checkbox-wrapper"],
         className,
         rootClassName,
       )}
@@ -229,12 +231,12 @@ const CheckboxControl = forwardRef<HTMLElement, CheckboxProps>(
         {...props}
         ref={ref}
         indeterminate={indeterminate}
-        className={cx(css.checkbox, "beautify-checkbox")}
+        className={cx(css.checkbox, slots["beautify-checkbox"])}
         onCheckedChange={(checked, details) =>
           onChange?.(eventFor(value, checked, details.event))
         }
       >
-        <BaseCheckbox.Indicator className="beautify-checkbox-inner">
+        <BaseCheckbox.Indicator className={slots["beautify-checkbox-inner"]}>
           {indeterminate ? "−" : "✓"}
         </BaseCheckbox.Indicator>
       </BaseCheckbox.Root>
@@ -255,7 +257,7 @@ function CheckboxGroup({
   return (
     <div
       {...props}
-      className={cx(css.flex, props.className, "beautify-checkbox-group")}
+      className={cx(css.flex, props.className, slots["beautify-checkbox-group"])}
     >
       {children ??
         options.map((raw: any) => {
@@ -301,7 +303,7 @@ export const Switch = forwardRef<HTMLElement, SwitchProps>(
       {...props}
       ref={ref}
       disabled={props.disabled || loading}
-      className={cx(css.switch, "beautify-switch", className, rootClassName)}
+      className={cx(css.switch, slots["beautify-switch"], className, rootClassName)}
       onCheckedChange={(checked, details) => onChange?.(checked, details.event)}
     >
       <span>{props.checked ? checkedChildren : unCheckedChildren}</span>
@@ -330,20 +332,20 @@ const RadioControl = forwardRef<HTMLElement, RadioProps>(
         {...props}
         value={value}
         ref={ref}
-        className={cx(css.radio, "beautify-radio")}
+        className={cx(css.radio, slots["beautify-radio"])}
         onClick={(e) => {
           props.onClick?.(e);
           onChange?.(eventFor(value, true, e.nativeEvent));
         }}
       >
-        <BaseRadio.Indicator className="beautify-radio-inner" />
+        <BaseRadio.Indicator className={slots["beautify-radio-inner"]} />
       </BaseRadio.Root>
     );
     return (
       <label
         className={cx(
           css.checkLabel,
-          "beautify-radio-wrapper",
+          slots["beautify-radio-wrapper"],
           className,
           rootClassName,
         )}
@@ -376,7 +378,7 @@ const Group = ({
   <RadioContext.Provider value={true}>
     <RadioGroup
       {...props}
-      className={cx(css.flex, "beautify-radio-group", className, rootClassName)}
+      className={cx(css.flex, slots["beautify-radio-group"], className, rootClassName)}
       onValueChange={(value, details) =>
         onChange?.(eventFor(value, true, details.event))
       }
@@ -423,7 +425,7 @@ export const InputNumber = forwardRef<HTMLDivElement, InputNumberProps>(
       ref={ref}
       className={cx(
         css.number,
-        "beautify-input-number",
+        slots["beautify-input-number"],
         className,
         rootClassName,
       )}
@@ -475,7 +477,7 @@ export function Collapse({
       {...props}
       className={cx(
         css.collapse,
-        "beautify-collapse",
+        slots["beautify-collapse"],
         className,
         rootClassName,
       )}
@@ -491,16 +493,16 @@ export function Collapse({
           disabled={item.collapsible === "disabled"}
           className={cx(
             css.collapseItem,
-            "beautify-collapse-item",
+            slots["beautify-collapse-item"],
             item.className,
           )}
           style={item.style}
         >
-          <Accordion.Header className="beautify-collapse-header">
+          <Accordion.Header className={slots["beautify-collapse-header"]}>
             <Accordion.Trigger
               className={cx(
                 css.collapseTrigger,
-                "beautify-collapse-header-text",
+                slots["beautify-collapse-header-text"],
               )}
             >
               {item.label}
@@ -509,9 +511,9 @@ export function Collapse({
           </Accordion.Header>
           <Accordion.Panel
             keepMounted={!destroyInactivePanel && !item.destroyOnHidden}
-            className={cx(css.collapsePanel, "beautify-collapse-content")}
+            className={cx(css.collapsePanel, slots["beautify-collapse-content"])}
           >
-            <div className="beautify-collapse-content-box">{item.children}</div>
+            <div className={slots["beautify-collapse-content-box"]}>{item.children}</div>
           </Accordion.Panel>
         </Accordion.Item>
       ))}
@@ -546,26 +548,26 @@ export function Tabs({
       }}
       className={cx(
         css.tabs,
-        "beautify-tabs",
-        `beautify-tabs-${tabPosition || "top"}`,
+        slots["beautify-tabs"],
+        moduleClassNames(slots, `beautify-tabs-${tabPosition || "top"}`),
         className,
         rootClassName,
       )}
     >
-      <div className="beautify-tabs-nav">
+      <div className={slots["beautify-tabs-nav"]}>
         {tabBarExtraContent &&
         !React.isValidElement(tabBarExtraContent) &&
         typeof tabBarExtraContent === "object"
           ? tabBarExtraContent.left
           : null}
-        <div className="beautify-tabs-nav-wrap">
-          <BaseTabs.List className={cx(css.tabList, "beautify-tabs-nav-list")}>
+        <div className={slots["beautify-tabs-nav-wrap"]}>
+          <BaseTabs.List className={cx(css.tabList, slots["beautify-tabs-nav-list"])}>
             {items.map((item) => (
               <span
                 key={item.key}
                 className={cx(
-                  "beautify-tabs-tab",
-                  current === item.key && "beautify-tabs-tab-active",
+                  slots["beautify-tabs-tab"],
+                  current === item.key && slots["beautify-tabs-tab-active"],
                 )}
               >
                 <BaseTabs.Tab
@@ -597,14 +599,14 @@ export function Tabs({
           ? tabBarExtraContent.right
           : tabBarExtraContent}
       </div>
-      <div className="beautify-tabs-content-holder">
-        <div className="beautify-tabs-content">
+      <div className={slots["beautify-tabs-content-holder"]}>
+        <div className={slots["beautify-tabs-content"]}>
           {items.map((item) => (
             <BaseTabs.Panel
               key={item.key}
               value={item.key}
               keepMounted={!destroyInactiveTabPane && !item.destroyOnHidden}
-              className={cx(css.tabPanel, "beautify-tabs-tabpane")}
+              className={cx(css.tabPanel, slots["beautify-tabs-tabpane"])}
             >
               {item.children}
             </BaseTabs.Panel>
@@ -633,9 +635,9 @@ export function Segmented<V extends string | number = string | number>({
           : options[0])
       }
       onValueChange={(v) => onChange?.(v as V)}
-      className={cx(css.segmented, "beautify-segmented", className)}
+      className={cx(css.segmented, slots["beautify-segmented"], className)}
     >
-      <BaseTabs.List className={cx(css.tabList, "beautify-segmented-group")}>
+      <BaseTabs.List className={cx(css.tabList, slots["beautify-segmented-group"])}>
         {options.map((raw: any) => {
           const o = typeof raw === "object" ? raw : { value: raw, label: raw };
           return (
@@ -651,7 +653,7 @@ export function Segmented<V extends string | number = string | number>({
                 )
               }
             >
-              <span className="beautify-segmented-item-label">
+              <span className={slots["beautify-segmented-item-label"]}>
                 {o.icon}
                 {o.label}
               </span>

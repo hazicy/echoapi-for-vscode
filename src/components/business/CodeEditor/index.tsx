@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import {
   Annotation,
@@ -284,8 +285,8 @@ const CodeEditor = forwardRef<CodeEditorRef, Props>((props, ref) => {
   }, [language, onMountAutoFormat]);
 
   return (
-    <EditorWrap className="code-editor-wrapper" style={{ height }}>
-      <div className={['code-editor-host', className].filter(Boolean).join(' ')} ref={hostRef} />
+    <EditorWrap className={slots["code-editor-wrapper"]} style={{ height }}>
+      <div className={[slots["code-editor-host"], className].filter(Boolean).join(' ')} ref={hostRef} />
     </EditorWrap>
   );
 });

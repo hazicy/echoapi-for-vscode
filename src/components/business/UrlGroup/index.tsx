@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -135,8 +136,8 @@ const UrlGroup = (props: UrlGroupProps) => {
   const optionRender: SelectProps['optionRender'] = (option) => {
     return (
       <OptionsItemContainer>
-        <span className="label">{option?.data?.label}</span>
-        <span className="uri">{renderUri(option?.data?.uri || '')}</span>
+        <span className={slots.label}>{option?.data?.label}</span>
+        <span className={slots.uri}>{renderUri(option?.data?.uri || '')}</span>
       </OptionsItemContainer>
     );
   }
@@ -159,12 +160,12 @@ const UrlGroup = (props: UrlGroupProps) => {
           {searchMethodList.map(i => <div onClick={() => {
             handleChange('method', `${i}`);
             setMethodSelectOpen(false);
-          }} aria-selected="false" className={classnames('beautify-select-item', 'beautify-select-item-option', {
+          }} aria-selected="false" className={classnames(slots["beautify-select-item"], slots["beautify-select-item-option"], {
             "beautify-select-item-option-selected": data?.method === i
           })} title={i}>
-            <div className="beautify-select-item-option-content">{i}</div>
-            <span onClick={(e) => e.stopPropagation()} className="beautify-select-item-option-state" unselectable="on" aria-hidden="true" style={{ "userSelect": "none" }}>
-              {!METHODS_MAP[type].includes(i) && <IconFont className='select-item-icon-delete' style={{ cursor: 'pointer' }} onClick={(e) => {
+            <div className={slots["beautify-select-item-option-content"]}>{i}</div>
+            <span onClick={(e) => e.stopPropagation()} className={slots["beautify-select-item-option-state"]} unselectable="on" aria-hidden="true" style={{ "userSelect": "none" }}>
+              {!METHODS_MAP[type].includes(i) && <IconFont className={slots["select-item-icon-delete"]} style={{ cursor: 'pointer' }} onClick={(e) => {
                 e.stopPropagation();
                 onMethodDelete(i);
               }} type='icon-delete'></IconFont>}
@@ -297,13 +298,13 @@ const UrlGroup = (props: UrlGroupProps) => {
               </Select.Option>
             ))}
           </Select>
-          <div className="line"></div>
+          <div className={slots.line}></div>
         </>
         }
 
 
 
-        <div className="url-group-container">
+        <div className={slots["url-group-container"]}>
           {includes(['sse', 'api','websocket2','socketio','graphql'], type) && !hideServer && isArray(currentEnv?.server_list) && (
             <Tooltip
               overlayInnerStyle={{ wordBreak: 'break-all' }}
@@ -343,7 +344,7 @@ const UrlGroup = (props: UrlGroupProps) => {
                     />
                   }
                   popupMatchSelectWidth={450}
-                  className="right-select right-select-http env-desc"
+                  className={[slots["right-select"], slots["right-select-http"], slots["env-desc"]].join(" ")}
                   onChange={(i)=>{
                     updateCurrentServerId(i);
                     SetCurServerId(i);
@@ -383,7 +384,7 @@ const UrlGroup = (props: UrlGroupProps) => {
           ) : (
             <Input
               maxLength={maxLength}
-              className="url-group-input"
+              className={slots["url-group-input"]}
               placeholder={placeholder || t('common.enter_url_placeholder')}
               readOnly={readOnly}
               onChange={(e) => handleChange('url', e?.target?.value || '')}
@@ -413,7 +414,7 @@ const UrlGroup = (props: UrlGroupProps) => {
                 />
               }
               popupMatchSelectWidth={false}
-              className="right-select right-select-http"
+              className={[slots["right-select"], slots["right-select-http"]].join(" ")}
               onChange={handleChange.bind(null, 'protocol')}
               size='small'
             >

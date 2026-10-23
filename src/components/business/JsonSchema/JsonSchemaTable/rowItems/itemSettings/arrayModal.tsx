@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useTranslation } from 'react-i18next';
 
 import { Flex, InputNumber, Switch } from '@/components/ui/base';
@@ -18,9 +19,9 @@ const ArrayModal = (props: any) => {
   const { t } = useTranslation();
   return (
     <>
-      <div className="base-setting">
-        <div className="item-line">{SelectTypeDom}</div>
-        <Flex gap={20} className="item-all-line item-necessarily">
+      <div className={slots["base-setting"]}>
+        <div className={slots["item-line"]}>{SelectTypeDom}</div>
+        <Flex gap={20} className={[slots["item-all-line"], slots["item-necessarily"]].join(" ")}>
           <Flex align="center" gap={8}>
             {t('common.schema.advanced_settings.required')}
             <Switch
@@ -44,16 +45,16 @@ const ArrayModal = (props: any) => {
         </Flex>
         {ItemMockDom && (
           <Flex gap={20}>
-            <div className="item-line">
-              <div className="case-title">Example</div>
-              <div className="case-value">{ItemMockDom}</div>
+            <div className={slots["item-line"]}>
+              <div className={slots["case-title"]}>Example</div>
+              <div className={slots["case-value"]}>{ItemMockDom}</div>
             </div>
           </Flex>
         )}
         <Flex gap={20}>
-          <div className="item-line">
-            <div className="case-title">{t('common.schema.advanced_settings.min_item')}</div>
-            <div className="case-value">
+          <div className={slots["item-line"]}>
+            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.min_item')}</div>
+            <div className={slots["case-value"]}>
               <InputNumber
                 size="small"
                 min={0}
@@ -64,9 +65,9 @@ const ArrayModal = (props: any) => {
           </div>
         </Flex>
         <Flex gap={20}>
-          <div className="item-line">
-            <div className="case-title">{t('common.schema.advanced_settings.max_item')}</div>
-            <div className="case-value">
+          <div className={slots["item-line"]}>
+            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.max_item')}</div>
+            <div className={slots["case-value"]}>
               <InputNumber
                 min={0}
                 size="small"

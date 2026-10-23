@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, forwardRef, FunctionComponent, ReactNode, Ref, useEffect, useImperativeHandle } from 'react';
 
 import { Flex, Segmented, SegmentedProps } from '@/components/ui/base';
@@ -64,7 +65,7 @@ const SegmentedTabs: FC<Props> = forwardRef(({
 
   return (
     <SegmentedTabsContainer $token={themeToken} vertical className={wrapClassName}>
-      <header className="segmented-tabs-header">
+      <header className={slots["segmented-tabs-header"]}>
         <Flex>
           <Segmented
             options={options}
@@ -73,18 +74,18 @@ const SegmentedTabs: FC<Props> = forwardRef(({
             {...resetProps}
           />
           {tabBarExtraContent && (
-            <div className="tab-bar-extra-content-wrap">{tabBarExtraContent}</div>
+            <div className={slots["tab-bar-extra-content-wrap"]}>{tabBarExtraContent}</div>
           )}
         </Flex>
       </header>
-      <main className="segmented-tabs-content">
+      <main className={slots["segmented-tabs-content"]}>
         {map(
           options,
           (item) =>
             renderChildrenMap[item.value] && (
               <div
                 hidden={mergeValue !== item.value}
-                className="segmented-tabs-content-item"
+                className={slots["segmented-tabs-content-item"]}
                 key={item.value}
               >
                 {typeof item.children === 'function' ? (

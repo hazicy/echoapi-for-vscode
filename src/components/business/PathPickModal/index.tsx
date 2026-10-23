@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -164,25 +165,25 @@ const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) =>
         value={expression}
         onChange={(event) => setExpression(event.target.value)}
       />
-      <div className="json-path-content ">
-        <div className="layout-item ">
-          <div className="item-title">{computedInfo.title}</div>
-          <div className="item-content">
+      <div className={slots["json-path-content"]}>
+        <div className={slots["layout-item"]}>
+          <div className={slots["item-title"]}>{computedInfo.title}</div>
+          <div className={slots["item-content"]}>
             <CodeEditor
               ref={refEditor}
               language={computedInfo.language}
-              className="code-editor-value"
+              className={slots["code-editor-value"]}
               value={value}
               onChange={setValue}
             />
           </div>
         </div>
-        <div className="layout-item ">
-          <div className="item-title">{t('supplement.pick_result')}</div>
-          <div className="item-content">
+        <div className={slots["layout-item"]}>
+          <div className={slots["item-title"]}>{t('supplement.pick_result')}</div>
+          <div className={slots["item-content"]}>
             <CodeEditor
               language="text"
-              className="code-editor-value"
+              className={slots["code-editor-value"]}
               readOnly
               value={computedInfo.computedPathValue}
             />

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -88,11 +89,11 @@ const Report = () => {
         title: t('report_list.operation'),
         render: (_, record) => {
           return (
-            <Flex align="center" className="operate">
+            <Flex align="center" className={slots.operate}>
               <Button type="link" size="small" onClick={() => handleViewReport(record)}>
                 {t('report_list.view')}
               </Button>
-              <Divider type="vertical" className="btn-divider" />
+              <Divider type="vertical" className={slots["btn-divider"]} />
               <Popconfirm title={t('common.tips')} onConfirm={() => handleDeleteReport(record)}>
                 <Button type="link" size="small">
                   {t('report_list.delete')}

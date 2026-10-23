@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { forwardRef } from "./forwardRef";
 import React, { useMemo, useState } from "react";
 import { Combobox } from "@base-ui/react/combobox";
@@ -155,7 +156,7 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
       }
     };
     const list = (
-      <Combobox.List className="beautify-select-item-list">
+      <Combobox.List className={slots["beautify-select-item-list"]}>
         {filtered.map((o, index) => (
           <Combobox.Item
             key={String(o.value)}
@@ -163,11 +164,11 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
             disabled={o.disabled}
             className={cx(
               css.option,
-              "beautify-select-item",
-              "beautify-select-item-option",
+              slots["beautify-select-item"],
+              slots["beautify-select-item-option"],
             )}
           >
-            <span className="beautify-select-item-option-content">
+            <span className={slots["beautify-select-item-option-content"]}>
               {optionRender
                 ? optionRender({ ...o, data: o }, { index })
                 : o.label}
@@ -232,8 +233,8 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
           style={style}
           className={cx(
             css.select,
-            "beautify-select",
-            multiple && "beautify-select-multiple",
+            slots["beautify-select"],
+            multiple && slots["beautify-select-multiple"],
             className,
             rootClassName,
           )}
@@ -261,15 +262,15 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
               }
               className={cx(
                 css.selectInput,
-                "beautify-select-selection-search-input",
+                slots["beautify-select-selection-search-input"],
               )}
             />
           ) : (
             <Combobox.Trigger
               {...props}
-              className={cx(css.selectTrigger, "beautify-select-selector")}
+              className={cx(css.selectTrigger, slots["beautify-select-selector"])}
             >
-              <span className="beautify-select-selection-item">
+              <span className={slots["beautify-select-selection-item"]}>
                 {selectedOptions
                   ? (labelRender?.({
                       label: selectedOptions.label,
@@ -285,7 +286,7 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
             </Combobox.Clear>
           )}
           <Combobox.Trigger
-            className={cx(css.selectArrow, "beautify-select-arrow")}
+            className={cx(css.selectArrow, slots["beautify-select-arrow"])}
             aria-label="Open options"
           >
             {loading ? "…" : (suffixIcon ?? "⌄")}
@@ -296,7 +297,7 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
             <Combobox.Popup
               className={cx(
                 css.popup,
-                "beautify-select-dropdown",
+                slots["beautify-select-dropdown"],
                 popupClassName,
               )}
               style={dropdownStyle}
@@ -353,7 +354,7 @@ export function AutoComplete({
     >
       <div
         style={style}
-        className={cx(css.select, "beautify-select", className)}
+        className={cx(css.select, slots["beautify-select"], className)}
       >
         <Combobox.Input
           {...props}

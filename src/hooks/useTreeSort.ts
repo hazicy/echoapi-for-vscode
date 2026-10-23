@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -31,7 +32,7 @@ const useTreeSort = (props: Props) => {
     // Dynamically adjust logic based on mouse position
     if (offsetY > (rect.height * 2) / 3 && isEqual(dropTitleProps[type], 'folder')) {
       const treeNodeEl = element.closest(`.beautify-tree-treenode`) || element;
-      treeNodeEl?.classList.add('drag-over');
+      treeNodeEl?.classList.add(slots["drag-over"]);
     }
   };
 

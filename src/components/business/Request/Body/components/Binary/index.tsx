@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -73,7 +74,7 @@ const RequestBodyBinary: FC<RequestBodyProps> = ({ value, onChange }) => {
         fileList={computedFileList}
         onRemove={handleRemoveFile}
         customRequest={customRequest}
-        className="upload-wrapper"
+        className={slots["upload-wrapper"]}
       >
         <Flex vertical align="center" gap={12}>
           <Button icon={<UploadOutlined />}>{t('supplement.upload_file')}</Button>

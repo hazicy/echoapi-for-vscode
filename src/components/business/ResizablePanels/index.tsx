@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { ReactNode, forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import {
   ImperativePanelGroupHandle,
@@ -149,31 +150,31 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
   const popoverContent = (
     <Space className="direction-popover-content" direction="vertical">
       <Flex
-        className={cn('direction-item-btn', isVertical && 'active')}
+        className={cn(slots["direction-item-btn"], isVertical && slots.active)}
         align="center"
         justify="left"
         onClick={() => handleChangeDirection('vertical')}
       >
         <IconFont type="icon-up-down" />
-        <span className="title">{t('common.response_component.single_pane')}</span>
+        <span className={slots.title}>{t('common.response_component.single_pane')}</span>
       </Flex>
       <Flex
-        className={cn('direction-item-btn', isHorizontal && 'active')}
+        className={cn(slots["direction-item-btn"], isHorizontal && slots.active)}
         align="center"
         justify="left"
         onClick={() => handleChangeDirection('horizontal')}
       >
         <IconFont type="icon-left-right" />
-        <span className="title">{t('common.response_component.two_pane')}</span>
+        <span className={slots.title}>{t('common.response_component.two_pane')}</span>
       </Flex>
     </Space>
   );
 
   const leftCollapse = (
-    <div className="left-collapse-wrap" onClick={resetLayout}>
+    <div className={slots["left-collapse-wrap"]} onClick={resetLayout}>
       <Flex vertical={isHorizontal} justify="center" align="center">
         <IconFont type="icon-left-folding" rotate={isVertical ? 270 : 180} />
-        <span className={cn('collapse-title', direction, language === 'en' && 'noSpacing')}>
+        <span className={cn(slots["collapse-title"], slots[direction], language === 'en' && slots.noSpacing)}>
           {leftPanelProps?.collapseTitle || ''}
         </span>
       </Flex>
@@ -181,10 +182,10 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
   );
 
   const rightCollapse = (
-    <div className="right-collapse-wrap" onClick={resetLayout}>
+    <div className={slots["right-collapse-wrap"]} onClick={resetLayout}>
       <Flex vertical={isHorizontal} justify="center" align="center">
         <IconFont type="icon-left-folding" rotate={isVertical ? 90 : 0} />
-        <span className={cn('collapse-title', direction, language === 'en' && 'noSpacing')}>
+        <span className={cn(slots["collapse-title"], slots[direction], language === 'en' && slots.noSpacing)}>
           {rightPanelProps?.collapseTitle || ''}
         </span>
       </Flex>
@@ -199,20 +200,20 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
           onCollapse={() => handleCollapse('left', true)}
           onExpand={() => handleCollapse('left', false)}
           {...omit(leftPanelProps, ['collapseTitle'])}
-          className={cn('resizable-panel-left-wrap', leftPanelProps?.className)}
+          className={cn(slots["resizable-panel-left-wrap"], leftPanelProps?.className)}
         >
           {!collapse.left ? leftPanel : leftCollapse}
         </Panel>
         {/* bar */}
         <div
-          className={cn('resizable-panel-handle', direction, panelResizeHandleProps?.className, {
-            'static-handle-border': showStaticHandleBorder,
+          className={cn(slots["resizable-panel-handle"], slots[direction], panelResizeHandleProps?.className, {
+            [slots["static-handle-border"]]: showStaticHandleBorder,
           })}
         >
-          <PanelResizeHandle {...panelResizeHandleProps} className="resizable-bar" />
+          <PanelResizeHandle {...panelResizeHandleProps} className={slots["resizable-bar"]} />
            {/* Collapse to one side */}
           {showRightCollapseBtn && !collapse.right && (
-            <div className="right-collapse-btn" onClick={handleRightCollapseWithOne}>
+            <div className={slots["right-collapse-btn"]} onClick={handleRightCollapseWithOne}>
               <IconFont type="icon-drop-down" rotate={isHorizontal ? -90 : 0} />
             </div>
           )}
@@ -224,12 +225,12 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
           {...omit(rightPanelProps, ['collapseTitle'])}
           // NOTE: The width property here is only to fix a flex layout bug
           style={isHorizontal ? { ...rightPanelProps.style, width: 0 } : {}}
-          className={cn('resizable-panel-right-wrap', rightPanelProps?.className)}
+          className={cn(slots["resizable-panel-right-wrap"], rightPanelProps?.className)}
         >
           {!collapse.right ? rightPanel : rightCollapse}
           {/* Split screen toggle */}
           {showDirectionBtn && !collapse.right && (
-            <div className="direction-wrap">
+            <div className={slots["direction-wrap"]}>
               <Popover
                 content={popoverContent}
                 overlayInnerStyle={{ padding: 8 }}

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, Key, ReactNode, useEffect } from 'react';
 
 import { ConfigProvider, TreeProps } from '@/components/ui/base';
@@ -137,7 +138,7 @@ const TreeCheckbox: FC<Props> = ({
           notCalcCheckedTypes={notCalcCheckedTypes}
           allCheckDesc={allCheckDesc}
         />
-        <div className="tree-wrap">
+        <div className={slots["tree-wrap"]}>
           <Tree
             treeData={treeData}
             checkable

@@ -9,10 +9,10 @@
   display: flex;
   align-items: center;
 }
-.FlowResponseRenderTitleWrap:global(.complete) {
+.FlowResponseRenderTitleWrap.slot-complete {
   color: var(--color-warning);
 }
-.FlowResponseRenderTitleWrap :global(.event-message) {
+.FlowResponseRenderTitleWrap .slot-event-message {
   border-radius: 4px;
   color: #0DA4A1;
   background: #0DA4A11A;
@@ -22,27 +22,27 @@
   justify-content: center;
   padding: 0 8px;
 }
-.FlowResponseRenderTitleWrap :global(.event-message):global(.connected) {
+.FlowResponseRenderTitleWrap .slot-event-message.slot-connected {
   color: #12B76A;
   background: #12B76A1A;
 }
-.FlowResponseRenderTitleWrap :global(.event-message):global(.error) {
+.FlowResponseRenderTitleWrap .slot-event-message.slot-error {
   color: #FF583E;
   background: #FF583E1A;
 }
-.FlowResponseRenderTitleWrap :global(.event-message):global(.message) {
+.FlowResponseRenderTitleWrap .slot-event-message.slot-message {
   color: #0787FF;
   background: #0787FF1A;
 }
-.FlowResponseRenderTitleWrap :global(.event-message):global(.completed) {
+.FlowResponseRenderTitleWrap .slot-event-message.slot-completed {
   color: #6941C6;
   background: #6941C61A;
 }
-.FlowResponseRenderTitleWrap :global(.event-message):global(.reconnecting) {
+.FlowResponseRenderTitleWrap .slot-event-message.slot-reconnecting {
   color: #FA8C16;
   background: #FACC151A;
 }
-.FlowResponseRenderTitleWrap :global(.event-message):global(.close) {
+.FlowResponseRenderTitleWrap .slot-event-message.slot-close {
   color: #33363966;
   background: #F6F8FA;
 }

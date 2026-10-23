@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useSyncExternalStore, useState } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import { Toast } from "@base-ui/react/toast";
@@ -206,7 +207,7 @@ function ModalControl({
         <Dialog.Popup
           aria-describedby={undefined}
           finalFocus={focusTriggerAfterClose}
-          className={cx(css.modal, "beautify-modal-content", className)}
+          className={cx(css.modal, slots["beautify-modal-content"], className)}
           style={{
             width,
             maxWidth: "calc(100vw - 32px)",
@@ -223,17 +224,17 @@ function ModalControl({
             </Dialog.Close>
           )}
           <Dialog.Title
-            className="beautify-modal-header"
+            className={slots["beautify-modal-header"]}
             style={styles?.header}
           >
             {title ?? t("base.tip")}
           </Dialog.Title>
-          <div className="beautify-modal-body" style={styles?.body}>
+          <div className={slots["beautify-modal-body"]} style={styles?.body}>
             {children}
           </div>
           {footer !== null && (
             <div
-              className={cx(css.actions, "beautify-modal-footer")}
+              className={cx(css.actions, slots["beautify-modal-footer"])}
               style={styles?.footer}
             >
               {typeof footer === "function"
@@ -353,7 +354,7 @@ export const Modal = Object.assign(ModalControl, {
 export const App = Object.assign(
   ({ children, className, style }: UIProps) => (
     <Toast.Provider toastManager={toastManager}>
-      <div className={cx(css.app, "beautify-app", className)} style={style}>
+      <div className={cx(css.app, slots["beautify-app"], className)} style={style}>
         {children}
       </div>
       <Toasts />

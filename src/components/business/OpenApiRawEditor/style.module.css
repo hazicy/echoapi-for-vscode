@@ -4,10 +4,10 @@
   height: 100%;
   min-height: 100px;
 }
-.RawEditorContainer > :global(.beautify-flex) {
+.RawEditorContainer > .slot-beautify-flex {
   flex: 1;
 }
-.RawEditorContainer > :global(.beautify-flex) > main {
+.RawEditorContainer > .slot-beautify-flex > main {
   flex: 1;
   margin-top: 8px;
   height: 0;

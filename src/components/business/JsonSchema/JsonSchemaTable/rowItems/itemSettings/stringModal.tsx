@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -26,9 +27,9 @@ const StringModal = (props: any) => {
   }, [value.enum]);
   return (
     <div>
-      <div className="base-setting">
-        <div className="item-line">{SelectTypeDom}</div>
-        <Flex gap={20} className="item-all-line item-necessarily">
+      <div className={slots["base-setting"]}>
+        <div className={slots["item-line"]}>{SelectTypeDom}</div>
+        <Flex gap={20} className={[slots["item-all-line"], slots["item-necessarily"]].join(" ")}>
           <Flex align="center" gap={8}>
             {t('common.schema.advanced_settings.required')}
             <Switch
@@ -44,19 +45,19 @@ const StringModal = (props: any) => {
         </Flex>
         {ItemMockDom && (
           <Flex gap={20}>
-            <div className="item-line">
-              <div className="case-title">example</div>
-              <div className="case-value">{ItemMockDom}</div>
+            <div className={slots["item-line"]}>
+              <div className={slots["case-title"]}>example</div>
+              <div className={slots["case-value"]}>{ItemMockDom}</div>
             </div>
           </Flex>
         )}
         <Flex vertical>
           <Flex gap={20} justify="space-between">
-            <div className="item-line">
-              <div className="case-title">
+            <div className={slots["item-line"]}>
+              <div className={slots["case-title"]}>
                 {t('common.schema.advanced_settings.default_values')}
               </div>
-              <div className="case-value">
+              <div className={slots["case-value"]}>
                 <Input
                   size="small"
                   value={value?.default}
@@ -66,9 +67,9 @@ const StringModal = (props: any) => {
                 />
               </div>
             </div>
-            <div className="item-line">
-              <div className="case-title">Format</div>
-              <div className="case-value">
+            <div className={slots["item-line"]}>
+              <div className={slots["case-title"]}>Format</div>
+              <div className={slots["case-value"]}>
                 <Select
                   value={isString(value?.format) ? value?.format : ''}
                   onChange={onChange.bind(null, 'format')}
@@ -86,9 +87,9 @@ const StringModal = (props: any) => {
             </div>
           </Flex>
           <Flex gap={20} justify="space-between">
-            <div className="item-line">
-              <div className="case-title"> {t('common.schema.advanced_settings.min_length')}</div>
-              <div className="case-value">
+            <div className={slots["item-line"]}>
+              <div className={slots["case-title"]}> {t('common.schema.advanced_settings.min_length')}</div>
+              <div className={slots["case-value"]}>
                 <InputNumber
                   size="small"
                   min={0}
@@ -97,9 +98,9 @@ const StringModal = (props: any) => {
                 />
               </div>
             </div>
-            <div className="item-line">
-              <div className="case-title"> {t('common.schema.advanced_settings.max_length')}</div>
-              <div className="case-value">
+            <div className={slots["item-line"]}>
+              <div className={slots["case-title"]}> {t('common.schema.advanced_settings.max_length')}</div>
+              <div className={slots["case-value"]}>
                 <InputNumber
                   size="small"
                   min={0}
@@ -110,8 +111,8 @@ const StringModal = (props: any) => {
             </div>
           </Flex>
         </Flex>
-        <div className="item-line">
-          <div className="case-title">
+        <div className={slots["item-line"]}>
+          <div className={slots["case-title"]}>
             <span style={{ paddingRight: 5 }}>
               {' '}
               {t('common.schema.advanced_settings.enum_values')}
@@ -122,7 +123,7 @@ const StringModal = (props: any) => {
               onChange={onChange.bind(null, 'apipost_enable_enum', !value?.apipost_enable_enum)}
             />
           </div>
-          <div className="case-value">
+          <div className={slots["case-value"]}>
             <Select
               maxTagCount={3}
               style={{ width: '100%' }}
@@ -137,12 +138,12 @@ const StringModal = (props: any) => {
             />
           </div>
         </div>
-        <div className="item-line">
-          <div className="case-title">Pattern</div>
-          <div className="case-value">
+        <div className={slots["item-line"]}>
+          <div className={slots["case-title"]}>Pattern</div>
+          <div className={slots["case-value"]}>
             <Input
               size="small"
-              className="case-value"
+              className={slots["case-value"]}
               value={value?.pattern}
               onChange={(e) => {
                 onChange('pattern', e.target.value);
@@ -151,9 +152,9 @@ const StringModal = (props: any) => {
           </div>
         </div>
 
-        <div className="item-line">
-          <div className="case-title">{t('common.schema.advanced_settings.remarks')}</div>
-          <div className="case-value">
+        <div className={slots["item-line"]}>
+          <div className={slots["case-title"]}>{t('common.schema.advanced_settings.remarks')}</div>
+          <div className={slots["case-value"]}>
             <TextArea
               size="small"
               autoSize={{ minRows: 3, maxRows: 3 }}

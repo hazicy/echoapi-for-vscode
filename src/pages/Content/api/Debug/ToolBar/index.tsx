@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { saveProjectConfig } from '@/events/apis/env';
 import { FC } from 'react';
 import { Flex, MenuProps } from '@/components/ui/base';
@@ -32,12 +33,12 @@ const ToolBar: FC<Props> = ({ apisData, onApisDataChange }) => {
 
   return (
     <ToolBarContainer>
-      <Flex gap={4} className="tab-bar-extra-content-wrap" align="center" justify="space-between">
+      <Flex gap={4} className={slots["tab-bar-extra-content-wrap"]} align="center" justify="space-between">
         
-        <Flex gap={8} align="center" className="edit-wrap" flex={1}>
+        <Flex gap={8} align="center" className={slots["edit-wrap"]} flex={1}>
           <TitleEdit
             maxLength={255}
-            className="apis-title-edit"
+            className={slots["apis-title-edit"]}
             value={apisData?.name}
             onChange={(event) => handleChange('name', event.target.value)}
           />

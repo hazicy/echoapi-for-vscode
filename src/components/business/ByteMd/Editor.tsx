@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +21,7 @@ import { useSystemConfig } from '@/store';
 import { copyStringToClipboard } from '@/utils/common';
 import { openUrlAndOpenTab } from '@/utils/open';
 
-import './css/index.css';
+import "./css/index.css";
 import en from './locale/en';
 import ja from './locale/ja_jp';
 import zh_Hans from './locale/zh_Hans';
@@ -142,9 +143,9 @@ const ByteMD = React.memo((props: ByteMDProps): any => {
     (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       copyStringToClipboard(target?.innerText || '', () => {
-        target?.classList.add('success');
+        target?.classList.add(slots.success);
         setTimeout(() => {
-          target?.classList.remove('success');
+          target?.classList.remove(slots.success);
         }, 800);
         message.success(t('supplement.copy_success'));
       });
@@ -185,7 +186,7 @@ const ByteMD = React.memo((props: ByteMDProps): any => {
     <ThemeModeWrap theme_mode={['white', 'orange'].includes(bg_color) ? 'light' : 'dark'}>
       <ByteMdWrap $token={themeToken}>
         <div
-          className={cn(`beautify-mark-down`, className, {})}
+          className={cn(slots["beautify-mark-down"], className, {})}
           style={{ height: Height, position: 'relative' }}
         >
           <Editor

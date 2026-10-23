@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -102,7 +103,7 @@ const ItemMock: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={cn('schema-td', 'settings-td', 'table-td')}>
+    <div className={cn(slots["schema-td"], slots["settings-td"], slots["table-td"])}>
       {isString(modalType) && modalType !== 'null' && modalType !== '' && (
         <ItemSettings
           value={value}
@@ -111,8 +112,8 @@ const ItemMock: React.FC<Props> = (props) => {
           setModalType={setModalType}
         />
       )}
-      <ItemWrapper className={cn('schema-td-warper')}>
-        <div className="desc-row-description">
+      <ItemWrapper className={cn(slots["schema-td-warper"])}>
+        <div className={slots["desc-row-description"]}>
           <Input.TextArea
             autoSize={false}
             value={value?.description || ''}
@@ -126,18 +127,18 @@ const ItemMock: React.FC<Props> = (props) => {
             placeholder={t('common.schema.description')}
           />
         </div>
-        <Flex gap={8} className="item-manage">
+        <Flex gap={8} className={slots["item-manage"]}>
           <Tooltip title={t('common.schema.required')}>
             <div
               onClick={handleUpdateRequired}
-              className={cn('item-required', { required: isRequired })}
+              className={cn(slots["item-required"], { [slots.required]: isRequired })}
             >
               <IconFont style={{ fontSize: 14 }} type="icon-fuhao" />
             </div>
           </Tooltip>
           <Popconfirm
             title={t('common.tips')}
-            className="delete-item-icon"
+            className={slots["delete-item-icon"]}
             onConfirm={onDeleteNode}
           >
             <Button

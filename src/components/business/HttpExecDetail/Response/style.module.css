@@ -1,7 +1,7 @@
 .ResponseWrapper {
   width: 100%;
 }
-.ResponseWrapper :global(.beautify-tabs-tabpane) ::-webkit-scrollbar {
+.ResponseWrapper .slot-beautify-tabs-tabpane ::-webkit-scrollbar {
   display: none;
 }
 .EmptyWrapper {

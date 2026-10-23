@@ -1,13 +1,13 @@
-.DropdownMenuWrap :global(.beautify-dropdown-menu) {
+.DropdownMenuWrap .slot-beautify-dropdown-menu {
   background-color: var(--color-bg-right);
 }
-.DropdownMenuWrap :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item) {
+.DropdownMenuWrap .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item {
   color: var(--font-content-color);
 }
-.DropdownMenuWrap :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item):hover {
+.DropdownMenuWrap .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item:hover {
   color: var(--color-primary);
   background: var(--color-primary-opacity);
 }
-.DropdownMenuWrap :global(.beautify-dropdown-menu) :global(.beautify-dropdown-menu-item) :global(.beautify-btn-text) {
+.DropdownMenuWrap .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item .slot-beautify-btn-text {
   color: var(--font-content-color);
 }

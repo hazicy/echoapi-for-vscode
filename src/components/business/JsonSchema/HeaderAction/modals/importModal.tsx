@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -81,14 +82,14 @@ const ImportModal = (props: ImportModalProps) => {
       onCancel={onCancel}
     >
       <ImportContainer $token={themeToken}>
-        <div className="import-header">
+        <div className={slots["import-header"]}>
           <Segmented
             value={activeKey}
             onChange={(activeKey: any) => setActiveKey(activeKey)}
             options={SCHEMA_TAB_LIST}
           />
         </div>
-        <div className="code-editor-container">
+        <div className={slots["code-editor-container"]}>
           <CodeEditor
             height={400}
             value={importValue}

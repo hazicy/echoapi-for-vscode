@@ -1,9 +1,9 @@
-.DotWrapper :global(.dot) {
+.DotWrapper .slot-dot {
   border-radius: 50%;
 }
-.DotWrapper :global(.dot):global(.success) {
+.DotWrapper .slot-dot.slot-success {
   background-color: var(--color-success);
 }
-.DotWrapper :global(.dot):global(.error) {
+.DotWrapper .slot-dot.slot-error {
   background-color: var(--color-error);
 }

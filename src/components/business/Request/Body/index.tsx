@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, lazy, useMemo } from 'react';
 
 import { Flex, message, Select, Tooltip, Typography } from '@/components/ui/base';
@@ -125,7 +126,7 @@ const RequestBody: FC<RequestBodyProps> = (props) => {
     return (
       <RequestBodyContainer className="request-body-container">
         <Flex vertical>
-          <Flex className="request-body-header" align="center" justify='space-between'>
+          <Flex className={slots["request-body-header"]} align="center" justify='space-between'>
             <Flex align="center">
 
             {isEqual(systemConfigTabDirection, -1) ? (
@@ -155,7 +156,7 @@ const RequestBody: FC<RequestBodyProps> = (props) => {
                 />
               )}
             </Flex>
-            {apiData?.target_type === 'api' && <Flex className='other-btn' align='center'>
+            {apiData?.target_type === 'api' && <Flex className={slots["other-btn"]} align='center'>
               {value?.mode === 'json' && <Tooltip title='Auto Generate'>
                 <Flex>
                   <Button
@@ -171,7 +172,7 @@ const RequestBody: FC<RequestBodyProps> = (props) => {
             </Flex>}
           </Flex>
           <SuspenseContent>
-            <div className="request-body-content-wrap">{bodyContent}</div>
+            <div className={slots["request-body-content-wrap"]}>{bodyContent}</div>
           </SuspenseContent>
         </Flex>
       </RequestBodyContainer>

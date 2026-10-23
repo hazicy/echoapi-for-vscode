@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { memo, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -126,7 +127,7 @@ const Assert: React.FC<Props> = memo(
     return (
       <ResponseAssertionContainer>
         {showAssertTitle && (
-          <div className="assert-title">
+          <div className={slots["assert-title"]}>
             <Flex
               style={{ color: "var(--font-content-color)" }}
               align="center"
@@ -142,13 +143,13 @@ const Assert: React.FC<Props> = memo(
             </Flex>
           </div>
         )}
-        <div className="assert-pot">
+        <div className={slots["assert-pot"]}>
           {responseDataIsCheckResult && responseDataIsCheckResult > 0 && (
             <>
-              <div className="assert-content">
+              <div className={slots["assert-content"]}>
                 <ScriptError sendingData={sendingData} />
               </div>
-              <div className="assert-content">
+              <div className={slots["assert-content"]}>
                 <BodyList
                   {...{
                     isSuccess,
@@ -156,7 +157,7 @@ const Assert: React.FC<Props> = memo(
                   }}
                 />
               </div>
-              <div className="assert-content">
+              <div className={slots["assert-content"]}>
                 <AssertList asserts={sendingData?.asserts} />
               </div>
             </>

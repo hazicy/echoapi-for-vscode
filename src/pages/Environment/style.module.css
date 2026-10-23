@@ -4,16 +4,16 @@
   height: 100%;
   background: var(--color-bg-right);
 }
-.EnvironmentContainer :global(.env-menu-top) {
+.EnvironmentContainer .slot-env-menu-top {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 20px;
   border-right: 1px solid var(--color-table-border);
 }
-.EnvironmentContainer :global(.env-menu-top) :global(.beautify-menu) {
+.EnvironmentContainer .slot-env-menu-top .slot-beautify-menu {
   border-inline-end: none;
 }
-.EnvironmentContainer :global(.title) {
+.EnvironmentContainer .slot-title {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -24,7 +24,7 @@
   color: var(--font-title-color);
   font-style: normal;
 }
-.EnvironmentContainer :global(.tip) {
+.EnvironmentContainer .slot-tip {
   padding: 8px 16px;
   width: 100%;
   display: flex;
@@ -37,7 +37,7 @@
   background-color: var(--color-bg-page);
   border-radius: 4px;
 }
-.EnvironmentContainer :global(.column) {
+.EnvironmentContainer .slot-column {
   flex-direction: column;
   align-items: flex-start;
 }
@@ -52,26 +52,26 @@
   align-items: center;
   justify-content: space-between;
 }
-.EnvLabel :global(.operation) {
+.EnvLabel .slot-operation {
   visibility: hidden;
   color: var(--icon-color);
 }
-.EnvLabel :global(.operation) :global(.anticon):hover {
+.EnvLabel .slot-operation .slot-anticon:hover {
   color: var(--color-primary);
 }
-.EnvLabel :global(.operation) :global(.anticon):last-child {
+.EnvLabel .slot-operation .slot-anticon:last-child {
   margin-inline-start: 10px;
 }
-.EnvLabel:hover :global(.operation) {
+.EnvLabel:hover .slot-operation {
   visibility: visible;
 }
-.EnvLabel :global(.name) {
+.EnvLabel .slot-name {
   width: auto;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.EnvLabel :global(.private) {
+.EnvLabel .slot-private {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -95,14 +95,14 @@
   padding-right: 0;
   /* background-color: var(--color-bg-page); */
 }
-.LeftMenuContainer :global(.beautify-menu-item) {
+.LeftMenuContainer .slot-beautify-menu-item {
   display: flex;
   align-items: center;
 }
-.LeftMenuContainer :global(.beautify-menu-item) :global(.beautify-menu-title-content) {
+.LeftMenuContainer .slot-beautify-menu-item .slot-beautify-menu-title-content {
   flex: 1;
 }
-.LeftMenuContainer :global(.env-menu-new) {
+.LeftMenuContainer .slot-env-menu-new {
   background-color: transparent;
 }
 .MenuTitle {
@@ -116,9 +116,9 @@
   font-weight: 400;
   color: var(--font-content-color);
 }
-.MenuIconContainer :global(.icon-cookie),
-.MenuIconContainer :global(.icon-global-param),
-.MenuIconContainer :global(.icon-global-var) {
+.MenuIconContainer .slot-icon-cookie,
+.MenuIconContainer .slot-icon-global-param,
+.MenuIconContainer .slot-icon-global-var {
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -127,22 +127,22 @@
   height: 18px;
   border-radius: 4px;
 }
-.MenuIconContainer :global(.icon-cookie) {
+.MenuIconContainer .slot-icon-cookie {
   background-color: rgba(255, 140, 0, 0.1);
 }
-.MenuIconContainer :global(.icon-cookie) > :global(.anticon) {
+.MenuIconContainer .slot-icon-cookie > .slot-anticon {
   color: #ff8c00;
 }
-.MenuIconContainer :global(.icon-global-param) {
+.MenuIconContainer .slot-icon-global-param {
   background-color: rgba(34, 162, 255, 0.1);
 }
-.MenuIconContainer :global(.icon-global-param) > :global(.anticon) {
+.MenuIconContainer .slot-icon-global-param > .slot-anticon {
   color: #22a2ff;
 }
-.MenuIconContainer :global(.icon-global-var) {
+.MenuIconContainer .slot-icon-global-var {
   background-color: rgba(175, 113, 255, 0.1);
 }
-.MenuIconContainer :global(.icon-global-var) > :global(.anticon) {
+.MenuIconContainer .slot-icon-global-var > .slot-anticon {
   color: #b071ff;
 }
 .EnvIconContainer {

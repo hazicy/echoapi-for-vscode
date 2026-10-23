@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, Key, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -70,10 +71,10 @@ const AllCheck: FC<Props> = ({
   return (
     <AllCheckContainer>
       <Checkbox checked={checked} onChange={handleChange}>
-        <span className="all-check-text">
+        <span className={slots["all-check-text"]}>
           {t("common.select_all")}
         </span>
-        {allCheckDesc && <span className='all-check-desc'>{allCheckDesc}</span>}
+        {allCheckDesc && <span className={slots["all-check-desc"]}>{allCheckDesc}</span>}
       </Checkbox>
     </AllCheckContainer>
   );

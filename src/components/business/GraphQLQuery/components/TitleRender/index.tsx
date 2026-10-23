@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { memo, useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -68,22 +69,22 @@ const TitleRender = memo((props: DataNode | any) => {
   }, [itemKind, kind, non_null]);
   return (
     <TitleRenderContainer align="center" justify="space-between">
-      <Flex align="center" className="title-container" gap={12}>
+      <Flex align="center" className={slots["title-container"]} gap={12}>
         <div
-          className={classNames('input', {
-            noDesc: !description,
+          className={classNames(slots.input, {
+            [slots.noDesc]: !description,
           })}
         >{`${name}`}</div>
         <div
-          className={classNames('type', {
-            null: non_null !== undefined,
-            array: includes(['array'], kind),
-            noDesc: !description,
+          className={classNames(slots.type, {
+            [slots.null]: non_null !== undefined,
+            [slots.array]: includes(['array'], kind),
+            [slots.noDesc]: !description,
           })}
         >
           {kindType}
         </div>
-        {description && <div className="desc">{description}</div>}
+        {description && <div className={slots.desc}>{description}</div>}
       </Flex>
       <Flex align="center" gap={8}>
         {!isEmpty(args) && !readOnly && (
@@ -109,7 +110,7 @@ const TitleRender = memo((props: DataNode | any) => {
             <Badge size="small" offset={[-2, 0]} count={count}>
               <Tooltip title={t('graphql.filter')}>
                 <Flex
-                  className="action-outer primary"
+                  className={[slots["action-outer"], slots.primary].join(" ")}
                   onClick={(e) => {
                     e?.stopPropagation();
                     if (readOnly) return;

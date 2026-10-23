@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, lazy, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -232,7 +233,7 @@ const Response: FC<Props> = memo(
 
         {!isNotEmpty && (
           <Empty
-            wrapClassName={showError ? "mask-error-mode" : undefined}
+            wrapClassName={showError ? slots["mask-error-mode"] : undefined}
             maskMode
           />
         )}

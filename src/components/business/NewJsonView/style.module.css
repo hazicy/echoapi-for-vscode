@@ -1,37 +1,38 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .NewJsonViewContainer {
   height: 100%;
   max-height: 400px;
   overflow: auto;
 }
-.NewJsonViewContainer :global(.string-value) {
+.NewJsonViewContainer .slot-string-value {
   word-break: break-all;
 }
-.NewJsonViewContainer :global(.object-key) > span {
+.NewJsonViewContainer .slot-object-key > span {
   word-break: break-all;
 }
-.JsonViewWrap :global(.react-json-view) {
+.JsonViewWrap [class~="react-json-view"] {
   padding: 12px;
   min-height: 200px;
   background-color: var(--background-color-primary) !important;
   word-break: break-all;
 }
-.JsonViewWrap :global(.object-key) {
+.JsonViewWrap .slot-object-key {
   color: var(--content-color-primary) !important;
 }
-.JsonViewWrap :global(.object-size) {
+.JsonViewWrap .slot-object-size {
   color: var(--content-color-secondary) !important;
 }
-.JsonViewWrap :global(.variable-row),
-.JsonViewWrap :global(.object-key-val) {
+.JsonViewWrap .slot-variable-row,
+.JsonViewWrap .slot-object-key-val {
   border-left-color: var(--border-color-default) !important;
 }
-.JsonViewWrap :global(.object-key-val) > span:first-child span:last-child {
+.JsonViewWrap .slot-object-key-val > span:first-child span:last-child {
   color: '#5AB8D1' !important;
 }
-.JsonViewWrap :global(.brace-row) {
+.JsonViewWrap .slot-brace-row {
   /* stylelint-disable-next-line no-descending-specificity */
 }
-.JsonViewWrap :global(.brace-row) span {
+.JsonViewWrap .slot-brace-row span {
   color: '#5AB8D1' !important;
 }
 .OtherPreViewWrap {

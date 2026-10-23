@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -88,7 +89,7 @@ const RestfulQuery: FC<Props> = memo(
     return (
       <RestfulQueryContainer>
         <BasicTable
-          className={cn({ 'table-custom-empty-wrap': size(value?.parameter) <= 0 })}
+          className={cn({ [slots["table-custom-empty-wrap"]]: size(value?.parameter) <= 0 })}
           rowKey="param_id"
           cellPadding={0}
           columns={tableColumns}

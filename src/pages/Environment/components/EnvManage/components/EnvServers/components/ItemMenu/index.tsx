@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -64,7 +65,7 @@ const Index: React.FC<Props> = (props) => {
       }}
       trigger={['click']}
     >
-      <div className="env-more">
+      <div className={slots["env-more"]}>
         <IconFont type="icon-navi-more" />
       </div>
     </Dropdown>

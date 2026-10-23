@@ -1,3 +1,5 @@
+import slots from "@/components/ui/base/slots.module.css";
+import { moduleClassNames } from "@/components/ui/base/moduleClassNames";
 import { FC, memo, useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -82,8 +84,8 @@ const RowKey: FC<Props> = memo((props) => {
       <div
         style={{ pointerEvents: 'visible' }}
         className={classnames({
-          required: true,
-          checked: rowData?.required,
+          [slots.required]: true,
+          [slots.checked]: rowData?.required,
         })}
       >
         <Tooltip title={t('supplement.required')} placement="top">
@@ -109,7 +111,7 @@ const RowKey: FC<Props> = memo((props) => {
   return (
     <RowItemWrap>
       {showCheckbox && (
-        <Flex className="checkbox-wrap" align="center">
+        <Flex className={slots["checkbox-wrap"]} align="center">
           <Checkbox
             checked={isEqual(rowData?.required, true)}
             onChange={handleChangeChecked}
@@ -118,7 +120,7 @@ const RowKey: FC<Props> = memo((props) => {
         </Flex>
       )}
       {!isEqual(tabType, 'header') ? (
-        <div className="row-description">
+        <div className={slots["row-description"]}>
           <VarInput
             enableNewRow
             envId={envId}
@@ -149,7 +151,7 @@ const RowKey: FC<Props> = memo((props) => {
         >
           {map(finalFieldType, (item) => (
             <Select.Option value={item} key={item}>
-              <SelectFieldTypeOptionItem className={`item-${item?.toLocaleLowerCase()}`}>
+              <SelectFieldTypeOptionItem className={moduleClassNames(slots, `item-${item?.toLocaleLowerCase()}`)}>
                 {item}
               </SelectFieldTypeOptionItem>
             </Select.Option>

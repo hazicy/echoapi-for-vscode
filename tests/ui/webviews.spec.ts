@@ -1,4 +1,8 @@
 import { expect, test } from "@playwright/test";
+import { generateScopedName } from "../../scripts/css-modules.mjs";
+
+const slotSelector = (name: string) =>
+  `.${generateScopedName(name, "/ui/base/slots.module.css")}`;
 
 for (const panel of [
   "sidePanel",
@@ -136,10 +140,10 @@ for (const panel of [
     }, panel);
     if (panel === "folderTestReportPanel") {
       await expect(
-        page.locator("#root .beautify-spin-container").first(),
+        page.locator(`#root ${slotSelector("beautify-spin-container")}`).first(),
       ).toHaveAttribute("aria-busy", "false");
     } else {
-      await expect(page.locator("#root .beautify-skeleton")).toHaveCount(0);
+      await expect(page.locator(`#root ${slotSelector("beautify-skeleton")}`)).toHaveCount(0);
     }
     await expect(page.locator("#root")).not.toHaveText("");
     await page.evaluate(
@@ -151,7 +155,7 @@ for (const panel of [
     if (panel === "sidePanel") {
       for (const width of [280, 380]) {
         await page.setViewportSize({width, height:900});
-        const group = page.locator('.beautify-new-http-more');
+        const group = page.locator(slotSelector('beautify-new-http-more'));
         const main = group.locator('button').first();
         const groupBox = await group.boundingBox();
         const mainBox = await main.boundingBox();
@@ -165,8 +169,8 @@ for (const panel of [
     if (panel === "tagPanel") {
       for (const width of [760, 1024]) {
         await page.setViewportSize({width, height:900});
-        await page.getByRole('tab', {name:'Params', exact:true}).click();
-        const table = page.getByRole('tabpanel', {name:'Params', exact:true}).locator('table');
+        await page.getByRole('tab').filter({hasText:/^Params(?:\s*\d+)?$/}).click();
+        const table = page.getByRole('tabpanel', {name:/^Params(?:\s*\d+)?$/}).locator('table');
         await expect(table).toHaveCSS('table-layout', 'fixed');
         const key = table.locator('[contenteditable=true]').filter({hasText:'search'});
         const value = table.locator('[contenteditable=true]').filter({hasText:'hello'});

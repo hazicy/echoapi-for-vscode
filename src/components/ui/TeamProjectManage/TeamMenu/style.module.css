@@ -6,7 +6,7 @@
 .TeamMenuWrapper::-webkit-scrollbar {
   display: none;
 }
-.TeamMenuWrapper :global(.title) :global(.count) {
+.TeamMenuWrapper .slot-title .slot-count {
   width: 22px;
   height: 22px;
   border-radius: 4px;
@@ -17,69 +17,69 @@
   color: var(--font-content-color);
   background-color: var(--color-bg-page);
 }
-.TeamMenuWrapper :global(.beautify-menu-inline) {
+.TeamMenuWrapper .slot-beautify-menu-inline {
   border-right: none !important;
 }
-.TeamMenuWrapper :global(.beautify-menu-submenu-title) {
+.TeamMenuWrapper .slot-beautify-menu-submenu-title {
   margin: 0;
   padding: 0;
   width: 100%;
 }
-.TeamMenuWrapper :global(.beautify-menu-item) {
+.TeamMenuWrapper .slot-beautify-menu-item {
   margin: 0;
   padding-left: 36px;
   width: 100%;
 }
-.TeamMenuWrapper :global(.beautify-menu-submenu-selected) :global(.beautify-menu-submenu-title) {
+.TeamMenuWrapper .slot-beautify-menu-submenu-selected .slot-beautify-menu-submenu-title {
   font-weight: 600;
   color: var(--font-content-color);
 }
-.TeamMenuWrapper :global(.beautify-menu-submenu-active) :global(.beautify-menu-submenu-title) {
+.TeamMenuWrapper .slot-beautify-menu-submenu-active .slot-beautify-menu-submenu-title {
   color: var(--color-primary);
 }
-.TeamMenuWrapper :global(.beautify-menu-title-content) {
+.TeamMenuWrapper .slot-beautify-menu-title-content {
   margin-left: 14px;
 }
-.TeamMenuWrapper :global(.beautify-menu-title-content) :global(.name) {
+.TeamMenuWrapper .slot-beautify-menu-title-content .slot-name {
   max-width: 190px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.TeamMenuWrapper :global(.beautify-menu-item-selected) {
+.TeamMenuWrapper .slot-beautify-menu-item-selected {
   color: var(--color-primary);
 }
-.MenuItemContainer :global(.project-name) {
+.MenuItemContainer .slot-project-name {
   max-width: 240px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.MenuItemContainer :global(.logout-project) {
+.MenuItemContainer .slot-logout-project {
   display: none;
   color: #ff583e;
 }
-.MenuItemContainer:hover :global(.logout-project) {
+.MenuItemContainer:hover .slot-logout-project {
   display: block;
 }
-.MenuItemContainer :global(.fail) {
+.MenuItemContainer .slot-fail {
   font-size: var(--font-size-12);
   color: #ff3b27;
 }
-.MenuItemContainer :global(.pending) {
+.MenuItemContainer .slot-pending {
   font-size: var(--font-size-12);
   color: #26cea4;
 }
 .MigrateItemWrapper {
   padding: 0 20px;
 }
-.MigrateItemWrapper :global(.migrate-item) {
+.MigrateItemWrapper .slot-migrate-item {
   margin-top: 12px;
   padding-left: 12px;
   height: 32px;
   cursor: pointer;
 }
-.MigrateItemWrapper :global(.migrate-item) :global(.migrate-text) {
+.MigrateItemWrapper .slot-migrate-item .slot-migrate-text {
   font-size: var(--font-size-14);
   color: var(--color-primary);
 }

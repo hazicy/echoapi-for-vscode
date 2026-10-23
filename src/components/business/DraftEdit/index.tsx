@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -435,9 +436,9 @@ const VariableInput = (props: Props, refForward: React.Ref<any>) => {
         <DraftWrap
           onKeyDown={handleKeyDown}
           ref={refForward}
-          className={cn('mini-editor', className, {
-            'editor-active': active,
-            'editor-no-wrap': !enableNewRow,
+          className={cn(slots["mini-editor"], className, {
+            [slots["editor-active"]]: active,
+            [slots["editor-no-wrap"]]: !enableNewRow,
           })}
         >
           <Editor

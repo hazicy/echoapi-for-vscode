@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { memo, useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
@@ -124,7 +125,7 @@ const SortableItem = <SortItem extends AnyObject>({
   const renderHeader = useMemoizedFn(() => {
     return (
       <div
-        className="header-container"
+        className={slots["header-container"]}
         ref={preview}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -145,8 +146,8 @@ const SortableItem = <SortItem extends AnyObject>({
           {<Arrow show={showArrow} activeKey={activeKey} />}
           {customHeader && (
             <div
-              className={classNames('custom-header', {
-                ['hover-show-custom-header']: hoverShowTools,
+              className={classNames(slots["custom-header"], {
+                [slots["hover-show-custom-header"]]: hoverShowTools,
               })}
             >
               {customHeader(sortItem)}
@@ -159,7 +160,7 @@ const SortableItem = <SortItem extends AnyObject>({
 
   const renderChildren = useMemoizedFn(() => {
     return (
-      <div className="children-container">
+      <div className={slots["children-container"]}>
         {map(sortItem.children, (children, idx: number) => {
           return (
             <SortableItem
@@ -232,14 +233,14 @@ const SortableItem = <SortItem extends AnyObject>({
     <div
       ref={refContainer}
       style={{ opacity: isDragging ? 0.5 : 1 }}
-      className={classNames('item-container', {
-        top,
-        inside,
-        bottom,
+      className={classNames(slots["item-container"], {
+        [slots.top]: top,
+        [slots.inside]: inside,
+        [slots.bottom]: bottom,
       })}
     >
       {sortable && (
-        <div ref={refHandler} className="icon">
+        <div ref={refHandler} className={slots.icon}>
           <IconFont
             type="icon-drag"
             style={{ color: themeToken.iconColor, fontSize: themeToken.fontSize }}

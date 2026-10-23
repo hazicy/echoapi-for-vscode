@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useMemo, useState } from 'react';
 import { PushRightWrap } from './style';
 import { useTranslation } from 'react-i18next';
@@ -103,7 +104,7 @@ const PushRight = (props: PushRightProps) => {
   };
 
   return (<PushRightWrap style={dynamicStyle}>
-    <div className="title">
+    <div className={slots.title}>
       {renderTitle()}
     </div>
     {renderConfictItems()}

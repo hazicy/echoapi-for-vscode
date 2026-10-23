@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -24,18 +25,18 @@ const Index = (props: Props) => {
   const { text, prop } = props;
   const tipsElement = (
     <ContainerWrap $token={themeToken}>
-      <div className="item-title">
-        <div className="pop-var-icon fixed">
+      <div className={slots["item-title"]}>
+        <div className={[slots["pop-var-icon"], slots.fixed].join(" ")}>
           <IconFont type="icon-a-fixedvalue" />
         </div>
-        <div className="pop-var-title green">
+        <div className={[slots["pop-var-title"], slots.green].join(" ")}>
           <Tooltip title={t('var_insert.fixed_value')}>{t('var_insert.fixed_value')}</Tooltip>
         </div>
       </div>
-      <div className="item-var">
-        <div className="var-value">{text.substring(1, text.length - 1)}</div>
+      <div className={slots["item-var"]}>
+        <div className={slots["var-value"]}>{text.substring(1, text.length - 1)}</div>
       </div>
-      <div className="item-edit">
+      <div className={slots["item-edit"]}>
         <Button size="small" type="primary" onClick={() => varClick(prop, targetRef.current, text)}>
           {t('supplement.edit')}
         </Button>
@@ -46,7 +47,7 @@ const Index = (props: Props) => {
   return (
     <>
       <CustomPopover placement="bottomLeft" content={tipsElement}>
-        <span ref={targetRef} className="tag-env">
+        <span ref={targetRef} className={slots["tag-env"]}>
           {props.children}
         </span>
       </CustomPopover>

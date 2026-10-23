@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { ChangeEvent, FC, memo } from 'react';
 
 import { Flex, Input } from '@/components/ui/base';
@@ -27,7 +28,7 @@ const RowPattern: FC<Props> = memo(({ rowData, rowIndex, onChange, onDelete }) =
     <Flex>
       <Input value={rowData.expression} onChange={handleChange} />
       <IconFont
-        className="delete-vars-params-icon"
+        className={slots["delete-vars-params-icon"]}
         type="icon-delete"
         onClick={() => onDelete(rowIndex)}
         style={{ padding: '0 10px' }}

@@ -6,7 +6,7 @@
   flex: 1;
   gap: 12px;
 }
-.PushLeftWrap :global(.beautify-input-affix-wrapper) {
+.PushLeftWrap .slot-beautify-input-affix-wrapper {
   background: var(--vscode-input-background);
   border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
 }

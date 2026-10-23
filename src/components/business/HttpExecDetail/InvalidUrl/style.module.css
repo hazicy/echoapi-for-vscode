@@ -2,11 +2,11 @@
   width: 100%;
   height: 100%;
 }
-.InvalidUrlWrapper :global(.icon) {
+.InvalidUrlWrapper .slot-icon {
   font-size: 58px;
   color: var(--icon-color);
 }
-.InvalidUrlWrapper :global(.text) {
+.InvalidUrlWrapper .slot-text {
   padding: 4px 8px;
   border-radius: var(--border-radius);
   text-align: center;

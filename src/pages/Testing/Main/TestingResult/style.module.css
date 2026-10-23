@@ -7,9 +7,9 @@
   margin-top: 12px;
   border-radius: 4px;
 }
-.TestingResultWrapper :global(.content) {
+.TestingResultWrapper .slot-content {
   color: #111827;
 }
-.TestingResultWrapper :global(.title) {
+.TestingResultWrapper .slot-title {
   color: #667085;
 }

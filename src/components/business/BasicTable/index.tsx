@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useMemo } from 'react';
 
 import { ConfigProvider } from '@/components/ui/base';
@@ -24,7 +25,7 @@ const BasicTable = <DataSource extends AnyObject>(props: BasicTableProps<DataSou
 
   const tableProps = {
     ...props,
-    rowClassName: classNames(props.rootClassName, { 'reset-padding': props.resetPadding || false }),
+    rowClassName: classNames(props.rootClassName, { [slots["reset-padding"]]: props.resetPadding || false }),
     pagination: props.pagination ?? false,
     locale: { emptyText: <Empty style={{ height: 160 }} /> },
   };

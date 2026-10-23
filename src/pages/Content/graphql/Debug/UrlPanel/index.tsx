@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { memo, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -129,7 +130,7 @@ const Index = memo((props: ApiComponentType) => {
         fieldNames={{ title: 'label' }}
         treeData={convertToSaveFolderTree(apiDetailsData)}
         titleRender={(nodeData) => {
-          return <div className="dropdown-tree-title">{nodeData.label}</div>;
+          return <div className={slots["dropdown-tree-title"]}>{nodeData.label}</div>;
         }}
       />
     </SaveDropDownContainer>
@@ -137,7 +138,7 @@ const Index = memo((props: ApiComponentType) => {
   return (
     <UrlPanelContainer>
       <UrlGroup
-        className="url-group-wrap"
+        className={slots["url-group-wrap"]}
         type="graphql"
         maxLength={10240}
         data={urlGroupData}

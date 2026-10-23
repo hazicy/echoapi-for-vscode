@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, lazy, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -117,7 +118,7 @@ const SocketIoDebug: FC<SocketIoComponentType> = ({ apisData, onApisDataChange }
         fieldNames={{ title: 'label' }}
         treeData={convertToSaveFolderTree(apiDetailsData)}
         titleRender={(nodeData) => {
-          return <div className="dropdown-tree-title">{nodeData.label}</div>;
+          return <div className={slots["dropdown-tree-title"]}>{nodeData.label}</div>;
         }}
       />
     </SaveDropDownContainer>
@@ -131,9 +132,9 @@ const SocketIoDebug: FC<SocketIoComponentType> = ({ apisData, onApisDataChange }
         onApisDataChange(val as unknown as SocketIoDetailsData);
       }} />
       <WsDebugContainer>
-        <div className="url-panel" style={{ padding: '0 16px' }}>
+        <div className={slots["url-panel"]} style={{ padding: '0 16px' }}>
           <Flex flex={1} justify="space-between" align="center">
-            <div className="url-group">
+            <div className={slots["url-group"]}>
               <UrlGroup
                 curServerId={curServerId}
                 SetCurServerId={SetCurServerId}

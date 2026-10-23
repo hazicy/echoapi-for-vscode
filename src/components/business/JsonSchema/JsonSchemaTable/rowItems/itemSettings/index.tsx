@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -138,7 +139,7 @@ const ItemSettings = (props: any, ref: any) => {
     <Select style={{ width: '100%' }} value={value.type} size="small" onChange={handleChangeType}>
       {ITEM_TYPES.map((d: string) => (
         <Select.Option value={d} key={d}>
-          <span className={classNames(d, 'item-key-types')}>{toLower(d)}</span>
+          <span className={classNames(slots[d] ?? d, slots["item-key-types"])}>{toLower(d)}</span>
         </Select.Option>
       ))}
     </Select>
@@ -195,7 +196,7 @@ const ItemSettings = (props: any, ref: any) => {
                 </div>
               )}
               {computedActiveTab === 'schema' && (
-                <div className="source-setting">
+                <div className={slots["source-setting"]}>
                   <CodeEditor
                     height={230}
                     value={beautifyText}
@@ -206,12 +207,12 @@ const ItemSettings = (props: any, ref: any) => {
                 </div>
               )}
             </Flex>
-            <Flex className="source-help" align="center">
+            <Flex className={slots["source-help"]} align="center">
               <Flex
                 onClick={() =>
                   openUrl('https://www.echoapi.com/wiki/docs/schema/create#advanced-field-settings')
                 }
-                className="source-tip"
+                className={slots["source-tip"]}
                 gap={2}
               >
                 <Tooltip title={t('supplement.help')}>

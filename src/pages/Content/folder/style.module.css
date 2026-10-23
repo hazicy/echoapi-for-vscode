@@ -4,9 +4,9 @@
   height: 100%;
   overflow: auto;
 }
-.FlexSegmented :global(.custom-segmented-tabs-wrap) {
+.FlexSegmented .slot-custom-segmented-tabs-wrap {
   padding-top: 12px;
 }
-.FlexSegmented :global(.custom-segmented-tabs-wrap) :global(.segmented-tabs-header) {
+.FlexSegmented .slot-custom-segmented-tabs-wrap .slot-segmented-tabs-header {
   padding: 0 16px;
 }

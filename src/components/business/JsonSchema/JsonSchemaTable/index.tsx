@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { memo, useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -72,7 +73,7 @@ const Template: React.FC<Props> = (props) => {
       }}
     >
       <SchemaWrapper $token={themeToken}>
-        <div ref={refTable} className="template-table">
+        <div ref={refTable} className={slots["template-table"]}>
           <ItemNode
             enableDelete={false}
             deepIndex={0}

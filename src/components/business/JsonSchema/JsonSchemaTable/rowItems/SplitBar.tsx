@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { MouseEventHandler, memo, useEffect, useRef, useState } from 'react';
 
 import cn from 'classnames';
@@ -118,8 +119,8 @@ const SplitBar: React.FC<Props> = (props) => {
           height: barHeight,
         }}
         className={cn({
-          'td-scale': false,
-          scaling,
+          [slots["td-scale"]]: false,
+          [slots.scaling]: scaling,
         })}
       />
     </>

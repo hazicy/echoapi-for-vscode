@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -81,7 +82,7 @@ const Setting = (props: Props) => {
               <Flex key={it.key} gap={12} align="center">
                 <Flex flex={1} vertical>
                   <div className="setting-title">{it.title}</div>
-                  <div className="setting-desc">{it.desc}</div>
+                  <div className={slots["setting-desc"]}>{it.desc}</div>
                 </Flex>
                 <Flex flex={0.1} style={{ minWidth: 120 }} align="start" justify="start">
                   {it.children}

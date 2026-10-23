@@ -1,3 +1,5 @@
+import slots from "@/components/ui/base/slots.module.css";
+import { moduleClassNames } from "@/components/ui/base/moduleClassNames";
 import { FC, useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -92,7 +94,7 @@ const Realtime: FC<Props> = ({ sendingDataSSE }) => {
           if(isString(result.event) && !isEmpty(result?.event)){
             return (<Flex gap={4} align='center'>
               <Tooltip title={result.event}>
-              <span className={`event-message ${result.event}`}>{result.event.slice(0,10)}</span>
+              <span className={moduleClassNames(slots, `event-message ${result.event}`)}>{result.event.slice(0,10)}</span>
               </Tooltip>
          
               {eventData}
@@ -159,7 +161,7 @@ const Realtime: FC<Props> = ({ sendingDataSSE }) => {
 
     if (['message', 'complete', 'connect', 'disconnect', 'sse'].includes(action)) {
       return (
-        <FlowResponseRenderTitleWrap className={cn({ complete: isEqual(action, 'complete') })}>
+        <FlowResponseRenderTitleWrap className={cn({ [slots.complete]: isEqual(action, 'complete') })}>
           {mapTips[action]}
           {calcContent(data)}
         </FlowResponseRenderTitleWrap>

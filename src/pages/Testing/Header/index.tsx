@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import useTesting from '@/store/useTesting';
 import cn from 'classnames';
 import { Button, Flex } from '@/components/ui/base';
@@ -31,13 +32,13 @@ const TestingHeader = ({folderName, onRunClick,setShowReportList}:TestingHeaderP
   return (
     <Flex justify='space-between'>
       <Flex align='center' gap={12}>
-        <div className="folder-name">{folderName}</div>
-        <div className="history-report" onClick={()=>{
+        <div className={slots["folder-name"]}>{folderName}</div>
+        <div className={slots["history-report"]} onClick={()=>{
           setShowReportList(true);
         }}>{t('common.folder_operate.history_report')}</div>
       </Flex>
       <Button className={cn({
-        'folder-sending-btn': testingSendingData.sendStatus === 'sending'
+        [slots["folder-sending-btn"]]: testingSendingData.sendStatus === 'sending'
       })} type='primary' onClick={onRunClick}>
         {renderRunBtnText}
       </Button>

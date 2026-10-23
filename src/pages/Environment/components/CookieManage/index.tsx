@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -78,9 +79,9 @@ const Index = () => {
 
   return (
     <CookieContainer>
-      <Flex className="cookie-flex" vertical gap={15}>
-        <div className="cookie-title">
-          <Space className="title">
+      <Flex className={slots["cookie-flex"]} vertical gap={15}>
+        <div className={slots["cookie-title"]}>
+          <Space className={slots.title}>
             {t('global_setting.cookie_detail.title')}
             <Tooltip title={t('global_setting.cookie_detail.tips')}>
               <IconFont type="icon-wenhao" />
@@ -94,7 +95,7 @@ const Index = () => {
           </Space>
         </div>
         <AddDomain project_id={projectId} value={domainInfo} onChange={updateDomainInfo} />
-        <div className="cookie-content">
+        <div className={slots["cookie-content"]}>
           <DomainItem project_id={projectId} value={domainInfo} onChange={updateDomainInfo} />
         </div>
       </Flex>

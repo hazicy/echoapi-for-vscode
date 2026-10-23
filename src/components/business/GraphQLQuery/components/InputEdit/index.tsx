@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -32,8 +33,8 @@ const InputEdit = (props: Props) => {
   return (
     <li
       className={classnames({
-        'basic-tab-bar': true,
-        'basic-tab-bar-active': active,
+        [slots["basic-tab-bar"]]: true,
+        [slots["basic-tab-bar-active"]]: active,
       })}
       onDoubleClick={() => setEdit(false)}
       onClick={() => onSelect?.(curKey)}
@@ -42,7 +43,7 @@ const InputEdit = (props: Props) => {
         <Input
           size="small"
           className={classnames({
-            'edit-input': !edit,
+            [slots["edit-input"]]: !edit,
           })}
           style={{ width: 100 }}
           autoFocus
@@ -73,7 +74,7 @@ const InputEdit = (props: Props) => {
         >
           <IconFont
             type="icon-small-close"
-            className="icon-close"
+            className={slots["icon-close"]}
             onClick={(e) => {
               e.stopPropagation();
             }}

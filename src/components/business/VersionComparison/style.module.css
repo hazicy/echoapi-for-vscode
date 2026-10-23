@@ -1,4 +1,4 @@
-.VersionModalWrap :global(.version-tip) {
+.VersionModalWrap .slot-version-tip {
   font-size: var(--font-size-14);
   padding: 10px 0 10px 12px;
   border: 1px solid var(--color-table-border);
@@ -6,16 +6,16 @@
   color: var(--font-content-color);
   flex: 1;
 }
-.VersionModalWrap :global(.beautify-select) {
+.VersionModalWrap .slot-beautify-select {
   height: 40px;
 }
-.VersionModalWrap :global(.beautify-select) :global(.beautify-select-selector) {
+.VersionModalWrap .slot-beautify-select .slot-beautify-select-selector {
   font-size: var(--font-size-14);
 }
-.VersionModalWrap :global(.beautify-collapse-header) {
+.VersionModalWrap .slot-beautify-collapse-header {
   font-size: var(--font-size-14);
 }
-.VersionModalWrap :global(.prev-tag) {
+.VersionModalWrap .slot-prev-tag {
   right: 0;
   padding: 0 4px;
   height: 24px;
@@ -24,7 +24,7 @@
   color: #ff583e;
   background-color: #ff583e1a;
 }
-.VersionModalWrap :global(.next-tag) {
+.VersionModalWrap .slot-next-tag {
   padding: 0 4px;
   height: 24px;
   border-radius: var(--border-radius);

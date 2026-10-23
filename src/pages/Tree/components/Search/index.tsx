@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, useEffect } from 'react';
 
 import { Flex, Input, Tooltip } from '@/components/ui/base';
@@ -60,14 +61,14 @@ const Search: FC<Props> = ({
 
   return (
     <SearchContainer>
-      <div className="search-wrap">
+      <div className={slots["search-wrap"]}>
           <Input
             prefix={<IconFont style={{color:"var(--vscode-input-placeholderForeground)"}} type="icon-search-line" />}
             placeholder={searchInputPlaceholder}
             value={searchValue}
             onChange={(event) => setSearchValue(event.target.value)}
           />
-          {showActions &&  <Flex className="actions-wrap" align="center">
+          {showActions &&  <Flex className={slots["actions-wrap"]} align="center">
 
               <Tooltip placement="topRight" title={t('common.folder_operate.locate')}>
                 <IconFont type="icon-positioning" onClick={()=>onPosition(apisActiveKey)} />

@@ -5,17 +5,17 @@
   overflow-y: auto;
   gap: 12px;
 }
-.TestingMainWarp :global(.segmented-tabs-content) {
+.TestingMainWarp .slot-segmented-tabs-content {
   min-height: 100px !important;
 }
-.TestingMainWarp :global(.beautify-progress-outer) {
+.TestingMainWarp .slot-beautify-progress-outer {
   width: 99% !important;
 }
-.TestingMainWarp :global(.event-btns) :global(.beautify-btn) {
+.TestingMainWarp .slot-event-btns .slot-beautify-btn {
   padding: 0px 12px;
   height: 24px;
 }
-.TestingMainWarp :global(.event-btns) :global(.select-all) {
+.TestingMainWarp .slot-event-btns .slot-select-all {
   padding: 0px !important;
 }
 .TestingConfigWrap {
@@ -33,33 +33,33 @@
   border: 1px solid var(--color-border);
   border-radius: 4px;
 }
-.FunctionalWrap :global(.switch-name) {
+.FunctionalWrap .slot-switch-name {
   cursor: pointer;
 }
-.FunctionalWrap :global(.beautify-input-number) :global(.beautify-input-number-input),
-.FunctionalWrap :global(.beautify-upload-wrapper) {
+.FunctionalWrap .slot-beautify-input-number .slot-beautify-input-number-input,
+.FunctionalWrap .slot-beautify-upload-wrapper {
   background: var(--search-bg-color);
 }
-.FunctionalWrap :global(.beautify-upload-wrapper) {
+.FunctionalWrap .slot-beautify-upload-wrapper {
   border-radius: 4px;
   border: 1px solid var(--color-table-border);
   height: 32px;
 }
-.FunctionalWrap :global(.beautify-upload-wrapper):global(.disabled) {
+.FunctionalWrap .slot-beautify-upload-wrapper.slot-disabled {
   cursor: not-allowed;
 }
-.FunctionalWrap :global(.beautify-upload) :global(.beautify-btn-text) {
+.FunctionalWrap .slot-beautify-upload .slot-beautify-btn-text {
   color: var(--font-content-color);
 }
-.FunctionalWrap :global(.env-select-wrap),
-.FunctionalWrap :global(.icon-manage-env) {
+.FunctionalWrap .slot-env-select-wrap,
+.FunctionalWrap .slot-icon-manage-env {
   background-color: var(--search-bg-color) !important;
 }
-.FunctionalWrap :global(.icon-manage-env) :global(.anticon),
-.FunctionalWrap :global(.env-select-wrap) :global(.anticon) {
+.FunctionalWrap .slot-icon-manage-env .slot-anticon,
+.FunctionalWrap .slot-env-select-wrap .slot-anticon {
   color: var(--font-content-color) !important;
 }
-.FunctionalWrap :global(.file-name-wrap) {
+.FunctionalWrap .slot-file-name-wrap {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -70,29 +70,29 @@
   border-radius: 4px;
   border: 1px solid var(--vscode-editor-lineHighlightBorder, #262628);
 }
-.FunctionalWrap :global(.file-name-wrap):hover {
+.FunctionalWrap .slot-file-name-wrap:hover {
   border: 1px solid var(--color-primary);
 }
-.FunctionalWrap :global(.file-name-wrap) :global(.name) {
+.FunctionalWrap .slot-file-name-wrap .slot-name {
   max-width: 180px;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.FunctionalWrap :global(.file-name-wrap):global(.disabled) {
+.FunctionalWrap .slot-file-name-wrap.slot-disabled {
   cursor: not-allowed;
 }
-.FunctionalWrap :global(.beautify-input-number-outlined) {
+.FunctionalWrap .slot-beautify-input-number-outlined {
   width: 100%;
 }
 .ResultListWarp {
   /* overflow: hidden; */
 }
-.ResultListWarp :global(.beautify-tabs) {
+.ResultListWarp .slot-beautify-tabs {
   height: 100%;
 }
-.ResultListWarp :global(.beautify-tabs) :global(.beautify-tabs-content-holder) {
+.ResultListWarp .slot-beautify-tabs .slot-beautify-tabs-content-holder {
   /* overflow-y: auto; */
 }
-.ResultListWarp :global(.beautify-tabs) :global(.beautify-tabs-tab) {
+.ResultListWarp .slot-beautify-tabs .slot-beautify-tabs-tab {
   padding: 10px 8px !important;
 }

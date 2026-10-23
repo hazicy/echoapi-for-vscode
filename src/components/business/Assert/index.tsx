@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, ReactNode, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -149,7 +150,7 @@ const Assert: FC<Props> = ({ value, onChange, rawData }) => {
     <AssertWrapper $token={themeToken}>
       <Flex vertical gap={themeToken.padding12}>
         <Flex gap={themeToken.padding12} align="center">
-          <div className="label">{t('common.assertion.content')}</div>
+          <div className={slots.label}>{t('common.assertion.content')}</div>
           <Select
             value={value.type}
             placeholder=""
@@ -165,7 +166,7 @@ const Assert: FC<Props> = ({ value, onChange, rawData }) => {
           />
         </Flex>
         <Flex gap={themeToken.padding12} align="center">
-          <div className="label">{t('common.assertion.expression.title')}</div>
+          <div className={slots.label}>{t('common.assertion.expression.title')}</div>
           {!hidePathInput && (
             <Input
               placeholder={calcTargetInfo(value.type)?.pathPlaceholder}
@@ -197,7 +198,7 @@ const Assert: FC<Props> = ({ value, onChange, rawData }) => {
                 suffixIcon={false}
                 dropdownStyle={{ display: 'none' }}
                 placeholder={getCompareTypeTip(get(value, 'expression.compareType'))}
-                className="collection-variable-select"
+                className={slots["collection-variable-select"]}
                 value={
                   get(value, 'expression.compareValue')
                     ? get(value, 'expression.compareValue')?.split(',')
@@ -209,7 +210,7 @@ const Assert: FC<Props> = ({ value, onChange, rawData }) => {
               />
             ) : (
               <VarInput
-                wrapClassName="assert-input"
+                wrapClassName={slots["assert-input"]}
                 hasBorder
                 placeholder={getCompareTypeTip(get(value, 'expression.compareType'))}
                 value={get(value, 'expression.compareValue')}

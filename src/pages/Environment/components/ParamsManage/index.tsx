@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
@@ -30,12 +31,12 @@ const Index:FC<{defaultTabKey?:string}> = ({defaultTabKey='Headers'}) => {
 
   return (
     <ParamsManageContainer>
-      <Flex className="params-flex" vertical gap={15}>
+      <Flex className={slots["params-flex"]} vertical gap={15}>
         <Flex vertical gap={15}>
-          <span className="title">{t('global_setting.key_detail.title')}</span>
-          <span className="tip">{t('global_setting.key_detail.tips')}</span>
+          <span className={slots.title}>{t('global_setting.key_detail.title')}</span>
+          <span className={slots.tip}>{t('global_setting.key_detail.tips')}</span>
         </Flex>
-        <div className="params-content">
+        <div className={slots["params-content"]}>
           <RequestGlobal
             defaultTabKey={defaultTabKey}
             isSystem={true}

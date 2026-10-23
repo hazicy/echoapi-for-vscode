@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { forwardRef } from "./forwardRef";
 import React from "react";
 import cx from "classnames";
@@ -27,7 +28,7 @@ export const Flex = forwardRef<HTMLDivElement, UIProps>(
       {
         ...props,
         ref,
-        className: cx(css.flex, "beautify-flex", className, rootClassName),
+        className: cx(css.flex, slots["beautify-flex"], className, rootClassName),
         style: {
           flexDirection: vertical ? "column" : "row",
           alignItems: align,
@@ -104,7 +105,7 @@ export const Divider = ({
     <Separator
       {...props}
       orientation={type === "vertical" ? "vertical" : "horizontal"}
-      className={cx(css.separator, "beautify-divider", className)}
+      className={cx(css.separator, slots["beautify-divider"], className)}
       style={style}
     />
   );
@@ -116,12 +117,12 @@ export function Empty({
   style,
 }: UIProps) {
   return (
-    <div className={cx(css.empty, "beautify-empty", className)} style={style}>
-      {image && <div className="beautify-empty-image">{image}</div>}
+    <div className={cx(css.empty, slots["beautify-empty"], className)} style={style}>
+      {image && <div className={slots["beautify-empty-image"]}>{image}</div>}
       {description !== false && (
-        <div className="beautify-empty-description">{description}</div>
+        <div className={slots["beautify-empty-description"]}>{description}</div>
       )}
-      {children && <div className="beautify-empty-footer">{children}</div>}
+      {children && <div className={slots["beautify-empty-footer"]}>{children}</div>}
     </div>
   );
 }
@@ -137,7 +138,7 @@ export function Spin({
 }: UIProps) {
   return (
     <div
-      className={cx(css.spinHost, "beautify-spin-nested-loading", className)}
+      className={cx(css.spinHost, slots["beautify-spin-nested-loading"], className)}
       style={style}
     >
       {spinning && (
@@ -146,7 +147,7 @@ export function Spin({
           {tip}
         </div>
       )}
-      <div className="beautify-spin-container" aria-busy={spinning}>
+      <div className={slots["beautify-spin-container"]} aria-busy={spinning}>
         {children}
       </div>
     </div>
@@ -157,7 +158,7 @@ export const Skeleton = Object.assign(
     loading ? (
       <div
         {...props}
-        className={cx(css.skeleton, "beautify-skeleton", props.className)}
+        className={cx(css.skeleton, slots["beautify-skeleton"], props.className)}
         aria-label="Loading"
       >
         {Array.from({ length: paragraph?.rows ?? 3 }, (_, i) => (
@@ -259,7 +260,7 @@ export const Tag = forwardRef<HTMLSpanElement, UIProps>(
     <span
       {...props}
       ref={ref}
-      className={cx(css.tag, "beautify-tag", className)}
+      className={cx(css.tag, slots["beautify-tag"], className)}
       style={{ color, ...style }}
     >
       {icon}
@@ -283,13 +284,13 @@ export const Badge = ({
   className,
   style,
 }: UIProps) => (
-  <span className={cx(css.badge, "beautify-badge", className)} style={style}>
+  <span className={cx(css.badge, slots["beautify-badge"], className)} style={style}>
     {children}
     {status ? (
       <span style={{ color }}>{text}</span>
     ) : (
       (count || showZero) && (
-        <sup className="beautify-badge-count">
+        <sup className={slots["beautify-badge-count"]}>
           {Number(count) > overflowCount ? `${overflowCount}+` : count}
         </sup>
       )
@@ -310,7 +311,7 @@ export const Alert = ({
 }: UIProps) => (
   <div
     role={type === "error" ? "alert" : "status"}
-    className={cx(css.alert, "beautify-alert", className)}
+    className={cx(css.alert, slots["beautify-alert"], className)}
     style={style}
   >
     {showIcon && icon}

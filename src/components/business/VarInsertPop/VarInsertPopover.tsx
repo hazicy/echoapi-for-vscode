@@ -1,3 +1,5 @@
+import slots from "@/components/ui/base/slots.module.css";
+import { moduleClassNames } from "@/components/ui/base/moduleClassNames";
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { PopoverProps } from '@/components/ui/base';
@@ -127,10 +129,10 @@ const Index = ({
           transition: 'width .2s,height .2s',
         }}
       >
-        <ContentContainer id={VARIABLE_LIST_CONTENT_KEY} className={`${step === 1 && 'active'}`}>
+        <ContentContainer id={VARIABLE_LIST_CONTENT_KEY} className={moduleClassNames(slots, `${step === 1 && 'active'}`)}>
           <VarList onChange={stepChange} type={tabsValue} />
         </ContentContainer>
-        <VarContent className={`${step === 2 && 'active'}`} ref={contentRef} />
+        <VarContent className={moduleClassNames(slots, `${step === 2 && 'active'}`)} ref={contentRef} />
       </div>
     );
   }, [step, tabsValue, language, height]);

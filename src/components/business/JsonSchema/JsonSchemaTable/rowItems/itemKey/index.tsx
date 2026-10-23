@@ -1,3 +1,5 @@
+import slots from "@/components/ui/base/slots.module.css";
+import { moduleClassNames } from "@/components/ui/base/moduleClassNames";
 import React, { memo, useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -152,7 +154,7 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
   const IndentPanel = (deepIndex: any) => {
     // Generate indent array based on deepIndex
     const indents = Array.from({ length: deepIndex - 1 }, (_, index) => (
-      <div key={index} className="indent-panel"></div>
+      <div key={index} className={slots["indent-panel"]}></div>
     ));
 
     return indents;
@@ -161,23 +163,23 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
   return (
     <div
       ref={refContainerWarper}
-      className={cn('schema-td', 'table-td')}
+      className={cn(slots["schema-td"], slots["table-td"])}
     >
-      <KeyWarperContainer className={cn('schema-td-warper', 'schema-width-auto')}>
+      <KeyWarperContainer className={cn(slots["schema-td-warper"], slots["schema-width-auto"])}>
         {IndentPanel(deepIndex)}
         {deepIndex > 0 && sortAble && (
           <div style={{ position: 'absolute', zIndex: 999 }}>{DragHandle(handleSortMouseDown)}</div>
         )}
         {deepIndex > 0 && (
-          <div className="empty-btn">
-            <div className="empty-btn-l"></div>
-            <div className="empty-btn-r"></div>
+          <div className={slots["empty-btn"]}>
+            <div className={slots["empty-btn-l"]}></div>
+            <div className={slots["empty-btn-r"]}></div>
           </div>
         )}
         {showArrow && (
           <Button
             type="text"
-            className="caret-icon"
+            className={slots["caret-icon"]}
             icon={expand ? <CaretDownOutlined /> : <CaretRightOutlined />}
             size="small"
             onClick={setExpand.bind(null, !expand)}
@@ -186,9 +188,9 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
         {readOnly && (
           <Button
             size="small"
-            className={`item-key-input apipost-btn-disabled readonly ${
+            className={moduleClassNames(slots, `item-key-input apipost-btn-disabled readonly ${
               deepIndex === 0 && 'item-key-input-front'
-            }`}
+            }`)}
             spellCheck={false}
             style={{
               flex: 1,
@@ -199,15 +201,15 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
         )}
         {!readOnly && (
           <Flex style={{ position: 'relative', height: '100%' }}>
-            <div className="hidden-input">{`${
+            <div className={slots["hidden-input"]}>{`${
               deepIndex === 0 ? t('common.schema.root') : nodeTitle
             }`}</div>
             <Input
               size="small"
               ref={txtKeyRef}
-              className={`item-key-input item-key-input-hover ${
+              className={moduleClassNames(slots, `item-key-input item-key-input-hover ${
                 deepIndex === 0 && 'item-key-input-front'
-              }`}
+              }`)}
               spellCheck={false}
               style={{
                 flex: 1,
@@ -232,7 +234,7 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
                 position: 'relative',
                 zIndex: isObject(overrideData) ? 1000 : 0,
               }}
-              className={classNames(nodeType, 'item-key-types')}
+              className={classNames(slots[nodeType] ?? nodeType, slots["item-key-types"])}
             >
               {nodeType}
             </Flex>

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -83,11 +84,11 @@ const ImportProjectManual = () => {
           <Title style={{ fontSize: "16px" }} level={3}>
             {t("settings.import_project.title")}
           </Title>
-          <div className="import-project-item">
-            <div className="import-project-item-title">
+          <div className={slots["import-project-item"]}>
+            <div className={slots["import-project-item-title"]}>
               {t("settings.import_project.source")}
             </div>
-            <div className="import-project-item-content">
+            <div className={slots["import-project-item-content"]}>
               <Radio.Group value={fileType}>
                 {IMPORT_TYPE_LIST.map((item: any) => (
                   <Tooltip
@@ -96,8 +97,8 @@ const ImportProjectManual = () => {
                     <div
                       key={item.key}
                       className={classnames({
-                        "radio-card": true,
-                        active: item.key === fileType,
+                        [slots["radio-card"]]: true,
+                        [slots.active]: item.key === fileType,
                       })}
                     >
                       <Radio
@@ -123,7 +124,7 @@ const ImportProjectManual = () => {
                           form.resetFields();
                         }}
                       >
-                        <span className="radio-card-content">
+                        <span className={slots["radio-card-content"]}>
                           <IconFont type={item.icon} />
                           {item.value}
                         </span>

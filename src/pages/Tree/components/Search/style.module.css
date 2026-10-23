@@ -5,50 +5,50 @@
   width: 100%;
   /* height: 32px; */
 }
-.SearchContainer :global(.beautify-new-http-more) {
+.SearchContainer .slot-beautify-new-http-more {
   width: 100% !important;
 }
-.SearchContainer :global(.beautify-new-http-more) > button:first-child {
+.SearchContainer .slot-beautify-new-http-more > button:first-child {
   flex: 1;
   font-weight: 600;
 }
-.SearchContainer :global(.beautify-new-http-more) > button {
+.SearchContainer .slot-beautify-new-http-more > button {
   height: 28px;
 }
-.SearchContainer :global(.beautify-flex) {
+.SearchContainer .slot-beautify-flex {
   height: 100%;
 }
-.SearchContainer :global(.beautify-flex) :global(.beautify-input-affix-wrapper) {
+.SearchContainer .slot-beautify-flex .slot-beautify-input-affix-wrapper {
   padding: 4px 8px;
   height: 100%;
   background-color: var(--search-bg-color);
 }
-.SearchContainer :global(.beautify-flex) :global(.beautify-input-affix-wrapper) :global(.beautify-input-suffix) {
+.SearchContainer .slot-beautify-flex .slot-beautify-input-affix-wrapper .slot-beautify-input-suffix {
   min-width: 80px;
 }
-.SearchContainer :global(.beautify-space-compact) {
+.SearchContainer .slot-beautify-space-compact {
   width: auto;
 }
-.SearchContainer :global(.search-wrap) {
+.SearchContainer .slot-search-wrap {
   display: flex;
   align-items: center;
   flex: 1;
   gap: 4px;
 }
-.SearchContainer :global(.search-wrap) :global(.beautify-input) {
+.SearchContainer .slot-search-wrap .slot-beautify-input {
   font-size: var(--font-size-12);
 }
-.SearchContainer :global(.search-wrap) :global(.beautify-input-outlined) {
+.SearchContainer .slot-search-wrap .slot-beautify-input-outlined {
   background: var(--vscode-input-background);
 }
-.SearchContainer :global(.search-wrap) :global(.beautify-select) {
+.SearchContainer .slot-search-wrap .slot-beautify-select {
   position: relative;
   right: -12px;
 }
-.SearchContainer :global(.search-wrap) :global(.apis-mark-select-wrap) :global(.beautify-select-selector) {
+.SearchContainer .slot-search-wrap .slot-apis-mark-select-wrap .slot-beautify-select-selector {
   padding-left: 0;
 }
-.SearchContainer :global(.search-wrap) :global(.actions-wrap) > :global(.anticon) {
+.SearchContainer .slot-search-wrap .slot-actions-wrap > .slot-anticon {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -61,13 +61,13 @@
   color: var(--icon-color);
   transition: all 0.3s;
 }
-.SearchContainer :global(.search-wrap) :global(.actions-wrap) > :global(.anticon):hover {
+.SearchContainer .slot-search-wrap .slot-actions-wrap > .slot-anticon:hover {
   background-color: var(--vscode-toolbar-hoverBackground);
 }
-.SearchContainer :global(.search-wrap) :global(.actions-wrap) > :global(.anticon):last-of-type {
+.SearchContainer .slot-search-wrap .slot-actions-wrap > .slot-anticon:last-of-type {
   margin: 0;
 }
-.SearchContainer :global(.add-btn) {
+.SearchContainer .slot-add-btn {
   margin-left: 4px;
   width: 32px;
   height: 32px;

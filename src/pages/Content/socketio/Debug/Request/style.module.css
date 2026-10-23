@@ -1,21 +1,21 @@
-.SettingWrap :global(.beautify-input) {
+.SettingWrap .slot-beautify-input {
   /* width: 120px; */
   width: 100%;
 }
-.SettingWrap :global(.beautify-input-number) {
+.SettingWrap .slot-beautify-input-number {
   width: 100%;
 }
-.SettingWrap :global(.beautify-select) {
+.SettingWrap .slot-beautify-select {
   width: 100%;
 }
-.SettingWrap :global(.setting-desc) {
+.SettingWrap .slot-setting-desc {
   color: var(--font-light-color);
 }
 .RawEditorWrap {
   flex: 1;
   height: 0;
 }
-.RawEditorWrap :global(.code-editor-wrapper) {
+.RawEditorWrap .slot-code-editor-wrapper {
   width: 97%;
 }
 .MessageHeaderWrap {
@@ -24,9 +24,9 @@
   justify-content: space-between;
   margin-bottom: 7px;
 }
-.MessageHeaderWrap :global(.beautify-select-selector) {
+.MessageHeaderWrap .slot-beautify-select-selector {
   font-size: 12px !important;
 }
-.MessageHeaderWrap :global(.beautify-select) :global(.beautify-select-arrow) {
+.MessageHeaderWrap .slot-beautify-select .slot-beautify-select-arrow {
   font-size: 10px;
 }

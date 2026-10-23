@@ -1,25 +1,26 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .ItemWrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.ItemWrapper :global(.txt-description) {
+.ItemWrapper .slot-txt-description {
   flex: 1;
   min-width: 80px;
   border-color: transparent;
   line-height: 32px;
 }
-.ItemWrapper :global(.txt-description):not(:global(.draft-active)) {
+.ItemWrapper .slot-txt-description:not(.slot-draft-active) {
   height: 33px;
 }
-.ItemWrapper :global(.txt-description):global(.draft-active) {
+.ItemWrapper .slot-txt-description.slot-draft-active {
   min-height: 33px;
   /* background-color: var(--background-color-primary); */
 }
-.ItemWrapper :global(.txt-description) :global(.DraftEditor-root) {
+.ItemWrapper .slot-txt-description [class~="DraftEditor-root"] {
   padding: 0 4px;
 }
-.ItemWrapper :global(.item-manage) {
+.ItemWrapper .slot-item-manage {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -27,40 +28,40 @@
   width: 100px;
   height: 32px;
 }
-.ItemWrapper :global(.item-manage) :global(.ai-icon) {
+.ItemWrapper .slot-item-manage .slot-ai-icon {
   /* visibility: hidden !important; */
 }
-.ItemWrapper :global(.item-manage) :global(.delete-item-icon) {
+.ItemWrapper .slot-item-manage .slot-delete-item-icon {
   /* visibility: hidden !important; */
 }
-.ItemWrapper :global(.item-manage) :global(.btn-item) {
+.ItemWrapper .slot-item-manage .slot-btn-item {
   margin-left: 10px;
   padding: 0;
   width: 20px;
   height: 20px;
 }
-.ItemWrapper :global(.item-manage) :global(.btn-item) :global(.add-svg) {
+.ItemWrapper .slot-item-manage .slot-btn-item .slot-add-svg {
   fill: #43a047;
 }
-.ItemWrapper :global(.schema-item-desc) {
+.ItemWrapper .slot-schema-item-desc {
   height: 100%;
   border-radius: 0;
   border: none;
   border-bottom: 1px solid transparent;
 }
-.ItemWrapper :global(.schema-item-desc):hover,
-.ItemWrapper :global(.schema-item-desc):focus {
+.ItemWrapper .slot-schema-item-desc:hover,
+.ItemWrapper .slot-schema-item-desc:focus {
   border-bottom: 1px solid var(--color-primary);
 }
-.ItemWrapper :global(.desc-row-description) {
+.ItemWrapper .slot-desc-row-description {
   display: flex;
   min-width: calc(100% - 100px);
   height: 30px;
 }
-.ItemWrapper :global(.desc-row-description) :global(.textarea) {
+.ItemWrapper .slot-desc-row-description .slot-textarea {
   width: 100%;
 }
-.ItemWrapper :global(.desc-row-description) :global(.beautify-input) {
+.ItemWrapper .slot-desc-row-description .slot-beautify-input {
   margin: 0 8px;
   padding: 2px 4px;
   width: calc(100% - 100px);
@@ -72,14 +73,14 @@
   font-size: 12px;
   resize: none;
 }
-.ItemWrapper :global(.desc-row-description) :global(.beautify-input):hover {
+.ItemWrapper .slot-desc-row-description .slot-beautify-input:hover {
   height: 32px;
   /* border-radius: 4px; */
   border: 1px solid var(--color-primary);
   background-color: var(--highlight-change-color);
   /* background-color: var(--highlight-change-color); */
 }
-.ItemWrapper :global(.desc-row-description) :global(.beautify-input):focus {
+.ItemWrapper .slot-desc-row-description .slot-beautify-input:focus {
   z-index: 700;
   width: calc(100% - 100px);
   height: 32px;
@@ -89,13 +90,13 @@
   color: var(--font-content-color);
   background-color: var(--highlight-change-color);
 }
-.ItemWrapper :global(.desc-row-description) :global(.beautify-input)::placeholder {
+.ItemWrapper .slot-desc-row-description .slot-beautify-input::placeholder {
   line-height: 26px;
 }
-.ItemWrapper :global(.desc-row-description) > textarea {
+.ItemWrapper .slot-desc-row-description > textarea {
   border-radius: 0;
 }
-.ItemWrapper :global(.item-required) {
+.ItemWrapper .slot-item-required {
   width: 16px;
   height: 16px;
   border-radius: 2px;
@@ -107,6 +108,6 @@
   background-color: var(--color-border);
   cursor: pointer;
 }
-.ItemWrapper :global(.item-required):global(.required) {
+.ItemWrapper .slot-item-required.slot-required {
   color: var(--color-primary);
 }

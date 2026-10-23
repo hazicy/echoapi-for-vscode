@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -46,7 +47,7 @@ const GenerateCodeDrawer: React.FC<Props> = (props) => {
       if (isArray(har2languages.languages[language])) {
         return har2languages.languages[language].map((subclass: string) => (
           <div
-            className={classNames('menu-item', { active: `${language}.${subclass}` === menuKey })}
+            className={classNames(slots["menu-item"], { [slots.active]: `${language}.${subclass}` === menuKey })}
             key={`${language}.${subclass}`}
             onClick={() => {
               menuClick(language, subclass);
@@ -167,8 +168,8 @@ const GenerateCodeDrawer: React.FC<Props> = (props) => {
       <GenerateCodeWrap>
         <Spin tip={t('supplement.generating')} spinning={genLoading}>
           <Flex>
-            <div className="menu">{generateMenuDom}</div>
-            <div className="edit">
+            <div className={slots.menu}>{generateMenuDom}</div>
+            <div className={slots.edit}>
               <CodeEditor readOnly language={editorLanguage} value={codeText} />
             </div>
           </Flex>

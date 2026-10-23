@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useTranslation } from 'react-i18next';
 
 import { Button, Flex } from '@/components/ui/base';
@@ -29,8 +30,8 @@ const ListSideBar = (props: Props) => {
 
   return (
     <ListSideBarContainer>
-      <Flex vertical className={classNames('side-tree-wrap', { expand })}>
-        <div className="basic-tabs-con">
+      <Flex vertical className={classNames(slots["side-tree-wrap"], { [slots.expand]: expand })}>
+        <div className={slots["basic-tabs-con"]}>
           <ul>
             {map(value, (item, index) => {
               return (
@@ -48,7 +49,7 @@ const ListSideBar = (props: Props) => {
             })}
           </ul>
         </div>
-        <div className="add-btn-con">
+        <div className={slots["add-btn-con"]}>
           <Button
             onClick={handleAdd}
             icon={<IconFont type="icon-add-line" />}
@@ -60,8 +61,8 @@ const ListSideBar = (props: Props) => {
           </Button>
         </div>
       </Flex>
-      <div className="expand-divider">
-        <div className="icon-wrap" onClick={() => setExpand(!expand)}>
+      <div className={slots["expand-divider"]}>
+        <div className={slots["icon-wrap"]} onClick={() => setExpand(!expand)}>
           <IconFont type="icon-drop-down" rotate={expand ? -90 : 90} />
         </div>
       </div>

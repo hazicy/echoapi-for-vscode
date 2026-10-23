@@ -1,3 +1,4 @@
+/* Third-party DOM classes are matched only within the component selectors below. */
 .ContentContainer {
   display: flex;
   position: absolute;
@@ -10,49 +11,49 @@
   transition: opacity 0.1s ease-in-out;
   pointer-events: none;
 }
-.ContentContainer :global(.param-title) {
+.ContentContainer .slot-param-title {
   color: var(--font-light-color);
 }
-.ContentContainer :global(.beautify-input),
-.ContentContainer :global(.beautify-input-number-input) {
+.ContentContainer .slot-beautify-input,
+.ContentContainer .slot-beautify-input-number-input {
   background-color: var(--search-big-select-color);
   box-shadow: none;
 }
-.ContentContainer :global(.beautify-select) {
+.ContentContainer .slot-beautify-select {
   background-color: var(--search-big-select-color);
 }
-.ContentContainer :global(.beautify-select) * {
+.ContentContainer .slot-beautify-select * {
   box-shadow: none !important;
 }
-.ContentContainer :global(.beautify-select-selector) {
+.ContentContainer .slot-beautify-select-selector {
   box-shadow: none;
 }
-.ContentContainer:global(.active) {
+.ContentContainer.slot-active {
   opacity: 1;
   pointer-events: unset;
 }
-.ContentContainer:global(.cursor) {
+.ContentContainer.slot-cursor {
   cursor: pointer;
 }
-.ContentContainer :global(.title) {
+.ContentContainer .slot-title {
   font-size: 14px;
   font-weight: 400;
   color: var(--font-content-color);
   cursor: pointer;
 }
-.ContentContainer :global(.title):hover :global(.anticon) {
+.ContentContainer .slot-title:hover .slot-anticon {
   color: var(--color-primary);
 }
-.ContentContainer :global(.input-label) {
+.ContentContainer .slot-input-label {
   color: var(--font-light-color);
 }
-.ContentContainer :global(.fn-list) {
+.ContentContainer .slot-fn-list {
   padding: 6px;
   border-radius: 4px;
   background-color: var(--color-bg-page);
   box-sizing: border-box;
 }
-.ContentContainer :global(.fn-list) :global(.list-content) {
+.ContentContainer .slot-fn-list .slot-list-content {
   padding: 6px;
   width: 100%;
   border-radius: 4px;
@@ -61,16 +62,16 @@
   box-sizing: border-box;
   overflow-y: auto;
 }
-.ContentContainer :global(.fn-list) :global(.list-content) :global(.list-content-item) {
+.ContentContainer .slot-fn-list .slot-list-content .slot-list-content-item {
   padding: 0 4px;
   border-radius: 4px;
   line-height: 28px;
   box-sizing: border-box;
 }
-.ContentContainer :global(.fn-list) :global(.list-content) :global(.list-content-item):hover {
+.ContentContainer .slot-fn-list .slot-list-content .slot-list-content-item:hover {
   background-color: var(--form-hover-color);
 }
-.ContentContainer :global(.fn-list) :global(.list-content) :global(.list-content-item) :global(.name) {
+.ContentContainer .slot-fn-list .slot-list-content .slot-list-content-item .slot-name {
   flex: 1;
   width: 0;
   overflow: hidden;
@@ -80,21 +81,21 @@
   font-weight: 400;
   color: var(--font-content-color);
 }
-.ContentContainer :global(.fn-list) :global(.list-content) :global(.list-content-item) :global(.name):global(.del) {
+.ContentContainer .slot-fn-list .slot-list-content .slot-list-content-item .slot-name.slot-del {
   text-decoration: line-through;
   color: var(--font-light-color);
 }
-.ContentContainer :global(.fn-list) :global(.list-content) :global(.list-content-item) :global(.desc) {
+.ContentContainer .slot-fn-list .slot-list-content .slot-list-content-item .slot-desc {
   font-size: 12px;
   font-weight: 400;
   color: var(--font-light-color);
 }
-.ContentContainer :global(.desc-list) {
+.ContentContainer .slot-desc-list {
   flex: 1;
   width: 100%;
   overflow-y: auto;
 }
-.ContentContainer :global(.desc-list) :global(.desc-item) {
+.ContentContainer .slot-desc-list .slot-desc-item {
   padding: 0 8px;
   min-height: 32px;
   border-radius: 4px;
@@ -108,33 +109,33 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.ContentContainer :global(.desc-list) :global(.desc-item):hover,
-.ContentContainer :global(.desc-list) :global(.desc-item):global(.active) {
+.ContentContainer .slot-desc-list .slot-desc-item:hover,
+.ContentContainer .slot-desc-list .slot-desc-item.slot-active {
   background-color: var(--popover-select-bg-hover-color);
   cursor: pointer;
 }
-.ContentContainer :global(.desc-ai) {
+.ContentContainer .slot-desc-ai {
   width: 100%;
 }
-.ContentContainer :global(.desc-ai) :global(.desc-ai-title) {
+.ContentContainer .slot-desc-ai .slot-desc-ai-title {
   font-size: 12px;
   font-weight: 400;
   color: var(--font-light-color);
 }
-.ContentContainer :global(.desc-ai) :global(.desc-ai-title):global(.refresh) {
+.ContentContainer .slot-desc-ai .slot-desc-ai-title.slot-refresh {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.ContentContainer :global(.desc-ai) :global(.desc-ai-title):global(.refresh) :global(.params-refresh) {
+.ContentContainer .slot-desc-ai .slot-desc-ai-title.slot-refresh .slot-params-refresh {
   display: flex;
   cursor: pointer;
   gap: 4px;
 }
-.ContentContainer :global(.desc-ai) :global(.desc-ai-title):global(.refresh) :global(.params-refresh):hover {
+.ContentContainer .slot-desc-ai .slot-desc-ai-title.slot-refresh .slot-params-refresh:hover {
   color: var(--color-primary);
 }
-.ContentContainer :global(.desc-ai) :global(.desc-ai-key) {
+.ContentContainer .slot-desc-ai .slot-desc-ai-key {
   font-size: 14px;
   font-weight: 400;
   color: var(--font-content-color);
@@ -142,13 +143,13 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.ContentContainer :global(.footer) {
+.ContentContainer .slot-footer {
   width: 100%;
 }
-.ContentContainer :global(.footer) :global(.footer-preview) {
+.ContentContainer .slot-footer .slot-footer-preview {
   width: 100%;
 }
-.ContentContainer :global(.footer) :global(.footer-preview) :global(.preview-tip) {
+.ContentContainer .slot-footer .slot-footer-preview .slot-preview-tip {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -156,15 +157,15 @@
   font-weight: 400;
   color: var(--font-light-color);
 }
-.ContentContainer :global(.footer) :global(.footer-preview) :global(.preview-tip) :global(.preview-refresh) {
+.ContentContainer .slot-footer .slot-footer-preview .slot-preview-tip .slot-preview-refresh {
   display: flex;
   cursor: pointer;
   gap: 4px;
 }
-.ContentContainer :global(.footer) :global(.footer-preview) :global(.preview-tip) :global(.preview-refresh):hover {
+.ContentContainer .slot-footer .slot-footer-preview .slot-preview-tip .slot-preview-refresh:hover {
   color: var(--color-primary);
 }
-.ContentContainer :global(.footer) :global(.footer-preview) :global(.preview-content) {
+.ContentContainer .slot-footer .slot-footer-preview .slot-preview-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -177,30 +178,30 @@
   background: var(--color-bg-page);
   gap: 10px;
 }
-.ContentContainer :global(.footer) :global(.footer-preview) :global(.preview-content) :global(.anticon) {
+.ContentContainer .slot-footer .slot-footer-preview .slot-preview-content .slot-anticon {
   color: var(--font-light-color);
   cursor: pointer;
 }
-.ContentContainer :global(.footer) :global(.footer-preview) :global(.preview-content) :global(.anticon):hover {
+.ContentContainer .slot-footer .slot-footer-preview .slot-preview-content .slot-anticon:hover {
   color: var(--color-primary);
 }
-.ContentContainer :global(.footer) :global(.footer-preview) :global(.preview-content-text) {
+.ContentContainer .slot-footer .slot-footer-preview .slot-preview-content-text {
   flex: 1;
   width: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.ContentContainer :global(.footer) :global(.footer-bth) {
+.ContentContainer .slot-footer .slot-footer-bth {
   /* stylelint-disable-next-line no-descending-specificity */
 }
-.ContentContainer :global(.footer) :global(.footer-bth) :global(.anticon) {
+.ContentContainer .slot-footer .slot-footer-bth .slot-anticon {
   font-size: 18px;
 }
-.ContentContainer :global(.footer) :global(.footer-bth) > button {
+.ContentContainer .slot-footer .slot-footer-bth > button {
   flex: 1;
 }
-.ContentContainer :global(.footer) :global(.footer-bth) :global(.footer-bth-link) {
+.ContentContainer .slot-footer .slot-footer-bth .slot-footer-bth-link {
   padding: 4px 0;
 }
 .TreeDropDownContainer {
@@ -209,11 +210,11 @@
   padding: 4px;
   box-sizing: border-box;
 }
-.TreeDropDownContainer :global(.beautify-tabs) {
+.TreeDropDownContainer .slot-beautify-tabs {
   padding: 0 8px;
   box-sizing: border-box;
 }
-.TreeDropDownContainer :global(.beautify-select-tree-indent) {
+.TreeDropDownContainer [class~="beautify-select-tree-indent"] {
   width: 0;
 }
 .TreeTitleContainer {
@@ -222,13 +223,13 @@
   align-items: center;
   gap: 10px;
 }
-.TreeTitleContainer :global(.label) {
+.TreeTitleContainer .slot-label {
   max-width: 110px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.TreeTitleContainer :global(.desc) {
+.TreeTitleContainer .slot-desc {
   flex: 1;
   width: 0;
   overflow: hidden;
@@ -238,13 +239,13 @@
   text-align: right;
   color: var(--font-light-color);
 }
-.TreeValueContainer :global(.value) {
+.TreeValueContainer .slot-value {
   width: max-content;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.TreeValueContainer :global(.anticon) {
+.TreeValueContainer .slot-anticon {
   padding-left: 4px;
   font-size: 12px;
   cursor: pointer;

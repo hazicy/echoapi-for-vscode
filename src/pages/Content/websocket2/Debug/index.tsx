@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, lazy, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -117,7 +118,7 @@ const WsDebug: FC<Websocket2ComponentType> = ({ apisData, onApisDataChange }) =>
         fieldNames={{ title: 'label' }}
         treeData={convertToSaveFolderTree(apiDetailsData)}
         titleRender={(nodeData: any) => {
-          return <div className="dropdown-tree-title">{nodeData.label}</div>;
+          return <div className={slots["dropdown-tree-title"]}>{nodeData.label}</div>;
         }}
       />
     </SaveDropDownContainer>
@@ -129,9 +130,9 @@ const WsDebug: FC<Websocket2ComponentType> = ({ apisData, onApisDataChange }) =>
         onApisDataChange(val as unknown as Websocket2DetailsData);
       }} />
       <WsDebugContainer>
-        <div className="url-panel" style={{ padding: '0 16px' }}>
+        <div className={slots["url-panel"]} style={{ padding: '0 16px' }}>
           <Flex flex={1} justify="space-between" align="center">
-            <div className="url-group">
+            <div className={slots["url-group"]}>
               <UrlGroup
                 maxLength={10240}
                 placeholder={t('supplement.socket_url_placeholder')}

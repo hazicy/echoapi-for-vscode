@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useTranslation } from 'react-i18next';
 
 import cn from 'classnames';
@@ -16,11 +17,11 @@ type ResponseEmpty = {
 const ResponseEmpty = ({ description, maskMode = false, wrapClassName }: ResponseEmpty) => {
   const { t } = useTranslation();
   return (
-    <ResponseEmptyContainer className={cn({ 'mask-mode': maskMode }, wrapClassName)} >
+    <ResponseEmptyContainer className={cn({ [slots["mask-mode"]]: maskMode }, wrapClassName)} >
       <Empty
-        className="response-empty-wrap"
+        className={slots["response-empty-wrap"]}
         description={description || t('api.run.response_tip')}
-        image={<IconFont type="icon-zanwu" className="icon-empty-wrap" />}
+        image={<IconFont type="icon-zanwu" className={slots["icon-empty-wrap"]} />}
       />
     </ResponseEmptyContainer>
   );

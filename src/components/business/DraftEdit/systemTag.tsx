@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -49,21 +50,21 @@ const EnvTag = (props: { decoratedText: string; children: React.ReactNode }) => 
 
   const tipsElement = (
     <ContainerWrap $token={themeToken}>
-      <div className="item-title">
-        <div className="pop-var-icon">
+      <div className={slots["item-title"]}>
+        <div className={slots["pop-var-icon"]}>
           <IconFont type="icon-label-gloabl" />
         </div>
-        <div className="pop-var-title blue">
+        <div className={[slots["pop-var-title"], slots.blue].join(" ")}>
           <Tooltip title={varName}>{varName}</Tooltip>
         </div>
       </div>
-      <div className="item-var">
-        <div className="var-name">{t('supplement.var_desc')}</div>
-        <div className="var-value">{systemValue || desc || ''}</div>
+      <div className={slots["item-var"]}>
+        <div className={slots["var-name"]}>{t('supplement.var_desc')}</div>
+        <div className={slots["var-value"]}>{systemValue || desc || ''}</div>
       </div>
-      <div className="item-var">{t('supplement.scope')}</div>
-      <div className="item-desc">{t('supplement.inner_var')}</div>
-      <div className="item-edit">
+      <div className={slots["item-var"]}>{t('supplement.scope')}</div>
+      <div className={slots["item-desc"]}>{t('supplement.inner_var')}</div>
+      <div className={slots["item-edit"]}>
         <Button size="small" type="primary" onClick={() => varClick(props, targetRef.current)}>
           {t('supplement.edit')}
         </Button>
@@ -72,7 +73,7 @@ const EnvTag = (props: { decoratedText: string; children: React.ReactNode }) => 
   );
   return (
     <CustomPopover placement="bottomLeft" content={tipsElement}>
-      <span ref={targetRef} className="tag-global">
+      <span ref={targetRef} className={slots["tag-global"]}>
         {props.children}
       </span>
     </CustomPopover>

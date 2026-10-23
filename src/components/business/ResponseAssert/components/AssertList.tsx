@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -21,13 +22,13 @@ const List: React.FC<ListProps> = ({ asserts }) => {
     <>
       {isArray(asserts) && asserts.length > 0 && (
         <>
-          <div className="content-title">{t('common.assertion.tag')}</div>
+          <div className={slots["content-title"]}>{t('common.assertion.tag')}</div>
           <div className="assert-list">
             {asserts?.map((item, index) => (
               <ResponseAssertItemContainer
                 key={index}
                 $status={!!item?.passed}
-                className="content-item"
+                className={slots["content-item"]}
               >
                 <Space>
                   {item?.passed ? <CheckCircleFilled /> : <CloseCircleFilled />}

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useContext, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -102,7 +103,7 @@ const RawEditor = ({
                     open={varOpen}
                     setOpen={setVarOpen}
                   >
-                    <Button  className='beautify-text-btn-highlight' mode='light' type="text" size="small" icon={<IconFont type="icon-a-Dynamicvalue" />}>
+                    <Button  className={slots["beautify-text-btn-highlight"]} mode='light' type="text" size="small" icon={<IconFont type="icon-a-Dynamicvalue" />}>
                       {t('var_insert.dynamic_value')}
                     </Button>
                   </VarInsertPop>

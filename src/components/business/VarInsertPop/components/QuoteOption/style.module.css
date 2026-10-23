@@ -5,12 +5,12 @@
   height: 200px;
   overflow-y: auto;
 }
-.QuoteOptionContainer :global(.list) {
+.QuoteOptionContainer .slot-list {
   flex: 1;
   overflow-y: auto;
   border-right: 1px solid var(--color-border);
 }
-.QuoteOptionContainer :global(.list) :global(.list-item) {
+.QuoteOptionContainer .slot-list .slot-list-item {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,11 +20,11 @@
   cursor: pointer;
   gap: 10px;
 }
-.QuoteOptionContainer :global(.list) :global(.list-item):hover,
-.QuoteOptionContainer :global(.list) :global(.list-item):global(.active) {
+.QuoteOptionContainer .slot-list .slot-list-item:hover,
+.QuoteOptionContainer .slot-list .slot-list-item.slot-active {
   background: var(--popover-select-bg-hover-color);
 }
-.QuoteOptionContainer :global(.list) :global(.list-item-icon) {
+.QuoteOptionContainer .slot-list .slot-list-item-icon {
   width: 18px;
   height: 18px;
   border-radius: var(--border-radius);
@@ -33,13 +33,13 @@
   color: #fff;
   background: #3a86ff;
 }
-.QuoteOptionContainer :global(.list) :global(.list-item-icon):global(.e) {
+.QuoteOptionContainer .slot-list .slot-list-item-icon.slot-e {
   background: #3cc071;
 }
-.QuoteOptionContainer :global(.list) :global(.list-item-icon):global(.g) {
+.QuoteOptionContainer .slot-list .slot-list-item-icon.slot-g {
   background: #fa8c16;
 }
-.QuoteOptionContainer :global(.list) :global(.list-item-key) {
+.QuoteOptionContainer .slot-list .slot-list-item-key {
   width: 0;
   color: var(--font-content-color);
   /* stylelint-disable-next-line order/properties-order */
@@ -48,7 +48,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.QuoteOptionContainer :global(.content) {
+.QuoteOptionContainer .slot-content {
   display: flex;
   flex: 1;
   overflow-y: auto;
@@ -58,12 +58,12 @@
   gap: 12px;
   max-width: 173px;
 }
-.QuoteOptionContainer :global(.content) :global(.label) {
+.QuoteOptionContainer .slot-content .slot-label {
   font-size: 12px;
   font-weight: 400;
   color: var(--font-light-color);
 }
-.QuoteOptionContainer :global(.content) :global(.value) {
+.QuoteOptionContainer .slot-content .slot-value {
   font-size: 14px;
   font-weight: 400;
   word-wrap: break-word;

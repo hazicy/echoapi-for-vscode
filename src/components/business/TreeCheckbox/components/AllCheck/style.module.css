@@ -15,7 +15,7 @@
 .AllCheckContainer label span {
   white-space: nowrap;
 }
-.AllCheckContainer :global(.beautify-checkbox-wrapper) {
+.AllCheckContainer .slot-beautify-checkbox-wrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -24,14 +24,14 @@
       background-color: var(--color-bg-tree-page);
     } */
 }
-.AllCheckContainer :global(.all-check-desc) {
+.AllCheckContainer .slot-all-check-desc {
   font-size: 12px;
   color: var(--font-light-color);
   margin-left: 8px;
 }
-.AllCheckContainer :global(.all-check-text) {
+.AllCheckContainer .slot-all-check-text {
   font-size: 14px;
 }
-.AllCheckContainer :global(.all-check-text) :global(.all-check-num) {
+.AllCheckContainer .slot-all-check-text .slot-all-check-num {
   color: var(--color-primary);
 }

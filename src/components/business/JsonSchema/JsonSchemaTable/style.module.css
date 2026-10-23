@@ -2,21 +2,21 @@
   display: flex;
   flex-direction: column;
 }
-.SchemaWrapper :global(.beautify-btn) {
+.SchemaWrapper .slot-beautify-btn {
   padding: 0;
   width: 20px;
   height: 20px;
 }
-.SchemaWrapper :global(.template-table) {
+.SchemaWrapper .slot-template-table {
   position: relative;
   flex: 1;
 }
-.SchemaWrapper :global(.template-table) :global(.sel-title) {
+.SchemaWrapper .slot-template-table .slot-sel-title {
   font-size: var(--font-size-12);
   text-transform: capitalize;
   color: #43a047;
 }
-.SchemaWrapper :global(.template-table) :global(.table-tr) {
+.SchemaWrapper .slot-template-table .slot-table-tr {
   display: flex;
   height: 32px;
   /* border-top: 1px solid var(--color-border); */
@@ -24,22 +24,22 @@
   /* border-left: 1px solid var(--color-border); */
   /* border-left: 1px solid var(--color-border); */
 }
-.SchemaWrapper :global(.template-table) :global(.table-tr):hover {
+.SchemaWrapper .slot-template-table .slot-table-tr:hover {
   background-color: var(--color-bg-page);
 }
-.SchemaWrapper :global(.template-table) :global(.table-tr):hover :global(.set-icon) {
+.SchemaWrapper .slot-template-table .slot-table-tr:hover .slot-set-icon {
   visibility: visible !important;
 }
-.SchemaWrapper :global(.template-table) :global(.table-tr):hover :global(.ai-icon) {
+.SchemaWrapper .slot-template-table .slot-table-tr:hover .slot-ai-icon {
   visibility: visible !important;
 }
-.SchemaWrapper :global(.template-table) :global(.table-tr):hover :global(.delete-item-icon) {
+.SchemaWrapper .slot-template-table .slot-table-tr:hover .slot-delete-item-icon {
   visibility: visible !important;
 }
-.SchemaWrapper :global(.template-table) :global(.table-tr):global(.is-hidden) {
+.SchemaWrapper .slot-template-table .slot-table-tr.slot-is-hidden {
   background-color: var(--color-bg-page);
 }
-.SchemaWrapper :global(.template-table) :global(.table-tr) :global(.table-td) {
+.SchemaWrapper .slot-template-table .slot-table-tr .slot-table-td {
   height: 32px;
   border-top: none;
   border-right: none;
@@ -51,22 +51,22 @@
   /* flex: 1; */
   /* } */
 }
-.SchemaWrapper :global(.template-table) :global(.object-list) :global(.object-item):last-child :global(.table-tr):last-of-type {
+.SchemaWrapper .slot-template-table .slot-object-list .slot-object-item:last-child .slot-table-tr:last-of-type {
   border-radius: 0 0 4px 4px;
 }
-.SchemaWrapper :global(.template-table) :global(.object-list) :global(.object-item):last-child :global(.table-tr):last-of-type :global(.empty-btn-r) {
+.SchemaWrapper .slot-template-table .slot-object-list .slot-object-item:last-child .slot-table-tr:last-of-type .slot-empty-btn-r {
   border-left: 0;
 }
-.SchemaWrapper :global(.template-table) :global(.object-item):last-child :global(.table-tr) :global(.table-td) {
+.SchemaWrapper .slot-template-table .slot-object-item:last-child .slot-table-tr .slot-table-td {
   /* border-radius: 0 0 */
 }
-.SchemaWrapper :global(.template-table) :global(.object-item):last-child :global(.table-tr) :global(.table-td):first-child {
+.SchemaWrapper .slot-template-table .slot-object-item:last-child .slot-table-tr .slot-table-td:first-child {
   border-radius: 0 0 0 4px;
 }
-.SchemaWrapper :global(.template-table) :global(.object-item):last-child :global(.table-tr) :global(.table-td):last-child {
+.SchemaWrapper .slot-template-table .slot-object-item:last-child .slot-table-tr .slot-table-td:last-child {
   border-radius: 0 0 0 4px;
 }
-.SchemaWrapper :global(.template-table) :global(.empty-row-panel) {
+.SchemaWrapper .slot-template-table .slot-empty-row-panel {
   display: flex;
   flex: 1;
   justify-content: flex-start;
@@ -81,56 +81,56 @@
   /* border-left: 1px solid transparent; */
   color: var(--font-title-color);
 }
-.SchemaWrapper :global(.template-table) :global(.empty-row-panel) :global(.btn-add-item) {
+.SchemaWrapper .slot-template-table .slot-empty-row-panel .slot-btn-add-item {
   margin-left: 10px;
   color: var(--color-primary);
   cursor: pointer;
 }
-.SchemaWrapper :global(.template-table) :global(.empty-row-panel) :global(.empty-row-tip) {
+.SchemaWrapper .slot-template-table .slot-empty-row-panel .slot-empty-row-tip {
   color: var(--font-light-color);
 }
-.SchemaWrapper :global(.template-table) tr,
-.SchemaWrapper :global(.template-table) td {
+.SchemaWrapper .slot-template-table tr,
+.SchemaWrapper .slot-template-table td {
   height: 32px;
   border-collapse: collapse;
 }
-.SchemaWrapper :global(.template-table) tr:hover {
+.SchemaWrapper .slot-template-table tr:hover {
   background-color: var(--color-bg-page);
 }
-.SchemaWrapper :global(.template-table) :global(.item-key-types) {
+.SchemaWrapper .slot-template-table .slot-item-key-types {
   font-size: 12px;
   cursor: pointer;
 }
-.SchemaWrapper :global(.template-table) :global(.item-key-types):hover {
+.SchemaWrapper .slot-template-table .slot-item-key-types:hover {
   text-decoration: underline;
 }
-.SchemaWrapper :global(.template-table) :global(.beautify-select-single):hover :global(.item-key-types) {
+.SchemaWrapper .slot-template-table .slot-beautify-select-single:hover .slot-item-key-types {
   text-decoration: underline;
 }
-.SchemaWrapper :global(.template-table) :global(.is-hidden) :global(.schema-text-box),
-.SchemaWrapper :global(.template-table) :global(.is-hidden) :global(.sel-title),
-.SchemaWrapper :global(.template-table) :global(.is-hidden) :global(.item-key-types),
-.SchemaWrapper :global(.template-table) :global(.is-hidden) :global(.beautify-input) {
+.SchemaWrapper .slot-template-table .slot-is-hidden .slot-schema-text-box,
+.SchemaWrapper .slot-template-table .slot-is-hidden .slot-sel-title,
+.SchemaWrapper .slot-template-table .slot-is-hidden .slot-item-key-types,
+.SchemaWrapper .slot-template-table .slot-is-hidden .slot-beautify-input {
   text-decoration: line-through !important;
   font-size: var(--font-size-12) !important;
 }
-.SchemaWrapper :global(.template-table) :global(.is-hidden) :global(.schema-text-box):hover,
-.SchemaWrapper :global(.template-table) :global(.is-hidden) :global(.sel-title):hover,
-.SchemaWrapper :global(.template-table) :global(.is-hidden) :global(.item-key-types):hover,
-.SchemaWrapper :global(.template-table) :global(.is-hidden) :global(.beautify-input):hover {
+.SchemaWrapper .slot-template-table .slot-is-hidden .slot-schema-text-box:hover,
+.SchemaWrapper .slot-template-table .slot-is-hidden .slot-sel-title:hover,
+.SchemaWrapper .slot-template-table .slot-is-hidden .slot-item-key-types:hover,
+.SchemaWrapper .slot-template-table .slot-is-hidden .slot-beautify-input:hover {
   color: var(--font-title-color);
 }
-.SchemaWrapper :global(.template-table) tbody > tr:nth-child(2) {
+.SchemaWrapper .slot-template-table tbody > tr:nth-child(2) {
   border-top: 0;
 }
-.SchemaWrapper :global(.template-table) tbody > tr:nth-child(2) td {
+.SchemaWrapper .slot-template-table tbody > tr:nth-child(2) td {
   border-top: 0;
 }
-.SchemaWrapper :global(.template-table) :global(.schema-td) {
+.SchemaWrapper .slot-template-table .slot-schema-td {
   padding: 0;
   border: 1px solid #000;
 }
-.SchemaWrapper :global(.template-table) :global(.schema-td-warper) {
+.SchemaWrapper .slot-template-table .slot-schema-td-warper {
   display: flex;
   float: left;
   position: relative;
@@ -139,7 +139,7 @@
   width: 100%;
   height: 100%;
 }
-.SchemaWrapper :global(.template-table) :global(.schema-td) :global(.td-scale) {
+.SchemaWrapper .slot-template-table .slot-schema-td .slot-td-scale {
   display: flex;
   position: absolute;
   top: 0;
@@ -152,16 +152,16 @@
   cursor: ew-resize;
   content: '';
 }
-.SchemaWrapper :global(.template-table) :global(.schema-td) :global(.td-scale)::after {
+.SchemaWrapper .slot-template-table .slot-schema-td .slot-td-scale::after {
   visibility: hidden;
   width: 1px;
   height: 100%;
   background-color: var(--color-primary);
   content: '';
 }
-.SchemaWrapper :global(.template-table) :global(.schema-td) :global(.td-scale):hover::after {
+.SchemaWrapper .slot-template-table .slot-schema-td .slot-td-scale:hover::after {
   visibility: visible;
 }
-.SchemaWrapper :global(.template-table) :global(.schema-td) :global(.td-scale):global(.scaling)::after {
+.SchemaWrapper .slot-template-table .slot-schema-td .slot-td-scale.slot-scaling::after {
   visibility: visible;
 }

@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { forwardRef } from "./forwardRef";
 import React, { useMemo, useState } from "react";
 import RcTable from "rc-table";
@@ -184,8 +185,8 @@ export function Table<T extends object = Record<string, unknown>>({
     <div
       className={cx(
         css.table,
-        "beautify-table-wrapper",
-        bordered && "beautify-table-bordered",
+        slots["beautify-table-wrapper"],
+        bordered && slots["beautify-table-bordered"],
         className,
         rootClassName,
       )}
@@ -205,6 +206,7 @@ export function Table<T extends object = Record<string, unknown>>({
       <RcTable
         {...props}
         prefixCls="beautify-table"
+        className={slots["beautify-table"]}
         tableLayout={tableLayout}
         rowKey={rowKey as any}
         columns={finalColumns as any}
@@ -343,7 +345,7 @@ export const TreeSelect = Object.assign(
         {...props}
         ref={ref}
         prefixCls="beautify-select"
-        className={cx(css.select, className, rootClassName)}
+        className={cx(css.select, slots["beautify-select"], className, rootClassName)}
         dropdownClassName={cx(
           css.popup,
           css.tree,
@@ -385,7 +387,7 @@ function UploadControl({
     onChange?.({ file, fileList: list });
   };
   return (
-    <div className={cx(css.upload, "beautify-upload-wrapper", className)}>
+    <div className={cx(css.upload, slots["beautify-upload-wrapper"], className)}>
       <RcUpload
         {...props}
         beforeUpload={async (file, list) => {
@@ -434,7 +436,7 @@ function UploadControl({
       </RcUpload>
       {showUploadList &&
         files.map((file) => (
-          <div key={file.uid} className="beautify-upload-list-item">
+          <div key={file.uid} className={slots["beautify-upload-list-item"]}>
             {iconRender?.(file)}
             {file.name}
             <button

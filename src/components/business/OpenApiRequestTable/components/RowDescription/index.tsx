@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, memo, useRef, useState } from 'react';
 
 import { Flex, Input } from '@/components/ui/base';
@@ -86,7 +87,7 @@ export const RowDescription: FC<Props> = memo((props) => {
 
   return (
     <RowItemWrap>
-      <div className="row-description">
+      <div className={slots["row-description"]}>
         <Input.TextArea
           readOnly={readOnly}
           autoSize={false}
@@ -109,7 +110,7 @@ export const RowDescription: FC<Props> = memo((props) => {
         />
       </div>
       <Flex
-        className="row-description-operation"
+        className={slots["row-description-operation"]}
         align="center"
         gap={12}
         style={{ height: '100%', padding: '0 12px' }}
@@ -117,7 +118,7 @@ export const RowDescription: FC<Props> = memo((props) => {
         {showDelete && (
           <IconFont
             type="icon-delete"
-            className="delete-params-icon"
+            className={slots["delete-params-icon"]}
             onClick={() => onDelete?.(rowIndex)}
           />
         )}

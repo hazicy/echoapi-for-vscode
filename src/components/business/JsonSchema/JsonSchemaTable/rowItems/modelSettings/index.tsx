@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -28,7 +29,7 @@ const ItemMock: React.FC<Props> = (props) => {
   const isUnLinkState = isPlainObject(overrideData);
 
   return (
-    <div className={cn('schema-td', 'table-td')}>
+    <div className={cn(slots["schema-td"], slots["table-td"])}>
       <ItemModelWarperContainer>
         {isUnLinkState ? (
           <>
@@ -66,15 +67,15 @@ const ItemMock: React.FC<Props> = (props) => {
               disabled
               value={value?.description}
             />
-            <Button onClick={onCancelLinkItem} className="btn-hide" size="small">
+            <Button onClick={onCancelLinkItem} className={slots["btn-hide"]} size="small">
               {t('supplement.disassociate')}
             </Button>
             {overrideData === null ? (
-              <Button onClick={onShow} className="btn-hide" size="small">
+              <Button onClick={onShow} className={slots["btn-hide"]} size="small">
                 {t('supplement.show_field')}
               </Button>
             ) : (
-              <Button onClick={onHide} className="btn-hide" size="small">
+              <Button onClick={onHide} className={slots["btn-hide"]} size="small">
                 {t('supplement.hide_field')}
               </Button>
             )}

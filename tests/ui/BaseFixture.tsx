@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
+import { EmptyWrap } from "@/components/ui/Empty/style";
 import {
   App,
   Button,
+  Empty,
   Input,
   InputNumber,
   Select,
@@ -34,6 +36,14 @@ function Content() {
   const [form] = Form.useForm();
   return (
     <>
+      <section aria-label="Module styles">
+        <Button size="small">Small module button</Button>
+        <Button size="large">Large module button</Button>
+        <EmptyWrap style={{ "--vscode-tab-unfocusedInactiveForeground": "rgb(10, 20, 30)" } as CSSProperties}>
+          <Empty description="Styled empty description" />
+        </EmptyWrap>
+        <Empty description="Plain empty description" style={{ color: "rgb(4, 5, 6)" }} />
+      </section>
       <section aria-label="Controls">
         <Input
           aria-label="Text value"

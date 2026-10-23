@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import ReactJson from "react-json-view";
 
 import { Flex } from '@/components/ui/base';
@@ -81,9 +82,9 @@ const ConsoleContent = (props: ConsoleContentProps) => {
       {map(consoleList, (consoleItem, consoleIndex) => (
         <ConsoleItemWrap
           key={`${consoleItem.level}-${consoleIndex}`}
-          className={consoleItem.level}
+          className={slots[consoleItem.level] ?? consoleItem.level}
         >
-          <div className="time">
+          <div className={slots.time}>
             {isNumber(consoleItem.time)
               ? formatTime(consoleItem.time, TIME_FORMAT.TIME_L)
               : consoleItem.time}
@@ -94,7 +95,7 @@ const ConsoleContent = (props: ConsoleContentProps) => {
           <Flex>
             {map(consoleItem.args, (argsItem, argsIndex) => {
               return (
-                <div className="console-item-content" key={argsIndex}>
+                <div className={slots["console-item-content"]} key={argsIndex}>
                   {computedContent(argsItem, consoleItem.level)}
                 </div>
               );

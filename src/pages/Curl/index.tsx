@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { CurlWrap } from './style';
 import CodeEditor from '@/components/business/CodeEditor';
 import { useSafeState } from 'ahooks';
@@ -23,7 +24,7 @@ const Curl = () => {
 
   return (
     <CurlWrap vertical>
-      <CodeEditor className='curl-code-editor' onChange={setValue} value={value} />
+      <CodeEditor className={slots["curl-code-editor"]} onChange={setValue} value={value} />
       <Button type="primary" onClick={handleImportCurl}>
         {t('supplement.import')}
       </Button>

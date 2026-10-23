@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { IconFont } from '@/components/ui';
 import { Dropdown, Flex, MenuProps } from '@/components/ui/base';
 import i18next from 'i18next';
@@ -19,7 +20,7 @@ type NewProps = {
           trigger={['click']}
           type="primary"
           size='small'
-          className='beautify-new-http-more'
+          className={slots["beautify-new-http-more"]}
           icon={<IconFont type="icon-drop-down" />}
           onClick={() => {
             const apiMenu = find(createMenus,(im)=>im?.key === 'api');

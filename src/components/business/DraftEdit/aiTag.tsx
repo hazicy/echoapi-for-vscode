@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -18,16 +19,16 @@ const Index = (props: Props) => {
   const { themeToken } = useTheme();
   const tipsElement = (
     <ContainerWrap $token={themeToken}>
-      <div className="item-title">
-        <div className="pop-var-icon fixed">
+      <div className={slots["item-title"]}>
+        <div className={[slots["pop-var-icon"], slots.fixed].join(" ")}>
           <img width={16} src={AiDescIcon} />
         </div>
-        <div className="pop-var-title green">
+        <div className={[slots["pop-var-title"], slots.green].join(" ")}>
           <Tooltip title={t('var_insert.ai_value')}>{t('var_insert.ai_value')}</Tooltip>
         </div>
       </div>
-      <div className="item-var">
-        <div className="var-value">{t('var_insert.send_random')}</div>
+      <div className={slots["item-var"]}>
+        <div className={slots["var-value"]}>{t('var_insert.send_random')}</div>
       </div>
     </ContainerWrap>
   );

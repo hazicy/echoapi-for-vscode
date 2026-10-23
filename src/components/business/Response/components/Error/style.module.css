@@ -7,7 +7,7 @@
   height: 100%;
   background: var(--color-bg-right);
 }
-.ResponseErrorContainer :global(.close-error-wrapper) {
+.ResponseErrorContainer .slot-close-error-wrapper {
   position: absolute;
   top: 14px;
   right: 16px;
@@ -15,7 +15,7 @@
   color: #ff4c4c;
   cursor: pointer;
 }
-.ResponseErrorContainer :global(.container) {
+.ResponseErrorContainer .slot-container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -25,7 +25,7 @@
   text-align: center;
   color: var(--font-content-color);
 }
-.ResponseErrorContainer :global(.container) p:global(.error-str) {
+.ResponseErrorContainer .slot-container p.slot-error-str {
   margin: 10px auto;
   padding: 6px 8px;
   width: max-content;
@@ -34,16 +34,16 @@
   font-size: 14px;
   background: #ff5806;
 }
-.ResponseErrorContainer :global(.container) :global(.error-str):global(.proxy-error) {
+.ResponseErrorContainer .slot-container .slot-error-str.slot-proxy-error {
   background: #fff9df;
 }
-.ResponseErrorContainer :global(.container) span {
+.ResponseErrorContainer .slot-container span {
   color: var(--main);
   cursor: pointer;
 }
-.ResponseErrorContainer :global(.container) :global(.chioce-btn) {
+.ResponseErrorContainer .slot-container .slot-chioce-btn {
   color: #3a86ff;
 }
-.ResponseErrorContainer :global(.container) :global(.proxy-img) {
+.ResponseErrorContainer .slot-container .slot-proxy-img {
   margin: 0 0 20px;
 }

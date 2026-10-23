@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -84,7 +85,7 @@ const Visualization: React.FC<Props> = (props) => {
           ></iframe>
         </>
       ) : (
-        <Flex vertical justify="center" gap={12} align="center" className="visualization-empty">
+        <Flex vertical justify="center" gap={12} align="center" className={slots["visualization-empty"]}>
           {t('common.response_component.visualize_tip')}
           <Button
             onClick={() => openUrl('http://wiki.echoapi.com/docs/usescript/visual/')}

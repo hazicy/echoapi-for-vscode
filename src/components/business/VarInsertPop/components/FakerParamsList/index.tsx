@@ -1,4 +1,5 @@
 /* eslint-disable quotes */
+import slots from "@/components/ui/base/slots.module.css";
 import { useTranslation } from 'react-i18next';
 
 import { DatePicker, Flex, Input, InputNumber, Select } from '@/components/ui/base';
@@ -206,12 +207,12 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
 
   return (
     <>
-      <div className="param-title">{t('var_insert.param_config')}</div>
+      <div className={slots["param-title"]}>{t('var_insert.param_config')}</div>
       <FakerParamsContainer vertical>
         {fakerJsParamList?.length ? (
           <div
-            className={cn('param', {
-              footer: fakerJsParamList?.length === keys(fakerJsParamsMap[value]).length,
+            className={cn(slots.param, {
+              [slots.footer]: fakerJsParamList?.length === keys(fakerJsParamsMap[value]).length,
             })}
           >
             {fakerJsParamList.map((item) => {
@@ -220,15 +221,15 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
                 ? params?.[item.key]?.description?.[MOCK_LANGUAGE_MAP[language]]
                 : '';
               return (
-                <div className="param-item">
-                  <div className="param-content">
-                    <span className="param-item-desc">
+                <div className={slots["param-item"]}>
+                  <div className={slots["param-content"]}>
+                    <span className={slots["param-item-desc"]}>
                       <Tooltip title={desc}>{transKey(item.key)}</Tooltip>
                     </span>
-                    <div className="param-item-com">{getCom(item, params)}</div>
+                    <div className={slots["param-item-com"]}>{getCom(item, params)}</div>
                   </div>
                   <IconFont
-                    className="param-item-del"
+                    className={slots["param-item-del"]}
                     style={{ color: '#ff583e', cursor: 'pointer' }}
                     onClick={() => del(item.key)}
                     type="icon-error"
@@ -241,7 +242,7 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
           ''
         )}
 
-        <div className="selection">
+        <div className={slots.selection}>
           {entries(fakerJsParamsMap[value]).map(([key, v]: any) => {
             const newKey = transKey(key);
             if (fakerJsParamList?.find((it) => it?.key === key)) {
@@ -249,7 +250,7 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
             }
             return (
               <Tooltip title={v?.description?.[MOCK_LANGUAGE_MAP[language]]}>
-                <span onClick={() => add(key, v?.type)} className="select-item">
+                <span onClick={() => add(key, v?.type)} className={slots["select-item"]}>
                   {newKey}
                 </span>
               </Tooltip>

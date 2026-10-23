@@ -6,38 +6,38 @@
   align-items: center;
   justify-content: space-between;
 }
-.ApisTypeTag:global(.post) {
+.ApisTypeTag.slot-post {
   color: var(--color-warning);
   background-color: var(--color-warning-bg);
 }
-.ApisTypeTag:global(.get),
-.ApisTypeTag:global(.api-extra),
-.ApisTypeTag:global(.socket),
-.ApisTypeTag:global(.socket-service) {
+.ApisTypeTag.slot-get,
+.ApisTypeTag.slot-api-extra,
+.ApisTypeTag.slot-socket,
+.ApisTypeTag.slot-socket-service {
   color: var(--color-success);
   background-color: var(--color-success-bg);
 }
-.ApisTypeTag:global(.put) {
+.ApisTypeTag.slot-put {
   color: var(--color-info);
   background-color: var(--color-info-bg);
 }
-.ApisTypeTag:global(.socket),
-.ApisTypeTag:global(.testing),
-.ApisTypeTag:global(.kit) {
+.ApisTypeTag.slot-socket,
+.ApisTypeTag.slot-testing,
+.ApisTypeTag.slot-kit {
   width: auto;
 }
-.ApisTypeTag:global(.socket-method),
-.ApisTypeTag:global(.doc) {
+.ApisTypeTag.slot-socket-method,
+.ApisTypeTag.slot-doc {
   color: var(--color-info);
   background-color: var(--color-info-bg);
 }
-.ApisTypeTag:global(.delete) {
+.ApisTypeTag.slot-delete {
   color: var(--color-error);
   background-color: var(--color-error-bg);
 }
-.ApisTypeTag:global(.grpc),
-.ApisTypeTag:global(.ws),
-.ApisTypeTag:global(.patch) {
+.ApisTypeTag.slot-grpc,
+.ApisTypeTag.slot-ws,
+.ApisTypeTag.slot-patch {
   color: var(--color-success);
   background-color: var(--color-success-bg);
 }

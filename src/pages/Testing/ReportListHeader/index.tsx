@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { Button, Flex } from '@/components/ui/base';
 import IconFont from '@/components/ui/IconFont';
 import { ReportListHeaderWrapper } from './style';
@@ -13,7 +14,7 @@ const ReportListHeader = ({folderName, setShowReportList}:TestingHeaderProps) =>
     <ReportListHeaderWrapper>
       <Flex align='center' gap={6}>
         <IconFont style={{fontSize: 20}} type="icon-back1" onClick={() => setShowReportList(false)} />
-        <div className="folder-name">{folderName}</div>
+        <div className={slots["folder-name"]}>{folderName}</div>
       </Flex>
     </ReportListHeaderWrapper>
   )

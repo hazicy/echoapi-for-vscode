@@ -9,29 +9,29 @@
   font-size: 14px;
   gap: 16px;
 }
-.PushRightWrap :global(.title) {
+.PushRightWrap .slot-title {
   font-size: 16px;
   font-family: 600;
   line-height: 28px;
   color: var(--font-title-color);
 }
-.PushRightWrap :global(.team-project-manage-space) {
+.PushRightWrap .slot-team-project-manage-space {
   border: 1px solid var(--color-border);
   border-radius: 4px;
   padding: 5px 8px;
   width: 100%;
 }
-.PushRightWrap :global(.team-project-manage-space) :global(.beautify-space-item) {
+.PushRightWrap .slot-team-project-manage-space .slot-beautify-space-item {
   width: 100%;
 }
-.PushRightWrap :global(.team-project-manage-space):hover {
+.PushRightWrap .slot-team-project-manage-space:hover {
   border: 1px solid var(--color-primary);
 }
-.PushRightWrap :global(.team-project-manage-space) :global(.project-name),
-.PushRightWrap :global(.team-project-manage-space) :global(.team-name) {
+.PushRightWrap .slot-team-project-manage-space .slot-project-name,
+.PushRightWrap .slot-team-project-manage-space .slot-team-name {
   max-width: 150px;
 }
-.PushRightWrap :global(.beautify-radio-group) {
+.PushRightWrap .slot-beautify-radio-group {
   padding: 12px;
   background: var(--color-bg-right);
   border-top: 1px solid var(--color-table-border);

@@ -2,11 +2,11 @@
   /* padding-left: 5px; */
   position: relative;
 }
-.KeyWarperContainer :global(.item-mock) {
+.KeyWarperContainer .slot-item-mock {
   float: left;
   width: 100%;
 }
-.KeyWarperContainer :global(.item-mock) :global(.beautify-input-inner-wrapper) {
+.KeyWarperContainer .slot-item-mock .slot-beautify-input-inner-wrapper {
   display: flex;
   /* width: calc(100% - 10px); */
   float: left;
@@ -14,14 +14,14 @@
   border-radius: 0;
   /* border-color: transparent; */
 }
-.KeyWarperContainer :global(.item-mock) :global(.beautify-input-inner-wrapper) input {
+.KeyWarperContainer .slot-item-mock .slot-beautify-input-inner-wrapper input {
   flex: 1;
   margin-right: 10px;
 }
-.KeyWarperContainer :global(.item-mock) :global(.beautify-input-inner-wrapper-disabled) {
+.KeyWarperContainer .slot-item-mock .slot-beautify-input-inner-wrapper-disabled {
   /* border-bottom: 1px solid transparent; */
 }
-.KeyWarperContainer :global(.spn-require) {
+.KeyWarperContainer .slot-spn-require {
   margin: 0 5px;
   width: 16px;
   height: 16px;
@@ -36,19 +36,19 @@
   background-color: transparent;
   cursor: pointer;
 }
-.KeyWarperContainer :global(.spn-require):global(.checked) {
+.KeyWarperContainer .slot-spn-require.slot-checked {
   color: var(--base-color-brand);
 }
-.KeyWarperContainer :global(.mock-auto-vars) {
+.KeyWarperContainer .slot-mock-auto-vars {
   height: 100%;
 }
-.KeyWarperContainer :global(.mock-auto-vars) :global(.beautify-select-selector) {
+.KeyWarperContainer .slot-mock-auto-vars .slot-beautify-select-selector {
   height: 32px;
   border-radius: var(--border-radius);
   background: transparent !important;
   box-shadow: none !important;
 }
-.KeyWarperContainer :global(.mock-auto-vars) :global(.beautify-select-selector):hover,
-.KeyWarperContainer :global(.mock-auto-vars) :global(.beautify-select-selector):focus {
+.KeyWarperContainer .slot-mock-auto-vars .slot-beautify-select-selector:hover,
+.KeyWarperContainer .slot-mock-auto-vars .slot-beautify-select-selector:focus {
   box-shadow: none;
 }

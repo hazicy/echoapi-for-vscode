@@ -2,6 +2,6 @@
   width: 100%;
   height: 100%;
 }
-.RequestHeaderContainer :global(.table-cell-span) {
+.RequestHeaderContainer .slot-table-cell-span {
   word-break: break-all;
 }

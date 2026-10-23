@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { FC, memo } from 'react';
 
 import { isArray, isEqual, isPlainObject } from 'lodash';
@@ -33,7 +34,7 @@ const RequestHeader: FC<Props> = memo(
         title: 'name',
         dataIndex: 'key',
         render: (_text: any, rowData: any, _rowIndex: number) => (
-          <span className="table-cell-span">{rowData.key || rowData.name}</span>
+          <span className={slots["table-cell-span"]}>{rowData.key || rowData.name}</span>
         ),
       },
       {
@@ -41,7 +42,7 @@ const RequestHeader: FC<Props> = memo(
         title: 'value',
         dataIndex: 'value',
         render: (text: any, _rowData: any, _rowIndex: number) => (
-          <span className="table-cell-span">{text || '-'}</span>
+          <span className={slots["table-cell-span"]}>{text || '-'}</span>
         ),
       },
     ];

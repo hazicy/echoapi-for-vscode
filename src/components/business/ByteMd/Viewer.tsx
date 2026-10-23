@@ -1,3 +1,4 @@
+import slots from "@/components/ui/base/slots.module.css";
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -44,9 +45,9 @@ const Preview = (props: Props) => {
     (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       copyStringToClipboard(target?.innerText || '', () => {
-        target?.classList.add('success');
+        target?.classList.add(slots.success);
         setTimeout(() => {
-          target?.classList.remove('success');
+          target?.classList.remove(slots.success);
         }, 800);
         message.success(t('supplement.copy_success'));
       });
