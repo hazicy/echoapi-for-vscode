@@ -21,11 +21,14 @@ import { handleMessage } from '@/extension/messageHandler/sidbar';
 import { DEFAULT_PROJECT, DEFAULT_TEAM_PROJECT } from '@/features/project/constants/project';
 import { Project, TeamItem } from '@/features/auth/types';
 import { randomUUID } from 'node:crypto';
+import { registerNativeTree } from './extension/nativeTree';
+import { nativeTreeChanged } from './extension/nativeTreeEvents';
 
 export async function activate(context: vscode.ExtensionContext) {
 
   // Code to execute during plugin initialization
   await initializePlugin(context);
+  registerNativeTree(context);
 
  // Read user's saved enableFeature configuration value
  const config = vscode.workspace.getConfiguration('echoapi');
@@ -114,6 +117,7 @@ export async function activate(context: vscode.ExtensionContext) {
       }
       if (selected.project?.project_id === userConfig.currentProject?.project_id) return;
       await handleMessage({ action: 'switchProject', data: selected }, context);
+      nativeTreeChanged.fire();
       await globalConfig.sidePanelWebView?.webview.postMessage({
         action: 'setUserConfig',
         data: context.globalState.get('userConfig'),

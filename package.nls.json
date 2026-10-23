@@ -8,5 +8,13 @@
   "command.feedBack": "FeedBack",
   "command.openHelpDoc": "Help Docs",
   "command.importData": "Import Data",
-  "command.exportData": "Export Data"
+  "command.exportData": "Export Data",
+  "command.tree.new": "New",
+  "command.tree.filter": "Filter Requests",
+  "command.tree.refresh": "Refresh",
+  "command.tree.runTests": "Open Test Runner",
+  "command.tree.deleteReport": "Delete Test Report",
+  "view.requests": "Requests",
+  "view.tests": "Automation Tests",
+  "view.history": "Request History"
 }

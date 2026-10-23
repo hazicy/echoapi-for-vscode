@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { recordRequestHistory } from '../requestHistory';
 import {
   downloadFile,
   getApiList,
@@ -126,6 +127,7 @@ export const handelOpenMessage = async (
       panel.title = showTabName(data?.name) + " ⚈";
       break;
     case "sendApi":
+      recordRequestHistory(context, data);
       // Get global parameters
       const result = await sendApi(
         data,
@@ -140,6 +142,7 @@ export const handelOpenMessage = async (
       });
       break;
     case "sendSse":
+      recordRequestHistory(context, data);
       sendSse(
         data,
         context,
@@ -271,6 +274,7 @@ export const handelOpenMessage = async (
       panel.webview.postMessage({ action: "copyAsCurl", data: har });
       break;
     case "ws_connect":
+      recordRequestHistory(context, data);
       data.option = await getWebsocketOption(data, context);
 
       wsConnect(data);
@@ -282,6 +286,7 @@ export const handelOpenMessage = async (
       wsSend(data);
       break;
     case "socketio_connect":
+      recordRequestHistory(context, data);
       data.option = await getSocketIoOption(data, context);
 
       socketioConnect(data);

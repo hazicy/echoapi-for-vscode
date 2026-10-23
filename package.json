@@ -78,6 +78,11 @@
           "type": "number",
           "default": 3000,
           "description": "%configuration.documentServicePort.description%"
+        },
+        "echoapi.nativeTree": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use the native VS Code tree for requests, automation tests and request history. Disable to restore the Webview sidebar."
         }
       }
     },
@@ -102,7 +107,25 @@
           "id": "myView",
           "name": "okapi",
           "type": "webview",
-          "icon": "dist/images/okapi-activity.svg"
+          "icon": "dist/images/okapi-activity.svg",
+          "when": "!config.echoapi.nativeTree"
+        },
+        {
+          "id": "okapiRequests",
+          "name": "%view.requests%",
+          "when": "config.echoapi.nativeTree"
+        },
+        {
+          "id": "okapiTests",
+          "name": "%view.tests%",
+          "when": "config.echoapi.nativeTree",
+          "collapsed": true
+        },
+        {
+          "id": "okapiHistory",
+          "name": "%view.history%",
+          "when": "config.echoapi.nativeTree",
+          "collapsed": true
         }
       ]
     },
@@ -110,42 +133,89 @@
       "view/title": [
         {
           "command": "echoapi.switchWorkspace",
-          "when": "view == myView",
+          "when": "view == myView || view == okapiRequests",
           "group": "navigation@1"
         },
         {
           "command": "openImportDataPanel",
-          "when": "view == myView",
+          "when": "view == myView || view == okapiRequests",
           "group": "navigation@2"
         },
         {
           "command": "openExportDataPanel",
-          "when": "view == myView",
+          "when": "view == myView || view == okapiRequests",
           "group": "navigation@3"
         },
         {
           "command": "echoapi.openEnv",
-          "when": "view == myView",
+          "when": "view == myView || view == okapiRequests",
           "group": "@2",
           "order": 1
         },
         {
           "command": "echoapi.openExtenisonSettings",
-          "when": "view == myView",
+          "when": "view == myView || view == okapiRequests",
           "group": "@2",
           "order": 2
         },
         {
           "command": "echoapi.openHelpDoc",
-          "when": "view == myView",
+          "when": "view == myView || view == okapiRequests",
           "group": "@3",
           "order": 100
         },
         {
           "command": "echoapi.feedBack",
-          "when": "view == myView",
+          "when": "view == myView || view == okapiRequests",
           "group": "@3",
           "order": 200
+        },
+        {
+          "command": "okapi.tree.new",
+          "when": "view == okapiRequests",
+          "group": "navigation@4"
+        },
+        {
+          "command": "okapi.tree.filter",
+          "when": "view == okapiRequests",
+          "group": "navigation@5"
+        },
+        {
+          "command": "okapi.tree.refresh",
+          "when": "view == okapiRequests",
+          "group": "navigation@6"
+        },
+        {
+          "command": "okapi.tree.runTests",
+          "when": "view == okapiTests",
+          "group": "navigation@1"
+        },
+        {
+          "command": "okapi.tree.refresh",
+          "when": "view == okapiTests || view == okapiHistory",
+          "group": "navigation@3"
+        },
+        {
+          "command": "okapi.tree.filter",
+          "when": "view == okapiHistory",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "okapi.tree.new",
+          "when": "view == okapiRequests && viewItem == okapiFolder",
+          "group": "inline"
+        },
+        {
+          "command": "okapi.tree.runTests",
+          "when": "view == okapiTests && viewItem == okapiTestFolder",
+          "group": "inline"
+        },
+        {
+          "command": "okapi.tree.deleteReport",
+          "when": "view == okapiTests && viewItem == okapiReport",
+          "group": "management"
         }
       ]
     },
@@ -185,6 +255,35 @@
         "command": "openExportDataPanel",
         "title": "%command.exportData%",
         "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "okapi.tree.new",
+        "title": "%command.tree.new%",
+        "icon": "$(add)"
+      },
+      {
+        "command": "okapi.tree.filter",
+        "title": "%command.tree.filter%",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "okapi.tree.refresh",
+        "title": "%command.tree.refresh%",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "okapi.tree.open",
+        "title": "Open Request"
+      },
+      {
+        "command": "okapi.tree.runTests",
+        "title": "%command.tree.runTests%",
+        "icon": "$(play)"
+      },
+      {
+        "command": "okapi.tree.deleteReport",
+        "title": "%command.tree.deleteReport%",
+        "icon": "$(trash)"
       }
     ]
   },

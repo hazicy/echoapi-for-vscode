@@ -8,5 +8,13 @@
   "command.feedBack": "问题反馈",
   "command.openHelpDoc": "帮助文档",
   "command.importData": "导入数据",
-  "command.exportData": "导出数据"
+  "command.exportData": "导出数据",
+  "command.tree.new": "新建",
+  "command.tree.filter": "筛选接口",
+  "command.tree.refresh": "刷新",
+  "command.tree.runTests": "打开测试运行页",
+  "command.tree.deleteReport": "删除测试报告",
+  "view.requests": "接口",
+  "view.tests": "自动化测试",
+  "view.history": "请求历史"
 }
