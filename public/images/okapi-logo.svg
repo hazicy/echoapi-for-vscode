@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="312" height="96" viewBox="0 0 312 96" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">okapi</title>
+  <desc id="desc">A minimal open-ring connection mark and lowercase okapi wordmark.</desc>
+  <path d="M63.799 28.201a28 28 0 1 0 0 39.598" stroke="#79D4C5" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="80" cy="48" r="5" fill="#79D4C5"/>
+  <text x="113" y="64" fill="#79D4C5" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="54" font-weight="600" letter-spacing="-2.5">okapi</text>
+</svg>

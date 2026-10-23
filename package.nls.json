@@ -1,5 +1,5 @@
 {
-  "configuration.title": "EchoAPI Settings",
+  "configuration.title": "okapi Settings",
   "configuration.documentServicePort.description": "Default port number of the local document service",
   "submenu.commit": "Commit",
   "command.openEnv": "Environment",

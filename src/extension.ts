@@ -124,7 +124,7 @@ export async function activate(context: vscode.ExtensionContext) {
   // Feedback
   context.subscriptions.push(
     vscode.commands.registerCommand('echoapi.feedBack', (data) => {
-      vscode.env.openExternal(vscode.Uri.parse('https://github.com/EchoAPI-Team/echoapi-for-vscode-support/issues'));
+      vscode.env.openExternal(vscode.Uri.parse('https://github.com/hazicy/echoapi-for-vscode/issues'));
     })
   );
 
@@ -141,7 +141,7 @@ export async function activate(context: vscode.ExtensionContext) {
        // Jump directly to plugin settings page
        vscode.commands.executeCommand(
         'workbench.action.openSettings',
-        '@ext:EchoAPI.echoapi-for-vscode' // Replace with your plugin ID (e.g. publisher.name)
+        `@ext:${context.extension.id}`
       );
       // vscode.env.openExternal(vscode.Uri.parse('https://x.com/EchoApiTeam'));
     })

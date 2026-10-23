@@ -1,12 +1,12 @@
 import slots from "@/components/ui/base/slots.module.css";
-import { FC, memo, useContext, useRef } from 'react';
+import { FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Switch, Typography } from '@/components/ui/base';
+import { Flex, Switch } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
 import produce from 'immer';
-import { includes, isBoolean, isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 
 import { Popover, Tooltip } from '@/components/ui';
 import Button from '@/components/ui/Button';
@@ -17,7 +17,6 @@ import { ChangeFuncType } from '@/types/common';
 import { PARAMETER_TYPE, RequestTableProps, TableColumnSwitchConfig } from '../../types';
 
 import { ColumnConfigContainer, DescMoreItemWrap } from './style';
-import { useSystemConfig } from '@/store';
 
 type Props = Pick<
   RequestTableProps,
@@ -38,8 +37,6 @@ const ColumnConfig: FC<Props> = memo(
   }) => {
     const { t } = useTranslation();
     const [popoverOpen, setPopoverOpen] = useSafeState(false);
-    const systemConfig = useSystemConfig(store => store.systemConfig);
-    const updateSystemConfig = useSystemConfig(store => store.updateSystemConfig);
 
     const onColumnSwitchChange: ChangeFuncType<TableColumnSwitchConfig> = (key, value) => {
       const config = produce(columnSwitchConfig, (draft) => {
@@ -106,42 +103,7 @@ const ColumnConfig: FC<Props> = memo(
               </Flex>
             }
           >
-            <Tooltip overlayClassName={slots["raw-parameter-pilot-bubble-tooltip"]} placement='bottomRight' open={isBoolean(systemConfig?.raw_parameter_pilot_bubble_switch) ? systemConfig?.raw_parameter_pilot_bubble_switch : false} title={<Flex vertical gap={12} style={{ padding: 10 }}>
-              <Typography.Text style={{ color: 'var(--font-title-color)', fontSize: '14px' }}>
-                Parameter types/requirements and descriptions are hidden by default in '...'. Click '...' to toggle their visibility.
-              </Typography.Text>
-              <Flex gap={2} vertical style={{"padding": 12,"backgroundColor": "var(--color-bg-page)",fontSize: 14}}>
-                <Flex gap={8}>
-                  <Typography.Text style={{ color: 'var(--font-light-color)', fontSize: '12px' }}>
-                    Display Column
-                  </Typography.Text>
-                  <IconFont type='icon-wenhao' />
-                </Flex>
-                <Flex style={{ padding: '6.5px 0' }} justify='space-between'>
-                  <Typography.Text style={{ color: 'var(--font-light-color)', fontSize: '14px' }}>
-                    Parameter Type / Required
-                  </Typography.Text>
-                  <Switch checked={false} disabled={true} />
-                </Flex>
-                <Flex style={{ padding: '6.5px 0' }} justify='space-between'>
-                  <Typography.Text style={{ color: 'var(--font-light-color)', fontSize: '14px' }}>
-                  Parameter Description
-                  </Typography.Text>
-                  <Switch checked={false} disabled={true} />
-                </Flex>
-              </Flex>
-              <Flex justify='end'>
-                <Button type='primary' onClick={() => {
-                  updateSystemConfig({ ...systemConfig, raw_parameter_pilot_bubble_switch: false });
-                  window?.vscode.postMessage({
-                    action: 'setSystemConfig',
-                    data: { raw_parameter_pilot_bubble_switch: false }
-                  });
-                }}>Confirm</Button>
-              </Flex>
-            </Flex>}>
-              <IconFont className={slots["icon-navi-more"]} type="icon-navi-more" />
-            </Tooltip>
+            <IconFont className={slots["icon-navi-more"]} type="icon-navi-more" />
           </Popover>
           <Button
             type="text"

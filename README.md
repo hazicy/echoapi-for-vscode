@@ -1,79 +1,55 @@
-# EchoAPI for VS Code
-We are officially open-sourcing our EchoAPI extension for VS Code.
-### Why open-source now?
- We originally built this extension out of frustration after Thunder Client suddenly locked core features behind mandatory paywalls. Back then, we just wanted a proper, free API client for VS Code. Now, as our team shifts focus to building AI application tools, we no longer have much time to maintain it. So, we want to hand it over to the community for maintenance and growth.
-### What this means for you:
-* The Extension Remains Free: We believe lightweight, local API tools in the AI era shouldn't cost money. Because of this, EchoAPI for VS Code remains completely free for everyone.
-* Core Features Intact: Still ultra-lightweight, no login required, with offline usage and seamless Git collaboration.
-* Your Turn to Build: Feel free to contribute, maintain, or even fork it to build a completely new product!
-Thank you for being part of our journey. We hope the community takes good care of it!
+<p align="center">
+  <img src="./public/images/okapi-logo.png" alt="okapi" width="312" />
+</p>
 
-![EchoAPI for VS Code](./public/assets/92c325a5-4c8d-4c49-ae33-35bf94b85b26.png "image.png")
+# okapi
 
-EchoAPI for VS Code is a lightweight REST API client extension for Visual Studio Code, designed with a focus on simplicity, clean design, and local storage, and it's **free** to use.
+A lightweight API client for Visual Studio Code. Create requests, manage environments, and inspect responses without leaving your editor.
 
-## Why EchoAPI?
+## Features
 
-EchoAPI has a few standout features:
+- HTTP requests with query parameters, headers, authentication, and request bodies.
+- WebSocket, Socket.IO, SSE, and GraphQL support.
+- Local collections and environment variables, with no sign-in required for local use.
+- Collection runs, assertions, and response inspection.
+- Postman-compatible scripts and collection import/export.
+- A compact interface that follows your VS Code theme.
 
-1. **No login required**: Just install and start using it.
-2. **Supports Scratch Pad**: Makes jotting down quick notes and ideas super easy.
-3. **Ultra-lightweight**: It’s incredibly fast and doesn’t bloat your system.
-4. **100% compatible with Postman script syntax**: You can switch over without having to relearn anything.
+## Install
 
-## Installing EchoAPI for VS Code
+Install the packaged `.vsix` through **Extensions → … → Install from VSIX…**. Open **okapi** in the activity bar to start a collection or create a request.
 
-![Installing EchoAPI for VS Code](./public/assets/70dfc182-4dc1-4842-abe0-629ef5e944b8.png "Install.png")
+## Development
 
-Getting started with EchoAPI is a breeze. Just navigate to the VS Code Extensions Marketplace, search for EchoAPI, and hit install. No additional tools or sign-ins are necessary—everything operates straight from your VS Code sidebar.
+```sh
+yarn install
+yarn start
+```
 
+Build and check the extension:
 
-## API Debug (Creating a New Request)
+```sh
+yarn package
+```
 
-![Creating New Requests](./public/assets/b92af081-f89b-44f3-9511-d68712871f95.png "image.png")
+See [the development guide](./scripts/README.md) for webview builds, localization, and browser tests.
 
-To create a new request, start by opening the EchoAPI tab where you’ll see options for recent activities, collections, and environments. It’s pretty intuitive if you’ve used Postman before. Right-click on the collection list to create a New Collection, name it, and then right-click on the collection name to add a new request.
+## Brand assets
 
-## API Tests (Running a collection)
+- [Logo](./public/images/okapi-logo.svg)
+- [Icon](./public/images/okapi-icon.svg)
+- [VS Code activity icon](./public/images/okapi-activity.svg)
 
-Just pick the folder you want to run, right-click, and hit "Run All." That’s it!
+Regenerate the PNG icons after changing the source SVG:
 
-![Running a collection](./public/assets/95c062d8-3336-4a0e-860c-47baebffd145.png "image.png")
+```sh
+node scripts/generate-brand-icons.cjs
+```
 
-## Variables and Environments
+Existing local data and collection format identifiers remain compatible with the upstream project.
 
-![EchoAPI is 100% compatible with Postman script syntax](./public/assets/24df826c-9198-40e9-a3a5-0b995913d17d.png "image.png")
+## Feedback and license
 
-Just like in Postman, you can use variables and manage environments in EchoAPI. **EchoAPI is 100% compatible with Postman script syntax.** To activate a specific environment for your tests, just set it as active (indicated by a star next to the environment name). Importing and exporting environments is compatible with Postman 2.1.0 format and .env files.
+[Report an issue](https://github.com/hazicy/echoapi-for-vscode/issues) · [Source](https://github.com/hazicy/echoapi-for-vscode)
 
-## System Variables
-
-![System Variables](./public/assets/ae0aedfa-9e79-48af-bec9-1b3a7b68da7d.png "image.png")
-
-EchoAPI also has a set of system variables that streamline generating unique data. Prepend $ before the variable name to use them:
-
-- `{{$guid}}` - random UUID number
-- `{{$email}}` - random email string
-
-## Script-less Testing
-
-![Testing in EchoAPI is straightforward and script-less](./public/assets/d7314e74-9f4f-48f2-97e5-38017bfd63fa.png "image.png")
-
-Testing in EchoAPI is straightforward and script-less. Choose a parameter from the dropdown menu, set your condition and value, and you’re done! There are plenty of parameters and conditions to choose from, like ResponseCode, ResponseBody, or Content-Type. You can even set values from API responses to environment variables or verify specific JSON path values.
-
-## Authentication
-
-![EchoAPI supports various authorization types](./public/assets/9c9edfea-bde9-40ba-98f2-843bef9d5150.png "image.png")
-
-EchoAPI supports various authorization types, including None, Inherit, Basic Auth, Bearer, and OAuth 1.0. This is super useful for testing secured APIs that require credentials or tokens.
-
-## Useful Links
-
-EchoAPI is continually growing, and I’ll definitely keep an eye on its progress. Here are some useful links:
-
-- [Website](https://www.echoapi.com/)
-- [Documentation](https://www.echoapi.com/wiki/docs/vscode/start)
-- [Twitter](https://x.com/EchoApiTeam)
-- [Youtube](https://www.youtube.com/@EchoAPI-Team)
-
-Give EchoAPI a try and see how it compares to Postman for your API testing needs!
+Based on the open-source EchoAPI extension. Original copyright notices are retained in [LICENSE.txt](./LICENSE.txt).

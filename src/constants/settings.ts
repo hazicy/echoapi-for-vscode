@@ -190,7 +190,7 @@ export const IMPORT_TYPE_LIST = [
   },
   {
     key: IMPORT_TYPE_ENUM.ECHOAPI,
-    value: "EchoAPI",
+    value: "okapi",
     icon: "icon-logo-primary",
   },
 ];
@@ -205,7 +205,7 @@ export const EXPORT_TYPE_MAP: {
   [key: string]: { name: string; id: number; tips: string };
 } = {
   echoapi: {
-    name: "EchoAPI",
+    name: "okapi",
     id: 1,
     tips: i18next.t("supplement.old_imp"),
   },
@@ -223,9 +223,9 @@ export const EXPORT_TYPE_MAP: {
 export const EXPORT_TYPE_LIST = [
   {
     key: "echoapi",
-    value: "EchoAPI",
+    value: "okapi",
     icon: "icon-logo-primary",
-    tip: "You can import the exported file into any EchoAPI platform.",
+    tip: "You can import the exported file into any okapi platform.",
   },
   {
     key: "swagger",

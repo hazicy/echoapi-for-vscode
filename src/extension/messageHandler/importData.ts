@@ -195,7 +195,7 @@ export const handelImportDataMessage = async (
         let valid = validate(json, echoapiSchemaRule).valid;
         if (!valid) {
           vscode.window.showErrorMessage(
-            "Non standard format EchoAPI file, please check and upload it again.",
+            "Non standard format okapi file, please check and upload it again.",
           );
           return;
         }

@@ -19,7 +19,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { HotkeysProvider } from 'react-hotkeys-hook';
 import useApisHotkeys from '@/hooks/useHotKeys/useApisHotkeys';
-import { forEach, isBoolean, keys } from 'lodash';
+import { forEach, keys } from 'lodash';
 import produce from 'immer';
 import { ApiSendingDataSSE, ApiStreamResponseSSEItem } from '@/types/apis/send';
 import useShare from '@/store/useShare';
@@ -142,12 +142,7 @@ function TagPanel() {
           updateVscodeTheme(message.data);
           break;
         case 'setSystemConfig':
-          let raw_parameter_pilot_bubble_switch = false;
-          if (!isBoolean(message?.data?.raw_parameter_pilot_bubble_switch)) {
-            raw_parameter_pilot_bubble_switch = true;
-          }
-
-          updateSystemConfig({ ...systemConfig, ...message.data, raw_parameter_pilot_bubble_switch });
+          updateSystemConfig({ ...systemConfig, ...message.data });
           break;
         case 'setDocBaseUrl':
           updateDocBaseUrl(message.data);

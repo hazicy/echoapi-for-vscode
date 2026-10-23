@@ -124,7 +124,7 @@
   appearance: none;
 }
 .UrrGroupWrap .slot-mini-editor.slot-editor-active {
-  height: auto;
+  height: 30px;
 }
 .UrrGroupWrap .slot-grpc-url-name {
   display: flex;

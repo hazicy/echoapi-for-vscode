@@ -2,7 +2,7 @@ import { TeamItem } from "@/types/user";
 import dayjs from "dayjs";
 
 export const DEFAULT_TEAM:TeamItem={
-  name: "EchoAPI",
+  name: "okapi",
   team_id: "-1",
   is_team_admin: 1,
   is_default: 1,

@@ -169,7 +169,7 @@ export const getOpenApi = async (
 ) => {
   try {
     const json = getExportData({ apis: [apiData] }, context);
-    const fileName = `echoapi_${apiData.name}_openapi.json`;
+    const fileName = `okapi_${apiData.name}_openapi.json`;
     const res = await exportMethod.apiToSwagger(json, "3.0");
     if (res.status === "success") {
       return {

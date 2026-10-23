@@ -229,6 +229,23 @@ for (const panel of [
           expect(box!.width).toBeGreaterThan(100);
           expect(box!.height).toBeGreaterThan(10);
         }
+        const urlInput = page.getByRole('textbox', {name:'Enter URL or paste cURL text'});
+        for (const editor of [urlInput, key, value]) {
+          await page.getByRole('tab').filter({hasText:/^Params(?:\s*\d+)?$/}).click();
+          const measure = () => editor.evaluate(element => {
+            const box = element.getBoundingClientRect();
+            const style = getComputedStyle(element);
+            return {
+              x:box.x, y:box.y, width:box.width, height:box.height,
+              textX:box.x + parseFloat(style.paddingLeft) + parseFloat(style.borderLeftWidth),
+              textY:box.y + parseFloat(style.paddingTop) + parseFloat(style.borderTopWidth),
+            };
+          });
+          const before = await measure();
+          await editor.click();
+          await expect(editor).toBeFocused();
+          expect(await measure()).toEqual(before);
+        }
       }
       const urlGroup = page.locator(slotSelector('url-group-wrap'));
       const protocol = urlGroup.locator(slotSelector('right-select-http')).last();

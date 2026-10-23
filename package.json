@@ -1,10 +1,10 @@
 {
-  "name": "echoapi-for-vscode",
-  "displayName": "EchoAPI for VS Code",
+  "name": "okapi",
+  "displayName": "okapi",
   "description": "Ultra-lightweight Rest API debugging tool for VS Code.",
   "version": "1.7.13",
-  "publisher": "EchoAPI",
-  "homepage": "https://www.echoapi.com",
+  "publisher": "hazicy",
+  "homepage": "https://github.com/hazicy/echoapi-for-vscode",
   "repository": {
     "type": "git",
     "url": "https://github.com/hazicy/echoapi-for-vscode.git"
@@ -58,7 +58,7 @@
     "Snippets",
     "Testing"
   ],
-  "icon": "dist/images/logo_icon.png",
+  "icon": "dist/images/okapi-icon.png",
   "activationEvents": [],
   "main": "./dist/extension.js",
   "license": "MIT",
@@ -91,8 +91,8 @@
       "activitybar": [
         {
           "id": "myExtension",
-          "title": "EchoAPI for VS Code",
-          "icon": "dist/images/logo.png"
+          "title": "okapi",
+          "icon": "dist/images/okapi-activity.svg"
         }
       ]
     },
@@ -100,9 +100,9 @@
       "myExtension": [
         {
           "id": "myView",
-          "name": "EchoAPI for VS Code",
+          "name": "okapi",
           "type": "webview",
-          "icon": "dist/images/http.png"
+          "icon": "dist/images/okapi-activity.svg"
         }
       ]
     },
@@ -146,12 +146,12 @@
       {
         "command": "echoapi.feedBack",
         "title": "%command.feedBack%",
-        "category": "EchoAPI"
+        "category": "okapi"
       },
       {
         "command": "echoapi.openHelpDoc",
         "title": "%command.openHelpDoc%",
-        "category": "EchoAPI"
+        "category": "okapi"
       }
     ]
   },

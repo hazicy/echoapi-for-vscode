@@ -43,7 +43,7 @@
     "api_folder_conflict_handling":"接口和目录冲突处理",
     "env_conflict_handling":"环境冲突处理",
     "manage_account":"账号管理",
-    "push_to_echoapi":"推送到ApiPost",
+    "push_to_echoapi":"推送到okapi",
     "env_title":"全局参数设置",
     "not_create_debug_tip":"API调试数据还没有创建。里面没有数据。",
     "save_request_open_debug_content":"打开调试页面之前, 您需要先保存它.",
@@ -216,8 +216,8 @@
       "pwd_tip": "密码（支持变量）",
       "token_tip": "Token（支持变量）",
       "more": "更多",
-      "more_tip": "EchoAPI会自动为其中某些字段生成默认值，除非指定了值",
-      "disable_tip": "EchoAPI默认会从接收到的响应中提取值，将其添加到请求中，然后重试，是否禁用？",
+      "more_tip": "okapi会自动为其中某些字段生成默认值，除非指定了值",
+      "disable_tip": "okapi默认会从接收到的响应中提取值，将其添加到请求中，然后重试，是否禁用？",
       "disable": "禁用重试请求",
       "header_prefix": "在令牌之前添加到授权头中。",
       "access_token_tip": "获取到的访问令牌在保存后会与其他协作成员共享，您可以将获取到的访问令牌设置为环境变量的本地值，以便不与其他协作成员共享。",
@@ -461,7 +461,7 @@
       "login": "登录"
     },
     "login_modal": {
-      "title": "欢迎使用EchoAPI",
+      "title": "欢迎使用okapi",
       "log_email": "邮箱登录",
       "email": "请输入邮箱",
       "password": "请输入密码",
@@ -473,7 +473,7 @@
       "log_wechat": "微信登录",
       "signup_email": "不想扫码？",
       "signup_email1": "用邮箱注册",
-      "slogan": "EchoAPI 开发快人一步",
+      "slogan": "okapi 开发快人一步",
       "slogan_1": "不止于API设计、调试、文档、自动化测试"
     },
     "raw_input": {
@@ -972,7 +972,7 @@
     "plugins": {
       "title": "插件管理",
       "folder": "插件目录",
-      "tips": "WEB版不支持该功能，请下载EchoAPI客户端使用",
+      "tips": "WEB版不支持该功能，请下载okapi客户端使用",
       "download": "下载客户端",
       "open": "打开目录",
       "help": "查看帮助"
@@ -1261,7 +1261,7 @@
     },
     "openapi": {
       "title": "OpenAPI",
-      "tips": "通过Open API可以访问您在EchoAPI中的项目数据。使用时需要携带API token，您可根据用途创建不同的API token。",
+      "tips": "通过Open API可以访问您在okapi中的项目数据。使用时需要携带API token，您可根据用途创建不同的API token。",
       "link": "查看OpenAPI文档",
       "project_id": "当前项目ID : ",
       "name": "备注名",
@@ -1286,7 +1286,7 @@
       "postman_tips": "支持 postman V2.0导出的 Collections JSON。建议您升级 postman到最新版后再导出。",
       "swagger_tips": "支持 swagger v2 和v3(openapi),如果选择导出的类型是postman或其他类型请选择对应类型导入。",
       "other_tips": "支持{{fileType}},如果选择导出的类型是postman或其他类型请选择对应类型导入。",
-      "echoapi_tips":"支持EchoAPI。如果您选择以postman或其他类型导出，请选择相应的类型进行导入。",
+      "echoapi_tips":"支持okapi。如果您选择以postman或其他类型导出，请选择相应的类型进行导入。",
       "source": "数据来源",
       "data_format": "选择json文件",
       "file": "上传文件",
@@ -1722,7 +1722,7 @@
         "remote": "云端Mock",
         "local": "本地Mock",
         "url": "域名",
-        "local_tip": "需要安装EchoAPI客户端"
+        "local_tip": "需要安装okapi客户端"
       }
     },
     "response_labels": {
@@ -2113,7 +2113,7 @@
     "more": "更多",
     "mock_field": "内置Mock字段变量",
     "support": "联系客服",
-    "apipost": "EchoAPI官网",
+    "apipost": "okapi官网",
     "questions": "问题反馈",
     "help": "帮助文档",
     "collapse_sidebar": "精简模式",
@@ -2894,7 +2894,7 @@
     "saving_all": "保存所有标签中...",
     "clone_cur_tab": "克隆当前标签",
     "close_cur_tab": "关闭当前标签",
-    "old_imp": "EchoAPI格式文件可能无法在老版本软件中正确导入。为了避免兼容性问题，请在最新版软件中进行导入操作。",
+    "old_imp": "okapi格式文件可能无法在老版本软件中正确导入。为了避免兼容性问题，请在最新版软件中进行导入操作。",
     "redis_set_key": "设置指定键的值",
     "redis_get_key": "获取指定键的值",
     "redis_del_key": "删除指定的键",
@@ -2950,7 +2950,7 @@
     "project_name_required": "项目名称必填",
     "add_success": "添加成功",
     "will_del_link": "将会删除该链接，其他人将无法通过该分享链接加入项目",
-    "invite_apipost": "邀请您加入EchoAPI项目",
+    "invite_apipost": "邀请您加入okapi项目",
     "link_valid_time": "链接有效期",
     "link_get_people": "获得链接的人为",
     "restore": "恢复",
@@ -2966,7 +2966,7 @@
     "cors_origin": "由于浏览器跨域限制，网页版只支持访问非本地接口，如需访问本地 API，建议下载客户端",
     "no_team_cur": "当前无团队",
     "no_project_cur": "当前团队无项目",
-    "exit_apipost": "退出EchoAPI",
+    "exit_apipost": "退出okapi",
     "exit_has_change": "有修改内容未保存，确定退出？",
     "exit_no_save": "不保存直接退出",
     "exit_save": "保存并退出",
@@ -3079,7 +3079,7 @@
     "input_ssh_user": "请输入ssh用户名",
     "input_ssh_password": "请输入ssh密码",
     "database_manager": "数据库管理",
-    "apipost_export": "EchoAPI导出项目",
+    "apipost_export": "okapi导出项目",
     "upload_right_file": "请上传正确格式的文件",
     "input_url_first1": "请先填写url地址",
     "upload_file_first": "请先上传文件",

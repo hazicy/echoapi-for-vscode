@@ -13,7 +13,7 @@
   },
   "common": {
     "download_desktop_app":"Download Desktop App",
-    "performance_apis_echoapi_tips":"Simulate real-world traffic from your local machine and observe the performance of your APIs on EchoAPI’s desktop app.",
+    "performance_apis_echoapi_tips":"Simulate real-world traffic from your local machine and observe the performance of your APIs on okapi’s desktop app.",
     "test_your_apis_tips":"Test how your APIs perform under load",
     "request_error":"Request Error",
     "refresh_success":"Refresh Successfully",
@@ -43,7 +43,7 @@
     "api_folder_conflict_handling":"Interface and Folder Conflict Handling",
     "env_conflict_handling":"Environmental Conflict Handling",
     "manage_account":"Manage Account",
-    "push_to_echoapi":"Push to EchoAPI",
+    "push_to_echoapi":"Push to okapi",
     "env_title":"Global Para Settings",
     "not_create_debug_tip":"The API debug data hasn't been created. There's no data in it.",
     "save_request_open_debug_content":"Before opening the Debug Tabs, you need to save it.",
@@ -216,8 +216,8 @@
       "pwd_tip": "Password（Supports variables）",
       "token_tip": "Token（Supports variables）",
       "more": "Advanced configurations",
-      "more_tip": "EchoAPI will automatically generate default values for certain fields unless specified.",
-      "disable_tip": "EchoAPI by default extracts values from the received response, adds them to the request, and then retries. Do you want to disable this?",
+      "more_tip": "okapi will automatically generate default values for certain fields unless specified.",
+      "disable_tip": "okapi by default extracts values from the received response, adds them to the request, and then retries. Do you want to disable this?",
       "disable": "Disable Retry Request",
       "header_prefix": "Added to the Authorization header before the token.",
       "access_token_tip": "The access token obtained will be shared with other collaborators after saving. You can set the access token as a local environment variable to avoid sharing it with other collaborators.",
@@ -461,7 +461,7 @@
       "login": "Login"
     },
     "login_modal": {
-      "title": "Welcome to EchoAPI",
+      "title": "Welcome to okapi",
       "log_email": "Email Login",
       "email": "Please enter your email",
       "password": "Please enter your password",
@@ -473,7 +473,7 @@
       "log_wechat": "WeChat Login",
       "signup_email": "Don't want to scan qr-code",
       "signup_email1": "Register with email",
-      "slogan": "EchoAPI Develop more efficiently",
+      "slogan": "okapi Develop more efficiently",
       "slogan_1": "Covering API Design, Debugging, Documentation, Automated Testing, and More Functionality"
     },
     "raw_input": {
@@ -653,7 +653,7 @@
     "admin_center": "Manage",
     "qa": "Blog & QA",
     "sign_out": "Sign Out",
-    "sign_in":"Sign in to EchoAPI",
+    "sign_in":"Sign in to okapi",
     "sign_cloud_account":"Sign in to your cloud account.",
     "switch_team_project":"Switch to the team/project.",
     "pull_tip":"Then click \"Pull\".",
@@ -972,7 +972,7 @@
     "plugins": {
       "title": "Plugin",
       "folder": "Plugin Directory",
-      "tips": "This feature is not supported in the web version. Please download the EchoAPI client to use it.",
+      "tips": "This feature is not supported in the web version. Please download the okapi client to use it.",
       "download": "Download Client",
       "open": "Open Directory",
       "help": "Documentation"
@@ -1260,7 +1260,7 @@
     },
     "openapi": {
       "title": "OpenAPI",
-      "tips": "Access your project data in EchoAPI through the Open API. You need to provide an API token, and you can create different API tokens for different purposes.",
+      "tips": "Access your project data in okapi through the Open API. You need to provide an API token, and you can create different API tokens for different purposes.",
       "link": "View OpenAPI Documentation",
       "project_id": "Current Project ID: ",
       "name": "Name",
@@ -1285,7 +1285,7 @@
       "postman_tips": "Supports Collections JSON exported from postman V2.1 It is recommended to upgrade postman to the latest version before exporting.",
       "swagger_tips": "Supports swagger v2 and v3 (openapi). If you choose to export as postman or other types, please select the corresponding type for import.",
       "other_tips": "Supports {{fileType}}. If you choose to export as postman or other types, please select the corresponding type for import.",
-      "echoapi_tips":"Supports EchoAPI. If you choose to export as postman or other types, please select the corresponding type for import.",
+      "echoapi_tips":"Supports okapi. If you choose to export as postman or other types, please select the corresponding type for import.",
       "source": "Data Source",
       "data_format": "Select files",
       "file": "Upload File",
@@ -1353,7 +1353,7 @@
     "export_project": {
       "title": "Export Project Data",
       "postman_tips":"Export as Postman Collection (supports only HTTP/1.1 and HTTP/2 protocols).",
-      "tips": "EchoAPI format files may not be correctly imported in older software versions. To avoid compatibility issues, please perform the import operation in the latest version of the software.",
+      "tips": "okapi format files may not be correctly imported in older software versions. To avoid compatibility issues, please perform the import operation in the latest version of the software.",
       "data_format": "Data Format",
       "version": "Version",
       "export": "Export Now"
@@ -1720,7 +1720,7 @@
         "remote": "Cloud Mock",
         "local": "Local Mock",
         "url": "Domain",
-        "local_tip": "EchoAPI client installation required"
+        "local_tip": "okapi client installation required"
       }
     },
     "response_labels": {
@@ -2111,7 +2111,7 @@
     "more": "More",
     "mock_field": "Mock Field",
     "support": "Support",
-    "apipost": "EchoAPI",
+    "apipost": "okapi",
     "questions": "Feedback",
     "help": "Documentation",
     "collapse_sidebar": "Collapse Sidebar",
@@ -2892,7 +2892,7 @@
     "saving_all": "Save All Tabs...",
     "clone_cur_tab": "Clone Current Tab",
     "close_cur_tab": "Close Current Tab",
-    "old_imp": "To avoid compatibility issues, import EchoAPI files in the latest software version.",
+    "old_imp": "To avoid compatibility issues, import okapi files in the latest software version.",
     "redis_set_key": "Set the value of a specified key",
     "redis_get_key": "Get the value of a specified key",
     "redis_del_key": "Delete a specified key",
@@ -2949,7 +2949,7 @@
     "project_name_required": "Project name is required",
     "add_success": "Add Success",
     "will_del_link": "This link will be deleted, and others will no longer be able to join the project through this sharing link.",
-    "invite_apipost": "Inviting you to join an EchoAPI project.",
+    "invite_apipost": "Inviting you to join an okapi project.",
     "link_valid_time": "Validity",
     "link_get_people": "Person who receives the link",
     "restore": "Restore",
@@ -2965,7 +2965,7 @@
     "cors_origin": "For cross-origin limits, web access is limited to non-local APIs. To access local APIs, download the client.",
     "no_team_cur": "No Team",
     "no_project_cur": "No Project",
-    "exit_apipost": "Exit EchoAPI",
+    "exit_apipost": "Exit okapi",
     "exit_has_change": "You have unsaved changes. Are you sure  to exit?",
     "exit_no_save": "Exit without saving",
     "exit_save": "Save and Exit",
@@ -3078,7 +3078,7 @@
     "input_ssh_user": "Please enter the ssh username",
     "input_ssh_password": "Please enter the ssh password",
     "database_manager": "Database Manage",
-    "apipost_export": "EchoAPI export project",
+    "apipost_export": "okapi export project",
     "upload_right_file": "Please upload a file of the correct format!",
     "input_url_first1": "Please fill in the URL address first.",
     "upload_file_first": "Please upload a file first.",

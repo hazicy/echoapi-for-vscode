@@ -124,7 +124,7 @@ const getSwaggerHtml = (baseUrl: string, share_id: string) => {
 	return `<!DOCTYPE html>
 <html>
   <head>
-    <title>EchoAPI For Vscode</title>
+    <title>okapi</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 

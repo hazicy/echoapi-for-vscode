@@ -18,7 +18,7 @@ export const getExportData =async (option:{type:string,version:string}, context:
   const json = getExportApiData({apis:apiList || []}, context);
 
   if(type === EXPORT_TYPE_ENUM.postman){
-    result.fileName = `${user_config?.currentProject?.name || ''}_echoapi_postman.json`;
+    result.fileName = `${user_config?.currentProject?.name || ''}_okapi_postman.json`;
     const swaggerRes = await exportMethod.apiToPostman(json);
 		if (swaggerRes.status === 'success') {
       result.fileText=JSON.stringify(swaggerRes.data,null,'\t');
@@ -41,7 +41,7 @@ export const getExportData =async (option:{type:string,version:string}, context:
       },
       "apis": apiList || [] ,
     }
-    result.fileName = `${user_config?.currentProject?.name || ''}_echoapi.json`;
+    result.fileName = `${user_config?.currentProject?.name || ''}_okapi.json`;
     result.fileText=JSON.stringify(echoApiData,null,'\t');
     return result;
   }else if(type === EXPORT_TYPE_ENUM.swagger){
