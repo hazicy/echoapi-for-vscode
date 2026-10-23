@@ -72,3 +72,27 @@
   width: 32px;
   height: 32px;
 }
+
+.SearchContainer .slot-search-wrap {
+  gap: 6px;
+  min-width: 0;
+}
+.SearchContainer .slot-search-wrap .slot-beautify-input-affix-wrapper {
+  flex: 1;
+  min-width: 0;
+  height: 28px;
+  border-radius: 4px;
+  background: var(--vscode-input-background);
+  border-color: var(--vscode-input-border, transparent);
+}
+.SearchContainer .slot-search-wrap .slot-actions-wrap {
+  flex-shrink: 0;
+  gap: 2px;
+}
+.SearchContainer .slot-search-wrap .slot-actions-wrap > .slot-anticon {
+  width: 24px;
+  height: 26px;
+  margin: 0;
+  font-size: 14px;
+  transition: background-color 120ms;
+}

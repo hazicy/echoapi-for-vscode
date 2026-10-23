@@ -16,3 +16,18 @@
   height: 28px;
   padding: 0 15px;
 }
+
+.TestsWrapper {
+  min-height: 0;
+  width: 100%;
+}
+.TestsWrapper > .slot-beautify-flex {
+  align-items: center;
+  gap: 6px !important;
+  flex-shrink: 0;
+}
+.TestsWrapper .slot-beautify-btn {
+  flex-shrink: 0;
+  padding: 0 10px;
+  font-size: 11px;
+}

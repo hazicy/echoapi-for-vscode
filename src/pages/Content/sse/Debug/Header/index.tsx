@@ -1,70 +1,70 @@
-import slots from "@/components/ui/base/slots.module.css";
-import { API_METHODS } from "@/constants/common";
-import { ApiComponentType } from "@/types/apis/api";
-import { AnyObject } from "@/types/common";
+import slots from '@/components/ui/base/slots.module.css';
+import { API_METHODS } from '@/constants/common';
+import { ApiComponentType } from '@/types/apis/api';
+import { AnyObject } from '@/types/common';
 import { Button, Flex } from '@/components/ui/base';
-import produce from "immer";
-import React, { FC, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { isArray, isEqual } from "lodash";
-import { genQueryByUrl, genRestfulByUrl } from "@/utils/apis";
-import UrlGroup from "@/components/business/UrlGroup";
-import { useApis } from "@/store";
-import { HeaderContainer } from "./style";
-import { snowflakeId } from "apipost-tools";
+import produce from 'immer';
+import React, { FC, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { isArray, isEqual } from 'lodash';
+import { genQueryByUrl, genRestfulByUrl } from '@/utils/apis';
+import UrlGroup from '@/components/business/UrlGroup';
+import { useApis } from '@/store';
+import { HeaderContainer } from './style';
+import { snowflakeId } from 'apipost-tools';
 
 const Header: FC<ApiComponentType> = ({ apisData, onApisDataChange, type }) => {
   const { t } = useTranslation();
   const currentSendingData = useApis((state) => state.currentSseSendingData);
   const updateCurrentSendingData = useApis(
-    (store) => store.updateCurrentSseSendingData
+    (store) => store.updateCurrentSseSendingData,
   );
 
-  const [curServerId, SetCurServerId] = useState("");
+  const [curServerId, SetCurServerId] = useState('');
 
   const handleChange = (key: string, value: string) => {
     onApisDataChange(
       produce(apisData, (draft: AnyObject) => {
         draft[key] = value;
-        if (key === "url") {
+        if (key === 'url') {
           if (isArray(draft?.request?.query?.parameter)) {
             draft.request.query.parameter = genQueryByUrl(
               `${value}`,
-              draft?.request?.query?.parameter || []
+              draft?.request?.query?.parameter || [],
             );
           }
 
           if (isArray(draft?.request?.restful?.parameter)) {
             draft.request.restful.parameter = genRestfulByUrl(
               `${value}`,
-              draft?.request?.restful?.parameter || []
+              draft?.request?.restful?.parameter || [],
             );
           }
         }
-      })
+      }),
     );
   };
-  const isSending = isEqual(currentSendingData?.sendStatus, "sending");
+  const isSending = isEqual(currentSendingData?.sendStatus, 'sending');
 
   const handleSend = (option?: { server_id: string }) => {
     // Reset before sending
 
     updateCurrentSendingData({
       target_id: apisData?.target_id,
-      sendStatus: "sending",
+      sendStatus: 'sending',
       streamResponse: [
         {
-          action: "connect",
+          action: 'connect',
           id: snowflakeId(),
           data: apisData.url,
           error: null,
-          msg: "success",
+          msg: 'success',
         },
       ],
     });
 
     window?.vscode.postMessage({
-      action: "sendSse",
+      action: 'sendSse',
       data: apisData,
       option: {
         server_id: curServerId,
@@ -89,23 +89,23 @@ const Header: FC<ApiComponentType> = ({ apisData, onApisDataChange, type }) => {
       method: apisData.method,
       protocol: apisData.protocol,
     }),
-    [apisData]
+    [apisData],
   );
 
   const handleStop = () => {
     // Terminate send thread
     window?.vscode.postMessage({
-      action: "stopSendApi",
+      action: 'stopSendApi',
     });
 
     const newCurApiSendingDataSSE = produce(currentSendingData, (draft) => {
       draft.target_id = apisData.target_id;
-      draft.sendStatus = "initial";
+      draft.sendStatus = 'initial';
       draft.streamResponse?.push({
-        action: "disconnect",
+        action: 'disconnect',
         data: apisData.url,
         error: null,
-        msg: "success",
+        msg: 'success',
         id: snowflakeId(),
       });
     });
@@ -116,8 +116,8 @@ const Header: FC<ApiComponentType> = ({ apisData, onApisDataChange, type }) => {
   return (
     <HeaderContainer>
       <UrlGroup
-        className={slots["url-group-wrap"]}
-        type={type || "sse"}
+        className={slots['url-group-wrap']}
+        type={type || 'sse'}
         maxLength={10240}
         data={urlGroupData}
         onChange={handleChange}
@@ -125,32 +125,40 @@ const Header: FC<ApiComponentType> = ({ apisData, onApisDataChange, type }) => {
         curServerId={curServerId}
         SetCurServerId={SetCurServerId}
         style={{
-          paddingRight: "0",
+          paddingRight: '0',
         }}
         urlGroupExtraContent={
           <Button
             type="primary"
             size="middle"
             onClick={() => (isSending ? handleStop() : handleSend())}
-            style={{ padding: 0, fontSize: "13px", borderRadius: "0 4px 4px 0",marginLeft:'4px' }}
+            style={{
+              padding: 0,
+              fontSize: '13px',
+              borderRadius: '0 4px 4px 0',
+              marginLeft: '4px',
+            }}
           >
-            {isSending ? `${t("api.run.close_connection")}` : t("api.run.send")}
+            {isSending ? `${t('api.run.close_connection')}` : t('api.run.send')}
           </Button>
         }
       />
-      <Flex gap={4} align="center">
+      <Flex
+        gap={4}
+        align="center"
+      >
         <Button
           type="default"
           size="middle"
           onClick={() => {
             window?.vscode.postMessage({
-              action: "saveApiData",
+              action: 'saveApiData',
               data: apisData,
             });
           }}
-          style={{ padding: 0, fontSize: "13px" }}
+          style={{ padding: 0, fontSize: '13px' }}
         >
-          {t("api.run.save")}
+          {t('api.run.save')}
         </Button>
       </Flex>
     </HeaderContainer>

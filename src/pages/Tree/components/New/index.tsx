@@ -18,7 +18,7 @@ type NewProps = {
           menu={{ items: createMenus }}
           placement="bottomRight"
           trigger={['click']}
-          type="primary"
+          type="default"
           size='small'
           className={slots["beautify-new-http-more"]}
           icon={<IconFont type="icon-drop-down" />}

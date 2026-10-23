@@ -23,3 +23,22 @@
   width: 32px;
   height: 32px;
 }
+
+.NewBtnsContainer .slot-beautify-new-http-more > button {
+  height: 26px;
+  padding: 0 8px;
+  background: var(--vscode-button-secondaryBackground, transparent);
+  color: var(--vscode-button-secondaryForeground, var(--font-title-color));
+  border-color: var(--vscode-widget-border, var(--color-border));
+  font-size: 11px;
+}
+.NewBtnsContainer .slot-beautify-new-http-more > button:first-child {
+  font-weight: 500;
+}
+.NewBtnsContainer .slot-beautify-new-http-more > button:hover {
+  background: var(--vscode-button-secondaryHoverBackground, var(--vscode-toolbar-hoverBackground));
+}
+.NewBtnsContainer .slot-beautify-new-http-more > button:last-child {
+  width: 24px;
+  padding: 0 4px;
+}

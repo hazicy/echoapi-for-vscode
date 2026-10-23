@@ -269,13 +269,12 @@ const UrlGroup = (props: UrlGroupProps) => {
       <UrrGroupWrap $token={themeToken} className={className} style={style}>
         {['api', 'sse'].includes(type) && <>
           <Select
+            bordered={false}
             open={methodSelectOpen}
             onDropdownVisibleChange={(open) => {
               setMethodSelectOpen(open);
             }}
-            className={classnames('default', {
-              [data?.method?.toLowerCase() || 'default']: true,
-            })}
+            className={slots[data?.method?.toLowerCase() || 'DEFAULT']}
             disabled={readOnly}
             value={data?.method || METHODS_MAP[type][0]}
             suffixIcon={<IconFont style={{ pointerEvents: 'none' }} type="icon-drop-down" />}
@@ -333,6 +332,7 @@ const UrlGroup = (props: UrlGroupProps) => {
                 }}
               >
                 {isArray(currentEnv?.server_list) && currentEnv?.server_list.some(i => (isString(i?.uri) && i?.uri.length > 0)) && <Select
+                  bordered={false}
                   value={curServerId || defaultServerId}
                   labelRender={labelRender}
                   optionRender={optionRender}
@@ -406,6 +406,7 @@ const UrlGroup = (props: UrlGroupProps) => {
             }}
           >
             <Select
+              bordered={false}
               value={data?.protocol || 'http/1.1'}
               suffixIcon={
                 <IconFont

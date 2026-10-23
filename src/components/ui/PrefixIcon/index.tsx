@@ -39,7 +39,7 @@ const PrefixIcon: FC<Props> = memo(({ type, method, wrapClassName = '', style = 
     if (method) {
       typeMap.api = {
         icon: REQUEST_METHOD_MAP?.[method] || method,
-        className: REQUEST_METHOD_MAP?.[method] ? method?.toLowerCase() : slots.DEFAULT,
+        className: REQUEST_METHOD_MAP?.[method] ? slots[method.toLowerCase()] : slots.DEFAULT,
       };
     }
 

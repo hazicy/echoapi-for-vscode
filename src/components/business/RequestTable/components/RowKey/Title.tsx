@@ -25,16 +25,15 @@ const RowKeyTitle: FC<Props> = memo(
     const { t } = useTranslation();
     return (
       <Flex justify="space-between" align="center" style={{ marginLeft: '-8px' }}>
-        <div style={{ marginLeft: '0' }}>
+        <Flex align="center" gap={8}>
           {!isEqual(tabType, 'socketio') && (
             <Checkbox
               {...allCheckboxStatus}
               onChange={handleCheckAll}
-              style={{ paddingInlineEnd: 19 }}
             />
           )}
           <span className="txt-title">{t('common.request_table.param_name')}</span>
-        </div>
+        </Flex>
         {isEqual(tabType, 'query') && isNumber(queryAddEqual) && (
           <span className="sameIcon">
             <Tooltip

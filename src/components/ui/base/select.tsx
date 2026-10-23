@@ -233,6 +233,7 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
           style={style}
           className={cx(
             css.select,
+            (bordered === false || variant === 'borderless') && css.selectBorderless,
             slots["beautify-select"],
             multiple && slots["beautify-select-multiple"],
             className,

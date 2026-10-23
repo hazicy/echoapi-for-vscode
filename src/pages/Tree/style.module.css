@@ -29,7 +29,8 @@
   font-size: 14px;
 }
 .TreeMenuContainer .slot-tab-container.slot-beautify-segmented .slot-beautify-segmented-group {
-  justify-content: space-around;
+  justify-content: flex-start;
+  gap: 20px;
 }
 .TreeMenuContainer .slot-tab-container.slot-beautify-segmented .slot-beautify-segmented-item-label {
   padding: 0 4px;
@@ -267,4 +268,115 @@
   font-size: var(--font-size-12);
   letter-spacing: 0.5px;
   color: var(--font-light-color);
+}
+
+/* Compact workspace chrome, with the collection list as the primary surface. */
+.TreeMenuContainer {
+  padding: 0 12px;
+  min-height: 0;
+  font-size: 12px;
+  background: var(--vscode-sideBar-background);
+}
+.workspaceToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 44px;
+  flex-shrink: 0;
+}
+.workspaceToolbar > :first-child {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+}
+.workspaceToolbar > :last-child {
+  flex-shrink: 0;
+}
+.TreeMenuContainer > :last-child {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+  overflow: hidden;
+}
+.TreeMenuContainer .slot-segmented-tabs-header {
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+.TreeMenuContainer .slot-tab-container.slot-beautify-segmented {
+  margin-top: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: 12px;
+}
+.TreeMenuContainer .slot-tab-container [role="tablist"] {
+  justify-content: flex-start;
+  gap: 20px;
+  width: 100%;
+}
+.TreeMenuContainer .slot-tab-container [role="tab"] {
+  min-height: 36px;
+  padding: 8px 0;
+  border-radius: 0;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  color: var(--font-light-color);
+}
+.TreeMenuContainer .slot-tab-container [role="tab"][data-active] {
+  background: transparent;
+  border-radius: 0;
+  border-bottom-color: var(--color-primary);
+  color: var(--font-title-color);
+  font-weight: 600;
+}
+.TreeMenuContainer .slot-segmented-tabs-content {
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+.TreeMenuContainer .slot-segmented-tabs-content-item:not([hidden]) {
+  display: flex;
+  min-height: 0;
+}
+.TreeMenuContainer .slot-tree-wrap {
+  min-height: 0;
+  height: auto;
+  margin-top: 8px;
+}
+.TreeContainer [class~="beautify-tree-treenode"] {
+  min-height: 30px;
+  border-radius: 4px;
+}
+.TreeContainer [class~="beautify-tree-treenode"]:hover {
+  background: var(--vscode-list-hoverBackground, var(--vscode-toolbar-hoverBackground));
+}
+.TreeContainer [class~="beautify-tree-node-selected"] {
+  background: var(--vscode-list-inactiveSelectionBackground, var(--vscode-list-hoverBackground));
+  color: var(--vscode-list-inactiveSelectionForeground, var(--font-title-color));
+  border-radius: 3px;
+}
+.TreeContainer [class~="beautify-tree-node-content-wrapper"] {
+  overflow: hidden;
+  min-height: 28px;
+}
+.TreeContainer [class~="beautify-tree-iconEle"] {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+.TreeMenuContainer [role="tab"]:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder);
+  outline-offset: -2px;
+}
+@media (max-width: 280px) {
+  .workspaceToolbar {
+    flex-wrap: wrap;
+    padding: 6px 0;
+  }
+  .workspaceToolbar > :first-child {
+    flex-basis: 100%;
+  }
 }

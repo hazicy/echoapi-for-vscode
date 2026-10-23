@@ -31,3 +31,30 @@
 .HeaderContainer .slot-beautify-btn {
   height: 36px !important;
 }
+
+.HeaderContainer {
+  gap: 8px;
+  padding-bottom: 8px;
+}
+.HeaderContainer > .slot-url-group-wrap {
+  min-width: 0;
+  height: 40px;
+  border-radius: 5px;
+  background: var(--vscode-input-background, var(--search-big-bg-color));
+  border-color: var(--vscode-input-border, var(--color-border));
+}
+.HeaderContainer > .slot-url-group-wrap:focus-within {
+  border-color: var(--vscode-focusBorder, var(--color-primary));
+  box-shadow: 0 0 0 1px var(--vscode-focusBorder, var(--color-primary));
+}
+.HeaderContainer .slot-beautify-btn {
+  height: 40px !important;
+  min-width: 72px;
+  font-weight: 600;
+}
+.HeaderContainer .slot-url-group-container {
+  min-width: 0;
+}
+.HeaderContainer .slot-url-group-container .slot-mini-editor {
+  font-size: 13px;
+}

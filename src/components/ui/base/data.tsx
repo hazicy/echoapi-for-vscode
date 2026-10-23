@@ -345,9 +345,10 @@ export const TreeSelect = Object.assign(
         {...props}
         ref={ref}
         prefixCls="beautify-select"
-        className={cx(css.select, slots["beautify-select"], className, rootClassName)}
+        className={cx(css.select, css.treeSelect, slots["beautify-select"], className, rootClassName)}
         dropdownClassName={cx(
           css.popup,
+          css.treeSelectPopup,
           css.tree,
           popupClassName,
           dropdownClassName,

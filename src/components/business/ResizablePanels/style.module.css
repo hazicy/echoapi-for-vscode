@@ -154,3 +154,10 @@
   background: var(--color-bg-page);
   box-shadow: 0 4px 8px -4px #101801;
 }
+
+.ResizablePanelsContainer .slot-resizable-panel-handle.slot-static-handle-border {
+  background: var(--vscode-panel-border, var(--vscode-widget-border, var(--color-border)));
+}
+.ResizablePanelsContainer .slot-resizable-panel-handle:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder, var(--color-primary));
+}

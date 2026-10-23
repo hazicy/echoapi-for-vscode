@@ -3,7 +3,7 @@ import { Children, FC, useMemo } from 'react';
 import { isArray, isPlainObject, keys, size } from 'lodash';
 
 import { TabsHeaderCountContainer, TabsHeaderDotContainer } from './style';
-import { Badge } from '@/components/ui/base';
+import slots from '@/components/ui/base/slots.module.css';
 
 interface Props {
   dataSource?: any;
@@ -31,19 +31,15 @@ const HeaderCount: FC<Props> = ({ label, dataSource, showDot = false, customCalc
   }, [dataSource, customCalcFun, showDot]);
 
   if (showDot) {
-    return <>
+    return <TabsHeaderCountContainer>
       {label}
       <TabsHeaderDotContainer />
-    </>;
+    </TabsHeaderCountContainer>;
   }
 
   return <TabsHeaderCountContainer>
-    {calcCount && calcCount > 0 ? <Badge classNames={{
-      root: 'tabs-count-badge-root',
-      indicator: 'tabs-count-badge'
-    }} count={calcCount} offset={[5, 5]}>
-      {label}
-    </Badge> : label}
+    {label}
+    {!!calcCount && calcCount > 0 && <span className={slots['tabs-count-badge']}>{calcCount}</span>}
   </TabsHeaderCountContainer>;
 };
 

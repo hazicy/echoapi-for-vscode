@@ -50,3 +50,38 @@
   transform: translate(-50%, -50%);
   white-space: nowrap;
 }
+
+.ResponseResultWrap .slot-segmented-tabs-header > .slot-beautify-flex {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ResponseResultWrap .slot-segmented-tabs-header {
+  margin-bottom: 8px;
+}
+.ResponseResultWrap .slot-response-result-tabs-wrap .slot-tab-bar-extra-content-wrap {
+  display: flex;
+  align-items: center;
+  flex: 0 1 auto;
+  gap: 6px;
+  overflow: visible;
+}
+.ResponseResultWrap .slot-tab-bar-extra-content-wrap .slot-beautify-select {
+  min-height: 26px;
+  height: 26px;
+  font-size: 11px;
+}
+.ResponseResultWrap [role="tablist"] {
+  border-bottom: 0;
+}
+.ResponseResultWrap [role="tab"] {
+  min-height: 28px;
+  padding: 4px 8px;
+  border-bottom: 0;
+  border-radius: 3px;
+  font-size: 11px;
+}
+.ResponseResultWrap [role="tab"][data-active] {
+  border-bottom: 0;
+  background: var(--vscode-toolbar-hoverBackground, var(--color-bg-right));
+}

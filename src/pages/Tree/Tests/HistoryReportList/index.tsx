@@ -65,21 +65,21 @@ const HistoryReportList=({reportList}:HistoryReportListProps)=> {
   return (
     <HistoryReportListWrapper>
       {isArray(reportList) && reportList.length > 0 && reportList.map(item=>
-      <Dropdown trigger={['contextMenu']} menu={nodeItemDropdownContextMenu(item)}>
+      <Dropdown key={item.report_id} trigger={['contextMenu']} menu={nodeItemDropdownContextMenu(item)}>
       <HistoryReportListItem className={cn({
         [slots["select-item"]]:testsActiveKey === item.report_id
       })} onClick={()=>reportItemClick(item)}>
-        <Flex gap={4} align='center'>
+        <Flex gap={6} align='center' style={{ minWidth: 0 }}>
         {item?.complete?.http?.success === item?.complete?.http?.total ? <SvgTestSuccess className={slots["icon-ok"]} /> : <SvgTestError className={slots["icon-small-close"]} />}
         <Tooltip placement="topLeft" title={item?.report_name}>
-        <Typography.Text style={{maxWidth:'120px',fontSize:'14px'}} ellipsis>
+        <Typography.Text style={{fontSize:'12px'}} ellipsis>
           {item?.report_name || 'Test Report'}
         </Typography.Text>
         </Tooltip>
         </Flex>
     
         <Flex align='center'>
-        <Typography.Text style={{fontSize:'10px'}}>
+        <Typography.Text style={{fontSize:'10px', color:'var(--font-light-color)', whiteSpace:'nowrap'}}>
           {formatTimeToDateTimeLong(item.complete.start_at)}
         </Typography.Text>
         </Flex>

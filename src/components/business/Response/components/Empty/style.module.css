@@ -22,5 +22,5 @@
 }
 .ResponseEmptyContainer .slot-response-empty-wrap .slot-beautify-empty-description {
   font-size: var(--font-size-12);
-  color: var(--vscode-tab-unfocusedInactiveForeground);
+  color: var(--vscode-descriptionForeground, var(--vscode-foreground, #999));
 }

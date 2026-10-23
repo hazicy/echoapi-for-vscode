@@ -14,3 +14,23 @@
 .ResponseContainer .slot-beautify-tabs-top > .slot-beautify-tabs-nav {
   margin-bottom: 8px;
 }
+
+.ResponseContainer {
+  padding: 0 16px;
+  min-height: 0;
+}
+.ResponseContainer [role="tablist"] {
+  border-bottom: 1px solid var(--vscode-widget-border, var(--color-border));
+}
+.ResponseContainer [role="tab"] {
+  padding: 9px 10px;
+  font-size: 12px;
+}
+.ResponseContainer [role="tab"][data-active] {
+  color: var(--vscode-foreground, var(--font-title-color));
+  font-weight: 600;
+}
+.ResponseContainer .slot-beautify-empty-description {
+  color: var(--vscode-descriptionForeground, var(--font-light-color));
+  font-size: 12px;
+}

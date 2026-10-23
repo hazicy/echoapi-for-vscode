@@ -153,27 +153,75 @@ for (const panel of [
         ),
     );
     if (panel === "sidePanel") {
-      for (const width of [280, 380]) {
+      await page.evaluate(() => {
+        (window as any).__sidebarMessages = [];
+        (window as any).vscode.postMessage = (message: unknown) => (window as any).__sidebarMessages.push(message);
+        window.postMessage({action:'setApiList', data:[{
+          target_id:'sample-folder', parent_id:'0', target_type:'folder',
+          name:'Samples', status:0, sort:0,
+        }]}, '*');
+      });
+      for (const width of [240, 280, 380]) {
         await page.setViewportSize({width, height:900});
         const group = page.locator(slotSelector('beautify-new-http-more'));
         const main = group.locator('button').first();
         const groupBox = await group.boundingBox();
         const mainBox = await main.boundingBox();
-        expect(groupBox!.width).toBeGreaterThan(width - 40);
+        expect(groupBox!.x).toBeGreaterThanOrEqual(0);
+        expect(groupBox!.x + groupBox!.width).toBeLessThanOrEqual(width);
         expect(mainBox!.height).toBeLessThanOrEqual(32);
-        expect(mainBox!.width).toBeGreaterThan(180);
+        expect(mainBox!.width).toBeGreaterThan(50);
         await expect(group.getByRole('button', {name:'More actions'})).toBeVisible();
+        const tabs = page.getByRole('tab');
+        await expect(tabs.first()).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+        await tabs.nth(1).click();
+        await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
+        const folderInput = page.getByRole('combobox');
+        await expect(folderInput).toBeVisible();
+        await expect(folderInput).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+        const folderBox = await folderInput.boundingBox();
+        expect(folderBox!.width).toBeGreaterThan(30);
+        expect(folderBox!.x + folderBox!.width).toBeLessThan(width);
+        await tabs.first().click();
+        await expect(tabs.first()).toHaveAttribute('aria-selected', 'true');
+        expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
       }
+      await page.getByRole('tab').nth(1).click();
+      const run = page.getByRole('button', {name: /Run all/i});
+      await expect(run).toBeDisabled();
+      await page.getByRole('combobox').click();
+      await page.getByText('Samples', {exact:true}).last().click();
+      await expect(run).toBeEnabled();
+      await run.click();
+      await expect.poll(() => page.evaluate(() => (window as any).__sidebarMessages.some((m: any) => m.action === 'runFolder' && m.data.target_id === 'sample-folder'))).toBe(true);
+      await expect(page.getByRole('combobox')).toHaveAttribute('aria-expanded', 'false');
+      expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThanOrEqual(900);
       await page.screenshot({path: test.info().outputPath('sidebar.png')});
     }
     if (panel === "tagPanel") {
       for (const width of [760, 1024]) {
         await page.setViewportSize({width, height:900});
+        const embeddedSelects = page.locator(slotSelector('url-group-wrap')).locator(slotSelector('beautify-select'));
+        for (const select of await embeddedSelects.all()) {
+          await expect(select).toHaveCSS('border-top-width', '0px');
+          await expect(select).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+        }
         await page.getByRole('tab').filter({hasText:/^Params(?:\s*\d+)?$/}).click();
+        const paramsTab = page.getByRole('tab').filter({hasText:/^Params(?:\s*\d+)?$/});
+        const count = paramsTab.locator(slotSelector('tabs-count-badge'));
+        await expect(count).toHaveText('1');
+        const tabBox = await paramsTab.boundingBox();
+        const countBox = await count.boundingBox();
+        expect(Math.abs((tabBox!.y + tabBox!.height / 2) - (countBox!.y + countBox!.height / 2))).toBeLessThanOrEqual(2);
         const table = page.getByRole('tabpanel', {name:/^Params(?:\s*\d+)?$/}).locator('table');
         await expect(table).toHaveCSS('table-layout', 'fixed');
-        const key = table.locator('[contenteditable=true]').filter({hasText:'search'});
-        const value = table.locator('[contenteditable=true]').filter({hasText:'hello'});
+        const selectAll = table.locator('th').getByRole('checkbox').first();
+        await expect(selectAll).toHaveCSS('width', '16px');
+        await expect(selectAll).toHaveCSS('padding-right', '0px');
+        const key = table.getByRole('textbox').nth(0);
+        const value = table.getByRole('textbox').nth(1);
+        await expect(key).toHaveValue('search');
+        await expect(value).toHaveValue('hello');
         await expect(key).toBeVisible();
         await expect(value).toBeVisible();
         for (const editor of [key, value]) {

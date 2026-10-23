@@ -43,3 +43,30 @@
   top: 16px;
   right: 2px;
 }
+
+.TabsHeaderCountContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 18px;
+}
+.TabsHeaderCountContainer .slot-tabs-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 3px;
+  background: var(--vscode-badge-background, var(--vscode-toolbar-hoverBackground));
+  color: var(--vscode-badge-foreground, var(--font-light-color));
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.TabsHeaderDotContainer {
+  position: static;
+  margin: 0;
+  flex-shrink: 0;
+}

@@ -52,12 +52,13 @@ const Tests = () => {
         // }
         popupMatchSelectWidth={false}
         showSearch
+        aria-label={t('supplement.select_folder_tip')}
         filterTreeNode={(input, treeNode) => {
           return treeNode?.name?.includes(input);
         }}
         treeDefaultExpandAll
         placeholder={t('supplement.select_folder_tip')}
-        style={{ flex: 1,overflow:'auto' }}
+        style={{ flex: 1, minWidth: 0 }}
         fieldNames={{
           label: 'name',
           value: 'target_id',
@@ -68,7 +69,7 @@ const Tests = () => {
         value={selectFolderId}
         onChange={(value) => setSelectFolderId(value)}
       />
-      <Button onClick={onRunClick} type='primary'>
+      <Button onClick={onRunClick} disabled={selectFolderId === undefined} type='primary'>
           {t('common.folder_operate.run_all')}
       </Button>
     </Flex>

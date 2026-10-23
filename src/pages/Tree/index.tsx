@@ -1,4 +1,5 @@
 import slots from "@/components/ui/base/slots.module.css";
+import styles from './style.module.css';
 import React, { ReactElement, useEffect, useMemo, useRef } from 'react';
 import {
   Button,
@@ -820,9 +821,10 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
   return (
     <>
       <TreeMenuContainer>
-        <TreeMenuHeader />
-
-        <NewBtns createMenus={createMenus} />
+        <div className={styles.workspaceToolbar}>
+          <TreeMenuHeader />
+          <NewBtns createMenus={createMenus} />
+        </div>
 
         <SegmentedTabs
           className={slots["tab-container"]}

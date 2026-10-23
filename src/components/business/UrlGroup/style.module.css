@@ -194,3 +194,53 @@
   text-overflow: ellipsis;
   color: var(--font-light-color);
 }
+
+.UrrGroupWrap > .slot-beautify-select,
+.UrrGroupWrap .slot-url-group-container > .slot-beautify-select {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  min-height: 28px;
+  flex-wrap: nowrap;
+}
+.UrrGroupWrap > .slot-beautify-select:first-child {
+  min-width: 84px;
+  max-width: 100px;
+  font-weight: 600;
+  color: var(--color-success);
+}
+.UrrGroupWrap > .slot-beautify-select.slot-post {
+  color: var(--color-warning);
+}
+.UrrGroupWrap > .slot-beautify-select.slot-put {
+  color: var(--color-info);
+}
+.UrrGroupWrap > .slot-beautify-select.slot-delete {
+  color: var(--color-error);
+}
+.UrrGroupWrap .slot-line {
+  flex-shrink: 0;
+  height: 20px;
+  background: var(--vscode-widget-border, var(--color-border));
+}
+.UrrGroupWrap .slot-url-group-container .slot-mini-editor,
+.UrrGroupWrap .slot-url-group-container .slot-mini-editor:hover,
+.UrrGroupWrap .slot-url-group-container .slot-mini-editor.slot-editor-active {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+.UrrGroupWrap .slot-right-select {
+  border-left: 1px solid var(--vscode-widget-border, var(--color-border));
+  margin-right: 4px;
+}
+.UrrGroupWrap .slot-beautify-select [role="combobox"]:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder, var(--color-primary));
+  outline-offset: -2px;
+}
+
+.UrrGroupWrap > .slot-beautify-select:first-child input::placeholder {
+  color: inherit;
+  opacity: 1;
+}

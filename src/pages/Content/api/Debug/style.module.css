@@ -9,3 +9,27 @@
 .RequestContainer .slot-beautify-text-btn-highlight:hover {
   color: var(--color-primary) !important;
 }
+
+.RequestContainer {
+  padding: 0 16px 12px;
+  min-height: 0;
+}
+.RequestContainer .slot-beautify-text-btn-highlight {
+  color: var(--vscode-descriptionForeground, var(--font-light-color)) !important;
+  font-size: 11px;
+}
+.RequestContainer .slot-beautify-text-btn-highlight:hover {
+  color: var(--color-primary) !important;
+  background: var(--vscode-toolbar-hoverBackground);
+}
+.RequestContainer [role="tablist"] {
+  border-bottom: 1px solid var(--vscode-widget-border, var(--color-border));
+}
+.RequestContainer [role="tab"] {
+  padding: 9px 10px;
+  font-size: 12px;
+}
+.RequestContainer [role="tab"][data-active] {
+  color: var(--vscode-foreground, var(--font-title-color));
+  font-weight: 600;
+}

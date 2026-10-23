@@ -111,3 +111,18 @@
 .TableContainer .slot-reset-padding [class~="beautify-table-cell"] {
   padding: 0;
 }
+
+.TableWrapper .slot-beautify-table th {
+  background: var(--vscode-editorWidget-background, var(--vscode-input-background));
+  color: var(--vscode-foreground, var(--font-title-color));
+  font-size: 12px;
+  font-weight: 500;
+}
+.TableWrapper .slot-beautify-table td {
+  font-size: 12px;
+}
+
+/* Cells grow through the table layout; native textarea grips break row alignment. */
+.TableWrapper .slot-beautify-table td textarea {
+  resize: none;
+}

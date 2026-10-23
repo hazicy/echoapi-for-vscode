@@ -769,3 +769,116 @@
 .toast[data-limited] {
   display: none;
 }
+
+/* rc-tree-select owns its DOM and requires its own input/placeholder layout. */
+.treeSelect {
+  position: relative;
+  min-width: 0;
+  color: var(--vscode-input-foreground, var(--font-title-color));
+  background: var(--vscode-input-background, var(--color-bg-right));
+  border: 1px solid var(--vscode-input-border, var(--color-border));
+  border-radius: 4px;
+  font-size: 12px;
+}
+.treeSelect:focus-within {
+  border-color: var(--vscode-focusBorder, var(--color-primary));
+}
+.treeSelect [class~="beautify-select-selector"] {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 26px;
+  padding: 0 24px 0 8px;
+  cursor: pointer;
+}
+.treeSelect [class~="beautify-select-selection-wrap"] {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+}
+.treeSelect [class~="beautify-select-selection-search"] {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+}
+.treeSelect [class~="beautify-select-selection-search-input"] {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  appearance: none;
+}
+.treeSelect [class~="beautify-select-selection-search-mirror"] {
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;
+  pointer-events: none;
+}
+.treeSelect [class~="beautify-select-selection-placeholder"],
+.treeSelect [class~="beautify-select-selection-item"] {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+.treeSelect [class~="beautify-select-selection-placeholder"] {
+  color: var(--vscode-input-placeholderForeground, var(--font-light-color));
+}
+.treeSelect [class~="beautify-select-arrow"] {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.treeSelect [class~="beautify-select-arrow"]::after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+}
+
+.treeSelectPopup {
+  position: absolute;
+  z-index: 1200;
+  box-sizing: border-box;
+}
+.treeSelectPopup[class~="beautify-select-dropdown-hidden"] {
+  display: none;
+}
+
+.checkbox {
+  flex-shrink: 0;
+  padding: 0;
+  line-height: 1;
+  font-size: 12px;
+}
+.checkbox[data-indeterminate] {
+  background: var(--color-primary, #1677ff);
+}
+
+.select.selectBorderless {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.selectBorderless:focus-within {
+  outline: none;
+}
