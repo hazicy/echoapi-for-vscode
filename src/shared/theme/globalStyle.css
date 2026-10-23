@@ -132,12 +132,14 @@
 .slot-beautify-input,
 .slot-beautify-input-number {
   background: var(--vscode-input-background);
-  border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
+  border: 1px solid var(--vscode-input-border, var(--vscode-settings-numberInputBorder, transparent));
 }
-.slot-beautify-input-outlined:hover,
-.slot-beautify-input-outlined:focus {
+.slot-beautify-input-outlined:hover {
   background: var(--vscode-input-background);
   border: 1px solid var(--color-primary);
+}
+.slot-beautify-input-outlined:focus {
+  border-color: var(--control-focus-border, var(--vscode-focusBorder, var(--color-primary)));
 }
 .slot-beautify-select .slot-beautify-select-selector,
 .slot-beautify-select-outlined:not(.slot-beautify-select-customize-input) .slot-beautify-select-selector {
@@ -145,7 +147,7 @@
 }
 .slot-beautify-dropdown-trigger {
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: var(--vscode-cornerRadius-small, 4px);
 }
 .slot-beautify-dropdown-trigger:hover {
   border-color: var(--color-primary);
@@ -155,18 +157,18 @@
 }
 .slot-beautify-table .slot-beautify-select-focused .slot-beautify-select-selector {
   background: var(--highlight-change-color) !important;
-  border-color: var(--color-primary) !important;
+  border-color: var(--control-focus-border, var(--vscode-focusBorder, var(--color-primary))) !important;
 }
 .slot-beautify-table .slot-beautify-input {
   border-color: transparent !important;
 }
 .slot-beautify-table .slot-beautify-input:focus {
-  border-color: var(--color-primary) !important;
+  border-color: var(--control-focus-border) !important;
 }
 .slot-beautify-table .beautify-table-tbody .beautify-table-cell .slot-beautify-input-outlined:focus {
   background: var(--highlight-change-color) !important;
 }
-.slot-beautify-table .beautify-table-tbody .beautify-table-cell .slot-beautify-input-outlined:hover {
+.slot-beautify-table .beautify-table-tbody .beautify-table-cell .slot-beautify-input-outlined:hover:not(:focus) {
   border-color: var(--color-primary) !important;
 }
 .beautify-dropdown .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item-selected {

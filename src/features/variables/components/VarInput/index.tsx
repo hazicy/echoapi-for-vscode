@@ -204,6 +204,7 @@ export default function VarInput(props: Partial<VarInputProps>) {
         ) : (
           <Input
             ref={inputRef}
+            bordered={false}
             className={styles.EditorField}
             value={value}
             placeholder={placeholder}

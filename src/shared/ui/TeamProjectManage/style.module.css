@@ -53,7 +53,7 @@
 }
 .ProjectContainer {
   width: 100%;
-  border-radius: 8px;
+  border-radius: var(--vscode-cornerRadius-medium, 6px);
 }
 .ProjectContainer .slot-sign-btn {
   font-size: 12px;

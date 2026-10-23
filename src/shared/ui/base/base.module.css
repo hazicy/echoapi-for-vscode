@@ -15,7 +15,7 @@
   min-height: 30px;
   padding: 4px 12px;
   border: 1px solid var(--color-border, #ddd);
-  border-radius: var(--border-radius, 4px);
+  border-radius: var(--vscode-cornerRadius-small, 4px);
   background: transparent;
   color: var(--font-content-color, #222);
   font: inherit;
@@ -45,6 +45,13 @@
 .button:hover {
   color: var(--color-primary, #1677ff);
   border-color: var(--color-primary, #1677ff);
+}
+.button:focus-visible,
+.checkbox:focus-visible,
+.radio:focus-visible,
+.switch:focus-visible {
+  outline: 1px solid var(--control-focus-border, var(--vscode-focusBorder, #1677ff));
+  outline-offset: 2px;
 }
 .button.slot-beautify-btn-sm {
   min-height: 24px;
@@ -91,7 +98,7 @@
   max-width: 100%;
   padding: 4px 8px;
   border: 1px solid var(--color-border, #ddd);
-  border-radius: var(--border-radius, 4px);
+  border-radius: var(--vscode-cornerRadius-small, 4px);
   background: var(--vscode-input-background, var(--color-bg-right, #fff));
   color: var(--font-content-color, #222);
   font: inherit;
@@ -101,7 +108,7 @@
   width: 100%;
   padding: 0 8px;
   border: 1px solid var(--color-border, #ddd);
-  border-radius: var(--border-radius, 4px);
+  border-radius: var(--vscode-cornerRadius-small, 4px);
   background: var(--vscode-input-background, transparent);
 }
 .affix > .input {
@@ -109,11 +116,12 @@
   background: transparent;
   padding-inline: 0;
 }
-.affix:focus-within {
-  border-color: var(--color-primary, #1677ff);
+.affix:focus-within,
+.select:focus-within {
+  border-color: var(--control-focus-border, var(--vscode-focusBorder, #1677ff));
 }
 .input:focus {
-  border-color: var(--color-primary, #1677ff);
+  border-color: var(--control-focus-border, var(--vscode-focusBorder, #1677ff));
 }
 .input:disabled {
   opacity: 0.5;
@@ -152,7 +160,7 @@
   width: 16px;
   height: 16px;
   border: 1px solid var(--check-box-border-color, #888);
-  border-radius: 3px;
+  border-radius: var(--vscode-cornerRadius-xSmall, 2px);
   background: transparent;
   color: #fff;
 }
@@ -177,7 +185,7 @@
   height: 20px;
   padding: 2px;
   border: 0;
-  border-radius: 12px;
+  border-radius: var(--vscode-cornerRadius-circle, 9999px);
   background: var(--color-border, #aaa);
   color: #fff;
   cursor: pointer;
@@ -220,7 +228,7 @@
   min-width: 80px;
   min-height: 30px;
   border: 1px solid var(--color-border, #ddd);
-  border-radius: var(--border-radius, 4px);
+  border-radius: var(--vscode-cornerRadius-small, 4px);
   background: var(--color-bg-right, #fff);
   color: var(--font-content-color, #222);
   font: inherit;
@@ -261,7 +269,7 @@
   align-items: center;
   gap: 4px;
   padding: 1px 4px;
-  border-radius: 3px;
+  border-radius: var(--vscode-cornerRadius-xSmall, 2px);
   background: var(--color-bg-gray, #eee);
 }
 .chip > button {
@@ -280,7 +288,7 @@
   padding: 4px;
   overflow: auto;
   border: 1px solid var(--color-border, #ddd);
-  border-radius: var(--border-radius, 5px);
+  border-radius: var(--vscode-cornerRadius-medium, 6px);
   background: var(--popover-select-bg-color, var(--color-bg-right, #fff));
   color: var(--font-content-color, #222);
   box-shadow: 0 4px 16px #0003;
@@ -301,7 +309,7 @@
   padding: 4px 8px;
   box-sizing: border-box;
   border: 0;
-  border-radius: 3px;
+  border-radius: var(--vscode-cornerRadius-xSmall, 2px);
   background: transparent;
   color: inherit;
   font: inherit;
@@ -336,7 +344,7 @@
 .tooltip {
   max-width: 320px;
   padding: 6px 8px;
-  border-radius: 4px;
+  border-radius: var(--vscode-cornerRadius-small, 4px);
   background: var(--font-title-color, #222);
   color: var(--color-bg-right, #fff);
   overflow-wrap: anywhere;
@@ -394,20 +402,20 @@
 .segmented {
   display: inline-flex;
   background: var(--color-bg-gray, transparent);
-  border-radius: 5px;
+  border-radius: var(--vscode-cornerRadius-small, 4px);
   padding: 2px;
 }
 .segmented .tab[data-active] {
   background: var(--color-bg-right, #fff);
   border-color: transparent;
-  border-radius: 3px;
+  border-radius: var(--vscode-cornerRadius-xSmall, 2px);
 }
 .collapse {
   width: 100%;
 }
 .collapseItem {
   border: 1px solid var(--color-border, #ddd);
-  border-radius: 4px;
+  border-radius: var(--vscode-cornerRadius-small, 4px);
   margin-bottom: 8px;
 }
 .collapseItem > h3 {
@@ -503,7 +511,7 @@
   gap: 4px;
   padding: 2px 6px;
   border: 1px solid var(--color-border, #ddd);
-  border-radius: 3px;
+  border-radius: var(--vscode-cornerRadius-xSmall, 2px);
 }
 .tag > button {
   border: 0;
@@ -517,7 +525,7 @@
 .badge > sup {
   background: var(--color-error, #f92814);
   color: white;
-  border-radius: 8px;
+  border-radius: var(--vscode-cornerRadius-circle, 9999px);
   padding: 1px 5px;
 }
 .alert {
@@ -525,7 +533,7 @@
   gap: 8px;
   padding: 8px;
   border: 1px solid var(--color-border, #ddd);
-  border-radius: 4px;
+  border-radius: var(--vscode-cornerRadius-small, 4px);
 }
 .progress {
   display: flex;
@@ -573,7 +581,7 @@
   display: block;
   height: 16px;
   background: var(--color-bg-gray, #ddd);
-  border-radius: 3px;
+  border-radius: var(--vscode-cornerRadius-xSmall, 2px);
 }
 .table {
   width: 100%;
@@ -650,7 +658,7 @@
   height: 14px;
   margin: 0 5px;
   border: 1px solid var(--check-box-border-color, #888);
-  border-radius: 3px;
+  border-radius: var(--vscode-cornerRadius-xSmall, 2px);
   cursor: pointer;
 }
 .tree [class~="beautify-tree-checkbox-checked"] {
@@ -689,7 +697,7 @@
 .dropzone {
   padding: 24px;
   border: 1px dashed var(--color-border, #ddd);
-  border-radius: 4px;
+  border-radius: var(--vscode-cornerRadius-small, 4px);
   text-align: center;
   cursor: pointer;
 }
@@ -712,7 +720,7 @@
   max-height: calc(100vh - 32px);
   overflow: auto;
   padding: 16px 20px;
-  border-radius: var(--border-radius, 6px);
+  border-radius: var(--vscode-cornerRadius-medium, 6px);
   background: var(--modal-content-bg, var(--color-bg-right, #fff));
   color: var(--font-content-color, #222);
   box-shadow: 0 8px 32px #0004;
@@ -755,7 +763,7 @@
   min-width: 200px;
   padding: 12px 16px;
   border: 1px solid var(--color-border, #ddd);
-  border-radius: 6px;
+  border-radius: var(--vscode-cornerRadius-medium, 6px);
   background: var(--color-bg-right, #fff);
   color: var(--font-content-color, #222);
   box-shadow: 0 4px 16px #0003;
@@ -777,7 +785,7 @@
   color: var(--vscode-input-foreground, var(--font-title-color));
   background: var(--vscode-input-background, var(--color-bg-right));
   border: 1px solid var(--vscode-input-border, var(--color-border));
-  border-radius: 4px;
+  border-radius: var(--vscode-cornerRadius-small, 4px);
   font-size: 12px;
 }
 .treeSelect:focus-within {

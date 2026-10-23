@@ -164,8 +164,30 @@ test("theme changes update CSS variables and extracted conditional styles", asyn
   const state = page.getByText("Styled state", { exact: true });
   await expect(state).toHaveCSS("color", "rgb(22, 119, 255)");
   await expect(state).toHaveCSS("cursor", "not-allowed");
+  const controls = [
+    page.getByRole("button", { name: "Theme button" }),
+    page.getByRole("textbox", { name: "Theme input" }),
+    page.getByRole("combobox", { name: "Theme select" }).locator(".."),
+  ];
+  for (const control of controls) {
+    await expect(control).toHaveCSS("border-radius", "4px");
+  }
   await page.getByRole("button", { name: "Toggle theme" }).click();
   await expect(state).toHaveCSS("color", "rgb(255, 0, 0)");
   await expect(state).toHaveCSS("cursor", "auto");
   await expect(page.locator("html")).toHaveCSS("--font-size-14", "16px");
+  for (const control of controls) {
+    await expect(control).toHaveCSS("border-radius", "4px");
+  }
+  await page.locator("html").evaluate((root) => {
+    root.style.setProperty("--vscode-cornerRadius-small", "5px");
+  });
+  for (const control of controls) {
+    await expect(control).toHaveCSS("border-radius", "5px");
+  }
+  await page.locator("html").evaluate((root) => {
+    root.style.setProperty("--vscode-focusBorder", "rgb(200, 100, 50)");
+  });
+  await controls[1].focus();
+  await expect(controls[1]).toHaveCSS("border-top-color", "rgb(200, 100, 50)");
 });

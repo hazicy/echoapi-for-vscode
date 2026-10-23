@@ -36,7 +36,7 @@ export default function GlobalThemeStyle() {
       "--font-light-color": token.fontLightColor,
       "--box-shadow-modal-color": token.boxShadowModalColor,
       "--line-height": token.lineHeight,
-      "--border-radius": `${token.borderRadius}px`,
+      "--border-radius": "var(--vscode-cornerRadius-small, 4px)",
       "--color-primary": token.colorPrimary,
       "--icon-primary-color": token.iconPrimaryColor,
       "--selected-border-color": token.SelectedBorderColor,

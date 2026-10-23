@@ -5,7 +5,7 @@
   justify-content: center;
   width: 16px;
   height: 16px;
-  border-radius: 4px;
+  border-radius: var(--vscode-cornerRadius-small, 4px);
 }
 .ApisColorPrefixIconContainer .slot-anticon {
   font-size: var(--font-size-12);

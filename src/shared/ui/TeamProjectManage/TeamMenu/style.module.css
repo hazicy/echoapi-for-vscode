@@ -9,7 +9,7 @@
 .TeamMenuWrapper .slot-title .slot-count {
   width: 22px;
   height: 22px;
-  border-radius: 4px;
+  border-radius: var(--vscode-cornerRadius-small, 4px);
   font-size: var(--font-size-12);
   line-height: 22px;
   font-weight: 400;
