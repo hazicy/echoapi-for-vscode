@@ -1,105 +1,220 @@
-const { test } = require('node:test');
-const assert = require('node:assert/strict');
-const { build } = require('esbuild');
-const Module = require('node:module');
-const path = require('node:path');
+const { test } = require("node:test");
+const assert = require("node:assert/strict");
+const { build } = require("esbuild");
+const Module = require("node:module");
+const path = require("node:path");
 
-test('native sidebar panels, test commands and workspace request history', async () => {
+test("native sidebar panels, test commands and workspace request history", async () => {
   const views = new Map();
   const commands = new Map();
   const writes = new Map();
   const executed = [];
   const rows = [
-    { target_id: 'folder', target_type: 'folder', parent_id: '0', name: 'Samples', is_deleted: -1 },
-    { target_id: 'nested', target_type: 'folder', parent_id: 'folder', name: 'Nested', is_deleted: -1 },
-    { target_id: 'request', target_type: 'api', parent_id: 'nested', name: 'Get user', method: 'GET', url: '/users', is_deleted: -1 },
+    {
+      target_id: "folder",
+      target_type: "folder",
+      parent_id: "0",
+      name: "Samples",
+      is_deleted: -1,
+    },
+    {
+      target_id: "nested",
+      target_type: "folder",
+      parent_id: "folder",
+      name: "Nested",
+      is_deleted: -1,
+    },
+    {
+      target_id: "request",
+      target_type: "api",
+      parent_id: "nested",
+      name: "Get user",
+      method: "GET",
+      url: "/users",
+      is_deleted: -1,
+    },
   ];
-  const report = { report_id: 'report', report_name: 'Samples run', complete: { start_at: Date.now(), http: { total: 1, success: 1 } } };
+  const report = {
+    report_id: "report",
+    report_name: "Samples run",
+    complete: { start_at: Date.now(), http: { total: 1, success: 1 } },
+  };
   let nextId = 0;
   class EventEmitter {
     listeners = [];
-    event = listener => { this.listeners.push(listener); return { dispose() {} }; };
-    fire = value => this.listeners.forEach(listener => listener(value));
+    event = (listener) => {
+      this.listeners.push(listener);
+      return { dispose() {} };
+    };
+    fire = (value) => this.listeners.forEach((listener) => listener(value));
     dispose() {}
   }
-  const context = { subscriptions: [], project: 'one' };
+  const context = { subscriptions: [], project: "one" };
   const mocks = {
     vscode: {
       EventEmitter,
-      TreeItem: class { constructor(label, collapsibleState) { Object.assign(this, { label, collapsibleState }); } },
-      ThemeIcon: class { constructor(id, color) { Object.assign(this, { id, color }); } },
-      ThemeColor: class { constructor(id) { this.id = id; } },
+      TreeItem: class {
+        constructor(label, collapsibleState) {
+          Object.assign(this, { label, collapsibleState });
+        }
+      },
+      ThemeIcon: class {
+        constructor(id, color) {
+          Object.assign(this, { id, color });
+        }
+      },
+      ThemeColor: class {
+        constructor(id) {
+          this.id = id;
+        }
+      },
       TreeItemCollapsibleState: { None: 0, Collapsed: 1, Expanded: 2 },
-      env: { language: 'zh-cn' },
+      env: { language: "zh-cn" },
       window: {
-        createTreeView: (id, options) => { views.set(id, options.treeDataProvider); return { dispose() {} }; },
-        showInputBox: async () => 'Get user',
+        createTreeView: (id, options) => {
+          views.set(id, options.treeDataProvider);
+          return { dispose() {} };
+        },
+        showInputBox: async () => "Get user",
       },
       commands: {
-        registerCommand: (id, fn) => { commands.set(id, fn); return { dispose() {} }; },
+        registerCommand: (id, fn) => {
+          commands.set(id, fn);
+          return { dispose() {} };
+        },
         executeCommand: (...args) => executed.push(args),
       },
     },
-    utils: { getApiList: () => rows, getProjectReportList: () => [report], getApiListName: ctx => `apiList:${ctx.project}` },
-    db: { getDataFromGlobalStorage: (_, key, fallback) => writes.get(key) ?? fallback, setDataToGlobalStorage: (_, key, value) => writes.set(key, value) },
+    utils: {
+      getApiList: () => rows,
+      getProjectReportList: () => [report],
+      getApiListName: (ctx) => `apiList:${ctx.project}`,
+    },
+    db: {
+      getDataFromGlobalStorage: (_, key, fallback) =>
+        writes.get(key) ?? fallback,
+      setDataToGlobalStorage: (_, key, value) => writes.set(key, value),
+    },
     sidbar: { handleMessage: () => {} },
-    common: { APIS_BASE_DEFAULT_DATA: { api: { response: { restored: true } } } },
-    constants: { APIS_TARGET_TYPE_ENUM: { API: 'api', FOLDER: 'folder' } },
-    'apipost-tools': { snowflakeId: () => String(++nextId) },
+    common: {
+      APIS_BASE_DEFAULT_DATA: { api: { response: { restored: true } } },
+    },
+    constants: { APIS_TARGET_TYPE_ENUM: { API: "api", FOLDER: "folder" } },
+    "apipost-tools": { snowflakeId: () => String(++nextId) },
   };
   globalThis.__okapiNativeMocks = mocks;
   try {
     const result = await build({
-      stdin: { contents: "export { registerNativeTree } from './src/extension/nativeTree'; export { recordRequestHistory, getRequestHistory } from './src/extension/requestHistory';", resolveDir: path.resolve(__dirname, '..') },
-      bundle: true, write: false, platform: 'node', format: 'cjs',
-      plugins: [{ name: 'native-test-dependencies', setup(builder) {
-        builder.onResolve({ filter: /^(vscode|apipost-tools)$|(^|\/)(utils|db|sidbar|common)$|^@\/features\/requests\/constants$/ }, args => {
-          const key = args.path === '@/features/requests/constants' ? 'constants' : args.path.split('/').pop();
-          if (mocks[key]) { return { path: key, namespace: 'mock' }; }
-        });
-        builder.onLoad({ filter: /.*/, namespace: 'mock' }, args => ({ contents: `module.exports = globalThis.__okapiNativeMocks[${JSON.stringify(args.path)}]`, loader: 'js' }));
-      } }],
+      stdin: {
+        contents:
+          "export { registerNativeTree } from './src/extension/nativeTree'; export { recordRequestHistory, getRequestHistory } from './src/extension/requestHistory'; export { storageChanged } from './src/extension/storageEvents'; export { requestChildren } from './src/extension/nativeTreeData';",
+        resolveDir: path.resolve(__dirname, ".."),
+      },
+      bundle: true,
+      write: false,
+      platform: "node",
+      format: "cjs",
+      plugins: [
+        {
+          name: "native-test-dependencies",
+          setup(builder) {
+            builder.onResolve(
+              {
+                filter:
+                  /^(vscode|apipost-tools)$|(^|\/)(utils|db|sidbar|common)$|^@\/features\/requests\/constants$/,
+              },
+              (args) => {
+                const key =
+                  args.path === "@/features/requests/constants"
+                    ? "constants"
+                    : args.path.split("/").pop();
+                if (mocks[key]) {
+                  return { path: key, namespace: "mock" };
+                }
+              },
+            );
+            builder.onLoad({ filter: /.*/, namespace: "mock" }, (args) => ({
+              contents: `module.exports = globalThis.__okapiNativeMocks[${JSON.stringify(args.path)}]`,
+              loader: "js",
+            }));
+          },
+        },
+      ],
     });
-    const filename = path.join(__dirname, 'nativeTree.bundle.cjs');
+    const filename = path.join(__dirname, "nativeTree.bundle.cjs");
     const bundled = new Module(filename);
     bundled.paths = module.paths;
     bundled._compile(result.outputFiles[0].text, filename);
-    const { registerNativeTree, recordRequestHistory, getRequestHistory } = bundled.exports;
+    const {
+      registerNativeTree,
+      recordRequestHistory,
+      getRequestHistory,
+      storageChanged,
+      requestChildren,
+    } = bundled.exports;
     registerNativeTree(context);
-    assert.deepEqual([...views.keys()], ['okapiRequests', 'okapiTests', 'okapiHistory']);
-    const requests = views.get('okapiRequests');
-    const tests = views.get('okapiTests');
-    const history = views.get('okapiHistory');
-    assert.equal(requests.getChildren()[0].kind, 'request');
-    assert.equal(requests.getChildren(requests.getChildren()[0])[0].data.target_id, 'nested');
+    assert.deepEqual(
+      [...views.keys()],
+      ["okapiRequests", "okapiTests", "okapiHistory"],
+    );
+    const requests = views.get("okapiRequests");
+    const tests = views.get("okapiTests");
+    const history = views.get("okapiHistory");
+    let refreshes = 0;
+    requests.onDidChangeTreeData(() => refreshes++);
+    storageChanged.fire("unrelated");
+    assert.equal(refreshes, 0);
+    storageChanged.fire("apiList:one");
+    storageChanged.fire("one:test");
+    storageChanged.fire("userConfig");
+    assert.equal(refreshes, 3);
+    const orphan = {
+      ...rows[2],
+      target_id: "orphan",
+      parent_id: "missing",
+      sort: 2,
+    };
+    assert.equal(requestChildren([...rows, orphan]).at(-1).target_id, "orphan");
+    const cycle = [{ ...rows[0], parent_id: "nested" }, rows[1], rows[2]];
+    assert.deepEqual(requestChildren(cycle, undefined, "get user"), []);
+    assert.equal(requests.getChildren()[0].kind, "request");
+    assert.equal(
+      requests.getChildren(requests.getChildren()[0])[0].data.target_id,
+      "nested",
+    );
     const testFolder = tests.getChildren()[0];
-    assert.equal(testFolder.kind, 'testFolder');
-    await commands.get('okapi.tree.runTests')(testFolder);
-    assert.equal(executed.at(-1)[0], 'echoapi.folderTest');
-    const reports = tests.getChildren().find(node => node.kind === 'reports');
-    await commands.get('okapi.tree.openReport')(tests.getChildren(reports)[0]);
-    assert.deepEqual(executed.at(-1), ['echoapi.folderTestReportData', report]);
-    assert.equal(history.getChildren()[0].kind, 'empty');
-    const sent = { ...rows[2], response: { raw: 'large body' } };
+    assert.equal(testFolder.kind, "testFolder");
+    await commands.get("okapi.tree.runTests")(testFolder);
+    assert.equal(executed.at(-1)[0], "echoapi.folderTest");
+    const reports = tests.getChildren().find((node) => node.kind === "reports");
+    await commands.get("okapi.tree.openReport")(tests.getChildren(reports)[0]);
+    assert.deepEqual(executed.at(-1), ["echoapi.folderTestReportData", report]);
+    assert.equal(history.getChildren()[0].kind, "empty");
+    const sent = { ...rows[2], response: { raw: "large body" } };
     recordRequestHistory(context, sent);
-    sent.url = '/changed';
-    assert.equal(getRequestHistory(context)[0].request.url, '/users');
+    sent.url = "/changed";
+    assert.equal(getRequestHistory(context)[0].request.url, "/users");
     assert.equal(getRequestHistory(context)[0].request.response, undefined);
     const day = history.getChildren()[0];
-    assert.equal(day.kind, 'day');
+    assert.equal(day.kind, "day");
     const entry = history.getChildren(day)[0];
-    await commands.get('okapi.tree.openHistory')(entry);
-    assert.equal(executed.at(-1)[0], 'openTabPanel');
-    assert.notEqual(executed.at(-1)[1].target_id, 'request');
+    await commands.get("okapi.tree.openHistory")(entry);
+    assert.equal(executed.at(-1)[0], "openTabPanel");
+    assert.notEqual(executed.at(-1)[1].target_id, "request");
     assert.deepEqual(executed.at(-1)[1].response, { restored: true });
-    context.project = 'two';
+    context.project = "two";
     assert.deepEqual(getRequestHistory(context), []);
-    context.project = 'one';
-    for (let i = 0; i < 205; i++) { recordRequestHistory(context, sent); }
+    context.project = "one";
+    for (let i = 0; i < 205; i++) {
+      recordRequestHistory(context, sent);
+    }
     assert.equal(getRequestHistory(context).length, 200);
-    await commands.get('okapi.tree.filter')();
-    assert.equal(requests.getChildren()[0].data.target_id, 'folder');
-    assert.equal(requests.getChildren(requests.getChildren()[0])[0].data.target_id, 'nested');
+    await commands.get("okapi.tree.filter")();
+    assert.equal(requests.getChildren()[0].data.target_id, "folder");
+    assert.equal(
+      requests.getChildren(requests.getChildren()[0])[0].data.target_id,
+      "nested",
+    );
   } finally {
     delete globalThis.__okapiNativeMocks;
   }

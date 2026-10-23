@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { storageChanged } from '../storageEvents';
 import {
   deleteProjectReport,
   deleteTestingFolderData,
@@ -247,6 +248,7 @@ export const handleMessage = async (
         new_user_config.currentProject = project;
 
         await context.globalState.update("userConfig", new_user_config);
+        storageChanged.fire('userConfig');
 
         // Restore local apiList
         sidePanelWebView?.webview.postMessage({

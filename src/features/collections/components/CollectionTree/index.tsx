@@ -168,30 +168,6 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
       });
       return;
     }
-    if (key === 'import_data') {
-      window?.vscode.postMessage({
-        action: 'openImportDataPanel',
-        data: { type: 'curl' },
-      });
-      return;
-    }
-
-    if (key === 'import_tc_data') {
-      window?.vscode.postMessage({
-        action: 'openImportDataPanel',
-        data: { type: 'thunderClient' },
-      });
-      return;
-    }
-
-    if (key === 'export_data') {
-      window?.vscode.postMessage({
-        action: 'openExportDataPanel',
-        data: { type: 'echoapi' },
-      });
-      return;
-    }
-
     const result = await createOpensItem({
       target_type: key as APIS_TARGET_TYPE_ENUM,
       project_id: '',

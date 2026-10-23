@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import os from 'os';
 import { isArray } from 'lodash';
-import { nativeTreeChanged } from '../nativeTreeEvents';
+import { storageChanged } from '../storageEvents';
 
 export const isWin = () => {
   const platform = process.platform;
@@ -126,9 +126,6 @@ export const setDataToGlobalStorage = (context: vscode.ExtensionContext, key: st
     } catch (error) { }
 
     fs.writeFileSync(filePath, JSON.stringify(value, null, 2), 'utf-8');
-    if (key === 'apiList' || key.startsWith('apiList:') || key.endsWith(':test') || key === 'userConfig') {
-      nativeTreeChanged.fire();
-    }
 
     try {
       // Check if cache directory exists, create if not
@@ -155,6 +152,7 @@ export const setDataToGlobalStorage = (context: vscode.ExtensionContext, key: st
       fs.writeFileSync(cachePath, JSON.stringify(value, null, 2), 'utf-8');
     }
 
+    storageChanged.fire(key);
     return true;
   } catch (error) {
     return false;
