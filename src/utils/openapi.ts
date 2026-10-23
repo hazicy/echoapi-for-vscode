@@ -10,7 +10,7 @@ import { parseModelToJsonSchema } from '@/utils/dataModel';
 import { areKeysOneToOne, EditFormat, isJSON } from '@/utils/common';
 import { useProjectSetting } from '@/store';
 import { JSONSchemaType } from '@/types/jsonSchema';
-import Type from 'type-of-is';
+import { getTypeName } from '@/utils/type';
 import { AnyObject } from '@/types/common';
 
 const getProxyMockRulesList = () => {
@@ -263,7 +263,7 @@ export const handleEchoApiToOpenApi = (apisData: ApiDetailsData): openapiResult 
 }
 
 export const transformObject = (obj: AnyObject) => {
-  const result: any = { type: Type.string(obj).toLowerCase(), properties: {} };
+  const result: any = { type: getTypeName(obj).toLowerCase(), properties: {} };
 
   if (result.type === 'object') {
     for (const key in obj) {

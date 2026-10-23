@@ -270,7 +270,6 @@
     "react-router-dom": "6.21.0",
     "socket.io-client-pro": "^1.0.20",
     "sql-ddl-to-json-schema": "^4.1.0",
-    "type-of-is": "^3.5.1",
     "url-parse": "^1.5.10",
     "web-curl-to-har": "^1.0.3",
     "websocket-client-pro": "^1.0.26",

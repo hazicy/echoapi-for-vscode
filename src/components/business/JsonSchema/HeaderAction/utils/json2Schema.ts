@@ -1,8 +1,7 @@
-// Modules
-import Type from 'type-of-is';
+import { getTypeName } from '@/utils/type';
 
 function getPropertyFormat(value: any) {
-  const type = Type.string(value).toLowerCase();
+  const type = getTypeName(value).toLowerCase();
 
   if (type === 'date') return 'date-time';
 
@@ -10,7 +9,7 @@ function getPropertyFormat(value: any) {
 }
 
 function getPropertyType(value: any) {
-  const type = Type.string(value).toLowerCase();
+  const type = getTypeName(value).toLowerCase();
 
   if (type === 'number') return Number.isInteger(value) ? 'integer' : type;
   if (type === 'date') return 'string';
@@ -116,7 +115,7 @@ function processArray(array: any, output?: any, nested?: any) {
         }
       }
       if (oneOf) {
-        const childType = Type.string(value).toLowerCase();
+        const childType = getTypeName(value).toLowerCase();
         const tempObj: any = {};
         if (!arrayItem.type && childType === 'object') {
           tempObj.properties = arrayItem;
@@ -208,7 +207,7 @@ export default function Process(title: any, object?: any) {
   }
 
   // Set initial object type
-  output.type = Type.string(object).toLowerCase();
+  output.type = getTypeName(object).toLowerCase();
 
   // Process object
   if (output.type === 'object') {
