@@ -659,7 +659,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
       label: (
         <span className={styles.workspaceTabLabel} title={t('common.api_tab.run')}>
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M4 6h12l-1 11H5L4 6Zm-1-3h14M7 3V1.5h6V3" />
+            <path d="M4 4h12v12H4zM7 8l2 2-2 2M11 12h2" />
           </svg>
           <span className={styles.workspaceTabText}>{t('common.api_tab.run')}</span>
         </span>
@@ -767,12 +767,9 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
   return (
     <>
       <TreeMenuContainer>
-        <div className={styles.workspaceToolbar}>
-          <NewBtns createMenus={createMenus} />
-        </div>
-
         <SegmentedTabs
           className={slots["tab-container"]}
+          tabBarExtraContent={<NewBtns createMenus={createMenus} />}
           options={TESTING_CONFIG_TAB_LIST}
           value={tabValue}
           onChange={(val) => {

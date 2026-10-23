@@ -1,43 +1,31 @@
 .NewBtnsContainer {
   display: flex;
+  flex-shrink: 0;
 }
-.NewBtnsContainer .slot-beautify-new-http-more {
-  width: 100% !important;
-}
-.NewBtnsContainer .slot-beautify-new-http-more > button:first-child {
-  flex: 1;
-  font-weight: 600;
-}
-.NewBtnsContainer .slot-beautify-space-compact {
-  width: auto;
-}
-.NewBtnsContainer .slot-add-btn {
-  margin-left: 4px;
-  width: 32px;
-  height: 32px;
-}
-
 .NewBtnsContainer .slot-beautify-new-http-more > button {
-  height: 36px;
-  padding: 0 12px;
-  background: var(--vscode-button-background, var(--color-primary));
-  color: var(--vscode-button-foreground, #fff);
-  border-color: var(--vscode-button-border, transparent);
-  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0;
+  background: transparent;
+  color: var(--vscode-icon-foreground, var(--font-content-color));
+  border: 0;
+  border-radius: 4px;
 }
 .NewBtnsContainer .slot-beautify-new-http-more > button:first-child {
-  font-weight: 600;
-  border-inline-end: 0;
-  border-start-start-radius: 8px;
-  border-end-start-radius: 8px;
-}
-.NewBtnsContainer .slot-beautify-new-http-more > button:hover {
-  background: var(--vscode-button-hoverBackground, var(--color-primary));
+  width: auto;
+  gap: 4px;
+  padding: 0 6px;
+  white-space: nowrap;
 }
 .NewBtnsContainer .slot-beautify-new-http-more > button:last-child {
-  width: 36px;
-  padding: 0 4px;
-  border-start-end-radius: 8px;
-  border-end-end-radius: 8px;
-  border-inline-start: 1px solid color-mix(in srgb, var(--vscode-button-foreground, #fff) 25%, transparent);
+  width: 20px;
+}
+.NewBtnsContainer .slot-beautify-new-http-more > button:hover {
+  background: var(--vscode-toolbar-hoverBackground);
+}
+.NewBtnsContainer .slot-beautify-new-http-more > button:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder);
+  outline-offset: -1px;
 }

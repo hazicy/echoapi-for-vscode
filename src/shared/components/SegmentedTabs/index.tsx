@@ -66,7 +66,7 @@ const SegmentedTabs: FC<Props> = forwardRef(({
   return (
     <SegmentedTabsContainer $token={themeToken} vertical className={wrapClassName}>
       <header className={slots["segmented-tabs-header"]}>
-        <Flex>
+        <Flex align="center" style={{ width: '100%' }}>
           <Segmented
             options={options}
             value={mergeValue}
@@ -74,7 +74,10 @@ const SegmentedTabs: FC<Props> = forwardRef(({
             {...resetProps}
           />
           {tabBarExtraContent && (
-            <div className={slots["tab-bar-extra-content-wrap"]}>{tabBarExtraContent}</div>
+            <div
+              className={slots["tab-bar-extra-content-wrap"]}
+              style={{ marginInlineStart: 'auto', flex: '0 0 auto', overflow: 'visible' }}
+            >{tabBarExtraContent}</div>
           )}
         </Flex>
       </header>

@@ -251,22 +251,6 @@
   font-size: 12px;
   background: var(--vscode-sideBar-background);
 }
-.workspaceToolbar {
-  display: flex;
-  align-items: stretch;
-  gap: 8px;
-  padding: 8px 0;
-  flex-shrink: 0;
-}
-.workspaceToolbar > :first-child {
-  flex: 1;
-  min-width: 0;
-  min-height: 36px;
-  margin: 0;
-}
-.workspaceToolbar > :last-child {
-  flex-shrink: 0;
-}
 .TreeMenuContainer > :last-child {
   flex: 1;
   min-height: 0;
@@ -274,7 +258,8 @@
   overflow: hidden;
 }
 .TreeMenuContainer .slot-segmented-tabs-header {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  padding-top: 4px;
   flex-shrink: 0;
 }
 .TreeMenuContainer .slot-tab-container.slot-beautify-segmented {
@@ -292,22 +277,23 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0;
-  border-radius: 5px;
-  background: var(--vscode-input-background, var(--color-bg-page));
+  border-radius: 0;
+  background: transparent;
 }
 .TreeMenuContainer .slot-tab-container [role="tab"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
   height: 34px;
   min-height: 34px;
-  padding: 6px 12px;
+  padding: 6px 8px;
   margin: 0;
-  border-radius: 4px;
+  border-radius: 0;
   background: transparent;
-  border: 1px solid transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
   color: var(--font-content-color);
   transition: background-color 120ms ease, color 120ms ease;
 }
@@ -316,18 +302,30 @@
   color: var(--font-title-color);
 }
 .TreeMenuContainer .slot-tab-container [role="tab"][data-active] {
-  background: var(--vscode-sideBar-background, var(--color-bg-container));
-  border-radius: 4px;
-  border-color: var(--vscode-widget-border, var(--color-border));
-  box-shadow: 0 1px 3px #00000014;
-  color: var(--font-title-color);
+  background: transparent;
+  border-bottom-color: var(--vscode-panelTitle-activeBorder, var(--color-primary));
+  color: var(--vscode-panelTitle-activeForeground, var(--font-title-color));
   font-weight: 600;
+}
+.TreeMenuContainer .slot-segmented-tabs-header > div {
+  width: 100%;
+  align-items: center;
+  gap: 4px;
+}
+.TreeMenuContainer .slot-tab-container {
+  flex: 1;
+  min-width: 0;
+}
+.TreeMenuContainer .slot-segmented-tabs-header .slot-tab-bar-extra-content-wrap {
+  margin-inline-start: auto;
+  flex: 0 0 auto;
+  overflow: visible;
 }
 .workspaceTabLabel {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  gap: 5px;
   white-space: nowrap;
 }
 .TreeMenuContainer .slot-tab-container .slot-beautify-segmented-item-label {
@@ -343,14 +341,7 @@
   font-size: 18px;
 }
 .workspaceTabText {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+  font-size: 12px;
 }
 .TreeMenuContainer .slot-segmented-tabs-content {
   display: flex;
