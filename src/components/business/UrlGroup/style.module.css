@@ -236,11 +236,28 @@
   margin-right: 4px;
 }
 .UrrGroupWrap .slot-beautify-select [role="combobox"]:focus-visible {
-  outline: 1px solid var(--vscode-focusBorder, var(--color-primary));
-  outline-offset: -2px;
+  outline: none;
 }
 
 .UrrGroupWrap > .slot-beautify-select:first-child input::placeholder {
   color: inherit;
   opacity: 1;
+}
+
+.MethodDropdownWrap {
+  min-width: 120px;
+  font-size: 12px;
+}
+.MethodDropdownWrap .slot-beautify-select-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 28px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  line-height: 18px;
+}
+.UrrGroupWrap > .slot-beautify-select:first-child {
+  max-width: 110px;
 }

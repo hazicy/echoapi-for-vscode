@@ -279,6 +279,9 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
                     }) ?? selectedOptions.label)
                   : placeholder}
               </span>
+              <span className={cx(css.selectArrow, slots["beautify-select-arrow"])} aria-hidden="true">
+                {loading ? "…" : (suffixIcon ?? "⌄")}
+              </span>
             </Combobox.Trigger>
           )}
           {allowClear && (
@@ -286,12 +289,12 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
               ×
             </Combobox.Clear>
           )}
-          <Combobox.Trigger
+          {(showSearch || multiple) && <Combobox.Trigger
             className={cx(css.selectArrow, slots["beautify-select-arrow"])}
             aria-label="Open options"
           >
             {loading ? "…" : (suffixIcon ?? "⌄")}
-          </Combobox.Trigger>
+          </Combobox.Trigger>}
         </div>
         <Combobox.Portal>
           <Combobox.Positioner sideOffset={4} className={css.positioner}>

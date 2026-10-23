@@ -230,6 +230,31 @@ for (const panel of [
           expect(box!.height).toBeGreaterThan(10);
         }
       }
+      const urlGroup = page.locator(slotSelector('url-group-wrap'));
+      const protocol = urlGroup.locator(slotSelector('right-select-http')).last();
+      await expect(protocol.getByRole('combobox')).toHaveCount(1);
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const trigger = protocol.getByRole('combobox');
+        const triggerBox = await trigger.boundingBox();
+        await trigger.click(attempt === 1 ? {position:{x:8,y:12}} : attempt === 2 ? {position:{x:triggerBox!.width - 8,y:12}} : {});
+        // Catch focus/blur closures after the opening pointer event completes.
+        await page.waitForTimeout(300);
+        await expect(page.getByRole('option', {name:'http/1.1', exact:true})).toBeVisible();
+        const nextProtocol = attempt === 1 ? 'http/2' : 'http/1.1';
+        await page.getByRole('option', {name:nextProtocol, exact:true}).click();
+        await expect(trigger).toContainText(nextProtocol);
+        await expect(page.getByRole('option', {name:'http/1.1', exact:true})).toBeHidden();
+      }
+      await protocol.getByRole('combobox').click();
+      await page.keyboard.press('Escape');
+      await expect(page.getByRole('option', {name:'http/1.1', exact:true})).toBeHidden();
+      const method = urlGroup.locator(slotSelector('beautify-select')).first();
+      await method.locator('button').click();
+      await page.waitForTimeout(300);
+      await expect(page.getByTitle('POST', {exact:true})).toBeVisible();
+      await page.getByTitle('POST', {exact:true}).click();
+      await expect(method.getByRole('combobox')).toHaveAttribute('placeholder', 'POST');
+      await expect(page.getByTitle('POST', {exact:true})).toBeHidden();
       await page.screenshot({path: test.info().outputPath('request.png')});
     }
     expect(errors).toEqual([]);
