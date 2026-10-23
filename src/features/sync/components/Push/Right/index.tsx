@@ -3,10 +3,9 @@ import { useMemo } from 'react';
 import { PushRightWrap } from './style';
 import { useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';
-import TeamProjectManage from '@/shared/ui/TeamProjectManage';
-import { Button, Flex } from '@/shared/ui/base';
+import { Button, Flex, Select } from '@/shared/ui/base';
 import { useUserConfig } from '@/app/store';
-import { Project, TeamItem } from '@/features/auth/types';
+import { MIGRATE_RESULT_STATUS } from '@/features/import/constants/migrate';
 import { getTeamAndProjectByProjectId } from '@/features/project/events';
 import ApiConflict from './ApiConflict';
 import { PushApiData, PushEnvData } from '../type';
@@ -34,11 +33,10 @@ const PushRight = (props: PushRightProps) => {
   const { t } = useTranslation();
 
   const teamProjectList = useUserConfig(stroe => stroe.teamProjectList);
-  const { currentProject, currentTeam, updateCurrentTeam, updateCurrentProject } = useUserConfig(
-    useShallow(({ currentProject, currentTeam, updateCurrentTeam, updateCurrentProject }) => {
+  const { currentProject, updateCurrentTeam, updateCurrentProject } = useUserConfig(
+    useShallow(({ currentProject, updateCurrentTeam, updateCurrentProject }) => {
       return {
         currentProject,
-        currentTeam,
         updateCurrentTeam,
         updateCurrentProject
       };
@@ -83,7 +81,19 @@ const PushRight = (props: PushRightProps) => {
     }
     return <>
       <label>{t('common.push_target_address')}</label>
-      <TeamProjectManage from='push' currentProject={currentProject?.project_id === '-1' ? {} as Project : currentProject} currentTeam={currentTeam?.team_id === '-1' ? {} as TeamItem : currentTeam} onProjectChange={onProjectChange} />
+      <Select
+        aria-label={t('common.push_target_address')}
+        placeholder={t('common.select_tip')}
+        showSearch
+        style={{ width: '100%' }}
+        value={currentProject?.project_id === '-1' ? undefined : currentProject?.project_id}
+        options={teamProjectList.flatMap(team => (team.project || []).map(project => ({
+          value: project.project_id,
+          label: `${team.name} / ${project.name}`,
+          disabled: project.upgrade_status !== MIGRATE_RESULT_STATUS.NORMAL,
+        })))}
+        onChange={onProjectChange}
+      />
 
       <Flex justify='end'>
         <Button type="primary" onClick={handlePush}>
