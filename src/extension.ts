@@ -138,14 +138,14 @@ export async function activate(context: vscode.ExtensionContext) {
   // Register Import Data Webview
   context.subscriptions.push(
     vscode.commands.registerCommand('openImportDataPanel', (data) => {
-      createImportDataPanel(data, context);
+      createImportDataPanel(data ?? { type: 'curl' }, context);
     })
   );
 
   // Register Export Data Webview
   context.subscriptions.push(
     vscode.commands.registerCommand('openExportDataPanel', (data) => {
-      createExportDataPanel(data, context);
+      createExportDataPanel(data ?? { type: 'echoapi' }, context);
     })
   );
 

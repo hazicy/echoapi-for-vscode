@@ -122,6 +122,7 @@
       "website_plugin": "Import by Chrome Extensions",
       "new_http": "HTTP Request",
       "new_http_request": "HTTP1/2 Request",
+      "new_short": "New",
       "new_sse": "SSE Request",
       "new_sse_request": "Server sent events Request",
       "new_markdown": "New Markdown",

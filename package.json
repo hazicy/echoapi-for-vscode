@@ -114,6 +114,16 @@
           "group": "navigation@1"
         },
         {
+          "command": "openImportDataPanel",
+          "when": "view == myView",
+          "group": "navigation@2"
+        },
+        {
+          "command": "openExportDataPanel",
+          "when": "view == myView",
+          "group": "navigation@3"
+        },
+        {
           "command": "echoapi.openEnv",
           "when": "view == myView",
           "group": "@2",
@@ -165,6 +175,16 @@
         "command": "echoapi.openHelpDoc",
         "title": "%command.openHelpDoc%",
         "category": "okapi"
+      },
+      {
+        "command": "openImportDataPanel",
+        "title": "%command.importData%",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "openExportDataPanel",
+        "title": "%command.exportData%",
+        "icon": "$(cloud-upload)"
       }
     ]
   },

@@ -519,7 +519,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
   });
 
   const switcherIcon = useMemo(
-    () => (
+    () => ({ isLeaf }: { isLeaf?: boolean }) => isLeaf ? null : (
       <IconFont
         type="icon-drop-down"
         style={{ fontSize: 16 }}
@@ -659,7 +659,8 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
       label: (
         <span className={styles.workspaceTabLabel} title={t('common.api_tab.run')}>
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M4 4h12v12H4zM7 8l2 2-2 2M11 12h2" />
+            <rect x="3" y="3" width="14" height="14" rx="3" />
+            <path d="m6.5 7.5 2.5 2.5-2.5 2.5M11.5 12.5h2" />
           </svg>
           <span className={styles.workspaceTabText}>{t('common.api_tab.run')}</span>
         </span>
@@ -754,7 +755,8 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
       label: (
         <span className={styles.workspaceTabLabel} title={t('menu.test')}>
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M3 2.5h14v11H3zM6 6h5v4H6zM7 17h6M10 13.5V17M14 6h.01M14 9h.01" />
+            <rect x="3" y="3" width="14" height="14" rx="3" />
+            <path d="m6.25 7.5 1 1L9 6.5M11.5 7.5h2.25M6.25 12.5l1 1L9 11.5M11.5 12.5h2.25" />
           </svg>
           <span className={styles.workspaceTabText}>{t('menu.test')}</span>
         </span>

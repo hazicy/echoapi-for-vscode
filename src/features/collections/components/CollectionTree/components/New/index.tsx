@@ -32,7 +32,7 @@ type NewProps = {
           <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
             <path d="M10 4v12M4 10h12" />
           </svg>
-          <span>{i18next.t('common.folder_operate.new_http_request')}</span>
+          <span>{i18next.t('common.folder_operate.new_short')}</span>
         </Dropdown.Button>
       </NewBtnsContainer>
   )

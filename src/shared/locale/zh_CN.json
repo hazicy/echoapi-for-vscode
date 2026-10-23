@@ -122,6 +122,7 @@
       "settings":"设置",
       "new_http": "新建接口",
       "new_http_request": "新建接口",
+      "new_short": "新建",
       "new_sse": "新建SSE接口",
       "new_sse_request": "新建SSE接口",
       "new_markdown": "新建Markdown",

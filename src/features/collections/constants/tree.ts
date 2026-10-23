@@ -1,7 +1,6 @@
 import i18next from "i18next";
 import { concat, map, omit } from "lodash";
 import {
-  APIS_CREATE_ITEM_OTHER_ENUM,
   APIS_MORE_OPERATE_ENUM,
   APIS_TARGET_TYPE_ENUM,
 } from "@/features/requests/constants";
@@ -53,16 +52,6 @@ const OTHER_CREATE_ITEM: ApisCreateList = [
     key: APIS_TARGET_TYPE_ENUM.FOLDER,
     icon: "icon-add-folder",
     label: i18next.t("common.folder_operate.new_folder"),
-  },
-  {
-    key: APIS_CREATE_ITEM_OTHER_ENUM.IMPORT_DATA,
-    label: i18next.t("settings.import_project.title"),
-    icon: "icon-import",
-  },
-  {
-    key: APIS_CREATE_ITEM_OTHER_ENUM.EXPORT_DATA,
-    label: i18next.t("settings.export_project.title"),
-    icon: "icon-export",
   },
 ];
 

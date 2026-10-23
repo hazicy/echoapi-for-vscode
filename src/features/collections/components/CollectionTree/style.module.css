@@ -258,8 +258,8 @@
   overflow: hidden;
 }
 .TreeMenuContainer .slot-segmented-tabs-header {
-  margin-bottom: 8px;
-  padding-top: 4px;
+  margin-bottom: 10px;
+  padding-top: 6px;
   flex-shrink: 0;
 }
 .TreeMenuContainer .slot-tab-container.slot-beautify-segmented {
@@ -273,7 +273,7 @@
 }
 .TreeMenuContainer .slot-tab-container [role="tablist"] {
   display: flex;
-  gap: 0;
+  gap: 4px;
   width: 100%;
   box-sizing: border-box;
   padding: 0;
@@ -286,15 +286,15 @@
   justify-content: center;
   flex: 0 1 auto;
   min-width: 0;
-  height: 34px;
-  min-height: 34px;
-  padding: 6px 8px;
+  box-sizing: border-box;
+  height: 28px;
+  min-height: 28px;
+  padding: 4px 8px;
   margin: 0;
-  border-radius: 0;
+  border-radius: 5px;
   background: transparent;
   border: 0;
-  border-bottom: 2px solid transparent;
-  color: var(--font-content-color);
+  color: var(--vscode-panelTitle-inactiveForeground, var(--font-content-color));
   transition: background-color 120ms ease, color 120ms ease;
 }
 .TreeMenuContainer .slot-tab-container [role="tab"]:hover {
@@ -302,10 +302,15 @@
   color: var(--font-title-color);
 }
 .TreeMenuContainer .slot-tab-container [role="tab"][data-active] {
-  background: transparent;
-  border-bottom-color: var(--vscode-panelTitle-activeBorder, var(--color-primary));
-  color: var(--vscode-panelTitle-activeForeground, var(--font-title-color));
+  background: color-mix(in srgb, var(--vscode-focusBorder, var(--color-primary)) 12%, var(--vscode-sideBar-background));
+  border: 0;
+  border-radius: 5px;
+  box-shadow: none;
+  color: var(--vscode-foreground);
   font-weight: 600;
+}
+.TreeMenuContainer .slot-tab-container [role="tab"][data-active] svg {
+  color: var(--vscode-focusBorder, var(--color-primary));
 }
 .TreeMenuContainer .slot-segmented-tabs-header > div {
   width: 100%;
@@ -338,7 +343,11 @@
 .workspaceTabLabel svg {
   width: 18px;
   height: 18px;
-  font-size: 18px;
+  flex-shrink: 0;
+  fill: none;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .workspaceTabText {
   font-size: 12px;
@@ -355,11 +364,12 @@
 .TreeMenuContainer .slot-tree-wrap {
   min-height: 0;
   height: auto;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 .TreeContainer [class~="beautify-tree-treenode"] {
   min-height: 30px;
   border-radius: 4px;
+  transition: background-color 120ms ease;
 }
 .TreeContainer [class~="beautify-tree-treenode"]:hover {
   background: var(--vscode-list-hoverBackground, var(--vscode-toolbar-hoverBackground));
@@ -367,7 +377,7 @@
 .TreeContainer [class~="beautify-tree-node-selected"] {
   background: var(--vscode-list-inactiveSelectionBackground, var(--vscode-list-hoverBackground));
   color: var(--vscode-list-inactiveSelectionForeground, var(--font-title-color));
-  border-radius: 3px;
+  border-radius: 4px;
 }
 .TreeContainer [class~="beautify-tree-node-content-wrapper"] {
   overflow: hidden;
@@ -382,4 +392,21 @@
 .TreeMenuContainer [role="tab"]:focus-visible {
   outline: 1px solid var(--vscode-focusBorder);
   outline-offset: -2px;
+}
+
+.TreeContainer .slot-methods {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.TreeContainer .slot-children-num {
+  font-size: 11px;
+  color: var(--vscode-descriptionForeground);
+  opacity: 0.7;
+}
+@media (prefers-reduced-motion: reduce) {
+  .TreeMenuContainer .slot-tab-container [role="tab"],
+  .TreeContainer [class~="beautify-tree-treenode"] {
+    transition: none;
+  }
 }

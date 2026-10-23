@@ -1,68 +1,46 @@
 .SearchContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
   width: 100%;
-  /* height: 32px; */
-}
-.SearchContainer .slot-beautify-new-http-more {
-  width: 100% !important;
-}
-.SearchContainer .slot-beautify-new-http-more > button:first-child {
-  flex: 1;
-  font-weight: 600;
-}
-.SearchContainer .slot-beautify-new-http-more > button {
-  height: 28px;
-}
-.SearchContainer .slot-beautify-flex {
-  height: 100%;
-}
-.SearchContainer .slot-beautify-flex .slot-beautify-input-affix-wrapper {
-  padding: 4px 8px;
-  height: 100%;
-  background-color: var(--search-bg-color);
-}
-.SearchContainer .slot-beautify-flex .slot-beautify-input-affix-wrapper .slot-beautify-input-suffix {
-  min-width: 80px;
-}
-.SearchContainer .slot-beautify-space-compact {
-  width: auto;
+  flex-shrink: 0;
 }
 .SearchContainer .slot-search-wrap {
   display: flex;
   align-items: center;
-  flex: 1;
-  gap: 4px;
-}
-.SearchContainer .slot-search-wrap .slot-beautify-input {
-  font-size: var(--font-size-12);
-}
-.SearchContainer .slot-search-wrap .slot-beautify-input-outlined {
-  background: var(--vscode-input-background);
-}
-.SearchContainer .slot-search-wrap .slot-beautify-select {
-  position: relative;
-  right: -12px;
-}
-.SearchContainer .slot-search-wrap .slot-apis-mark-select-wrap .slot-beautify-select-selector {
-  padding-left: 0;
-}
-.SearchContainer .slot-add-btn {
-  margin-left: 4px;
-  width: 32px;
-  height: 32px;
-}
-
-.SearchContainer .slot-search-wrap {
-  gap: 6px;
   min-width: 0;
 }
 .SearchContainer .slot-search-wrap .slot-beautify-input-affix-wrapper {
+  display: flex;
+  align-items: center;
   flex: 1;
+  gap: 6px;
   min-width: 0;
-  height: 28px;
-  border-radius: 4px;
+  height: 30px;
+  box-sizing: border-box;
+  padding: 0 8px;
+  border-radius: 5px;
   background: var(--vscode-input-background);
-  border-color: var(--vscode-input-border, transparent);
+  border: 1px solid var(--vscode-input-border, transparent);
+  transition: border-color 120ms ease;
+}
+.SearchContainer .slot-search-wrap .slot-beautify-input-affix-wrapper:hover {
+  border-color: var(--vscode-input-border, var(--vscode-widget-border, transparent));
+}
+.SearchContainer .slot-search-wrap .slot-beautify-input-affix-wrapper:focus-within {
+  border-color: var(--vscode-focusBorder);
+}
+.SearchContainer .slot-search-wrap .slot-beautify-input {
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 12px;
+  line-height: 20px;
+}
+.SearchContainer .slot-beautify-input::placeholder {
+  color: var(--vscode-input-placeholderForeground);
+  opacity: 1;
+}
+.SearchContainer .slot-search-wrap .slot-anticon {
+  flex-shrink: 0;
+  font-size: 14px;
 }
