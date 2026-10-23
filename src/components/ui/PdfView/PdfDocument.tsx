@@ -1,51 +1,55 @@
-import React, { useState } from 'react';
-import PDF from 'react-pdf-js';
+import { useEffect, useRef, useState } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
 
-import { useMount } from 'ahooks';
-import { isNull, isNumber } from 'lodash';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
+
+import styles from './PdfDocument.module.css';
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url
+).toString();
 
 type Props = {
   file: any;
 };
 
-const PdfView: React.FC<Props> = (props) => {
-  const { file } = props;
-
-  const [pdfjsWorker, setPdfjsWorker] = useState(null);
+const PdfDocument: React.FC<Props> = ({ file }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [numPages, setNumPages] = useState(0);
-  const onDocumentComplete = (pages: number) => {
-    setNumPages(pages);
-  };
-  function directlyRenderPdf(num: number) {
-    const x = [];
-    for (let i = 2; i <= num; i++) {
-      x.push(<PDF workerSrc={pdfjsWorker || ''} page={i} key={`x${i}`} file={file} scale={0.61} />);
-    }
-    return x;
-  }
+  const [pageWidth, setPageWidth] = useState(700);
 
-  useMount(() => {
-    import('pdfjs-dist/build/pdf.worker.entry').then((src) => {
-      setPdfjsWorker(src);
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      setPageWidth(Math.max(1, Math.floor(entry.contentRect.width)));
     });
-  });
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <>
-      {!isNull(pdfjsWorker) && (
-        <>
-          <PDF
-            workerSrc={pdfjsWorker}
-            scale={0.61}
-            onDocumentComplete={onDocumentComplete}
-            page={1}
-            file={file}
+    <div ref={containerRef} className={styles.pdfViewer}>
+      <Document
+        file={file}
+        onLoadSuccess={({ numPages: pages }) => setNumPages(pages)}
+        loading={<span role="status">Loading PDF…</span>}
+        error={<span role="alert">Failed to load PDF.</span>}
+      >
+        {Array.from({ length: numPages }, (_, index) => (
+          <Page
+            key={`page-${index + 1}`}
+            pageNumber={index + 1}
+            width={pageWidth}
+            className={styles.pdfPage}
           />
-          {isNumber(numPages) && numPages > 1 && directlyRenderPdf(numPages)}
-        </>
-      )}
-    </>
+        ))}
+      </Document>
+    </div>
   );
 };
 
-export default PdfView;
+export default PdfDocument;

@@ -1,0 +1,15 @@
+.pdfViewer {
+  width: 100%;
+}
+
+.pdfPage {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 16px;
+  max-width: 100%;
+}
+
+.pdfPage canvas {
+  max-width: 100%;
+  height: auto !important;
+}
