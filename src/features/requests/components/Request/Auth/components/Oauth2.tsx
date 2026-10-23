@@ -1,13 +1,22 @@
+import "../style.css";
+import styles from "../style.module.css";
 /* eslint-disable no-useless-escape */
 import slots from "@/shared/ui/base/slots.module.css";
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Checkbox, Flex, Form, Select, Typography, message } from '@/shared/ui/base';
+import {
+  Checkbox,
+  Flex,
+  Form,
+  Select,
+  Typography,
+  message,
+} from "@/shared/ui/base";
 
-import { DragEndEvent } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
-import { snowflakeId } from 'apipost-tools';
+import { DragEndEvent } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
+import { snowflakeId } from "apipost-tools";
 import {
   cloneDeep,
   entries,
@@ -24,13 +33,13 @@ import {
   merge,
   reduce,
   setWith,
-} from 'lodash';
+} from "lodash";
 
-import { BasicTable, SegmentedTabs } from '@/shared/components';
-import VarInput from '@/features/variables/components/VarInput';
+import { BasicTable, SegmentedTabs } from "@/shared/components";
+import VarInput from "@/features/variables/components/VarInput";
 
-import { Button, IconFont, Tooltip } from '@/shared/ui';
-import GhostCollapse from '@/shared/ui/GhostCollapse';
+import { Button, IconFont, Tooltip } from "@/shared/ui";
+import GhostCollapse from "@/shared/ui/GhostCollapse";
 import {
   AUTH_ENUM,
   AUTH_OAUTH2_AUTHENTICATION,
@@ -39,12 +48,15 @@ import {
   AUTH_OAUTH2_GRANT_TYPE_MAP,
   AUTH_OAUTH2_LOCATION,
   AUTH_OAUTH2_SEND_IN,
-} from '@/features/requests/constants/auth';
-import { useApis, useProjectConfig, useStorage, useUserConfig } from '@/app/store';
-import { AuthOauth2, RequestParamsItem } from '@/features/requests/types/auth';
-import { openUrl } from '@/shared/utils/open';
-
-import { MoreTipContainer, Oauth2Container } from '../style';
+} from "@/features/requests/constants/auth";
+import {
+  useApis,
+  useProjectConfig,
+  useStorage,
+  useUserConfig,
+} from "@/app/store";
+import { AuthOauth2, RequestParamsItem } from "@/features/requests/types/auth";
+import { openUrl } from "@/shared/utils/open";
 
 type DataSourceItem = {
   key: string;
@@ -64,13 +76,13 @@ type AccessInfo = {
 
 type TokenInfo = Omit<
   AuthOauth2,
-  | 'access_token'
-  | 'addTokenTo'
-  | 'headerPrefix'
-  | 'challengeAlgorithm'
-  | 'client_authentication'
-  | 'refreshTokenUrl'
-  | 'refreshRequestParams'
+  | "access_token"
+  | "addTokenTo"
+  | "headerPrefix"
+  | "challengeAlgorithm"
+  | "client_authentication"
+  | "refreshTokenUrl"
+  | "refreshRequestParams"
 >;
 
 interface TableProps {
@@ -85,10 +97,10 @@ interface Props {
 }
 
 export const DEFAULT_ITEM = {
-  key: '',
-  value: '',
-  send_as: 'request_body',
-  param_id: '',
+  key: "",
+  value: "",
+  send_as: "request_body",
+  param_id: "",
   static: true,
   enabled: true,
 };
@@ -107,15 +119,19 @@ const ParamsTable = ({ value, onChange, hasSendIn = false }: TableProps) => {
 
   const columns = [
     {
-      title: '',
+      title: "",
       width: 24,
-      dataIndex: 'enabled',
+      dataIndex: "enabled",
       render: (text: boolean, rowData: DataSourceItem, rowIndex: number) => {
         return (
           <Flex style={{ paddingInline: 4 }} align="center">
             <Checkbox
               checked={text}
-              onChange={(e) => handleItemChange(rowData, rowIndex, { enabled: e?.target?.checked })}
+              onChange={(e) =>
+                handleItemChange(rowData, rowIndex, {
+                  enabled: e?.target?.checked,
+                })
+              }
               disabled={!!rowData?.static}
             />
           </Flex>
@@ -123,12 +139,12 @@ const ParamsTable = ({ value, onChange, hasSendIn = false }: TableProps) => {
       },
     },
     {
-      title: 'Key',
+      title: "Key",
       width: 150,
-      dataIndex: 'key',
+      dataIndex: "key",
       render: (text: string, rowData: DataSourceItem, rowIndex: number) => (
         <VarInput
-          wrapClassName={'oauth-input'}
+          wrapClassName={"oauth-input"}
           value={text}
           onChange={(e) => {
             handleItemChange(rowData, rowIndex, { key: e });
@@ -137,11 +153,11 @@ const ParamsTable = ({ value, onChange, hasSendIn = false }: TableProps) => {
       ),
     },
     {
-      title: 'Value',
-      dataIndex: 'value',
+      title: "Value",
+      dataIndex: "value",
       render: (text: string, rowData: DataSourceItem, rowIndex: number) => (
         <VarInput
-          wrapClassName={'oauth-input'}
+          wrapClassName={"oauth-input"}
           value={text}
           onChange={(e) =>
             handleItemChange(rowData, rowIndex, {
@@ -155,9 +171,9 @@ const ParamsTable = ({ value, onChange, hasSendIn = false }: TableProps) => {
 
   const sendColumns = [
     {
-      title: 'Send In',
+      title: "Send In",
       width: 150,
-      dataIndex: 'send_as',
+      dataIndex: "send_as",
       render: (text: string, rowData: DataSourceItem, rowIndex: number) => (
         <Select
           value={text}
@@ -227,11 +243,11 @@ const Oauth2 = (props: Props) => {
   const form = Form.useFormInstance();
   const childWindow = useRef<any>(null);
   const tokenInfo = useRef<Partial<TokenInfo> | null>(null);
-  const [tabsValue, setTabsValue] = useState<string>('authRequestParams');
+  const [tabsValue, setTabsValue] = useState<string>("authRequestParams");
   const [refreshLoading, setRefreshLoading] = useState<boolean>(false);
-  const grantType = Form.useWatch([AUTH_ENUM.OAUTH2, 'grant_type']);
-  const clientId = Form.useWatch([AUTH_ENUM.OAUTH2, 'clientId']);
-  const refreshTokenUrl = Form.useWatch([AUTH_ENUM.OAUTH2, 'refreshTokenUrl']);
+  const grantType = Form.useWatch([AUTH_ENUM.OAUTH2, "grant_type"]);
+  const clientId = Form.useWatch([AUTH_ENUM.OAUTH2, "clientId"]);
+  const refreshTokenUrl = Form.useWatch([AUTH_ENUM.OAUTH2, "refreshTokenUrl"]);
   const envList = useProjectConfig((state) => state.envList);
   const envDetailKeys = useProjectConfig((state) => state.envDetailKeys);
   const globalVars = useProjectConfig((state) => state.globalVars);
@@ -248,7 +264,7 @@ const Oauth2 = (props: Props) => {
   const getAccessToken = async ({ code, state }: AccessInfo) => {
     const {
       tokenRequestParams = [],
-      accessTokenUrl = '',
+      accessTokenUrl = "",
       clientId,
       clientSecret,
       redirect_uri,
@@ -260,9 +276,9 @@ const Oauth2 = (props: Props) => {
     const { data, params, headers } = tokenRequestParams.reduce(
       (pre, { key, value, send_as }) => {
         const { data, params, headers } = pre;
-        if (isEqual(send_as, 'request_body')) {
+        if (isEqual(send_as, "request_body")) {
           data[key] = value;
-        } else if (isEqual(send_as, 'request_url')) {
+        } else if (isEqual(send_as, "request_url")) {
           params[key] = value;
         } else {
           headers[key] = value;
@@ -273,7 +289,7 @@ const Oauth2 = (props: Props) => {
         data: {} as ObjectItem,
         params: {} as ObjectItem,
         headers: {} as ObjectItem,
-      }
+      },
     );
     const prams = {
       ...data,
@@ -286,117 +302,126 @@ const Oauth2 = (props: Props) => {
           : undefined,
     };
     if (code) {
-      setWith(prams, ['code'], code, Object);
+      setWith(prams, ["code"], code, Object);
     }
     if (state) {
-      setWith(prams, ['state'], state, Object);
+      setWith(prams, ["state"], state, Object);
     }
-    if (isEqual(grant_type, 'authorization_code_with_pkce')) {
-      setWith(prams, ['code_verifier'], code_verifier, Object);
+    if (isEqual(grant_type, "authorization_code_with_pkce")) {
+      setWith(prams, ["code_verifier"], code_verifier, Object);
     }
-    if (isEqual(grant_type, 'password_credentials')) {
-      setWith(prams, ['password'], password, Object);
-      setWith(prams, ['username'], username, Object);
+    if (isEqual(grant_type, "password_credentials")) {
+      setWith(prams, ["password"], password, Object);
+      setWith(prams, ["username"], username, Object);
     }
-    
+
     try {
       window?.vscode.postMessage({
-        action: '/proxy/fetch',
-        data:{
+        action: "/proxy/fetch",
+        data: {
           url: accessTokenUrl,
           data: prams,
           headers: {
             ...headers,
-            'Content-Type': 'application/x-www-form-urlencoded',
+            "Content-Type": "application/x-www-form-urlencoded",
           },
           options: { params },
-        }
+        },
       });
-     
+
       closeChildWindow();
     } catch (err: any) {
-      message.error(t('common.auth.get_access_fail'));
+      message.error(t("common.auth.get_access_fail"));
       closeChildWindow();
     }
   };
 
   const handleMessage = (e: any) => {
     const isEqualOrigin = e?.origin === location.origin;
-    if (e?.data?.source === 'oauth-source-subpage' && isEqualOrigin) {
+    if (e?.data?.source === "oauth-source-subpage" && isEqualOrigin) {
       const watching = isEqual(props.target_id, apisActiveKey);
       if (e?.data?.payload?.code && watching) {
-        getAccessToken({ code: e?.data?.payload?.code, state: e?.data?.payload?.state });
+        getAccessToken({
+          code: e?.data?.payload?.code,
+          state: e?.data?.payload?.state,
+        });
       }
     }
   };
 
   const refreshToken = useMemo(() => {
-    return getOauthRefreshData([uid, clientId, 'refresh_token']);
+    return getOauthRefreshData([uid, clientId, "refresh_token"]);
   }, [uid, clientId]);
 
   useEffect(() => {
-    window.addEventListener('message', handleMessage);
+    window.addEventListener("message", handleMessage);
     return () => {
       closeChildWindow();
-      window.removeEventListener('message', handleMessage);
+      window.removeEventListener("message", handleMessage);
     };
   }, [apisActiveKey]);
 
   const segmentedOptions = useMemo(() => {
     const authRequest = {
-      label: 'Auth Request',
-      key: 'authRequestParams',
-      value: 'authRequestParams',
+      label: "Auth Request",
+      key: "authRequestParams",
+      value: "authRequestParams",
       children: (
         <Flex vertical gap={4}>
-          <Typography.Text style={{ color: 'var(--font-light-color)', marginBottom: 20 }}>
-            {t('common.auth.auth_table_tip')}
+          <Typography.Text
+            style={{ color: "var(--font-light-color)", marginBottom: 20 }}
+          >
+            {t("common.auth.auth_table_tip")}
           </Typography.Text>
-          <Form.Item noStyle name={[AUTH_ENUM.OAUTH2, 'authRequestParams']}>
+          <Form.Item noStyle name={[AUTH_ENUM.OAUTH2, "authRequestParams"]}>
             <ParamsTable />
           </Form.Item>
         </Flex>
       ),
     };
     const tokenRequest = {
-      label: 'Token Request',
-      key: 'tokenRequestParams',
-      value: 'tokenRequestParams',
+      label: "Token Request",
+      key: "tokenRequestParams",
+      value: "tokenRequestParams",
       children: (
         <Flex vertical gap={4}>
-          <Typography.Text style={{ color: 'var(--font-light-color)', marginBottom: 12 }}>
-            {t('common.auth.token_table_tip')}
+          <Typography.Text
+            style={{ color: "var(--font-light-color)", marginBottom: 12 }}
+          >
+            {t("common.auth.token_table_tip")}
           </Typography.Text>
-          <Form.Item noStyle name={[AUTH_ENUM.OAUTH2, 'tokenRequestParams']}>
+          <Form.Item noStyle name={[AUTH_ENUM.OAUTH2, "tokenRequestParams"]}>
             <ParamsTable hasSendIn />
           </Form.Item>
         </Flex>
       ),
     };
     const refreshRequest = {
-      label: 'Refresh Request',
-      key: 'refreshRequestParams',
-      value: 'refreshRequestParams',
+      label: "Refresh Request",
+      key: "refreshRequestParams",
+      value: "refreshRequestParams",
       children: (
         <Flex vertical gap={4}>
-          <Typography.Text style={{ color: 'var(--font-light-color)', marginBottom: 12 }}>
-            {t('common.auth.refresh_table_tip')}
+          <Typography.Text
+            style={{ color: "var(--font-light-color)", marginBottom: 12 }}
+          >
+            {t("common.auth.refresh_table_tip")}
           </Typography.Text>
-          <Form.Item noStyle name={[AUTH_ENUM.OAUTH2, 'refreshRequestParams']}>
+          <Form.Item noStyle name={[AUTH_ENUM.OAUTH2, "refreshRequestParams"]}>
             <ParamsTable hasSendIn />
           </Form.Item>
         </Flex>
       ),
     };
-    if (isEqual(grantType, 'implicit')) {
-      if (isEqual(tabsValue, 'tokenRequestParams')) {
-        setTabsValue('authRequestParams');
+    if (isEqual(grantType, "implicit")) {
+      if (isEqual(tabsValue, "tokenRequestParams")) {
+        setTabsValue("authRequestParams");
       }
       return [authRequest, refreshRequest];
     }
-    if (['password_credentials', 'client_credentials'].includes(grantType)) {
-      if (isEqual(tabsValue, 'authRequestParams')) {
-        setTabsValue('tokenRequestParams');
+    if (["password_credentials", "client_credentials"].includes(grantType)) {
+      if (isEqual(tabsValue, "authRequestParams")) {
+        setTabsValue("tokenRequestParams");
       }
       return [tokenRequest, refreshRequest];
     }
@@ -413,7 +438,7 @@ const Oauth2 = (props: Props) => {
 
         return prev;
       },
-      {}
+      {},
     );
   }, [globalVars]);
 
@@ -426,11 +451,11 @@ const Oauth2 = (props: Props) => {
           : JSON.stringify(obj?.current_value);
         return pre;
       },
-      {} as Record<string, any>
+      {} as Record<string, any>,
     );
   }, [envList, envDetailKeys]);
 
-  const validateUrl = (str: string = ''): Promise<string> =>
+  const validateUrl = (str: string = ""): Promise<string> =>
     new Promise((resolve, reject) => {
       const reg = /\{\{(?![\$!])[^\{\}]+\}\}/g;
       const matches = str.match(reg);
@@ -453,7 +478,9 @@ const Oauth2 = (props: Props) => {
       resolve(newStr);
     });
 
-  const validateTableParams = (arr: DataSourceItem[]): Promise<DataSourceItem[]> =>
+  const validateTableParams = (
+    arr: DataSourceItem[],
+  ): Promise<DataSourceItem[]> =>
     new Promise((resolve, reject) => {
       const reg = /\{\{(?![\$!])[^\{\}]+\}\}/g;
       const varMap = merge(globalsMap, environmentMap);
@@ -542,17 +569,18 @@ const Oauth2 = (props: Props) => {
         clientSecret: _clientSecret,
         password: _password,
         username: _username,
-        tokenRequestParams: _tokenRequestParams as unknown as RequestParamsItem[],
+        tokenRequestParams:
+          _tokenRequestParams as unknown as RequestParamsItem[],
         grant_type,
       };
       await getAccessToken({});
     } catch (err) {
-      return message.error(t('common.auth.var_not_defined', { err }));
+      return message.error(t("common.auth.var_not_defined", { err }));
     }
   };
 
   const handleGetToken = () => {
-    if (isEqual(grantType, 'password_credentials')) {
+    if (isEqual(grantType, "password_credentials")) {
       handleGetTokenByPassword();
     }
   };
@@ -565,14 +593,18 @@ const Oauth2 = (props: Props) => {
     refreshRequestParams,
   }: Pick<
     AuthOauth2,
-    'refreshRequestParams' | 'clientId' | 'clientSecret' | 'redirect_uri' | 'refreshTokenUrl'
+    | "refreshRequestParams"
+    | "clientId"
+    | "clientSecret"
+    | "redirect_uri"
+    | "refreshTokenUrl"
   >) => {
     const { data, params, headers } = refreshRequestParams.reduce(
       (pre, { key, value, send_as }) => {
         const { data, params, headers } = pre;
-        if (isEqual(send_as, 'request_body')) {
+        if (isEqual(send_as, "request_body")) {
           data[key] = value;
-        } else if (isEqual(send_as, 'request_url')) {
+        } else if (isEqual(send_as, "request_url")) {
           params[key] = value;
         } else {
           headers[key] = value;
@@ -583,7 +615,7 @@ const Oauth2 = (props: Props) => {
         data: {} as ObjectItem,
         params: {} as ObjectItem,
         headers: {} as ObjectItem,
-      }
+      },
     );
     const prams: any = {
       ...data,
@@ -592,23 +624,23 @@ const Oauth2 = (props: Props) => {
       client_secret: clientSecret,
       redirect_uri,
     };
- 
+
     try {
       setRefreshLoading(true);
       window?.vscode.postMessage({
-        action: '/proxy/fetch',
-        data:{
+        action: "/proxy/fetch",
+        data: {
           url: refreshTokenUrl,
           data: prams,
           headers: {
             ...headers,
-            'Content-Type': 'application/x-www-form-urlencoded',
+            "Content-Type": "application/x-www-form-urlencoded",
           },
           options: { params },
-        }
+        },
       });
     } catch (err: any) {
-      message.error(t('supplement.refresh_fail'));
+      message.error(t("supplement.refresh_fail"));
     } finally {
       setRefreshLoading(false);
     }
@@ -616,212 +648,241 @@ const Oauth2 = (props: Props) => {
 
   const handleRefreshToken = async () => {
     const { oauth2 = {} } = await form.validateFields();
-    const { clientId, redirect_uri, clientSecret, refreshRequestParams, refreshTokenUrl } =
-      oauth2 || {};
+    const {
+      clientId,
+      redirect_uri,
+      clientSecret,
+      refreshRequestParams,
+      refreshTokenUrl,
+    } = oauth2 || {};
     try {
-      const [_clientId, _redirect_uri, _clientSecret, _refreshTokenUrl, _refreshRequestParams] =
-        await Promise.all([
-          await validateUrl(clientId),
-          await validateUrl(redirect_uri),
-          await validateUrl(clientSecret),
-          await validateUrl(refreshTokenUrl),
-          await validateTableParams(refreshRequestParams || []),
-        ]);
+      const [
+        _clientId,
+        _redirect_uri,
+        _clientSecret,
+        _refreshTokenUrl,
+        _refreshRequestParams,
+      ] = await Promise.all([
+        await validateUrl(clientId),
+        await validateUrl(redirect_uri),
+        await validateUrl(clientSecret),
+        await validateUrl(refreshTokenUrl),
+        await validateTableParams(refreshRequestParams || []),
+      ]);
       await refreshAccessToken({
         clientId: _clientId,
         redirect_uri: _redirect_uri,
         clientSecret: _clientSecret,
         refreshTokenUrl: _refreshTokenUrl,
-        refreshRequestParams: _refreshRequestParams as unknown as RequestParamsItem[],
+        refreshRequestParams:
+          _refreshRequestParams as unknown as RequestParamsItem[],
       });
     } catch (err) {
-      return message.error(t('common.auth.var_not_defined', { err }));
+      return message.error(t("common.auth.var_not_defined", { err }));
     }
   };
 
   const downLoadTip = (
     <div>
-      {t('api.stress.stress_settings.test_data_tip')},
-      <a onClick={() => openUrl('https://www.echoapi.com/download')}>
-        {t('api.stress.stress_settings.test_data_tip_download')}
+      {t("api.stress.stress_settings.test_data_tip")},
+      <a onClick={() => openUrl("https://www.echoapi.com/download")}>
+        {t("api.stress.stress_settings.test_data_tip_download")}
       </a>
     </div>
   );
 
   const refreshSuffix =
     refreshToken && refreshTokenUrl ? (
-      <Tooltip title={includes(
-        ['authorization_code', 'authorization_code_with_pkce'],
-        grantType
-      ) ? downLoadTip : ''}>
+      <Tooltip
+        title={
+          includes(
+            ["authorization_code", "authorization_code_with_pkce"],
+            grantType,
+          )
+            ? downLoadTip
+            : ""
+        }
+      >
         <Button
           loading={refreshLoading}
           onClick={handleRefreshToken}
           disabled={includes(
-            ['authorization_code', 'authorization_code_with_pkce'],
-            grantType
+            ["authorization_code", "authorization_code_with_pkce"],
+            grantType,
           )}
           size="mini"
           type="primary"
           mode="light"
           icon={<IconFont type="icon-refresh" />}
         >
-          {t('base.refresh')}
+          {t("base.refresh")}
         </Button>
       </Tooltip>
     ) : undefined;
 
   return (
-    <Oauth2Container>
+    <div className={styles.oauth2}>
       <Form.Item
-        initialValue={'header'}
-        label={t('common.auth.add_to')}
-        name={[AUTH_ENUM.OAUTH2, 'addTokenTo']}
+        initialValue={"header"}
+        label={t("common.auth.add_to")}
+        name={[AUTH_ENUM.OAUTH2, "addTokenTo"]}
       >
         <Select options={AUTH_OAUTH2_LOCATION || []} />
       </Form.Item>
       <Form.Item
-        tooltip={t('common.auth.header_prefix')}
-        initialValue={'Bearer'}
-        label={'Header Prefix'}
-        name={[AUTH_ENUM.OAUTH2, 'headerPrefix']}
+        tooltip={t("common.auth.header_prefix")}
+        initialValue={"Bearer"}
+        label={"Header Prefix"}
+        name={[AUTH_ENUM.OAUTH2, "headerPrefix"]}
       >
         <VarInput hasBorder />
       </Form.Item>
       <Form.Item
-        name={[AUTH_ENUM.OAUTH2, 'access_token']}
-        tooltip={t('common.auth.access_token_tip')}
-        label={'Token'}
+        name={[AUTH_ENUM.OAUTH2, "access_token"]}
+        tooltip={t("common.auth.access_token_tip")}
+        label={"Token"}
       >
         <VarInput suffix={refreshSuffix} hasBorder />
       </Form.Item>
       <div className={slots.divider}></div>
       <Flex style={{ marginBottom: 20 }} justify="space-between" align="center">
-        <span style={{ color: 'var(--font-title-color)' }}>{t('common.auth.get_token')}</span>
-        <Tooltip title={includes(
-        ['authorization_code', 'authorization_code_with_pkce'],
-        grantType
-      ) ? downLoadTip : ''}>
+        <span style={{ color: "var(--font-title-color)" }}>
+          {t("common.auth.get_token")}
+        </span>
+        <Tooltip
+          title={
+            includes(
+              ["authorization_code", "authorization_code_with_pkce"],
+              grantType,
+            )
+              ? downLoadTip
+              : ""
+          }
+        >
           <Button
             onClick={handleGetToken}
             size="small"
-            disabled={
-              includes(
-                ['authorization_code', 'authorization_code_with_pkce'],
-                grantType
-              )
-            }
+            disabled={includes(
+              ["authorization_code", "authorization_code_with_pkce"],
+              grantType,
+            )}
             type="primary"
           >
-            {t('common.auth.get_token')}
+            {t("common.auth.get_token")}
           </Button>
         </Tooltip>
       </Flex>
       <Form.Item
-        initialValue={'password_credentials'}
-        label={'Grant type'}
-        name={[AUTH_ENUM.OAUTH2, 'grant_type']}
+        initialValue={"password_credentials"}
+        label={"Grant type"}
+        name={[AUTH_ENUM.OAUTH2, "grant_type"]}
       >
         <Select options={AUTH_OAUTH2_GRANT_TYPE || []} />
       </Form.Item>
       <Form.Item
-        hidden={['client_credentials', 'password_credentials'].includes(grantType)}
-        tooltip={t('common.auth.call_url_tip')}
-        label={'Callback URL'}
-        name={[AUTH_ENUM.OAUTH2, 'redirect_uri']}
-        rules={[{ required: !isEqual(grantType, 'password_credentials') }]}
+        hidden={["client_credentials", "password_credentials"].includes(
+          grantType,
+        )}
+        tooltip={t("common.auth.call_url_tip")}
+        label={"Callback URL"}
+        name={[AUTH_ENUM.OAUTH2, "redirect_uri"]}
+        rules={[{ required: !isEqual(grantType, "password_credentials") }]}
       >
         <VarInput hasBorder />
       </Form.Item>
       <Form.Item
-        hidden={['client_credentials', 'password_credentials'].includes(grantType)}
-        tooltip={t('common.auth.auth_url_tip')}
-        label={'Auth URL'}
-        name={[AUTH_ENUM.OAUTH2, 'authUrl']}
-        rules={[{ required: !isEqual(grantType, 'password_credentials') }]}
+        hidden={["client_credentials", "password_credentials"].includes(
+          grantType,
+        )}
+        tooltip={t("common.auth.auth_url_tip")}
+        label={"Auth URL"}
+        name={[AUTH_ENUM.OAUTH2, "authUrl"]}
+        rules={[{ required: !isEqual(grantType, "password_credentials") }]}
       >
         <VarInput hasBorder />
       </Form.Item>
 
       <Form.Item
-        hidden={isEqual(grantType, 'implicit')}
-        tooltip={t('common.auth.access_url_tip')}
-        label={'Access Token URL'}
-        name={[AUTH_ENUM.OAUTH2, 'accessTokenUrl']}
+        hidden={isEqual(grantType, "implicit")}
+        tooltip={t("common.auth.access_url_tip")}
+        label={"Access Token URL"}
+        name={[AUTH_ENUM.OAUTH2, "accessTokenUrl"]}
         rules={[{ required: true }]}
       >
         <VarInput hasBorder />
       </Form.Item>
       <Form.Item
-        tooltip={t('common.auth.client_id_tip')}
-        label={'Client ID'}
-        name={[AUTH_ENUM.OAUTH2, 'clientId']}
-        rules={[{ required: !isEqual(grantType, 'password_credentials') }]}
+        tooltip={t("common.auth.client_id_tip")}
+        label={"Client ID"}
+        name={[AUTH_ENUM.OAUTH2, "clientId"]}
+        rules={[{ required: !isEqual(grantType, "password_credentials") }]}
       >
         <VarInput hasBorder />
       </Form.Item>
       <Form.Item
-        hidden={isEqual(grantType, 'implicit')}
-        tooltip={t('common.auth.client_secret_tip')}
-        label={'Client Secret'}
-        name={[AUTH_ENUM.OAUTH2, 'clientSecret']}
-        rules={[{ required: !isEqual(grantType, 'password_credentials') }]}
+        hidden={isEqual(grantType, "implicit")}
+        tooltip={t("common.auth.client_secret_tip")}
+        label={"Client Secret"}
+        name={[AUTH_ENUM.OAUTH2, "clientSecret"]}
+        rules={[{ required: !isEqual(grantType, "password_credentials") }]}
       >
         <VarInput hasBorder />
       </Form.Item>
       <Form.Item
-        hidden={!isEqual(grantType, 'password_credentials')}
-        label={'Username'}
-        name={[AUTH_ENUM.OAUTH2, 'username']}
-        rules={[{ required: isEqual(grantType, 'password_credentials') }]}
+        hidden={!isEqual(grantType, "password_credentials")}
+        label={"Username"}
+        name={[AUTH_ENUM.OAUTH2, "username"]}
+        rules={[{ required: isEqual(grantType, "password_credentials") }]}
       >
         <VarInput hasBorder />
       </Form.Item>
       <Form.Item
-        hidden={!isEqual(grantType, 'password_credentials')}
-        label={'Password'}
-        name={[AUTH_ENUM.OAUTH2, 'password']}
-        rules={[{ required: isEqual(grantType, 'password_credentials') }]}
+        hidden={!isEqual(grantType, "password_credentials")}
+        label={"Password"}
+        name={[AUTH_ENUM.OAUTH2, "password"]}
+        rules={[{ required: isEqual(grantType, "password_credentials") }]}
       >
         <VarInput hasBorder />
       </Form.Item>
       <Form.Item
-        hidden={!isEqual(grantType, 'authorization_code_with_pkce')}
-        tooltip={t('common.auth.code_method_tip')}
-        initialValue={'S256'}
-        label={'Code Challenge Method'}
-        name={[AUTH_ENUM.OAUTH2, 'challengeAlgorithm']}
+        hidden={!isEqual(grantType, "authorization_code_with_pkce")}
+        tooltip={t("common.auth.code_method_tip")}
+        initialValue={"S256"}
+        label={"Code Challenge Method"}
+        name={[AUTH_ENUM.OAUTH2, "challengeAlgorithm"]}
       >
         <Select options={AUTH_OAUTH2_CHALLENGE || []} />
       </Form.Item>
       <Form.Item
-        hidden={!isEqual(grantType, 'authorization_code_with_pkce')}
-        tooltip={t('common.auth.code_verify_tip')}
-        label={'Code Verifier'}
-        name={[AUTH_ENUM.OAUTH2, 'code_verifier']}
+        hidden={!isEqual(grantType, "authorization_code_with_pkce")}
+        tooltip={t("common.auth.code_verify_tip")}
+        label={"Code Verifier"}
+        name={[AUTH_ENUM.OAUTH2, "code_verifier"]}
       >
         <VarInput maxLength={128} hasBorder />
       </Form.Item>
       <Form.Item
-        tooltip={t('common.auth.scope_tip')}
-        label={'Scope'}
-        name={[AUTH_ENUM.OAUTH2, 'scope']}
+        tooltip={t("common.auth.scope_tip")}
+        label={"Scope"}
+        name={[AUTH_ENUM.OAUTH2, "scope"]}
       >
         <VarInput hasBorder />
       </Form.Item>
       <Form.Item
-        hidden={['password_credentials', 'client_credentials'].includes(grantType)}
-        tooltip={t('common.auth.state_tip')}
-        label={'State'}
-        name={[AUTH_ENUM.OAUTH2, 'state']}
+        hidden={["password_credentials", "client_credentials"].includes(
+          grantType,
+        )}
+        tooltip={t("common.auth.state_tip")}
+        label={"State"}
+        name={[AUTH_ENUM.OAUTH2, "state"]}
       >
         <VarInput hasBorder />
       </Form.Item>
       <Form.Item
-        tooltip={t('common.auth.client_auth_tip')}
-        initialValue={'header'}
-        label={'Client Authentication'}
-        name={[AUTH_ENUM.OAUTH2, 'client_authentication']}
+        tooltip={t("common.auth.client_auth_tip")}
+        initialValue={"header"}
+        label={"Client Authentication"}
+        name={[AUTH_ENUM.OAUTH2, "client_authentication"]}
       >
         <Select options={AUTH_OAUTH2_AUTHENTICATION || []} />
       </Form.Item>
@@ -829,14 +890,16 @@ const Oauth2 = (props: Props) => {
         style={{ marginTop: 24 }}
         items={[
           {
-            key: 'oauth2-more',
-            label: <MoreTipContainer>{t('common.auth.more')}</MoreTipContainer>,
+            key: "oauth2-more",
+            label: (
+              <span className={styles.moreTip}>{t("common.auth.more")}</span>
+            ),
             children: (
               <>
                 <Form.Item
-                  tooltip={t('common.auth.refresh_token_tip')}
-                  label={'Refresh Token URL'}
-                  name={[AUTH_ENUM.OAUTH2, 'refreshTokenUrl']}
+                  tooltip={t("common.auth.refresh_token_tip")}
+                  label={"Refresh Token URL"}
+                  name={[AUTH_ENUM.OAUTH2, "refreshTokenUrl"]}
                 >
                   <VarInput hasBorder />
                 </Form.Item>
@@ -851,7 +914,7 @@ const Oauth2 = (props: Props) => {
           },
         ]}
       />
-    </Oauth2Container>
+    </div>
   );
 };
 

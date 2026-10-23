@@ -1,10 +1,15 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import styles from './style.module.css';
-import React, { ReactElement, useEffect, useMemo, useRef } from 'react';
-import { Button, Flex, Skeleton, Tree } from '@/shared/ui/base';
-import type { GetProps, MenuItemProps, MenuProps, TreeProps } from '@/shared/ui/base';
-import { TreeMenuContainer, CreateOtherIcon, TreeContainer } from './style';
-import Search from './components/Search';
+import styles from "./style.module.css";
+import React, { ReactElement, useEffect, useMemo, useRef } from "react";
+import { Button, Flex, Skeleton, Tree } from "@/shared/ui/base";
+import type {
+  GetProps,
+  MenuItemProps,
+  MenuProps,
+  TreeProps,
+} from "@/shared/ui/base";
+
+import Search from "./components/Search";
 import {
   API_TYPE_INCLUDES,
   APIS_FOLDER_OPERATE_LIST,
@@ -17,35 +22,35 @@ import {
   SSE_METHOD_OPERATE_LIST,
   TREE_CREATE_LIST,
   WEBSOCKET2_METHOD_OPERATE_LIST,
-} from '@/features/collections/constants/tree';
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
-import { useDebounceFn, useMemoizedFn, useSafeState } from 'ahooks';
-import apisActionMap from '@/features/requests/events/action';
-import { TreeDataFilterParams } from '@/features/collections/types/tree';
-import { head, includes, isEqual, last, map, omit, reduce } from 'lodash';
-import IconFont from '@/shared/ui/IconFont';
-import { createOpensItem } from '@/features/requests/events/opens';
-import useTreeData from '@/features/collections/hooks/useTreeData';
-import ItemIcon from './components/ItemIcon';
-import ItemTitle from './components/ItemTitle';
+} from "@/features/collections/constants/tree";
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
+import { useDebounceFn, useMemoizedFn, useSafeState } from "ahooks";
+import apisActionMap from "@/features/requests/events/action";
+import { TreeDataFilterParams } from "@/features/collections/types/tree";
+import { head, includes, isEqual, last, map, omit, reduce } from "lodash";
+import IconFont from "@/shared/ui/IconFont";
+import { createOpensItem } from "@/features/requests/events/opens";
+import useTreeData from "@/features/collections/hooks/useTreeData";
+import ItemIcon from "./components/ItemIcon";
+import ItemTitle from "./components/ItemTitle";
 
-import { TreeDataItem as ApiTreeDataItem } from '@/features/requests/types/api';
-import { DataNode } from '@/shared/ui/base';
-import { DEFAULT_CALC_CHILDREN_COUNT_TYPES } from './constants';
-import { ApisBaseData } from '@/features/requests/types/base';
-import ApisColorPrefixIcon from '@/shared/ui/ApisColorPrefixIcon';
-import { ApisItemActionType } from '@/features/requests/types/other';
-import { moveApisRequestType } from '@/features/requests/types/services';
-import useTreeSort from '@/features/collections/hooks/useTreeSort';
+import { TreeDataItem as ApiTreeDataItem } from "@/features/requests/types/api";
+import { DataNode } from "@/shared/ui/base";
+import { DEFAULT_CALC_CHILDREN_COUNT_TYPES } from "./constants";
+import { ApisBaseData } from "@/features/requests/types/base";
+import ApisColorPrefixIcon from "@/shared/ui/ApisColorPrefixIcon";
+import { ApisItemActionType } from "@/features/requests/types/other";
+import { moveApisRequestType } from "@/features/requests/types/services";
+import useTreeSort from "@/features/collections/hooks/useTreeSort";
 
-import TitleExtraContent from './TitleExtraContent';
-import { useTranslation } from 'react-i18next';
-import { useApis } from '@/app/store';
-import { Empty } from '@/shared/ui';
-import { SegmentedTabs } from '@/shared/components';
+import TitleExtraContent from "./TitleExtraContent";
+import { useTranslation } from "react-i18next";
+import { useApis } from "@/app/store";
+import { Empty } from "@/shared/ui";
+import { SegmentedTabs } from "@/shared/components";
 
-import NewBtns from './components/New';
-import Tests from './Tests';
+import NewBtns from "./components/New";
+import Tests from "./Tests";
 
 type TreeDataItem = ApiTreeDataItem & DataNode;
 
@@ -55,16 +60,16 @@ const { DirectoryTree } = Tree;
 
 export interface TreeMenuProps {
   value: any[];
-  createMenus?: MenuProps['items'];
+  createMenus?: MenuProps["items"];
   searchInputPlaceholder?: string;
 }
 
 const customFieldNames = {
-  title: 'name',
-  key: 'target_id',
-  parentKey: 'parent_id',
-  children: 'children',
-  type: 'target_type',
+  title: "name",
+  key: "target_id",
+  parentKey: "parent_id",
+  children: "children",
+  type: "target_type",
   parentNodeType: APIS_TARGET_TYPE_ENUM.FOLDER,
 };
 
@@ -80,10 +85,10 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
 
   const [treeDataFilterParams, setTreeDataFilterParams] =
     useSafeState<TreeDataFilterParams>({
-      value: '',
+      value: "",
     });
   const [treeExpandedKeys, setTreeExpandedKeys] = useSafeState<string[]>([]);
-  const [tabValue, setTabValue] = useSafeState<string>('requests');
+  const [tabValue, setTabValue] = useSafeState<string>("requests");
   const [scrollIng, setScrollIng] = useSafeState(false);
   const [treeHeight, setTreeHeight] = useSafeState(500);
   const containerRef = useRef<any>(null);
@@ -93,10 +98,10 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
   const updateApisActiveKey = useApis((stroe) => stroe.updateApisActiveKey);
 
   useEffect(() => {
-    if (tabValue === 'tests') {
+    if (tabValue === "tests") {
       // Fetch the latest report data
       window?.vscode.postMessage({
-        action: 'getProjectReportList',
+        action: "getProjectReportList",
       });
     }
   }, [tabValue]);
@@ -110,78 +115,78 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
       setTreeHeight(containerHeight);
     };
 
-    window.addEventListener('resize', resizeHandler);
+    window.addEventListener("resize", resizeHandler);
     resizeHandler();
 
     return () => {
-      window.removeEventListener('resize', resizeHandler);
+      window.removeEventListener("resize", resizeHandler);
     };
   }, [containerRef?.current, tabValue]);
 
-  const onSelect: DirectoryTreeProps['onSelect'] = (keys, info) => {
+  const onSelect: DirectoryTreeProps["onSelect"] = (keys, info) => {
     const curKey = head(keys) as string;
     // Update the currently selected tab key
     updateApisActiveKey(curKey);
     window?.vscode.postMessage({
-      action: 'openTagPanelById',
+      action: "openTagPanelById",
       data: curKey,
     });
   };
 
-  const onExpand: TreeProps['onExpand'] = useMemoizedFn(
+  const onExpand: TreeProps["onExpand"] = useMemoizedFn(
     (keys, { nativeEvent }) => {
       // NOTE: Disable auto-expand when dragging into
-      if (isEqual(nativeEvent.type, 'dragenter')) {
+      if (isEqual(nativeEvent.type, "dragenter")) {
         return;
       }
       setTreeExpandedKeys(keys as string[]);
     },
   );
 
-  const handleCreateItemClick: MenuItemProps['onClick'] = async ({ key }) => {
-    if (key === 'folder') {
+  const handleCreateItemClick: MenuItemProps["onClick"] = async ({ key }) => {
+    if (key === "folder") {
       window?.vscode.postMessage({
-        action: 'showInputBox',
+        action: "showInputBox",
       });
       return;
     }
-    if (key === 'import_curl') {
+    if (key === "import_curl") {
       window?.vscode.postMessage({
-        action: 'openCurlPanel',
+        action: "openCurlPanel",
       });
       return;
     }
     const result = await createOpensItem({
       target_type: key as APIS_TARGET_TYPE_ENUM,
-      project_id: '',
-      parent_id: '0',
+      project_id: "",
+      parent_id: "0",
     });
 
     window?.vscode.postMessage({
-      action: 'openTagPanel',
+      action: "openTagPanel",
       data: result,
     });
   };
 
-  const createMenus: MenuProps['items'] = map(TREE_CREATE_LIST, (item) => ({
-    ...omit(item, ['gradientColor']),
+  const createMenus: MenuProps["items"] = map(TREE_CREATE_LIST, (item) => ({
+    ...omit(item, ["gradientColor"]),
     key: item.key as string,
     label: item.label,
     icon: item.gradientColor ? (
       <ApisColorPrefixIcon
-        icon={item.icon || ''}
+        icon={item.icon || ""}
         gradientColor={item.gradientColor}
       />
     ) : (
-      <CreateOtherIcon>
-        <IconFont type={item.icon || ''} />
-      </CreateOtherIcon>
+      <div className={styles.createOtherIcon}>
+        <IconFont type={item.icon || ""} />
+      </div>
     ),
     onClick: handleCreateItemClick,
   }));
 
   const { treeData } = useTreeData({
-    searchIncludesField: ['name', 'url'],
+    searchIncludesField: ["name", "url"],
     treeDataFilterParams,
     dataSource: value,
     customFieldNames,
@@ -192,10 +197,10 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
   });
 
   const calcChildrenCountFunc = useMemoizedFn(
-    (children: ApiTreeDataItem['children']) => {
+    (children: ApiTreeDataItem["children"]) => {
       const includesTypes = DEFAULT_CALC_CHILDREN_COUNT_TYPES;
 
-      function count(children: ApiTreeDataItem['children']) {
+      function count(children: ApiTreeDataItem["children"]) {
         return reduce(
           children,
           (acc, item) => {
@@ -231,7 +236,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
             icon: (
               <IconFont
                 type={it.icon}
-                style={{ fontSize: 'var(--font-size-16)' }}
+                style={{ fontSize: "var(--font-size-16)" }}
               />
             ),
             children: map(
@@ -240,13 +245,13 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
                 ...child,
                 icon: child.gradientColor ? (
                   <ApisColorPrefixIcon
-                    icon={child.icon || ''}
+                    icon={child.icon || ""}
                     gradientColor={child.gradientColor}
                   />
                 ) : (
-                  <CreateOtherIcon>
-                    <IconFont type={child.icon || ''} />
-                  </CreateOtherIcon>
+                  <div className={styles.createOtherIcon}>
+                    <IconFont type={child.icon || ""} />
+                  </div>
                 ),
               }),
             ),
@@ -257,7 +262,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
             icon: (
               <IconFont
                 type={it.icon}
-                style={{ fontSize: 'var(--font-size-16)' }}
+                style={{ fontSize: "var(--font-size-16)" }}
               />
             ),
           };
@@ -270,7 +275,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
         icon: (
           <IconFont
             type={item.icon}
-            style={{ fontSize: 'var(--font-size-16)' }}
+            style={{ fontSize: "var(--font-size-16)" }}
           />
         ),
       }));
@@ -281,7 +286,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
         icon: (
           <IconFont
             type={item.icon}
-            style={{ fontSize: 'var(--font-size-16)' }}
+            style={{ fontSize: "var(--font-size-16)" }}
           />
         ),
       }));
@@ -293,7 +298,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
         icon: (
           <IconFont
             type={item.icon}
-            style={{ fontSize: 'var(--font-size-16)' }}
+            style={{ fontSize: "var(--font-size-16)" }}
           />
         ),
       }));
@@ -305,7 +310,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
         icon: (
           <IconFont
             type={item.icon}
-            style={{ fontSize: 'var(--font-size-16)' }}
+            style={{ fontSize: "var(--font-size-16)" }}
           />
         ),
       }));
@@ -317,7 +322,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
         icon: (
           <IconFont
             type={item.icon}
-            style={{ fontSize: 'var(--font-size-16)' }}
+            style={{ fontSize: "var(--font-size-16)" }}
           />
         ),
       }));
@@ -328,7 +333,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
       icon: (
         <IconFont
           type={item.icon}
-          style={{ fontSize: 'var(--font-size-16)' }}
+          style={{ fontSize: "var(--font-size-16)" }}
         />
       ),
     }));
@@ -338,13 +343,12 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
       nodeItem: ApisBaseData,
       keyPath: string[],
       domEvent:
-        | React.MouseEvent<HTMLElement>
-        | React.KeyboardEvent<HTMLElement>,
+        React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
     ) => {
       domEvent.stopPropagation();
 
       const targetType = nodeItem?.target_type;
-      const actionType = last(keyPath) || '';
+      const actionType = last(keyPath) || "";
 
       const currentAction = (apisActionMap as any)[targetType];
       const actionFun = currentAction[actionType];
@@ -354,7 +358,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
       );
       const actionFunParams: ApisItemActionType = {
         apisData: nodeDetails,
-        projectId: '',
+        projectId: "",
       };
 
       // For folder type, need to pass in child node type
@@ -380,7 +384,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
   const computedTreeData = useMemoizedFn(
     (data: TreeDataItem[]): TreeDataItem[] => {
       return map(data, (item) => {
-        let icon: React.ReactNode = '';
+        let icon: React.ReactNode = "";
         const isParentNodeType = isEqual(
           item[customFieldNames.type],
           customFieldNames.parentNodeType,
@@ -448,12 +452,11 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
   });
 
   const switcherIcon = useMemo(
-    () => ({ isLeaf }: { isLeaf?: boolean }) => isLeaf ? null : (
-      <IconFont
-        type="icon-drop-down"
-        style={{ fontSize: 16 }}
-      />
-    ),
+    () =>
+      ({ isLeaf }: { isLeaf?: boolean }) =>
+        isLeaf ? null : (
+          <IconFont type="icon-drop-down" style={{ fontSize: 16 }} />
+        ),
     [],
   );
   const { run: stopScrollIng } = useDebounceFn(
@@ -470,13 +473,13 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
   const handleMoveApis = async (data: moveApisRequestType) => {
     try {
       window?.vscode.postMessage({
-        action: 'onDrop',
+        action: "onDrop",
         data,
       });
     } catch (err) {}
   };
   // Tree sort allow drop configuration
-  const allowDrop: TreeProps['allowDrop'] = (info) => {
+  const allowDrop: TreeProps["allowDrop"] = (info) => {
     const { dropNode, dropPosition, dragNode } = info;
 
     const dragNodeTitleProps = (dragNode?.title as ReactElement)?.props || {};
@@ -565,20 +568,19 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
   };
   const { genNewData, ...originTreeSortProps } = useTreeSort({
     allowDrop,
-    primaryIdKeyName: 'target_id',
+    primaryIdKeyName: "target_id",
     onMoveApis: handleMoveApis,
-    type: 'target_type',
+    type: "target_type",
   });
-
 
   const createApi = async () => {
     const result = await createOpensItem({
       target_type: APIS_TARGET_TYPE_ENUM.API,
-      project_id: '',
-      parent_id: '0',
+      project_id: "",
+      parent_id: "0",
     });
     window?.vscode.postMessage({
-      action: 'openTagPanel',
+      action: "openTagPanel",
       data: result,
     });
   };
@@ -586,15 +588,28 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
   const TESTING_CONFIG_TAB_LIST = [
     {
       label: (
-        <span className={styles.workspaceTabLabel} title={t('common.api_tab.run')}>
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <span
+          className={styles.workspaceTabLabel}
+          title={t("common.api_tab.run")}
+        >
+          <svg
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
             <rect x="3" y="3" width="14" height="14" rx="3" />
             <path d="m6.5 7.5 2.5 2.5-2.5 2.5M11.5 12.5h2" />
           </svg>
-          <span className={styles.workspaceTabText}>{t('common.api_tab.run')}</span>
+          <span className={styles.workspaceTabText}>
+            {t("common.api_tab.run")}
+          </span>
         </span>
       ),
-      value: 'requests',
+      value: "requests",
       children: (
         <>
           <Search
@@ -604,44 +619,26 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
           />
           <Skeleton
             active
-            paragraph={{ rows: 15, width: '100%' }}
+            paragraph={{ rows: 15, width: "100%" }}
             loading={treeLoading}
           >
             <div className={slots["tree-wrap"]}>
-              <TreeContainer ref={containerRef}>
+              <div ref={containerRef} className={styles.tree}>
                 {treeData.length <= 0 ? (
                   <Empty
                     className={slots["response-empty-wrap"]}
                     description={
-                      <Flex
-                        gap={6}
-                        justify="center"
-                        align="center"
-                        vertical
-                      >
+                      <Flex gap={6} justify="center" align="center" vertical>
                         <Flex wrap="wrap">
                           Guess you haven't created any requests yet!
                         </Flex>
-                        <Flex
-                          justify="center"
-                          align="center"
-                          wrap="wrap"
-                        >
-                          <Flex
-                            gap={4}
-                            align="center"
-                          >
-                            You can{' '}
-
-                            &nbsp;{' '}
+                        <Flex justify="center" align="center" wrap="wrap">
+                          <Flex gap={4} align="center">
+                            You can &nbsp;{" "}
                           </Flex>
-                          <Flex
-                            gap={4}
-                            align="center"
-                          >
-
+                          <Flex gap={4} align="center">
                             <Button
-                              style={{ height: '24' }}
+                              style={{ height: "24" }}
                               type="text"
                               onClick={createApi}
                             >
@@ -666,7 +663,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
                     selectedKeys={[apisActiveKey]}
                     onExpand={onExpand}
                     expandedKeys={treeExpandedKeys}
-                    expandAction={'click'}
+                    expandAction={"click"}
                     onScroll={handleScroll}
                     switcherIcon={switcherIcon}
                     titleRender={titleRender}
@@ -674,7 +671,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
                     {...originTreeSortProps}
                   />
                 )}
-              </TreeContainer>
+              </div>
             </div>
           </Skeleton>
         </>
@@ -682,22 +679,30 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
     },
     {
       label: (
-        <span className={styles.workspaceTabLabel} title={t('menu.test')}>
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <span className={styles.workspaceTabLabel} title={t("menu.test")}>
+          <svg
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
             <rect x="3" y="3" width="14" height="14" rx="3" />
             <path d="m6.25 7.5 1 1L9 6.5M11.5 7.5h2.25M6.25 12.5l1 1L9 11.5M11.5 12.5h2.25" />
           </svg>
-          <span className={styles.workspaceTabText}>{t('menu.test')}</span>
+          <span className={styles.workspaceTabText}>{t("menu.test")}</span>
         </span>
       ),
-      value: 'tests',
+      value: "tests",
       children: <Tests />,
     },
   ];
 
   return (
     <>
-      <TreeMenuContainer>
+      <div className={styles.container}>
         <SegmentedTabs
           className={slots["tab-container"]}
           tabBarExtraContent={<NewBtns createMenus={createMenus} />}
@@ -707,8 +712,7 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
             setTabValue(val as string);
           }}
         />
-
-      </TreeMenuContainer>
+      </div>
     </>
   );
 };

@@ -1,7 +1,8 @@
+import styles from "./style.module.css";
 import { useMemo } from "react";
-import { TestingResultWrapper } from "./style";
+
 import useTheme from "@/shared/hooks/useTheme";
-import { Flex, Progress, Typography } from '@/shared/ui/base';
+import { Flex, Progress, Typography } from "@/shared/ui/base";
 import {
   chunk,
   floor,
@@ -173,7 +174,7 @@ const TestingResult = ({
         )}
       </Flex>
       {!isEmpty(testingSendingData?.complete) && (
-        <TestingResultWrapper>
+        <div className={styles.container}>
           <Flex flex={1} gap={6} vertical>
             {results.left.map(({ key, value }) => (
               <Flex key={key} gap={12}>
@@ -202,7 +203,7 @@ const TestingResult = ({
               </Flex>
             ))}
           </Flex>
-        </TestingResultWrapper>
+        </div>
       )}
     </Flex>
   );

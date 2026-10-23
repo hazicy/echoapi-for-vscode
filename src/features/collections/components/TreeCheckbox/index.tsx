@@ -1,21 +1,24 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, Key, useEffect } from 'react';
+import { FC, Key, useEffect } from "react";
 
-import { ConfigProvider, TreeProps } from '@/shared/ui/base';
+import { ConfigProvider, TreeProps } from "@/shared/ui/base";
 
-import { useMemoizedFn, useSafeState } from 'ahooks';
+import { useMemoizedFn, useSafeState } from "ahooks";
 
-import Tree from '@/features/collections/components/Tree';
-import { useTreeData } from '@/features/collections/components/Tree/hooks';
-import { TreeDataFilterParams } from '@/features/collections/components/Tree/types';
-import { APIS_TARGET_TYPE_ENUM, DEFAULT_API_MARK_ENUM } from '@/features/requests/constants';
-import useTheme from '@/shared/hooks/useTheme';
+import Tree from "@/features/collections/components/Tree";
+import { useTreeData } from "@/features/collections/components/Tree/hooks";
+import { TreeDataFilterParams } from "@/features/collections/components/Tree/types";
+import {
+  APIS_TARGET_TYPE_ENUM,
+  DEFAULT_API_MARK_ENUM,
+} from "@/features/requests/constants";
+import useTheme from "@/shared/hooks/useTheme";
 
-import Search from './components/Search';
-import AllCheck from './components/AllCheck';
+import Search from "./components/Search";
+import AllCheck from "./components/AllCheck";
 
-import { TreeCheckboxContainer } from './style';
-import { isEqual } from 'lodash';
+import { isEqual } from "lodash";
 
 export const API_TYPE_INCLUDES: string[] = [
   APIS_TARGET_TYPE_ENUM.FOLDER,
@@ -25,10 +28,13 @@ export const API_TYPE_INCLUDES: string[] = [
   APIS_TARGET_TYPE_ENUM.GRPC,
   APIS_TARGET_TYPE_ENUM.SOCKET,
   APIS_TARGET_TYPE_ENUM.SOCKET_METHOD,
-  'model',
-  'group',
+  "model",
+  "group",
 ];
-const FOLDER_TYPE_INCLUDES: string[] = [APIS_TARGET_TYPE_ENUM.FOLDER, APIS_TARGET_TYPE_ENUM.SOCKET];
+const FOLDER_TYPE_INCLUDES: string[] = [
+  APIS_TARGET_TYPE_ENUM.FOLDER,
+  APIS_TARGET_TYPE_ENUM.SOCKET,
+];
 
 const NOT_CALC_CHECKED_TYPES: string[] = [
   APIS_TARGET_TYPE_ENUM.FOLDER,
@@ -64,7 +70,7 @@ const TreeCheckbox: FC<Props> = ({
   hasMarkFilter,
   typeIncludes = [...API_TYPE_INCLUDES],
   folderIncludes = [...FOLDER_TYPE_INCLUDES],
-  searchIncludesField = ['name', 'url'],
+  searchIncludesField = ["name", "url"],
   notCalcCheckedTypes = [...NOT_CALC_CHECKED_TYPES],
   searchInputPlaceholder,
   notCalcChildrenCountTypes,
@@ -73,15 +79,16 @@ const TreeCheckbox: FC<Props> = ({
   searchValue,
 }) => {
   const { themeToken } = useTheme();
-  const [treeDataFilterParams, setTreeDataFilterParams] = useSafeState<TreeDataFilterParams>({
-    value: '',
-    mark_id: DEFAULT_API_MARK_ENUM.ALL,
-  });
+  const [treeDataFilterParams, setTreeDataFilterParams] =
+    useSafeState<TreeDataFilterParams>({
+      value: "",
+      mark_id: DEFAULT_API_MARK_ENUM.ALL,
+    });
   const [treeExpandedKeys, setTreeExpandedKeys] = useSafeState<string[]>([]);
-  
+
   useEffect(() => {
     setTreeDataFilterParams({
-      value: searchValue || '',
+      value: searchValue || "",
       mark_id: DEFAULT_API_MARK_ENUM.ALL,
     });
   }, [searchValue]);
@@ -93,22 +100,26 @@ const TreeCheckbox: FC<Props> = ({
     dataSource,
     typeIncludes,
     folderIncludes,
-    expandedKeys:treeExpandedKeys,
-    setExpandedKeys:setTreeExpandedKeys,
+    expandedKeys: treeExpandedKeys,
+    setExpandedKeys: setTreeExpandedKeys,
   });
 
-  const handleCheck: TreeProps['onCheck'] = (checkedKeys, info) => {
+  const handleCheck: TreeProps["onCheck"] = (checkedKeys, info) => {
     if (setHalfCheckedKeys) {
       setHalfCheckedKeys(info.halfCheckedKeys as Key[]);
     }
     setCheckedKeys(checkedKeys as Key[]);
   };
 
-  const onExpand: TreeProps['onExpand'] = useMemoizedFn((keys, { nativeEvent }) => {
-    // NOTE: Auto-expand is disabled when dragging in
-    if (isEqual(nativeEvent.type, 'dragenter')) { return; }
-    setTreeExpandedKeys(keys as string[]);
-  });
+  const onExpand: TreeProps["onExpand"] = useMemoizedFn(
+    (keys, { nativeEvent }) => {
+      // NOTE: Auto-expand is disabled when dragging in
+      if (isEqual(nativeEvent.type, "dragenter")) {
+        return;
+      }
+      setTreeExpandedKeys(keys as string[]);
+    },
+  );
 
   return (
     <ConfigProvider
@@ -120,13 +131,15 @@ const TreeCheckbox: FC<Props> = ({
         },
       }}
     >
-      <TreeCheckboxContainer>
-        {!hideSearchInput && <Search
-          searchInputPlaceholder={searchInputPlaceholder}
-          hasMarkFilter={hasMarkFilter}
-          treeDataFilterParams={treeDataFilterParams}
-          setTreeDataFilterParams={setTreeDataFilterParams}
-        />}
+      <div className={styles.container}>
+        {!hideSearchInput && (
+          <Search
+            searchInputPlaceholder={searchInputPlaceholder}
+            hasMarkFilter={hasMarkFilter}
+            treeDataFilterParams={treeDataFilterParams}
+            setTreeDataFilterParams={setTreeDataFilterParams}
+          />
+        )}
 
         <AllCheck
           treeData={treeData}
@@ -153,7 +166,7 @@ const TreeCheckbox: FC<Props> = ({
             {...originTreeProps}
           />
         </div>
-      </TreeCheckboxContainer>
+      </div>
     </ConfigProvider>
   );
 };

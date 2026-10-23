@@ -1,19 +1,16 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { memo, useMemo, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { memo, useMemo, useRef } from "react";
+import { useParams } from "react-router-dom";
 
-import { useMemoizedFn, useSafeState } from 'ahooks';
-import { isObject, isPlainObject } from 'lodash';
-import { isEmpty } from 'lodash';
+import { useMemoizedFn, useSafeState } from "ahooks";
+import { isObject, isPlainObject } from "lodash";
+import { isEmpty } from "lodash";
 
-import useTheme from '@/shared/hooks/useTheme';
-
-import { DEFAULT_LAYOUTS } from './constant';
-import context, { LayoutProps } from './context';
-import ItemNode from './ItemNode';
-import dataModels from './utils/dataModels';
-
-import { SchemaWrapper } from './style';
+import { DEFAULT_LAYOUTS } from "./constant";
+import context, { LayoutProps } from "./context";
+import ItemNode from "./ItemNode";
+import dataModels from "./utils/dataModels";
 
 type Props = {
   models: { [model_id: string]: any }; // Model objects available for dropdown selection when referencing models
@@ -24,13 +21,13 @@ type Props = {
 
 const Template: React.FC<Props> = (props) => {
   const { models, value, onChange, model_id } = props;
-  const { themeToken } = useTheme();
+
   const { projectId } = useParams();
 
   const { Provider } = context;
 
   const refTable = useRef(null);
-  const shemaData = isPlainObject(value) ? value : { type: 'object' };
+  const shemaData = isPlainObject(value) ? value : { type: "object" };
 
   const [layouts, setLayouts] = useSafeState<LayoutProps>(DEFAULT_LAYOUTS);
 
@@ -72,7 +69,7 @@ const Template: React.FC<Props> = (props) => {
         parseModelToJsonSchema: modelUtils?.parseModelToJsonSchema,
       }}
     >
-      <SchemaWrapper $token={themeToken}>
+      <div className={styles.container}>
         <div ref={refTable} className={slots["template-table"]}>
           <ItemNode
             enableDelete={false}
@@ -86,7 +83,7 @@ const Template: React.FC<Props> = (props) => {
             parentModels={parentModels}
           />
         </div>
-      </SchemaWrapper>
+      </div>
     </Provider>
   );
 };

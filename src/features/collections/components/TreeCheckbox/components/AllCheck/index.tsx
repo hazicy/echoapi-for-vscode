@@ -1,16 +1,16 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, Key, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC, Key, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Checkbox, CheckboxProps } from '@/shared/ui/base';
+import { Checkbox, CheckboxProps } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import { includes, reduce, size } from 'lodash';
+import { useSafeState } from "ahooks";
+import { includes, reduce, size } from "lodash";
 
-import { TreeDataItem } from '@/features/requests/types/api';
+import { TreeDataItem } from "@/features/requests/types/api";
 
-import { AllCheckContainer } from './style';
-import i18next from 'i18next';
+import i18next from "i18next";
 
 interface Props {
   dataSource: {
@@ -22,7 +22,7 @@ interface Props {
   checkKey?: string;
   setCheckedKeys: (args: Key[]) => void;
   notCalcCheckedTypes: string[];
-  allCheckDesc?:string
+  allCheckDesc?: string;
 }
 
 const AllCheck: FC<Props> = ({
@@ -32,11 +32,11 @@ const AllCheck: FC<Props> = ({
   checkedKeys,
   setCheckedKeys,
   notCalcCheckedTypes,
-  allCheckDesc = i18next.t('common.push_tip')
+  allCheckDesc = i18next.t("common.push_tip"),
 }) => {
   const { t } = useTranslation();
   const [checked, setChecked] = useSafeState(false);
-  
+
   useEffect(() => {
     setChecked(size(checkedKeys) === size(filteredTreeList));
   }, [checkedKeys, filteredTreeList]);
@@ -47,20 +47,24 @@ const AllCheck: FC<Props> = ({
     return reduce(
       checkedKeys,
       (pre, cur) => {
-        if (!includes(notCalcCheckedTypes, dataSource[cur as string]?.target_type)) {
+        if (
+          !includes(notCalcCheckedTypes, dataSource[cur as string]?.target_type)
+        ) {
           return pre + 1;
         }
         return pre;
       },
-      0
+      0,
     );
   }, [checkedKeys, dataSource]);
 
-  const handleChange: CheckboxProps['onChange'] = (event) => {
+  const handleChange: CheckboxProps["onChange"] = (event) => {
     const value = event.target.checked;
 
     if (value) {
-      setCheckedKeys(filteredTreeList.map((item) => item[checkKey || 'target_id']));
+      setCheckedKeys(
+        filteredTreeList.map((item) => item[checkKey || "target_id"]),
+      );
     } else {
       setCheckedKeys([]);
     }
@@ -69,14 +73,16 @@ const AllCheck: FC<Props> = ({
   };
 
   return (
-    <AllCheckContainer>
+    <div className={styles.container}>
       <Checkbox checked={checked} onChange={handleChange}>
         <span className={slots["all-check-text"]}>
           {t("common.select_all")}
         </span>
-        {allCheckDesc && <span className={slots["all-check-desc"]}>{allCheckDesc}</span>}
+        {allCheckDesc && (
+          <span className={slots["all-check-desc"]}>{allCheckDesc}</span>
+        )}
       </Checkbox>
-    </AllCheckContainer>
+    </div>
   );
 };
 

@@ -1,11 +1,12 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { memo, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { memo, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Col, Divider, Flex, Row } from '@/shared/ui/base';
+import { Col, Divider, Flex, Row } from "@/shared/ui/base";
 
-import aptTools from 'apipost-tools';
-import classNames from 'classnames';
+import aptTools from "apipost-tools";
+import classNames from "classnames";
 import {
   add,
   divide,
@@ -24,39 +25,34 @@ import {
   subtract,
   sumBy,
   values,
-} from 'lodash';
+} from "lodash";
 
-import { Tooltip } from '@/shared/ui';
-import IconFont from '@/shared/ui/IconFont';
-import CustomPopover from '@/shared/ui/Popover';
+import { Tooltip } from "@/shared/ui";
+import IconFont from "@/shared/ui/IconFont";
+import CustomPopover from "@/shared/ui/Popover";
 import {
   HTTPS_TIME_ARRAY,
   HTTP_TIME_ARRAY,
   RESPONSE_CODE_DESC_MAP,
-} from '@/features/requests/constants/response';
-import useTheme from '@/shared/hooks/useTheme';
-import { useSystemConfig } from '@/app/store';
-import { ApiSendResponseDataProxy, ApiSendingData } from '@/features/requests/types/send';
+} from "@/features/requests/constants/response";
+import useTheme from "@/shared/hooks/useTheme";
+import { useSystemConfig } from "@/app/store";
+import {
+  ApiSendResponseDataProxy,
+  ApiSendingData,
+} from "@/features/requests/types/send";
 import {
   convertResponseBytes,
   convertResponseTime,
   download,
   hexToRGBA,
   toFixed,
-} from '@/shared/utils/common';
-import { parseStreamToRaw } from '@/shared/utils/parse';
-
-import {
-  CustomCodePopoverWrap,
-  CustomPopoverWrap,
-  CustomProxyWrap,
-  CustomSizePopoverWrap,
-  ResponseSizeWrap,
-} from './style';
+} from "@/shared/utils/common";
+import { parseStreamToRaw } from "@/shared/utils/parse";
 
 interface ResponseSizeProps {
-  response?: ApiSendingData['response'];
-  request?: ApiSendingData['request'];
+  response?: ApiSendingData["response"];
+  request?: ApiSendingData["request"];
   showProxy?: boolean;
   showIcon?: boolean;
   showDownload?: boolean;
@@ -80,7 +76,9 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
 
   const timings = response?.timings;
   const responseCode = response?.code;
-  const originResponseSizeFormat = convertResponseBytes(response?.response_size || 0);
+  const originResponseSizeFormat = convertResponseBytes(
+    response?.response_size || 0,
+  );
   const responseTime = response?.response_time;
   const responseProxy = response?.proxy;
   const requestProxy = request?.proxy;
@@ -96,12 +94,12 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
 
     const rawHtml =
       !isUndefined(stream?.data) && isPlainObject(mime_type)
-        ? parseStreamToRaw(stream?.data, mime_type, 'utf8')
-        : '';
+        ? parseStreamToRaw(stream?.data, mime_type, "utf8")
+        : "";
 
-    const name = `${t('supplement.res_data')}.${mime_type?.ext}`;
+    const name = `${t("supplement.res_data")}.${mime_type?.ext}`;
 
-    if (isString(fit_for_show) && fit_for_show === 'Monaco') {
+    if (isString(fit_for_show) && fit_for_show === "Monaco") {
       download(rawHtml, filename || name, mime_type?.mime);
       return;
     }
@@ -109,14 +107,15 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
     const _bufferToRaw = aptTools.bufferToRaw(stream?.data, mime_type);
     const { buffer } = _bufferToRaw;
 
-    stream?.data && (stream.data = Array.from(buffer) as unknown as ArrayBuffer);
+    stream?.data &&
+      (stream.data = Array.from(buffer) as unknown as ArrayBuffer);
 
     download(stream, filename || name, mime_type?.mime);
   };
 
   const computedProxyValue = (
     requestProxy: ApiSendResponseDataProxy | undefined,
-    responseProxy: ApiSendResponseDataProxy | undefined
+    responseProxy: ApiSendResponseDataProxy | undefined,
   ) => {
     if (responseProxy?.href) {
       return responseProxy?.href;
@@ -126,128 +125,192 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
       return `${requestProxy?.host}:${requestProxy?.port}`;
     }
 
-    return t('common.response_indicators.no_local');
+    return t("common.response_indicators.no_local");
   };
 
-  const isValidValue = (value: any) => !isNil(value) && value !== 'undefined' && value !== '';
+  const isValidValue = (value: any) =>
+    !isNil(value) && value !== "undefined" && value !== "";
   const isValidArray = (value: string[]) =>
-    some(value, (key) => has(network, key) && isValidValue(get(network, key) as string));
+    some(
+      value,
+      (key) => has(network, key) && isValidValue(get(network, key) as string),
+    );
 
   const newProxyContent = () => {
     const firstLine =
-      isValidArray(['HTTPVersion', 'LocalAddress', 'RemoteAddress']) &&
-      isValidArray(['TLSProtocol', 'CipherName']);
+      isValidArray(["HTTPVersion", "LocalAddress", "RemoteAddress"]) &&
+      isValidArray(["TLSProtocol", "CipherName"]);
     const secondLine =
-      isValidArray(['TLSProtocol', 'CipherName']) &&
-      isValidArray(['Certificate', 'Issuer', 'ValidUntil']);
+      isValidArray(["TLSProtocol", "CipherName"]) &&
+      isValidArray(["Certificate", "Issuer", "ValidUntil"]);
     return (
-      <CustomProxyWrap gap={8} style={{ width: 300 }}>
+      <Flex gap={8} style={{ width: 300 }} className={styles.customProxy}>
         <Flex className={slots["icon-wrapper"]}>
           <IconFont type="icon-network" />
         </Flex>
-        <Flex gap={4} className={slots["right-wrapper"]} style={{ width: 0 }} flex={1} vertical>
-          <Flex justify="space-between" style={{ width: '100%' }} className={slots.name} gap={8}>
+        <Flex
+          gap={4}
+          className={slots["right-wrapper"]}
+          style={{ width: 0 }}
+          flex={1}
+          vertical
+        >
+          <Flex
+            justify="space-between"
+            style={{ width: "100%" }}
+            className={slots.name}
+            gap={8}
+          >
             <span>Network</span>
           </Flex>
-          {isValidValue(get(network, 'HTTPVersion')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={8}>
+          {isValidValue(get(network, "HTTPVersion")) && (
+            <Flex
+              justify="space-between"
+              style={{ width: "100%" }}
+              className={slots.desc}
+              gap={8}
+            >
               <span>HTTP Version</span>
-              <span>{get(network, 'HTTPVersion')}</span>
+              <span>{get(network, "HTTPVersion")}</span>
             </Flex>
           )}
-          {isValidValue(get(network, 'LocalAddress')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={8}>
+          {isValidValue(get(network, "LocalAddress")) && (
+            <Flex
+              justify="space-between"
+              style={{ width: "100%" }}
+              className={slots.desc}
+              gap={8}
+            >
               <span>Local Address</span>
-              <span>{get(network, 'LocalAddress')}</span>
+              <span>{get(network, "LocalAddress")}</span>
             </Flex>
           )}
-          {isValidValue(get(network, 'RemoteAddress')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={8}>
+          {isValidValue(get(network, "RemoteAddress")) && (
+            <Flex
+              justify="space-between"
+              style={{ width: "100%" }}
+              className={slots.desc}
+              gap={8}
+            >
               <span>Remote Address</span>
-              <span>{get(network, 'RemoteAddress')}</span>
+              <span>{get(network, "RemoteAddress")}</span>
             </Flex>
           )}
-          {firstLine && <Divider style={{ margin: '8px 0' }} />}
-          {isValidValue(get(network, 'TLSProtocol')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={8}>
+          {firstLine && <Divider style={{ margin: "8px 0" }} />}
+          {isValidValue(get(network, "TLSProtocol")) && (
+            <Flex
+              justify="space-between"
+              style={{ width: "100%" }}
+              className={slots.desc}
+              gap={8}
+            >
               <span>TLS Protocol</span>
-              <span>{get(network, 'TLSProtocol')}</span>
+              <span>{get(network, "TLSProtocol")}</span>
             </Flex>
           )}
-          {isValidValue(get(network, 'CipherName')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={8}>
+          {isValidValue(get(network, "CipherName")) && (
+            <Flex
+              justify="space-between"
+              style={{ width: "100%" }}
+              className={slots.desc}
+              gap={8}
+            >
               <span>Cipher Name</span>
-              <span>{get(network, 'CipherName')}</span>
+              <span>{get(network, "CipherName")}</span>
             </Flex>
           )}
-          {secondLine && <Divider style={{ margin: '8px 0' }} />}
-          {isValidValue(get(network, 'Certificate')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={4}>
+          {secondLine && <Divider style={{ margin: "8px 0" }} />}
+          {isValidValue(get(network, "Certificate")) && (
+            <Flex
+              justify="space-between"
+              style={{ width: "100%" }}
+              className={slots.desc}
+              gap={4}
+            >
               <span>Certificate CN</span>
-              <span>{get(network, 'Certificate')}</span>
+              <span>{get(network, "Certificate")}</span>
             </Flex>
           )}
-          {isValidValue(get(network, 'Issuer')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={4}>
+          {isValidValue(get(network, "Issuer")) && (
+            <Flex
+              justify="space-between"
+              style={{ width: "100%" }}
+              className={slots.desc}
+              gap={4}
+            >
               <span>Issuer CN</span>
-              <span>{get(network, 'Issuer')}</span>
+              <span>{get(network, "Issuer")}</span>
             </Flex>
           )}
-          {isValidValue(get(network, 'ValidUntil')) && (
-            <Flex justify="space-between" style={{ width: '100%' }} className={slots.desc} gap={4}>
+          {isValidValue(get(network, "ValidUntil")) && (
+            <Flex
+              justify="space-between"
+              style={{ width: "100%" }}
+              className={slots.desc}
+              gap={4}
+            >
               <span>Valid Until</span>
-              <span>{get(network, 'ValidUntil')}</span>
+              <span>{get(network, "ValidUntil")}</span>
             </Flex>
           )}
         </Flex>
-      </CustomProxyWrap>
+      </Flex>
     );
   };
 
   const proxyContent = (
-    <CustomPopoverWrap style={{ width: 180 }}>
+    <div style={{ width: 180 }} className={styles.container}>
       <Row gutter={[0, 8]}>
         <Col span={24}>
-          <Flex justify="space-between" className={slots["response-size-title"]}>
-            <span>{t('common.response_indicators.network')}</span>
+          <Flex
+            justify="space-between"
+            className={slots["response-size-title"]}
+          >
+            <span>{t("common.response_indicators.network")}</span>
           </Flex>
         </Col>
         <Col span={24}>
           <Flex flex={1} justify="space-between">
-            <span>{t('common.response_indicators.local')}</span>
+            <span>{t("common.response_indicators.local")}</span>
             <span>{computedProxyValue(requestProxy, responseProxy)}</span>
           </Flex>
         </Col>
       </Row>
-    </CustomPopoverWrap>
+    </div>
   );
 
   const timeContentKeyMap = {
-    prepare: 'Prepare',
-    socketInitialization: 'Socket Initialization',
-    dnsLookup: 'DNS Lookup',
-    tcpHandshake: 'TCP Handshake',
-    sslHandshake: 'SSL Handshake',
-    waiting: 'Waiting(TTFB)',
-    download: 'Download',
-    process: 'Process',
+    prepare: "Prepare",
+    socketInitialization: "Socket Initialization",
+    dnsLookup: "DNS Lookup",
+    tcpHandshake: "TCP Handshake",
+    sslHandshake: "SSL Handshake",
+    waiting: "Waiting(TTFB)",
+    download: "Download",
+    process: "Process",
   };
 
   const timeContentList = useMemo(() => {
     if (!formatTimings) return [];
-    const total = sumBy(values(omit(formatTimings, ['total'])), 'duration');
-    const left = Number(toFixed(divide(formatTimings?.prepare.duration, total)));
-    const right = Number(toFixed(divide(formatTimings?.process?.duration, total)));
+    const total = sumBy(values(omit(formatTimings, ["total"])), "duration");
+    const left = Number(
+      toFixed(divide(formatTimings?.prepare.duration, total)),
+    );
+    const right = Number(
+      toFixed(divide(formatTimings?.process?.duration, total)),
+    );
 
-    const mapArr = has(formatTimings, 'sslHandshake') ? HTTPS_TIME_ARRAY : HTTP_TIME_ARRAY;
+    const mapArr = has(formatTimings, "sslHandshake")
+      ? HTTPS_TIME_ARRAY
+      : HTTP_TIME_ARRAY;
 
     const { res } = mapArr.reduce(
       (prev: { res: any[]; tempTotal: number }, key) => {
         const width = multiply(
           Number(toFixed(divide(get(formatTimings, key)?.duration, total))),
-          100
+          100,
         );
-        if (isEqual(key, 'prepare')) {
+        if (isEqual(key, "prepare")) {
           prev.res.push({
             key,
             name: get(timeContentKeyMap, key),
@@ -256,7 +319,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
             width,
             marginLeft: 0,
           });
-        } else if (isEqual(key, 'process')) {
+        } else if (isEqual(key, "process")) {
           prev.res.push({
             key,
             name: get(timeContentKeyMap, key),
@@ -278,7 +341,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
         prev.tempTotal = add(prev.tempTotal, get(formatTimings, key)?.duration);
         return prev;
       },
-      { res: [], tempTotal: 0 }
+      { res: [], tempTotal: 0 },
     );
     return res;
   }, [formatTimings, timeContentKeyMap]);
@@ -287,18 +350,24 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
     if (responseCode) {
       return get(RESPONSE_CODE_DESC_MAP, responseCode);
     }
-    return { name: '', desc: '' };
+    return { name: "", desc: "" };
   }, [responseCode]);
 
   const responseSizeFormat = useMemo(() => {
     if (!formatSize) return {};
-    const resSize = convertResponseBytes(add(formatSize.responseHeaders, formatSize.responseBody));
+    const resSize = convertResponseBytes(
+      add(formatSize.responseHeaders, formatSize.responseBody),
+    );
     const resHeaderSize = convertResponseBytes(formatSize.responseHeaders);
     const resBodySize = convertResponseBytes(formatSize.responseBody);
-    const reqSize = convertResponseBytes(add(formatSize.requestHeaders, formatSize.requestBody));
+    const reqSize = convertResponseBytes(
+      add(formatSize.requestHeaders, formatSize.requestBody),
+    );
     const reqHeaderSize = convertResponseBytes(formatSize.requestHeaders);
     const reqBodySize = convertResponseBytes(formatSize.requestBody);
-    const resUnCompressSize = convertResponseBytes(formatSize.uncompressedResponseBody || 0);
+    const resUnCompressSize = convertResponseBytes(
+      formatSize.uncompressedResponseBody || 0,
+    );
     return {
       responseSize: `${resSize.convertedValue}${resSize.unit}`,
       responseHeaders: `${resHeaderSize.convertedValue}${resHeaderSize.unit}`,
@@ -311,9 +380,9 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
   }, [formatSize]);
 
   const responseSizeContent = (
-    <CustomSizePopoverWrap vertical style={{ width: 300 }}>
+    <Flex vertical style={{ width: 300 }} className={styles.customSizePopover}>
       <Flex gap={4} vertical>
-        <Flex style={{ width: '100%' }} gap={8}>
+        <Flex style={{ width: "100%" }} gap={8}>
           <Flex className={slots["icon-wrapper"]}>
             <IconFont type="icon-download" />
           </Flex>
@@ -330,7 +399,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
               <span>Body</span>
               <span>{responseSizeFormat?.responseBody}</span>
             </Flex>
-            {has(formatSize, 'uncompressedResponseBody') && (
+            {has(formatSize, "uncompressedResponseBody") && (
               <Flex justify="space-between" className={slots.desc} gap={4}>
                 <span>Uncompressed</span>
                 <span>{responseSizeFormat?.responseUnCompress}</span>
@@ -338,8 +407,8 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
             )}
           </Flex>
         </Flex>
-        <Divider style={{ margin: '8px 0' }} />
-        <Flex style={{ width: '100%' }} gap={8}>
+        <Divider style={{ margin: "8px 0" }} />
+        <Flex style={{ width: "100%" }} gap={8}>
           <Flex className={[slots["icon-wrapper"], slots.request].join(" ")}>
             <IconFont rotate={180} type="icon-download" />
           </Flex>
@@ -359,16 +428,22 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           </Flex>
         </Flex>
       </Flex>
-    </CustomSizePopoverWrap>
+    </Flex>
   );
 
   const responseCodeContent = (
-    <CustomCodePopoverWrap gap={8} style={{ width: 240 }}>
+    <Flex gap={8} style={{ width: 240 }} className={styles.customCodePopover}>
       <Flex
-        className={classNames(slots["icon-code"], { [slots.success]: String(responseCode).charAt(0) === '2' })}
+        className={classNames(slots["icon-code"], {
+          [slots.success]: String(responseCode).charAt(0) === "2",
+        })}
       >
         <IconFont
-          type={String(responseCode).charAt(0) === '2' ? 'icon-row-checked' : 'icon-client-close'}
+          type={
+            String(responseCode).charAt(0) === "2"
+              ? "icon-row-checked"
+              : "icon-client-close"
+          }
         />
       </Flex>
       <Flex gap={4} vertical>
@@ -380,58 +455,93 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           {responseCodeDesc?.desc}
         </Flex>
       </Flex>
-    </CustomCodePopoverWrap>
+    </Flex>
   );
 
   const newTimeContent = (
-    <CustomPopoverWrap style={{ width: 380 }}>
+    <div style={{ width: 380 }} className={styles.container}>
       <Flex align="flex-start" gap={4}>
         <IconFont
-          style={{ marginTop: 2, color: 'var(--font-title-color)', fontSize: '14px' }}
+          style={{
+            marginTop: 2,
+            color: "var(--font-title-color)",
+            fontSize: "14px",
+          }}
           type="icon-response-time"
         />
         <Flex flex={1} vertical>
           <Row gutter={[8, 8]}>
             <Col span={24}>
-              <Flex justify="space-between" className={slots["new-response-size-title"]}>
+              <Flex
+                justify="space-between"
+                className={slots["new-response-size-title"]}
+              >
                 Response Time
                 <span>{`${toFixed(formatTimings?.total?.duration || 0)}ms`}</span>
               </Flex>
             </Col>
           </Row>
 
-          {map(timeContentList, ({ key, name, lineLeftSize, lineRightSize, width, marginLeft }) => (
-            <Row className={classNames(slots[key] ?? key, { [slots.empty]: isEqual(width, 0) })} gutter={[8, 8]}>
-              <Col style={{ lineHeight: '26px' }} span={8}>
-                {name}
-              </Col>
-              <Col style={{ height: 24 }} span={12}>
-                <div className={slots.progress}>
-                  <div style={{ left: `${lineLeftSize}%` }} className={slots["progress-left"]}></div>
-                  <div
-                    style={{ width: `${width}%`, marginLeft: `${marginLeft}%` }}
-                    className={classNames(slots["progress-content"], slots[key] ?? key)}
-                  ></div>
-                  <div style={{ left: `${lineRightSize}%` }} className={slots["progress-right"]}></div>
-                </div>
-              </Col>
-              <Col style={{ textAlign: 'right', lineHeight: '26px' }} span={4}>
-                {isEqual(width, 0) ? 'Cache' : `${toFixed(get(formatTimings, key)?.duration)}ms`}
-              </Col>
-            </Row>
-          ))}
+          {map(
+            timeContentList,
+            ({ key, name, lineLeftSize, lineRightSize, width, marginLeft }) => (
+              <Row
+                className={classNames(slots[key] ?? key, {
+                  [slots.empty]: isEqual(width, 0),
+                })}
+                gutter={[8, 8]}
+              >
+                <Col style={{ lineHeight: "26px" }} span={8}>
+                  {name}
+                </Col>
+                <Col style={{ height: 24 }} span={12}>
+                  <div className={slots.progress}>
+                    <div
+                      style={{ left: `${lineLeftSize}%` }}
+                      className={slots["progress-left"]}
+                    ></div>
+                    <div
+                      style={{
+                        width: `${width}%`,
+                        marginLeft: `${marginLeft}%`,
+                      }}
+                      className={classNames(
+                        slots["progress-content"],
+                        slots[key] ?? key,
+                      )}
+                    ></div>
+                    <div
+                      style={{ left: `${lineRightSize}%` }}
+                      className={slots["progress-right"]}
+                    ></div>
+                  </div>
+                </Col>
+                <Col
+                  style={{ textAlign: "right", lineHeight: "26px" }}
+                  span={4}
+                >
+                  {isEqual(width, 0)
+                    ? "Cache"
+                    : `${toFixed(get(formatTimings, key)?.duration)}ms`}
+                </Col>
+              </Row>
+            ),
+          )}
         </Flex>
       </Flex>
-    </CustomPopoverWrap>
+    </div>
   );
 
   const timeContent = (
-    <CustomPopoverWrap style={{ width: 240 }}>
+    <div style={{ width: 240 }} className={styles.container}>
       <Row gutter={[0, 8]}>
         <Col span={24}>
-          <Flex justify="space-between" className={slots["response-size-title"]}>
-            <span>{t('common.response_indicators.event')}</span>
-            <span>{t('common.response_indicators.use_time')}</span>
+          <Flex
+            justify="space-between"
+            className={slots["response-size-title"]}
+          >
+            <span>{t("common.response_indicators.event")}</span>
+            <span>{t("common.response_indicators.use_time")}</span>
           </Flex>
         </Col>
         {!isNil(timings?.request) && (
@@ -473,7 +583,9 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           <Col span={24}>
             <Flex justify="space-between">
               <span>SecureConnect</span>
-              <span className={slots.time}>{toFixed(timings.secure_connect)}ms</span>
+              <span className={slots.time}>
+                {toFixed(timings.secure_connect)}ms
+              </span>
             </Flex>
           </Col>
         )}
@@ -504,7 +616,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
           </Col>
         )}
       </Row>
-    </CustomPopoverWrap>
+    </div>
   );
 
   const responseTimeStr = useMemo(() => {
@@ -512,7 +624,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
   }, [responseTime]);
 
   return (
-    <ResponseSizeWrap gap={8} align="center">
+    <Flex gap={8} align="center" className={styles.responseSize}>
       {responseCode !== 0 && (
         <>
           {responseCode && (
@@ -520,19 +632,19 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
               <CustomPopover content={responseCodeContent}>
                 <span
                   style={{
-                    padding: '0px 8px',
-                    borderRadius: 'var(--border-radius)',
-                    border: '1px solid',
+                    padding: "0px 8px",
+                    borderRadius: "var(--border-radius)",
+                    border: "1px solid",
                     borderColor:
-                      String(responseCode).charAt(0) === '2'
-                        ? hexToRGBA('#26CEA4', 0.15)
-                        : hexToRGBA('#ff583e', 0.15),
+                      String(responseCode).charAt(0) === "2"
+                        ? hexToRGBA("#26CEA4", 0.15)
+                        : hexToRGBA("#ff583e", 0.15),
                     background:
-                      String(responseCode).charAt(0) === '2'
-                        ? hexToRGBA('#26CEA4', 0.1)
-                        : hexToRGBA('#ff583e', 0.1),
+                      String(responseCode).charAt(0) === "2"
+                        ? hexToRGBA("#26CEA4", 0.1)
+                        : hexToRGBA("#ff583e", 0.1),
                     color:
-                      String(responseCode).charAt(0) === '2'
+                      String(responseCode).charAt(0) === "2"
                         ? themeToken.colorSuccess
                         : themeToken.colorError,
                   }}
@@ -553,11 +665,20 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <circle cx="2" cy="2" r="2" fill="var(--check-box-border-color)" />
+                  <circle
+                    cx="2"
+                    cy="2"
+                    r="2"
+                    fill="var(--check-box-border-color)"
+                  />
                 </svg>
                 {!isEmpty(timings) ? (
-                  <CustomPopover content={isNewTimings ? newTimeContent : timeContent}>
-                    <span className={slots["cur-pointer"]}>{responseTimeStr}</span>
+                  <CustomPopover
+                    content={isNewTimings ? newTimeContent : timeContent}
+                  >
+                    <span className={slots["cur-pointer"]}>
+                      {responseTimeStr}
+                    </span>
                   </CustomPopover>
                 ) : (
                   <span>{responseTimeStr}</span>
@@ -575,14 +696,23 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <circle cx="2" cy="2" r="2" fill="var(--check-box-border-color)" />
+                <circle
+                  cx="2"
+                  cy="2"
+                  r="2"
+                  fill="var(--check-box-border-color)"
+                />
               </svg>
               <Flex>
-                <Tooltip title={t('common.response_indicators.size')}></Tooltip>
+                <Tooltip title={t("common.response_indicators.size")}></Tooltip>
                 <CustomPopover
-                  overlayInnerStyle={{ padding: isNewTimings ? '16px 20px' : '6px 8px' }}
+                  overlayInnerStyle={{
+                    padding: isNewTimings ? "16px 20px" : "6px 8px",
+                  }}
                   content={
-                    isNewTimings ? responseSizeContent : t('common.response_indicators.size')
+                    isNewTimings
+                      ? responseSizeContent
+                      : t("common.response_indicators.size")
                   }
                 >
                   <span>{`${originResponseSizeFormat.convertedValue}${originResponseSizeFormat.unit}`}</span>
@@ -595,7 +725,12 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <circle cx="2" cy="2" r="2" fill="var(--check-box-border-color)" />
+                <circle
+                  cx="2"
+                  cy="2"
+                  r="2"
+                  fill="var(--check-box-border-color)"
+                />
               </svg>
             </>
           )}
@@ -604,23 +739,42 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
 
       {showProxy && (
         <>
-          <CustomPopover content={isNewTimings ? newProxyContent : proxyContent}>
+          <CustomPopover
+            content={isNewTimings ? newProxyContent : proxyContent}
+          >
             <IconFont
               type="icon-network"
               className={slots["cur-pointer"]}
               style={{
-                color: systemProxy === 2 ? themeToken.fontContentColor : themeToken.colorSuccess,
+                color:
+                  systemProxy === 2
+                    ? themeToken.fontContentColor
+                    : themeToken.colorSuccess,
               }}
             />
           </CustomPopover>
         </>
       )}
-      {showLine && <svg width="1" height="10" viewBox="0 0 1 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <line x1="0.5" y1="2.18556e-08" x2="0.5" y2="10" stroke="var(--check-box-border-color)" />
-      </svg>}
+      {showLine && (
+        <svg
+          width="1"
+          height="10"
+          viewBox="0 0 1 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line
+            x1="0.5"
+            y1="2.18556e-08"
+            x2="0.5"
+            y2="10"
+            stroke="var(--check-box-border-color)"
+          />
+        </svg>
+      )}
 
       {showDownload ? (
-        <Tooltip title={t('response.download_tip')}>
+        <Tooltip title={t("response.download_tip")}>
           <IconFont
             style={{ fontSize: 14 }}
             className={slots["cur-pointer"]}
@@ -630,11 +784,14 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
         </Tooltip>
       ) : (
         showIcon &&
-        (String(responseCode).charAt(0) === '2' ? (
-          <IconFont type="icon-checked" style={{ color: themeToken.colorSuccess }} />
+        (String(responseCode).charAt(0) === "2" ? (
+          <IconFont
+            type="icon-checked"
+            style={{ color: themeToken.colorSuccess }}
+          />
         ) : null)
       )}
-    </ResponseSizeWrap>
+    </Flex>
   );
 };
 

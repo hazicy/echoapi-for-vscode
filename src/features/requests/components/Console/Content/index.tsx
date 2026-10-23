@@ -1,7 +1,9 @@
+import styles from "./style.module.css";
+import classNames from "classnames";
 import slots from "@/shared/ui/base/slots.module.css";
 import ReactJson from "react-json-view";
 
-import { Flex } from '@/shared/ui/base';
+import { Flex } from "@/shared/ui/base";
 
 import aptTools from "apipost-tools";
 import {
@@ -19,7 +21,6 @@ import { ApiSendResponseDataConsoleItem } from "@/features/requests/types/send";
 
 import { ConsoleContentProps } from "../types";
 
-import { ConsoleContentWrapper, ConsoleItemWrap } from "./style";
 import { formatTime, TIME_FORMAT } from "@/shared/utils/time";
 
 const CONSOLE_LEVEL_ICON_MAP: Partial<{ [x in keyof Console]: string }> = {
@@ -33,7 +34,7 @@ const ConsoleContent = (props: ConsoleContentProps) => {
 
   const computedContent = (
     argsItem: any,
-    level: ApiSendResponseDataConsoleItem["level"]
+    level: ApiSendResponseDataConsoleItem["level"],
   ) => {
     if (isEqual(level, "error") && isPlainObject(argsItem)) {
       return String(argsItem?.errorMessage);
@@ -78,11 +79,15 @@ const ConsoleContent = (props: ConsoleContentProps) => {
   };
 
   return (
-    <ConsoleContentWrapper>
+    <div className={styles.container}>
       {map(consoleList, (consoleItem, consoleIndex) => (
-        <ConsoleItemWrap
+        <Flex
+          align={"center"}
           key={`${consoleItem.level}-${consoleIndex}`}
-          className={slots[consoleItem.level] ?? consoleItem.level}
+          className={classNames(
+            styles.consoleItem,
+            slots[consoleItem.level] ?? consoleItem.level,
+          )}
         >
           <div className={slots.time}>
             {isNumber(consoleItem.time)
@@ -101,9 +106,9 @@ const ConsoleContent = (props: ConsoleContentProps) => {
               );
             })}
           </Flex>
-        </ConsoleItemWrap>
+        </Flex>
       ))}
-    </ConsoleContentWrapper>
+    </div>
   );
 };
 

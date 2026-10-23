@@ -1,18 +1,17 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { Dispatch } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Dispatch } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Input, message } from '@/shared/ui/base';
+import { Input, message } from "@/shared/ui/base";
 
-import { snowflakeId } from 'apipost-tools';
-import produce from 'immer';
-import { cloneDeep, isArray, isObject, isString } from 'lodash';
+import { snowflakeId } from "apipost-tools";
+import produce from "immer";
+import { cloneDeep, isArray, isObject, isString } from "lodash";
 
-import Button from '@/shared/ui/Button';
+import Button from "@/shared/ui/Button";
 
-import { DomainInfoProps, ICookie } from '../../types';
-
-import { AddDomainContainer } from './style';
+import { DomainInfoProps, ICookie } from "../../types";
 
 interface Props {
   value: DomainInfoProps;
@@ -25,7 +24,7 @@ const Index = (props: Props) => {
   const { value, onChange, project_id } = props;
   const handleChangeDomain = (
     type: string | string[],
-    val: string | { cookieObj: any; inputDomain: string }
+    val: string | { cookieObj: any; inputDomain: string },
   ) => {
     let newVal = value;
     if (isString(type)) {
@@ -55,14 +54,14 @@ const Index = (props: Props) => {
       (!regDomain.test(inputDomain) && !reg.test(inputDomain)) ||
       inputDomain?.trim()?.length <= 0
     ) {
-      message.error(t('supplement.domain_invalid'));
+      message.error(t("supplement.domain_invalid"));
       return;
     }
     // Need to ignore port number
-    inputDomain = inputDomain.replace(/:\d+/, '');
+    inputDomain = inputDomain.replace(/:\d+/, "");
     const newCookieObj = cloneDeep(cookieObj);
     if (Object.keys(newCookieObj).indexOf(inputDomain) > -1) {
-      return message.error(t('supplement.domain_has_live'));
+      return message.error(t("supplement.domain_has_live"));
     }
 
     const date = new Date();
@@ -70,31 +69,31 @@ const Index = (props: Props) => {
     const newCookie: ICookie = {
       project_id,
       cookie_id: snowflakeId(),
-      path: '/',
-      key: 'newCookie_1',
-      value: 'value',
+      path: "/",
+      key: "newCookie_1",
+      value: "value",
       domain: inputDomain,
       expires: date.toUTCString(),
-      maxAge: '',
+      maxAge: "",
     };
     newCookieObj[inputDomain] = [newCookie];
-    handleChangeDomain(['cookieObj', 'inputDomain'], {
+    handleChangeDomain(["cookieObj", "inputDomain"], {
       cookieObj: newCookieObj,
-      inputDomain: '',
+      inputDomain: "",
     });
   };
 
   return (
-    <AddDomainContainer>
+    <div className={styles.container}>
       <Input
-        onChange={(e) => handleChangeDomain('inputDomain', e.target.value)}
+        onChange={(e) => handleChangeDomain("inputDomain", e.target.value)}
         className={slots.domin}
         placeholder="example.com"
       />
       <Button onClick={addDomain} type="primary">
-        {t('global_setting.cookie_detail.add_domain')}
+        {t("global_setting.cookie_detail.add_domain")}
       </Button>
-    </AddDomainContainer>
+    </div>
   );
 };
 

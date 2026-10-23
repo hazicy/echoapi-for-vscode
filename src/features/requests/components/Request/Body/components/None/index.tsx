@@ -1,15 +1,14 @@
-import { useTranslation } from 'react-i18next';
+import styles from "../../style.module.css";
+import { useTranslation } from "react-i18next";
 
-import Empty from '@/shared/ui/Empty';
-
-import { RequestBodyContentContainer } from '../../style';
+import Empty from "@/shared/ui/Empty";
 
 const RequestBodyNone = () => {
   const { t } = useTranslation();
   return (
-    <RequestBodyContentContainer>
-      <Empty description={t('common.nodata')} />
-    </RequestBodyContentContainer>
+    <div className={styles.requestBodyContent}>
+      <Empty description={t("common.nodata")} />
+    </div>
   );
 };
 

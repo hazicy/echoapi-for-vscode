@@ -1,21 +1,24 @@
-import { useEffect, useRef } from 'react';
+import styles from "./style.module.css";
+import { Flex } from "@/shared/ui/base";
+import { useEffect, useRef } from "react";
 
-import { useMemoizedFn } from 'ahooks';
-import { snowflakeId } from 'apipost-tools';
-import produce from 'immer';
-import { isEmpty } from 'lodash';
+import { useMemoizedFn } from "ahooks";
+import { snowflakeId } from "apipost-tools";
+import produce from "immer";
+import { isEmpty } from "lodash";
 
-import { DEFAULT_GRAPHQL_QUERY_ITEM } from '@/features/requests/constants/request';
-import { GraphQLChangeFuncType, GraphQLDetailsData } from '@/features/requests/types/graphql';
+import { DEFAULT_GRAPHQL_QUERY_ITEM } from "@/features/requests/constants/request";
+import {
+  GraphQLChangeFuncType,
+  GraphQLDetailsData,
+} from "@/features/requests/types/graphql";
 
-import { QueryList } from './components';
-import GraphQLQueryContext from './context/GraphQLQueryContext';
-import Main from './Main';
-
-import { GraphQLContainer } from './style';
+import { QueryList } from "./components";
+import GraphQLQueryContext from "./context/GraphQLQueryContext";
+import Main from "./Main";
 
 interface Props {
-  requestData: GraphQLDetailsData['request'];
+  requestData: GraphQLDetailsData["request"];
   apiData: GraphQLDetailsData;
   target_id: string;
   onChange: GraphQLChangeFuncType<GraphQLDetailsData>;
@@ -40,13 +43,15 @@ const GraphQLQuery = (props: Props) => {
     }
   }, []);
 
-  const handleRequestBodyChange = useMemoizedFn((newVal, search_id?: string) => {
-    const newData = produce(requestData, (draft) => {
-      draft.body = newVal;
-    });
+  const handleRequestBodyChange = useMemoizedFn(
+    (newVal, search_id?: string) => {
+      const newData = produce(requestData, (draft) => {
+        draft.body = newVal;
+      });
 
-    onChange?.('request', newData, search_id);
-  });
+      onChange?.("request", newData, search_id);
+    },
+  );
 
   return (
     <GraphQLQueryContext.Provider
@@ -55,10 +60,14 @@ const GraphQLQuery = (props: Props) => {
         onChange,
       }}
     >
-      <GraphQLContainer>
+      <Flex className={styles.container}>
         <QueryList data={requestData.body} onChange={handleRequestBodyChange} />
-        <Main ref={mainRef} data={requestData.body} onChange={handleRequestBodyChange} />
-      </GraphQLContainer>
+        <Main
+          ref={mainRef}
+          data={requestData.body}
+          onChange={handleRequestBodyChange}
+        />
+      </Flex>
     </GraphQLQueryContext.Provider>
   );
 };

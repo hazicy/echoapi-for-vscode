@@ -1,12 +1,13 @@
+import styles from "../../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { memo, useContext, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { memo, useContext, useMemo, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Badge, Flex } from '@/shared/ui/base';
-import { DataNode } from '@/shared/ui/base';
+import { Badge, Flex } from "@/shared/ui/base";
+import { DataNode } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import classNames from 'classnames';
+import { useSafeState } from "ahooks";
+import classNames from "classnames";
 import {
   entries,
   find,
@@ -19,27 +20,36 @@ import {
   isPlainObject,
   keys,
   size,
-} from 'lodash';
+} from "lodash";
 
-import GraphQLSchemaProvider from '@/features/requests/components/GraphQLQuery/context/GraphQLSchemaProvider';
-import { Tooltip } from '@/shared/ui';
-import { Popover } from '@/shared/ui';
+import GraphQLSchemaProvider from "@/features/requests/components/GraphQLQuery/context/GraphQLSchemaProvider";
+import { Tooltip } from "@/shared/ui";
+import { Popover } from "@/shared/ui";
 
-import Filters from '../Filters';
-
-import { PopoverFilterContainer, TitleRenderContainer } from '../../style';
+import Filters from "../Filters";
 
 const TitleRender = memo((props: DataNode | any) => {
   const { t } = useTranslation();
-  const { name, kind, itemKind, description, non_null, args, path, readOnly = false } = props || {};
+  const {
+    name,
+    kind,
+    itemKind,
+    description,
+    non_null,
+    args,
+    path,
+    readOnly = false,
+  } = props || {};
   const { filterData } = useContext(GraphQLSchemaProvider);
 
   const count = useMemo(() => {
     if (isEmpty(args)) return 0;
-    const filterArgs = find(args, (e: any) => has(e, 'inputObjects'));
+    const filterArgs = find(args, (e: any) => has(e, "inputObjects"));
     if (filterArgs) {
       if (isArray(filterArgs?.inputObjects)) {
-        const data = filterData[path]?.find((item: any) => isEqual(item.name, filterArgs.name));
+        const data = filterData[path]?.find((item: any) =>
+          isEqual(item.name, filterArgs.name),
+        );
         if (get(filterData, path) && data && data?.value) {
           return entries(data?.value).reduce((pre, [_key, obj]) => {
             if (isPlainObject(obj)) {
@@ -60,15 +70,15 @@ const TitleRender = memo((props: DataNode | any) => {
   const kindType = useMemo(() => {
     let type = itemKind;
     if (non_null !== undefined) {
-      type += '!';
+      type += "!";
     }
-    if (includes(['array'], kind)) {
+    if (includes(["array"], kind)) {
       type = `[${type}]`;
     }
     return type;
   }, [itemKind, kind, non_null]);
   return (
-    <TitleRenderContainer align="center" justify="space-between">
+    <Flex align="center" justify="space-between" className={styles.titleRender}>
       <Flex align="center" className={slots["title-container"]} gap={12}>
         <div
           className={classNames(slots.input, {
@@ -78,7 +88,7 @@ const TitleRender = memo((props: DataNode | any) => {
         <div
           className={classNames(slots.type, {
             [slots.null]: non_null !== undefined,
-            [slots.array]: includes(['array'], kind),
+            [slots.array]: includes(["array"], kind),
             [slots.noDesc]: !description,
           })}
         >
@@ -94,9 +104,12 @@ const TitleRender = memo((props: DataNode | any) => {
               setFilterOpen(open);
             }}
             placement="bottom"
-            trigger={'click'}
+            trigger={"click"}
             content={
-              <PopoverFilterContainer onClick={(e) => e?.stopPropagation()}>
+              <Flex
+                onClick={(e) => e?.stopPropagation()}
+                className={styles.popoverFilter}
+              >
                 <Filters
                   path={path}
                   open={filterOpen}
@@ -104,11 +117,11 @@ const TitleRender = memo((props: DataNode | any) => {
                   data={args}
                   onCancel={() => setFilterOpen(false)}
                 />
-              </PopoverFilterContainer>
+              </Flex>
             }
           >
             <Badge size="small" offset={[-2, 0]} count={count}>
-              <Tooltip title={t('graphql.filter')}>
+              <Tooltip title={t("graphql.filter")}>
                 <Flex
                   className={[slots["action-outer"], slots.primary].join(" ")}
                   onClick={(e) => {
@@ -126,7 +139,7 @@ const TitleRender = memo((props: DataNode | any) => {
           </Popover>
         )}
       </Flex>
-    </TitleRenderContainer>
+    </Flex>
   );
 });
 

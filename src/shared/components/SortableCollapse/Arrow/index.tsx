@@ -1,12 +1,17 @@
-import IconFont from '@/shared/ui/IconFont';
-import useTheme from '@/shared/hooks/useTheme';
+import styles from "./style.module.css";
+import IconFont from "@/shared/ui/IconFont";
+import useTheme from "@/shared/hooks/useTheme";
 
-import { ArrowWrapper } from './style';
-
-const Arrow = ({ activeKey, show }: { activeKey: string | undefined; show: boolean }) => {
+const Arrow = ({
+  activeKey,
+  show,
+}: {
+  activeKey: string | undefined;
+  show: boolean;
+}) => {
   const { themeToken } = useTheme();
   return (
-    <ArrowWrapper>
+    <div className={styles.container}>
       {show && (
         <IconFont
           style={{ fontSize: themeToken.fontSize, color: themeToken.iconColor }}
@@ -14,7 +19,7 @@ const Arrow = ({ activeKey, show }: { activeKey: string | undefined; show: boole
           rotate={activeKey ? 0 : -90}
         />
       )}
-    </ArrowWrapper>
+    </div>
   );
 };
 

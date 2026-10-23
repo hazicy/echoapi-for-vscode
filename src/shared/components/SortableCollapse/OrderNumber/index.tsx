@@ -1,10 +1,7 @@
-import useTheme from '@/shared/hooks/useTheme';
-
-import { OrderNumberWrapper } from './style';
+import styles from "./style.module.css";
 
 const OrderNumber = ({ orderNumber }: { orderNumber: number }) => {
-  const { themeToken } = useTheme();
-  return <OrderNumberWrapper $token={themeToken}>{orderNumber}</OrderNumberWrapper>;
+  return <div className={styles.container}>{orderNumber}</div>;
 };
 
 export default OrderNumber;

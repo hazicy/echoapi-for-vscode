@@ -1,25 +1,24 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, useEffect } from 'react';
+import { FC, useEffect } from "react";
 
-import { Flex, Input } from '@/shared/ui/base';
+import { Flex, Input } from "@/shared/ui/base";
 
-import { useDebounce, useSafeState } from 'ahooks';
-import i18next from 'i18next';
-import { concat } from 'lodash';
+import { useDebounce, useSafeState } from "ahooks";
+import i18next from "i18next";
+import { concat } from "lodash";
 
-import { TreeDataFilterParams } from '@/features/collections/components/Tree/types';
-import IconFont from '@/shared/ui/IconFont';
+import { TreeDataFilterParams } from "@/features/collections/components/Tree/types";
+import IconFont from "@/shared/ui/IconFont";
 import {
   DEFAULT_API_MARK_ENUM,
   DEFAULT_API_MARK_ENUM_ALL_OPTION,
   DEFAULT_API_MARK_ENUM_LIST,
-} from '@/features/requests/constants';
-
-import { SearchContainer } from './style';
+} from "@/features/requests/constants";
 
 const DEFAULT_API_MARK_LIST = concat(
   [DEFAULT_API_MARK_ENUM_ALL_OPTION],
-  DEFAULT_API_MARK_ENUM_LIST
+  DEFAULT_API_MARK_ENUM_LIST,
 );
 
 interface Props {
@@ -32,17 +31,22 @@ interface Props {
 const Search: FC<Props> = ({
   treeDataFilterParams,
   hasMarkFilter = true,
-  searchInputPlaceholder = i18next.t('supplement.folder_api'),
+  searchInputPlaceholder = i18next.t("supplement.folder_api"),
   setTreeDataFilterParams,
 }) => {
-  const [searchValue, setSearchValue] = useSafeState(treeDataFilterParams.value);
+  const [searchValue, setSearchValue] = useSafeState(
+    treeDataFilterParams.value,
+  );
   const debouncedSearchValue = useDebounce(searchValue, { wait: 500 });
 
   useEffect(() => {
-    handleChange('value', debouncedSearchValue);
+    handleChange("value", debouncedSearchValue);
   }, [debouncedSearchValue]);
 
-  const handleChange = (field: string, value: string | DEFAULT_API_MARK_ENUM) => {
+  const handleChange = (
+    field: string,
+    value: string | DEFAULT_API_MARK_ENUM,
+  ) => {
     setTreeDataFilterParams({
       ...treeDataFilterParams,
       [field]: value,
@@ -50,7 +54,7 @@ const Search: FC<Props> = ({
   };
 
   return (
-    <SearchContainer>
+    <div className={styles.container}>
       <Flex>
         <div className={slots["search-wrap"]}>
           <Input
@@ -58,13 +62,11 @@ const Search: FC<Props> = ({
             placeholder={searchInputPlaceholder}
             value={searchValue}
             onChange={(event) => setSearchValue(event.target.value)}
-            suffix={
-               null
-            }
+            suffix={null}
           />
         </div>
       </Flex>
-    </SearchContainer>
+    </div>
   );
 };
 

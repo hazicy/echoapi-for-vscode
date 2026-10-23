@@ -1,19 +1,12 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import {
-  Flex,
-  InputNumber,
-  Switch,
-} from '@/shared/ui/base';
+import { Flex, InputNumber, Switch } from "@/shared/ui/base";
 
-import { useMemoizedFn } from 'ahooks';
-import produce from 'immer';
-import { isEqual, map } from 'lodash';
-
-import useTheme from '@/shared/hooks/useTheme';
-
-import { SettingWrap } from './style';
+import { useMemoizedFn } from "ahooks";
+import produce from "immer";
+import { isEqual, map } from "lodash";
 
 interface Props {
   value: any;
@@ -23,7 +16,7 @@ interface Props {
 const Setting = (props: Props) => {
   const { t } = useTranslation();
   const { value, readOnly, onChange } = props || {};
-  const { themeToken } = useTheme();
+
   const handleConfig = useMemoizedFn((key: string, val: any) => {
     const newData = produce(value, (draft: any) => {
       draft[key] = val;
@@ -34,47 +27,49 @@ const Setting = (props: Props) => {
 
   const SETTING_MAP_LIST = [
     {
-      key: 'certificate_verification',
-      title: t('ws.settings.certificate_verification'),
-      desc: t('ws.settings.certificate_verification_tip'),
+      key: "certificate_verification",
+      title: t("ws.settings.certificate_verification"),
+      desc: t("ws.settings.certificate_verification_tip"),
       children: (
         <Switch
           disabled={readOnly}
           checked={isEqual(value?.certificate_verification, 1)}
-          onChange={(val) => handleConfig('certificate_verification', val ? 1 : -1)}
+          onChange={(val) =>
+            handleConfig("certificate_verification", val ? 1 : -1)
+          }
         />
       ),
     },
     {
-      key: 'shake_hands_timeout',
-      title: t('ws.settings.time_out'),
-      desc: t('ws.settings.time_out_tip'),
+      key: "shake_hands_timeout",
+      title: t("ws.settings.time_out"),
+      desc: t("ws.settings.time_out_tip"),
       children: (
         <InputNumber
           readOnly={readOnly}
           controls={false}
           addonAfter="ms"
           value={value?.shake_hands_timeout}
-          onChange={(val) => handleConfig('shake_hands_timeout', val)}
+          onChange={(val) => handleConfig("shake_hands_timeout", val)}
         />
       ),
     },
     {
-      key: 'information_size',
-      title: t('ws.settings.content'),
-      desc: t('ws.settings.content_tip'),
+      key: "information_size",
+      title: t("ws.settings.content"),
+      desc: t("ws.settings.content_tip"),
       children: (
         <InputNumber
           readOnly={readOnly}
           controls={false}
           value={value?.information_size}
-          onChange={(val) => handleConfig('information_size', val)}
+          onChange={(val) => handleConfig("information_size", val)}
         />
       ),
     },
   ];
   return (
-    <SettingWrap $token={themeToken}>
+    <div className={styles.container}>
       <Flex style={{ marginLeft: 8 }} vertical gap={12}>
         {map(SETTING_MAP_LIST, (it) => (
           <>
@@ -84,7 +79,12 @@ const Setting = (props: Props) => {
                   <div className="setting-title">{it.title}</div>
                   <div className={slots["setting-desc"]}>{it.desc}</div>
                 </Flex>
-                <Flex flex={0.1} style={{ minWidth: 120 }} align="start" justify="start">
+                <Flex
+                  flex={0.1}
+                  style={{ minWidth: 120 }}
+                  align="start"
+                  justify="start"
+                >
                   {it.children}
                 </Flex>
               </Flex>
@@ -92,7 +92,7 @@ const Setting = (props: Props) => {
           </>
         ))}
       </Flex>
-    </SettingWrap>
+    </div>
   );
 };
 

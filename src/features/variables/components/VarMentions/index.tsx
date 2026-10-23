@@ -1,17 +1,24 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useEffect, useMemo, useRef } from 'react';
-import ReactDOM from 'react-dom';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useMemo, useRef } from "react";
+import ReactDOM from "react-dom";
+import { useTranslation } from "react-i18next";
 
-import { useMemoizedFn, useSafeState } from 'ahooks';
-import cn from 'classnames';
-import { cloneDeep, find, isFunction, isObject, isPlainObject, isUndefined, map } from 'lodash';
-import { useShallow } from 'zustand/react/shallow';
+import { useMemoizedFn, useSafeState } from "ahooks";
+import cn from "classnames";
+import {
+  cloneDeep,
+  find,
+  isFunction,
+  isObject,
+  isPlainObject,
+  isUndefined,
+  map,
+} from "lodash";
+import { useShallow } from "zustand/react/shallow";
 
-import { SYSTEM_VARS } from '@/shared/constants/system';
-import { useProjectConfig } from '@/app/store';
-
-import { VarMentionsWrap } from './style';
+import { SYSTEM_VARS } from "@/shared/constants/system";
+import { useProjectConfig } from "@/app/store";
 
 const envVarMarkVarsList = [];
 
@@ -25,12 +32,12 @@ interface EnvVarsProps {
 
 const EnvVar = (props: EnvVarsProps) => {
   const { t } = useTranslation();
-  const { envVisible, offset, onCancel, onSelect, env_id = '-1' } = props;
+  const { envVisible, offset, onCancel, onSelect, env_id = "-1" } = props;
   const { envList, globalVars } = useProjectConfig(
     useShallow(({ envList, globalVars }) => ({
       envList,
       globalVars,
-    }))
+    })),
   );
   // Current environment variables
   const envVars = useMemo(() => {
@@ -83,14 +90,14 @@ const EnvVar = (props: EnvVarsProps) => {
             varsList.push({
               key: k,
               value: obj[k],
-              envType: 'global',
+              envType: "global",
               description: obj[k],
             });
           } else if (isObject(obj[k])) {
             if (!obj[k]?.key) {
               obj[k].key = k;
             }
-            obj[k].envType = index === 0 ? 'env' : 'global';
+            obj[k].envType = index === 0 ? "env" : "global";
             varsList.push(obj[k]);
           }
         } catch (error) {
@@ -107,7 +114,8 @@ const EnvVar = (props: EnvVarsProps) => {
     if (itemIndex !== null) {
       x = itemIndex + i;
     }
-    const varDom: HTMLElement | null = document.getElementById('scroll-env-vars');
+    const varDom: HTMLElement | null =
+      document.getElementById("scroll-env-vars");
     if (i === 1) {
       const isScroll = varDom && varDom.scrollTop + 8 * 28 < (x + 1) * 28;
       if (isScroll) varDom.scrollTop = (x - 7) * 28;
@@ -120,7 +128,8 @@ const EnvVar = (props: EnvVarsProps) => {
         refItemIndex.current += 1;
       }
       const isScroll =
-        (varDom && varDom.scrollTop === (x - 1) * 28) || x === envVarMarkVarsList.length - 8;
+        (varDom && varDom.scrollTop === (x - 1) * 28) ||
+        x === envVarMarkVarsList.length - 8;
       if (isScroll && varDom) {
         varDom.scrollTop = (x - 2) * 28 >= 0 ? (x - 2) * 28 : 0;
       }
@@ -130,15 +139,19 @@ const EnvVar = (props: EnvVarsProps) => {
   };
 
   const listener = useMemoizedFn((e) => {
-    if (e.code === 'ArrowDown') {
+    if (e.code === "ArrowDown") {
       if (itemIndex < markVarsList?.length - 1) changeActive(1);
     }
-    if (e.code === 'ArrowUp') {
+    if (e.code === "ArrowUp") {
       if (itemIndex > 0) changeActive(-1);
     }
-    if (e.code === 'Enter') {
-      const markItem: { key: string; value: string; envType: string; description: string } =
-        markVarsList[itemIndex];
+    if (e.code === "Enter") {
+      const markItem: {
+        key: string;
+        value: string;
+        envType: string;
+        description: string;
+      } = markVarsList[itemIndex];
 
       if (!isUndefined(markItem)) {
         if (isFunction(onSelect)) {
@@ -152,9 +165,9 @@ const EnvVar = (props: EnvVarsProps) => {
   });
 
   useEffect(() => {
-    document.addEventListener('keydown', listener, true);
+    document.addEventListener("keydown", listener, true);
     return () => {
-      document.removeEventListener('keydown', listener, true);
+      document.removeEventListener("keydown", listener, true);
     };
   }, []);
 
@@ -166,7 +179,7 @@ const EnvVar = (props: EnvVarsProps) => {
       setTimeout(() => {
         onCancel && onCancel();
       }, 0);
-    }
+    },
   );
 
   const calcValue = (value: unknown) => {
@@ -182,54 +195,62 @@ const EnvVar = (props: EnvVarsProps) => {
       {envVisible &&
         currentItem &&
         ReactDOM.createPortal(
-          <VarMentionsWrap>
+          <div className={styles.container}>
             <div className={slots["related-env-vars"]} style={offset}>
               <div className={slots["env-vars-list"]} id="scroll-env-vars">
                 {map(markVarsList, (item: any, index) => (
                   <div
                     key={`${item.key} + ${index}`}
-                    className={cn(slots["env-vars-default"], { [slots.active]: itemIndex === index })}
+                    className={cn(slots["env-vars-default"], {
+                      [slots.active]: itemIndex === index,
+                    })}
                     onFocus={setItemIndex.bind(null, index)}
                     onMouseOver={setItemIndex.bind(null, index)}
                     onMouseDown={handleSelectMarkItem.bind(null, item.key)}
                   >
                     <div
                       className={cn(slots["default-type"], {
-                        [slots.e]: item?.envType === 'env',
+                        [slots.e]: item?.envType === "env",
                       })}
                     >
-                      {item?.envType === 'env' ? 'E' : 'G'}
+                      {item?.envType === "env" ? "E" : "G"}
                     </div>
-                    <div className={[slots["default-name"], "text-ellipse2"].join(" ")}>{item.key}</div>
+                    <div
+                      className={[slots["default-name"], "text-ellipse2"].join(
+                        " ",
+                      )}
+                    >
+                      {item.key}
+                    </div>
                     <div className={slots["default-icon"]}></div>
                   </div>
                 ))}
               </div>
               <div className={slots["env-vars-desc"]}>
-                <div className="desc-title">{t('supplement.var_name')}</div>
+                <div className="desc-title">{t("supplement.var_name")}</div>
                 <div className={slots["var-name"]}>{currentItem.key}</div>
-                <div className="desc-title" style={{ margin: '16px 0 0 0' }}>
-                  {t('supplement.var_value')}
+                <div className="desc-title" style={{ margin: "16px 0 0 0" }}>
+                  {t("supplement.var_value")}
                 </div>
                 <div className={slots["var-value"]}>
                   {calcValue(
-                    currentItem?.envType === 'env'
+                    currentItem?.envType === "env"
                       ? currentItem?.current_value || currentItem?.value
-                      : currentItem.description
+                      : currentItem.description,
                   )}
                 </div>
-                <div className="desc-title" style={{ margin: '16px 0 0 0' }}>
-                  {t('supplement.scope')}
+                <div className="desc-title" style={{ margin: "16px 0 0 0" }}>
+                  {t("supplement.scope")}
                 </div>
                 <div className={slots["var-value"]}>
-                  {currentItem?.envType === 'env'
-                    ? t('supplement.var_env')
-                    : t('supplement.var_glo')}
+                  {currentItem?.envType === "env"
+                    ? t("supplement.var_env")
+                    : t("supplement.var_glo")}
                 </div>
               </div>
             </div>
-          </VarMentionsWrap>,
-          document.querySelector('body') as HTMLElement
+          </div>,
+          document.querySelector("body") as HTMLElement,
         )}
     </>
   );

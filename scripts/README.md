@@ -42,8 +42,8 @@ headless rc packages where Base UI has no corresponding component. Ant Design an
 styled-components are no longer direct dependencies or source imports.
 
 Styles live in CSS Modules, with shared global CSS and theme custom properties.
-The `withStyles` helper preserves existing wrapper exports, refs, and dynamic
-custom properties; it does not generate or inject CSS rules at runtime.
+Components import CSS Modules directly. State styles use `data-*` attributes;
+dynamic values use inline CSS custom properties without style wrapper components.
 
 Run `yarn check:ui` to guard against reintroducing the removed libraries.
 Run `yarn playwright install chromium` once, then `yarn test:ui` after a full build

@@ -1,9 +1,8 @@
-import { Table as AntdTable } from '@/shared/ui/base';
+import styles from "./style.module.css";
+import { Table as AntdTable } from "@/shared/ui/base";
 
-import ResizableTable from '../ResizableTable';
-import { AnyObject, TableProps } from '../types';
-
-import { TableContainer, TableWrapper } from './style';
+import ResizableTable from "../ResizableTable";
+import { AnyObject, TableProps } from "../types";
 
 const Table = <DataSource extends AnyObject>(props: TableProps<DataSource>) => {
   const { resizableColEnable } = props;
@@ -15,11 +14,11 @@ const Table = <DataSource extends AnyObject>(props: TableProps<DataSource>) => {
   }
 
   return (
-    <TableWrapper>
-      <TableContainer>
+    <div className={styles.container}>
+      <div className={styles.table}>
         <RenderTable {...props} />
-      </TableContainer>
-    </TableWrapper>
+      </div>
+    </div>
   );
 };
 

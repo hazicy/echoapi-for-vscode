@@ -1,26 +1,29 @@
+import styles from "../../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { Key, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Key, useEffect, useMemo, useRef, useState } from "react";
 
-import { Tree } from '@/shared/ui/base';
-import { DataNode } from '@/shared/ui/base';
-import { TreeProps } from '@/shared/ui/base';
+import { Tree } from "@/shared/ui/base";
+import { DataNode } from "@/shared/ui/base";
+import { TreeProps } from "@/shared/ui/base";
 
-import { t } from 'i18next';
+import { t } from "i18next";
 
-import { IconFont, Input } from '@/shared/ui';
-import { getChildTree } from '@/features/requests/utils/graphql/schema2tree';
+import { IconFont, Input } from "@/shared/ui";
+import { getChildTree } from "@/features/requests/utils/graphql/schema2tree";
 
-import TitleRender from '../TitleRender';
-
-import { SchemaTreeContainer } from '../../style';
+import TitleRender from "../TitleRender";
 
 const { DirectoryTree } = Tree;
 
-const SchemaTree = (props: TreeProps & { setTreeData: React.Dispatch<any>; querySchema: any }) => {
-  const titleRender = (node: DataNode): React.ReactNode => <TitleRender {...node} />;
+const SchemaTree = (
+  props: TreeProps & { setTreeData: React.Dispatch<any>; querySchema: any },
+) => {
+  const titleRender = (node: DataNode): React.ReactNode => (
+    <TitleRender {...node} />
+  );
   const { treeData, setTreeData, querySchema } = props || {};
-  const [value, setValue] = useState<string>('');
-  const [expandedKeys, setExpandedKeys] = useState<Key[]>(['Query']);
+  const [value, setValue] = useState<string>("");
+  const [expandedKeys, setExpandedKeys] = useState<Key[]>(["Query"]);
   const [treeHeight, setTreeHeight] = useState(320);
 
   const treeRef = useRef<any>(null);
@@ -74,7 +77,11 @@ const SchemaTree = (props: TreeProps & { setTreeData: React.Dispatch<any>; query
     return filterTree(treeData);
   }, [value, treeData]);
 
-  const updateTreeData = (list: DataNode[], key: React.Key, children: DataNode[]): DataNode[] =>
+  const updateTreeData = (
+    list: DataNode[],
+    key: React.Key,
+    children: DataNode[],
+  ): DataNode[] =>
     list.map((node) => {
       if (node.key === key) {
         return {
@@ -98,16 +105,16 @@ const SchemaTree = (props: TreeProps & { setTreeData: React.Dispatch<any>; query
         return;
       }
       setTreeData((origin: any) =>
-        updateTreeData(origin, item?.key, getChildTree(item, querySchema))
+        updateTreeData(origin, item?.key, getChildTree(item, querySchema)),
       );
       resolve();
     });
 
   return (
-    <SchemaTreeContainer>
+    <div className={styles.schemaTree}>
       <div className={slots.search}>
         <Input
-          placeholder={t('graphql.search_placeholder')}
+          placeholder={t("graphql.search_placeholder")}
           prefix={<IconFont type="icon-search-line" />}
           value={value}
           onChange={onChange}
@@ -118,9 +125,9 @@ const SchemaTree = (props: TreeProps & { setTreeData: React.Dispatch<any>; query
           height={treeHeight}
           {...props}
           fieldNames={{
-            key: 'key',
-            title: 'name',
-            children: 'children',
+            key: "key",
+            title: "name",
+            children: "children",
           }}
           blockNode
           expandedKeys={expandedKeys}
@@ -133,7 +140,7 @@ const SchemaTree = (props: TreeProps & { setTreeData: React.Dispatch<any>; query
           showIcon={false}
         />
       </div>
-    </SchemaTreeContainer>
+    </div>
   );
 };
 

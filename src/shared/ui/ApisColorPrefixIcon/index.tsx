@@ -1,12 +1,11 @@
-import { FC } from 'react';
+import styles from "./style.module.css";
+import { FC } from "react";
 
-import cn from 'classnames';
+import cn from "classnames";
 
-import IconFont from '@/shared/ui/IconFont';
+import IconFont from "@/shared/ui/IconFont";
 
-import { ApisColorPrefixIconContainer } from './style';
-
-const defaultGradientColor = ['#F6504B', '#F98E8B'];
+const defaultGradientColor = ["#F6504B", "#F98E8B"];
 
 interface Props {
   gradientColor: string[];
@@ -16,14 +15,14 @@ interface Props {
 
 const ApisColorPrefixIcon: FC<Props> = ({ gradientColor, icon, className }) => {
   return (
-    <ApisColorPrefixIconContainer
-      className={cn(className)}
+    <div
       style={{
-        background: `linear-gradient(${(gradientColor || defaultGradientColor).join(',')})`,
+        background: `linear-gradient(${(gradientColor || defaultGradientColor).join(",")})`,
       }}
+      className={cn(styles.container, cn(className))}
     >
       <IconFont type={icon} />
-    </ApisColorPrefixIconContainer>
+    </div>
   );
 };
 

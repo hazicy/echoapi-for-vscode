@@ -1,11 +1,12 @@
+import styles from "./style.module.css";
 /* eslint-disable quotes */
 import slots from "@/shared/ui/base/slots.module.css";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import { DatePicker, Flex, Input, InputNumber, Select } from '@/shared/ui/base';
+import { DatePicker, Flex, Input, InputNumber, Select } from "@/shared/ui/base";
 
-import cn from 'classnames';
-import dayjs from 'dayjs';
+import cn from "classnames";
+import dayjs from "dayjs";
 import {
   cloneDeep,
   concat,
@@ -17,15 +18,13 @@ import {
   isEqual,
   keys,
   startsWith,
-} from 'lodash';
+} from "lodash";
 
-import { IconFont, Tooltip } from '@/shared/ui';
-import { MOCK_LANGUAGE_MAP } from '@/features/settings/constants/settings';
-import { FAKERJS_BOOLEAN_OPTIONS } from '@/features/variables/constants/variable';
-import { useSystemConfig } from '@/app/store';
-import { transKey } from '@/features/variables/utils/variable';
-
-import { FakerParamsContainer } from './style';
+import { IconFont, Tooltip } from "@/shared/ui";
+import { MOCK_LANGUAGE_MAP } from "@/features/settings/constants/settings";
+import { FAKERJS_BOOLEAN_OPTIONS } from "@/features/variables/constants/variable";
+import { useSystemConfig } from "@/app/store";
+import { transKey } from "@/features/variables/utils/variable";
 
 interface Props {
   value: any;
@@ -34,13 +33,18 @@ interface Props {
   onChange: (fakerJsParamList: any) => void;
 }
 
-const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) => {
+const Index = ({
+  value,
+  fakerJsParamsMap,
+  fakerJsParamList,
+  onChange,
+}: Props) => {
   const { t } = useTranslation();
   const language = useSystemConfig((state) => state.systemConfig.language);
   const paramConfig = fakerJsParamsMap[value];
 
   const add = (key: string, type: string) => {
-    if (isEqual(type, 'coordinates')) {
+    if (isEqual(type, "coordinates")) {
       onChange(concat(fakerJsParamList, [{ key, value: [0, 0] }]));
     } else {
       onChange(concat(fakerJsParamList, [{ key, value: undefined }]));
@@ -51,7 +55,8 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
     onChange(filter(fakerJsParamList, (item) => item?.key !== key));
   };
 
-  const mapOptions = (arr: string[]) => arr.map((item) => ({ label: item, value: item }));
+  const mapOptions = (arr: string[]) =>
+    arr.map((item) => ({ label: item, value: item }));
 
   const handleChange = (key: string, value: any) => {
     const index = findIndex(fakerJsParamList, (item) => item.key === key);
@@ -65,7 +70,7 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
   const getCom = ({ key, value }: { key: string; value: any }, params: any) => {
     const type = paramConfig?.[key]?.type;
     const lowerType = type?.toLowerCase();
-    if (isEqual(lowerType, 'date')) {
+    if (isEqual(lowerType, "date")) {
       const timeVal = value ? dayjs(value) : undefined;
       return (
         <DatePicker
@@ -76,7 +81,7 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
         />
       );
     }
-    if (isEqual(lowerType, 'number')) {
+    if (isEqual(lowerType, "number")) {
       const precision = params?.[key]?.precision || 0;
       const max = params?.[key]?.max || undefined;
       const min = params?.[key]?.min || 0;
@@ -92,7 +97,7 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
         />
       );
     }
-    if (isEqual(lowerType, 'boolean')) {
+    if (isEqual(lowerType, "boolean")) {
       return (
         <Select
           onChange={(e) => handleChange(key, e)}
@@ -102,7 +107,7 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
         />
       );
     }
-    if (isEqual(lowerType, 'string')) {
+    if (isEqual(lowerType, "string")) {
       return (
         <Input
           maxLength={256}
@@ -112,7 +117,7 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
         />
       );
     }
-    if (isEqual(lowerType, 'regexp')) {
+    if (isEqual(lowerType, "regexp")) {
       return (
         <Input
           maxLength={256}
@@ -122,12 +127,17 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
         />
       );
     }
-    if (isEqual(lowerType, 'array')) {
+    if (isEqual(lowerType, "array")) {
       return (
-        <Select value={value} onChange={(e) => handleChange(key, e)} size="small" mode="tags" />
+        <Select
+          value={value}
+          onChange={(e) => handleChange(key, e)}
+          size="small"
+          mode="tags"
+        />
       );
     }
-    if (isEqual(lowerType, 'coordinates')) {
+    if (isEqual(lowerType, "coordinates")) {
       const latitude = value?.[0];
       const longitude = value?.[1];
       const coordinatesChange = (index: number, key: string, e: number) => {
@@ -144,7 +154,7 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
             min={-180}
             max={180}
             precision={5}
-            placeholder={t('var_insert.latitude')}
+            placeholder={t("var_insert.latitude")}
             controls={false}
           />
           <InputNumber
@@ -154,16 +164,16 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
             min={-180}
             max={180}
             precision={5}
-            placeholder={t('var_insert.longitude')}
+            placeholder={t("var_insert.longitude")}
             controls={false}
           />
         </Flex>
       );
     }
-    if (startsWith(type, 'enum(') && endsWith(type, ')')) {
+    if (startsWith(type, "enum(") && endsWith(type, ")")) {
       const options = type
         ?.substring(5, type?.length - 1)
-        ?.split('|')
+        ?.split("|")
         ?.map((v: string) => ({
           title: v.trim(),
           value: v.trim(),
@@ -177,10 +187,10 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
         />
       );
     }
-    if (startsWith(type, 'enums(') && endsWith(type, ')')) {
+    if (startsWith(type, "enums(") && endsWith(type, ")")) {
       const options = type
         ?.substring(6, type?.length - 1)
-        ?.split('|')
+        ?.split("|")
         ?.map((v: string) => ({
           title: v.trim(),
           value: v.trim(),
@@ -207,30 +217,34 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
 
   return (
     <>
-      <div className={slots["param-title"]}>{t('var_insert.param_config')}</div>
-      <FakerParamsContainer vertical>
+      <div className={slots["param-title"]}>{t("var_insert.param_config")}</div>
+      <Flex vertical className={styles.container}>
         {fakerJsParamList?.length ? (
           <div
             className={cn(slots.param, {
-              [slots.footer]: fakerJsParamList?.length === keys(fakerJsParamsMap[value]).length,
+              [slots.footer]:
+                fakerJsParamList?.length ===
+                keys(fakerJsParamsMap[value]).length,
             })}
           >
             {fakerJsParamList.map((item) => {
               const params = fakerJsParamsMap?.[value];
               const desc = has(params, item.key)
                 ? params?.[item.key]?.description?.[MOCK_LANGUAGE_MAP[language]]
-                : '';
+                : "";
               return (
                 <div className={slots["param-item"]}>
                   <div className={slots["param-content"]}>
                     <span className={slots["param-item-desc"]}>
                       <Tooltip title={desc}>{transKey(item.key)}</Tooltip>
                     </span>
-                    <div className={slots["param-item-com"]}>{getCom(item, params)}</div>
+                    <div className={slots["param-item-com"]}>
+                      {getCom(item, params)}
+                    </div>
                   </div>
                   <IconFont
                     className={slots["param-item-del"]}
-                    style={{ color: '#ff583e', cursor: 'pointer' }}
+                    style={{ color: "#ff583e", cursor: "pointer" }}
                     onClick={() => del(item.key)}
                     type="icon-error"
                   />
@@ -239,25 +253,28 @@ const Index = ({ value, fakerJsParamsMap, fakerJsParamList, onChange }: Props) =
             })}
           </div>
         ) : (
-          ''
+          ""
         )}
 
         <div className={slots.selection}>
           {entries(fakerJsParamsMap[value]).map(([key, v]: any) => {
             const newKey = transKey(key);
             if (fakerJsParamList?.find((it) => it?.key === key)) {
-              return '';
+              return "";
             }
             return (
               <Tooltip title={v?.description?.[MOCK_LANGUAGE_MAP[language]]}>
-                <span onClick={() => add(key, v?.type)} className={slots["select-item"]}>
+                <span
+                  onClick={() => add(key, v?.type)}
+                  className={slots["select-item"]}
+                >
                   {newKey}
                 </span>
               </Tooltip>
             );
           })}
         </div>
-      </FakerParamsContainer>
+      </Flex>
     </>
   );
 };

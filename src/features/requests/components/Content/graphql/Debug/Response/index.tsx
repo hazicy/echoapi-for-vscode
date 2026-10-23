@@ -1,44 +1,48 @@
-import { memo } from 'react';
+import styles from "./style.module.css";
+import { memo } from "react";
 
-import { useMemoizedFn } from 'ahooks';
-import produce from 'immer';
+import { useMemoizedFn } from "ahooks";
+import produce from "immer";
 
-import ResponsePanel from '@/features/requests/components/Response';
-import { useApis } from '@/app/store';
-import { ApiComponentType, GraphQLDetailsData } from '@/features/requests/types/graphql';
-
-import { ResponseContainer } from './style';
+import ResponsePanel from "@/features/requests/components/Response";
+import { useApis } from "@/app/store";
+import {
+  ApiComponentType,
+  GraphQLDetailsData,
+} from "@/features/requests/types/graphql";
 
 const Response = memo((props: ApiComponentType) => {
   const { apisData, onApisDataChange } = props;
 
   const curApiSendingData = useApis((state) => state.currentSendingData);
 
-  const handleOnChange = useMemoizedFn((data: GraphQLDetailsData['response']) => {
-    const newData = produce(apisData, (draft) => {
-      draft.response = data;
-    });
-    onApisDataChange(newData);
-  });
+  const handleOnChange = useMemoizedFn(
+    (data: GraphQLDetailsData["response"]) => {
+      const newData = produce(apisData, (draft) => {
+        draft.response = data;
+      });
+      onApisDataChange(newData);
+    },
+  );
 
   return (
-    <ResponseContainer>
+    <div className={styles.container}>
       <ResponsePanel
         showDownload
-        resultIncludesTabs={['beautify', 'visualization']}
+        resultIncludesTabs={["beautify", "visualization"]}
         includesTabs={[
-          'realtime',
-          'requestHeader',
-          'responseHeader',
-          'cookie',
-          'realRequest',
-          'console',
+          "realtime",
+          "requestHeader",
+          "responseHeader",
+          "cookie",
+          "realRequest",
+          "console",
         ]}
         responseData={apisData.response}
         sendingData={curApiSendingData}
         onResponseDataChange={handleOnChange}
       />
-    </ResponseContainer>
+    </div>
   );
 });
 

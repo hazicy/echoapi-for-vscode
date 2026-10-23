@@ -1,20 +1,19 @@
-import { Radio as AntdRadio } from '@/shared/ui/base';
-import type { RadioGroupProps, RadioProps } from '@/shared/ui/base';
-
-import { RadioGroupWrap, RadioWrap } from './style';
+import styles from "./style.module.css";
+import { Radio as AntdRadio } from "@/shared/ui/base";
+import type { RadioGroupProps, RadioProps } from "@/shared/ui/base";
 
 const Radio = (props: RadioProps) => {
   return (
-    <RadioWrap>
+    <div className={styles.container}>
       <AntdRadio {...props} />
-    </RadioWrap>
+    </div>
   );
 };
 const Group = (props: RadioGroupProps) => {
   return (
-    <RadioGroupWrap>
+    <div className={styles.radioGroup}>
       <AntdRadio.Group {...props}></AntdRadio.Group>
-    </RadioGroupWrap>
+    </div>
   );
 };
 Radio.Group = Group;

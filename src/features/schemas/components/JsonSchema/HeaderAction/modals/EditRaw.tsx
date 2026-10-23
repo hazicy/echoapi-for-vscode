@@ -1,16 +1,15 @@
-import React, { memo, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import styles from "../style.module.css";
+import React, { memo, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { message } from '@/shared/ui/base';
+import { message } from "@/shared/ui/base";
 
-import { useMemoizedFn } from 'ahooks';
-import { isObject, isString } from 'lodash';
+import { useMemoizedFn } from "ahooks";
+import { isObject, isString } from "lodash";
 
-import CodeEditor from '@/shared/components/CodeEditor';
-import Modal from '@/shared/ui/Modal';
-import { EditFormat, isJSON } from '@/shared/utils/common';
-
-import { EditRawContainer } from '../style';
+import CodeEditor from "@/shared/components/CodeEditor";
+import Modal from "@/shared/ui/Modal";
+import { EditFormat, isJSON } from "@/shared/utils/common";
 
 const EditRow: React.FC<any> = (props) => {
   const { t } = useTranslation();
@@ -20,7 +19,7 @@ const EditRow: React.FC<any> = (props) => {
 
   const handleConfirm = useMemoizedFn(() => {
     if (!isJSON(tempText)) {
-      message.error(t('supplement.only_json_pick'));
+      message.error(t("supplement.only_json_pick"));
       return;
     }
     const data = JSON.parse(tempText);
@@ -33,10 +32,10 @@ const EditRow: React.FC<any> = (props) => {
     try {
       jsonText = JSON.stringify(tempText);
     } catch (ex) {
-      jsonText = '';
-      message.error(t('supplement.parse_exception'));
+      jsonText = "";
+      message.error(t("supplement.parse_exception"));
     }
-    const beautifyText = isObject(tempText) ? EditFormat(jsonText).value : '';
+    const beautifyText = isObject(tempText) ? EditFormat(jsonText).value : "";
 
     setTempText(beautifyText);
   }, []);
@@ -48,18 +47,14 @@ const EditRow: React.FC<any> = (props) => {
       title="Raw"
       onCancel={onCancel}
       onOk={handleConfirm}
-      cancelText={t('supplement.cancel')}
-      okText={t('supplement.confirm')}
+      cancelText={t("supplement.cancel")}
+      okText={t("supplement.confirm")}
     >
-      <EditRawContainer>
+      <div className={styles.editRaw}>
         {isString(tempText) && (
-          <CodeEditor
-            language="json"
-            value={tempText}
-            onChange={setTempText}
-          />
+          <CodeEditor language="json" value={tempText} onChange={setTempText} />
         )}
-      </EditRawContainer>
+      </div>
     </Modal>
   );
 };

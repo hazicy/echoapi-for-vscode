@@ -1,27 +1,31 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { memo, useRef, useState } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
-import { useTranslation } from 'react-i18next';
+import { memo, useRef, useState } from "react";
+import { useDrag, useDrop } from "react-dnd";
+import { useTranslation } from "react-i18next";
 
-import { Flex, Popconfirm, Switch } from '@/shared/ui/base';
+import { Flex, Popconfirm, Switch } from "@/shared/ui/base";
 
-import { useDeepCompareEffect, useMemoizedFn } from 'ahooks';
-import classNames from 'classnames';
-import { isEmpty, map, throttle } from 'lodash';
-import VirtualList from 'rc-virtual-list';
+import { useDeepCompareEffect, useMemoizedFn } from "ahooks";
+import classNames from "classnames";
+import { isEmpty, map, throttle } from "lodash";
+import VirtualList from "rc-virtual-list";
 
-import OrderNumber from '@/shared/components/SortableCollapse/OrderNumber';
-import Collapse from '@/shared/ui/Collapse';
-import IconFont from '@/shared/ui/IconFont';
-import { STATUS_CODE } from '@/shared/constants/common';
-import useTheme from '@/shared/hooks/useTheme';
+import OrderNumber from "@/shared/components/SortableCollapse/OrderNumber";
+import Collapse from "@/shared/ui/Collapse";
+import IconFont from "@/shared/ui/IconFont";
+import { STATUS_CODE } from "@/shared/constants/common";
+import useTheme from "@/shared/hooks/useTheme";
 
-import Arrow from './Arrow';
-import Tag from './Tag';
-import { AnyObject, DRAG_MODE, SortableCollapseProps, SortableItemProps } from './types';
-import { getDefaultActiveKey } from './utils';
-
-import { SortableCollapseWrapper } from './style';
+import Arrow from "./Arrow";
+import Tag from "./Tag";
+import {
+  AnyObject,
+  DRAG_MODE,
+  SortableCollapseProps,
+  SortableItemProps,
+} from "./types";
+import { getDefaultActiveKey } from "./utils";
 
 const SortableItem = <SortItem extends AnyObject>({
   isTree,
@@ -69,7 +73,7 @@ const SortableItem = <SortItem extends AnyObject>({
   }, [isDefaultActiveItems, isDefaultActiveKeyShowAll]);
 
   const [{ isDragging }, drag, preview] = useDrag({
-    type: 'card',
+    type: "card",
     item: () => {
       return { index: sortItem[rowKey], nodeKey: sortItem[rowKey] };
     },
@@ -79,7 +83,7 @@ const SortableItem = <SortItem extends AnyObject>({
   });
 
   const [{ canDrop, isOver }, drop] = useDrop({
-    accept: 'card',
+    accept: "card",
     collect: (monitor) => ({
       isOver: monitor.isOver({ shallow: true }),
       canDrop: monitor.canDrop(),
@@ -89,7 +93,9 @@ const SortableItem = <SortItem extends AnyObject>({
         return;
       }
 
-      const hoverBoundingRect = (refHandler.current as HTMLElement)?.getBoundingClientRect();
+      const hoverBoundingRect = (
+        refHandler.current as HTMLElement
+      )?.getBoundingClientRect();
       const hoverHeight = hoverBoundingRect?.bottom - hoverBoundingRect?.top;
       const clientOffset = monitor.getClientOffset();
 
@@ -114,7 +120,8 @@ const SortableItem = <SortItem extends AnyObject>({
     drop(item: any, monitor) {
       const didDrop = monitor.didDrop();
       if (!didDrop && dragMode) {
-        handleDragEnd && handleDragEnd(item.nodeKey, sortItem[rowKey], dragMode);
+        handleDragEnd &&
+          handleDragEnd(item.nodeKey, sortItem[rowKey], dragMode);
       }
     },
   });
@@ -131,11 +138,16 @@ const SortableItem = <SortItem extends AnyObject>({
         onMouseLeave={() => setIsHovered(false)}
       >
         <Flex align="center" gap={12}>
-          {showOrderNumber && orderNumber && <OrderNumber orderNumber={orderNumber} />}
+          {showOrderNumber && orderNumber && (
+            <OrderNumber orderNumber={orderNumber} />
+          )}
           {defaultTools.onSwitchChange && (
             <Switch
               size="small"
-              checked={sortItem[defaultTools.switchKey || 'enabled'] === STATUS_CODE.ENABLE}
+              checked={
+                sortItem[defaultTools.switchKey || "enabled"] ===
+                STATUS_CODE.ENABLE
+              }
               onChange={(checked, event) => {
                 event.stopPropagation();
                 defaultTools.onSwitchChange?.(checked, sortItem);
@@ -189,18 +201,24 @@ const SortableItem = <SortItem extends AnyObject>({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <Flex gap={themeToken.padding12} style={{ opacity: hoverShowTools && isHovered ? 1 : 0 }}>
+        <Flex
+          gap={themeToken.padding12}
+          style={{ opacity: hoverShowTools && isHovered ? 1 : 0 }}
+        >
           {customHoverTools && customHoverTools(sortItem)}
           {!isEmpty(defaultTools) && (
             <Flex gap={themeToken.padding12}>
               {defaultTools.onDelete && (
                 <Popconfirm
-                  title={t('common.tips')}
+                  title={t("common.tips")}
                   onConfirm={() => {
                     defaultTools.onDelete?.(sortItem);
                   }}
                 >
-                  <IconFont style={{ color: themeToken.iconColor }} type="icon-delete" />
+                  <IconFont
+                    style={{ color: themeToken.iconColor }}
+                    type="icon-delete"
+                  />
                 </Popconfirm>
               )}
             </Flex>
@@ -243,17 +261,20 @@ const SortableItem = <SortItem extends AnyObject>({
         <div ref={refHandler} className={slots.icon}>
           <IconFont
             type="icon-drag"
-            style={{ color: themeToken.iconColor, fontSize: themeToken.fontSize }}
+            style={{
+              color: themeToken.iconColor,
+              fontSize: themeToken.fontSize,
+            }}
           />
         </div>
       )}
-      <div style={{ width: `calc(100% - ${sortable ? '20' : '0'}px)` }}>
+      <div style={{ width: `calc(100% - ${sortable ? "20" : "0"}px)` }}>
         <Collapse
           headerPadding="4px 12px"
           activeKey={activeKey}
           bordered
           items={items as any}
-          collapsible={showArrow ? 'header' : 'icon'}
+          collapsible={showArrow ? "header" : "icon"}
           onChange={(activeKey) => onChange(activeKey)}
         />
       </div>
@@ -283,7 +304,10 @@ const SortableCollapse = <SortItem extends AnyObject>({
         itemKey={rowKey}
       >
         {(sortItem: SortItem, index) => (
-          <SortableCollapseWrapper key={sortItem[rowKey]} className={classNames(wrapClassName)}>
+          <div
+            key={sortItem[rowKey]}
+            className={classNames(styles.container, classNames(wrapClassName))}
+          >
             <PureSortableItem
               isTree={isTree}
               handleDragEnd={handleDragEnd}
@@ -294,14 +318,14 @@ const SortableCollapse = <SortItem extends AnyObject>({
               sortItem={sortItem}
               {...restProps}
             />
-          </SortableCollapseWrapper>
+          </div>
         )}
       </VirtualList>
     );
   }
 
   return (
-    <SortableCollapseWrapper className={classNames(wrapClassName)}>
+    <div className={classNames(styles.container, classNames(wrapClassName))}>
       {map(sortItemList, (sortItem, index) => (
         <PureSortableItem
           isTree={isTree}
@@ -314,7 +338,7 @@ const SortableCollapse = <SortItem extends AnyObject>({
           {...restProps}
         />
       ))}
-    </SortableCollapseWrapper>
+    </div>
   );
 };
 

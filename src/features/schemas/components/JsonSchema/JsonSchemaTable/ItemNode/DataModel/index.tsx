@@ -1,19 +1,27 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useContext, useEffect, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useContext, useEffect, useMemo, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
-import { useMemoizedFn, useSafeState } from 'ahooks';
-import cn from 'classnames';
-import produce from 'immer';
-import { assign, has, isArray, isEmpty, isPlainObject, isString, values } from 'lodash';
+import { useMemoizedFn, useSafeState } from "ahooks";
+import cn from "classnames";
+import produce from "immer";
+import {
+  assign,
+  has,
+  isArray,
+  isEmpty,
+  isPlainObject,
+  isString,
+  values,
+} from "lodash";
 
-import ItemNode from '..';
-import context from '../../context';
-import LinkModal from '../../modals/Link';
-import ObjectList from '../../NodeList/Object';
+import ItemNode from "..";
+import context from "../../context";
+import LinkModal from "../../modals/Link";
+import ObjectList from "../../NodeList/Object";
 
-import { ModelWarper } from './style';
-import { AnyObject } from '@/shared/types/common';
+import { AnyObject } from "@/shared/types/common";
 
 type Props = {
   deepIndex: number;
@@ -48,7 +56,9 @@ const DataModel: React.FC<Props> = (props) => {
     return schemaData?.[nodeValue?.ECHOAPI_MODEL_ID];
   }, [schemaData, nodeValue?.ECHOAPI_MODEL_ID]);
 
-  const parentNodeRef = useRef(parentModels.current.concat(nodeValue?.ECHOAPI_MODEL_ID));
+  const parentNodeRef = useRef(
+    parentModels.current.concat(nodeValue?.ECHOAPI_MODEL_ID),
+  );
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
@@ -83,7 +93,10 @@ const DataModel: React.FC<Props> = (props) => {
     }
     const resultList: any[] = [];
     // Handle case where imported data has no ECHOAPI_ORDERS or ECHOAPI_ORDERS is empty
-    if ((!isArray(orderKeys) || orderKeys.length <= 0) && isPlainObject(nodeValue?.properties)) {
+    if (
+      (!isArray(orderKeys) || orderKeys.length <= 0) &&
+      isPlainObject(nodeValue?.properties)
+    ) {
       Object.keys(nodeValue?.properties).forEach((key) => {
         if (isPlainObject(nodeValue?.properties[key])) {
           resultList.push([key, nodeValue?.properties[key]]);
@@ -95,7 +108,7 @@ const DataModel: React.FC<Props> = (props) => {
         const modelData = schemaData?.[schemaKey];
         if (isPlainObject(modelData) && isPlainObject(modelData?.schema)) {
           const modelSchema = produce(modelData?.schema, (draft: any) => {
-            draft.type = 'dataModel';
+            draft.type = "dataModel";
             draft.ECHOAPI_MODEL_ID = schemaKey;
             draft.ECHOAPI_MODEL_KEY = key;
             draft.refData = refData;
@@ -115,7 +128,7 @@ const DataModel: React.FC<Props> = (props) => {
         const modelData = schemaData?.[schemaKey];
         if (isPlainObject(modelData) && isPlainObject(modelData?.schema)) {
           const modelSchema = produce(modelData?.schema, (draft: any) => {
-            draft.type = 'dataModel';
+            draft.type = "dataModel";
             draft.ECHOAPI_MODEL_ID = schemaKey;
             draft.ECHOAPI_MODEL_KEY = key;
             draft.refData = refData;
@@ -134,27 +147,30 @@ const DataModel: React.FC<Props> = (props) => {
     }
     setShowModal(true);
   });
-  const isLoopLink = parentModels.current.some((item) => item === nodeValue?.ECHOAPI_MODEL_ID);
+  const isLoopLink = parentModels.current.some(
+    (item) => item === nodeValue?.ECHOAPI_MODEL_ID,
+  );
 
   const getProperties = (model: any) => {
     if (model?.ECHOAPI_REFS) {
-      return values(model?.ECHOAPI_REFS)?.reduce(
-        (pre, e) => {
-          pre = { ...pre, ...getProperties(schemaData?.[e?.ref]?.schema) };
-          return pre;
-        },
-        model?.properties || {}
-      );
+      return values(model?.ECHOAPI_REFS)?.reduce((pre, e) => {
+        pre = { ...pre, ...getProperties(schemaData?.[e?.ref]?.schema) };
+        return pre;
+      }, model?.properties || {});
     } else {
       return model?.properties;
     }
   };
 
-  if (linkSchema === 'disable') {
+  if (linkSchema === "disable") {
     if (isLoopLink) {
       return null;
     }
-    return <ObjectList {...{ ...props, deepIndex: deepIndex - 1, parentModels: parentNodeRef }} />;
+    return (
+      <ObjectList
+        {...{ ...props, deepIndex: deepIndex - 1, parentModels: parentNodeRef }}
+      />
+    );
   }
 
   return (
@@ -166,35 +182,47 @@ const DataModel: React.FC<Props> = (props) => {
           onLinkSchema={handleLinkSchema}
         />
       )}
-      <ModelWarper ref={refTable} className={cn('ref-table', 'model-tbody', 'table-tbody')}>
+      <div
+        ref={refTable}
+        className={cn(
+          styles.container,
+          cn("ref-table", "model-tbody", "table-tbody"),
+        )}
+      >
         <div className={slots["outer-box"]} style={{ height: warpHeight }}>
           <div className={slots["edit-form"]}>
             <div className={slots["btn-item"]} onClick={handleEditModel}>
-              <span>{t('supplement.edit')}</span>
+              <span>{t("supplement.edit")}</span>
             </div>
             <div className={slots["btn-item"]} onClick={onCancelLinkSchema}>
-              <span>{t('supplement.disassociate')}</span>
+              <span>{t("supplement.disassociate")}</span>
             </div>
             <div className={slots["btn-item"]} onClick={onDeleteModel}>
-              {t('supplement.delete')}
+              {t("supplement.delete")}
             </div>
           </div>
         </div>
 
         {isLoopLink ? (
-          <div className={slots["loop-link-item"]}>{t('supplement.link_schema_loop')}</div>
+          <div className={slots["loop-link-item"]}>
+            {t("supplement.link_schema_loop")}
+          </div>
         ) : isArray(listData) && listData.length ? (
           listData.map(([key, value], index) => {
-            const mergedValue = assign({}, value, nodeValue.refData?.ECHOAPI_OVERRIDES?.[key]);
+            const mergedValue = assign(
+              {},
+              value,
+              nodeValue.refData?.ECHOAPI_OVERRIDES?.[key],
+            );
             // Recursively validate if refValue is an empty schema
             const refValue = schemaData?.[nodeValue?.refData?.ref]?.schema;
             const properties = getProperties(refValue);
             if (isEmpty(value) || isEmpty(properties)) {
               return (
                 <div className={slots["loop-empty-model"]}>
-                  {t('supplement.sch')}
+                  {t("supplement.sch")}
                   <span>{emptyModelInfo?.name}</span>
-                  {t('supplement.no_field')}
+                  {t("supplement.no_field")}
                 </div>
               );
             }
@@ -210,17 +238,22 @@ const DataModel: React.FC<Props> = (props) => {
                   onChange: () => void 0,
                   onDeleteNode: () => void 0,
                   onAddSiblingNode: () => void 0,
-                  isRequired: nodeValue.refData?.ECHOAPI_OVERRIDES?.[key]?.required?.includes(key),
+                  isRequired:
+                    nodeValue.refData?.ECHOAPI_OVERRIDES?.[
+                      key
+                    ]?.required?.includes(key),
                   onSetRequired: (k) => {
                     const newData = produce(mergedValue, (draft: AnyObject) => {
-                      if (!has(draft, 'required')) {
-                        draft['required'] = [];
+                      if (!has(draft, "required")) {
+                        draft["required"] = [];
                       }
                       if (draft?.required?.includes(k)) {
                         // Delete
-                        draft['required'] = draft?.required?.filter((e: string) => e !== k);
+                        draft["required"] = draft?.required?.filter(
+                          (e: string) => e !== k,
+                        );
                       } else {
-                        draft['required'] = draft?.required?.concat([k]);
+                        draft["required"] = draft?.required?.concat([k]);
                       }
                     });
                     onChangeRefs.apply(null, [key, ...[newData]]);
@@ -229,7 +262,7 @@ const DataModel: React.FC<Props> = (props) => {
                   isModelItem: true,
                   onChangeRefs,
                   overrideData: nodeValue.refData?.ECHOAPI_OVERRIDES?.[key],
-                  linkSchema: 'disable',
+                  linkSchema: "disable",
                   parentModels: parentNodeRef,
                   mergedValue: mergedValue,
                 }}
@@ -238,12 +271,12 @@ const DataModel: React.FC<Props> = (props) => {
           })
         ) : (
           <div className={slots["loop-empty-model"]}>
-            {t('supplement.she')}
+            {t("supplement.she")}
             <span>{emptyModelInfo?.name}</span>
-            {t('supplement.no_field')}
+            {t("supplement.no_field")}
           </div>
         )}
-      </ModelWarper>
+      </div>
     </>
   );
 };

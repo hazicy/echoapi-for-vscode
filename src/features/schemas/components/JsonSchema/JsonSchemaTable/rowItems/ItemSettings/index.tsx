@@ -1,30 +1,35 @@
+import "./style.css";
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useEffect, useImperativeHandle, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex, Popconfirm, Segmented, Select, message } from '@/shared/ui/base';
+import { Flex, Popconfirm, Segmented, Select, message } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import classNames from 'classnames';
-import { isNumber, isObject, isUndefined, toLower } from 'lodash';
+import { useSafeState } from "ahooks";
+import classNames from "classnames";
+import { isNumber, isObject, isUndefined, toLower } from "lodash";
 
-import CodeEditor from '@/shared/components/CodeEditor';
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
-import Tooltip from '@/shared/ui/Tooltip';
-import { copyStringToClipboard } from '@/shared/utils/common';
-import { EditFormat } from '@/shared/utils/common';
-import { openUrl } from '@/shared/utils/open';
+import CodeEditor from "@/shared/components/CodeEditor";
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
+import Tooltip from "@/shared/ui/Tooltip";
+import { copyStringToClipboard } from "@/shared/utils/common";
+import { EditFormat } from "@/shared/utils/common";
+import { openUrl } from "@/shared/utils/open";
 
-import { ITEM_TYPES } from '../ItemKey/constant';
-import ItemMock from '../ItemMock';
-import ArrayModal from './ArrayModal';
-import BooleanModal from './BooleanModal';
-import NumberModal from './NumberModal';
-import SchemaModal from './SchemaModal';
-import StringModal from './StringModal';
-
-import { SchemasPopStyle, SettingContent, SettingsWrapperContainer } from './style';
+import { ITEM_TYPES } from "../ItemKey/constant";
+import ItemMock from "../ItemMock";
+import ArrayModal from "./ArrayModal";
+import BooleanModal from "./BooleanModal";
+import NumberModal from "./NumberModal";
+import SchemaModal from "./SchemaModal";
+import StringModal from "./StringModal";
 
 const MODALPAGES: any = {
   string: StringModal,
@@ -61,7 +66,7 @@ const ItemSettings = (props: any, ref: any) => {
   } = props;
   const { t } = useTranslation();
   const [tempValue, setTempValue] = useState(value);
-  const [activeTab, setActiveTab] = useSafeState<string | number>('dataModel');
+  const [activeTab, setActiveTab] = useSafeState<string | number>("dataModel");
 
   useEffect(() => {
     setTempValue(value);
@@ -70,12 +75,12 @@ const ItemSettings = (props: any, ref: any) => {
   const options = useMemo(() => {
     const opt = [
       {
-        value: 'dataModel',
-        label: t('common.schema.advanced_settings.set'),
+        value: "dataModel",
+        label: t("common.schema.advanced_settings.set"),
       },
       {
-        value: 'schema',
-        label: t('common.schema.advanced_settings.edit_code'),
+        value: "schema",
+        label: t("common.schema.advanced_settings.edit_code"),
       },
     ];
     return opt;
@@ -85,11 +90,11 @@ const ItemSettings = (props: any, ref: any) => {
     const newVal = newValue;
     const newData = { ...tempValue };
     newData[attrName] = newVal;
-    if (attrName === 'apipost_enable_enum' && newVal === false) {
+    if (attrName === "apipost_enable_enum" && newVal === false) {
       newData.apipost_enable_enum = undefined;
       newData.enum = undefined;
     }
-    if (attrName === 'format' && newValue === '') {
+    if (attrName === "format" && newValue === "") {
       delete newData.format;
     }
 
@@ -107,9 +112,9 @@ const ItemSettings = (props: any, ref: any) => {
   };
 
   const handleSaveChanges = () => {
-    if (value.type === 'integer') {
+    if (value.type === "integer") {
       if (tempValue?.enum?.some((d: any) => !isNumber(d))) {
-        message.error(t('supplement.enum_invalid'));
+        message.error(t("supplement.enum_invalid"));
         return;
       }
     }
@@ -125,7 +130,9 @@ const ItemSettings = (props: any, ref: any) => {
 
   const beautifyText = useMemo(() => {
     try {
-      return isObject(tempValue) ? EditFormat(JSON.stringify(tempValue))?.value : '';
+      return isObject(tempValue)
+        ? EditFormat(JSON.stringify(tempValue))?.value
+        : "";
     } catch (ex) {
       return JSON.stringify(tempValue);
     }
@@ -136,10 +143,17 @@ const ItemSettings = (props: any, ref: any) => {
   const ModalPage = MODALPAGES[modalType];
 
   const SelectTypeDom = (
-    <Select style={{ width: '100%' }} value={value.type} size="small" onChange={handleChangeType}>
+    <Select
+      style={{ width: "100%" }}
+      value={value.type}
+      size="small"
+      onChange={handleChangeType}
+    >
       {ITEM_TYPES.map((d: string) => (
         <Select.Option value={d} key={d}>
-          <span className={classNames(slots[d] ?? d, slots["item-key-types"])}>{toLower(d)}</span>
+          <span className={classNames(slots[d] ?? d, slots["item-key-types"])}>
+            {toLower(d)}
+          </span>
         </Select.Option>
       ))}
     </Select>
@@ -161,7 +175,6 @@ const ItemSettings = (props: any, ref: any) => {
 
   return (
     <>
-      <SchemasPopStyle />
       <Popconfirm
         overlayStyle={{ width: 400 }}
         placement="rightTop"
@@ -170,10 +183,9 @@ const ItemSettings = (props: any, ref: any) => {
         // getTooltipContainer={(triggerNode: HTMLElement) => triggerNode.parentNode as HTMLElement}
         title={null}
         description={
-          <SettingsWrapperContainer>
-
+          <div className={styles.container}>
             <Flex style={{ minHeight: 300 }} vertical>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <Segmented
                   onChange={(e: string | number) => setActiveTab(e)}
                   value={computedActiveTab}
@@ -181,8 +193,8 @@ const ItemSettings = (props: any, ref: any) => {
                 />
               </div>
 
-              {computedActiveTab === 'dataModel' && (
-                <div style={{ width: '100%' }}>
+              {computedActiveTab === "dataModel" && (
+                <div style={{ width: "100%" }}>
                   <ModalPage
                     SelectTypeDom={SelectTypeDom}
                     ItemMockDom={mockDisable ? null : ItemMockDom}
@@ -195,7 +207,7 @@ const ItemSettings = (props: any, ref: any) => {
                   />
                 </div>
               )}
-              {computedActiveTab === 'schema' && (
+              {computedActiveTab === "schema" && (
                 <div className={slots["source-setting"]}>
                   <CodeEditor
                     height={230}
@@ -210,18 +222,21 @@ const ItemSettings = (props: any, ref: any) => {
             <Flex className={slots["source-help"]} align="center">
               <Flex
                 onClick={() =>
-                  openUrl('https://www.echoapi.com/wiki/docs/schema/create#advanced-field-settings')
+                  openUrl(
+                    "https://www.echoapi.com/wiki/docs/schema/create#advanced-field-settings",
+                  )
                 }
                 className={slots["source-tip"]}
                 gap={2}
               >
-                <Tooltip title={t('supplement.help')}>
+                <Tooltip title={t("supplement.help")}>
                   <IconFont type="icon-tips" />
                 </Tooltip>
               </Flex>
               <Button
                 style={{
-                  visibility: computedActiveTab === 'schema' ? 'visible' : 'hidden',
+                  visibility:
+                    computedActiveTab === "schema" ? "visible" : "hidden",
                   marginRight: 4,
                 }}
                 type="text"
@@ -229,17 +244,19 @@ const ItemSettings = (props: any, ref: any) => {
                 mode="background"
                 onClick={() => copyStringToClipboard(beautifyText)}
               >
-                {t('common.schema.advanced_settings.copy')}
+                {t("common.schema.advanced_settings.copy")}
               </Button>
             </Flex>
-          </SettingsWrapperContainer>
+          </div>
         }
         onConfirm={handleSaveChanges}
         icon={null}
-        okText={t('common.schema.advanced_settings.confirm')}
-        cancelText={t('common.schema.advanced_settings.cancel')}
+        okText={t("common.schema.advanced_settings.confirm")}
+        cancelText={t("common.schema.advanced_settings.cancel")}
       >
-        <SettingContent>{showSettings && renderChild}</SettingContent>
+        <div className={styles.settingContent}>
+          {showSettings && renderChild}
+        </div>
       </Popconfirm>
     </>
   );

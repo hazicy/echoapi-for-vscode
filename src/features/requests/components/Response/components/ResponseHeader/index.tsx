@@ -1,11 +1,10 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, memo } from 'react';
+import { FC, memo } from "react";
 
-import { isArray, isEqual, isPlainObject } from 'lodash';
+import { isArray, isEqual, isPlainObject } from "lodash";
 
-import BasicTable from '@/shared/components/BasicTable';
-
-import { ResponseHeaderContainer } from './style';
+import BasicTable from "@/shared/components/BasicTable";
 
 interface Props {
   value: any;
@@ -30,29 +29,36 @@ const ResponseHeader: FC<Props> = memo(
 
     const columns = [
       {
-        width: '25%',
-        title: 'name',
-        dataIndex: 'key',
+        width: "25%",
+        title: "name",
+        dataIndex: "key",
         render: (_text: any, rowData: any, _rowIndex: number) => (
-          <span className={slots["table-cell-span"]}>{rowData.key || rowData.name}</span>
+          <span className={slots["table-cell-span"]}>
+            {rowData.key || rowData.name}
+          </span>
         ),
       },
       {
-        width: '75%',
-        title: 'value',
-        dataIndex: 'value',
+        width: "75%",
+        title: "value",
+        dataIndex: "value",
         render: (text: any, _rowData: any, _rowIndex: number) => (
-          <span className={slots["table-cell-span"]}>{text || '-'}</span>
+          <span className={slots["table-cell-span"]}>{text || "-"}</span>
         ),
       },
     ];
     return (
-      <ResponseHeaderContainer>
-        <BasicTable bordered showHeader={false} columns={columns} dataSource={dataList()} />
-      </ResponseHeaderContainer>
+      <div className={styles.container}>
+        <BasicTable
+          bordered
+          showHeader={false}
+          columns={columns}
+          dataSource={dataList()}
+        />
+      </div>
     );
   },
-  (prevProps, nextProps) => isEqual(prevProps, nextProps)
+  (prevProps, nextProps) => isEqual(prevProps, nextProps),
 );
 
 export default ResponseHeader;

@@ -1,11 +1,12 @@
+import styles from "../../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useEffect, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useMemo, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Tag } from '@/shared/ui/base';
+import { Tag } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import aptTools from 'apipost-tools';
+import { useSafeState } from "ahooks";
+import aptTools from "apipost-tools";
 import {
   includes,
   isArray,
@@ -14,44 +15,49 @@ import {
   isString,
   map,
   size,
-} from 'lodash';
+} from "lodash";
 
-import Sending from '@/features/requests/components/Sending';
+import Sending from "@/features/requests/components/Sending";
 
-import FlowResponse from '@/features/requests/components/FlowResponse';
-import ResizablePanels from '@/shared/components/ResizablePanels';
-import ResponseResult from '@/features/requests/components/ResponseResult';
+import FlowResponse from "@/features/requests/components/FlowResponse";
+import ResizablePanels from "@/shared/components/ResizablePanels";
+import ResponseResult from "@/features/requests/components/ResponseResult";
 
-import { Tooltip } from '@/shared/ui';
-import Empty from '@/shared/ui/Empty';
-import { useApis } from '@/app/store';
-import useWebsocket2Store from '@/features/requests/store/useApis/websocket2';
-import { MessageItem } from '@/features/requests/types/socketio';
-import { hexToRGBA } from '@/shared/utils/common';
+import { Tooltip } from "@/shared/ui";
+import Empty from "@/shared/ui/Empty";
+import { useApis } from "@/app/store";
+import useWebsocket2Store from "@/features/requests/store/useApis/websocket2";
+import { MessageItem } from "@/features/requests/types/socketio";
+import { hexToRGBA } from "@/shared/utils/common";
 
-import useWebsocket2 from '../../../useWebsocket2';
-import ExampleModal from './ExampleModal';
-import Header from './Header';
-import { getSendStr, handleSocketResponse, stringToColor } from './utils';
-import { ExampleLabelContainer, SocketIoLeftPanelContainer } from '../../style';
+import useWebsocket2 from "../../../useWebsocket2";
+import ExampleModal from "./ExampleModal";
+import Header from "./Header";
+import { getSendStr, handleSocketResponse, stringToColor } from "./utils";
 
 interface Props {
   target_id: string;
   onChange: (value: any) => void;
-  apiScreenDirection:any;
+  apiScreenDirection: any;
 }
 
-const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) => {
+const Realtime: React.FC<Props> = ({
+  target_id,
+  onChange,
+  apiScreenDirection,
+}) => {
   const { t } = useTranslation();
-  const websocket2ConnectionPool = useWebsocket2Store((state) => state.websocket2ConnectionPool);
+  const websocket2ConnectionPool = useWebsocket2Store(
+    (state) => state.websocket2ConnectionPool,
+  );
   const { updatePool } = useWebsocket2();
   const apisActiveKey = useApis((state) => state.apisActiveKey);
   const opensApiDetailsData = useApis((state) => state.opensApiDetailsData);
   const value: any = opensApiDetailsData[target_id];
-  const [mode, setMode] = useSafeState<any>('text');
+  const [mode, setMode] = useSafeState<any>("text");
   const [data, setData] = useSafeState<any>({});
-  const [filterValue, setFilterValue] = useSafeState<string>('');
-  const [filterType, setFilterType] = useSafeState<string>('all');
+  const [filterValue, setFilterValue] = useSafeState<string>("");
+  const [filterType, setFilterType] = useSafeState<string>("all");
   const [isScrollAuto, setIsScrollAuto] = useSafeState<boolean>(true);
   const lastScrollTop = useRef<{ [k: string]: number }>();
   const resultRef = useRef<any>(null);
@@ -64,13 +70,13 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
     collapsedSize: 5,
   };
   const mapTips: any = {
-    connect: '',
-    disconnect: `${t('ws.response.disconnect')}`,
-    error: '',
-    send: '',
-    message: '',
-    listen: `${t('supplement.listening')}`,
-    'listen-end': `${t('supplement.listen_end')}`,
+    connect: "",
+    disconnect: `${t("ws.response.disconnect")}`,
+    error: "",
+    send: "",
+    message: "",
+    listen: `${t("supplement.listening")}`,
+    "listen-end": `${t("supplement.listen_end")}`,
   };
 
   const isJSONString = (str: string): boolean => {
@@ -83,21 +89,21 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
   };
 
   const rawHandle = (data: any) => {
-    let str = '';
+    let str = "";
     switch (data?.action) {
-      case 'connect':
+      case "connect":
         str = data?.message?.message;
         break;
-      case 'send':
+      case "send":
         str = getSendStr(data?.message?.message?.data);
         break;
-      case 'listen':
+      case "listen":
         str = data?.message;
         break;
-      case 'listen-end':
+      case "listen-end":
         str = data?.message;
         break;
-      case 'send_ack':
+      case "send_ack":
         str = getSendStr(data?.message?.message?.data);
         break;
       default:
@@ -105,7 +111,7 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
         break;
     }
 
-    return str || '';
+    return str || "";
   };
 
   const calcContent = (params?: any, parseToJsonStr = false) => {
@@ -115,8 +121,7 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
         message: { message },
       } = params || {};
 
-      if (action === 'message') {
-        
+      if (action === "message") {
         if (!isString(message) && message?.data?.type && message?.data?.data) {
           const bufferRaw = aptTools.bufferToRaw(message?.data?.data, {});
           const { raw } = bufferRaw;
@@ -138,12 +143,12 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
         return rawHandle(params);
       }
     } catch (err) {
-      return '';
+      return "";
     }
   };
 
   const resultRaw = useMemo(() => {
-    return calcContent(data) || '';
+    return calcContent(data) || "";
   }, [data]);
   const renderTitle = (data: any) => {
     const { action } = data || {};
@@ -152,26 +157,30 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
       <div
         className={slots.title}
         style={{
-          whiteSpace: 'nowrap',
-          maxWidth: '100%',
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
+          whiteSpace: "nowrap",
+          maxWidth: "100%",
+          textOverflow: "ellipsis",
+          overflow: "hidden",
         }}
       >
         {mapTips[action]}
-        {includes(['message', 'send', 'send_ack'], action) && data?.message?.message?.event && (
-          <Tag
-            bordered={false}
-            style={{
-              marginLeft: 8,
-              color: stringToColor(data?.message?.message?.event),
-              background: hexToRGBA(stringToColor(data?.message?.message?.event), 0.05),
-            }}
-          >
-            {data?.message?.message?.event}
-          </Tag>
-        )}
-        {includes(['listen', 'listen-end'], action) ? (
+        {includes(["message", "send", "send_ack"], action) &&
+          data?.message?.message?.event && (
+            <Tag
+              bordered={false}
+              style={{
+                marginLeft: 8,
+                color: stringToColor(data?.message?.message?.event),
+                background: hexToRGBA(
+                  stringToColor(data?.message?.message?.event),
+                  0.05,
+                ),
+              }}
+            >
+              {data?.message?.message?.event}
+            </Tag>
+          )}
+        {includes(["listen", "listen-end"], action) ? (
           <Tag
             bordered={false}
             style={{
@@ -184,8 +193,9 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
           </Tag>
         ) : (
           <>
-            {!isEqual(data?.message?.fitForShow, 'Monaco') && isEqual(data?.action, 'message')
-              ? '<Binary>'
+            {!isEqual(data?.message?.fitForShow, "Monaco") &&
+            isEqual(data?.action, "message")
+              ? "<Binary>"
               : calcContent(data)}
           </>
         )}
@@ -197,18 +207,18 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
     return handleSocketResponse(
       websocket2ConnectionPool[apisActiveKey]?.socketRes,
       filterValue,
-      filterType
+      filterType,
     );
   }, [websocket2ConnectionPool, apisActiveKey, filterValue, filterType]);
 
   const DropdownItems = useMemo(() => {
     return map(value?.message, (item: MessageItem) => ({
       label: (
-        <ExampleLabelContainer>
+        <div className={styles.exampleLabel}>
           <span className={slots.name}>
             <Tooltip title={item.name}>{item.name}</Tooltip>
           </span>
-        </ExampleLabelContainer>
+        </div>
       ),
       key: item.param_id,
     }));
@@ -224,10 +234,13 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
     };
   };
   useEffect(() => {
-    if (!isEqual(data?.message?.fitForShow, 'Monaco') && isEqual(data?.action, 'message')) {
-      resultRef?.current?.setTabsValue('preview');
+    if (
+      !isEqual(data?.message?.fitForShow, "Monaco") &&
+      isEqual(data?.action, "message")
+    ) {
+      resultRef?.current?.setTabsValue("preview");
     } else {
-      resultRef?.current?.setTabsValue('beautify');
+      resultRef?.current?.setTabsValue("beautify");
     }
   }, [data]);
 
@@ -238,7 +251,7 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
     }
   }, [apisActiveKey, isScrollAuto, wsTemplateStateList]);
   useEffect(() => {
-    flowRef.current?.addEventListener('scroll', () => {
+    flowRef.current?.addEventListener("scroll", () => {
       if (!lastScrollTop.current)
         lastScrollTop.current = {
           [apisActiveKey]: 0,
@@ -253,51 +266,52 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
 
     return () => {
       // Use local variable to remove event listener
-      currentFlowRef?.removeEventListener('scroll', () => { });
+      currentFlowRef?.removeEventListener("scroll", () => {});
     };
   }, [apisActiveKey]);
   useEffect(() => {
-    if (wsTemplateStateList[size(wsTemplateStateList) - 1]?.action === 'send') {
+    if (wsTemplateStateList[size(wsTemplateStateList) - 1]?.action === "send") {
       setIsScrollAuto(true);
     }
   }, [wsTemplateStateList]);
 
   return (
     <>
-      {websocket2ConnectionPool[apisActiveKey]?.status === 'connecting' && (
+      {websocket2ConnectionPool[apisActiveKey]?.status === "connecting" && (
         <Sending
           onCancel={() => {
             // Disconnect
             window?.vscode.postMessage({
-              action: 'socketio_disconnect',
-              data: target_id
+              action: "socketio_disconnect",
+              data: target_id,
             });
-            updatePool(target_id, 'disconnect', {});
+            updatePool(target_id, "disconnect", {});
           }}
         />
       )}
 
       <div
         style={{
-          height: '100%',
+          height: "100%",
         }}
       >
         {size(wsTemplateStateList) > -1 ? (
           <ResizablePanels
             panelGroupProps={{
-              autoSaveId: 'ws_realtime_container_resize_save_id',
-              direction: apiScreenDirection === 'horizontal' ? 'vertical' : 'horizontal',
+              autoSaveId: "ws_realtime_container_resize_save_id",
+              direction:
+                apiScreenDirection === "horizontal" ? "vertical" : "horizontal",
             }}
             leftPanelProps={{
               ...panelProps,
-              collapseTitle: t('supplement.socket_realtime_msg'),
+              collapseTitle: t("supplement.socket_realtime_msg"),
             }}
             rightPanelProps={{
               ...panelProps,
-              collapseTitle: t('supplement.socket_realtime_content'),
+              collapseTitle: t("supplement.socket_realtime_content"),
             }}
             leftPanel={
-              <SocketIoLeftPanelContainer>
+              <div className={styles.socketIoLeftPanel}>
                 <Header
                   target_id={apisActiveKey}
                   filterValue={filterValue}
@@ -308,10 +322,10 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
                 <div
                   ref={flowRef}
                   style={{
-                    overflow: 'auto',
-                    maxHeight: 'calc(100% - 50px)',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--border-radius)',
+                    overflow: "auto",
+                    maxHeight: "calc(100% - 50px)",
+                    border: "1px solid var(--color-border)",
+                    borderRadius: "var(--border-radius)",
                   }}
                 >
                   <FlowResponse
@@ -323,11 +337,11 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
                     data={wsTemplateStateList}
                   />
                 </div>
-              </SocketIoLeftPanelContainer>
+              </div>
             }
             rightPanel={
-              <div style={{ height: '100%', padding: 8 }}>
-                {isEqual(data?.action, 'message') && (
+              <div style={{ height: "100%", padding: 8 }}>
+                {isEqual(data?.action, "message") && (
                   <ResponseResult
                     ref={resultRef}
                     data={
@@ -335,20 +349,20 @@ const Realtime: React.FC<Props> = ({ target_id, onChange, apiScreenDirection }) 
                         ...data,
                         fit_for_show: data?.message?.fitForShow,
                         stream: data?.message?.message?.data,
-                        mime_type: { ext: data?.message?.dataType, mime: '' },
+                        mime_type: { ext: data?.message?.dataType, mime: "" },
                       } as any
                     }
                     setMode={setMode}
-                    resultIncludesTabs={['beautify', 'native', 'preview']}
+                    resultIncludesTabs={["beautify", "native", "preview"]}
                     warpVisible={false}
                     rawHtml={resultRaw}
                   />
                 )}
-                {!isEqual(data?.action, 'message') && (
+                {!isEqual(data?.action, "message") && (
                   <ResponseResult
                     ref={resultRef}
                     setMode={setMode}
-                    resultIncludesTabs={['beautify', 'native']}
+                    resultIncludesTabs={["beautify", "native"]}
                     warpVisible={false}
                     rawHtml={resultRaw}
                   />

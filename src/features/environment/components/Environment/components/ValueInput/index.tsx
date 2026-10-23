@@ -1,7 +1,6 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { Input } from '@/shared/ui/base';
-
-import ValueInputContainer from './style';
+import { Input } from "@/shared/ui/base";
 
 interface Props {
   value: string;
@@ -19,27 +18,32 @@ const Index = (props: Props) => {
       scrollHeight = tar?.scrollHeight;
 
     if (scrollHeight <= lineHeight || tar.value.length === 0) {
-      tar.style.height = lineHeight + 'px';
+      tar.style.height = lineHeight + "px";
     } else {
-      tar.style.height = scrollHeight + 'px';
+      tar.style.height = scrollHeight + "px";
     }
   };
 
   const handlerBlur = (e: any) => {
     const tar = e.target as HTMLTextAreaElement;
-    tar.style.height = 36 + 'px';
+    tar.style.height = 36 + "px";
   };
 
   return (
-    <ValueInputContainer>
+    <div className={styles.container}>
       <div className={slots["value-input-textarea"]}>
         <Input.TextArea
           disabled={disabled}
           autoSize={false}
-          style={{ position: 'absolute', top: 0, height: '36px !important', lineHeight: '24px' }}
-          placeholder={''}
+          style={{
+            position: "absolute",
+            top: 0,
+            height: "36px !important",
+            lineHeight: "24px",
+          }}
+          placeholder={""}
           variant="borderless"
-          value={value || ''}
+          value={value || ""}
           onInput={handlerInput}
           onFocus={handlerInput}
           onBlur={handlerBlur}
@@ -52,7 +56,7 @@ const Index = (props: Props) => {
           }}
         />
       </div>
-    </ValueInputContainer>
+    </div>
   );
 };
 

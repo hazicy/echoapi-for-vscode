@@ -1,22 +1,21 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { memo, useContext, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { memo, useContext, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Checkbox, Input, Tree } from '@/shared/ui/base';
+import { Checkbox, Input, Tree } from "@/shared/ui/base";
 
-import { useMemoizedFn, useSafeState } from 'ahooks';
-import { isPlainObject, isUndefined } from 'lodash';
+import { useMemoizedFn, useSafeState } from "ahooks";
+import { isPlainObject, isUndefined } from "lodash";
 
-import Button from '@/shared/ui/Button';
-import Empty from '@/shared/ui/Empty';
-import IconFont from '@/shared/ui/IconFont';
-import Modal from '@/shared/ui/Modal';
+import Button from "@/shared/ui/Button";
+import Empty from "@/shared/ui/Empty";
+import IconFont from "@/shared/ui/IconFont";
+import Modal from "@/shared/ui/Modal";
 
-import context from '../../context';
-import { listToTree } from '../../utils/list2tree';
-import useListData from './hooks/useListData';
-
-import { Footer, LinkWarper } from './style';
+import context from "../../context";
+import { listToTree } from "../../utils/list2tree";
+import useListData from "./hooks/useListData";
 
 type Props = {
   open?: boolean;
@@ -30,7 +29,7 @@ const LinkPanel: React.FC<Props> = (props) => {
 
   const [value, setValue] = useSafeState<any | null>(null);
   const [expandedKeys, setExpandedKeys] = useSafeState<string[]>([]);
-  const [filterName, setFilterName] = useSafeState<string>('');
+  const [filterName, setFilterName] = useSafeState<string>("");
 
   const { schemaData, getModelItem, model_id }: any = useContext(context);
 
@@ -61,7 +60,7 @@ const LinkPanel: React.FC<Props> = (props) => {
     if (!isPlainObject(nodeData)) {
       return;
     }
-    if (nodeData.model_type !== 'model') {
+    if (nodeData.model_type !== "model") {
       return;
     }
     if (nodeData?.model_id === value?.model_id) {
@@ -75,31 +74,40 @@ const LinkPanel: React.FC<Props> = (props) => {
     return (
       <div
         onClick={() => {
-          if (item.model_type === 'folder' || item.key === model_id) return;
+          if (item.model_type === "folder" || item.key === model_id) return;
           onNodeClick(item.key);
         }}
         className={slots["model-node-item"]}
       >
         <div className={slots["icon-panel"]}>
-          {item.model_type === 'model' && (
+          {item.model_type === "model" && (
             <>
               <Checkbox
                 value={item.key}
                 onClick={() => {
                   onNodeClick(item.key);
                 }}
-                checked={!isUndefined(value?.model_id) && item.key === value?.model_id}
+                checked={
+                  !isUndefined(value?.model_id) && item.key === value?.model_id
+                }
                 disabled={item.key === model_id}
               />
-              <IconFont className={slots["icon-model"]} type="icon-data-model" />
+              <IconFont
+                className={slots["icon-model"]}
+                type="icon-data-model"
+              />
             </>
           )}
         </div>
         <span className={slots["node-text"]}>
-          {item.model_type === 'folder' && (
+          {item.model_type === "folder" && (
             <IconFont
               style={{ marginRight: 5 }}
-              type={expandedKeys?.includes(item?.key) ? 'icon-open-folder' : 'icon-folder'}
+              type={
+                expandedKeys?.includes(item?.key)
+                  ? "icon-open-folder"
+                  : "icon-folder"
+              }
             />
           )}
           {item?.title}
@@ -112,29 +120,29 @@ const LinkPanel: React.FC<Props> = (props) => {
     <Modal
       width={600}
       style={{ height: 410 }}
-      title={t('imp_models.title')}
+      title={t("imp_models.title")}
       open={open}
       onCancel={handleClose}
       footer={
         filteredTreeList.length === 0
           ? null
           : [
-              <Footer>
+              <div className={styles.footer}>
                 <Button type="primary" onClick={handleConfirm}>
-                  {t('imp_models.confirm')}
+                  {t("imp_models.confirm")}
                 </Button>
-              </Footer>,
+              </div>,
             ]
       }
     >
-      <LinkWarper>
+      <div className={styles.container}>
         <Input
           value={filterName}
           onChange={(e) => {
             setFilterName(e.target.value);
           }}
           prefix={<IconFont type="icon-search-line" />}
-          placeholder={t('imp_models.search_tip')}
+          placeholder={t("imp_models.search_tip")}
         />
 
         {filteredTreeList.length === 0 ? (
@@ -154,7 +162,7 @@ const LinkPanel: React.FC<Props> = (props) => {
             titleRender={renderNode}
           ></Tree>
         )}
-      </LinkWarper>
+      </div>
     </Modal>
   );
 };

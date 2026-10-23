@@ -1,26 +1,30 @@
+import styles from "./style.module.css";
+import classNames from "classnames";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, memo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC, memo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex, Switch } from '@/shared/ui/base';
+import { Flex, Switch } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import produce from 'immer';
-import { isEqual } from 'lodash';
+import { useSafeState } from "ahooks";
+import produce from "immer";
+import { isEqual } from "lodash";
 
-import { Popover, Tooltip } from '@/shared/ui';
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
-import { STATUS_CODE } from '@/shared/constants/common';
-import { ChangeFuncType } from '@/shared/types/common';
+import { Popover, Tooltip } from "@/shared/ui";
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
+import { STATUS_CODE } from "@/shared/constants/common";
+import { ChangeFuncType } from "@/shared/types/common";
 
-import { PARAMETER_TYPE, RequestTableProps, TableColumnSwitchConfig } from '../../types';
-
-import { ColumnConfigContainer, DescMoreItemWrap } from './style';
+import {
+  PARAMETER_TYPE,
+  RequestTableProps,
+  TableColumnSwitchConfig,
+} from "../../types";
 
 type Props = Pick<
   RequestTableProps,
-  'tabType' | 'columnSwitchConfig' | 'onColumnSwitchConfig' | 'bodyMode'
+  "tabType" | "columnSwitchConfig" | "onColumnSwitchConfig" | "bodyMode"
 > & {
   onAiModal: () => void;
   setParameterType: (parameterType: PARAMETER_TYPE) => void;
@@ -38,7 +42,10 @@ const ColumnConfig: FC<Props> = memo(
     const { t } = useTranslation();
     const [popoverOpen, setPopoverOpen] = useSafeState(false);
 
-    const onColumnSwitchChange: ChangeFuncType<TableColumnSwitchConfig> = (key, value) => {
+    const onColumnSwitchChange: ChangeFuncType<TableColumnSwitchConfig> = (
+      key,
+      value,
+    ) => {
       const config = produce(columnSwitchConfig, (draft) => {
         if (draft?.[key]) {
           draft[key] = value;
@@ -52,7 +59,7 @@ const ColumnConfig: FC<Props> = memo(
       return checked ? STATUS_CODE.ENABLE : STATUS_CODE.DISABLE;
     };
 
-    if (isEqual(tabType, 'event') || isEqual(tabType, 'socketio')) {
+    if (isEqual(tabType, "event") || isEqual(tabType, "socketio")) {
       return null;
     }
 
@@ -63,60 +70,96 @@ const ColumnConfig: FC<Props> = memo(
     };
 
     return (
-      <ColumnConfigContainer>
-        <Flex gap={8} align="center" style={{ height: '100%' }}>
+      <div className={styles.columnConfig}>
+        <Flex gap={8} align="center" style={{ height: "100%" }}>
           <Popover
             placement="bottomLeft"
-            trigger={['click']}
+            trigger={["click"]}
             arrow={false}
-            overlayInnerStyle={{ padding: '8px 12px', width: 228 }}
+            overlayInnerStyle={{ padding: "8px 12px", width: 228 }}
             open={popoverOpen}
             onOpenChange={(open) => setPopoverOpen(open)}
             content={
               <Flex vertical>
-                <DescMoreItemWrap className={slots["tips-item-wrap"]}>
-                  <span>{t('common.request_table.display_column')}</span>
-                  <Tooltip title={t('common.request_table.display_column_tips')}>
+                <Flex
+                  align={"center"}
+                  justify={"space-between"}
+                  className={classNames(
+                    styles.container,
+                    slots["tips-item-wrap"],
+                  )}
+                >
+                  <span>{t("common.request_table.display_column")}</span>
+                  <Tooltip
+                    title={t("common.request_table.display_column_tips")}
+                  >
                     <IconFont type="icon-tips" />
                   </Tooltip>
-                </DescMoreItemWrap>
-                <DescMoreItemWrap>
-                  <span>{t('common.request_table.display_column_param_type')}</span>
+                </Flex>
+                <Flex
+                  align={"center"}
+                  justify={"space-between"}
+                  className={styles.container}
+                >
+                  <span>
+                    {t("common.request_table.display_column_param_type")}
+                  </span>
                   <Switch
                     size="small"
-                    checked={isEqual(columnSwitchConfig?.parameter_type, STATUS_CODE.ENABLE)}
+                    checked={isEqual(
+                      columnSwitchConfig?.parameter_type,
+                      STATUS_CODE.ENABLE,
+                    )}
                     onChange={(checked) =>
-                      onColumnSwitchChange('parameter_type', calcChecked(checked))
+                      onColumnSwitchChange(
+                        "parameter_type",
+                        calcChecked(checked),
+                      )
                     }
                   />
-                </DescMoreItemWrap>
-                <DescMoreItemWrap>
-                  <span>{t('common.request_table.display_column_param_desc')}</span>
+                </Flex>
+                <Flex
+                  align={"center"}
+                  justify={"space-between"}
+                  className={styles.container}
+                >
+                  <span>
+                    {t("common.request_table.display_column_param_desc")}
+                  </span>
                   <Switch
                     size="small"
-                    checked={isEqual(columnSwitchConfig?.parameter_description, STATUS_CODE.ENABLE)}
+                    checked={isEqual(
+                      columnSwitchConfig?.parameter_description,
+                      STATUS_CODE.ENABLE,
+                    )}
                     onChange={(checked) =>
-                      onColumnSwitchChange('parameter_description', calcChecked(checked))
+                      onColumnSwitchChange(
+                        "parameter_description",
+                        calcChecked(checked),
+                      )
                     }
                   />
-                </DescMoreItemWrap>
+                </Flex>
               </Flex>
             }
           >
-            <IconFont className={slots["icon-navi-more"]} type="icon-navi-more" />
+            <IconFont
+              className={slots["icon-navi-more"]}
+              type="icon-navi-more"
+            />
           </Popover>
           <Button
             type="text"
             size="small"
-            style={{ justifyContent: 'flex-start', paddingInline: 0 }}
+            style={{ justifyContent: "flex-start", paddingInline: 0 }}
             onClick={() => handleOperate(PARAMETER_TYPE.BATCH_EDIT)}
           >
-            {t('common.request_table.batch_edit')}
+            {t("common.request_table.batch_edit")}
           </Button>
         </Flex>
-      </ColumnConfigContainer>
+      </div>
     );
-  }
+  },
 );
 
 export default ColumnConfig;

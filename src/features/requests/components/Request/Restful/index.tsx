@@ -1,25 +1,28 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, memo, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC, memo, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { useMemoizedFn } from 'ahooks';
-import cn from 'classnames';
-import produce from 'immer';
-import { isEqual, size } from 'lodash';
+import { useMemoizedFn } from "ahooks";
+import cn from "classnames";
+import produce from "immer";
+import { isEqual, size } from "lodash";
 
-import BasicTable from '@/shared/components/BasicTable';
-import { RowDescription, RowKey, RowValue } from '@/shared/components/RequestTable/components';
-import { ApisBaseDataItem } from '@/features/requests/types/base';
-import { ApiRequest } from '@/features/requests/types/request';
-import { ChangeFuncType } from '@/shared/types/common';
+import BasicTable from "@/shared/components/BasicTable";
+import {
+  RowDescription,
+  RowKey,
+  RowValue,
+} from "@/shared/components/RequestTable/components";
+import { ApisBaseDataItem } from "@/features/requests/types/base";
+import { ApiRequest } from "@/features/requests/types/request";
+import { ChangeFuncType } from "@/shared/types/common";
 
-import { RequestTabsItemProps } from '../types';
-
-import { RestfulQueryContainer } from './style';
+import { RequestTabsItemProps } from "../types";
 
 type Props = RequestTabsItemProps & {
   readOnly?: boolean;
-  value: ApiRequest['restful'];
+  value: ApiRequest["restful"];
   onChange: ChangeFuncType<ApiRequest>;
 };
 
@@ -29,9 +32,9 @@ const RestfulQuery: FC<Props> = memo(
     const tableColumns = useMemo(() => {
       const columns = [
         {
-          key: 'key',
-          dataIndex: 'key',
-          title: t('common.request_table.param_name'),
+          key: "key",
+          dataIndex: "key",
+          title: t("common.request_table.param_name"),
           render: (_: string, record: ApisBaseDataItem, index: number) => (
             <RowKey
               onChange={handleItemOnChange}
@@ -44,9 +47,9 @@ const RestfulQuery: FC<Props> = memo(
           ),
         },
         {
-          key: 'value',
-          dataIndex: 'value',
-          title: t('common.request_table.param_value'),
+          key: "value",
+          dataIndex: "value",
+          title: t("common.request_table.param_value"),
           render: (_: string, record: ApisBaseDataItem, index: number) => (
             <RowValue
               readOnly={readOnly}
@@ -59,9 +62,9 @@ const RestfulQuery: FC<Props> = memo(
           ),
         },
         {
-          key: 'description',
-          dataIndex: 'description',
-          title: t('common.request_table.param_desc'),
+          key: "description",
+          dataIndex: "description",
+          title: t("common.request_table.param_desc"),
           render: (_: string, record: ApisBaseDataItem, index: number) => (
             <RowDescription
               readOnly={readOnly}
@@ -75,30 +78,37 @@ const RestfulQuery: FC<Props> = memo(
         },
       ];
 
-      return columns?.map((it) => ({ ...it, width: `${100 / columns.length}%` }));
+      return columns?.map((it) => ({
+        ...it,
+        width: `${100 / columns.length}%`,
+      }));
     }, [readOnly]);
 
-    const handleItemOnChange = useMemoizedFn((rowIndex: number, rowData: ApisBaseDataItem) => {
-      const newDataSource = produce(value, (draft) => {
-        draft!.parameter[rowIndex] = rowData;
-      });
+    const handleItemOnChange = useMemoizedFn(
+      (rowIndex: number, rowData: ApisBaseDataItem) => {
+        const newDataSource = produce(value, (draft) => {
+          draft!.parameter[rowIndex] = rowData;
+        });
 
-      onChange?.('restful', newDataSource);
-    });
+        onChange?.("restful", newDataSource);
+      },
+    );
 
     return (
-      <RestfulQueryContainer>
+      <div className={styles.container}>
         <BasicTable
-          className={cn({ [slots["table-custom-empty-wrap"]]: size(value?.parameter) <= 0 })}
+          className={cn({
+            [slots["table-custom-empty-wrap"]]: size(value?.parameter) <= 0,
+          })}
           rowKey="param_id"
           cellPadding={0}
           columns={tableColumns}
           dataSource={value?.parameter || []}
         />
-      </RestfulQueryContainer>
+      </div>
     );
   },
-  (prevProps, nextProps) => isEqual(prevProps, nextProps)
+  (prevProps, nextProps) => isEqual(prevProps, nextProps),
 );
 
 export default RestfulQuery;

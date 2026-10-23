@@ -1,17 +1,14 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React from 'react';
+import React from "react";
 
-import { List } from '@/shared/ui/base';
+import { List } from "@/shared/ui/base";
 
-import { useMount, useSafeState } from 'ahooks';
-import classnames from 'classnames';
+import { useMount, useSafeState } from "ahooks";
+import classnames from "classnames";
 
-import useTheme from '@/shared/hooks/useTheme';
-
-import RowItem from './RowItem';
-import { RowItemTipsConfig } from './types';
-
-import { FlowResponseWrap } from './style';
+import RowItem from "./RowItem";
+import { RowItemTipsConfig } from "./types";
 
 interface Props {
   data: any;
@@ -20,14 +17,13 @@ interface Props {
   customTipsContent?: (data: any) => RowItemTipsConfig;
 }
 const FlowResponse = (props: Props) => {
-  const { themeToken } = useTheme();
   const { data, renderTitle, onItemClick, customTipsContent } = props || {};
   const [active, setActive] = useSafeState<string>();
   useMount(() => {
     onItemClick?.(data?.[0]);
   });
   return (
-    <FlowResponseWrap $token={themeToken}>
+    <div className={styles.container}>
       <List
         size="small"
         dataSource={data}
@@ -42,11 +38,15 @@ const FlowResponse = (props: Props) => {
               onItemClick?.(item);
             }}
           >
-            <RowItem data={item} renderTitle={renderTitle} customTipsContent={customTipsContent} />
+            <RowItem
+              data={item}
+              renderTitle={renderTitle}
+              customTipsContent={customTipsContent}
+            />
           </List.Item>
         )}
       />
-    </FlowResponseWrap>
+    </div>
   );
 };
 

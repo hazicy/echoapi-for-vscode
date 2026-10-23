@@ -1,17 +1,16 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex } from '@/shared/ui/base';
+import { Flex } from "@/shared/ui/base";
 
-import classNames from 'classnames';
-import { concat, entries, filter, find, isString, map, size } from 'lodash';
+import classNames from "classnames";
+import { concat, entries, filter, find, isString, map, size } from "lodash";
 
-import { Empty, Tooltip } from '@/shared/ui';
-import { SYSTEM_VARS } from '@/shared/constants/system';
-import { useProjectConfig } from '@/app/store';
-
-import { QuoteOptionContainer } from './style';
+import { Empty, Tooltip } from "@/shared/ui";
+import { SYSTEM_VARS } from "@/shared/constants/system";
+import { useProjectConfig } from "@/app/store";
 
 interface Props {
   value: string;
@@ -33,14 +32,21 @@ const Index = ({ value, onChange }: Props) => {
 
   const list = useMemo(() => {
     const currentEnv = find(envList, (item) => item.env_id === envDetailKeys);
-    const envVarList = map(entries(currentEnv?.env_var_list), ([key, obj]: any) => ({
+    const envVarList = map(
+      entries(currentEnv?.env_var_list),
+      ([key, obj]: any) => ({
+        key,
+        value: isString(obj?.current_value)
+          ? obj?.current_value
+          : JSON.stringify(obj?.current_value),
+        type: ListType.env,
+      }),
+    );
+    const globalVarList = map(entries(globalVars), ([key, obj]: any) => ({
       key,
-      value: isString(obj?.current_value) ? obj?.current_value : JSON.stringify(obj?.current_value),
-      type: ListType.env,
-    }));
-    const globalVarList = map(entries(globalVars), ([key, obj]:any) => ({
-      key,
-      value: isString(obj?.current_value) ? obj?.current_value : JSON.stringify(obj?.current_value),
+      value: isString(obj?.current_value)
+        ? obj?.current_value
+        : JSON.stringify(obj?.current_value),
       type: ListType.global,
     }));
     const systemVarList = map(entries(SYSTEM_VARS), ([key, value]) => ({
@@ -48,14 +54,13 @@ const Index = ({ value, onChange }: Props) => {
       value,
       type: ListType.inner,
     }));
-    return filter(
-      concat(envVarList, globalVarList, systemVarList),
-      (item) => (item?.key as string)?.toLowerCase().includes(value?.toLowerCase() || '')
+    return filter(concat(envVarList, globalVarList, systemVarList), (item) =>
+      (item?.key as string)?.toLowerCase().includes(value?.toLowerCase() || ""),
     );
   }, [value, globalVars, envList, envDetailKeys]);
 
   return (
-    <QuoteOptionContainer>
+    <div className={styles.container}>
       {size(list) ? (
         <>
           <div className={slots.list}>
@@ -75,7 +80,7 @@ const Index = ({ value, onChange }: Props) => {
                     [slots.g]: item?.type === ListType.global,
                   })}
                 >
-                  {item?.type === ListType.env ? 'E' : 'G'}
+                  {item?.type === ListType.env ? "E" : "G"}
                 </div>
                 <div className={slots["list-item-key"]}>
                   <Tooltip title={item.key}>{item.key}</Tooltip>
@@ -87,19 +92,25 @@ const Index = ({ value, onChange }: Props) => {
             {list[index] && (
               <>
                 <Flex gap={4} vertical>
-                  <span className={slots.label}>{t('supplement.var_name')}</span>
-                  <span className={slots.value}>{list[index]?.key || ''}</span>
+                  <span className={slots.label}>
+                    {t("supplement.var_name")}
+                  </span>
+                  <span className={slots.value}>{list[index]?.key || ""}</span>
                 </Flex>
                 <Flex gap={4} vertical>
-                  <span className={slots.label}>{t('supplement.var_value')}</span>
-                  <span className={slots.value}>{list[index]?.value || ''}</span>
+                  <span className={slots.label}>
+                    {t("supplement.var_value")}
+                  </span>
+                  <span className={slots.value}>
+                    {list[index]?.value || ""}
+                  </span>
                 </Flex>
                 <Flex gap={4} vertical>
-                  <span className={slots.label}>{t('supplement.scope')}</span>
+                  <span className={slots.label}>{t("supplement.scope")}</span>
                   <span className={slots.value}>
                     {list[index]?.type === ListType.env
-                      ? t('supplement.var_env')
-                      : t('supplement.var_glo')}
+                      ? t("supplement.var_env")
+                      : t("supplement.var_glo")}
                   </span>
                 </Flex>
               </>
@@ -107,9 +118,9 @@ const Index = ({ value, onChange }: Props) => {
           </div>
         </>
       ) : (
-        <Empty wrapStyle={{ width: '100%' }} />
+        <Empty wrapStyle={{ width: "100%" }} />
       )}
-    </QuoteOptionContainer>
+    </div>
   );
 };
 

@@ -1,29 +1,28 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, ReactNode, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC, ReactNode, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex, Input, Select, SelectProps } from '@/shared/ui/base';
+import { Flex, Input, Select, SelectProps } from "@/shared/ui/base";
 
-import { DownOutlined } from '@/shared/ui/base/Icons';
-import produce from 'immer';
-import { find, get, includes, isEqual, map } from 'lodash';
+import { DownOutlined } from "@/shared/ui/base/Icons";
+import produce from "immer";
+import { find, get, includes, isEqual, map } from "lodash";
 
-import PathPickModal from '@/shared/components/PathPickModal';
-import IconFont from '@/shared/ui/IconFont';
+import PathPickModal from "@/shared/components/PathPickModal";
+import IconFont from "@/shared/ui/IconFont";
 import {
   BASE_COMPARE_TIMES_TYPES,
   BASE_COMPARE_TYPES,
   HIDE_TOOLS_COMPARE_TYPES,
   HIDE_VALUE_COMPARE_TYPES,
   SELECT_MODE_COMPARE_TYPES,
-} from '@/shared/constants/common';
-import useTheme from '@/shared/hooks/useTheme';
-import { getCompareTypeTip } from '@/shared/utils/common';
+} from "@/shared/constants/common";
+import useTheme from "@/shared/hooks/useTheme";
+import { getCompareTypeTip } from "@/shared/utils/common";
 
-import VarInput from '../../../variables/components/VarInput';
-import { SOCKET_ASSERT_TYPES } from './constants';
-
-import { AssertWrapper, DescWrapper } from './style';
+import VarInput from "../../../variables/components/VarInput";
+import { SOCKET_ASSERT_TYPES } from "./constants";
 
 type AssertValue = {
   type: string;
@@ -34,7 +33,7 @@ type AssertValue = {
   };
 };
 
-type LabelRender = SelectProps['labelRender'];
+type LabelRender = SelectProps["labelRender"];
 
 interface Props {
   value: AssertValue;
@@ -46,23 +45,24 @@ const Assert: FC<Props> = ({ value, onChange, rawData }) => {
   const { t } = useTranslation();
   const { themeToken } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-  
+
   const hidePathInput = useMemo(
-    () => includes(['responseText', 'responseCode', 'responseTime'], value.type),
-    [value.type]
+    () =>
+      includes(["responseText", "responseCode", "responseTime"], value.type),
+    [value.type],
   );
 
   const hideValueInput = useMemo(
     () => includes(HIDE_VALUE_COMPARE_TYPES, value.expression.compareType),
-    [value.expression.compareType]
+    [value.expression.compareType],
   );
   const collectionShow = useMemo(
     () => includes(SELECT_MODE_COMPARE_TYPES, value.expression.compareType),
-    [value.expression.compareType]
+    [value.expression.compareType],
   );
   const hideToolsSuffix = useMemo(
     () => includes(HIDE_TOOLS_COMPARE_TYPES, value.type),
-    [value.type]
+    [value.type],
   );
 
   const calcTargetInfo = (type: string) => {
@@ -70,7 +70,7 @@ const Assert: FC<Props> = ({ value, onChange, rawData }) => {
       typeSuffixIcon: ReactNode;
       valueSuffixIcon: ReactNode;
       pathPlaceholder: string;
-    } = { typeSuffixIcon: null, valueSuffixIcon: null, pathPlaceholder: '' };
+    } = { typeSuffixIcon: null, valueSuffixIcon: null, pathPlaceholder: "" };
     const target = find(SOCKET_ASSERT_TYPES, (item) => item.value === type);
 
     if (target?.description) {
@@ -97,7 +97,7 @@ const Assert: FC<Props> = ({ value, onChange, rawData }) => {
 
   const handleChange = (key: string, newVal: string) => {
     const newValue = produce(value, (draft) => {
-      if (key === 'type') {
+      if (key === "type") {
         draft.type = newVal;
       } else {
         draft.expression = {
@@ -112,22 +112,22 @@ const Assert: FC<Props> = ({ value, onChange, rawData }) => {
 
   const compareOptions = useMemo(() => {
     const compareType = value.type;
-    if (isEqual('responseTime', compareType)) {
+    if (isEqual("responseTime", compareType)) {
       return BASE_COMPARE_TIMES_TYPES;
     }
-    
+
     return BASE_COMPARE_TYPES;
   }, [value.type]);
 
   const assertTypeChange = (val: string) => {
     const newValue = produce(value, (draft) => {
       draft.type = val;
-      if (isEqual('responseTime', val)) {
-        const compareType = get(value, 'expression.compareType');
+      if (isEqual("responseTime", val)) {
+        const compareType = get(value, "expression.compareType");
         if (!BASE_COMPARE_TIMES_TYPES.some((e) => e.value === compareType)) {
           draft.expression = {
             ...draft.expression,
-            ['compareType']: 'eq',
+            ["compareType"]: "eq",
           };
         }
       }
@@ -139,22 +139,24 @@ const Assert: FC<Props> = ({ value, onChange, rawData }) => {
     const { label, value } = props;
     const target = find(SOCKET_ASSERT_TYPES, (item) => item.value === value);
     return (
-      <Flex justify="space-between" style={{ width: '100%' }}>
+      <Flex justify="space-between" style={{ width: "100%" }}>
         <span>{label}</span>
-        {target?.description && <DescWrapper>{target?.description}</DescWrapper>}
+        {target?.description && (
+          <span className={styles.desc}>{target?.description}</span>
+        )}
       </Flex>
     );
   };
 
   return (
-    <AssertWrapper $token={themeToken}>
+    <div className={styles.container}>
       <Flex vertical gap={themeToken.padding12}>
         <Flex gap={themeToken.padding12} align="center">
-          <div className={slots.label}>{t('common.assertion.content')}</div>
+          <div className={slots.label}>{t("common.assertion.content")}</div>
           <Select
             value={value.type}
             placeholder=""
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             labelRender={labelRender}
             onChange={assertTypeChange}
             options={map(SOCKET_ASSERT_TYPES, (item) => {
@@ -166,24 +168,29 @@ const Assert: FC<Props> = ({ value, onChange, rawData }) => {
           />
         </Flex>
         <Flex gap={themeToken.padding12} align="center">
-          <div className={slots.label}>{t('common.assertion.expression.title')}</div>
+          <div className={slots.label}>
+            {t("common.assertion.expression.title")}
+          </div>
           {!hidePathInput && (
             <Input
               placeholder={calcTargetInfo(value.type)?.pathPlaceholder}
-              value={get(value, 'expression.path')}
+              value={get(value, "expression.path")}
               suffix={
                 !hideToolsSuffix ? (
-                  <IconFont type="icon-gongju" onClick={() => setIsOpen(true)} />
+                  <IconFont
+                    type="icon-gongju"
+                    onClick={() => setIsOpen(true)}
+                  />
                 ) : null
               }
-              onChange={(event) => handleChange('path', event.target.value)}
+              onChange={(event) => handleChange("path", event.target.value)}
             />
           )}
           <Select
-            placeholder={t('supplement.select_if')}
+            placeholder={t("supplement.select_if")}
             style={{ width: 240 }}
-            value={get(value, 'expression.compareType')}
-            onChange={(val) => handleChange('compareType', val)}
+            value={get(value, "expression.compareType")}
+            onChange={(val) => handleChange("compareType", val)}
             options={map(compareOptions, (item) => {
               return {
                 value: item.value,
@@ -196,26 +203,30 @@ const Assert: FC<Props> = ({ value, onChange, rawData }) => {
               <Select
                 allowClear
                 suffixIcon={false}
-                dropdownStyle={{ display: 'none' }}
-                placeholder={getCompareTypeTip(get(value, 'expression.compareType'))}
+                dropdownStyle={{ display: "none" }}
+                placeholder={getCompareTypeTip(
+                  get(value, "expression.compareType"),
+                )}
                 className={slots["collection-variable-select"]}
                 value={
-                  get(value, 'expression.compareValue')
-                    ? get(value, 'expression.compareValue')?.split(',')
+                  get(value, "expression.compareValue")
+                    ? get(value, "expression.compareValue")?.split(",")
                     : []
                 }
                 mode="tags"
-                tokenSeparators={[',']}
-                onChange={(val) => handleChange('compareValue', val?.join(','))}
+                tokenSeparators={[","]}
+                onChange={(val) => handleChange("compareValue", val?.join(","))}
               />
             ) : (
               <VarInput
                 wrapClassName={slots["assert-input"]}
                 hasBorder
-                placeholder={getCompareTypeTip(get(value, 'expression.compareType'))}
-                value={get(value, 'expression.compareValue')}
+                placeholder={getCompareTypeTip(
+                  get(value, "expression.compareType"),
+                )}
+                value={get(value, "expression.compareValue")}
                 suffix={calcTargetInfo(value.type)?.valueSuffixIcon}
-                onChange={(val) => handleChange('compareValue', val)}
+                onChange={(val) => handleChange("compareValue", val)}
               />
             )
           ) : null}
@@ -223,11 +234,11 @@ const Assert: FC<Props> = ({ value, onChange, rawData }) => {
       </Flex>
       <PathPickModal
         defaultValue={rawData}
-        type={isEqual(value.type, 'responseJson') ? 'json' : 'xml'}
+        type={isEqual(value.type, "responseJson") ? "json" : "xml"}
         open={isOpen}
         onCancel={() => setIsOpen(false)}
       />
-    </AssertWrapper>
+    </div>
   );
 };
 

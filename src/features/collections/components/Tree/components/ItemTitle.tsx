@@ -1,13 +1,12 @@
+import styles from "../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, ReactNode, memo, useMemo } from 'react';
+import { FC, ReactNode, memo, useMemo } from "react";
 
-import { Dropdown, MenuProps } from '@/shared/ui/base';
+import { Dropdown, MenuProps } from "@/shared/ui/base";
 
-import { isNumber } from 'lodash';
+import { isNumber } from "lodash";
 
-import { TreeDataItem } from '@/features/requests/types/api';
-
-import { ItemTitleContainer } from '../style';
+import { TreeDataItem } from "@/features/requests/types/api";
 
 type Props = Partial<
   TreeDataItem & {
@@ -31,16 +30,20 @@ const ItemTitle: FC<Props> = memo((props) => {
 
   const dropdownContextMenu = useMemo(
     () => (!scrollIng ? nodeItemDropdownContextMenu?.(props) : undefined),
-    [nodeItemDropdownContextMenu, props, scrollIng]
+    [nodeItemDropdownContextMenu, props, scrollIng],
   );
 
   const extraContent = useMemo(
-    () => nodeItemTitleExtraContent?.({ ...props, moreOperateMenu: dropdownContextMenu }),
-    [nodeItemTitleExtraContent, props, dropdownContextMenu]
+    () =>
+      nodeItemTitleExtraContent?.({
+        ...props,
+        moreOperateMenu: dropdownContextMenu,
+      }),
+    [nodeItemTitleExtraContent, props, dropdownContextMenu],
   );
 
   const renderContent = (
-    <ItemTitleContainer>
+    <div className={styles.itemTitle}>
       <div className={slots.title} title={name}>
         {name}
         {showChildrenCount && isNumber(childrenCount) && childrenCount > 0 && (
@@ -48,7 +51,7 @@ const ItemTitle: FC<Props> = memo((props) => {
         )}
       </div>
       {extraContent}
-    </ItemTitleContainer>
+    </div>
   );
 
   if (props?.scrollIng) {
@@ -60,7 +63,7 @@ const ItemTitle: FC<Props> = memo((props) => {
   }
 
   return (
-    <Dropdown trigger={['contextMenu']} menu={dropdownContextMenu}>
+    <Dropdown trigger={["contextMenu"]} menu={dropdownContextMenu}>
       {renderContent}
     </Dropdown>
   );

@@ -1,31 +1,35 @@
-import { useTranslation } from 'react-i18next';
+import "../style.css";
+import styles from "../style.module.css";
+import { useTranslation } from "react-i18next";
 
-import { Checkbox, Form, Input } from '@/shared/ui/base';
+import { Checkbox, Form, Input } from "@/shared/ui/base";
 
-import { map } from 'lodash';
+import { map } from "lodash";
 
-import GhostCollapse from '@/shared/ui/GhostCollapse';
-import { AUTH_ENUM } from '@/features/requests/constants/auth';
-
-import { MoreTipContainer } from '../style';
+import GhostCollapse from "@/shared/ui/GhostCollapse";
+import { AUTH_ENUM } from "@/features/requests/constants/auth";
 
 const fieldList = [
-  { label: 'Username', name: 'username', placeholder: 'Username' },
-  { label: 'Password', name: 'password', placeholder: 'password' },
+  { label: "Username", name: "username", placeholder: "Username" },
+  { label: "Password", name: "password", placeholder: "password" },
 ];
 
 const moreFieldList = [
-  { label: 'Domain', name: 'domain', placeholder: 'e.g. example.com' },
-  { label: 'Workstation', name: 'workstation', placeholder: 'e.g. someone-PC' },
+  { label: "Domain", name: "domain", placeholder: "e.g. example.com" },
+  { label: "Workstation", name: "workstation", placeholder: "e.g. someone-PC" },
 ];
 
 const Ntlm = () => {
   const { t } = useTranslation();
   return (
     <>
-      <span className="auth-tips">{t('common.auth.disable_tip')}</span>
-      <Form.Item label="" valuePropName="checked" name={[AUTH_ENUM.NTLM, 'disableRetryRequest']}>
-        <Checkbox className="auth-checked">{t('common.auth.disable')}</Checkbox>
+      <span className="auth-tips">{t("common.auth.disable_tip")}</span>
+      <Form.Item
+        label=""
+        valuePropName="checked"
+        name={[AUTH_ENUM.NTLM, "disableRetryRequest"]}
+      >
+        <Checkbox className="auth-checked">{t("common.auth.disable")}</Checkbox>
       </Form.Item>
       {map(fieldList, (item) => (
         <Form.Item label={item.label} name={[AUTH_ENUM.NTLM, item.name]}>
@@ -35,13 +39,18 @@ const Ntlm = () => {
       <GhostCollapse
         items={[
           {
-            key: 'hawk-more',
-            label: <MoreTipContainer>{t('common.auth.more')}</MoreTipContainer>,
+            key: "hawk-more",
+            label: (
+              <span className={styles.moreTip}>{t("common.auth.more")}</span>
+            ),
             children: (
               <>
-                <span className="auth-tips">{t('common.auth.more_tip')}</span>
+                <span className="auth-tips">{t("common.auth.more_tip")}</span>
                 {map(moreFieldList, (item) => (
-                  <Form.Item label={item.label} name={[AUTH_ENUM.NTLM, item.name]}>
+                  <Form.Item
+                    label={item.label}
+                    name={[AUTH_ENUM.NTLM, item.name]}
+                  >
                     <Input.TextArea autoSize placeholder={item.placeholder} />
                   </Form.Item>
                 ))}

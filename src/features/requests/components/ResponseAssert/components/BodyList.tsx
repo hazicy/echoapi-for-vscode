@@ -1,13 +1,12 @@
+import styles from "../style.module.css";
+import classNames from "classnames";
 import slots from "@/shared/ui/base/slots.module.css";
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import { useTranslation } from "react-i18next";
 
-import { Space } from '@/shared/ui/base';
+import { Space } from "@/shared/ui/base";
 
-import IconFont from '@/shared/ui/IconFont';
-import { openUrl } from '@/shared/utils/open';
-
-import { BodyListContainer, ResponseAssertItemContainer } from '../style';
+import IconFont from "@/shared/ui/IconFont";
 
 interface BodyListProps {
   isSuccess: boolean;
@@ -18,22 +17,29 @@ const BodyList: React.FC<BodyListProps> = (props) => {
   const { isSuccess, errList } = props;
   const { t } = useTranslation();
   return (
-    <BodyListContainer>
+    <div className={styles.bodyList}>
       <div className="assert-list">
         {errList?.map((item, index) => (
-          <ResponseAssertItemContainer key={index} $status={item.status} className={slots["content-item"]}>
+          <span
+            key={index}
+            data-passed={Boolean(item.status)}
+            className={classNames(
+              styles.responseAssertItem,
+              slots["content-item"],
+            )}
+          >
             <Space>
-              {item.status === 'success' ? (
+              {item.status === "success" ? (
                 <IconFont type="icon-checked" />
               ) : (
                 <IconFont type="icon-error" />
               )}
               {item.expect}
             </Space>
-          </ResponseAssertItemContainer>
+          </span>
         ))}
       </div>
-    </BodyListContainer>
+    </div>
   );
 };
 

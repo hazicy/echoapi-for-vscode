@@ -1,19 +1,28 @@
+import styles from "./styles.module.css";
+import classNames from "classnames";
 import slots from "@/shared/ui/base/slots.module.css";
 import { moduleClassNames } from "@/shared/ui/base/moduleClassNames";
-import { Dispatch } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Dispatch } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Input, message } from '@/shared/ui/base';
+import { Input, message } from "@/shared/ui/base";
 
-import { snowflakeId } from 'apipost-tools';
-import produce from 'immer';
-import { cloneDeep, flattenDeep, isArray, isObject, isPlainObject, isString, trim } from 'lodash';
+import { snowflakeId } from "apipost-tools";
+import produce from "immer";
+import {
+  cloneDeep,
+  flattenDeep,
+  isArray,
+  isObject,
+  isPlainObject,
+  isString,
+  trim,
+} from "lodash";
 
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
 
-import { DomainInfoProps, ICookie } from '../../../../types';
-import { BtnListContainer, TabContainer, TabItemContainer } from './styles';
+import { DomainInfoProps, ICookie } from "../../../../types";
 
 const { TextArea } = Input;
 
@@ -47,7 +56,7 @@ const Index = (props: Props) => {
 
   const handleChangeEditorItem = (domaindata: ICookie) => {
     const { domain } = domaindata;
-    handleChangeDomain(['activeItem', 'activeId', 'isShowArea'], {
+    handleChangeDomain(["activeItem", "activeId", "isShowArea"], {
       activeItem: domaindata,
       activeId: domaindata.cookie_id,
       isShowArea: domain,
@@ -59,21 +68,23 @@ const Index = (props: Props) => {
     const newCookies = cloneDeep(cookieObj);
 
     const { domain } = item;
-    newCookies[domain] = newCookies[domain].filter((d: ICookie) => d.cookie_id !== item.cookie_id);
+    newCookies[domain] = newCookies[domain].filter(
+      (d: ICookie) => d.cookie_id !== item.cookie_id,
+    );
     if (newCookies[domain].length <= 0) {
       delete newCookies[domain];
     }
     if (activeId === item.cookie_id) {
-      handleChangeDomain('isShowArea', '');
+      handleChangeDomain("isShowArea", "");
     }
-    handleChangeDomain(['isShowArea', 'cookieObj'], {
-      isShowArea: '',
+    handleChangeDomain(["isShowArea", "cookieObj"], {
+      isShowArea: "",
       cookieObj: newCookies,
     });
   };
 
   const getCookieText = (obj: ICookie) => {
-    let cookieString = '';
+    let cookieString = "";
     if (isPlainObject(obj?.value)) {
       cookieString = `${obj?.value?.cookieText}`;
     } else {
@@ -93,7 +104,7 @@ const Index = (props: Props) => {
     const suffix = domainList.length + 1;
     const getMax = (suf: number) => {
       const res = domainList.reduce((pre: string, e: any) => {
-        if (e.key?.replace('newCookie_', '') === `${suf}`) {
+        if (e.key?.replace("newCookie_", "") === `${suf}`) {
           pre = getMax(suf + 1);
         }
         return pre;
@@ -104,18 +115,18 @@ const Index = (props: Props) => {
     const newCookie: ICookie = {
       project_id,
       cookie_id: snowflakeId(),
-      path: '/',
+      path: "/",
       key: `newCookie_${newSuffix}`,
-      value: 'value',
+      value: "value",
       domain,
       expires: date.toUTCString(),
-      maxAge: '',
+      maxAge: "",
     };
     lastCookieObj = {
       ...lastCookieObj,
       [domain]: [...lastCookieObj[domain], newCookie],
     };
-    handleChangeDomain(['isShowArea', 'activeId', 'activeItem', 'cookieObj'], {
+    handleChangeDomain(["isShowArea", "activeId", "activeItem", "cookieObj"], {
       isShowArea: domain,
       activeId: newCookie.cookie_id,
       activeItem: newCookie,
@@ -125,29 +136,35 @@ const Index = (props: Props) => {
 
   const confirmSaveCookie = async (key: string) => {
     const { cookieText } = value;
-    const [nameAndValue, Paths, Domain, ExpiresTime] = cookieText.split(';');
-    const index = nameAndValue.indexOf('=');
-    let name = '';
-    let tempValue = '';
+    const [nameAndValue, Paths, Domain, ExpiresTime] = cookieText.split(";");
+    const index = nameAndValue.indexOf("=");
+    let name = "";
+    let tempValue = "";
     if (index === -1) {
       name = trim(nameAndValue);
     } else {
-      name = trim(nameAndValue.substring(0, nameAndValue.indexOf('=')));
-      tempValue = nameAndValue.substring(nameAndValue.indexOf('=') + 1, nameAndValue.length);
+      name = trim(nameAndValue.substring(0, nameAndValue.indexOf("=")));
+      tempValue = nameAndValue.substring(
+        nameAndValue.indexOf("=") + 1,
+        nameAndValue.length,
+      );
     }
     if (isString(name) && name.length <= 0) {
-      message.error(t('supplement.cookie_not_empty'));
+      message.error(t("supplement.cookie_not_empty"));
       return;
     }
-    const Path = Paths.split('=')?.[1];
-    const domain = Domain.split('=')?.[1];
-    const Expires = ExpiresTime?.split('=')?.[1];
+    const Path = Paths.split("=")?.[1];
+    const domain = Domain.split("=")?.[1];
+    const Expires = ExpiresTime?.split("=")?.[1];
     const regDomain =
       /^(.+\.)(com|edu|gov|int|mil|net|org|biz|info|name|museum|coop|aero|[a-z][a-z])$/;
     // eslint-disable-next-line no-useless-escape
     const reg = /^[a-z\d|\:|\.|\-|_]*$/;
-    if ((!regDomain.test(domain) && !reg.test(domain)) || domain.trim().length <= 0) {
-      message.error(t('supplement.domain_invalid'));
+    if (
+      (!regDomain.test(domain) && !reg.test(domain)) ||
+      domain.trim().length <= 0
+    ) {
+      message.error(t("supplement.domain_invalid"));
       return;
     }
     const saveCookie = {
@@ -187,20 +204,26 @@ const Index = (props: Props) => {
         }
         return it;
       });
-    handleChangeDomain(['cookieObj', 'isShowArea'], {
+    handleChangeDomain(["cookieObj", "isShowArea"], {
       cookieObj: obj,
-      isShowArea: '',
+      isShowArea: "",
     });
   };
 
   return (
-    <TabContainer>
+    <div className={styles.container}>
       {value?.cookieObj[domain].map((item: ICookie) => {
         const { key, cookie_id } = item;
         return (
-          <TabItemContainer
+          <div
             key={cookie_id}
-            className={moduleClassNames(slots, `cookie-list-item ${value?.activeId === cookie_id ? 'active' : ''}`)}
+            className={classNames(
+              styles.tabItem,
+              moduleClassNames(
+                slots,
+                `cookie-list-item ${value?.activeId === cookie_id ? "active" : ""}`,
+              ),
+            )}
           >
             <div
               className={slots["cookie-name"]}
@@ -220,16 +243,23 @@ const Index = (props: Props) => {
             >
               <IconFont type="icon-close" />
             </div>
-          </TabItemContainer>
+          </div>
         );
       })}
-      <TabItemContainer
-        className={["cookie-list-item", slots.active, slots["cookie-item-add"]].join(" ")}
+      <div
         onClick={() => addCookieItem(domain)}
+        className={classNames(
+          styles.tabItem,
+          ["cookie-list-item", slots.active, slots["cookie-item-add"]].join(
+            " ",
+          ),
+        )}
       >
-        <div className={slots["cookie-name"]}>{t('global_setting.cookie_detail.add_cookie')}</div>
+        <div className={slots["cookie-name"]}>
+          {t("global_setting.cookie_detail.add_cookie")}
+        </div>
         <IconFont type="icon-add-line" />
-      </TabItemContainer>
+      </div>
       {value?.isShowArea === domain ? (
         <>
           <TextArea
@@ -237,17 +267,17 @@ const Index = (props: Props) => {
             className={slots["beautify-scroll-bar"]}
             value={value?.cookieText || getCookieText(value?.activeItem)}
             onChange={(e) => {
-              handleChangeDomain('cookieText', e.target.value);
+              handleChangeDomain("cookieText", e.target.value);
             }}
           />
-          <BtnListContainer>
+          <div className={styles.btnList}>
             <Button
               size="small"
               onClick={() => {
-                handleChangeDomain('isShowArea', '');
+                handleChangeDomain("isShowArea", "");
               }}
             >
-              {t('global_setting.cookie_detail.cancel')}
+              {t("global_setting.cookie_detail.cancel")}
             </Button>
             <Button
               type="primary"
@@ -256,12 +286,12 @@ const Index = (props: Props) => {
                 confirmSaveCookie(value?.activeItem?.cookie_id);
               }}
             >
-              {t('global_setting.cookie_detail.confirm')}
+              {t("global_setting.cookie_detail.confirm")}
             </Button>
-          </BtnListContainer>
+          </div>
         </>
       ) : null}
-    </TabContainer>
+    </div>
   );
 };
 

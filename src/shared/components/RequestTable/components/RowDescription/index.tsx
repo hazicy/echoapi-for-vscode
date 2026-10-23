@@ -1,15 +1,14 @@
+import styles from "../../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, memo, useRef, useState } from 'react';
+import { FC, memo, useRef, useState } from "react";
 
-import { Input } from '@/shared/ui/base';
-import { TextAreaProps } from '@/shared/ui/base';
+import { Input } from "@/shared/ui/base";
+import { TextAreaProps } from "@/shared/ui/base";
 
-import { useUpdateEffect } from 'ahooks';
-import { isString, trim } from 'lodash';
+import { useUpdateEffect } from "ahooks";
+import { isString, trim } from "lodash";
 
-import { ItemProps } from '../../types';
-
-import { RowItemWrap } from '../../style';
+import { ItemProps } from "../../types";
 
 const lineHeight = 32;
 
@@ -19,12 +18,7 @@ type Props = ItemProps & {
 };
 
 export const RowDescription: FC<Props> = memo((props) => {
-  const {
-    rowData,
-    rowIndex,
-    onChange,
-    readOnly,
-  } = props;
+  const { rowData, rowIndex, onChange, readOnly } = props;
 
   const isComposition = useRef(false);
   const [curValue, setCurValue] = useState(rowData?.description);
@@ -46,20 +40,19 @@ export const RowDescription: FC<Props> = memo((props) => {
       scrollHeight = tar?.scrollHeight;
 
     if (scrollHeight <= lineHeight || tar.value.length === 0) {
-      tar.style.height = lineHeight + 'px';
+      tar.style.height = lineHeight + "px";
     } else {
-      tar.style.height = scrollHeight + 'px';
+      tar.style.height = scrollHeight + "px";
     }
   };
 
-
-  const handleInputChange: TextAreaProps['onChange'] = (event) => {
+  const handleInputChange: TextAreaProps["onChange"] = (event) => {
     const rawValue = event.target.value;
 
     setCurValue(rawValue);
 
     if (!isComposition.current) {
-      handleChange?.('description', rawValue);
+      handleChange?.("description", rawValue);
     }
   };
 
@@ -69,32 +62,36 @@ export const RowDescription: FC<Props> = memo((props) => {
 
   const handleCompositionEnd = (event: any) => {
     isComposition.current = false;
-    handleChange?.('description', event.currentTarget.value);
+    handleChange?.("description", event.currentTarget.value);
   };
 
   const handlerBlur = (e: any) => {
     const tar = e.target as HTMLTextAreaElement;
-    tar.style.height = lineHeight + 'px';
+    tar.style.height = lineHeight + "px";
 
     if (!rowData?.key) return;
 
-    if (!isString(rowData?.description) || trim(rowData.description).length <= 0) return;
+    if (
+      !isString(rowData?.description) ||
+      trim(rowData.description).length <= 0
+    )
+      return;
   };
 
   return (
-    <RowItemWrap>
+    <div className={styles.container}>
       <div className={slots["row-description"]}>
         <Input.TextArea
           readOnly={readOnly}
           autoSize={false}
           style={{
-            position: 'absolute',
+            position: "absolute",
             minHeight: 36,
             top: 0,
             height: 36,
-            lineHeight: '26px',
+            lineHeight: "26px",
           }}
-          placeholder={''}
+          placeholder={""}
           variant="borderless"
           value={curValue}
           onInput={handlerInput}
@@ -105,8 +102,7 @@ export const RowDescription: FC<Props> = memo((props) => {
           onCompositionEnd={handleCompositionEnd}
         />
       </div>
-    
-    </RowItemWrap>
+    </div>
   );
 });
 

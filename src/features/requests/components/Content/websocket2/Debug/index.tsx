@@ -1,69 +1,79 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, lazy, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC, lazy, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Dropdown, Flex, Tree } from '@/shared/ui/base';
+import { Dropdown, Flex, Tree } from "@/shared/ui/base";
 
-import { useMemoizedFn, useSafeState } from 'ahooks';
-import { cloneDeep, find, head, isArray } from 'lodash';
+import { useMemoizedFn, useSafeState } from "ahooks";
+import { cloneDeep, find, head, isArray } from "lodash";
 
-import { SuspenseContent } from '@/shared/components';
+import { SuspenseContent } from "@/shared/components";
 
-import ResizablePanels from '@/shared/components/ResizablePanels';
-import UrlGroup from '@/features/requests/components/UrlGroup';
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
-import ToolBar from '../../api/Debug/ToolBar';
-import { useApis, useProjectConfig, useUserConfig } from '@/app/store';
-import useApisWebsocket2 from '@/features/requests/store/useApis/websocket2';
-import { Websocket2ComponentType, Websocket2DetailsData } from '@/features/requests/types/websocket2';
-import { convertToSaveFolderTree, importDelay } from '@/shared/utils/common';
+import ResizablePanels from "@/shared/components/ResizablePanels";
+import UrlGroup from "@/features/requests/components/UrlGroup";
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
+import ToolBar from "../../api/Debug/ToolBar";
+import { useApis, useProjectConfig, useUserConfig } from "@/app/store";
+import useApisWebsocket2 from "@/features/requests/store/useApis/websocket2";
+import {
+  Websocket2ComponentType,
+  Websocket2DetailsData,
+} from "@/features/requests/types/websocket2";
+import { convertToSaveFolderTree, importDelay } from "@/shared/utils/common";
 
-import useWebsocket2 from '../useWebsocket2';
+import useWebsocket2 from "../useWebsocket2";
 
-import { SaveDropDownContainer, WsDebugContainer } from './style';
-import { ApiDetailsData } from '@/features/requests/types/api';
-import produce from 'immer';
-import { AnyObject } from '@/shared/types/common';
-import { genQueryByUrl } from '@/features/requests/utils/apis';
+import { ApiDetailsData } from "@/features/requests/types/api";
+import produce from "immer";
+import { AnyObject } from "@/shared/types/common";
+import { genQueryByUrl } from "@/features/requests/utils/apis";
 
-const Request = lazy(() => importDelay(import('./Request')));
-const Response = lazy(() => importDelay(import('./Response')));
+const Request = lazy(() => importDelay(import("./Request")));
+const Response = lazy(() => importDelay(import("./Response")));
 const panelProps = {
   defaultSize: 50,
   minSize: 5,
   collapsible: true,
   collapsedSize: 5,
 };
-const WsDebug: FC<Websocket2ComponentType> = ({ apisData, onApisDataChange }) => {
+const WsDebug: FC<Websocket2ComponentType> = ({
+  apisData,
+  onApisDataChange,
+}) => {
   const { t } = useTranslation();
   const { connectWebSocket } = useWebsocket2();
-  const websocket2ConnectionPool = useApisWebsocket2((state) => state.websocket2ConnectionPool);
+  const websocket2ConnectionPool = useApisWebsocket2(
+    (state) => state.websocket2ConnectionPool,
+  );
 
   const apiDetailsData = useApis((state) => state.apiDetailsData);
   const isReadonly = useUserConfig((state) => state.isReadonly);
 
   const [saveLoading, setSaveLoading] = useSafeState(false);
   const [open, setOpen] = useSafeState(false);
-  const [curServerId, SetCurServerId] = useSafeState('');
+  const [curServerId, SetCurServerId] = useSafeState("");
   const envList = useProjectConfig((state) => state.envList);
   const envDetailKeys = useProjectConfig((state) => state.envDetailKeys);
 
-  useEffect(()=>{
-    const currentEnv = find(envList, (it) => it?.env_id === envDetailKeys); 
-    if (isArray(currentEnv?.server_list) && curServerId === '') {
-      const defaultServerId = currentEnv.server_list.find((i:any) => i?.is_default === 1)?.server_id || '';
+  useEffect(() => {
+    const currentEnv = find(envList, (it) => it?.env_id === envDetailKeys);
+    if (isArray(currentEnv?.server_list) && curServerId === "") {
+      const defaultServerId =
+        currentEnv.server_list.find((i: any) => i?.is_default === 1)
+          ?.server_id || "";
       SetCurServerId(defaultServerId);
     }
-  },[envList,envDetailKeys,curServerId]);
+  }, [envList, envDetailKeys, curServerId]);
 
   const onSave = async () => {
     setSaveLoading(true);
     try {
       window?.vscode.postMessage({
-        action: 'saveApiData',
-        data: apisData
+        action: "saveApiData",
+        data: apisData,
       });
     } catch (err) {
     } finally {
@@ -72,23 +82,25 @@ const WsDebug: FC<Websocket2ComponentType> = ({ apisData, onApisDataChange }) =>
   };
 
   const handleUrlPanel = useMemoizedFn((key: string, value: string) => {
-    onApisDataChange(produce(apisData, (draft: AnyObject) => {
-      draft[key] = value;
-      if (key === 'url') {
-        if (value) {
-          if (isArray(draft?.request?.query?.parameter)) {
-            draft.request.query.parameter = genQueryByUrl(
-              `${value}`,
-              draft?.request?.query?.parameter || []
-            );
-          }
-        } else {
-          if (draft.request.query?.parameter) {
-            draft.request.query.parameter = [];
+    onApisDataChange(
+      produce(apisData, (draft: AnyObject) => {
+        draft[key] = value;
+        if (key === "url") {
+          if (value) {
+            if (isArray(draft?.request?.query?.parameter)) {
+              draft.request.query.parameter = genQueryByUrl(
+                `${value}`,
+                draft?.request?.query?.parameter || [],
+              );
+            }
+          } else {
+            if (draft.request.query?.parameter) {
+              draft.request.query.parameter = [];
+            }
           }
         }
-      }
-    }));
+      }),
+    );
   });
 
   const handleRequest = useMemoizedFn((data: Websocket2DetailsData) => {
@@ -100,7 +112,7 @@ const WsDebug: FC<Websocket2ComponentType> = ({ apisData, onApisDataChange }) =>
   }, [websocket2ConnectionPool, apisData]);
 
   const dropdownRender = () => (
-    <SaveDropDownContainer>
+    <div className={styles.saveDropDown}>
       <Tree
         height={250}
         blockNode
@@ -111,33 +123,38 @@ const WsDebug: FC<Websocket2ComponentType> = ({ apisData, onApisDataChange }) =>
           const result = cloneDeep(apisData);
 
           window?.vscode.postMessage({
-            action: 'saveApiData',
-            data: { ...result, parent_id: parent_id as string }
+            action: "saveApiData",
+            data: { ...result, parent_id: parent_id as string },
           });
           setOpen(false);
         }}
-        fieldNames={{ title: 'label' }}
+        fieldNames={{ title: "label" }}
         treeData={convertToSaveFolderTree(apiDetailsData)}
         titleRender={(nodeData: any) => {
-          return <div className={slots["dropdown-tree-title"]}>{nodeData.label}</div>;
+          return (
+            <div className={slots["dropdown-tree-title"]}>{nodeData.label}</div>
+          );
         }}
       />
-    </SaveDropDownContainer>
+    </div>
   );
 
   return (
     <>
-      <ToolBar apisData={apisData as unknown as ApiDetailsData} onApisDataChange={(val) => {
-        onApisDataChange(val as unknown as Websocket2DetailsData);
-      }} />
-      <WsDebugContainer>
-        <div className={slots["url-panel"]} style={{ padding: '0 16px' }}>
+      <ToolBar
+        apisData={apisData as unknown as ApiDetailsData}
+        onApisDataChange={(val) => {
+          onApisDataChange(val as unknown as Websocket2DetailsData);
+        }}
+      />
+      <div className={styles.container}>
+        <div className={slots["url-panel"]} style={{ padding: "0 16px" }}>
           <Flex flex={1} justify="space-between" align="center">
             <div className={slots["url-group"]}>
               <UrlGroup
                 maxLength={10240}
-                placeholder={t('supplement.socket_url_placeholder')}
-                readOnly={status === 'connect'}
+                placeholder={t("supplement.socket_url_placeholder")}
+                readOnly={status === "connect"}
                 data={{
                   url: apisData?.url,
                 }}
@@ -145,32 +162,40 @@ const WsDebug: FC<Websocket2ComponentType> = ({ apisData, onApisDataChange }) =>
                 onChange={handleUrlPanel}
                 curServerId={curServerId}
                 SetCurServerId={SetCurServerId}
-                style={{padding:'3px',paddingRight: "0"}}
-                urlGroupExtraContent={ <Button
-                  type="primary"
-                  size="large"
-                  style={{ marginLeft: 4, width: 'max-content', borderRadius: "0 4px 4px 0" }}
-                  onClick={() => {
-                    connectWebSocket(apisData, status, curServerId);
-                  }}
-                >
-                  {status === 'connect'
-                    ? t('supplement.disconnect')
-                    : status === 'connecting'
-                      ? t('supplement.connecting')
-                      : t('supplement.connect')}
-                </Button>}
+                style={{ padding: "3px", paddingRight: "0" }}
+                urlGroupExtraContent={
+                  <Button
+                    type="primary"
+                    size="large"
+                    style={{
+                      marginLeft: 4,
+                      width: "max-content",
+                      borderRadius: "0 4px 4px 0",
+                    }}
+                    onClick={() => {
+                      connectWebSocket(apisData, status, curServerId);
+                    }}
+                  >
+                    {status === "connect"
+                      ? t("supplement.disconnect")
+                      : status === "connecting"
+                        ? t("supplement.connecting")
+                        : t("supplement.connect")}
+                  </Button>
+                }
               />
             </div>
-            <Flex style={{marginLeft:'4px'}} gap={12}>
+            <Flex style={{ marginLeft: "4px" }} gap={12}>
               <Dropdown.Button
-                getPopupContainer={(triggerNode) => triggerNode.parentNode as HTMLElement}
+                getPopupContainer={(triggerNode) =>
+                  triggerNode.parentNode as HTMLElement
+                }
                 placement="bottomRight"
                 open={open}
                 onOpenChange={(open) => setOpen(open)}
                 type="default"
                 size="small"
-                trigger={['click']}
+                trigger={["click"]}
                 icon={<IconFont type="icon-drop-down" />}
                 loading={saveLoading}
                 onClick={onSave}
@@ -179,35 +204,44 @@ const WsDebug: FC<Websocket2ComponentType> = ({ apisData, onApisDataChange }) =>
                 destroyPopupOnHide
                 dropdownRender={dropdownRender}
               >
-                {t('supplement.save')}
+                {t("supplement.save")}
               </Dropdown.Button>
             </Flex>
           </Flex>
         </div>
         <ResizablePanels
           panelGroupProps={{
-            direction: 'vertical',
+            direction: "vertical",
           }}
-          leftPanelProps={{ ...panelProps, collapseTitle: t('supplement.request_panel') }}
-          rightPanelProps={{ ...panelProps, collapseTitle: t('supplement.response_panel') }}
+          leftPanelProps={{
+            ...panelProps,
+            collapseTitle: t("supplement.request_panel"),
+          }}
+          rightPanelProps={{
+            ...panelProps,
+            collapseTitle: t("supplement.response_panel"),
+          }}
           leftPanel={
             <SuspenseContent>
-              <div style={{ padding: '0 16px 12px 16px', height: '100%' }}>
-                <Request readOnly={status === 'connect'} value={apisData} onChange={handleRequest} />
+              <div style={{ padding: "0 16px 12px 16px", height: "100%" }}>
+                <Request
+                  readOnly={status === "connect"}
+                  value={apisData}
+                  onChange={handleRequest}
+                />
               </div>
             </SuspenseContent>
           }
           rightPanel={
             <SuspenseContent>
-              <div style={{ padding: '0 16px', height: '100%' }}>
+              <div style={{ padding: "0 16px", height: "100%" }}>
                 <Response value={apisData} onChange={handleRequest} />
               </div>
             </SuspenseContent>
           }
         />
-      </WsDebugContainer>
+      </div>
     </>
-
   );
 };
 

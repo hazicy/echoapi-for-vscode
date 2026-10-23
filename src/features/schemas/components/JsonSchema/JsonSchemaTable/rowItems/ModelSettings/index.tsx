@@ -1,16 +1,15 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { memo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { memo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Input } from '@/shared/ui/base';
+import { Input } from "@/shared/ui/base";
 
-import cn from 'classnames';
-import { isPlainObject } from 'lodash';
+import cn from "classnames";
+import { isPlainObject } from "lodash";
 
-import Button from '@/shared/ui/Button';
-import Tooltip from '@/shared/ui/Tooltip';
-
-import { ItemModelWarperContainer } from './style';
+import Button from "@/shared/ui/Button";
+import Tooltip from "@/shared/ui/Tooltip";
 
 interface Props {
   value: any;
@@ -24,32 +23,40 @@ interface Props {
 
 const ItemMock: React.FC<Props> = (props) => {
   const { t } = useTranslation();
-  const { value, overrideData, onShow, onHide, onLinkItem, onCancelLinkItem, onChange } = props;
+  const {
+    value,
+    overrideData,
+    onShow,
+    onHide,
+    onLinkItem,
+    onCancelLinkItem,
+    onChange,
+  } = props;
 
   const isUnLinkState = isPlainObject(overrideData);
 
   return (
     <div className={cn(slots["schema-td"], slots["table-td"])}>
-      <ItemModelWarperContainer>
+      <div className={styles.container}>
         {isUnLinkState ? (
           <>
             <Input
               style={{
                 flex: 1,
-                border: 'none',
-                outline: 'none',
-                boxShadow: 'none',
-                backgroundColor: 'transparent',
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
+                backgroundColor: "transparent",
               }}
               size="small"
               value={value?.description}
               onChange={(e) => {
-                onChange('description', e.target.value);
+                onChange("description", e.target.value);
               }}
             />
-            <Tooltip title={t('supplement.reallocate')}>
+            <Tooltip title={t("supplement.reallocate")}>
               <Button size="small" onClick={onLinkItem}>
-                {t('supplement.reallocate')}
+                {t("supplement.reallocate")}
               </Button>
             </Tooltip>
           </>
@@ -59,29 +66,41 @@ const ItemMock: React.FC<Props> = (props) => {
               size="small"
               style={{
                 flex: 1,
-                border: 'none',
-                outline: 'none',
-                boxShadow: 'none',
-                backgroundColor: 'transparent',
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
+                backgroundColor: "transparent",
               }}
               disabled
               value={value?.description}
             />
-            <Button onClick={onCancelLinkItem} className={slots["btn-hide"]} size="small">
-              {t('supplement.disassociate')}
+            <Button
+              onClick={onCancelLinkItem}
+              className={slots["btn-hide"]}
+              size="small"
+            >
+              {t("supplement.disassociate")}
             </Button>
             {overrideData === null ? (
-              <Button onClick={onShow} className={slots["btn-hide"]} size="small">
-                {t('supplement.show_field')}
+              <Button
+                onClick={onShow}
+                className={slots["btn-hide"]}
+                size="small"
+              >
+                {t("supplement.show_field")}
               </Button>
             ) : (
-              <Button onClick={onHide} className={slots["btn-hide"]} size="small">
-                {t('supplement.hide_field')}
+              <Button
+                onClick={onHide}
+                className={slots["btn-hide"]}
+                size="small"
+              >
+                {t("supplement.hide_field")}
               </Button>
             )}
           </>
         )}
-      </ItemModelWarperContainer>
+      </div>
     </div>
   );
 };

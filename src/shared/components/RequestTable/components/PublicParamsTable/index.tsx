@@ -1,31 +1,45 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, memo, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC, memo, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Checkbox, Collapse, Flex, Input, Select, Space, Tag } from '@/shared/ui/base';
+import {
+  Checkbox,
+  Collapse,
+  Flex,
+  Input,
+  Select,
+  Space,
+  Tag,
+} from "@/shared/ui/base";
 
-import cn from 'classnames';
-import { concat, filter, isEqual, map, size, trim } from 'lodash';
-import { useShallow } from 'zustand/react/shallow';
+import cn from "classnames";
+import { concat, filter, isEqual, map, size, trim } from "lodash";
+import { useShallow } from "zustand/react/shallow";
 
-import BasicTable from '@/shared/components/BasicTable';
-import IconFont from '@/shared/ui/IconFont';
-import Tooltip from '@/shared/ui/Tooltip';
-import { FIELD_TYPES, STATUS_CODE } from '@/shared/constants/common';
-import { useProjectConfig, useSystemConfig } from '@/app/store';
-import { ApisBaseDataItem } from '@/features/requests/types/base';
-import { DefaultRequestSystemHeaders } from '@/features/requests/types/request';
-import { GlobalParamsHeaderItem } from '@/features/project/types';
+import BasicTable from "@/shared/components/BasicTable";
+import IconFont from "@/shared/ui/IconFont";
+import Tooltip from "@/shared/ui/Tooltip";
+import { FIELD_TYPES, STATUS_CODE } from "@/shared/constants/common";
+import { useProjectConfig, useSystemConfig } from "@/app/store";
+import { ApisBaseDataItem } from "@/features/requests/types/base";
+import { DefaultRequestSystemHeaders } from "@/features/requests/types/request";
+import { GlobalParamsHeaderItem } from "@/features/project/types";
 
-import { RequestTableProps } from '../../types';
+import { RequestTableProps } from "../../types";
 
-import { BasicTableContainer } from './style';
-import { ENV_MANAGE_ENUM } from '@/features/environment/components/Environment/constants';
-import { openEnvPage } from '@/features/requests/events/env';
+import { ENV_MANAGE_ENUM } from "@/features/environment/components/Environment/constants";
+import { openEnvPage } from "@/features/requests/events/env";
 
 type Props = Pick<
   RequestTableProps,
-  'globalParams' | 'folderParams' | 'paramsType' | 'tabType' | 'isSystem' | 'columnSwitchConfig' | 'target_type'
+  | "globalParams"
+  | "folderParams"
+  | "paramsType"
+  | "tabType"
+  | "isSystem"
+  | "columnSwitchConfig"
+  | "target_type"
 >;
 
 const PublicParamsTable: FC<Props> = memo(
@@ -36,124 +50,158 @@ const PublicParamsTable: FC<Props> = memo(
     tabType,
     isSystem = false,
     columnSwitchConfig,
-    target_type
+    target_type,
   }) => {
     const { t } = useTranslation();
     const systemConfig = useSystemConfig((state) => state.systemConfig);
     const systemRequestHeader = systemConfig?.systemRequestHeader || [];
     const systemRequestHeaderWs2 = systemConfig?.systemRequestHeaderWs2 || [];
 
-    const updateSystemConfig = useSystemConfig((state) => state.updateSystemConfig);
+    const updateSystemConfig = useSystemConfig(
+      (state) => state.updateSystemConfig,
+    );
 
     const lastDataSource = useMemo(() => {
       let commonParameters: (GlobalParamsHeaderItem | ApisBaseDataItem)[] = [];
 
-      const newGlobalParams = map(globalParams, (it) => ({ ...it, type: 'global' }));
-      const newFolderParams = map(folderParams, (it) => ({ ...it, type: 'folder' }));
+      const newGlobalParams = map(globalParams, (it) => ({
+        ...it,
+        type: "global",
+      }));
+      const newFolderParams = map(folderParams, (it) => ({
+        ...it,
+        type: "folder",
+      }));
 
-      if (paramsType !== 'global') {
+      if (paramsType !== "global") {
         commonParameters = concat(commonParameters, newGlobalParams);
       }
 
       commonParameters = concat(commonParameters, newFolderParams);
-      if (tabType === 'header') {
+      if (tabType === "header") {
         commonParameters = concat(
           commonParameters,
-          map(isEqual(target_type, 'socketio')
-            ? []
-            : isEqual(target_type, 'websocket2')
-              ? (systemRequestHeaderWs2 as GlobalParamsHeaderItem[])
-              : (systemRequestHeader as GlobalParamsHeaderItem[]),
+          map(
+            isEqual(target_type, "socketio")
+              ? []
+              : isEqual(target_type, "websocket2")
+                ? (systemRequestHeaderWs2 as GlobalParamsHeaderItem[])
+                : (systemRequestHeader as GlobalParamsHeaderItem[]),
             (it) => ({
               ...it,
-              type: 'system',
-            }))
+              type: "system",
+            }),
+          ),
         );
       }
-      return filter(commonParameters, (item) => trim(item?.key) !== '') || [];
+      return filter(commonParameters, (item) => trim(item?.key) !== "") || [];
     }, [globalParams, folderParams, paramsType, systemRequestHeader]);
     const { updateEnvOpen, updateEnvSettingKeys } = useProjectConfig(
       useShallow(({ updateEnvOpen, updateEnvSettingKeys }) => ({
         updateEnvOpen,
         updateEnvSettingKeys,
-      }))
+      })),
     );
 
     const columns = [
       {
-        key: 'handle',
-        dataIndex: 'handle',
-        title: '',
+        key: "handle",
+        dataIndex: "handle",
+        title: "",
         width: 34,
         render: (_text: string) => {
           return null;
         },
       },
       {
-        key: 'is_checked',
-        dataIndex: 'is_checked',
-        title: '',
+        key: "is_checked",
+        dataIndex: "is_checked",
+        title: "",
         width: 24,
         render: (text: number, rowData: any) => {
           return (
             <Checkbox
               onChange={(e) => {
                 const systemHeader: DefaultRequestSystemHeaders[] = map(
-                  isEqual(target_type, 'websocket2') ? systemRequestHeaderWs2 : systemRequestHeader,
+                  isEqual(target_type, "websocket2")
+                    ? systemRequestHeaderWs2
+                    : systemRequestHeader,
                   (el) => {
                     if (el?.key === rowData?.key) {
                       return { ...el, is_checked: e?.target?.checked ? 1 : -1 };
                     }
                     return el;
-                  }
+                  },
                 );
 
-                isEqual(target_type, 'websocket2')
-                ? updateSystemConfig({ ...systemConfig, systemRequestHeaderWs2: systemHeader })
-                : updateSystemConfig({ ...systemConfig, systemRequestHeader: systemHeader });
+                isEqual(target_type, "websocket2")
+                  ? updateSystemConfig({
+                      ...systemConfig,
+                      systemRequestHeaderWs2: systemHeader,
+                    })
+                  : updateSystemConfig({
+                      ...systemConfig,
+                      systemRequestHeader: systemHeader,
+                    });
 
                 window?.vscode.postMessage({
-                  action: 'setSystemConfig',
-                  data: { systemRequestHeader: systemHeader }
+                  action: "setSystemConfig",
+                  data: { systemRequestHeader: systemHeader },
                 });
-
               }}
-              disabled={rowData?.type !== 'system'}
+              disabled={rowData?.type !== "system"}
               checked={text === 1}
             />
           );
         },
       },
       {
-        key: 'key',
-        dataIndex: 'key',
-        title: t('common.request_table.param_name'),
-        width: '35%',
+        key: "key",
+        dataIndex: "key",
+        title: t("common.request_table.param_name"),
+        width: "35%",
         render: (text: string, rowData: any) => {
           return (
             <Flex>
-              <Input style={{ paddingLeft: 11 }} disabled variant="borderless" value={text} />
-              {!isEqual(columnSwitchConfig?.parameter_type, STATUS_CODE.DISABLE) && (
+              <Input
+                style={{ paddingLeft: 11 }}
+                disabled
+                variant="borderless"
+                value={text}
+              />
+              {!isEqual(
+                columnSwitchConfig?.parameter_type,
+                STATUS_CODE.DISABLE,
+              ) && (
                 <Select
                   style={{ minWidth: 120 }}
                   disabled
                   suffixIcon={
                     <div>
-                      <IconFont type="icon-drop-down" style={{ pointerEvents: 'none' }} />
+                      <IconFont
+                        type="icon-drop-down"
+                        style={{ pointerEvents: "none" }}
+                      />
                       <div
-                        style={{ pointerEvents: 'visible' }}
+                        style={{ pointerEvents: "visible" }}
                         className={cn({
                           [slots.required]: true,
                           [slots.checked]: rowData?.not_null == 1,
                         })}
                       >
-                        <Tooltip title={t('supplement.required')} placement="top">
-                          <IconFont style={{ fontSize: 14 }} type="icon-fuhao" />
+                        <Tooltip
+                          title={t("supplement.required")}
+                          placement="top"
+                        >
+                          <IconFont
+                            style={{ fontSize: 14 }}
+                            type="icon-fuhao"
+                          />
                         </Tooltip>
                       </div>
                     </div>
                   }
-                  value={rowData?.field_type || ''}
+                  value={rowData?.field_type || ""}
                 >
                   {FIELD_TYPES?.map((item: string) => (
                     <Select.Option key={item} value={item}>
@@ -167,20 +215,20 @@ const PublicParamsTable: FC<Props> = memo(
         },
       },
       {
-        key: 'value',
-        dataIndex: 'value',
-        title: t('common.request_table.param_value'),
-        width: '33%',
+        key: "value",
+        dataIndex: "value",
+        title: t("common.request_table.param_value"),
+        width: "33%",
         render: (text: string) => {
           return <Input disabled variant="borderless" value={text} />;
         },
       },
 
       {
-        key: 'description',
-        dataIndex: 'description',
-        title: t('common.request_table.param_desc'),
-        width: '33%',
+        key: "description",
+        dataIndex: "description",
+        title: t("common.request_table.param_desc"),
+        width: "33%",
         render: (text: string, row: any) => {
           return (
             <Flex align="center">
@@ -188,22 +236,24 @@ const PublicParamsTable: FC<Props> = memo(
                 disabled
                 variant="borderless"
                 value={
-                  !isEqual(columnSwitchConfig?.parameter_description, STATUS_CODE.DISABLE)
+                  !isEqual(
+                    columnSwitchConfig?.parameter_description,
+                    STATUS_CODE.DISABLE,
+                  )
                     ? text
-                    : ''
+                    : ""
                 }
               />
-              <Space size={8} style={{ padding: '0 10px' }}>
-                {row?.type !== 'system' && (
+              <Space size={8} style={{ padding: "0 10px" }}>
+                {row?.type !== "system" && (
                   <IconFont
                     onClick={() => {
-                      if (row?.type === 'global') {
+                      if (row?.type === "global") {
                         openEnvPage({ env_id: ENV_MANAGE_ENUM.globalParm });
                       } else {
-                        
                         window?.vscode.postMessage({
-                          action: 'openTagPanelById',
-                          data: row?.target_id
+                          action: "openTagPanelById",
+                          data: row?.target_id,
                         });
                       }
                     }}
@@ -212,13 +262,13 @@ const PublicParamsTable: FC<Props> = memo(
                   />
                 )}
 
-                {row?.type === 'global' || row?.type === 'system' ? (
+                {row?.type === "global" || row?.type === "system" ? (
                   <Tag bordered={false} color="processing">
-                    {t('common.request_table.global')}
+                    {t("common.request_table.global")}
                   </Tag>
                 ) : (
                   <Tag bordered={false} color="orange">
-                    {t('common.request_table.folder')}
+                    {t("common.request_table.folder")}
                   </Tag>
                 )}
               </Space>
@@ -232,7 +282,7 @@ const PublicParamsTable: FC<Props> = memo(
       return null;
     }
     return (
-      <BasicTableContainer>
+      <div className={styles.container}>
         {size(lastDataSource) > 0 && (
           <Collapse
             ghost
@@ -247,15 +297,19 @@ const PublicParamsTable: FC<Props> = memo(
                 </>
               );
             }}
-            className={[slots["table-collapse"], slots["table-collapse-public"]].join(" ")}
+            className={[
+              slots["table-collapse"],
+              slots["table-collapse-public"],
+            ].join(" ")}
             style={{ marginTop: -12 }}
             items={[
               {
-                key: 'description',
-                label: `${isSystem
-                  ? `${t('common.request_table.system')}（header）`
-                  : `${t('common.request_table.public_param')}（${tabType}）`
-                  }`,
+                key: "description",
+                label: `${
+                  isSystem
+                    ? `${t("common.request_table.system")}（header）`
+                    : `${t("common.request_table.public_param")}（${tabType}）`
+                }`,
                 children: (
                   <BasicTable
                     tableLayout="fixed"
@@ -271,9 +325,9 @@ const PublicParamsTable: FC<Props> = memo(
             ]}
           />
         )}
-      </BasicTableContainer>
+      </div>
     );
-  }
+  },
 );
 
 export default PublicParamsTable;

@@ -1,10 +1,16 @@
-import { FC } from 'react';
+import styles from "./style.module.css";
+import { Alert } from "@/shared/ui/base";
+import classNames from "classnames";
+import { FC } from "react";
 
-import { AlertProps } from '@/shared/ui/base';
-
-import { AlertTextWrap } from './style';
+import { AlertProps } from "@/shared/ui/base";
 
 const AlertText: FC<AlertProps> = (props) => {
-  return <AlertTextWrap {...props}></AlertTextWrap>;
+  return (
+    <Alert
+      {...props}
+      className={classNames(styles.container, props.className)}
+    ></Alert>
+  );
 };
 export default AlertText;

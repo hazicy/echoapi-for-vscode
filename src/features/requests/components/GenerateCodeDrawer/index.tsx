@@ -1,23 +1,23 @@
+import styles2 from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex, Spin, message } from '@/shared/ui/base';
+import { Flex, Spin, message } from "@/shared/ui/base";
 
-import { useDebounceFn, useSafeState } from 'ahooks';
-import classNames from 'classnames';
-import Har2languages from 'har2languages';
-import { cloneDeep, isArray, isEmpty, isObject, isString, map } from 'lodash';
+import { useDebounceFn, useSafeState } from "ahooks";
+import classNames from "classnames";
+import Har2languages from "har2languages";
+import { cloneDeep, isArray, isEmpty, isObject, isString, map } from "lodash";
 
-import CodeEditor from '@/shared/components/CodeEditor';
-import Button from '@/shared/ui/Button';
-import Drawer from '@/shared/ui/Drawer';
-import IconFont from '@/shared/ui/IconFont';
-import useVarReplaces from '@/features/variables/hooks/useVarReplaces';
-import { catchError, copyStringToClipboard } from '@/shared/utils/common';
+import CodeEditor from "@/shared/components/CodeEditor";
+import Button from "@/shared/ui/Button";
+import Drawer from "@/shared/ui/Drawer";
+import IconFont from "@/shared/ui/IconFont";
+import useVarReplaces from "@/features/variables/hooks/useVarReplaces";
+import { catchError, copyStringToClipboard } from "@/shared/utils/common";
 
-import { GenerateCodeWrap, LanguagesIcon } from './style';
-import { useApis, useSystemConfig } from '@/app/store';
+import { useApis, useSystemConfig } from "@/app/store";
 
 interface Props {
   value: any;
@@ -28,71 +28,81 @@ const GenerateCodeDrawer: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   const { value, onClose } = props || {};
 
-  const apiCodeHar = useApis(store => store.apiCodeHar);
+  const apiCodeHar = useApis((store) => store.apiCodeHar);
   const currentServerId = useApis((state) => state.currentServerId);
-  
-  const systemConfig = useSystemConfig(store=>store.systemConfig);
-  const updateSystemConfig = useSystemConfig(store=>store.updateSystemConfig);
-  const generate_code_mode = useSystemConfig(store=>store.systemConfig?.generate_code_mode);
 
-  const [menuKey, setMenuKey] = useSafeState<string>('shell.curl');
-  const [codeText, setCodeText] = useSafeState<string>('');
-  const [editorLanguage, setEditorLanguage] = useSafeState<string>('javascript');
+  const systemConfig = useSystemConfig((store) => store.systemConfig);
+  const updateSystemConfig = useSystemConfig(
+    (store) => store.updateSystemConfig,
+  );
+  const generate_code_mode = useSystemConfig(
+    (store) => store.systemConfig?.generate_code_mode,
+  );
+
+  const [menuKey, setMenuKey] = useSafeState<string>("shell.curl");
+  const [codeText, setCodeText] = useSafeState<string>("");
+  const [editorLanguage, setEditorLanguage] =
+    useSafeState<string>("javascript");
   const [genLoading, setGenLoading] = useSafeState<boolean>(false);
 
   const { varReplace } = useVarReplaces();
-  const generateMenuDom = 
+  const generateMenuDom =
     isObject(har2languages.languages) &&
     Object.keys(har2languages.languages).map((language) => {
       if (isArray(har2languages.languages[language])) {
         return har2languages.languages[language].map((subclass: string) => (
           <div
-            className={classNames(slots["menu-item"], { [slots.active]: `${language}.${subclass}` === menuKey })}
+            className={classNames(slots["menu-item"], {
+              [slots.active]: `${language}.${subclass}` === menuKey,
+            })}
             key={`${language}.${subclass}`}
             onClick={() => {
               menuClick(language, subclass);
             }}
           >
-            <LanguagesIcon type={`icon-${language}`} />
+            <IconFont
+              type={`icon-${language}`}
+              className={styles2.languagesIcon}
+            />
             {`${language}(${subclass})`}
           </div>
         ));
       }
-      return '';
+      return "";
     });
 
   useEffect(() => {
-     getCodeHar();
+    getCodeHar();
   }, []);
 
-  useEffect(()=>{
-    if(apiCodeHar && !isEmpty(apiCodeHar)){
-      let language = 'shell';
-      let subclass = 'curl';
-      if(isArray(generate_code_mode) && generate_code_mode.length > 1){
+  useEffect(() => {
+    if (apiCodeHar && !isEmpty(apiCodeHar)) {
+      let language = "shell";
+      let subclass = "curl";
+      if (isArray(generate_code_mode) && generate_code_mode.length > 1) {
         language = generate_code_mode[0];
-        subclass =generate_code_mode[1];
+        subclass = generate_code_mode[1];
       }
-      menuClick(language, subclass, '');
+      menuClick(language, subclass, "");
       setGenLoading(false);
     }
-  },[apiCodeHar]);
+  }, [apiCodeHar]);
 
   const getCodeHar = async () => {
     setGenLoading(true);
-    
+
     try {
       window?.vscode.postMessage({
-        action: 'getCodeHar',
-        data:{
-          apiData:value
+        action: "getCodeHar",
+        data: {
+          apiData: value,
         },
-        option:{
+        option: {
           server_id: currentServerId,
-        }
+        },
       });
     } catch (err: any) {
-      catchError(err, t('supplement.generate_err'));
+      catchError(err, t("supplement.generate_err"));
     } finally {
     }
   };
@@ -100,18 +110,23 @@ const GenerateCodeDrawer: React.FC<Props> = (props) => {
   const { run: menuClick } = useDebounceFn(
     async (language: string, subclass: string, code?: any) => {
       try {
-        const request = cloneDeep(code || apiCodeHar)?.log?.entries?.[0]?.request;
-        request.url = request?.url?.split('#')[0];
+        const request = cloneDeep(code || apiCodeHar)?.log?.entries?.[0]
+          ?.request;
+        request.url = request?.url?.split("#")[0];
         request.headers = map(request?.headers, (it) => {
           if (!isString(it.value)) {
             return { ...it, value: String(it.value) };
           }
           return it;
         });
-        
-        const languagesRes: any = har2languages.convert(request, language, subclass);
 
-        if (languagesRes?.status === 'error') {
+        const languagesRes: any = har2languages.convert(
+          request,
+          language,
+          subclass,
+        );
+
+        if (languagesRes?.status === "error") {
           message.error(`${languagesRes?.message}`);
           return;
         }
@@ -120,29 +135,34 @@ const GenerateCodeDrawer: React.FC<Props> = (props) => {
           languagesRes.data = varReplace(languagesRes.data);
         } catch (error) {}
 
-        setCodeText(languagesRes.data || '');
+        setCodeText(languagesRes.data || "");
         setMenuKey(`${language}.${subclass}`);
-        setEditorLanguage(isString(language) && language === 'node' ? 'javascript' : language);
+        setEditorLanguage(
+          isString(language) && language === "node" ? "javascript" : language,
+        );
         // Record selected code type
         window?.vscode.postMessage({
-          action: 'setSystemConfig',
-          data: {generate_code_mode: [language,subclass]}
+          action: "setSystemConfig",
+          data: { generate_code_mode: [language, subclass] },
         });
-  
-        updateSystemConfig({ ...systemConfig, generate_code_mode:[language,subclass] });
+
+        updateSystemConfig({
+          ...systemConfig,
+          generate_code_mode: [language, subclass],
+        });
       } catch (err) {
-        catchError(err, t('supplement.generate_err'));
+        catchError(err, t("supplement.generate_err"));
       }
     },
     {
       wait: 200,
-    }
+    },
   );
 
   return (
     <Drawer
       open
-      title={t('common.code.title')}
+      title={t("common.code.title")}
       width={860}
       mask={true}
       maskClosable={true}
@@ -155,18 +175,20 @@ const GenerateCodeDrawer: React.FC<Props> = (props) => {
       extra={
         <Button
           onClick={() =>
-            copyStringToClipboard(codeText, () => message.success(t('supplement.copy_success')))
+            copyStringToClipboard(codeText, () =>
+              message.success(t("supplement.copy_success")),
+            )
           }
           icon={<IconFont type="icon-copy" />}
           size="small"
           mode="light"
         >
-          {t('common.code.copy')}
+          {t("common.code.copy")}
         </Button>
       }
     >
-      <GenerateCodeWrap>
-        <Spin tip={t('supplement.generating')} spinning={genLoading}>
+      <div className={styles2.container}>
+        <Spin tip={t("supplement.generating")} spinning={genLoading}>
           <Flex>
             <div className={slots.menu}>{generateMenuDom}</div>
             <div className={slots.edit}>
@@ -174,7 +196,7 @@ const GenerateCodeDrawer: React.FC<Props> = (props) => {
             </div>
           </Flex>
         </Spin>
-      </GenerateCodeWrap>
+      </div>
     </Drawer>
   );
 };

@@ -1,20 +1,17 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import { Flex, message } from '@/shared/ui/base';
+import { Flex, message } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import classnames from 'classnames';
+import { useSafeState } from "ahooks";
+import classnames from "classnames";
 
-import AlertText from '@/shared/ui/AlertText';
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
-import Radio from '@/shared/ui/Radio';
-import Tooltip from '@/shared/ui/Tooltip';
-import { EXPORT_TYPE_LIST } from '@/features/settings/constants/settings';
-import useTheme from '@/shared/hooks/useTheme';
-
-import { ImportExportWrap } from './style';
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
+import Radio from "@/shared/ui/Radio";
+import Tooltip from "@/shared/ui/Tooltip";
+import { EXPORT_TYPE_LIST } from "@/features/settings/constants/settings";
 
 interface Props {
   onClick?: ({ exportType, version }: { [k: string]: string }) => Promise<void>;
@@ -22,10 +19,10 @@ interface Props {
 const Export = (props: Props) => {
   const { onClick } = props || {};
   const { t } = useTranslation();
-  const { themeToken } = useTheme();
+
   const [loading, setLoading] = useSafeState<boolean>(false);
-  const [exportType, setExportType] = useSafeState<string>('echoapi');
-  const [version, setVersion] = useSafeState<string>('3.0');
+  const [exportType, setExportType] = useSafeState<string>("echoapi");
+  const [version, setVersion] = useSafeState<string>("3.0");
 
   const exportHandle = async () => {
     try {
@@ -39,13 +36,17 @@ const Export = (props: Props) => {
   };
 
   return (
-    <ImportExportWrap $token={themeToken}>
+    <div className={styles.container}>
       <div className={slots["import-project-item"]}>
-        <div className={slots["import-project-item-title"]}>{t('settings.export_project.data_format')}</div>
+        <div className={slots["import-project-item-title"]}>
+          {t("settings.export_project.data_format")}
+        </div>
         <div className={slots["import-project-item-content"]}>
           <Radio.Group value={exportType}>
             {EXPORT_TYPE_LIST.map((item) => (
-              <Tooltip title={item?.disabled ? t('supplement.will_online') : ''}>
+              <Tooltip
+                title={item?.disabled ? t("supplement.will_online") : ""}
+              >
                 <div
                   key={item.key}
                   className={classnames({
@@ -72,9 +73,11 @@ const Export = (props: Props) => {
           </Radio.Group>
         </div>
       </div>
-      {exportType === 'swagger' && (
+      {exportType === "swagger" && (
         <div className={slots["import-project-item"]}>
-          <div className={slots["import-project-item-title"]}>{t('settings.export_project.version')}</div>
+          <div className={slots["import-project-item-title"]}>
+            {t("settings.export_project.version")}
+          </div>
           <div className={slots["import-project-item-content"]}>
             <Radio.Group
               value={version}
@@ -95,10 +98,10 @@ const Export = (props: Props) => {
           type="primary"
           className={slots["import-export-now"]}
         >
-          {t('settings.export_project.export')}
+          {t("settings.export_project.export")}
         </Button>
       </Flex>
-    </ImportExportWrap>
+    </div>
   );
 };
 

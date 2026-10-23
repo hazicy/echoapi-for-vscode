@@ -1,11 +1,12 @@
 .container {
-  cursor: var(--style-0f0fd159-DeleteContainer-0);
+  &[data-disabled="true"] {
+    cursor: not-allowed;
+  }
   & .slot-anticon {
     margin-right: 4px;
   }
-  &:hover {
-    /* color: var(--color-primary); */
-    color: var(--style-0f0fd159-DeleteContainer-1);
+  &:not([data-disabled="true"]):hover {
+    color: var(--color-primary);
   }
 }
 .edit {

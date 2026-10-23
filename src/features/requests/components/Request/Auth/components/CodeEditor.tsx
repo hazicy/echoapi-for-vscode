@@ -1,17 +1,17 @@
-import CodeEditor from '@/shared/components/CodeEditor';
-
-import { CodeContainer } from '../style';
+import "../style.css";
+import styles from "../style.module.css";
+import CodeEditor from "@/shared/components/CodeEditor";
 
 const AuthCodeEditor = (props: any) => {
   return (
-    <CodeContainer>
+    <div className={styles.code}>
       <CodeEditor
         language="json"
         height="100%"
-        value={props?.value || ''}
+        value={props?.value || ""}
         onChange={props?.onChange}
       />
-    </CodeContainer>
+    </div>
   );
 };
 

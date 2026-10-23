@@ -1,26 +1,25 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
 import { moduleClassNames } from "@/shared/ui/base/moduleClassNames";
-import React, { memo, useContext, useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { memo, useContext, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex, Input } from '@/shared/ui/base';
+import { Flex, Input } from "@/shared/ui/base";
 
-import { CaretDownOutlined, CaretRightOutlined } from '@/shared/ui/base/Icons';
-import { useMemoizedFn, useSafeState } from 'ahooks';
-import cn from 'classnames';
-import classNames from 'classnames';
-import produce from 'immer';
-import { isObject, isString, isUndefined } from 'lodash';
+import { CaretDownOutlined, CaretRightOutlined } from "@/shared/ui/base/Icons";
+import { useMemoizedFn, useSafeState } from "ahooks";
+import cn from "classnames";
+import classNames from "classnames";
+import produce from "immer";
+import { isObject, isString, isUndefined } from "lodash";
 
-import { IconFont, Tooltip } from '@/shared/ui';
-import Button from '@/shared/ui/Button';
-import { useProjectSetting, useUserConfig } from '@/app/store';
+import { IconFont, Tooltip } from "@/shared/ui";
+import Button from "@/shared/ui/Button";
+import { useProjectSetting, useUserConfig } from "@/app/store";
 
-import schemaContext from '../../context';
-import SplitBar from '../SplitBar';
-import ItemSettings from '../ItemSettings';
-
-import { BthsPanelDiv, KeyWarperContainer } from './style';
+import schemaContext from "../../context";
+import SplitBar from "../SplitBar";
+import ItemSettings from "../ItemSettings";
 
 export interface ItemKeyProps {
   nodeType: string;
@@ -81,18 +80,22 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
   const { t } = useTranslation();
   const { refTable, layouts, setLayouts } = useContext(schemaContext);
   const descriptionList = useProjectSetting((state) => state.descriptionList);
-  const innerDescriptionList = useProjectSetting((state) => state.innerDescriptionList);
+  const innerDescriptionList = useProjectSetting(
+    (state) => state.innerDescriptionList,
+  );
   const currentProject = useUserConfig((state) => state.currentProject);
 
   const tdWidth = layouts?.[0]?.width ?? 400;
   const refContainerWarper: any = useRef(null);
 
-  const showArrow = ['object', 'array', 'oneOf', 'anyOf', 'allOf'].includes(nodeType);
+  const showArrow = ["object", "array", "oneOf", "anyOf", "allOf"].includes(
+    nodeType,
+  );
 
   const handleUpdateWidth = useMemoizedFn((newWidth) => {
     const newLayouts = produce(layouts, (draft: any) => {
       draft[0].width = newWidth;
-      draft[0].flex = 'unset';
+      draft[0].flex = "unset";
     });
     setLayouts(newLayouts);
   });
@@ -130,11 +133,11 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
   };
 
   const isShowAddBtn =
-    ['object', 'oneOf', 'allOf', 'anyOf'].includes(nodeType) ||
-    (nodeType === 'array' && isUndefined(value?.items));
+    ["object", "oneOf", "allOf", "anyOf"].includes(nodeType) ||
+    (nodeType === "array" && isUndefined(value?.items));
 
   const showSiblingAdd =
-    ['string', 'number', 'boolean', 'integer', 'null'].includes(nodeType) &&
+    ["string", "number", "boolean", "integer", "null"].includes(nodeType) &&
     !singleOnly &&
     !isShowAddBtn;
 
@@ -144,9 +147,10 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
         currentProject.is_describe_library === 1
           ? [...descriptionList, ...innerDescriptionList]
           : descriptionList;
-      const desc = list.find((i) => i.key === e.target.value)?.description || '';
+      const desc =
+        list.find((i) => i.key === e.target.value)?.description || "";
       if (desc) {
-        descChange('description', desc);
+        descChange("description", desc);
       }
     }
   };
@@ -164,10 +168,17 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
       ref={refContainerWarper}
       className={cn(slots["schema-td"], slots["table-td"])}
     >
-      <KeyWarperContainer className={cn(slots["schema-td-warper"], slots["schema-width-auto"])}>
+      <div
+        className={classNames(
+          styles.keyWarper,
+          cn(slots["schema-td-warper"], slots["schema-width-auto"]),
+        )}
+      >
         {IndentPanel(deepIndex)}
         {deepIndex > 0 && sortAble && (
-          <div style={{ position: 'absolute', zIndex: 999 }}>{DragHandle(handleSortMouseDown)}</div>
+          <div style={{ position: "absolute", zIndex: 999 }}>
+            {DragHandle(handleSortMouseDown)}
+          </div>
         )}
         {deepIndex > 0 && (
           <div className={slots["empty-btn"]}>
@@ -187,37 +198,43 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
         {readOnly && (
           <Button
             size="small"
-            className={moduleClassNames(slots, `item-key-input apipost-btn-disabled readonly ${
-              deepIndex === 0 && 'item-key-input-front'
-            }`)}
+            className={moduleClassNames(
+              slots,
+              `item-key-input apipost-btn-disabled readonly ${
+                deepIndex === 0 && "item-key-input-front"
+              }`,
+            )}
             spellCheck={false}
             style={{
               flex: 1,
-              outline: 'none',
-              boxShadow: 'none',
+              outline: "none",
+              boxShadow: "none",
             }}
-          >{`${deepIndex === 0 ? t('common.schema.root') : nodeTitle}`}</Button>
+          >{`${deepIndex === 0 ? t("common.schema.root") : nodeTitle}`}</Button>
         )}
         {!readOnly && (
-          <Flex style={{ position: 'relative', height: '100%' }}>
+          <Flex style={{ position: "relative", height: "100%" }}>
             <div className={slots["hidden-input"]}>{`${
-              deepIndex === 0 ? t('common.schema.root') : nodeTitle
+              deepIndex === 0 ? t("common.schema.root") : nodeTitle
             }`}</div>
             <Input
               size="small"
               ref={txtKeyRef}
-              className={moduleClassNames(slots, `item-key-input item-key-input-hover ${
-                deepIndex === 0 && 'item-key-input-front'
-              }`)}
+              className={moduleClassNames(
+                slots,
+                `item-key-input item-key-input-hover ${
+                  deepIndex === 0 && "item-key-input-front"
+                }`,
+              )}
               spellCheck={false}
               style={{
                 flex: 1,
-                outline: 'none',
-                boxShadow: 'none',
+                outline: "none",
+                boxShadow: "none",
               }}
               readOnly={readOnly}
-              placeholder={t('common.schema.field_name')}
-              value={`${deepIndex === 0 ? t('common.schema.root') : nodeTitle}`}
+              placeholder={t("common.schema.field_name")}
+              value={`${deepIndex === 0 ? t("common.schema.root") : nodeTitle}`}
               onChange={handleChangeKey}
               onBlur={handleBlurKey}
             />
@@ -229,21 +246,28 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
             <Flex
               align="center"
               style={{
-                margin: '0 8px',
-                position: 'relative',
+                margin: "0 8px",
+                position: "relative",
                 zIndex: isObject(overrideData) ? 1000 : 0,
               }}
-              className={classNames(slots[nodeType] ?? nodeType, slots["item-key-types"])}
+              className={classNames(
+                slots[nodeType] ?? nodeType,
+                slots["item-key-types"],
+              )}
             >
               {nodeType}
             </Flex>
           }
           isRequired={isRequired}
           empty={value?.apipiost_allow_null === true}
-          handleUpdateRequired={(isRequired: boolean) => onUpdateRequired(!isRequired)}
-          handleChangeAllowNull={() => onChange('apipiost_allow_null', !value?.apipiost_allow_null)}
-          handleChangeType={(value: string) => onChange('type', value)}
-          showSettings={isString(nodeType) && nodeType !== ''}
+          handleUpdateRequired={(isRequired: boolean) =>
+            onUpdateRequired(!isRequired)
+          }
+          handleChangeAllowNull={() =>
+            onChange("apipiost_allow_null", !value?.apipiost_allow_null)
+          }
+          handleChangeType={(value: string) => onChange("type", value)}
+          showSettings={isString(nodeType) && nodeType !== ""}
           value={value}
           onChange={onManageChange}
           modalType={nodeType}
@@ -262,11 +286,16 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
             onUpdateWidth={handleUpdateWidth}
           />
         )}
-        <BthsPanelDiv>
-            {isShowAddBtn && (
-            <Tooltip title={t('common.schema.add_child_node')}>
+        <div className={styles.container}>
+          {isShowAddBtn && (
+            <Tooltip title={t("common.schema.add_child_node")}>
               <Button
-                icon={<IconFont type="icon-circle-add" style={{ color: 'var(--color-success)' }} />}
+                icon={
+                  <IconFont
+                    type="icon-circle-add"
+                    style={{ color: "var(--color-success)" }}
+                  />
+                }
                 size="small"
                 type="text"
                 onClick={onAddNode}
@@ -274,17 +303,22 @@ const ItemKey: React.FC<ItemKeyProps> = (props) => {
             </Tooltip>
           )}
           {showSiblingAdd && (
-            <Tooltip title={t('common.schema.add_adjacent_node')}>
+            <Tooltip title={t("common.schema.add_adjacent_node")}>
               <Button
-                icon={<IconFont type="icon-circle-add" style={{ color: 'var(--color-success)' }} />}
+                icon={
+                  <IconFont
+                    type="icon-circle-add"
+                    style={{ color: "var(--color-success)" }}
+                  />
+                }
                 size="small"
                 type="text"
                 onClick={onAddSiblingNode}
               ></Button>
             </Tooltip>
           )}
-        </BthsPanelDiv>
-      </KeyWarperContainer>
+        </div>
+      </div>
     </div>
   );
 };

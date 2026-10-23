@@ -1,16 +1,18 @@
-import { memo, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import styles from "./style.module.css";
+import { memo, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { useMemoizedFn } from 'ahooks';
-import produce from 'immer';
+import { useMemoizedFn } from "ahooks";
+import produce from "immer";
 
-import ResponsePanel from '@/features/requests/components/Response';
-import { useApis } from '@/app/store';
-import { ApiComponentType, ApiDetailsData } from '@/features/requests/types/api';
+import ResponsePanel from "@/features/requests/components/Response";
+import { useApis } from "@/app/store";
+import {
+  ApiComponentType,
+  ApiDetailsData,
+} from "@/features/requests/types/api";
 
-import Realtime from './components/Realtime';
-
-import { ResponseContainer } from './style';
+import Realtime from "./components/Realtime";
 
 const Response = memo((props: ApiComponentType) => {
   const { apisData, onApisDataChange } = props;
@@ -20,7 +22,7 @@ const Response = memo((props: ApiComponentType) => {
 
   const showResponseSize = useMemo(() => {
     return (
-      curApiSendingDataSSE?.sendStatus !== 'sending' &&
+      curApiSendingDataSSE?.sendStatus !== "sending" &&
       !!curApiSendingDataSSE?.streamResponse &&
       !!curApiSendingDataSSE?.response
     );
@@ -28,13 +30,13 @@ const Response = memo((props: ApiComponentType) => {
 
   const extraBeforeItem = [
     {
-      key: 'customRealtime',
-      label: t('api.run.response_tab'),
+      key: "customRealtime",
+      label: t("api.run.response_tab"),
       children: <Realtime sendingDataSSE={curApiSendingDataSSE} />,
     },
   ];
 
-  const handleOnChange = useMemoizedFn((data: ApiDetailsData['response']) => {
+  const handleOnChange = useMemoizedFn((data: ApiDetailsData["response"]) => {
     const newData = produce(apisData, (draft) => {
       draft.response = data;
     });
@@ -43,7 +45,7 @@ const Response = memo((props: ApiComponentType) => {
   });
 
   return (
-    <ResponseContainer>
+    <div className={styles.container}>
       <ResponsePanel
         onlySendingLoadingBar
         sendAfterResponseToTabDisabled
@@ -54,17 +56,17 @@ const Response = memo((props: ApiComponentType) => {
         sendingData={curApiSendingDataSSE}
         tabsDefaultActiveKey="customRealtime"
         includesTabs={[
-          'customRealtime',
-          'requestHeader',
-          'responseHeader',
-          'cookie',
-          'responseExample',
-          'realRequest',
-          'console',
+          "customRealtime",
+          "requestHeader",
+          "responseHeader",
+          "cookie",
+          "responseExample",
+          "realRequest",
+          "console",
         ]}
         onResponseDataChange={handleOnChange}
       />
-    </ResponseContainer>
+    </div>
   );
 });
 

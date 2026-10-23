@@ -1,7 +1,8 @@
+import styles from "./style.module.css";
 import { useCallback } from "react";
 import { IconFont } from "@/shared/ui";
-import { Flex, Input, MenuProps, message, Typography } from '@/shared/ui/base';
-import { ShareContainer } from "./style";
+import { Flex, Input, MenuProps, message, Typography } from "@/shared/ui/base";
+
 import { useSafeState } from "ahooks";
 import useDocsData from "./hooks/useDocsData";
 import useShare from "@/features/sharing/store/useShare";
@@ -10,7 +11,10 @@ import { last } from "lodash";
 import { ApiDetailsData } from "@/features/requests/types/api";
 import { useTranslation } from "react-i18next";
 import { openUrl } from "@/shared/utils/open";
-import { copyApiDocsUrlToClipboard, getApiDocsUrlById } from "@/features/sharing/utils/share";
+import {
+  copyApiDocsUrlToClipboard,
+  getApiDocsUrlById,
+} from "@/features/sharing/utils/share";
 import SharePanel from "./components/SharePanel";
 
 const SharePage = () => {
@@ -101,7 +105,7 @@ const SharePage = () => {
   );
 
   return (
-    <ShareContainer>
+    <div className={styles.container}>
       <Flex justify="space-between">
         <Typography.Text
           style={{
@@ -126,7 +130,7 @@ const SharePage = () => {
         activeTab={""}
         menuType={"share"}
       />
-    </ShareContainer>
+    </div>
   );
 };
 

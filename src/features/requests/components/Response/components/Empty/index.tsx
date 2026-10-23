@@ -1,12 +1,11 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import cn from 'classnames';
+import cn from "classnames";
 
-import Empty from '@/shared/ui/Empty';
-import IconFont from '@/shared/ui/IconFont';
-
-import { ResponseEmptyContainer } from './style';
+import Empty from "@/shared/ui/Empty";
+import IconFont from "@/shared/ui/IconFont";
 
 type ResponseEmpty = {
   description?: string;
@@ -14,16 +13,27 @@ type ResponseEmpty = {
   wrapClassName?: string;
 };
 
-const ResponseEmpty = ({ description, maskMode = false, wrapClassName }: ResponseEmpty) => {
+const ResponseEmpty = ({
+  description,
+  maskMode = false,
+  wrapClassName,
+}: ResponseEmpty) => {
   const { t } = useTranslation();
   return (
-    <ResponseEmptyContainer className={cn({ [slots["mask-mode"]]: maskMode }, wrapClassName)} >
+    <div
+      className={cn(
+        styles.container,
+        cn({ [slots["mask-mode"]]: maskMode }, wrapClassName),
+      )}
+    >
       <Empty
         className={slots["response-empty-wrap"]}
-        description={description || t('api.run.response_tip')}
-        image={<IconFont type="icon-zanwu" className={slots["icon-empty-wrap"]} />}
+        description={description || t("api.run.response_tip")}
+        image={
+          <IconFont type="icon-zanwu" className={slots["icon-empty-wrap"]} />
+        }
       />
-    </ResponseEmptyContainer>
+    </div>
   );
 };
 

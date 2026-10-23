@@ -1,23 +1,23 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex } from '@/shared/ui/base';
+import { Flex } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import dayjs from 'dayjs';
-import { isObject } from 'lodash';
+import { useSafeState } from "ahooks";
 
-import ApisDiffJsonContent from '@/features/sync/components/ApisDiffJsonContent';
-import { Modal } from '@/shared/ui/Modal';
+import { isObject } from "lodash";
 
-import { VersionModalWrap } from './style';
-import { EnvListItem } from '@/features/environment/types';
+import ApisDiffJsonContent from "@/features/sync/components/ApisDiffJsonContent";
+import { Modal } from "@/shared/ui/Modal";
+
+import { EnvListItem } from "@/features/environment/types";
 
 interface Props {
   curItem: {
-    localEnv:EnvListItem,
-    cloudEnv:EnvListItem,
+    localEnv: EnvListItem;
+    cloudEnv: EnvListItem;
   };
   open: boolean;
   onCancel: () => void;
@@ -25,7 +25,7 @@ interface Props {
 
 const VersionComparison = (props: Props) => {
   const { t } = useTranslation();
-  const { curItem, open,  onCancel } = props || {};
+  const { curItem, open, onCancel } = props || {};
 
   const [modal, contextHolder] = Modal.useModal();
 
@@ -39,26 +39,25 @@ const VersionComparison = (props: Props) => {
   }, [curItem]);
   return (
     <Modal
-      title={'Push Environment Conflict Comparison'}
+      title={"Push Environment Conflict Comparison"}
       onCancel={onCancel}
       footer={null}
       open={open}
       width={880}
     >
       {contextHolder}
-      <VersionModalWrap>
+      <div className={styles.container}>
         <Flex vertical gap={16}>
           <Flex align="center" gap={16} justify="space-between">
-            <span className={slots["version-tip"]}>
-              {'Local Data'}
-            </span>
-            <span className={slots["version-tip"]}>
-              {'Cloud Data'}
-            </span>
+            <span className={slots["version-tip"]}>{"Local Data"}</span>
+            <span className={slots["version-tip"]}>{"Cloud Data"}</span>
           </Flex>
-          <ApisDiffJsonContent prevDetails={prevDetails} nextDetails={nextDetails} />
+          <ApisDiffJsonContent
+            prevDetails={prevDetails}
+            nextDetails={nextDetails}
+          />
         </Flex>
-      </VersionModalWrap>
+      </div>
     </Modal>
   );
 };

@@ -1,11 +1,9 @@
+import styles from "./style.module.css";
 import { ceil, size } from "lodash";
 
 import Empty from "@/shared/ui/Empty";
 
-import { AllListWrapper } from "./style";
-
 import EventItemComponent from "./EventItem";
-import useTesting from "@/features/testing/store/useTesting";
 
 type CommonTestingResultProps = {
   testingResult?: any[]; // Type determined at runtime
@@ -21,7 +19,7 @@ const ResultList = ({
   eventCount,
 }: CommonTestingResultProps) => {
   return size(value) > 0 ? (
-    <AllListWrapper>
+    <div className={styles.container}>
       {value.map((item: any, index: number) => {
         let iterationText = `${ceil((index + 1) / eventCount)}/${execute_count}`;
         return (
@@ -32,7 +30,7 @@ const ResultList = ({
           />
         );
       })}
-    </AllListWrapper>
+    </div>
   ) : (
     <Empty wrapStyle={{ marginTop: "40px" }} />
   );

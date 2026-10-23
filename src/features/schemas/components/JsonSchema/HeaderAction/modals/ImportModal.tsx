@@ -1,24 +1,23 @@
+import styles from "../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { memo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { memo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Segmented, message } from '@/shared/ui/base';
+import { Segmented, message } from "@/shared/ui/base";
 
-import $RefParser from '@apidevtools/json-schema-ref-parser';
-import { XMLParser } from 'fast-xml-parser';
-import { isObject, isPlainObject, isString } from 'lodash';
+import $RefParser from "@apidevtools/json-schema-ref-parser";
+import { XMLParser } from "fast-xml-parser";
+import { isObject, isPlainObject, isString } from "lodash";
 
-import CodeEditor from '@/shared/components/CodeEditor';
-import Modal from '@/shared/ui/Modal';
-import { recursionSetSchemaOrder } from '@/shared/events/export';
-import { ThemeToken } from '@/shared/hooks/useTheme';
-import { getSafeJSON } from '@/shared/utils/common';
+import CodeEditor from "@/shared/components/CodeEditor";
+import Modal from "@/shared/ui/Modal";
+import { recursionSetSchemaOrder } from "@/shared/events/export";
+import { ThemeToken } from "@/shared/hooks/useTheme";
+import { getSafeJSON } from "@/shared/utils/common";
 
-import { SCHEMA_LANGUAGES, SCHEMA_TAB_LIST } from '../../constant';
-import JSONToSchema from '../utils/json2Schema';
-import { parseMySqlddlToSchema } from '../utils/sqldll2Schema';
-
-import { ImportContainer } from '../style';
+import { SCHEMA_LANGUAGES, SCHEMA_TAB_LIST } from "../../constant";
+import JSONToSchema from "../utils/json2Schema";
+import { parseMySqlddlToSchema } from "../utils/sqldll2Schema";
 
 interface ImportModalProps {
   onCancel: () => void;
@@ -29,44 +28,44 @@ interface ImportModalProps {
 const ImportModal = (props: ImportModalProps) => {
   const { onChange, onCancel, themeToken } = props;
 
-  const [importValue, setImportValue] = useState('');
-  const [activeKey, setActiveKey] = useState<'json' | 'xml' | 'jsonschema' | 'mysqlddl'>(
-    'jsonschema'
-  );
+  const [importValue, setImportValue] = useState("");
+  const [activeKey, setActiveKey] = useState<
+    "json" | "xml" | "jsonschema" | "mysqlddl"
+  >("jsonschema");
   const { t } = useTranslation();
   const handleImport = async () => {
     let data: string | object = importValue;
-    if (activeKey === 'jsonschema') {
+    if (activeKey === "jsonschema") {
       const jsonData = getSafeJSON(importValue);
       if (!isObject(jsonData)) {
-        message.error(t('supplement.invalid_data'));
+        message.error(t("supplement.invalid_data"));
         return;
       }
       data = await $RefParser.dereference(jsonData, {
         dereference: {
-          circular: 'ignore',
+          circular: "ignore",
         },
       });
-    } else if (activeKey === 'json') {
+    } else if (activeKey === "json") {
       const rawData = getSafeJSON(importValue);
       if (!isObject(rawData)) {
-        message.error(t('supplement.import_invalid_data'));
+        message.error(t("supplement.import_invalid_data"));
         return;
       }
       data = JSONToSchema(rawData);
-    } else if (activeKey === 'xml') {
+    } else if (activeKey === "xml") {
       if (!isString(importValue)) {
-        message.error(t('supplement.import_invalid_data'));
+        message.error(t("supplement.import_invalid_data"));
         return;
       }
       const parser = new XMLParser({ ignoreDeclaration: true });
       const xmlJsonData = parser.parse(importValue);
       data = JSONToSchema(xmlJsonData);
-    } else if (activeKey === 'mysqlddl') {
+    } else if (activeKey === "mysqlddl") {
       (data as any) = await parseMySqlddlToSchema(importValue);
     }
     if (!isPlainObject(data)) {
-      message.error(t('supplement.invalid_data'));
+      message.error(t("supplement.invalid_data"));
       return;
     }
     onChange(recursionSetSchemaOrder(data));
@@ -77,11 +76,11 @@ const ImportModal = (props: ImportModalProps) => {
     <Modal
       width={880}
       open
-      title={t('common.schema.import_modal.title')}
+      title={t("common.schema.import_modal.title")}
       onOk={handleImport}
       onCancel={onCancel}
     >
-      <ImportContainer $token={themeToken}>
+      <div className={styles.import}>
         <div className={slots["import-header"]}>
           <Segmented
             value={activeKey}
@@ -99,7 +98,7 @@ const ImportModal = (props: ImportModalProps) => {
             }}
           />
         </div>
-      </ImportContainer>
+      </div>
     </Modal>
   );
 };

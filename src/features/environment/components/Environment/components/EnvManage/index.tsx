@@ -1,27 +1,37 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex, Input, message, Tooltip } from '@/shared/ui/base';
+import { Flex, Input, message, Tooltip } from "@/shared/ui/base";
 
-import { useLatest, useUpdateEffect } from 'ahooks';
-import produce from 'immer';
-import { cloneDeep, find, findIndex, isNull, isUndefined, keys, map } from 'lodash';
+import { useLatest, useUpdateEffect } from "ahooks";
+import produce from "immer";
+import {
+  cloneDeep,
+  find,
+  findIndex,
+  isNull,
+  isUndefined,
+  keys,
+  map,
+} from "lodash";
 
-import Table from '@/shared/components/BasicTable';
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
-import { saveProjectConfig, updateEnvServerList } from '@/features/requests/events/env';
-import { useProjectConfig } from '@/app/store';
-import { EnvList, EnvListItem } from '@/features/environment/types';
-import { openUrl } from '@/shared/utils/open';
+import Table from "@/shared/components/BasicTable";
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
+import {
+  saveProjectConfig,
+  updateEnvServerList,
+} from "@/features/requests/events/env";
+import { useProjectConfig } from "@/app/store";
+import { EnvList, EnvListItem } from "@/features/environment/types";
+import { openUrl } from "@/shared/utils/open";
 
-import { DEFAULT_DATA_ITEM } from '../../constants';
-import ValueInput from '../ValueInput';
-import EnvServers from './components/EnvServers';
-import { IEnvDataItem } from './types';
-
-import { EnvManageContainer, EnvOpContainer, TitleContainer } from './style';
+import { DEFAULT_DATA_ITEM } from "../../constants";
+import ValueInput from "../ValueInput";
+import EnvServers from "./components/EnvServers";
+import { IEnvDataItem } from "./types";
 
 interface EnvModifyModalProps {
   editEnvId: string | undefined;
@@ -29,21 +39,25 @@ interface EnvModifyModalProps {
   changeKey: React.Dispatch<string[]>;
 }
 
-
 const Index = (props: EnvModifyModalProps) => {
   const { t } = useTranslation();
   const { editEnvId, envMenus } = props;
 
   const updateEnvList = useProjectConfig((state) => state.updateEnvList);
   const serverList = useProjectConfig((state) => state.serverList);
-  
+
   const [envData, setEnvData] = useState<Partial<EnvListItem>>({});
-  const [envList, setEnvList] = useState<Array<IEnvDataItem>>([{ ...DEFAULT_DATA_ITEM }]);
+  const [envList, setEnvList] = useState<Array<IEnvDataItem>>([
+    { ...DEFAULT_DATA_ITEM },
+  ]);
   const readonly = false;
   const latestEnvDataRef = useLatest(envData);
 
   useEffect(() => {
-    const data = find(envMenus, ({ env_id }) => env_id === editEnvId) as EnvListItem;
+    const data = find(
+      envMenus,
+      ({ env_id }) => env_id === editEnvId,
+    ) as EnvListItem;
 
     if (!data) return;
 
@@ -57,19 +71,22 @@ const Index = (props: EnvModifyModalProps) => {
       server_list: map(data.server_list, (serverItem) => {
         const _serverItem = find(
           latestEnvDataRef.current.server_list,
-          (findItem) => findItem.server_id === serverItem.server_id
+          (findItem) => findItem.server_id === serverItem.server_id,
         );
 
         return {
           ...serverItem,
-          uri: _serverItem?.uri || '',
+          uri: _serverItem?.uri || "",
         };
       }),
     });
   }, [editEnvId, envMenus]);
 
   useEffect(() => {
-    const data = find(envMenus, ({ env_id }) => env_id === editEnvId) as EnvListItem;
+    const data = find(
+      envMenus,
+      ({ env_id }) => env_id === editEnvId,
+    ) as EnvListItem;
     if (data) {
       const list = keys(data.env_var_list).map((e: any) => ({
         key: e,
@@ -77,11 +94,10 @@ const Index = (props: EnvModifyModalProps) => {
       }));
       setEnvList(list);
     }
-    
   }, [editEnvId, envMenus]);
-  
+
   const isDefaultOrMockEnv = () => {
-    return envData.env_id === '1' || envData.env_id === '2';
+    return envData.env_id === "1" || envData.env_id === "2";
   };
 
   const handleEnvChange = (key: string, value: string | number) => {
@@ -103,7 +119,7 @@ const Index = (props: EnvModifyModalProps) => {
     }
     return [...envList];
   };
-  
+
   const handleItemChange = (rowData: any, index: number, newVal: any) => {
     const newList: Array<IEnvDataItem> = cloneDeep(envList);
     delete rowData.static;
@@ -134,9 +150,9 @@ const Index = (props: EnvModifyModalProps) => {
 
   const envColumn: any[] = [
     {
-      title: t('global_setting.variables_table.variables'),
+      title: t("global_setting.variables_table.variables"),
       width: 150,
-      dataIndex: 'key',
+      dataIndex: "key",
       enableResize: true,
       render: (text: any, rowData: any, rowIndex: number) => (
         <Input
@@ -152,19 +168,19 @@ const Index = (props: EnvModifyModalProps) => {
     {
       title: (
         <Flex gap={8}>
-          <span>{t('global_setting.variables_table.cloud_value')}</span>
-          <Tooltip title={t('global_setting.variables_table.cloud_tip')}>
+          <span>{t("global_setting.variables_table.cloud_value")}</span>
+          <Tooltip title={t("global_setting.variables_table.cloud_tip")}>
             <IconFont type="icon-wenhao" />
           </Tooltip>
         </Flex>
       ),
       width: 150,
-      dataIndex: 'value',
+      dataIndex: "value",
       enableResize: true,
       render: (text: any, rowData: any, rowIndex: number) => (
-        <Flex style={{ width: '100%' }}>
+        <Flex style={{ width: "100%" }}>
           <ValueInput
-            value={isNull(text) || isUndefined(text) ? '' : String(text)}
+            value={isNull(text) || isUndefined(text) ? "" : String(text)}
             disabled={readonly}
             onChange={(e) =>
               handleItemChange(rowData, rowIndex, {
@@ -178,19 +194,19 @@ const Index = (props: EnvModifyModalProps) => {
     {
       title: (
         <Flex gap={8}>
-          <span>{t('global_setting.variables_table.local_value')}</span>
-          <Tooltip title={t('global_setting.variables_table.local_tip')}>
+          <span>{t("global_setting.variables_table.local_value")}</span>
+          <Tooltip title={t("global_setting.variables_table.local_tip")}>
             <IconFont type="icon-wenhao" />
           </Tooltip>
         </Flex>
       ),
       width: 150,
-      dataIndex: 'current_value',
+      dataIndex: "current_value",
       enableResize: true,
       render: (text: any, rowData: any, rowIndex: number) => (
-        <Flex style={{ width: '100%' }}>
+        <Flex style={{ width: "100%" }}>
           <ValueInput
-            value={isNull(text) || isUndefined(text) ? '' : String(text)}
+            value={isNull(text) || isUndefined(text) ? "" : String(text)}
             disabled={readonly}
             onChange={(e) =>
               handleItemChange(rowData, rowIndex, {
@@ -202,11 +218,11 @@ const Index = (props: EnvModifyModalProps) => {
       ),
     },
     {
-      title: t('global_setting.variables_table.description'),
-      dataIndex: 'description',
-      render: (text = '', rowData: any, rowIndex: number) => (
+      title: t("global_setting.variables_table.description"),
+      dataIndex: "description",
+      render: (text = "", rowData: any, rowIndex: number) => (
         <ValueInput
-          value={String(text ?? '')}
+          value={String(text ?? "")}
           disabled={readonly}
           onChange={(e) =>
             handleItemChange(rowData, rowIndex, {
@@ -217,23 +233,25 @@ const Index = (props: EnvModifyModalProps) => {
       ),
     },
     {
-      title: '',
-      dataIndex: 'del',
-      align: 'center',
+      title: "",
+      dataIndex: "del",
+      align: "center",
       width: 50,
       render: (_text: any, _rowData: any, rowIndex: number) =>
         readonly ? (
           <></>
         ) : (
-          <EnvOpContainer>
-            <IconFont onClick={() => handleDeleteItem(rowIndex)} type="icon-delete" />
-          </EnvOpContainer>
+          <div className={styles.envOp}>
+            <IconFont
+              onClick={() => handleDeleteItem(rowIndex)}
+              type="icon-delete"
+            />
+          </div>
         ),
     },
   ];
 
-
-  const onOk = (options?:any) => {
+  const onOk = (options?: any) => {
     const tempEnvData = options?.envData || envData;
 
     if (!tempEnvData.name?.trim()) return;
@@ -253,7 +271,10 @@ const Index = (props: EnvModifyModalProps) => {
       if (params?.isLocal) {
         delete params.isLocal;
         // Get maximum sort value
-        const maxSort = envMenus.reduce((max, obj) => (obj?.sort || 0) > max ? (obj?.sort || 0) : max, 0);
+        const maxSort = envMenus.reduce(
+          (max, obj) => ((obj?.sort || 0) > max ? obj?.sort || 0 : max),
+          0,
+        );
         const list = envMenus.map((e) => {
           if (e.env_id === params?.env_id) {
             return { ...params, sort: maxSort + 1, isLocal: undefined };
@@ -262,8 +283,8 @@ const Index = (props: EnvModifyModalProps) => {
         });
         updateEnvList(list);
         // changeKey([res.env_id]);
-        saveProjectConfig('envList',list);
-        message.success('Success');
+        saveProjectConfig("envList", list);
+        message.success("Success");
         return;
       }
       const newList = envMenus.map((e) => {
@@ -272,18 +293,17 @@ const Index = (props: EnvModifyModalProps) => {
         }
         return e;
       });
-      saveProjectConfig('envList',newList);
-      message.success('Success');
+      saveProjectConfig("envList", newList);
+      message.success("Success");
       // await updateEnvRequest({ ...params, project_id: project_id || '' });
       updateEnv({ ...params }, false);
     } catch (err) {
-      
       // err
     }
   };
-  useUpdateEffect(()=>{
+  useUpdateEffect(() => {
     updateEnvServerList(serverList);
-  },[serverList]);
+  }, [serverList]);
   const updateEnv = async (envData: any, serverUpdate = true) => {
     try {
       const newEnvList = produce(envMenus, (draft) => {
@@ -303,47 +323,61 @@ const Index = (props: EnvModifyModalProps) => {
   };
 
   return (
-    <EnvManageContainer>
+    <div className={styles.envManage}>
       <Flex className={slots["env-manage-flex"]} vertical gap={15}>
         <Flex gap={15} vertical>
-          <span className={slots.title}> {t('global_setting.environment_detail.title')}</span>
+          <span className={slots.title}>
+            {" "}
+            {t("global_setting.environment_detail.title")}
+          </span>
           <div className={[slots.tip, slots.column].join(" ")}>
             <div>
-              {t('global_setting.environment_detail.tips')}
+              {t("global_setting.environment_detail.tips")}
               <a
-                onClick={() => openUrl('https://www.echoapi.com/wiki/docs/http/environment-variables')}
+                onClick={() =>
+                  openUrl(
+                    "https://www.echoapi.com/wiki/docs/http/environment-variables",
+                  )
+                }
               >
-                {t('global_setting.environment_detail.link')}
+                {t("global_setting.environment_detail.link")}
               </a>
             </div>
-            <div>{t('global_setting.environment_detail.tips1')}</div>
-            <div>{t('global_setting.environment_detail.tips2')}</div>
+            <div>{t("global_setting.environment_detail.tips1")}</div>
+            <div>{t("global_setting.environment_detail.tips2")}</div>
           </div>
         </Flex>
         <div className={slots["env-manage-content"]}>
-          <TitleContainer>{t('global_setting.environment_detail.name')}</TitleContainer>
+          <div className={styles.container}>
+            {t("global_setting.environment_detail.name")}
+          </div>
           <Input
             className={slots["env-manage-input"]}
             maxLength={128}
             addonAfter={
-              find(envMenus, ({ env_id }) => env_id === editEnvId)?.is_private === 1 ||
+              find(envMenus, ({ env_id }) => env_id === editEnvId)
+                ?.is_private === 1 ||
               find(envMenus, ({ env_id }) => env_id === editEnvId)?.isLocal
                 ? undefined
                 : undefined
             }
-            placeholder={t('supplement.env_input_tip')}
+            placeholder={t("supplement.env_input_tip")}
             disabled={isDefaultOrMockEnv()}
             value={envData.name}
-            onChange={(e) => handleEnvChange('name', e.target.value)}
+            onChange={(e) => handleEnvChange("name", e.target.value)}
           />
-          <EnvServers value={envData as EnvListItem}           onChange={(newEnvData)=>{
-            setEnvData(newEnvData);
-            // Add auto-save logic
-            // onOk({envData:newEnvData});
-          }} updateEnv={updateEnv} />
-          <TitleContainer>
-            {t('global_setting.environment_detail.environment_variables')}
-          </TitleContainer>
+          <EnvServers
+            value={envData as EnvListItem}
+            onChange={(newEnvData) => {
+              setEnvData(newEnvData);
+              // Add auto-save logic
+              // onOk({envData:newEnvData});
+            }}
+            updateEnv={updateEnv}
+          />
+          <div className={styles.container}>
+            {t("global_setting.environment_detail.environment_variables")}
+          </div>
           <div>
             <Table
               pagination={false}
@@ -356,11 +390,11 @@ const Index = (props: EnvModifyModalProps) => {
 
         <Flex justify="flex-end">
           <Button onClick={onOk} type="primary">
-            {t('global_setting.environment_detail.save')}
+            {t("global_setting.environment_detail.save")}
           </Button>
         </Flex>
       </Flex>
-    </EnvManageContainer>
+    </div>
   );
 };
 

@@ -52,8 +52,12 @@
   display: block;
   border-radius: 2px;
   font-size: var(--font-size-14);
-  color: var(--style-f9a1fed8-ResponseAssertItemContainer-0);
-  background-color: var(--style-f9a1fed8-ResponseAssertItemContainer-1);
+  color: #ff583e;
+  background-color: rgba(255, 88, 62, 0.1);
+  &[data-passed="true"] {
+    color: #26cea4;
+    background-color: rgba(38, 206, 164, 0.1);
+  }
   & .slot-anticon {
     font-size: var(--font-size-16);
   }

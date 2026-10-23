@@ -1,13 +1,14 @@
-import { CSSProperties, FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import styles from "./style.module.css";
+import classNames from "classnames";
+import { CSSProperties, FC } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Empty as AntEmpty } from '@/shared/ui/base';
-import type { EmptyProps } from '@/shared/ui/base';
+import { Empty as AntEmpty } from "@/shared/ui/base";
+import type { EmptyProps } from "@/shared/ui/base";
 
-import EmptyIcon from '@/shared/assets/icon/empty.svg?react';
+import EmptyIcon from "@/shared/assets/icon/empty.svg?react";
 
-import { EmptyWrap } from './style';
-import { openUrl } from '@/shared/utils/open';
+import { openUrl } from "@/shared/utils/open";
 
 type Props = EmptyProps & {
   wrapClassName?: string;
@@ -15,19 +16,27 @@ type Props = EmptyProps & {
   link?: string;
 };
 
-const Empty: FC<Props> = ({ wrapClassName, wrapStyle, children, ...resetProps }) => {
+const Empty: FC<Props> = ({
+  wrapClassName,
+  wrapStyle,
+  children,
+  ...resetProps
+}) => {
   const { t } = useTranslation();
   const image = resetProps.image || <EmptyIcon />;
-  const description = resetProps.description || t('common.nodata');
-  const link = resetProps.link || '';
+  const description = resetProps.description || t("common.nodata");
+  const link = resetProps.link || "";
 
   return (
-    <EmptyWrap className={wrapClassName} style={wrapStyle}>
+    <div
+      style={wrapStyle}
+      className={classNames(styles.container, wrapClassName)}
+    >
       <AntEmpty {...resetProps} image={image} description={description}>
         {children}
-        {link && <a onClick={() => openUrl(link)}>{t('supplement.doc_use')}</a>}
+        {link && <a onClick={() => openUrl(link)}>{t("supplement.doc_use")}</a>}
       </AntEmpty>
-    </EmptyWrap>
+    </div>
   );
 };
 

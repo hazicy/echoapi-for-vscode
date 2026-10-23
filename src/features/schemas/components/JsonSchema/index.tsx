@@ -1,9 +1,8 @@
-import React, { memo } from 'react';
+import styles from "./style.module.css";
+import React, { memo } from "react";
 
-import HeaderAction from './HeaderAction';
-import JsonSchemaTable from './JsonSchemaTable';
-
-import JsonSchemaContainer from './style';
+import HeaderAction from "./HeaderAction";
+import JsonSchemaTable from "./JsonSchemaTable";
 
 type Props = {
   value?: any;
@@ -26,17 +25,22 @@ const Index: React.FC<Props> = (props) => {
   } = props;
 
   return (
-    <JsonSchemaContainer>
+    <div className={styles.container}>
       {isShowHeaderAction && (
         <HeaderAction
-          style={{ display: isShowHeaderAction ? 'none' : 'block' }}
+          style={{ display: isShowHeaderAction ? "none" : "block" }}
           value={value}
           onChange={onChange}
           importTitle={importTitle}
         />
       )}
-      <JsonSchemaTable model_id={model_id} models={models} value={value} onChange={onChange} />
-    </JsonSchemaContainer>
+      <JsonSchemaTable
+        model_id={model_id}
+        models={models}
+        value={value}
+        onChange={onChange}
+      />
+    </div>
   );
 };
 

@@ -68,5 +68,7 @@ src/
   together when changing them. Empty slot exports are intentional.
 - Do not add compatibility marker classes. Use module exports for styling
   and accessible roles and names for test locators.
+- Apply module classes directly to elements and existing UI components. Do not
+  introduce style wrapper components or wrapper-only TypeScript modules.
 - The production build lowers CSS nesting for Chromium 102, matching the
   minimum supported VS Code version.

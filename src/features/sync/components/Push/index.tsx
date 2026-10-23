@@ -1,57 +1,77 @@
-import React, { useState } from 'react';
-import { PushWrap } from './style';
-import { Flex, message, Spin, Typography } from '@/shared/ui/base';
-import { useTranslation } from 'react-i18next';
-import { useShallow } from 'zustand/react/shallow';
-import { Modal } from '@/shared/ui/Modal';
-import { useApis, useProjectConfig, useUserConfig } from '@/app/store';
+import styles from "./style.module.css";
+import React, { useState } from "react";
 
-import { batchSaveApiService, getApisListService } from '@/shared/services/apis';
-import { cloneDeep, forEach, isArray, isNumber, isPlainObject, some } from 'lodash';
-import Left from './Left';
-import Right from './Right';
-import { completeServiceList, getEnvConficList } from '@/features/sync/utils/push';
-import { PushApiData, PushEnvData } from './type';
-import produce from 'immer';
-import { addProjectEnvService, addProjectEnvSeverService, updateProjectEnvService, updateProjectEnvSeverService } from '@/shared/services/project';
+import { Flex, message, Spin, Typography } from "@/shared/ui/base";
+import { useTranslation } from "react-i18next";
+import { useShallow } from "zustand/react/shallow";
+import { Modal } from "@/shared/ui/Modal";
+import { useApis, useProjectConfig, useUserConfig } from "@/app/store";
+
+import {
+  batchSaveApiService,
+  getApisListService,
+} from "@/shared/services/apis";
+import {
+  cloneDeep,
+  forEach,
+  isArray,
+  isNumber,
+  isPlainObject,
+  some,
+} from "lodash";
+import Left from "./Left";
+import Right from "./Right";
+import {
+  completeServiceList,
+  getEnvConficList,
+} from "@/features/sync/utils/push";
+import { PushApiData, PushEnvData } from "./type";
+import produce from "immer";
+import {
+  addProjectEnvService,
+  addProjectEnvSeverService,
+  updateProjectEnvService,
+  updateProjectEnvSeverService,
+} from "@/shared/services/project";
 
 const Push = () => {
   const { t } = useTranslation();
 
   const [halfCheckedKeys, setHalfCheckedKeys] = useState<React.Key[]>([]);
   const [spinning, setSpinning] = useState(false);
-  const [conflictType, setConflictType] = useState<string>('manual');
+  const [conflictType, setConflictType] = useState<string>("manual");
   const envList = useProjectConfig((store) => store?.envList) || [];
-  const [tabValue, setTabValue] = useState<'apis' | 'env'>('apis');
+  const [tabValue, setTabValue] = useState<"apis" | "env">("apis");
   const [modal, contextHolder] = Modal.useModal();
   const [pushEnvData, setPushEnvData] = useState<Partial<PushEnvData>>({
     checkedKeys: [],
-    conflictType: 'mergeCloud',
+    conflictType: "mergeCloud",
     conflictItems: [],
     conflictCheckedKeys: [],
     addEnvs: [],
     uploadItems: [],
     newServiceList: [],
-    cloudServiceList: []
+    cloudServiceList: [],
   });
 
   const [pushApiData, setPushApiData] = useState<Partial<PushApiData>>({
     checkedKeys: [],
-    conflictType: 'local',
+    conflictType: "local",
     conflictItems: [],
     conflictCheckedKeys: [],
   });
 
-
   const apiOriginDetailsList = useApis((store) => store.apiOriginDetailsList);
 
-  const localProjectApisVersion = useApis((store) => store.localProjectApisVersion);
+  const localProjectApisVersion = useApis(
+    (store) => store.localProjectApisVersion,
+  );
   const { currentProject } = useUserConfig(
     useShallow(({ currentProject }) => {
       return {
         currentProject,
       };
-    })
+    }),
   );
 
   const serverList = useProjectConfig((store) => store.serverList);
@@ -59,7 +79,7 @@ const Push = () => {
   const updatePushApiData = (key: any, value?: any) => {
     let newPushApiData = produce(pushApiData, (draft: any) => {
       if (isPlainObject(key)) {
-        Object.keys(key).forEach(k => {
+        Object.keys(key).forEach((k) => {
           draft[k] = key[k];
         });
       } else {
@@ -72,7 +92,7 @@ const Push = () => {
   const updatePushEnvData = (key: any, value?: any) => {
     let newPushEnvData = produce(pushEnvData, (draft: any) => {
       if (isPlainObject(key)) {
-        Object.keys(key).forEach(k => {
+        Object.keys(key).forEach((k) => {
           draft[k] = key[k];
         });
       } else {
@@ -83,8 +103,8 @@ const Push = () => {
   };
 
   const handlePush = async () => {
-    if (!currentProject?.project_id || currentProject?.project_id === '-1') {
-      message.error(t('common.choose_target_tip'));
+    if (!currentProject?.project_id || currentProject?.project_id === "-1") {
+      message.error(t("common.choose_target_tip"));
       return;
     }
 
@@ -93,17 +113,24 @@ const Push = () => {
     let envCheckedKeys = pushEnvData?.checkedKeys || [];
 
     if (checkedKeys.length <= 0 && envCheckedKeys.length <= 0) {
-      message.error(t('common.least_one_item_tip'));
+      message.error(t("common.least_one_item_tip"));
       return;
     }
     const localApiList = cloneDeep(apiOriginDetailsList);
-    let checkedItems = localApiList.filter(i => checkedKeys.concat(halfCheckedKeys).includes(i?.target_id));
+    let checkedItems = localApiList.filter((i) =>
+      checkedKeys.concat(halfCheckedKeys).includes(i?.target_id),
+    );
 
     // Handle environment and service conflicts (get conflicting environment list)
-    const envConflictList = await getEnvConficList(pushEnvData?.checkedKeys || [], currentProject?.project_id);
+    const envConflictList = await getEnvConficList(
+      pushEnvData?.checkedKeys || [],
+      currentProject?.project_id,
+    );
 
     // Get all API versions from cloud
-    const res = await getApisListService({ project_id: currentProject.project_id });
+    const res = await getApisListService({
+      project_id: currentProject.project_id,
+    });
     const cloudList = res?.list || [];
 
     // Conflicting API list
@@ -112,51 +139,80 @@ const Push = () => {
     const conflictIdList: Array<string> = [];
 
     // Local API version records for target project
-    let localApisVersion: any = localProjectApisVersion?.[currentProject.project_id] || {};
+    let localApisVersion: any =
+      localProjectApisVersion?.[currentProject.project_id] || {};
 
     // Compare local and cloud for conflicts, prefer using recorded version numbers
     forEach(checkedItems, (item) => {
-      if (some(cloudList, (i) => {
-        let localVersion = localApisVersion?.[i?.target_id];
-        // If local has version record, prefer using local project version record for comparison
-        if (isNumber(localVersion)) {
-          return i?.target_id === item?.target_id && ['api', 'sse', 'websocket2', 'socketio', 'folder', 'graphql'].includes(item?.target_type) && i?.version > localVersion;
-        } else {
-          return i?.target_id === item?.target_id && ['api', 'sse', 'websocket2', 'socketio', 'folder', 'graphql'].includes(item?.target_type) && i?.version > item.version;
-        }
-      })) {
-        conflictList.push({ ...item, parent_id: '0' });
+      if (
+        some(cloudList, (i) => {
+          let localVersion = localApisVersion?.[i?.target_id];
+          // If local has version record, prefer using local project version record for comparison
+          if (isNumber(localVersion)) {
+            return (
+              i?.target_id === item?.target_id &&
+              [
+                "api",
+                "sse",
+                "websocket2",
+                "socketio",
+                "folder",
+                "graphql",
+              ].includes(item?.target_type) &&
+              i?.version > localVersion
+            );
+          } else {
+            return (
+              i?.target_id === item?.target_id &&
+              [
+                "api",
+                "sse",
+                "websocket2",
+                "socketio",
+                "folder",
+                "graphql",
+              ].includes(item?.target_type) &&
+              i?.version > item.version
+            );
+          }
+        })
+      ) {
+        conflictList.push({ ...item, parent_id: "0" });
         conflictIdList.push(item?.target_id);
       }
     });
     // API or environment has conflict, proceed to conflict resolution step
     if (conflictList.length > 0 || envConflictList.diffEnvs.length > 0) {
-      conflictList.sort((a:any, b:any) => {
-        if (a.target_type === 'folder' && b.target_type !== 'folder') {
-          return -1; 
-        } else if (a.target_type !== 'folder' && b.target_type === 'folder') {
+      conflictList.sort((a: any, b: any) => {
+        if (a.target_type === "folder" && b.target_type !== "folder") {
+          return -1;
+        } else if (a.target_type !== "folder" && b.target_type === "folder") {
           return 1;
         }
-        return 0; 
-      })
-      if (conflictType === 'manual') {
+        return 0;
+      });
+      if (conflictType === "manual") {
         updatePushApiData({
           conflictItems: conflictList,
-          conflictCheckedKeys: conflictList.map((i: any) => i?.target_id)
+          conflictCheckedKeys: conflictList.map((i: any) => i?.target_id),
         });
         updatePushEnvData({
           conflictItems: envConflictList.diffEnvs,
           addEnvs: envConflictList?.addEnvs || [],
           newServiceList: envConflictList?.newServiceList || [],
-          conflictCheckedKeys: envConflictList.diffEnvs.map((i) => i?.localEnv?.env_id),
-          cloudServiceList: envConflictList?.cloudServiceList || []
+          conflictCheckedKeys: envConflictList.diffEnvs.map(
+            (i) => i?.localEnv?.env_id,
+          ),
+          cloudServiceList: envConflictList?.cloudServiceList || [],
         });
         return;
-      } else if (conflictType === 'local') {
+      } else if (conflictType === "local") {
         // Use local data to resolve conflicts directly
-      } else if (conflictType === 'cloud') {
+      } else if (conflictType === "cloud") {
         // Filter out conflicting items, do not submit to cloud
-        checkedItems = checkedItems.filter(i => !conflictIdList.includes(i?.target_id))
+        checkedItems = checkedItems.filter(
+          (i) => !conflictIdList.includes(i?.target_id),
+        );
       }
     }
 
@@ -166,17 +222,28 @@ const Push = () => {
       item.project_id = currentProject.project_id;
     });
     try {
-
       // Upload environments without conflicts
-      if (isArray(envConflictList?.addEnvs) && envConflictList.addEnvs.length > 0) {
+      if (
+        isArray(envConflictList?.addEnvs) &&
+        envConflictList.addEnvs.length > 0
+      ) {
         // Before uploading environments, upload necessary services from the service list first
-        for (let index = 0; index < envConflictList.newServiceList.length; index++) {
+        for (
+          let index = 0;
+          index < envConflictList.newServiceList.length;
+          index++
+        ) {
           const newService = envConflictList.newServiceList[index];
-          if (newService?.mode === 'add') {
-            await addProjectEnvSeverService({ ...newService, project_id: currentProject.project_id });
-
-          } else if (newService?.mode === 'update') {
-            await updateProjectEnvSeverService({ ...newService, project_id: currentProject.project_id });
+          if (newService?.mode === "add") {
+            await addProjectEnvSeverService({
+              ...newService,
+              project_id: currentProject.project_id,
+            });
+          } else if (newService?.mode === "update") {
+            await updateProjectEnvSeverService({
+              ...newService,
+              project_id: currentProject.project_id,
+            });
           }
         }
 
@@ -184,56 +251,76 @@ const Push = () => {
           const localEnv = envConflictList.addEnvs[index];
           // Complete service list
           completeServiceList(localEnv, envConflictList.newServiceList);
-          await addProjectEnvService({ ...localEnv, project_id: currentProject.project_id });
+          await addProjectEnvService({
+            ...localEnv,
+            project_id: currentProject.project_id,
+          });
         }
       }
 
       if (checkedItems.length <= 0) {
         // Close upload page and show success message
         window?.vscode.postMessage({
-          action: 'pushSuccess',
+          action: "pushSuccess",
         });
         return;
       }
 
       // Upload APIs without conflicts
-      const result = await batchSaveApiService({ project_id: currentProject.project_id, apis: checkedItems });
+      const result = await batchSaveApiService({
+        project_id: currentProject.project_id,
+        apis: checkedItems,
+      });
       // After uploading APIs, use cloud's latest version number to overwrite local version
       if (isArray(result?.list) && result.list.length > 0) {
         forEach(result.list, (i) => {
-          let localIndex = localApiList.findIndex(it => it?.target_id === i?.target_id);
+          let localIndex = localApiList.findIndex(
+            (it) => it?.target_id === i?.target_id,
+          );
           if (isNumber(i.version)) {
             localApiList[localIndex].version = i.version;
           }
         });
         // Save updated version data locally
         window?.vscode.postMessage({
-          action: 'setApiList',
-          data: localApiList
+          action: "setApiList",
+          data: localApiList,
         });
       }
       // Close upload page and show success message
       window?.vscode.postMessage({
-        action: 'pushSuccess',
+        action: "pushSuccess",
       });
-    } catch (error) { }
+    } catch (error) {}
     setSpinning(false);
   };
   const conflictPush = async (keys?: React.Key[], uploadItem?: any[]) => {
     let checkedKeys = (pushApiData?.checkedKeys || []).concat(halfCheckedKeys);
-    
+
     setSpinning(true);
     try {
       //#region Upload environments start
       // Before uploading environments, upload necessary services from the service list first
-      if (isArray(pushEnvData?.newServiceList) && pushEnvData.newServiceList.length > 0) {
-        for (let index = 0; index < pushEnvData.newServiceList.length; index++) {
+      if (
+        isArray(pushEnvData?.newServiceList) &&
+        pushEnvData.newServiceList.length > 0
+      ) {
+        for (
+          let index = 0;
+          index < pushEnvData.newServiceList.length;
+          index++
+        ) {
           const newService = pushEnvData.newServiceList[index];
-          if (newService?.mode === 'add') {
-            await addProjectEnvSeverService({ ...newService, project_id: currentProject.project_id });
-
-          } else if (newService?.mode === 'update') {
-            await updateProjectEnvSeverService({ ...newService, project_id: currentProject.project_id });
+          if (newService?.mode === "add") {
+            await addProjectEnvSeverService({
+              ...newService,
+              project_id: currentProject.project_id,
+            });
+          } else if (newService?.mode === "update") {
+            await updateProjectEnvSeverService({
+              ...newService,
+              project_id: currentProject.project_id,
+            });
           }
         }
       }
@@ -244,7 +331,10 @@ const Push = () => {
           const localEnv = pushEnvData.addEnvs[index];
           // Complete service list
           completeServiceList(localEnv, pushEnvData?.newServiceList || []);
-          await addProjectEnvService({ ...localEnv, project_id: currentProject.project_id });
+          await addProjectEnvService({
+            ...localEnv,
+            project_id: currentProject.project_id,
+          });
         }
       }
 
@@ -258,14 +348,17 @@ const Push = () => {
           const localEnv = uploadArrs[index];
           // Complete service list
           completeServiceList(localEnv, pushEnvData?.newServiceList || []);
-          await updateProjectEnvService({ ...localEnv, project_id: currentProject.project_id });
+          await updateProjectEnvService({
+            ...localEnv,
+            project_id: currentProject.project_id,
+          });
         }
       }
       //#endregion Upload environments end
 
       //#region Upload APIs start
       const localApiList = cloneDeep(apiOriginDetailsList);
-      const checkedItems = localApiList.filter(i => {
+      const checkedItems = localApiList.filter((i) => {
         if (keys) {
           return keys.includes(i?.target_id);
         } else {
@@ -279,33 +372,38 @@ const Push = () => {
       if (checkedItems.length <= 0) {
         // Close upload page and show success message
         window?.vscode.postMessage({
-          action: 'pushSuccess',
+          action: "pushSuccess",
         });
         return;
       }
-      const result = await batchSaveApiService({ project_id: currentProject.project_id, apis: checkedItems });
+      const result = await batchSaveApiService({
+        project_id: currentProject.project_id,
+        apis: checkedItems,
+      });
 
       // After uploading APIs, use cloud's latest version number to overwrite local version
       if (isArray(result?.list) && result.list.length > 0) {
         forEach(result.list, (i) => {
-          let localIndex = localApiList.findIndex(it => it?.target_id === i?.target_id);
+          let localIndex = localApiList.findIndex(
+            (it) => it?.target_id === i?.target_id,
+          );
           if (isNumber(i.version)) {
             localApiList[localIndex].version = i.version;
           }
         });
         // Save updated version data locally
         window?.vscode.postMessage({
-          action: 'setApiList',
-          data: localApiList
+          action: "setApiList",
+          data: localApiList,
         });
       }
       //#endregion Upload APIs end
 
       // Close upload page and show success message
       window?.vscode.postMessage({
-        action: 'pushSuccess',
+        action: "pushSuccess",
       });
-    } catch (error) { }
+    } catch (error) {}
 
     setSpinning(false);
   };
@@ -314,68 +412,94 @@ const Push = () => {
     try {
       let envConflictItems = pushEnvData?.conflictItems || [];
       let conflictItems = pushApiData?.conflictItems || [];
-      if (tabValue === 'apis') {
-        let checkedKeys = (pushApiData?.checkedKeys || []).concat(halfCheckedKeys);
+      if (tabValue === "apis") {
+        let checkedKeys = (pushApiData?.checkedKeys || []).concat(
+          halfCheckedKeys,
+        );
         let useClond = pushApiData?.conflictType;
         let conflictCheckedKeys = pushApiData?.conflictCheckedKeys || [];
         if (useClond === undefined) {
-          message.error(t('common.select_conflict_mode_tip'));
+          message.error(t("common.select_conflict_mode_tip"));
           return;
         }
 
-        if (useClond === 'local') {
+        if (useClond === "local") {
           // Use local data
-          updatePushApiData('conflictItems', conflictItems.filter((i: any) => !conflictCheckedKeys.includes(i?.target_id)));
+          updatePushApiData(
+            "conflictItems",
+            conflictItems.filter(
+              (i: any) => !conflictCheckedKeys.includes(i?.target_id),
+            ),
+          );
           // Handle last conflict and resubmit data to cloud
           if (conflictCheckedKeys.length === conflictItems.length) {
             if (envConflictItems.length <= 0) {
               conflictPush();
             } else {
-              setTabValue('env');
+              setTabValue("env");
             }
           }
-        } else if (useClond === 'cloud') {
+        } else if (useClond === "cloud") {
           // Use cloud data
           updatePushApiData({
-            conflictItems: conflictItems.filter((i: any) => !conflictCheckedKeys.includes(i?.target_id)),
-            checkedKeys:checkedKeys.filter((i: React.Key) => !conflictCheckedKeys.includes(i))
+            conflictItems: conflictItems.filter(
+              (i: any) => !conflictCheckedKeys.includes(i?.target_id),
+            ),
+            checkedKeys: checkedKeys.filter(
+              (i: React.Key) => !conflictCheckedKeys.includes(i),
+            ),
           });
 
           // Handle last conflict and resubmit data to cloud
           if (conflictCheckedKeys.length === conflictItems.length) {
             if (envConflictItems.length <= 0) {
-              conflictPush(checkedKeys.filter((i: React.Key) => !conflictCheckedKeys.includes(i)));
+              conflictPush(
+                checkedKeys.filter(
+                  (i: React.Key) => !conflictCheckedKeys.includes(i),
+                ),
+              );
             } else {
-              setTabValue('env');
+              setTabValue("env");
             }
           }
         }
         return;
       }
-      if (tabValue === 'env') {
+      if (tabValue === "env") {
         let conflictCheckedKeys = pushEnvData?.conflictCheckedKeys || [];
         let uploadItems = cloneDeep(pushEnvData?.uploadItems) || [];
         switch (pushEnvData?.conflictType) {
-          case 'local':
+          case "local":
             const newServiceList = pushEnvData?.newServiceList || [];
 
             // Check for service changes before conflict resolution, show modal if changed
             if (newServiceList.length !== serverList.length) {
               const res = await modal?.confirm({
-                title: 'Push Confirmation',
-                content: <Flex vertical gap={20}>
-                  <Flex gap={8} vertical style={{ padding: 12, background: 'var(--color-bg-page)' }}>
-                    <Typography.Text style={{ color: 'var(--font-content-color)' }}>
-                      After selecting "Use Local Data", the system will automatically add any missing cloud services to ensure everything functions properly.
-                    </Typography.Text>
+                title: "Push Confirmation",
+                content: (
+                  <Flex vertical gap={20}>
+                    <Flex
+                      gap={8}
+                      vertical
+                      style={{
+                        padding: 12,
+                        background: "var(--color-bg-page)",
+                      }}
+                    >
+                      <Typography.Text
+                        style={{ color: "var(--font-content-color)" }}
+                      >
+                        After selecting "Use Local Data", the system will
+                        automatically add any missing cloud services to ensure
+                        everything functions properly.
+                      </Typography.Text>
+                    </Flex>
+                    <span>Do you want to continue?</span>
                   </Flex>
-                  <span>
-                    Do you want to continue?
-                  </span>
-                </Flex>,
+                ),
                 width: 800,
-                okText: 'Continue',
-                cancelText: 'Cancel',
+                okText: "Continue",
+                cancelText: "Cancel",
               });
               if (!res) {
                 return;
@@ -395,26 +519,39 @@ const Push = () => {
 
             updatePushEnvData({
               uploadItems,
-              conflictItems: envConflictItems.filter((i: any) => !conflictCheckedKeys.includes(i?.localEnv?.env_id))
+              conflictItems: envConflictItems.filter(
+                (i: any) => !conflictCheckedKeys.includes(i?.localEnv?.env_id),
+              ),
             });
 
             break;
-          case 'cloud':
+          case "cloud":
             // Use cloud data
-            updatePushEnvData('conflictItems', envConflictItems.filter((i: any) => !conflictCheckedKeys.includes(i?.localEnv?.env_id)));
+            updatePushEnvData(
+              "conflictItems",
+              envConflictItems.filter(
+                (i: any) => !conflictCheckedKeys.includes(i?.localEnv?.env_id),
+              ),
+            );
             break;
-          case 'mergeCloud':
+          case "mergeCloud":
             // Merge data, use cloud data for conflicting fields
             forEach(envConflictItems, (i) => {
               let item = cloneDeep(i);
               // Checked environments
               if (conflictCheckedKeys.includes(i?.localEnv?.env_id)) {
                 // Merge cloud services.
-                if (isArray(i?.cloudEnv?.server_list) && i.cloudEnv.server_list.length > 0) {
+                if (
+                  isArray(i?.cloudEnv?.server_list) &&
+                  i.cloudEnv.server_list.length > 0
+                ) {
                   forEach(i.cloudEnv.server_list, (cloudService) => {
-                    let localServiceIndex = item.localEnv.server_list.findIndex((f: any) => f?.server_id == cloudService?.server_id);
+                    let localServiceIndex = item.localEnv.server_list.findIndex(
+                      (f: any) => f?.server_id == cloudService?.server_id,
+                    );
                     if (localServiceIndex > -1) {
-                      item.localEnv.server_list[localServiceIndex] = cloudService;
+                      item.localEnv.server_list[localServiceIndex] =
+                        cloudService;
                     } else {
                       item.localEnv.server_list.push(cloudService);
                     }
@@ -425,8 +562,8 @@ const Push = () => {
 
                 // Use cloud data for environment variables
                 item.localEnv.env_var_list = {
-                  ...item?.localEnv?.env_var_list || {},
-                  ...item?.cloudEnv?.env_var_list || {}
+                  ...(item?.localEnv?.env_var_list || {}),
+                  ...(item?.cloudEnv?.env_var_list || {}),
                 };
 
                 // Use cloud is_private setting
@@ -437,19 +574,26 @@ const Push = () => {
 
             updatePushEnvData({
               uploadItems,
-              conflictItems: envConflictItems.filter((i: any) => !conflictCheckedKeys.includes(i?.localEnv?.env_id))
+              conflictItems: envConflictItems.filter(
+                (i: any) => !conflictCheckedKeys.includes(i?.localEnv?.env_id),
+              ),
             });
             break;
-          case 'mergeLocal':
+          case "mergeLocal":
             // Merge data, use local data for conflicting fields
             forEach(envConflictItems, (i) => {
               let item = cloneDeep(i);
               // Checked environments
               if (conflictCheckedKeys.includes(i?.localEnv?.env_id)) {
                 // Merge cloud services.
-                if (isArray(i?.cloudEnv?.server_list) && i.cloudEnv.server_list.length > 0) {
+                if (
+                  isArray(i?.cloudEnv?.server_list) &&
+                  i.cloudEnv.server_list.length > 0
+                ) {
                   forEach(i.cloudEnv.server_list, (cloudService) => {
-                    let localServiceIndex = item.localEnv.server_list.findIndex((f: any) => f?.server_id == cloudService?.server_id);
+                    let localServiceIndex = item.localEnv.server_list.findIndex(
+                      (f: any) => f?.server_id == cloudService?.server_id,
+                    );
                     if (localServiceIndex > -1) {
                     } else {
                       item.localEnv.server_list.push(cloudService);
@@ -459,8 +603,8 @@ const Push = () => {
 
                 // Environment variables prefer local data
                 item.localEnv.env_var_list = {
-                  ...item?.cloudEnv?.env_var_list || {},
-                  ...item?.localEnv?.env_var_list || {}
+                  ...(item?.cloudEnv?.env_var_list || {}),
+                  ...(item?.localEnv?.env_var_list || {}),
                 };
 
                 // Use cloud is_private setting
@@ -471,7 +615,9 @@ const Push = () => {
 
             updatePushEnvData({
               uploadItems,
-              conflictItems: envConflictItems.filter((i: any) => !conflictCheckedKeys.includes(i?.localEnv?.env_id))
+              conflictItems: envConflictItems.filter(
+                (i: any) => !conflictCheckedKeys.includes(i?.localEnv?.env_id),
+              ),
             });
             break;
           default:
@@ -482,20 +628,27 @@ const Push = () => {
           if (conflictItems.length <= 0) {
             conflictPush(pushApiData?.checkedKeys || [], uploadItems);
           } else {
-            setTabValue('apis');
+            setTabValue("apis");
           }
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handlePushCancel = () => {
     updatePushApiData({
-      conflictItems:[],
-      conflictCheckedKeys:[]
+      conflictItems: [],
+      conflictCheckedKeys: [],
     });
-    updatePushEnvData({ conflictItems: [], conflictCheckedKeys:[] , newServiceList:[], cloudServiceList:[] ,addEnvs: [], uploadItems: [] });
-    message.error(t('common.push_faied'));
+    updatePushEnvData({
+      conflictItems: [],
+      conflictCheckedKeys: [],
+      newServiceList: [],
+      cloudServiceList: [],
+      addEnvs: [],
+      uploadItems: [],
+    });
+    message.error(t("common.push_faied"));
   };
 
   const result = {
@@ -512,15 +665,15 @@ const Push = () => {
     updatePushApiData,
     tabValue,
     setTabValue,
-    handlePushCancel
+    handlePushCancel,
   };
 
   return (
-    <Spin tip={t('common.loading')} spinning={spinning}>
-      <PushWrap>
+    <Spin tip={t("common.loading")} spinning={spinning}>
+      <div className={styles.container}>
         <Left {...result} />
         <Right {...result} />
-      </PushWrap>
+      </div>
       {contextHolder}
     </Spin>
   );

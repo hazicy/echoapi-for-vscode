@@ -1,14 +1,14 @@
-import slots from "@/shared/ui/base/slots.module.css";
-import { moduleClassNames } from "@/shared/ui/base/moduleClassNames";
-import React from 'react';
+import styles from "./style.module.css";
+import { Tag as Tag2 } from "@/shared/ui/base";
+import classNames from "classnames";
 
-import { TagProps } from '@/shared/ui/base';
+import React from "react";
 
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
-import { ColorMap } from '@/features/requests/constants/common';
-import { ApiTypeMethod } from '@/features/requests/types/base';
+import { TagProps } from "@/shared/ui/base";
 
-import { ApisTypeTag as Tag } from './style';
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
+
+import { ApiTypeMethod } from "@/features/requests/types/base";
 
 type Props = TagProps & {
   targetType: APIS_TARGET_TYPE_ENUM;
@@ -16,16 +16,20 @@ type Props = TagProps & {
 };
 
 /** Tag containing apis target_type and api method */
-const ApisTypeTag: React.FC<Props> = ({ targetType, method, ...resetProps }) => {
+const ApisTypeTag: React.FC<Props> = ({
+  targetType,
+  method,
+  ...resetProps
+}) => {
   return (
-    <Tag
-      className={moduleClassNames(slots, `${ColorMap(targetType, method)}`)}
+    <Tag2
       style={{ fontWeight: 700 }}
       bordered={false}
       {...resetProps}
+      className={classNames(styles.container, resetProps.className)}
     >
       {method}
-    </Tag>
+    </Tag2>
   );
 };
 

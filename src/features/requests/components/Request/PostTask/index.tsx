@@ -1,41 +1,41 @@
-import { FC, FunctionComponent, memo } from 'react';
-import { useTranslation } from 'react-i18next';
+import styles from "./style.module.css";
+import { FC, FunctionComponent, memo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex } from '@/shared/ui/base';
+import { Flex } from "@/shared/ui/base";
 
-import { useMemoizedFn, useSafeState } from 'ahooks';
-import { snowflakeId } from 'apipost-tools';
-import produce from 'immer';
-import { filter, find, findIndex, isEqual, map } from 'lodash';
+import { useMemoizedFn, useSafeState } from "ahooks";
+import { snowflakeId } from "apipost-tools";
+import produce from "immer";
+import { filter, find, findIndex, isEqual, map } from "lodash";
 
-import { SCRIPT_TYPE } from '@/features/requests/components/CustomScript/constants';
-import SortableCollapse from '@/shared/components/SortableCollapse';
-import { DRAG_MODE } from '@/shared/components/SortableCollapse/types';
-import { Tooltip } from '@/shared/ui';
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
-import Popover from '@/shared/ui/Popover';
-import { APIS_TASK_TYPES_ENUM } from '@/features/requests/constants';
-import { STATUS_CODE } from '@/shared/constants/common';
-import useTheme from '@/shared/hooks/useTheme';
-import { ApiRequest, TaskBaseItem } from '@/features/requests/types/request';
-import { ChangeFuncType } from '@/shared/types/common';
-import { openUrl } from '@/shared/utils/open';
+import { SCRIPT_TYPE } from "@/features/requests/components/CustomScript/constants";
+import SortableCollapse from "@/shared/components/SortableCollapse";
+import { DRAG_MODE } from "@/shared/components/SortableCollapse/types";
+import { Tooltip } from "@/shared/ui";
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
+import Popover from "@/shared/ui/Popover";
+import { APIS_TASK_TYPES_ENUM } from "@/features/requests/constants";
+import { STATUS_CODE } from "@/shared/constants/common";
+import useTheme from "@/shared/hooks/useTheme";
+import { ApiRequest, TaskBaseItem } from "@/features/requests/types/request";
+import { ChangeFuncType } from "@/shared/types/common";
+import { openUrl } from "@/shared/utils/open";
 
-import AssertContent from '../TaskComponents/Assert';
-import CustomScriptContent from '../TaskComponents/CustomScript';
-import PickVarContent from '../TaskComponents/PickVars';
-import TaskHeader from '../TaskComponents/TaskHeader';
-import Wait from '../TaskComponents/Wait';
-import { DEFAULT_DATA, POST_TASK_ADD_MENUS_LIST } from '../constants';
+import AssertContent from "../TaskComponents/Assert";
+import CustomScriptContent from "../TaskComponents/CustomScript";
+import PickVarContent from "../TaskComponents/PickVars";
+import TaskHeader from "../TaskComponents/TaskHeader";
+import Wait from "../TaskComponents/Wait";
+import { DEFAULT_DATA, POST_TASK_ADD_MENUS_LIST } from "../constants";
 
-import { RequestPostTaskContainer } from './style';
-import { ApiDetailsData } from '@/features/requests/types/api';
+import { ApiDetailsData } from "@/features/requests/types/api";
 
 interface Props {
   apiData?: ApiDetailsData;
   onlyAssert?: boolean;
-  value: ApiRequest['post_tasks'];
+  value: ApiRequest["post_tasks"];
   onChange: ChangeFuncType<ApiRequest>;
 }
 
@@ -60,7 +60,7 @@ const RequestPostTask: FC<Props> = memo(
 
     const renderPopoverContent = map(
       filter(POST_TASK_ADD_MENUS_LIST, (it) =>
-        onlyAssert ? it?.key === APIS_TASK_TYPES_ENUM.ASSERT : true
+        onlyAssert ? it?.key === APIS_TASK_TYPES_ENUM.ASSERT : true,
       ),
       (item) => {
         return (
@@ -68,12 +68,15 @@ const RequestPostTask: FC<Props> = memo(
             block
             type="text"
             mode="menu-item"
-            style={{ width: 200, justifyContent: 'flex-start' }}
+            style={{ width: 200, justifyContent: "flex-start" }}
             icon={<IconFont style={{ color: item.color }} type={item.icon} />}
             key={item.key}
             onClick={() => handleAdd(item.key)}
           >
-            <Flex justify="space-between" style={{ display: 'flex', width: '100%' }}>
+            <Flex
+              justify="space-between"
+              style={{ display: "flex", width: "100%" }}
+            >
               {item.name}
               {item?.tips && (
                 <Tooltip
@@ -100,7 +103,7 @@ const RequestPostTask: FC<Props> = memo(
             </Flex>
           </Button>
         );
-      }
+      },
     );
 
     const handleAdd = async (key: APIS_TASK_TYPES_ENUM) => {
@@ -116,7 +119,7 @@ const RequestPostTask: FC<Props> = memo(
           });
         });
 
-        onChange('post_tasks', newRequestData);
+        onChange("post_tasks", newRequestData);
       } catch (err) {
         // err
       } finally {
@@ -124,13 +127,15 @@ const RequestPostTask: FC<Props> = memo(
       }
     };
 
-    const handleTaskItemChange = useMemoizedFn((index: number, newValue: TaskBaseItem) => {
-      const newRequestData = produce(value, (draft) => {
-        draft![index] = newValue;
-      });
+    const handleTaskItemChange = useMemoizedFn(
+      (index: number, newValue: TaskBaseItem) => {
+        const newRequestData = produce(value, (draft) => {
+          draft![index] = newValue;
+        });
 
-      onChange('post_tasks', newRequestData);
-    });
+        onChange("post_tasks", newRequestData);
+      },
+    );
 
     const handleOpenChange = (newOpen: boolean) => {
       setPopoverOpen(newOpen);
@@ -138,14 +143,16 @@ const RequestPostTask: FC<Props> = memo(
 
     const renderCustomHeader = useMemoizedFn((item: TaskBaseItem) => {
       const currentIndex = findIndex(value, (findItem: TaskBaseItem) =>
-        isEqual(item.id, findItem?.id)
+        isEqual(item.id, findItem?.id),
       );
 
       if (item.type === APIS_TASK_TYPES_ENUM.WAIT) {
         return (
           <Wait
             value={item}
-            onChange={(value: TaskBaseItem) => handleTaskItemChange(currentIndex, value)}
+            onChange={(value: TaskBaseItem) =>
+              handleTaskItemChange(currentIndex, value)
+            }
           />
         );
       }
@@ -153,7 +160,9 @@ const RequestPostTask: FC<Props> = memo(
       return (
         <TaskHeader
           value={item}
-          onChange={(value: TaskBaseItem) => handleTaskItemChange(currentIndex, value)}
+          onChange={(value: TaskBaseItem) =>
+            handleTaskItemChange(currentIndex, value)
+          }
         />
       );
     });
@@ -165,7 +174,7 @@ const RequestPostTask: FC<Props> = memo(
 
       const Component = TASK_CONTENT_MAP[item.type];
       const currentIndex = findIndex(value, (findItem: TaskBaseItem) =>
-        isEqual(item.id, findItem?.id)
+        isEqual(item.id, findItem?.id),
       );
 
       return (
@@ -173,34 +182,38 @@ const RequestPostTask: FC<Props> = memo(
           apiData={apiData}
           value={item}
           mode={SCRIPT_TYPE.ASSERT}
-          onChange={(value: TaskBaseItem) => handleTaskItemChange(currentIndex, value)}
+          onChange={(value: TaskBaseItem) =>
+            handleTaskItemChange(currentIndex, value)
+          }
         />
       );
     });
 
-    const onSwitchChange = useMemoizedFn((checked: boolean, record: TaskBaseItem) => {
-      const newRequestData = produce(value, (draft) => {
-        const currentIndex = findIndex(value, (findItem: TaskBaseItem) =>
-          isEqual(record.id, findItem?.id)
-        );
-        draft![currentIndex] = {
-          ...record,
-          enabled: checked ? STATUS_CODE.ENABLE : STATUS_CODE.DISABLE,
-        };
-      });
+    const onSwitchChange = useMemoizedFn(
+      (checked: boolean, record: TaskBaseItem) => {
+        const newRequestData = produce(value, (draft) => {
+          const currentIndex = findIndex(value, (findItem: TaskBaseItem) =>
+            isEqual(record.id, findItem?.id),
+          );
+          draft![currentIndex] = {
+            ...record,
+            enabled: checked ? STATUS_CODE.ENABLE : STATUS_CODE.DISABLE,
+          };
+        });
 
-      onChange('post_tasks', newRequestData);
-    });
+        onChange("post_tasks", newRequestData);
+      },
+    );
 
     const onDelete = useMemoizedFn((item: TaskBaseItem) => {
       const newRequestData = produce(value, (draft) => {
         const currentIndex = findIndex(value, (findItem: TaskBaseItem) =>
-          isEqual(item.id, findItem?.id)
+          isEqual(item.id, findItem?.id),
         );
         draft?.splice(currentIndex, 1);
       });
 
-      onChange('post_tasks', newRequestData);
+      onChange("post_tasks", newRequestData);
     });
 
     const handleDragEnd = useMemoizedFn(
@@ -213,8 +226,12 @@ const RequestPostTask: FC<Props> = memo(
         if (!current || !target) return;
 
         const newRequestData = produce(value, (draft) => {
-          const currentIdx = findIndex(value, (findItem) => isEqual(findItem?.id, current?.id));
-          const targetIdx = findIndex(value, (findItem) => isEqual(findItem?.id, target?.id));
+          const currentIdx = findIndex(value, (findItem) =>
+            isEqual(findItem?.id, current?.id),
+          );
+          const targetIdx = findIndex(value, (findItem) =>
+            isEqual(findItem?.id, target?.id),
+          );
 
           if ([DRAG_MODE.TOP, DRAG_MODE.BOTTOM].includes(mode)) {
             draft?.splice(currentIdx, 1);
@@ -229,12 +246,12 @@ const RequestPostTask: FC<Props> = memo(
           }
         });
 
-        onChange('post_tasks', newRequestData);
-      }
+        onChange("post_tasks", newRequestData);
+      },
     );
 
     return (
-      <RequestPostTaskContainer>
+      <div className={styles.container}>
         <SortableCollapse
           rowKey="id"
           isTree={false}
@@ -244,12 +261,14 @@ const RequestPostTask: FC<Props> = memo(
             APIS_TASK_TYPES_ENUM.ASSERT,
             APIS_TASK_TYPES_ENUM.CUSTOM_SCRIPT,
           ]}
-          sortItemList={(value || []).filter(i=> !['database'].includes(i?.type) )}
+          sortItemList={(value || []).filter(
+            (i) => !["database"].includes(i?.type),
+          )}
           customHeader={renderCustomHeader}
           customContent={renderCustomContent}
           handleDragEnd={handleDragEnd}
           defaultTools={{
-            switchKey: 'enabled',
+            switchKey: "enabled",
             onSwitchChange,
             onDelete,
           }}
@@ -262,14 +281,18 @@ const RequestPostTask: FC<Props> = memo(
           open={popoverOpen}
           onOpenChange={handleOpenChange}
         >
-          <Button size="large" icon={<IconFont type="icon-add-line" />} type="dashed">
-            {t('common.add')}
+          <Button
+            size="large"
+            icon={<IconFont type="icon-add-line" />}
+            type="dashed"
+          >
+            {t("common.add")}
           </Button>
         </Popover>
-      </RequestPostTaskContainer>
+      </div>
     );
   },
-  (prevProps, nextProps) => isEqual(prevProps, nextProps)
+  (prevProps, nextProps) => isEqual(prevProps, nextProps),
 );
 
 export default RequestPostTask;

@@ -1,30 +1,27 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, FunctionComponent, memo, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC, FunctionComponent, memo, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { SegmentedProps } from '@/shared/ui/base';
+import { SegmentedProps } from "@/shared/ui/base";
 
-import { useMemoizedFn, useSafeState } from 'ahooks';
-import { find, head, includes, isArray, last, map } from 'lodash';
+import { useMemoizedFn, useSafeState } from "ahooks";
+import { find, head, includes, isArray, last, map } from "lodash";
 
-import { SegmentedTabs } from '@/shared/components';
+import { SegmentedTabs } from "@/shared/components";
 
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
-import { useSystemConfig } from '@/app/store';
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
+import { useSystemConfig } from "@/app/store";
 
-import ContentItemWrap from './components/ContentItemWrap';
-import {
-  APIS_CONTENT_MAP,
-} from './constants';
+import ContentItemWrap from "./components/ContentItemWrap";
+import { APIS_CONTENT_MAP } from "./constants";
 
-import { FlexSegmented } from './style';
-import { ApiComponentType } from '@/features/requests/types/api';
-import ToolBar from './ToolBar';
-
+import { ApiComponentType } from "@/features/requests/types/api";
+import ToolBar from "./ToolBar";
 
 const Content: FC<ApiComponentType> = ({ apisData }) => {
   const { t } = useTranslation();
-  const targetType  = apisData?.target_type;
+  const targetType = apisData?.target_type;
 
   const [tabsValue, setTabsValue] = useSafeState<string | number>();
 
@@ -34,7 +31,7 @@ const Content: FC<ApiComponentType> = ({ apisData }) => {
       label: string;
       children: FunctionComponent<{ apisData: any; onApisDataChange: any }>;
     }[],
-    newTabsValue: string
+    newTabsValue: string,
   ) => {
     let value = newTabsValue;
     setTabsValue(value);
@@ -47,21 +44,31 @@ const Content: FC<ApiComponentType> = ({ apisData }) => {
       const { systemConfig } = useSystemConfig.getState();
       const { open_new_tab } = systemConfig;
 
-      let newTabsValue = head(targetTabs)?.value || '';
+      let newTabsValue = head(targetTabs)?.value || "";
 
-      if (includes([APIS_TARGET_TYPE_ENUM.API, APIS_TARGET_TYPE_ENUM.SOCKET_METHOD], targetType)) {
+      if (
+        includes(
+          [APIS_TARGET_TYPE_ENUM.API, APIS_TARGET_TYPE_ENUM.SOCKET_METHOD],
+          targetType,
+        )
+      ) {
         // HTTP, TCP follow config
         if (find(targetTabs, (findItem) => findItem.value === open_new_tab)) {
           newTabsValue = open_new_tab;
         } else {
-          newTabsValue = head(targetTabs)?.value || '';
+          newTabsValue = head(targetTabs)?.value || "";
         }
-      } else if (!includes([APIS_TARGET_TYPE_ENUM.DOC, APIS_TARGET_TYPE_ENUM.FOLDER], targetType)) {
+      } else if (
+        !includes(
+          [APIS_TARGET_TYPE_ENUM.DOC, APIS_TARGET_TYPE_ENUM.FOLDER],
+          targetType,
+        )
+      ) {
         // Other types check if config exists in tabs, otherwise use the last one
         if (find(targetTabs, (findItem) => findItem.value === open_new_tab)) {
           newTabsValue = open_new_tab;
         } else {
-          newTabsValue = last(targetTabs)?.value || '';
+          newTabsValue = last(targetTabs)?.value || "";
         }
       }
       updateTabsValue(targetTabs, newTabsValue);
@@ -69,7 +76,6 @@ const Content: FC<ApiComponentType> = ({ apisData }) => {
 
     return targetTabs;
   }, [targetType]);
-
 
   const segmentedOptions = useMemo(
     () =>
@@ -87,19 +93,21 @@ const Content: FC<ApiComponentType> = ({ apisData }) => {
           ),
         }))) ||
       [],
-    [result, tabsValue, apisData]
+    [result, tabsValue, apisData],
   );
 
-  const handleOptionsChange: SegmentedProps['onChange'] = useMemoizedFn(async (value) => {
-    setTabsValue(value);
-  });
+  const handleOptionsChange: SegmentedProps["onChange"] = useMemoizedFn(
+    async (value) => {
+      setTabsValue(value);
+    },
+  );
 
   if (!result) return null;
 
   return (
     <>
       {isArray(result) ? (
-        <FlexSegmented>
+        <div className={styles.container}>
           <SegmentedTabs
             options={segmentedOptions}
             wrapClassName={slots["custom-segmented-tabs-wrap"]}
@@ -107,18 +115,20 @@ const Content: FC<ApiComponentType> = ({ apisData }) => {
             onChange={handleOptionsChange}
             tabBarExtraContent={<ToolBar />}
           />
-        </FlexSegmented>
+        </div>
       ) : (
-        <FlexSegmented>
-          <ContentItemWrap key={apisData.target_id} apisData={apisData} element={result} />
-        </FlexSegmented>
+        <div className={styles.container}>
+          <ContentItemWrap
+            key={apisData.target_id}
+            apisData={apisData}
+            element={result}
+          />
+        </div>
       )}
     </>
   );
 };
 
-const MemoizedContent = memo(
-  Content,
-);
+const MemoizedContent = memo(Content);
 
 export default MemoizedContent;

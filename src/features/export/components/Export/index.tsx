@@ -1,31 +1,38 @@
-import { useTranslation } from 'react-i18next';
+import styles from "./style.module.css";
+import { useTranslation } from "react-i18next";
 
-import { Typography } from '@/shared/ui/base';
+import { Typography } from "@/shared/ui/base";
 
-import { EXPORT_TYPE_ENUM } from '@/features/settings/constants/settings';
-import ExportComponent from './ExportComponent';
-import { ExportWrap } from './style';
+import { EXPORT_TYPE_ENUM } from "@/features/settings/constants/settings";
+import ExportComponent from "./ExportComponent";
 
 const { Title } = Typography;
 
 const Export = () => {
   const { t } = useTranslation();
-  const onClick = async ({ exportType, version }: { [key: string]: string }) => {
+  const onClick = async ({
+    exportType,
+    version,
+  }: {
+    [key: string]: string;
+  }) => {
     if (exportType === EXPORT_TYPE_ENUM.echoapi) {
     }
     window?.vscode.postMessage({
-      action: 'exportProjectData',
-      data:{
-        type:exportType,
-        version
-      }
+      action: "exportProjectData",
+      data: {
+        type: exportType,
+        version,
+      },
     });
   };
   return (
-    <ExportWrap>
-      <Title style={{fontSize:16}} level={3}>{t('settings.export_project.title')}</Title>
+    <div className={styles.container}>
+      <Title style={{ fontSize: 16 }} level={3}>
+        {t("settings.export_project.title")}
+      </Title>
       <ExportComponent onClick={onClick} />
-    </ExportWrap>
+    </div>
   );
 };
 

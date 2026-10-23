@@ -1,21 +1,23 @@
+import styles from "../../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { forwardRef, useImperativeHandle, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex, Select, Space, message } from '@/shared/ui/base';
+import { Flex, Select, Space, message } from "@/shared/ui/base";
 
-import { useMemoizedFn } from 'ahooks';
-import produce from 'immer';
-import { cloneDeep, find, findIndex, isEqual, map } from 'lodash';
+import { useMemoizedFn } from "ahooks";
+import produce from "immer";
+import { cloneDeep, find, findIndex, isEqual, map } from "lodash";
 
-import LineTabs from '@/shared/components/LineTabs';
-import RawEditor from '@/shared/components/RawEditor';
-import { Input, Modal } from '@/shared/ui';
-import { DEFAULT_SOCKETIO_MESSAGE } from '@/features/requests/constants/default';
-import { MessageItem, SocketIoDetailsData } from '@/features/requests/types/socketio';
-import { EditFormat } from '@/shared/utils/common';
-
-import { ExampleModalContainer } from '../../style';
+import LineTabs from "@/shared/components/LineTabs";
+import RawEditor from "@/shared/components/RawEditor";
+import { Input, Modal } from "@/shared/ui";
+import { DEFAULT_SOCKETIO_MESSAGE } from "@/features/requests/constants/default";
+import {
+  MessageItem,
+  SocketIoDetailsData,
+} from "@/features/requests/types/socketio";
+import { EditFormat } from "@/shared/utils/common";
 
 interface Props {
   onChange?: (v: SocketIoDetailsData) => void;
@@ -26,12 +28,14 @@ interface Props {
 
 const Index = forwardRef((props: Props, ref) => {
   const { onChange, rawHtml, data, mode } = props;
-  const { value: editValue } = EditFormat(rawHtml || '');
+  const { value: editValue } = EditFormat(rawHtml || "");
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [binaryType, setBinaryType] = useState('');
+  const [binaryType, setBinaryType] = useState("");
   const [isCreate, setIsCreate] = useState(false);
-  const [activeKey, setActiveKey] = useState<'request' | 'response'>('response');
+  const [activeKey, setActiveKey] = useState<"request" | "response">(
+    "response",
+  );
   const [exampleInfo, setExampleInfo] = useState<MessageItem>({
     ...DEFAULT_SOCKETIO_MESSAGE,
   });
@@ -39,8 +43,8 @@ const Index = forwardRef((props: Props, ref) => {
   useImperativeHandle(ref, () => {
     return {
       show: ({ key }: any) => {
-        setActiveKey('response');
-        if (key === 'add') {
+        setActiveKey("response");
+        if (key === "add") {
           setIsCreate(true);
           setExampleInfo({
             ...DEFAULT_SOCKETIO_MESSAGE,
@@ -71,7 +75,7 @@ const Index = forwardRef((props: Props, ref) => {
   });
 
   const items = useMemo(() => {
-    return map(['request', 'response'], (item) => ({
+    return map(["request", "response"], (item) => ({
       label: <>{item}</>,
       key: item,
     }));
@@ -79,22 +83,26 @@ const Index = forwardRef((props: Props, ref) => {
 
   const rawEditorValue = useMemo(
     () => ({
-      raw: exampleInfo?.[activeKey]?.raw || '',
+      raw: exampleInfo?.[activeKey]?.raw || "",
       raw_schema: exampleInfo?.[activeKey]?.raw_schema,
       raw_parameter: exampleInfo?.[activeKey]?.raw_parameter || [],
     }),
-    [activeKey, exampleInfo]
+    [activeKey, exampleInfo],
   );
 
   const handleOnChange = useMemoizedFn(
-    (key: string, newValue: any, place: 'request' | 'response' = 'response') => {
+    (
+      key: string,
+      newValue: any,
+      place: "request" | "response" = "response",
+    ) => {
       let _targetItem = cloneDeep(exampleInfo);
-      if (isEqual(key, 'name')) {
+      if (isEqual(key, "name")) {
         _targetItem = {
           ..._targetItem,
           [key]: newValue,
         };
-      } else if (isEqual(key, 'raw-edit')) {
+      } else if (isEqual(key, "raw-edit")) {
         _targetItem = {
           ..._targetItem,
           [place]: {
@@ -102,7 +110,7 @@ const Index = forwardRef((props: Props, ref) => {
             ...newValue,
           },
         };
-      } else if (isEqual(key, 'schema')) {
+      } else if (isEqual(key, "schema")) {
         _targetItem = {
           ..._targetItem,
           [place]: {
@@ -110,7 +118,7 @@ const Index = forwardRef((props: Props, ref) => {
             ...newValue,
           },
         };
-      } else if (isEqual(key, 'mode')) {
+      } else if (isEqual(key, "mode")) {
         _targetItem = {
           ..._targetItem,
           [place]: {
@@ -121,12 +129,12 @@ const Index = forwardRef((props: Props, ref) => {
       }
 
       setExampleInfo(_targetItem);
-    }
+    },
   );
 
   const onOk = () => {
     if (!exampleInfo?.name) {
-      message.info(t('api.response_labels.new_modal.name_error_tip'));
+      message.info(t("api.response_labels.new_modal.name_error_tip"));
       return;
     }
     if (isCreate) {
@@ -139,7 +147,7 @@ const Index = forwardRef((props: Props, ref) => {
     } else {
       const newData = produce(data, (draft) => {
         const targetIndex = findIndex(draft?.message, (findItem) =>
-          isEqual(findItem.param_id, exampleInfo?.param_id)
+          isEqual(findItem.param_id, exampleInfo?.param_id),
         );
         draft.message[targetIndex] = exampleInfo;
       });
@@ -159,14 +167,17 @@ const Index = forwardRef((props: Props, ref) => {
       onCancel={() => setOpen(false)}
       open={open}
     >
-      <ExampleModalContainer>
+      <div className={styles.exampleModal}>
         <Input
           width={110}
           value={exampleInfo?.name}
           onBlur={(event) =>
-            handleOnChange('name', event.target.value?.trim() || t('supplement.msg'))
+            handleOnChange(
+              "name",
+              event.target.value?.trim() || t("supplement.msg"),
+            )
           }
-          onChange={(event) => handleOnChange('name', event.target.value)}
+          onChange={(event) => handleOnChange("name", event.target.value)}
         />
         <LineTabs
           items={items}
@@ -175,21 +186,23 @@ const Index = forwardRef((props: Props, ref) => {
         />
         <Flex align="center" justify="space-between">
           <Space align="center" className="info-wrap">
-            {isEqual(activeKey, 'request') ? t('supplement.req') : t('supplement.res')}
+            {isEqual(activeKey, "request")
+              ? t("supplement.req")
+              : t("supplement.res")}
             <Select
               value={binaryType || exampleInfo?.[activeKey]?.mode}
               onChange={(val) => {
-                if (val === 'binary') {
+                if (val === "binary") {
                   setBinaryType(val);
                   handleOnChange(
-                    'mode',
-                    isEqual(activeKey, 'request') ? 'base64' : 'binary',
-                    activeKey
+                    "mode",
+                    isEqual(activeKey, "request") ? "base64" : "binary",
+                    activeKey,
                   );
                   return;
                 }
-                setBinaryType('');
-                handleOnChange('mode', val, activeKey);
+                setBinaryType("");
+                handleOnChange("mode", val, activeKey);
               }}
               size="small"
               style={{ width: 80 }}
@@ -200,11 +213,11 @@ const Index = forwardRef((props: Props, ref) => {
               <Select.Option value="html">HTML</Select.Option>
               <Select.Option value="binary">Binary</Select.Option>
             </Select>
-            {binaryType === 'binary' && isEqual(activeKey, 'request') && (
+            {binaryType === "binary" && isEqual(activeKey, "request") && (
               <Select
                 size="small"
                 value={exampleInfo?.[activeKey]?.mode}
-                onChange={(val) => handleOnChange('mode', val, activeKey)}
+                onChange={(val) => handleOnChange("mode", val, activeKey)}
                 style={{ width: 115 }}
               >
                 <Select.Option value="base64">Base64</Select.Option>
@@ -215,14 +228,18 @@ const Index = forwardRef((props: Props, ref) => {
         </Flex>
         <div className={slots["raw-editor-example"]}>
           <RawEditor
-            responseParameterTitle={t('common.raw_input.body_value')}
+            responseParameterTitle={t("common.raw_input.body_value")}
             mode={exampleInfo?.[activeKey]?.mode}
-            isParameter={!['json', 'xml'].includes(exampleInfo?.[activeKey]?.mode)}
+            isParameter={
+              !["json", "xml"].includes(exampleInfo?.[activeKey]?.mode)
+            }
             value={rawEditorValue}
-            onChange={(value, key = 'schema') => handleOnChange(key, value, activeKey)}
+            onChange={(value, key = "schema") =>
+              handleOnChange(key, value, activeKey)
+            }
           />
         </div>
-      </ExampleModalContainer>
+      </div>
     </Modal>
   );
 });

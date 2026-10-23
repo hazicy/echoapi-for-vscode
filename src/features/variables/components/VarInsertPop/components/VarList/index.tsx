@@ -1,20 +1,19 @@
+import styles from "../../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
-import { Flex } from '@/shared/ui/base';
+import { Flex } from "@/shared/ui/base";
 
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import AiDescIcon from '@/shared/assets/icon/aidesc.png';
-import { IconFont } from '@/shared/ui';
+import AiDescIcon from "@/shared/assets/icon/aidesc.png";
+import { IconFont } from "@/shared/ui";
 import {
   DESC_OPTIONS_LIST,
   VARIABLE_TABS_VALUE,
   VAR_OPTIONS_KEY,
   VAR_OPTIONS_LIST,
-} from '@/features/variables/constants/variable';
-
-import { ListItemContainer } from '../../style';
+} from "@/features/variables/constants/variable";
 
 interface Props {
   type: VARIABLE_TABS_VALUE;
@@ -40,14 +39,22 @@ const Index = ({ type, onChange }: Props) => {
     <Flex vertical className={slots["options-list"]}>
       {list.map(({ label, desc, key, icon }) => {
         return (
-          <ListItemContainer key={key} onClick={() => onChange({ key })}>
-            <div className={classNames(slots["icon-content"], slots[key] ?? key)}>{iconRender(key, icon)}</div>
+          <div
+            key={key}
+            onClick={() => onChange({ key })}
+            className={styles.listItem}
+          >
+            <div
+              className={classNames(slots["icon-content"], slots[key] ?? key)}
+            >
+              {iconRender(key, icon)}
+            </div>
             <Flex flex={1} gap={4} vertical>
               <span className={slots.label}>{label}</span>
               <span className={slots.desc}>{desc}</span>
             </Flex>
             <IconFont rotate={-90} type="icon-arrow-down" />
-          </ListItemContainer>
+          </div>
         );
       })}
     </Flex>

@@ -1,16 +1,15 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex, SegmentedProps, Typography } from '@/shared/ui/base';
+import { Flex, SegmentedProps, Typography } from "@/shared/ui/base";
 
-import { useMemoizedFn, useSafeState } from 'ahooks';
+import { useMemoizedFn, useSafeState } from "ahooks";
 
-import SegmentedTabs from '@/shared/components/SegmentedTabs';
+import SegmentedTabs from "@/shared/components/SegmentedTabs";
 
-import CommonTable from './CommonTable';
-
-import { RealRequestContainer, RequestItem } from './style';
+import CommonTable from "./CommonTable";
 
 const { Text } = Typography;
 
@@ -20,46 +19,54 @@ interface Props {
 
 const RealRequest: React.FC<Props> = ({ sendingData }) => {
   const { t } = useTranslation();
-  const [tabsValue, setTabsValue] = useSafeState<string | number>('header');
+  const [tabsValue, setTabsValue] = useSafeState<string | number>("header");
 
-  const handleOptionsChange: SegmentedProps['onChange'] = useMemoizedFn((value) => {
-    setTabsValue(value);
-  });
+  const handleOptionsChange: SegmentedProps["onChange"] = useMemoizedFn(
+    (value) => {
+      setTabsValue(value);
+    },
+  );
 
   const segmentedOptions = [
     {
-      value: 'header',
-      label: 'header',
+      value: "header",
+      label: "header",
       children: <CommonTable value={sendingData?.request?.headers || []} />,
     },
     {
-      value: 'query',
-      label: 'query',
+      value: "query",
+      label: "query",
       children: <CommonTable value={sendingData?.request?.query || []} />,
     },
   ];
 
   return (
-    <RealRequestContainer>
-      <RequestItem>
-        <Text className={slots.title}>{t('supplement.req_url')}</Text>
-        <div className={[slots["content-warp"], slots["base-info-wrap"]].join(" ")}>
+    <div className={styles.container}>
+      <Flex vertical={true} gap={8} className={styles.requestItem}>
+        <Text className={slots.title}>{t("supplement.req_url")}</Text>
+        <div
+          className={[slots["content-warp"], slots["base-info-wrap"]].join(" ")}
+        >
           <Flex align="flex-start">
             <div className={slots.url}>{sendingData?.url}</div>
           </Flex>
         </div>
-      </RequestItem>
-      <RequestItem>
-        <Text className={slots.title}>{t('supplement.req_param')}</Text>
-        <div className={[slots["content-warp"], slots["content-request"]].join(" ")}>
+      </Flex>
+      <Flex vertical={true} gap={8} className={styles.requestItem}>
+        <Text className={slots.title}>{t("supplement.req_param")}</Text>
+        <div
+          className={[slots["content-warp"], slots["content-request"]].join(
+            " ",
+          )}
+        >
           <SegmentedTabs
             options={segmentedOptions}
             value={tabsValue}
             onChange={handleOptionsChange}
           />
         </div>
-      </RequestItem>
-    </RealRequestContainer>
+      </Flex>
+    </div>
   );
 };
 

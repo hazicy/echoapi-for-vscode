@@ -1,21 +1,33 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, memo, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC, memo, useMemo, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
-import { CheckboxProps, Flex } from '@/shared/ui/base';
+import { CheckboxProps, Flex } from "@/shared/ui/base";
 
-import { DragEndEvent } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
-import { useMemoizedFn, useSafeState } from 'ahooks';
-import ASideTools from 'apipost-inside-tools';
-import { snowflakeId } from 'apipost-tools';
-import produce from 'immer';
-import { cloneDeep, every, filter, forEach, isArray, isEqual, isNull, last, size, some } from 'lodash';
+import { DragEndEvent } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
+import { useMemoizedFn, useSafeState } from "ahooks";
 
-import BasicTable from '@/shared/components/BasicTable';
-import { PARAMETER_ITEM } from '@/features/requests/constants/request';
-import { STATUS_CODE } from '@/shared/constants/common';
-import { ApisBaseDataItem } from '@/features/requests/types/base';
+import { snowflakeId } from "apipost-tools";
+import produce from "immer";
+import {
+  cloneDeep,
+  every,
+  filter,
+  forEach,
+  isArray,
+  isEqual,
+  isNull,
+  last,
+  size,
+  some,
+} from "lodash";
+
+import BasicTable from "@/shared/components/BasicTable";
+import { PARAMETER_ITEM } from "@/features/requests/constants/request";
+import { STATUS_CODE } from "@/shared/constants/common";
+import { ApisBaseDataItem } from "@/features/requests/types/base";
 
 import {
   RowContentType,
@@ -24,16 +36,15 @@ import {
   RowKey,
   RowKeyTitle,
   RowValue,
-} from './components';
+} from "./components";
 
-import Listen from './components/Listen';
-import { PARAMETER_TYPE, RequestTableProps } from './types';
+import Listen from "./components/Listen";
+import { PARAMETER_TYPE, RequestTableProps } from "./types";
 
-import { BasicTableWrap, RequestTableContainer } from './style';
-import PublicParamsTable from './components/PublicParamsTable';
-import ColumnConfig from './components/ColumnConfig';
-import { IconFont } from '@/shared/ui';
-import ParameterConversion from '../ParameterConversion';
+import PublicParamsTable from "./components/PublicParamsTable";
+import ColumnConfig from "./components/ColumnConfig";
+import { IconFont } from "@/shared/ui";
+import ParameterConversion from "../ParameterConversion";
 
 const RequestTable: FC<RequestTableProps> = memo(
   ({
@@ -52,11 +63,13 @@ const RequestTable: FC<RequestTableProps> = memo(
     columnSwitchConfig,
     onColumnSwitchConfig,
     showDelete = true,
-    target_type
+    target_type,
   }) => {
     const { t } = useTranslation();
     const [open, setOpen] = useSafeState(false);
-    const [parameterType, setParameterType] = useSafeState<PARAMETER_TYPE>(PARAMETER_TYPE.EXPORT);
+    const [parameterType, setParameterType] = useSafeState<PARAMETER_TYPE>(
+      PARAMETER_TYPE.EXPORT,
+    );
     const lastRowDataRef = useRef<ApisBaseDataItem | null>(null);
 
     const tableDataList = useMemo(() => {
@@ -102,40 +115,51 @@ const RequestTable: FC<RequestTableProps> = memo(
       }
 
       // All selected
-      if (every(dataSource, (item) => item?.is_checked === STATUS_CODE.ENABLE)) {
+      if (
+        every(dataSource, (item) => item?.is_checked === STATUS_CODE.ENABLE)
+      ) {
         status.checked = true;
       }
 
       // Partially selected
-      if (some(dataSource, (item) => item?.is_checked === STATUS_CODE.DISABLE)) {
+      if (
+        some(dataSource, (item) => item?.is_checked === STATUS_CODE.DISABLE)
+      ) {
         status.indeterminate = true;
       }
 
       return status;
     }, [dataSource]);
 
-    const handleCheckAll: CheckboxProps['onChange'] = useMemoizedFn((event) => {
+    const handleCheckAll: CheckboxProps["onChange"] = useMemoizedFn((event) => {
       const newDataSource = produce(dataSource, (draft) => {
         forEach(draft, (item) => {
-          item.is_checked = event.target.checked ? STATUS_CODE.ENABLE : STATUS_CODE.DISABLE;
+          item.is_checked = event.target.checked
+            ? STATUS_CODE.ENABLE
+            : STATUS_CODE.DISABLE;
         });
       });
 
       onChange?.(newDataSource);
     });
 
-    const handleItemOnChange = useMemoizedFn((rowIndex: number, rowData: ApisBaseDataItem) => {
-      const newDataSource = produce(dataSource, (draft: ApisBaseDataItem[]) => {
-        draft[rowIndex] = rowData;
+    const handleItemOnChange = useMemoizedFn(
+      (rowIndex: number, rowData: ApisBaseDataItem) => {
+        const newDataSource = produce(
+          dataSource,
+          (draft: ApisBaseDataItem[]) => {
+            draft[rowIndex] = rowData;
 
-        // Key and value must not be empty, and not in read-only mode, to allow adding new rows
-        if ((rowData?.key || rowData?.value) && !readOnly) {
-          delete draft[rowIndex].static;
-        }
-      });
+            // Key and value must not be empty, and not in read-only mode, to allow adding new rows
+            if ((rowData?.key || rowData?.value) && !readOnly) {
+              delete draft[rowIndex].static;
+            }
+          },
+        );
 
-      onChange?.(newDataSource);
-    });
+        onChange?.(newDataSource);
+      },
+    );
 
     const onDelete = useMemoizedFn((rowIndex: number) => {
       const newDataSource = produce(dataSource, (draft: ApisBaseDataItem[]) => {
@@ -148,18 +172,22 @@ const RequestTable: FC<RequestTableProps> = memo(
     const onDragEnd = ({ active, over }: DragEndEvent) => {
       if (active.id !== over?.id) {
         const _dataSource = cloneDeep(dataSource);
-        const activeIndex = _dataSource.findIndex((i) => i.param_id === active.id);
+        const activeIndex = _dataSource.findIndex(
+          (i) => i.param_id === active.id,
+        );
         const overIndex = _dataSource.findIndex((i) => i.param_id === over?.id);
         const newDataSource = arrayMove(_dataSource, activeIndex, overIndex);
 
         onChange?.(newDataSource);
       }
     };
-    const handleAiModal = () => {
+    const handleAiModal = () => {};
 
-    };
-
-    const rowKeyRender = (_: string, record: ApisBaseDataItem, index: number) => (
+    const rowKeyRender = (
+      _: string,
+      record: ApisBaseDataItem,
+      index: number,
+    ) => (
       <RowKey
         readOnly={readOnly}
         tabType={tabType}
@@ -167,9 +195,11 @@ const RequestTable: FC<RequestTableProps> = memo(
         onChange={handleItemOnChange}
         rowData={record}
         rowIndex={index}
-        showCheckbox={!isEqual(tabType, 'socketio')}
+        showCheckbox={!isEqual(tabType, "socketio")}
         showAiDescription={showAiDescription}
-        showFieldType={!isEqual(columnSwitchConfig?.parameter_type, STATUS_CODE.DISABLE)}
+        showFieldType={
+          !isEqual(columnSwitchConfig?.parameter_type, STATUS_CODE.DISABLE)
+        }
       />
     );
 
@@ -183,9 +213,13 @@ const RequestTable: FC<RequestTableProps> = memo(
       />
     );
 
-    const rowValueRender = (_: string, record: ApisBaseDataItem, index: number) => (
+    const rowValueRender = (
+      _: string,
+      record: ApisBaseDataItem,
+      index: number,
+    ) => (
       <>
-        {isEqual(tabType, 'socketio') ?
+        {isEqual(tabType, "socketio") ? (
           <Listen
             readOnly={readOnly}
             onChange={handleItemOnChange}
@@ -195,7 +229,7 @@ const RequestTable: FC<RequestTableProps> = memo(
             bodyMode={bodyMode}
             valueSuffix
           />
-          :
+        ) : (
           <RowValue
             readOnly={readOnly}
             onChange={handleItemOnChange}
@@ -205,9 +239,8 @@ const RequestTable: FC<RequestTableProps> = memo(
             bodyMode={bodyMode}
             valueSuffix
           />
-        }
+        )}
       </>
-
     );
 
     const rowDescriptionTitleRender = () => (
@@ -218,7 +251,11 @@ const RequestTable: FC<RequestTableProps> = memo(
       />
     );
 
-    const rowDescriptionRender = (_: string, record: ApisBaseDataItem, index: number) => (
+    const rowDescriptionRender = (
+      _: string,
+      record: ApisBaseDataItem,
+      index: number,
+    ) => (
       <RowDescription
         readOnly={readOnly}
         onChange={handleItemOnChange}
@@ -230,7 +267,11 @@ const RequestTable: FC<RequestTableProps> = memo(
       />
     );
 
-    const rowContentTypeRender = (_: string, record: ApisBaseDataItem, index: number) => (
+    const rowContentTypeRender = (
+      _: string,
+      record: ApisBaseDataItem,
+      index: number,
+    ) => (
       <RowContentType
         readOnly={readOnly}
         onChange={handleItemOnChange}
@@ -243,49 +284,63 @@ const RequestTable: FC<RequestTableProps> = memo(
     const tableColumns = () => {
       const columns = [
         {
-          key: 'key',
-          dataIndex: 'key',
+          key: "key",
+          dataIndex: "key",
           title: rowKeyTitleRender,
           render: rowKeyRender,
         },
         {
-          key: 'value',
-          dataIndex: 'value',
-          title:isEqual(tabType, 'socketio')
-          ? t('supplement.listen')
-          : t('common.request_table.param_value'),
+          key: "value",
+          dataIndex: "value",
+          title: isEqual(tabType, "socketio")
+            ? t("supplement.listen")
+            : t("common.request_table.param_value"),
           render: rowValueRender,
         },
         {
-          key: 'description',
-          dataIndex: 'description',
+          key: "description",
+          dataIndex: "description",
           title: rowDescriptionTitleRender,
           render: rowDescriptionRender,
-          hidden: isEqual(columnSwitchConfig?.parameter_description, STATUS_CODE.DISABLE),
+          hidden: isEqual(
+            columnSwitchConfig?.parameter_description,
+            STATUS_CODE.DISABLE,
+          ),
         },
       ];
 
-      if (isEqual(tabType, 'event')) {
+      if (isEqual(tabType, "event")) {
         columns.splice(1, 1);
       }
 
-      if (isEqual(bodyMode, 'form-data')) {
+      if (isEqual(bodyMode, "form-data")) {
         columns.splice(2, 0, {
-          key: 'content_type',
-          dataIndex: 'content_type',
-          title: () => <Flex align="center" justify="space-between" style={{ minWidth: 175 }}>
-            {t('common.request_table.content_type')}
-          </Flex>,
+          key: "content_type",
+          dataIndex: "content_type",
+          title: () => (
+            <Flex
+              align="center"
+              justify="space-between"
+              style={{ minWidth: 175 }}
+            >
+              {t("common.request_table.content_type")}
+            </Flex>
+          ),
           render: rowContentTypeRender,
         });
       }
-      const filterColumns = filter(columns, (filterItem) => !filterItem?.hidden);
+      const filterColumns = filter(
+        columns,
+        (filterItem) => !filterItem?.hidden,
+      );
       return filterColumns?.map((colItem, colIndex) => ({
         ...colItem,
-        ...(!isEqual(colIndex, size(filterColumns) - 1) ? { width: 320 } : {
-          render: (text: string, record: ApisBaseDataItem, index: number) =>
-            lastColumnRender(text, record, index, colItem),
-        }),
+        ...(!isEqual(colIndex, size(filterColumns) - 1)
+          ? { width: 320 }
+          : {
+              render: (text: string, record: ApisBaseDataItem, index: number) =>
+                lastColumnRender(text, record, index, colItem),
+            }),
       }));
     };
 
@@ -294,12 +349,17 @@ const RequestTable: FC<RequestTableProps> = memo(
       setOpen(false);
     };
 
-    const lastColumnRender = (_: string, record: ApisBaseDataItem, index: number, colItem: any) => (
-      <Flex align="center" style={{ height: '100%', width: '100%' }}>
+    const lastColumnRender = (
+      _: string,
+      record: ApisBaseDataItem,
+      index: number,
+      colItem: any,
+    ) => (
+      <Flex align="center" style={{ height: "100%", width: "100%" }}>
         <Flex flex={1}>{colItem?.render(_, record, index)}</Flex>
         <Flex
           className={slots["row-description-operation"]}
-          style={{ height: '100%', padding: '0 8px' }}
+          style={{ height: "100%", padding: "0 8px" }}
           align="center"
           gap={12}
         >
@@ -315,7 +375,7 @@ const RequestTable: FC<RequestTableProps> = memo(
     );
 
     return (
-      <RequestTableContainer>
+      <div className={styles.requestTable}>
         <PublicParamsTable
           target_type={target_type}
           tabType={tabType}
@@ -325,7 +385,7 @@ const RequestTable: FC<RequestTableProps> = memo(
           folderParams={folderParams}
           columnSwitchConfig={columnSwitchConfig}
         />
-        <BasicTableWrap>
+        <div className={styles.basicTable}>
           <BasicTable
             tableLayout="fixed"
             rowKey="param_id"
@@ -346,7 +406,7 @@ const RequestTable: FC<RequestTableProps> = memo(
             columnSwitchConfig={columnSwitchConfig}
             onColumnSwitchConfig={onColumnSwitchConfig}
           />
-        </BasicTableWrap>
+        </div>
         <ParameterConversion
           value={dataSource}
           onCancel={() => setOpen(false)}
@@ -354,9 +414,9 @@ const RequestTable: FC<RequestTableProps> = memo(
           open={open}
           onChange={parameterChange}
         />
-      </RequestTableContainer>
+      </div>
     );
-  }
+  },
 );
 
 export default RequestTable;

@@ -1,19 +1,19 @@
-import { useTranslation } from 'react-i18next';
+import "../style.css";
+import styles from "../style.module.css";
+import { useTranslation } from "react-i18next";
 
-import { Checkbox, Flex, Form, Input, Select } from '@/shared/ui/base';
+import { Checkbox, Flex, Form, Input, Select } from "@/shared/ui/base";
 
-import { includes, map } from 'lodash';
+import { includes, map } from "lodash";
 
-import GhostCollapse from '@/shared/ui/GhostCollapse';
+import GhostCollapse from "@/shared/ui/GhostCollapse";
 import {
   AUTH_ENUM,
   AUTH_OAUTH_LOCATION,
   OAUTH1_METHODS_OPTIONS,
-} from '@/features/requests/constants/auth';
+} from "@/features/requests/constants/auth";
 
-import PrivateCom from './PrivateCom';
-
-import { MoreTipContainer } from '../style';
+import PrivateCom from "./PrivateCom";
 
 const options = map(OAUTH1_METHODS_OPTIONS, (item) => ({
   label: item,
@@ -22,7 +22,10 @@ const options = map(OAUTH1_METHODS_OPTIONS, (item) => ({
 
 const Encoding = (props: any) => {
   return (
-    <Checkbox value={props?.value} onChange={(e) => props?.onChange(!e?.target?.checked)}>
+    <Checkbox
+      value={props?.value}
+      onChange={(e) => props?.onChange(!e?.target?.checked)}
+    >
       Encode the parameters in the Authorization header
     </Checkbox>
   );
@@ -34,45 +37,57 @@ const Oauth1 = () => {
     <>
       <Form.Item
         initialValue={false}
-        label={t('common.auth.add_to')}
-        name={[AUTH_ENUM.OAUTH1, 'addParamsToHeader']}
+        label={t("common.auth.add_to")}
+        name={[AUTH_ENUM.OAUTH1, "addParamsToHeader"]}
       >
         <Select options={AUTH_OAUTH_LOCATION} />
       </Form.Item>
-      <Form.Item label="Signature Method" name={[AUTH_ENUM.OAUTH1, 'signatureMethod']}>
-        <Select placeholder={t('common.select_tip')} options={options} />
+      <Form.Item
+        label="Signature Method"
+        name={[AUTH_ENUM.OAUTH1, "signatureMethod"]}
+      >
+        <Select placeholder={t("common.select_tip")} options={options} />
       </Form.Item>
-      <Form.Item label="Consumer Key" name={[AUTH_ENUM.OAUTH1, 'consumerKey']}>
+      <Form.Item label="Consumer Key" name={[AUTH_ENUM.OAUTH1, "consumerKey"]}>
         <Input.TextArea autoSize />
       </Form.Item>
-      <Form.Item noStyle dependencies={[AUTH_ENUM.OAUTH1, 'signatureMethod']}>
+      <Form.Item noStyle dependencies={[AUTH_ENUM.OAUTH1, "signatureMethod"]}>
         {({ getFieldValue }) => {
-          const currentMethod = getFieldValue(AUTH_ENUM.OAUTH1)?.signatureMethod;
-          const isRSA = includes(['RSA-SHA1', 'RSA-SHA256', 'RSA-SHA512'], currentMethod);
+          const currentMethod = getFieldValue(
+            AUTH_ENUM.OAUTH1,
+          )?.signatureMethod;
+          const isRSA = includes(
+            ["RSA-SHA1", "RSA-SHA256", "RSA-SHA512"],
+            currentMethod,
+          );
 
           return (
             <>
               <Form.Item
                 label="Consumer Secret"
-                name={[AUTH_ENUM.OAUTH1, 'consumerSecret']}
+                name={[AUTH_ENUM.OAUTH1, "consumerSecret"]}
                 hidden={isRSA}
               >
                 <Input.TextArea autoSize />
               </Form.Item>
               <Form.Item
                 label="Token Secret"
-                name={[AUTH_ENUM.OAUTH1, 'tokenSecret']}
+                name={[AUTH_ENUM.OAUTH1, "tokenSecret"]}
                 hidden={isRSA}
               >
                 <Input.TextArea autoSize />
               </Form.Item>
               {/* NOTE RSA has two display types */}
-              <Form.Item label="Access Token" name={[AUTH_ENUM.OAUTH1, 'token']} hidden={isRSA}>
+              <Form.Item
+                label="Access Token"
+                name={[AUTH_ENUM.OAUTH1, "token"]}
+                hidden={isRSA}
+              >
                 <Input.TextArea autoSize />
               </Form.Item>
               <Form.Item
                 label="Private Key"
-                name={[AUTH_ENUM.OAUTH1, 'privateKey']}
+                name={[AUTH_ENUM.OAUTH1, "privateKey"]}
                 hidden={!isRSA}
               >
                 <PrivateCom />
@@ -85,53 +100,71 @@ const Oauth1 = () => {
         <GhostCollapse
           items={[
             {
-              key: 'oauth1-more',
-              label: <MoreTipContainer>{t('common.auth.more')}</MoreTipContainer>,
+              key: "oauth1-more",
+              label: (
+                <span className={styles.moreTip}>{t("common.auth.more")}</span>
+              ),
               children: (
                 <>
-                  <span className="auth-tips">{t('common.auth.more_tip')}</span>
-                  <Form.Item label="Callback Url" name={[AUTH_ENUM.OAUTH1, 'callback']}>
+                  <span className="auth-tips">{t("common.auth.more_tip")}</span>
+                  <Form.Item
+                    label="Callback Url"
+                    name={[AUTH_ENUM.OAUTH1, "callback"]}
+                  >
                     <Input.TextArea autoSize />
                   </Form.Item>
-                  <Form.Item label="Verifier" name={[AUTH_ENUM.OAUTH1, 'verifier']}>
+                  <Form.Item
+                    label="Verifier"
+                    name={[AUTH_ENUM.OAUTH1, "verifier"]}
+                  >
                     <Input.TextArea autoSize />
                   </Form.Item>
-                  <Form.Item label="Timestamp" name={[AUTH_ENUM.OAUTH1, 'timestamp']}>
+                  <Form.Item
+                    label="Timestamp"
+                    name={[AUTH_ENUM.OAUTH1, "timestamp"]}
+                  >
                     <Input.TextArea autoSize />
                   </Form.Item>
-                  <Form.Item label="Nonce" name={[AUTH_ENUM.OAUTH1, 'nonce']}>
+                  <Form.Item label="Nonce" name={[AUTH_ENUM.OAUTH1, "nonce"]}>
                     <Input.TextArea autoSize />
                   </Form.Item>
-                  <Form.Item label="Version" name={[AUTH_ENUM.OAUTH1, 'version']}>
+                  <Form.Item
+                    label="Version"
+                    name={[AUTH_ENUM.OAUTH1, "version"]}
+                  >
                     <Input.TextArea autoSize />
                   </Form.Item>
-                  <Form.Item label="Realm" name={[AUTH_ENUM.OAUTH1, 'realm']}>
+                  <Form.Item label="Realm" name={[AUTH_ENUM.OAUTH1, "realm"]}>
                     <Input.TextArea autoSize />
                   </Form.Item>
                   <Flex vertical gap={8}>
                     <Form.Item
                       noStyle
-                      name={[AUTH_ENUM.OAUTH1, 'includeBodyHash']}
+                      name={[AUTH_ENUM.OAUTH1, "includeBodyHash"]}
                       valuePropName="checked"
                     >
                       <Checkbox>Include body hash</Checkbox>
                     </Form.Item>
                     <Form.Item
                       noStyle
-                      name={[AUTH_ENUM.OAUTH1, 'addEmptyParamsToSign']}
+                      name={[AUTH_ENUM.OAUTH1, "addEmptyParamsToSign"]}
                       valuePropName="checked"
                     >
                       <Checkbox>Add empty parameters to signature</Checkbox>
                     </Form.Item>
-                    <Form.Item noStyle dependencies={[AUTH_ENUM.OAUTH1, 'addParamsToHeader']}>
+                    <Form.Item
+                      noStyle
+                      dependencies={[AUTH_ENUM.OAUTH1, "addParamsToHeader"]}
+                    >
                       {({ getFieldValue }) => {
-                        const addParamsToHeader = getFieldValue(AUTH_ENUM.OAUTH1)
-                          ?.addParamsToHeader;
+                        const addParamsToHeader = getFieldValue(
+                          AUTH_ENUM.OAUTH1,
+                        )?.addParamsToHeader;
                         if (addParamsToHeader) {
                           return (
                             <Form.Item
                               noStyle
-                              name={[AUTH_ENUM.OAUTH1, 'disableHeaderEncoding']}
+                              name={[AUTH_ENUM.OAUTH1, "disableHeaderEncoding"]}
                               valuePropName="checked"
                             >
                               <Encoding />

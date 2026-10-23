@@ -1,17 +1,17 @@
-import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import styles from "./style.module.css";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Collapse } from '@/shared/ui/base';
+import { Collapse } from "@/shared/ui/base";
 
-import { forEach, size } from 'lodash';
+import { forEach, size } from "lodash";
 
-import { Empty } from '@/shared/ui';
+import { Empty } from "@/shared/ui";
 
-import Edit from './Edit';
-import useFormat from './hooks';
+import Edit from "./Edit";
+import useFormat from "./hooks";
 
-import { ContentWrap } from './style';
-import { EnvListItem } from '@/features/environment/types';
+import { EnvListItem } from "@/features/environment/types";
 
 interface Props {
   prevDetails: EnvListItem;
@@ -23,7 +23,7 @@ const ApisDiffJsonContent = (props: Props) => {
   const { prevDetails, nextDetails } = props || {};
   const mapJson: { [k: string]: string } = useMemo(() => {
     return {
-      base_info: t('common.history_comparison.info'),
+      base_info: t("common.history_comparison.info"),
       server_list: `Server List`,
       env_var_list: `Environment Variable List`,
     };
@@ -32,7 +32,7 @@ const ApisDiffJsonContent = (props: Props) => {
   const { envs }: any = useFormat({
     oldData: prevDetails,
     newData: nextDetails,
-    targetType: 'env',
+    targetType: "env",
   });
   const mapTypeJson: { [k: string]: any } = {
     envs: mapJson,
@@ -60,8 +60,16 @@ const ApisDiffJsonContent = (props: Props) => {
               isAutoHeight={count === 1}
               key={key}
               activeKey={key}
-              prevValue={JSON.stringify(dataSource[key][`prev_${key}`], null, '\t')}
-              nextValue={JSON.stringify(dataSource[key][`next_${key}`], null, '\t')}
+              prevValue={JSON.stringify(
+                dataSource[key][`prev_${key}`],
+                null,
+                "\t",
+              )}
+              nextValue={JSON.stringify(
+                dataSource[key][`next_${key}`],
+                null,
+                "\t",
+              )}
             />
           ),
         });
@@ -71,35 +79,35 @@ const ApisDiffJsonContent = (props: Props) => {
   }, [envs]);
   if (size(renderList) === 0) {
     return (
-      <ContentWrap>
-        <Empty description={t('common.history_comparison.same')} />
-      </ContentWrap>
+      <div className={styles.container}>
+        <Empty description={t("common.history_comparison.same")} />
+      </div>
     );
   }
   return (
-    <ContentWrap>
+    <div className={styles.container}>
       <Collapse
         size="small"
         defaultActiveKey={[
-          'base_info',
-          'description',
-          'header',
-          'query',
-          'event',
-          'restful',
-          'cookie',
-          'auth',
-          'pre_tasks',
-          'post_tasks',
-          'response',
-          'message',
-          'body',
-          'server_list',
-          'env_var_list'
+          "base_info",
+          "description",
+          "header",
+          "query",
+          "event",
+          "restful",
+          "cookie",
+          "auth",
+          "pre_tasks",
+          "post_tasks",
+          "response",
+          "message",
+          "body",
+          "server_list",
+          "env_var_list",
         ]}
         items={renderList}
       />
-    </ContentWrap>
+    </div>
   );
 };
 

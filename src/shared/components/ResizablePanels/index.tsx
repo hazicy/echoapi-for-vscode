@@ -1,5 +1,12 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { ReactNode, forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import {
+  ReactNode,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from "react";
 import {
   ImperativePanelGroupHandle,
   Panel,
@@ -8,25 +15,23 @@ import {
   PanelProps,
   PanelResizeHandle,
   PanelResizeHandleProps,
-} from 'react-resizable-panels';
+} from "react-resizable-panels";
 
-import { Flex, Space } from '@/shared/ui/base';
+import { Flex, Space } from "@/shared/ui/base";
 
-import { useDebounceFn, useSafeState } from 'ahooks';
-import cn from 'classnames';
-import { t } from 'i18next';
-import produce from 'immer';
-import { isEqual, omit } from 'lodash';
+import { useDebounceFn, useSafeState } from "ahooks";
+import cn from "classnames";
+import { t } from "i18next";
+import produce from "immer";
+import { isEqual, omit } from "lodash";
 
-import Popover from '@/shared/ui/Popover';
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
-import { STATUS_CODE } from '@/shared/constants/common';
-import useTheme from '@/shared/hooks/useTheme';
-import { useSystemConfig } from '@/app/store';
-import { DirectionType } from '@/shared/types/common';
+import Popover from "@/shared/ui/Popover";
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
+import { STATUS_CODE } from "@/shared/constants/common";
 
-import { ResizablePanelsContainer } from './style';
+import { useSystemConfig } from "@/app/store";
+import { DirectionType } from "@/shared/types/common";
 
 const defaultPanelProps = { defaultSize: 50, minSize: 5 };
 
@@ -51,7 +56,7 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
   const {
     leftPanel,
     rightPanel,
-    panelGroupProps = { direction: 'horizontal' },
+    panelGroupProps = { direction: "horizontal" },
     leftPanelProps = { ...defaultPanelProps },
     rightPanelProps = { ...defaultPanelProps },
     panelResizeHandleProps,
@@ -61,21 +66,26 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
     onDirectionChange,
   } = props;
 
-  const { themeToken } = useTheme();
-
-  const systemConfigTabDirection = useSystemConfig((state) => state.systemConfig?.tab_direction);
+  const systemConfigTabDirection = useSystemConfig(
+    (state) => state.systemConfig?.tab_direction,
+  );
   const language = useSystemConfig((state) => state.systemConfig?.language);
 
-  const [direction, setDirection] = useSafeState<DirectionType>(panelGroupProps.direction);
-  const [collapse, setCollapse] = useSafeState<{ left: boolean; right: boolean }>({
+  const [direction, setDirection] = useSafeState<DirectionType>(
+    panelGroupProps.direction,
+  );
+  const [collapse, setCollapse] = useSafeState<{
+    left: boolean;
+    right: boolean;
+  }>({
     left: false,
     right: false,
   });
 
   const panelGroupRef = useRef<ImperativePanelGroupHandle>(null);
 
-  const isHorizontal = isEqual(direction, 'horizontal');
-  const isVertical = isEqual(direction, 'vertical');
+  const isHorizontal = isEqual(direction, "horizontal");
+  const isVertical = isEqual(direction, "vertical");
 
   useEffect(() => {
     panelGroupProps.direction && setDirection(panelGroupProps.direction);
@@ -86,8 +96,8 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
     if (!showDirectionBtn || !systemConfigTabDirection) return;
 
     const _direction = isEqual(systemConfigTabDirection, STATUS_CODE.ENABLE)
-      ? 'vertical'
-      : 'horizontal';
+      ? "vertical"
+      : "horizontal";
 
     setDirection(_direction);
     onDirectionChange?.(_direction);
@@ -104,24 +114,25 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
       if (!showDirectionBtn) return;
 
       const { systemConfig, updateSystemConfig } = useSystemConfig.getState();
-      const systemValue = _direction === 'vertical' ? STATUS_CODE.ENABLE : STATUS_CODE.DISABLE;
+      const systemValue =
+        _direction === "vertical" ? STATUS_CODE.ENABLE : STATUS_CODE.DISABLE;
 
       const newSystemConfig = produce(systemConfig, (draft) => {
-        draft['tab_direction'] = systemValue;
+        draft["tab_direction"] = systemValue;
       });
 
       updateSystemConfig(newSystemConfig);
 
       window?.vscode.postMessage({
-        action: 'setSystemConfig',
-        data:{ tab_direction: systemValue}
+        action: "setSystemConfig",
+        data: { tab_direction: systemValue },
       });
 
       // await saveSystemSettingRequest({ configure: { tab_direction: systemValue } });
     },
     {
       wait: 1000,
-    }
+    },
   );
 
   const handleChangeDirection = (direction: DirectionType) => {
@@ -138,7 +149,7 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
     setPanelGroupLayout([50, 50]);
   };
 
-  const handleCollapse = (position: 'left' | 'right', value: boolean) => {
+  const handleCollapse = (position: "left" | "right", value: boolean) => {
     setCollapse((prev) => ({ ...prev, [position]: value }));
   };
 
@@ -153,19 +164,26 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
         className={cn(slots["direction-item-btn"], isVertical && slots.active)}
         align="center"
         justify="left"
-        onClick={() => handleChangeDirection('vertical')}
+        onClick={() => handleChangeDirection("vertical")}
       >
         <IconFont type="icon-up-down" />
-        <span className={slots.title}>{t('common.response_component.single_pane')}</span>
+        <span className={slots.title}>
+          {t("common.response_component.single_pane")}
+        </span>
       </Flex>
       <Flex
-        className={cn(slots["direction-item-btn"], isHorizontal && slots.active)}
+        className={cn(
+          slots["direction-item-btn"],
+          isHorizontal && slots.active,
+        )}
         align="center"
         justify="left"
-        onClick={() => handleChangeDirection('horizontal')}
+        onClick={() => handleChangeDirection("horizontal")}
       >
         <IconFont type="icon-left-right" />
-        <span className={slots.title}>{t('common.response_component.two_pane')}</span>
+        <span className={slots.title}>
+          {t("common.response_component.two_pane")}
+        </span>
       </Flex>
     </Space>
   );
@@ -174,8 +192,14 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
     <div className={slots["left-collapse-wrap"]} onClick={resetLayout}>
       <Flex vertical={isHorizontal} justify="center" align="center">
         <IconFont type="icon-left-folding" rotate={isVertical ? 270 : 180} />
-        <span className={cn(slots["collapse-title"], slots[direction], language === 'en' && slots.noSpacing)}>
-          {leftPanelProps?.collapseTitle || ''}
+        <span
+          className={cn(
+            slots["collapse-title"],
+            slots[direction],
+            language === "en" && slots.noSpacing,
+          )}
+        >
+          {leftPanelProps?.collapseTitle || ""}
         </span>
       </Flex>
     </div>
@@ -185,47 +209,74 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
     <div className={slots["right-collapse-wrap"]} onClick={resetLayout}>
       <Flex vertical={isHorizontal} justify="center" align="center">
         <IconFont type="icon-left-folding" rotate={isVertical ? 90 : 0} />
-        <span className={cn(slots["collapse-title"], slots[direction], language === 'en' && slots.noSpacing)}>
-          {rightPanelProps?.collapseTitle || ''}
+        <span
+          className={cn(
+            slots["collapse-title"],
+            slots[direction],
+            language === "en" && slots.noSpacing,
+          )}
+        >
+          {rightPanelProps?.collapseTitle || ""}
         </span>
       </Flex>
     </div>
   );
 
   return (
-    <ResizablePanelsContainer $token={themeToken}>
-      <PanelGroup {...panelGroupProps} direction={direction} ref={panelGroupRef}>
+    <div className={styles.container}>
+      <PanelGroup
+        {...panelGroupProps}
+        direction={direction}
+        ref={panelGroupRef}
+      >
         {/* left and top panel */}
         <Panel
-          onCollapse={() => handleCollapse('left', true)}
-          onExpand={() => handleCollapse('left', false)}
-          {...omit(leftPanelProps, ['collapseTitle'])}
-          className={cn(slots["resizable-panel-left-wrap"], leftPanelProps?.className)}
+          onCollapse={() => handleCollapse("left", true)}
+          onExpand={() => handleCollapse("left", false)}
+          {...omit(leftPanelProps, ["collapseTitle"])}
+          className={cn(
+            slots["resizable-panel-left-wrap"],
+            leftPanelProps?.className,
+          )}
         >
           {!collapse.left ? leftPanel : leftCollapse}
         </Panel>
         {/* bar */}
         <div
-          className={cn(slots["resizable-panel-handle"], slots[direction], panelResizeHandleProps?.className, {
-            [slots["static-handle-border"]]: showStaticHandleBorder,
-          })}
+          className={cn(
+            slots["resizable-panel-handle"],
+            slots[direction],
+            panelResizeHandleProps?.className,
+            {
+              [slots["static-handle-border"]]: showStaticHandleBorder,
+            },
+          )}
         >
-          <PanelResizeHandle {...panelResizeHandleProps} className={slots["resizable-bar"]} />
-           {/* Collapse to one side */}
+          <PanelResizeHandle
+            {...panelResizeHandleProps}
+            className={slots["resizable-bar"]}
+          />
+          {/* Collapse to one side */}
           {showRightCollapseBtn && !collapse.right && (
-            <div className={slots["right-collapse-btn"]} onClick={handleRightCollapseWithOne}>
+            <div
+              className={slots["right-collapse-btn"]}
+              onClick={handleRightCollapseWithOne}
+            >
               <IconFont type="icon-drop-down" rotate={isHorizontal ? -90 : 0} />
             </div>
           )}
         </div>
         {/* right and bottom panel */}
         <Panel
-          onCollapse={() => handleCollapse('right', true)}
-          onExpand={() => handleCollapse('right', false)}
-          {...omit(rightPanelProps, ['collapseTitle'])}
+          onCollapse={() => handleCollapse("right", true)}
+          onExpand={() => handleCollapse("right", false)}
+          {...omit(rightPanelProps, ["collapseTitle"])}
           // NOTE: The width property here is only to fix a flex layout bug
           style={isHorizontal ? { ...rightPanelProps.style, width: 0 } : {}}
-          className={cn(slots["resizable-panel-right-wrap"], rightPanelProps?.className)}
+          className={cn(
+            slots["resizable-panel-right-wrap"],
+            rightPanelProps?.className,
+          )}
         >
           {!collapse.right ? rightPanel : rightCollapse}
           {/* Split screen toggle */}
@@ -240,14 +291,17 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
                 }
               >
                 <Button>
-                  <IconFont style={{color:'var(--icon-color)'}} type="icon-direction" />
+                  <IconFont
+                    style={{ color: "var(--icon-color)" }}
+                    type="icon-direction"
+                  />
                 </Button>
               </Popover>
             </div>
           )}
         </Panel>
       </PanelGroup>
-    </ResizablePanelsContainer>
+    </div>
   );
 });
 

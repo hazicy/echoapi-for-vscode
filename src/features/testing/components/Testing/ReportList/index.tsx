@@ -1,35 +1,36 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Divider, Flex, Popconfirm, message } from '@/shared/ui/base';
+import { Divider, Flex, Popconfirm, message } from "@/shared/ui/base";
 
-import { cloneDeep, isArray, size } from 'lodash';
+import { cloneDeep, isArray, size } from "lodash";
 
-import Table from '@/shared/components/BasicTable';
-import { ColumnsType } from '@/shared/components/BasicTable/types';
-import Button from '@/shared/ui/Button';
-import Empty from '@/shared/ui/Empty';
-import Tooltip from '@/shared/ui/Tooltip';
-import { TestingReportList } from '@/features/testing/types/res';
-import { formatTimeToDateTimeLong } from '@/shared/utils/time';
+import Table from "@/shared/components/BasicTable";
+import { ColumnsType } from "@/shared/components/BasicTable/types";
+import Button from "@/shared/ui/Button";
+import Empty from "@/shared/ui/Empty";
+import Tooltip from "@/shared/ui/Tooltip";
+import { TestingReportList } from "@/features/testing/types/res";
+import { formatTimeToDateTimeLong } from "@/shared/utils/time";
 
-import Result from './Result';
+import Result from "./Result";
 
-import { ReportWrapper } from './style';
-import useTesting from '@/features/testing/store/useTesting';
-import { getPercent } from '../utils';
-import produce from 'immer';
+import useTesting from "@/features/testing/store/useTesting";
+import { getPercent } from "../utils";
+import produce from "immer";
 
 const Report = () => {
   const { t } = useTranslation();
-  const testingReportList = useTesting(store=>store?.testingReportList);
-  const updateTestingReportList =  useTesting(store=>store?.updateTestingReportList);
+  const testingReportList = useTesting((store) => store?.testingReportList);
+  const updateTestingReportList = useTesting(
+    (store) => store?.updateTestingReportList,
+  );
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [reportDetails, setReportDetails] = useState<TestingReportList>();
 
   const columns: ColumnsType<TestingReportList>[] = useMemo(() => {
-
     const renderItem = (value: string) => {
       return (
         <Tooltip placement="topLeft" title={value}>
@@ -41,13 +42,16 @@ const Report = () => {
     return [
       {
         width: 160,
-        title: t('report_list.report_name'),
-        dataIndex: 'report_name',
-        fixed: 'left',
+        title: t("report_list.report_name"),
+        dataIndex: "report_name",
+        fixed: "left",
         ellipsis: true,
         render: (text, record) => (
           <Tooltip placement="topLeft" title={text}>
-            <span style={{ cursor: 'pointer' }} onClick={() => handleViewReport(record)}>
+            <span
+              style={{ cursor: "pointer" }}
+              onClick={() => handleViewReport(record)}
+            >
               {text}
             </span>
           </Tooltip>
@@ -55,48 +59,59 @@ const Report = () => {
       },
       {
         width: 100,
-        title: t('report_list.environment'),
+        title: t("report_list.environment"),
         ellipsis: true,
-        dataIndex: 'complete',
+        dataIndex: "complete",
         render: (value) => renderItem(value.env_name),
       },
       {
         width: 100,
-        title: t('report_list.pass_rate'),
-        dataIndex: 'complete',
-        render: (value) => renderItem(getPercent(value.http.success, value.http)),
+        title: t("report_list.pass_rate"),
+        dataIndex: "complete",
+        render: (value) =>
+          renderItem(getPercent(value.http.success, value.http)),
       },
       {
         width: 100,
-        title: t('report_list.assertion_rate'),
-        dataIndex: 'complete',
-        render: (value) => renderItem(getPercent(value.assert.success, value.assert)),
+        title: t("report_list.assertion_rate"),
+        dataIndex: "complete",
+        render: (value) =>
+          renderItem(getPercent(value.assert.success, value.assert)),
       },
       {
         width: 160,
-        title: t('report_list.start_time'),
-        dataIndex: 'complete',
-        render: (value) => (value ? renderItem(formatTimeToDateTimeLong(value.start_at)) : ''),
+        title: t("report_list.start_time"),
+        dataIndex: "complete",
+        render: (value) =>
+          value ? renderItem(formatTimeToDateTimeLong(value.start_at)) : "",
       },
       {
         width: 160,
-        title: t('report_list.end_time'),
-        dataIndex: 'complete',
-        render: (value) => (value ? renderItem(formatTimeToDateTimeLong(value.end_at)) : ''),
+        title: t("report_list.end_time"),
+        dataIndex: "complete",
+        render: (value) =>
+          value ? renderItem(formatTimeToDateTimeLong(value.end_at)) : "",
       },
       {
         width: 140,
-        title: t('report_list.operation'),
+        title: t("report_list.operation"),
         render: (_, record) => {
           return (
             <Flex align="center" className={slots.operate}>
-              <Button type="link" size="small" onClick={() => handleViewReport(record)}>
-                {t('report_list.view')}
+              <Button
+                type="link"
+                size="small"
+                onClick={() => handleViewReport(record)}
+              >
+                {t("report_list.view")}
               </Button>
               <Divider type="vertical" className={slots["btn-divider"]} />
-              <Popconfirm title={t('common.tips')} onConfirm={() => handleDeleteReport(record)}>
+              <Popconfirm
+                title={t("common.tips")}
+                onConfirm={() => handleDeleteReport(record)}
+              >
                 <Button type="link" size="small">
-                  {t('report_list.delete')}
+                  {t("report_list.delete")}
                 </Button>
               </Popconfirm>
             </Flex>
@@ -107,42 +122,44 @@ const Report = () => {
   }, [testingReportList]);
 
   const handleViewReport = (record: TestingReportList) => {
-      setReportDetails(record);
-      setIsDrawerOpen(true);
+    setReportDetails(record);
+    setIsDrawerOpen(true);
   };
 
   const handleDeleteReport = (record: TestingReportList) => {
-    const newTestingReportList = produce(testingReportList,(draft)=>{
-      const index = draft.findIndex(i=>i?.report_id === record.report_id);
-      if(index !== -1){
+    const newTestingReportList = produce(testingReportList, (draft) => {
+      const index = draft.findIndex((i) => i?.report_id === record.report_id);
+      if (index !== -1) {
         draft.splice(index, 1);
       }
     });
     updateTestingReportList(newTestingReportList);
-  
+
     // Save report list to vscode
-     window?.vscode.postMessage({
-      action: 'saveFolderTestData',
+    window?.vscode.postMessage({
+      action: "saveFolderTestData",
       data: {
-        reportList: newTestingReportList
-      }
+        reportList: newTestingReportList,
+      },
     });
-      message.success(t('supplement.del_success'));
+    message.success(t("supplement.del_success"));
   };
 
-  const dataSource = useMemo(()=>{
-    if(isArray(testingReportList) && testingReportList.length > 0){
-      const newData = cloneDeep(testingReportList)
-      return newData.sort((a,b)=>b?.complete?.start_at - a?.complete?.start_at);
+  const dataSource = useMemo(() => {
+    if (isArray(testingReportList) && testingReportList.length > 0) {
+      const newData = cloneDeep(testingReportList);
+      return newData.sort(
+        (a, b) => b?.complete?.start_at - a?.complete?.start_at,
+      );
     }
     return [];
-  },[testingReportList]);
+  }, [testingReportList]);
 
   return (
-    <ReportWrapper>
+    <div className={styles.container}>
       {size(testingReportList) ? (
         <Table<TestingReportList>
-          scroll={{ y: 'calc(100vh - 280px' }}
+          scroll={{ y: "calc(100vh - 280px" }}
           rowKey="report_id"
           dataSource={dataSource}
           columns={columns}
@@ -150,7 +167,7 @@ const Report = () => {
             defaultCurrent: 1,
             defaultPageSize: 10,
             showSizeChanger: true,
-            showTotal: (total) => t('common.count', { count: total }),
+            showTotal: (total) => t("common.count", { count: total }),
           }}
         />
       ) : (
@@ -167,7 +184,7 @@ const Report = () => {
           }}
         />
       )}
-    </ReportWrapper>
+    </div>
   );
 };
 

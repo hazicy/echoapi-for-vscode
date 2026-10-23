@@ -1,27 +1,28 @@
+import styles from "./style.module.css";
+import classNames from "classnames";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useContext, useEffect, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useContext, useEffect, useMemo, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex } from '@/shared/ui/base';
+import { Flex } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import i18next from 'i18next';
+import { useSafeState } from "ahooks";
+import i18next from "i18next";
 
-import { CodeEditor } from '@/shared/components';
-import VarInsertPop from '@/features/variables/components/VarInsertPop';
+import { CodeEditor } from "@/shared/components";
+import VarInsertPop from "@/features/variables/components/VarInsertPop";
 
-import { Button, IconFont } from '@/shared/ui';
-import { ApisBaseRequestBody } from '@/features/requests/types/request';
-import { ChangeFuncType } from '@/shared/types/common';
+import { Button, IconFont } from "@/shared/ui";
+import { ApisBaseRequestBody } from "@/features/requests/types/request";
+import { ChangeFuncType } from "@/shared/types/common";
 
-import VisualizationContext from './visualizationContext';
+import VisualizationContext from "./visualizationContext";
 
-import { ParamsFieldEditorContainer, RawEditorContainer } from './style';
-import JsonSchema from '../../../features/schemas/components/JsonSchema';
-import { useSchemas } from '@/app/store';
-import type { EditorOptions } from '@/shared/components/CodeEditor';
-import { VAR_OPTIONS_KEY } from '@/features/variables/constants/variable';
-import { InsertAction } from '@/features/requests/types/variable';
+import JsonSchema from "../../../features/schemas/components/JsonSchema";
+import { useSchemas } from "@/app/store";
+import type { EditorOptions } from "@/shared/components/CodeEditor";
+import { VAR_OPTIONS_KEY } from "@/features/variables/constants/variable";
+import { InsertAction } from "@/features/requests/types/variable";
 
 interface Props {
   mode?: string;
@@ -31,7 +32,7 @@ interface Props {
   responseParameterTitle?: string;
   value: Partial<ApisBaseRequestBody>;
   onChange: (val: any, key?: string) => void;
-  customAutoGeneration?: (val?: Props['value']) => void;
+  customAutoGeneration?: (val?: Props["value"]) => void;
   editorOptions?: EditorOptions;
   regularValueHeight?: number;
 }
@@ -40,7 +41,7 @@ const RawEditor = ({
   mode,
   isParameter = false,
   onMountAutoFormat,
-  responseParameterTitle = i18next.t('common.raw_input.body_value'),
+  responseParameterTitle = i18next.t("common.raw_input.body_value"),
   value,
   onChange,
   editorOptions = {},
@@ -53,22 +54,22 @@ const RawEditor = ({
 
   const { isDebugArea = false } = useContext(VisualizationContext);
   const { schemasBaseData } = useSchemas((state) => state);
-  const [tabsValue, setTabsValue] = useSafeState('paramValue');
+  const [tabsValue, setTabsValue] = useSafeState("paramValue");
   const [varOpen, setVarOpen] = useSafeState(false);
   const segmentedOptions = useMemo(() => {
     if (isParameter || isDebugArea) {
-      setTabsValue('paramValue');
-      return [{ label: responseParameterTitle, value: 'paramValue' }];
+      setTabsValue("paramValue");
+      return [{ label: responseParameterTitle, value: "paramValue" }];
     }
     return [
-      { label: t('common.raw_input.schema'), value: 'dataStructure' },
-      { label: responseParameterTitle, value: 'paramValue' },
+      { label: t("common.raw_input.schema"), value: "dataStructure" },
+      { label: responseParameterTitle, value: "paramValue" },
     ];
   }, [isParameter, responseParameterTitle, isDebugArea]);
 
   useEffect(() => {
-    if (tabsValue === 'paramValue') {
-      setTabsValue('paramValue');
+    if (tabsValue === "paramValue") {
+      setTabsValue("paramValue");
     }
   }, [tabsValue, isParameter, customAutoGeneration]);
 
@@ -80,21 +81,25 @@ const RawEditor = ({
     onChange(result);
   };
 
-  const valueChange = (str: string, _operation: VAR_OPTIONS_KEY, _action: InsertAction) => {
+  const valueChange = (
+    str: string,
+    _operation: VAR_OPTIONS_KEY,
+    _action: InsertAction,
+  ) => {
     codeEditorRef?.current?.insertText(str);
     setVarOpen(false);
   };
 
   const regularStyle = regularValueHeight
-  ? { height: regularValueHeight }
-  : !isDebugArea
-    ? { height: 380 }
-    : {};
+    ? { height: regularValueHeight }
+    : !isDebugArea
+      ? { height: 380 }
+      : {};
   return (
-    <RawEditorContainer className="raw-editor-container">
-      <Flex style={{width:'100%'}} vertical>
+    <div className={classNames(styles.container, "raw-editor-container")}>
+      <Flex style={{ width: "100%" }} vertical>
         <header>
-          <Flex align="center" justify='space-between'>
+          <Flex align="center" justify="space-between">
             <Flex gap={12} align="center">
               {isDebugArea ? (
                 <Flex gap={4}>
@@ -105,8 +110,14 @@ const RawEditor = ({
                     open={varOpen}
                     setOpen={setVarOpen}
                   >
-                    <Button  className={slots["beautify-text-btn-highlight"]} mode='light' type="text" size="small" icon={<IconFont type="icon-a-Dynamicvalue" />}>
-                      {t('var_insert.dynamic_value')}
+                    <Button
+                      className={slots["beautify-text-btn-highlight"]}
+                      mode="light"
+                      type="text"
+                      size="small"
+                      icon={<IconFont type="icon-a-Dynamicvalue" />}
+                    >
+                      {t("var_insert.dynamic_value")}
                     </Button>
                   </VarInsertPop>
                 </Flex>
@@ -120,50 +131,50 @@ const RawEditor = ({
               )}
             </Flex>
 
-            {tabsValue === 'paramValue' && (
+            {tabsValue === "paramValue" && (
               <Flex align="center">
                 <Button
-                  style={{ height: '14px' }}
+                  style={{ height: "14px" }}
                   onClick={() => {
                     codeEditorRef?.current?.formatEditor();
                   }}
-                  mode='light'
+                  mode="light"
                   type="text"
                   icon={<IconFont type="icon-beautify" />}
                   size="small"
                 >
-                  {t('common.morgan_editor.beautify')}
+                  {t("common.morgan_editor.beautify")}
                 </Button>
               </Flex>
             )}
           </Flex>
         </header>
         <main>
-          {tabsValue === 'dataStructure' && (
+          {tabsValue === "dataStructure" && (
             <JsonSchema
               isShowHeaderAction={false}
               value={value?.raw_schema}
-              onChange={(value) => handleChange('raw_schema', value)}
-              importTitle={t('common.schema.import')}
+              onChange={(value) => handleChange("raw_schema", value)}
+              importTitle={t("common.schema.import")}
               models={schemasBaseData}
             />
           )}
-          {tabsValue === 'paramValue' && (
-          <ParamsFieldEditorContainer style={regularStyle}>
-            <CodeEditor
-              ref={codeEditorRef}
-              language={mode}
-              height={'100%'}
-              onMountAutoFormat={onMountAutoFormat}
-              value={value?.raw || ''}
-              onChange={(value: string) => handleChange('raw', value)}
-              options={editorOptions}
-            />
-          </ParamsFieldEditorContainer>
+          {tabsValue === "paramValue" && (
+            <div style={regularStyle} className={styles.paramsFieldEditor}>
+              <CodeEditor
+                ref={codeEditorRef}
+                language={mode}
+                height={"100%"}
+                onMountAutoFormat={onMountAutoFormat}
+                value={value?.raw || ""}
+                onChange={(value: string) => handleChange("raw", value)}
+                options={editorOptions}
+              />
+            </div>
           )}
         </main>
       </Flex>
-    </RawEditorContainer>
+    </div>
   );
 };
 

@@ -1,23 +1,26 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-import { ConfigProvider, Form, Spin, Typography } from '@/shared/ui/base';
-import type { RcFile } from '@/shared/ui/base';
+import { ConfigProvider, Form, Spin, Typography } from "@/shared/ui/base";
+import type { RcFile } from "@/shared/ui/base";
 
 import { useSafeState } from "ahooks";
 import classnames from "classnames";
 
-import ImportContent from '@/features/import/components/ImportContent';
+import ImportContent from "@/features/import/components/ImportContent";
 
-import { ImportExportWrap } from "./style";
-import AlertText from "@/shared/ui/AlertText";
 import IconFont from "@/shared/ui/IconFont";
 import Radio from "@/shared/ui/Radio";
 import Tooltip from "@/shared/ui/Tooltip";
 import useTheme from "@/shared/hooks/useTheme";
 
-import { IMPORT_TYPE_ENUM, IMPORT_TYPE_LIST, ImportLocationEnum } from "@/features/settings/constants/settings";
+import {
+  IMPORT_TYPE_ENUM,
+  IMPORT_TYPE_LIST,
+  ImportLocationEnum,
+} from "@/features/settings/constants/settings";
 import { useSystemConfig } from "@/app/store";
 import { isString } from "lodash";
 
@@ -26,17 +29,17 @@ const { Title } = Typography;
 const ImportProjectManual = () => {
   const { themeToken } = useTheme();
   const [fileType, setFileType] = useSafeState<IMPORT_TYPE_ENUM>(
-    IMPORT_TYPE_ENUM.CURL
+    IMPORT_TYPE_ENUM.CURL,
   );
   const [uploadFile, setUploadFile] = useSafeState<RcFile | null>(null);
   const [importLocation, setImportLocation] = useSafeState<ImportLocationEnum>(
-    ImportLocationEnum.append
+    ImportLocationEnum.append,
   );
 
   const [importLoading, setImportLoading] = useSafeState<boolean>(false);
 
   const import_data_init_type = useSystemConfig(
-    (i) => i?.systemConfig?.import_data_init_type
+    (i) => i?.systemConfig?.import_data_init_type,
   );
 
   useEffect(() => {
@@ -58,7 +61,7 @@ const ImportProjectManual = () => {
     swaggerUrl,
     setSwaggerUrl,
     fileType,
-    setImportLoading
+    setImportLoading,
   };
 
   return (
@@ -67,7 +70,7 @@ const ImportProjectManual = () => {
         components: {
           Upload: {
             colorBorder: themeToken.colorDeepGray,
-            colorFillAlter: 'var(--vscode-settings-focusedRowBackground)',
+            colorFillAlter: "var(--vscode-settings-focusedRowBackground)",
             actionsColor: themeToken.colorError,
             colorTextDescription: themeToken.fontContentColor,
             controlItemBgHover: themeToken.formHoverColor,
@@ -76,7 +79,7 @@ const ImportProjectManual = () => {
       }}
     >
       <Spin spinning={importLoading}>
-        <ImportExportWrap $token={themeToken}>
+        <div className={styles.importExport}>
           <Title style={{ fontSize: "16px" }} level={3}>
             {t("settings.import_project.title")}
           </Title>
@@ -132,7 +135,7 @@ const ImportProjectManual = () => {
             </div>
           </div>
           <ImportContent {...contentProps} />
-        </ImportExportWrap>
+        </div>
       </Spin>
     </ConfigProvider>
   );

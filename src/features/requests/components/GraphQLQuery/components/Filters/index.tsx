@@ -1,8 +1,23 @@
+import styles from "../../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {
+  forwardRef,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
+import { useTranslation } from "react-i18next";
 
-import { Button, ConfigProvider, Flex, Form, Input, Select, message } from '@/shared/ui/base';
+import {
+  Button,
+  ConfigProvider,
+  Flex,
+  Form,
+  Input,
+  Select,
+  message,
+} from "@/shared/ui/base";
 
 import {
   PropertyPath,
@@ -20,13 +35,11 @@ import {
   keys,
   setWith,
   some,
-} from 'lodash';
+} from "lodash";
 
-import GraphQLSchemaProvider from '@/features/requests/components/GraphQLQuery/context/GraphQLSchemaProvider';
-import { IconFont } from '@/shared/ui';
-import useTheme from '@/shared/hooks/useTheme';
-
-import { FilterContainer } from '../../style';
+import GraphQLSchemaProvider from "@/features/requests/components/GraphQLQuery/context/GraphQLSchemaProvider";
+import { IconFont } from "@/shared/ui";
+import useTheme from "@/shared/hooks/useTheme";
 
 interface Props {
   onCancel?: () => void;
@@ -43,7 +56,9 @@ const Filters = (props: Props, ref: any) => {
   const [nameOptions, setNameOptions] = useState<any[]>([]);
   const [operaOptions, setOperaOptions] = useState<any>({});
   const [filterItem, setFilterItem] = useState<any>({});
-  const { filterData, setFilterData, refreshCheck } = useContext(GraphQLSchemaProvider);
+  const { filterData, setFilterData, refreshCheck } = useContext(
+    GraphQLSchemaProvider,
+  );
 
   useEffect(() => {
     if (open) {
@@ -52,38 +67,53 @@ const Filters = (props: Props, ref: any) => {
   }, [open]);
 
   const getList = (obj: any, name: string) => {
-    return entries(obj).map(([key, value]) => ({ name, operation: key, value }));
+    return entries(obj).map(([key, value]) => ({
+      name,
+      operation: key,
+      value,
+    }));
   };
 
   const init = () => {
-    const filterArgs = find(_data, (e: any) => has(e, 'inputObjects'));
+    const filterArgs = find(_data, (e: any) => has(e, "inputObjects"));
     setFilterItem(filterArgs);
     if (filterArgs) {
       if (isArray(filterArgs?.inputObjects)) {
         setIndependent(false);
-        const { nameOptions = [], operations = {} } = filterArgs.inputObjects.reduce(
-          (
-            pre: { nameOptions: { value: any; label: any }[]; operations: any },
-            item: { name: PropertyPath; operations: any }
-          ) => {
-            if (item.name && item.operations) {
-              pre.nameOptions.push({
-                value: item.name,
-                label: item.name,
-              });
-              setWith(pre.operations, item.name, item.operations, Object);
-            }
-            return pre;
-          },
-          {
-            nameOptions: [],
-            operations: {},
-          }
-        );
+        const { nameOptions = [], operations = {} } =
+          filterArgs.inputObjects.reduce(
+            (
+              pre: {
+                nameOptions: { value: any; label: any }[];
+                operations: any;
+              },
+              item: { name: PropertyPath; operations: any },
+            ) => {
+              if (item.name && item.operations) {
+                pre.nameOptions.push({
+                  value: item.name,
+                  label: item.name,
+                });
+                setWith(pre.operations, item.name, item.operations, Object);
+              }
+              return pre;
+            },
+            {
+              nameOptions: [],
+              operations: {},
+            },
+          );
         setNameOptions(nameOptions);
         setOperaOptions(operations);
-        const data = filterData[path]?.find((item: any) => isEqual(item.name, filterArgs.name));
-        if (get(filterData, path) && data && !isEmpty(data?.value) && isPlainObject(data?.value)) {
+        const data = filterData[path]?.find((item: any) =>
+          isEqual(item.name, filterArgs.name),
+        );
+        if (
+          get(filterData, path) &&
+          data &&
+          !isEmpty(data?.value) &&
+          isPlainObject(data?.value)
+        ) {
           const args = keys(data?.value).reduce((pre, key) => {
             pre = concat(pre, getList(data?.value[key], key));
             return pre;
@@ -107,7 +137,7 @@ const Filters = (props: Props, ref: any) => {
         form.setFieldsValue({
           args: _data?.map((item) => ({
             name: item.name,
-            value: '',
+            value: "",
           })),
         });
       }
@@ -124,11 +154,11 @@ const Filters = (props: Props, ref: any) => {
     if (filterItem && !independent) {
       const groupedByFields = groupBy(
         filter(values?.args, (e) => e.name && e.operation),
-        (item) => `${item.name}-${item.operation}`
+        (item) => `${item.name}-${item.operation}`,
       );
       const hasRepeat = some(groupedByFields, (group) => group.length > 1);
       if (hasRepeat) {
-        message.error(t('graphql.finish_tip'));
+        message.error(t("graphql.finish_tip"));
         return;
       }
       const argValue = values?.args?.reduce(
@@ -140,23 +170,33 @@ const Filters = (props: Props, ref: any) => {
                 ...i,
               };
               if (item.operation) {
-                setWith(pre.value, [item.name], { ...i, [item.operation]: item.value }, Object);
+                setWith(
+                  pre.value,
+                  [item.name],
+                  { ...i, [item.operation]: item.value },
+                  Object,
+                );
               }
             } else {
-              setWith(pre.value, [item.name], { [item.operation || '']: item.value }, Object);
+              setWith(
+                pre.value,
+                [item.name],
+                { [item.operation || ""]: item.value },
+                Object,
+              );
             }
           }
           return pre;
         },
         {
           value: {},
-        }
+        },
       );
       const d = {
         ...filterData,
         [path]: [
           {
-            name: filterItem?.name || '',
+            name: filterItem?.name || "",
             value: argValue?.value,
           },
         ],
@@ -182,7 +222,7 @@ const Filters = (props: Props, ref: any) => {
       form.setFieldsValue({
         args: _data?.map((item) => ({
           name: item.name,
-          value: '',
+          value: "",
         })),
       });
     } else {
@@ -208,18 +248,18 @@ const Filters = (props: Props, ref: any) => {
         },
       }}
     >
-      <FilterContainer vertical gap={12}>
-        <Flex style={{ overflowY: 'auto' }} flex={1}>
+      <Flex vertical gap={12} className={styles.filter}>
+        <Flex style={{ overflowY: "auto" }} flex={1}>
           <Form
             form={form}
             onFinish={onFinish}
             style={{
               width: 600,
-              background: 'var(--color-bg-page)',
-              borderRadius: 'var(--border-radius)',
+              background: "var(--color-bg-page)",
+              borderRadius: "var(--border-radius)",
               padding: 8,
               paddingBottom: 0,
-              overflowY: 'auto',
+              overflowY: "auto",
             }}
             initialValues={{
               args: [{}],
@@ -235,20 +275,23 @@ const Filters = (props: Props, ref: any) => {
                         <Flex key={key} gap={8} align="baseline">
                           <Flex flex={0.2}>
                             <Form.Item
-                              style={{ width: '100%' }}
+                              style={{ width: "100%" }}
                               {...restField}
-                              name={[name, 'name']}
+                              name={[name, "name"]}
                             >
-                              <Input readOnly placeholder={t('supplement.input_tip')} />
+                              <Input
+                                readOnly
+                                placeholder={t("supplement.input_tip")}
+                              />
                             </Form.Item>
                           </Flex>
                           <Flex flex={0.8}>
                             <Form.Item
-                              style={{ width: '100%' }}
+                              style={{ width: "100%" }}
                               {...restField}
-                              name={[name, 'value']}
+                              name={[name, "value"]}
                             >
-                              <Input placeholder={t('supplement.input_tip')} />
+                              <Input placeholder={t("supplement.input_tip")} />
                             </Form.Item>
                           </Flex>
                         </Flex>
@@ -257,25 +300,40 @@ const Filters = (props: Props, ref: any) => {
                     return (
                       <Flex key={key} gap={8} align="baseline">
                         <Flex flex={0.4}>
-                          <Form.Item style={{ width: '100%' }} {...restField} name={[name, 'name']}>
-                            <Select options={nameOptions} placeholder={t('common.select_tip')} />
+                          <Form.Item
+                            style={{ width: "100%" }}
+                            {...restField}
+                            name={[name, "name"]}
+                          >
+                            <Select
+                              options={nameOptions}
+                              placeholder={t("common.select_tip")}
+                            />
                           </Form.Item>
                         </Flex>
                         <Flex flex={0.2}>
-                          <Form.Item noStyle shouldUpdate dependencies={[name, 'name']}>
+                          <Form.Item
+                            noStyle
+                            shouldUpdate
+                            dependencies={[name, "name"]}
+                          >
                             {({ getFieldValue }) => {
-                              const args = getFieldValue('args');
-                              const options = get(operaOptions, args[name]?.name) || [];
+                              const args = getFieldValue("args");
+                              const options =
+                                get(operaOptions, args[name]?.name) || [];
                               return (
                                 <Form.Item
-                                  style={{ width: '100%' }}
+                                  style={{ width: "100%" }}
                                   {...restField}
-                                  name={[name, 'operation']}
+                                  name={[name, "operation"]}
                                 >
                                   <Select
-                                    fieldNames={{ value: 'name', label: 'name' }}
+                                    fieldNames={{
+                                      value: "name",
+                                      label: "name",
+                                    }}
                                     options={options}
-                                    placeholder={t('common.select_tip')}
+                                    placeholder={t("common.select_tip")}
                                   />
                                 </Form.Item>
                               );
@@ -283,19 +341,32 @@ const Filters = (props: Props, ref: any) => {
                           </Form.Item>
                         </Flex>
                         <Flex flex={0.4}>
-                          <Form.Item noStyle shouldUpdate dependencies={[name, 'operation']}>
+                          <Form.Item
+                            noStyle
+                            shouldUpdate
+                            dependencies={[name, "operation"]}
+                          >
                             {({ getFieldValue }) => {
-                              const operation = getFieldValue(['args', name, 'operation']);
+                              const operation = getFieldValue([
+                                "args",
+                                name,
+                                "operation",
+                              ]);
                               return (
                                 <Form.Item
-                                  style={{ width: '100%' }}
+                                  style={{ width: "100%" }}
                                   {...restField}
-                                  name={[name, 'value']}
+                                  name={[name, "value"]}
                                 >
-                                  {['in', 'nin'].includes(operation) ? (
-                                    <Select mode="tags" placeholder={t('supplement.input_tip')} />
+                                  {["in", "nin"].includes(operation) ? (
+                                    <Select
+                                      mode="tags"
+                                      placeholder={t("supplement.input_tip")}
+                                    />
                                   ) : (
-                                    <Input placeholder={t('supplement.input_tip')} />
+                                    <Input
+                                      placeholder={t("supplement.input_tip")}
+                                    />
                                   )}
                                 </Form.Item>
                               );
@@ -320,7 +391,7 @@ const Filters = (props: Props, ref: any) => {
                         onClick={() => add()}
                         icon={<IconFont type="icon-add-line" />}
                       >
-                        {t('api.apis_list.filter_modal.add_condition')}
+                        {t("api.apis_list.filter_modal.add_condition")}
                       </Button>
                     </Form.Item>
                   )}
@@ -329,7 +400,7 @@ const Filters = (props: Props, ref: any) => {
             </Form.List>
           </Form>
         </Flex>
-        <Flex justify={independent ? 'flex-end' : 'space-between'}>
+        <Flex justify={independent ? "flex-end" : "space-between"}>
           {!independent && (
             <Button
               style={{ padding: 0 }}
@@ -339,18 +410,18 @@ const Filters = (props: Props, ref: any) => {
               onClick={clearCondition}
               icon={<IconFont type="icon-clean" />}
             >
-              {t('api.apis_list.filter_modal.clear_condition')}
+              {t("api.apis_list.filter_modal.clear_condition")}
             </Button>
           )}
 
           <Flex align="center" gap={12}>
-            <Button onClick={onCancel}>{t('base.cancel')}</Button>
+            <Button onClick={onCancel}>{t("base.cancel")}</Button>
             <Button type="primary" onClick={() => form?.submit()}>
-              {t('common.confirm')}
+              {t("common.confirm")}
             </Button>
           </Flex>
         </Flex>
-      </FilterContainer>
+      </Flex>
     </ConfigProvider>
   );
 };

@@ -1,15 +1,14 @@
-import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
+import styles from "../../style.module.css";
+import { memo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { AutoComplete } from '@/shared/ui/base';
+import { AutoComplete } from "@/shared/ui/base";
 
-import { map } from 'lodash';
+import { map } from "lodash";
 
-import { REQUEST_CONTENT_TYPE } from '@/features/requests/constants';
+import { REQUEST_CONTENT_TYPE } from "@/features/requests/constants";
 
-import { ItemProps } from '../../types';
-
-import { RowItemWrap } from '../../style';
+import { ItemProps } from "../../types";
 
 const RowContentType = memo((props: ItemProps) => {
   const { t } = useTranslation();
@@ -25,19 +24,19 @@ const RowContentType = memo((props: ItemProps) => {
   };
 
   return (
-    <RowItemWrap>
+    <div className={styles.container}>
       <AutoComplete
         filterOption
-        placeholder={t('common.request_table.content_type_tip')}
+        placeholder={t("common.request_table.content_type_tip")}
         disabled={readOnly}
-        value={rowData?.content_type || ''}
-        onChange={(value) => handleChange('content_type', value)}
+        value={rowData?.content_type || ""}
+        onChange={(value) => handleChange("content_type", value)}
         options={map(REQUEST_CONTENT_TYPE, (item) => ({
           label: item,
           value: item,
         }))}
       />
-    </RowItemWrap>
+    </div>
   );
 });
 

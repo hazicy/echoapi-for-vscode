@@ -1,12 +1,8 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
 import { useMemo } from "react";
-import {
-  TestingConfigWrap,
-  FunctionalWrap,
-  ResultListWarp,
-  TestingMainWarp,
-} from "./style";
-import { SegmentedTabs } from '@/shared/components';
+
+import { SegmentedTabs } from "@/shared/components";
 
 import {
   Checkbox,
@@ -16,7 +12,7 @@ import {
   InputNumber,
   Skeleton,
   Tooltip,
-} from '@/shared/ui/base';
+} from "@/shared/ui/base";
 import { Button, IconFont, Upload } from "@/shared/ui";
 import {
   EventItem,
@@ -138,7 +134,7 @@ const Main = ({
       label: t("common.functional"),
       value: "functional",
       children: (
-        <FunctionalWrap>
+        <div className={styles.functional}>
           <Flex gap={16}>
             <Flex flex={1} vertical gap={6}>
               <label>{t("cicd.loop_count")}</label>
@@ -201,7 +197,9 @@ const Main = ({
                     })}
                   >
                     <Tooltip title={testingConfig?.file_name}>
-                      <span className={slots.name}>{testingConfig?.file_name}</span>
+                      <span className={slots.name}>
+                        {testingConfig?.file_name}
+                      </span>
                     </Tooltip>
                     {!sendingOrOver && (
                       <IconFont type="icon-delete" onClick={handleRemoveFile} />
@@ -301,7 +299,7 @@ const Main = ({
               </Checkbox>
             </Flex>
           </Flex>
-        </FunctionalWrap>
+        </div>
       ),
     },
   ];
@@ -340,8 +338,8 @@ const Main = ({
   }, [testingSendingData.requestList, testingSendingData?.sendStatus]);
 
   return (
-    <TestingMainWarp>
-      <TestingConfigWrap>
+    <div className={styles.container}>
+      <div className={styles.testingConfig}>
         <SegmentedTabs
           className={slots["tab-container"]}
           options={TESTING_CONFIG_TAB_LIST}
@@ -350,7 +348,7 @@ const Main = ({
             setTabValue(val);
           }}
         />
-      </TestingConfigWrap>
+      </div>
 
       <TestingResult
         testingConfig={testingConfig}
@@ -361,13 +359,13 @@ const Main = ({
         testingSendingData?.sendStatus || "",
       ) ? (
         <Skeleton active loading={testingListLoading}>
-          <ResultListWarp>
+          <div className={styles.resultList}>
             <TestingList
               testingConfig={testingConfig}
               eventAllCount={eventAllCount}
               list={testingSendingData.requestList || []}
             />
-          </ResultListWarp>
+          </div>
         </Skeleton>
       ) : (
         <>
@@ -375,7 +373,11 @@ const Main = ({
             <Button type="text" onClick={onRefresh}>
               {t("base.refresh")}
             </Button>
-            <Button className={slots["select-all"]} type="text" onClick={onSelectAll}>
+            <Button
+              className={slots["select-all"]}
+              type="text"
+              onClick={onSelectAll}
+            >
               {t("common.deselect_all")}
             </Button>
           </Flex>
@@ -392,7 +394,7 @@ const Main = ({
           />
         </>
       )}
-    </TestingMainWarp>
+    </div>
   );
 };
 

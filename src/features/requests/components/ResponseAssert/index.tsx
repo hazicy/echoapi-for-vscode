@@ -1,8 +1,9 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
 import { memo, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Flex, Switch, SwitchProps } from '@/shared/ui/base';
+import { Flex, Switch, SwitchProps } from "@/shared/ui/base";
 
 import { useMount, useSafeState } from "ahooks";
 import {
@@ -16,7 +17,7 @@ import {
 } from "lodash";
 
 import Dot from "@/shared/ui/Dot";
-import useTheme from "@/shared/hooks/useTheme";
+
 import { BaseResponse } from "@/features/requests/types/response";
 import { ApiSendingData } from "@/features/requests/types/send";
 import { ChangeFuncType } from "@/shared/types/common";
@@ -26,8 +27,6 @@ import AssertList from "./components/AssertList";
 import BodyList from "./components/BodyList";
 import ScriptError from "./components/ScriptError";
 import { getTestAssertResult } from "./utils";
-
-import { ResponseAssertionContainer } from "./style";
 
 type AssertResult = {
   result: boolean;
@@ -125,7 +124,7 @@ const Assert: React.FC<Props> = memo(
     };
 
     return (
-      <ResponseAssertionContainer>
+      <div className={styles.container}>
         {showAssertTitle && (
           <div className={slots["assert-title"]}>
             <Flex
@@ -163,7 +162,7 @@ const Assert: React.FC<Props> = memo(
             </>
           )}
         </div>
-      </ResponseAssertionContainer>
+      </div>
     );
   },
 );

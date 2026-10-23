@@ -1,20 +1,19 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { memo, useContext, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { memo, useContext, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { AutoComplete } from '@/shared/ui/base';
+import { AutoComplete } from "@/shared/ui/base";
 
-import { useMemoizedFn } from 'ahooks';
-import cn from 'classnames';
-import produce from 'immer';
-import { entries, isNumber, isPlainObject, isString } from 'lodash';
+import { useMemoizedFn } from "ahooks";
+import cn from "classnames";
+import produce from "immer";
+import { entries, isNumber, isPlainObject, isString } from "lodash";
 
-import { SYSTEM_VARS } from '@/shared/constants/system';
+import { SYSTEM_VARS } from "@/shared/constants/system";
 
-import schemaContext from '../../context';
-import SplitBar from '../SplitBar';
-
-import { KeyWarperContainer } from './style';
+import schemaContext from "../../context";
+import SplitBar from "../SplitBar";
 
 interface Props {
   disabled: boolean;
@@ -26,7 +25,8 @@ interface Props {
 }
 
 const ItemMock: React.FC<Props> = (props) => {
-  const { disabled, value, onChange, isModelItem, deepIndex, overrideData } = props;
+  const { disabled, value, onChange, isModelItem, deepIndex, overrideData } =
+    props;
   const { t } = useTranslation();
   const isUnLinkState = isPlainObject(overrideData);
 
@@ -35,7 +35,7 @@ const ItemMock: React.FC<Props> = (props) => {
   const tdWidth = currentLayout?.width ?? 400;
 
   const handleChange = (val: string) => {
-    onChange('mock', {
+    onChange("mock", {
       mock: val,
     });
   };
@@ -43,7 +43,7 @@ const ItemMock: React.FC<Props> = (props) => {
   const handleUpdateWidth = useMemoizedFn((newWidth) => {
     const newLayouts = produce(layouts, (draft) => {
       draft[1].width = newWidth;
-      draft[1].flex = 'unset';
+      draft[1].flex = "unset";
     });
     setLayouts(newLayouts);
   });
@@ -78,7 +78,7 @@ const ItemMock: React.FC<Props> = (props) => {
       label: (
         <div>
           <div>${value}</div>
-          <div style={{ whiteSpace: 'pre-wrap' }}>{label}</div>
+          <div style={{ whiteSpace: "pre-wrap" }}>{label}</div>
         </div>
       ),
       value: `$${value}`,
@@ -86,20 +86,26 @@ const ItemMock: React.FC<Props> = (props) => {
   }, []);
 
   return (
-    <div className={cn(slots["schema-td"], slots["table-td"])} style={{ ...currentLayout, width: '100%' }}>
-      <KeyWarperContainer
-        className={cn(slots["schema-td-warper"], {
-          [slots["is-model-item"]]: isModelItem,
-        })}
+    <div
+      className={cn(slots["schema-td"], slots["table-td"])}
+      style={{ ...currentLayout, width: "100%" }}
+    >
+      <div
+        className={cn(
+          styles.container,
+          cn(slots["schema-td-warper"], {
+            [slots["is-model-item"]]: isModelItem,
+          }),
+        )}
       >
         <AutoComplete
           size="small"
           filterOption
-          style={{ width: '100%' }}
+          style={{ width: "100%" }}
           className={slots["mock-auto-vars"]}
-          placeholder={t('common.schema.mock')}
+          placeholder={t("common.schema.mock")}
           disabled={disabled || (isModelItem && !isUnLinkState)}
-          value={isString(value?.mock?.mock) ? value?.mock?.mock : ''}
+          value={isString(value?.mock?.mock) ? value?.mock?.mock : ""}
           onChange={handleChange}
           options={dataList}
         />
@@ -112,7 +118,7 @@ const ItemMock: React.FC<Props> = (props) => {
             onUpdateWidth={handleUpdateWidth}
           />
         )}
-      </KeyWarperContainer>
+      </div>
     </div>
   );
 };

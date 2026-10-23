@@ -1,20 +1,26 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { Ref, forwardRef, memo, useEffect, useMemo, useRef } from 'react';
+import React, {
+  Ref,
+  forwardRef,
+  memo,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 
-import { Tree as AntdTree, Dropdown, MenuProps } from '@/shared/ui/base';
-import type { DataNode, TreeProps } from '@/shared/ui/base';
+import { Tree as AntdTree, Dropdown, MenuProps } from "@/shared/ui/base";
+import type { DataNode, TreeProps } from "@/shared/ui/base";
 
-import { useDebounceFn, useMemoizedFn, useSafeState } from 'ahooks';
-import { includes, isEqual, isFunction, map, reduce } from 'lodash';
+import { useDebounceFn, useMemoizedFn, useSafeState } from "ahooks";
+import { includes, isEqual, isFunction, map, reduce } from "lodash";
 
-import IconFont from '@/shared/ui/IconFont';
-import { TreeDataItem as ApiTreeDataItem } from '@/features/requests/types/api';
+import IconFont from "@/shared/ui/IconFont";
+import { TreeDataItem as ApiTreeDataItem } from "@/features/requests/types/api";
 
-import ItemIcon from './components/ItemIcon';
-import ItemTitle from './components/ItemTitle';
-import { DEFAULT_CALC_CHILDREN_COUNT_TYPES } from './constants';
-
-import { TreeContainer } from './style';
+import ItemIcon from "./components/ItemIcon";
+import ItemTitle from "./components/ItemTitle";
+import { DEFAULT_CALC_CHILDREN_COUNT_TYPES } from "./constants";
 
 const { DirectoryTree } = AntdTree;
 
@@ -55,11 +61,11 @@ const Tree = forwardRef((props: Props, treeRef: Ref<any>) => {
   } = props;
 
   const {
-    title = 'name',
-    key = 'target_id',
-    children = 'children',
-    type = 'target_type',
-    parentNodeType = 'folder',
+    title = "name",
+    key = "target_id",
+    children = "children",
+    type = "target_type",
+    parentNodeType = "folder",
   } = fieldNames || {};
 
   const [treeHeight, setTreeHeight] = useSafeState(500);
@@ -71,12 +77,12 @@ const Tree = forwardRef((props: Props, treeRef: Ref<any>) => {
     () => {
       setScrollIng(false);
     },
-    { wait: 100 }
+    { wait: 100 },
   );
 
   const switcherIcon = useMemo(
     () => <IconFont type="icon-drop-down" style={{ fontSize: 16 }} />,
-    []
+    [],
   );
 
   useEffect(() => {
@@ -85,115 +91,129 @@ const Tree = forwardRef((props: Props, treeRef: Ref<any>) => {
       setTreeHeight(containerHeight);
     };
 
-    window.addEventListener('resize', resizeHandler);
+    window.addEventListener("resize", resizeHandler);
     resizeHandler();
 
     return () => {
-      window.removeEventListener('resize', resizeHandler);
+      window.removeEventListener("resize", resizeHandler);
     };
   }, []);
 
-  const calcChildrenCountFunc = useMemoizedFn((children: ApiTreeDataItem['children']) => {
-    const includesTypes = notCalcChildrenCountTypes || DEFAULT_CALC_CHILDREN_COUNT_TYPES;
+  const calcChildrenCountFunc = useMemoizedFn(
+    (children: ApiTreeDataItem["children"]) => {
+      const includesTypes =
+        notCalcChildrenCountTypes || DEFAULT_CALC_CHILDREN_COUNT_TYPES;
 
-    function count(children: ApiTreeDataItem['children']) {
-      return reduce(
-        children,
-        (acc, item) => {
-          if (!includes(includesTypes, item[type])) {
-            acc += 1;
+      function count(children: ApiTreeDataItem["children"]) {
+        return reduce(
+          children,
+          (acc, item) => {
+            if (!includes(includesTypes, item[type])) {
+              acc += 1;
+            }
+
+            if (item.children && item.children.length > 0) {
+              acc += count(item.children);
+            }
+
+            return acc;
+          },
+          0,
+        );
+      }
+
+      return count(children);
+    },
+  );
+
+  const computedTreeData = useMemoizedFn(
+    (data: TreeDataItem[]): TreeDataItem[] => {
+      return map(data, (item) => {
+        let icon: React.ReactNode = "";
+        const isParentNodeType = isEqual(item[type], parentNodeType);
+
+        if (useOriginIcon) {
+          icon = isFunction(resetProps?.icon)
+            ? resetProps?.icon(item as any)
+            : resetProps?.icon;
+        } else {
+          if (!isParentNodeType) {
+            icon = (
+              <ItemIcon {...item} {...(fieldNames as Record<string, string>)} />
+            );
           }
-
-          if (item.children && item.children.length > 0) {
-            acc += count(item.children);
-          }
-
-          return acc;
-        },
-        0
-      );
-    }
-
-    return count(children);
-  });
-
-  const computedTreeData = useMemoizedFn((data: TreeDataItem[]): TreeDataItem[] => {
-    return map(data, (item) => {
-      let icon: React.ReactNode = '';
-      const isParentNodeType = isEqual(item[type], parentNodeType);
-
-      if (useOriginIcon) {
-        icon = isFunction(resetProps?.icon) ? resetProps?.icon(item as any) : resetProps?.icon;
-      } else {
-        if (!isParentNodeType) {
-          icon = <ItemIcon {...item} {...(fieldNames as Record<string, string>)} />;
         }
-      }
 
-      const selectable = !forceSelectable && (!parentNodeTypeSelectable || !isParentNodeType);
+        const selectable =
+          !forceSelectable && (!parentNodeTypeSelectable || !isParentNodeType);
 
-      const extendProps = genTreeDataItemsExtendProps?.(item) || {};
+        const extendProps = genTreeDataItemsExtendProps?.(item) || {};
 
-      const childrenCount = calcChildrenCountFunc(item.children);
+        const childrenCount = calcChildrenCountFunc(item.children);
 
-      const baseProps = {
-        key: item[key as keyof TreeDataItem] as string,
-        isLeaf: item.isLeaf,
-        selectable,
-        style: { height: 30 },
-        icon,
-        title: (
-          <ItemTitle
-            {...item}
-            {...extendProps}
-            fieldType={type}
-            childrenCount={childrenCount}
-            name={item[title as keyof TreeDataItem] as string}
-            showChildrenCount={showChildrenCount}
-            nodeItemTitleExtraContent={nodeItemTitleExtraContent}
-            nodeItemDropdownContextMenu={nodeItemDropdownContextMenu}
-          />
-        ),
-      };
-
-      if (item[children as keyof TreeDataItem]) {
-        return {
-          ...baseProps,
-          children: computedTreeData(item[children as string] as TreeDataItem[]),
+        const baseProps = {
+          key: item[key as keyof TreeDataItem] as string,
+          isLeaf: item.isLeaf,
+          selectable,
+          style: { height: 30 },
+          icon,
+          title: (
+            <ItemTitle
+              {...item}
+              {...extendProps}
+              fieldType={type}
+              childrenCount={childrenCount}
+              name={item[title as keyof TreeDataItem] as string}
+              showChildrenCount={showChildrenCount}
+              nodeItemTitleExtraContent={nodeItemTitleExtraContent}
+              nodeItemDropdownContextMenu={nodeItemDropdownContextMenu}
+            />
+          ),
         };
+
+        if (item[children as keyof TreeDataItem]) {
+          return {
+            ...baseProps,
+            children: computedTreeData(
+              item[children as string] as TreeDataItem[],
+            ),
+          };
+        }
+
+        return { ...baseProps };
+      }) as TreeDataItem[];
+    },
+  );
+
+  const renderTreeData = useMemoizedFn(
+    (data: TreeDataItem[]): TreeDataItem[] => {
+      const result = computedTreeData(data);
+
+      if (topNode) {
+        result.unshift({
+          key: "tree-top-node-key",
+          className: slots["tree-top-node-wrap"],
+          title: topNode,
+          isLeaf: true,
+          icon: <div />,
+          selectable: false,
+        } as TreeDataItem);
       }
 
-      return { ...baseProps };
-    }) as TreeDataItem[];
-  });
+      if (bottomNode) {
+        result.push({
+          className: slots["tree-bottom-node-wrap"],
+          title: bottomNode,
+          key: "tree-bottom-node-key",
+          isLeaf: true,
+          icon: <div />,
+          selectable: false,
+        } as TreeDataItem);
+      }
 
-  const renderTreeData = useMemoizedFn((data: TreeDataItem[]): TreeDataItem[] => {
-    const result = computedTreeData(data);
-
-    if (topNode) {
-      result.unshift({
-        key: 'tree-top-node-key',
-        className: slots["tree-top-node-wrap"],
-        title: topNode,
-        isLeaf: true,
-        icon: <div />,
-        selectable: false,
-      } as TreeDataItem);
-    }
-
-    if (bottomNode) {
-      result.push({
-        className: slots["tree-bottom-node-wrap"],
-        title: bottomNode,
-        key: 'tree-bottom-node-key',
-        isLeaf: true,
-        icon: <div />,
-        selectable: false,
-      } as TreeDataItem);
-    }
-
-    return result;
-  });
+      return result;
+    },
+  );
 
   // NOTE can internal computedTreeData get the latest data?
   const finalTreeData = useMemo(() => {
@@ -212,7 +232,7 @@ const Tree = forwardRef((props: Props, treeRef: Ref<any>) => {
   });
 
   return (
-    <TreeContainer ref={containerRef}>
+    <div ref={containerRef} className={styles.container}>
       <DirectoryTree
         ref={treeRef}
         height={treeHeight}
@@ -222,14 +242,16 @@ const Tree = forwardRef((props: Props, treeRef: Ref<any>) => {
         titleRender={titleRender}
         {...resetProps}
       />
-      {rootDropdownContextMenu && <Dropdown
-        trigger={['contextMenu']}
-        disabled={!rootDropdownContextMenu}
-        menu={rootDropdownContextMenu}
-      >
-        <div className={slots["root-context-menu-holder-placeholder"]} />
-      </Dropdown>}
-    </TreeContainer>
+      {rootDropdownContextMenu && (
+        <Dropdown
+          trigger={["contextMenu"]}
+          disabled={!rootDropdownContextMenu}
+          menu={rootDropdownContextMenu}
+        >
+          <div className={slots["root-context-menu-holder-placeholder"]} />
+        </Dropdown>
+      )}
+    </div>
   );
 });
 

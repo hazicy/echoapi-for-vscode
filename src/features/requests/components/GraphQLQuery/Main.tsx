@@ -1,3 +1,4 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
 import {
   forwardRef,
@@ -7,14 +8,19 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'react';
-import { useTranslation } from 'react-i18next';
+} from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex, Spin, TreeProps, message } from '@/shared/ui/base';
+import { Flex, Spin, TreeProps, message } from "@/shared/ui/base";
 
-import { useDebounceFn, useDeepCompareEffect, useMemoizedFn, useMount } from 'ahooks';
-import { ASTNode, Kind, parse, print } from 'graphql';
-import { produce } from 'immer';
+import {
+  useDebounceFn,
+  useDeepCompareEffect,
+  useMemoizedFn,
+  useMount,
+} from "ahooks";
+import { ASTNode, Kind, parse, print } from "graphql";
+import { produce } from "immer";
 import {
   add,
   assign,
@@ -37,27 +43,33 @@ import {
   startsWith,
   union,
   unionBy,
-} from 'lodash';
+} from "lodash";
 
-import GraphQLQueryContext from '@/features/requests/components/GraphQLQuery/context/GraphQLQueryContext';
-import GraphQLSchemaProvider from '@/features/requests/components/GraphQLQuery/context/GraphQLSchemaProvider';
-import CodeEditor from '@/shared/components/CodeEditor';
-import { Button, Empty, IconFont } from '@/shared/ui';
-import { useApis } from '@/app/store';
-import { ApiDetailsData } from '@/features/requests/types/api';
-import { FilterDataType } from '@/features/requests/types/graphql';
-import { GraphQLRequestBody, GraphQLRequestBodyQueryItem } from '@/features/requests/types/request';
-import { AnyObject } from '@/shared/types/common';
-import { graphql2json } from '@/features/requests/utils/graphql/graphql2json';
-import { createArguments, createOperationDefinition } from '@/features/requests/utils/graphql/json2graphql';
-import { raw2tree, transformStructure } from '@/features/requests/utils/graphql/schema2tree';
+import GraphQLQueryContext from "@/features/requests/components/GraphQLQuery/context/GraphQLQueryContext";
+import GraphQLSchemaProvider from "@/features/requests/components/GraphQLQuery/context/GraphQLSchemaProvider";
+import CodeEditor from "@/shared/components/CodeEditor";
+import { Button, Empty, IconFont } from "@/shared/ui";
+import { useApis } from "@/app/store";
 
-import ResizablePanels from '../../../../shared/components/ResizablePanels';
-import SuspenseContent from '../../../../shared/components/SuspenseContent';
-import SchemaTree from './components/SchemaTree';
-import useGraphQLQuery from './hooks';
+import { FilterDataType } from "@/features/requests/types/graphql";
+import {
+  GraphQLRequestBody,
+  GraphQLRequestBodyQueryItem,
+} from "@/features/requests/types/request";
+import { AnyObject } from "@/shared/types/common";
+import { graphql2json } from "@/features/requests/utils/graphql/graphql2json";
+import {
+  createArguments,
+  createOperationDefinition,
+} from "@/features/requests/utils/graphql/json2graphql";
+import {
+  raw2tree,
+  transformStructure,
+} from "@/features/requests/utils/graphql/schema2tree";
 
-import { MainContainer } from './style';
+import ResizablePanels from "../../../../shared/components/ResizablePanels";
+import SuspenseContent from "../../../../shared/components/SuspenseContent";
+import SchemaTree from "./components/SchemaTree";
 
 const panelProps = {
   defaultSize: 50,
@@ -77,9 +89,9 @@ const Main = forwardRef((props: Props, ref) => {
   const { apiData } = useContext(GraphQLQueryContext);
 
   const currentServerId = useApis((state) => state.currentServerId);
-  const schemaLoading  = useApis((state) => state?.schemaLoading);
-  const updateSchemaLoading  = useApis((state) => state.updateSchemaLoading);
-  
+  const schemaLoading = useApis((state) => state?.schemaLoading);
+  const updateSchemaLoading = useApis((state) => state.updateSchemaLoading);
+
   const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
   const [filterData, setFilterData] = useState<FilterDataType>({});
   const [treeData, setTreeData] = useState<any>([]);
@@ -119,46 +131,47 @@ const Main = forwardRef((props: Props, ref) => {
     }
   }, [data.query_schema]);
 
-  const getKeys = (arr: any[], prefix: string = '') => {
+  const getKeys = (arr: any[], prefix: string = "") => {
     return arr.reduce(
       (pre, item) => {
         if (!item.children) {
-          pre.keys.push(`${prefix ? `${prefix}.` : ''}${item.name}`);
+          pre.keys.push(`${prefix ? `${prefix}.` : ""}${item.name}`);
         } else {
           const { keys, filterData } = getKeys(
             item.children,
-            `${prefix ? `${prefix}.` : ''}${item.name}`
+            `${prefix ? `${prefix}.` : ""}${item.name}`,
           );
           pre.keys = concat(pre.keys, keys);
           pre.filterData = assign(pre.filterData, filterData);
         }
         if (item.arguments) {
-          pre.filterData[`${prefix ? `${prefix}.` : ''}${item.name}`] = item.arguments;
+          pre.filterData[`${prefix ? `${prefix}.` : ""}${item.name}`] =
+            item.arguments;
         }
         return pre;
       },
       {
         keys: [],
         filterData: {},
-      }
+      },
     );
   };
 
   const getNewKeys = (keys: string[]) => {
     const list = keys?.reduce(
       (pre, k) => {
-        if (includes(k, '.')) {
+        if (includes(k, ".")) {
           const res = getPartialStrings(k);
           pre = union(pre.concat(res));
         }
         return pre;
       },
-      [...keys]
+      [...keys],
     );
     const keySet = new Set(list);
     let highestLevel = 1;
     forEach(list, (str) => {
-      const level = str.split('.').length;
+      const level = str.split(".").length;
       // The split array length is one more than the number of dots (including empty string or the first part), so this is the correct level
       if (level > highestLevel) {
         highestLevel = level;
@@ -174,11 +187,13 @@ const Main = forwardRef((props: Props, ref) => {
             const newChildren = size(child.children)
               ? child.children
               : map(graphqlObjects?.[child?.itemKind]?.children, (e) => ({
-                ...e,
-                key: `${child.key}.${e?.name}`,
-                path: `${child.key}.${e?.name}`,
-                ...(has(graphqlObjects, e?.itemKind) ? { children: [] } : { isLeaf: true }),
-              }));
+                  ...e,
+                  key: `${child.key}.${e?.name}`,
+                  path: `${child.key}.${e?.name}`,
+                  ...(has(graphqlObjects, e?.itemKind)
+                    ? { children: [] }
+                    : { isLeaf: true }),
+                }));
             const keys = filterChildrenKeys(newChildren, deepLevel);
             acc = concat(acc, keys);
           }
@@ -188,7 +203,9 @@ const Main = forwardRef((props: Props, ref) => {
     };
     const checkedKeys = filterChildrenKeys(treeData[0]?.children);
     return {
-      checkedKeys: size(checkedKeys) ? union(concat(['Query'], checkedKeys)) : checkedKeys,
+      checkedKeys: size(checkedKeys)
+        ? union(concat(["Query"], checkedKeys))
+        : checkedKeys,
     };
   };
 
@@ -205,7 +222,7 @@ const Main = forwardRef((props: Props, ref) => {
         setFilterData({});
       }
     },
-    { wait: 200 }
+    { wait: 200 },
   );
 
   const filterGraphQLSchema = (schema: any, paths: string[]) => {
@@ -214,7 +231,7 @@ const Main = forwardRef((props: Props, ref) => {
     // Can recursively search here and set a level based on the dot-separated keyList to stop at a certain depth
     let highestLevel = 1;
     forEach(paths, (str) => {
-      const level = str.split('.').length;
+      const level = str.split(".").length;
       if (level > highestLevel) {
         highestLevel = level;
       }
@@ -232,11 +249,13 @@ const Main = forwardRef((props: Props, ref) => {
             const newChildren = size(child.children)
               ? child.children
               : map(graphqlObjects?.[child?.itemKind]?.children, (e) => ({
-                ...e,
-                key: `${child.key}.${e?.name}`,
-                path: `${child.key}.${e?.name}`,
-                ...(has(graphqlObjects, e?.itemKind) ? { children: [] } : { isLeaf: true }),
-              }));
+                  ...e,
+                  key: `${child.key}.${e?.name}`,
+                  path: `${child.key}.${e?.name}`,
+                  ...(has(graphqlObjects, e?.itemKind)
+                    ? { children: [] }
+                    : { isLeaf: true }),
+                }));
             const filtered = filterChildren(newChildren, deepLevel);
             if (filtered.length > 0) {
               acc.push({
@@ -267,32 +286,75 @@ const Main = forwardRef((props: Props, ref) => {
     prefix: string,
     checkKeys: string[],
     allKeys: string[],
-    backFilterData?: FilterDataType
+    backFilterData?: FilterDataType,
   ) => {
     return mergeWith(qAst, sAst, (qValue, sValue, key, object) => {
-      if (isEqual(key, 'selections') && isArray(qValue) && isArray(sValue)) {
-        const arr = unionBy(qValue, sValue, 'name.value').reduce((pre, item) => {
-          const valueKey = get(item, 'name.value');
-          const qValueIndex = findIndex(qValue, (e) => isEqual(get(e, 'name.value'), valueKey));
-          const sValueIndex = findIndex(sValue, (e) => isEqual(get(e, 'name.value'), valueKey));
-          if (qValueIndex !== -1 && sValueIndex !== -1) {
-            const qValueItem = qValue[qValueIndex];
-            const sValueItem = sValue[sValueIndex];
-            pre.push(
-              recursiveMerge(
-                qValueItem,
-                sValueItem,
-                `${prefix}.${valueKey}`,
-                checkKeys,
-                allKeys,
-                backFilterData
-              )
+      if (isEqual(key, "selections") && isArray(qValue) && isArray(sValue)) {
+        const arr = unionBy(qValue, sValue, "name.value").reduce(
+          (pre, item) => {
+            const valueKey = get(item, "name.value");
+            const qValueIndex = findIndex(qValue, (e) =>
+              isEqual(get(e, "name.value"), valueKey),
             );
-          } else {
-            const item = qValueIndex === -1 ? sValue[sValueIndex] : qValue[qValueIndex];
-            const itemKey = get(item, 'name.value');
-            if (allKeys.includes(`${prefix}.${itemKey}`)) {
-              if (checkKeys.includes(`${prefix}.${itemKey}`)) {
+            const sValueIndex = findIndex(sValue, (e) =>
+              isEqual(get(e, "name.value"), valueKey),
+            );
+            if (qValueIndex !== -1 && sValueIndex !== -1) {
+              const qValueItem = qValue[qValueIndex];
+              const sValueItem = sValue[sValueIndex];
+              pre.push(
+                recursiveMerge(
+                  qValueItem,
+                  sValueItem,
+                  `${prefix}.${valueKey}`,
+                  checkKeys,
+                  allKeys,
+                  backFilterData,
+                ),
+              );
+            } else {
+              const item =
+                qValueIndex === -1 ? sValue[sValueIndex] : qValue[qValueIndex];
+              const itemKey = get(item, "name.value");
+              if (allKeys.includes(`${prefix}.${itemKey}`)) {
+                if (checkKeys.includes(`${prefix}.${itemKey}`)) {
+                  const filterObj = backFilterData || filterData;
+                  pre.push({
+                    ...item,
+                    arguments: has(filterObj, `${prefix}.${itemKey}`)
+                      ? createArguments(filterObj[`${prefix}.${itemKey}`])
+                      : [],
+                  });
+                } else if (qValueIndex !== -1) {
+                  if (
+                    has(item, "selectionSet.selections") &&
+                    isArray(get(item, "selectionSet.selections"))
+                  ) {
+                    const list = getCurrentSelectionsKeys(
+                      get(item, "selectionSet.selections"),
+                      `${prefix}.${itemKey}`,
+                    );
+                    const childList = new Set(allKeys);
+                    const hasIdNot = some(list, (id) => !childList.has(id));
+                    if (hasIdNot) {
+                      const childArr = recursiveMerge(
+                        item,
+                        {
+                          selectionSet: {
+                            kind: Kind.SELECTION_SET,
+                            selections: [],
+                          },
+                        },
+                        `${prefix}.${itemKey}`,
+                        checkKeys,
+                        allKeys,
+                        backFilterData,
+                      );
+                      pre = concat(pre, childArr);
+                    }
+                  }
+                }
+              } else {
                 const filterObj = backFilterData || filterData;
                 pre.push({
                   ...item,
@@ -300,46 +362,16 @@ const Main = forwardRef((props: Props, ref) => {
                     ? createArguments(filterObj[`${prefix}.${itemKey}`])
                     : [],
                 });
-              } else if (qValueIndex !== -1) {
-                if (
-                  has(item, 'selectionSet.selections') &&
-                  isArray(get(item, 'selectionSet.selections'))
-                ) {
-                  const list = getCurrentSelectionsKeys(
-                    get(item, 'selectionSet.selections'),
-                    `${prefix}.${itemKey}`
-                  );
-                  const childList = new Set(allKeys);
-                  const hasIdNot = some(list, (id) => !childList.has(id));
-                  if (hasIdNot) {
-                    const childArr = recursiveMerge(
-                      item,
-                      { selectionSet: { kind: Kind.SELECTION_SET, selections: [] } },
-                      `${prefix}.${itemKey}`,
-                      checkKeys,
-                      allKeys,
-                      backFilterData
-                    );
-                    pre = concat(pre, childArr);
-                  }
-                }
               }
-            } else {
-              const filterObj = backFilterData || filterData;
-              pre.push({
-                ...item,
-                arguments: has(filterObj, `${prefix}.${itemKey}`)
-                  ? createArguments(filterObj[`${prefix}.${itemKey}`])
-                  : [],
-              });
             }
-          }
-          return pre;
-        }, []);
+            return pre;
+          },
+          [],
+        );
         return arr;
       }
-      if (isEqual(key, 'arguments')) {
-        const valueKey = get(object, 'name.value');
+      if (isEqual(key, "arguments")) {
+        const valueKey = get(object, "name.value");
         const filterObj = backFilterData || filterData;
         const pre = backFilterData ? `${prefix}` : `${prefix}.${valueKey}`;
         if (has(filterObj, pre)) {
@@ -352,41 +384,47 @@ const Main = forwardRef((props: Props, ref) => {
 
   const getCurrentSelectionsKeys = (arr: any[], prefix: string) => {
     return arr.reduce((pre, item) => {
-      if (has(item, 'selectionSet.selections') && isArray(get(item, 'selectionSet.selections'))) {
+      if (
+        has(item, "selectionSet.selections") &&
+        isArray(get(item, "selectionSet.selections"))
+      ) {
         pre = concat(
           pre,
           getCurrentSelectionsKeys(
-            get(item, 'selectionSet.selections'),
-            `${prefix}.${get(item, 'name.value')}`
-          )
+            get(item, "selectionSet.selections"),
+            `${prefix}.${get(item, "name.value")}`,
+          ),
         );
       } else {
-        pre.push(`${prefix}.${get(item, 'name.value')}`);
+        pre.push(`${prefix}.${get(item, "name.value")}`);
       }
       return pre;
     }, []);
   };
 
   const graphqlObjects: AnyObject = useMemo(() => {
-    if (has(data?.query_schema, 'objects')) {
-      return transformStructure({ objects: (data?.query_schema as any)?.objects })?.objects || {};
+    if (has(data?.query_schema, "objects")) {
+      return (
+        transformStructure({ objects: (data?.query_schema as any)?.objects })
+          ?.objects || {}
+      );
     }
     return {};
   }, [data?.query_schema]);
 
   const getPartialStrings = (str: string) => {
-    const parts = str.split('.');
+    const parts = str.split(".");
     const results = [];
 
     for (let i = 1; i <= parts.length; i++) {
-      results.push(parts.slice(0, i).join('.'));
+      results.push(parts.slice(0, i).join("."));
     }
 
     return results;
   };
 
   const gerRemoveKeys = (checked: string[], key: string) => {
-    if (key.includes('.')) {
+    if (key.includes(".")) {
       const keysPathList = getPartialStrings(key).reverse().slice(1);
       const keys = keysPathList.reduce(
         (pre, item) => {
@@ -395,7 +433,7 @@ const Main = forwardRef((props: Props, ref) => {
           }
           return pre;
         },
-        [...checked]
+        [...checked],
       );
       return keys;
     }
@@ -407,18 +445,18 @@ const Main = forwardRef((props: Props, ref) => {
     if (e?.checked) {
       const list = checked?.reduce(
         (pre, selectKey) => {
-          if (includes(selectKey, '.')) {
+          if (includes(selectKey, ".")) {
             const res = getPartialStrings(selectKey);
             pre = union(pre.concat(res));
           }
           return pre;
         },
-        [...checked]
+        [...checked],
       );
       if (has(graphqlObjects, e?.node?.itemKind)) {
         const children = filter(
           graphqlObjects[e?.node?.itemKind]?.children,
-          (i) => !has(graphqlObjects, i?.itemKind)
+          (i) => !has(graphqlObjects, i?.itemKind),
         );
         const childrenKeys = children?.map((i) => `${e?.node?.key}.${i?.name}`);
         keys = union(concat(list, childrenKeys));
@@ -446,10 +484,10 @@ const Main = forwardRef((props: Props, ref) => {
         const data = graphql2json(searchData?.query);
         const { keys } = getKeys([data]);
         queryKeys = keys;
-      } catch (err) { }
+      } catch (err) {}
     }
     forEach(union(concat(checkKeys, queryKeys)), (str) => {
-      const level = str.split('.').length;
+      const level = str.split(".").length;
       // The split array length is one more than the number of dots (including empty string or the first part), so this is the correct level
       if (level > highestLevel) {
         highestLevel = level;
@@ -466,11 +504,13 @@ const Main = forwardRef((props: Props, ref) => {
             const newChildren = size(child.children)
               ? child.children
               : map(graphqlObjects?.[child?.itemKind]?.children, (e) => ({
-                ...e,
-                key: `${child.key}.${e?.name}`,
-                path: `${child.key}.${e?.name}`,
-                ...(has(graphqlObjects, e?.itemKind) ? { children: [] } : { isLeaf: true }),
-              }));
+                  ...e,
+                  key: `${child.key}.${e?.name}`,
+                  path: `${child.key}.${e?.name}`,
+                  ...(has(graphqlObjects, e?.itemKind)
+                    ? { children: [] }
+                    : { isLeaf: true }),
+                }));
             const keys = filterAllKeys(newChildren, deepLevel);
             acc = concat(acc, keys);
           }
@@ -482,7 +522,7 @@ const Main = forwardRef((props: Props, ref) => {
     return allKeys;
   };
 
-  const onCheck: TreeProps['onCheck'] = ({ checked }: any, e) => {
+  const onCheck: TreeProps["onCheck"] = ({ checked }: any, e) => {
     const keys = customGetKeys(checked, e);
     setCheckedKeys(keys as string[]);
     try {
@@ -490,7 +530,7 @@ const Main = forwardRef((props: Props, ref) => {
       let queryAst: any = {};
       try {
         queryAst = parse(searchData.query);
-      } catch (err) { }
+      } catch (err) {}
       const ast = {
         kind: Kind.DOCUMENT,
         definitions: [createOperationDefinition(obj)],
@@ -499,28 +539,30 @@ const Main = forwardRef((props: Props, ref) => {
       const mergeAst = recursiveMerge(
         cloneDeep(queryAst),
         cloneDeep(ast),
-        'Query',
+        "Query",
         union(keys as string[], e?.halfCheckedKeys || []) as string[],
-        allKeys
+        allKeys,
       );
       const query = print(mergeAst as ASTNode);
-      onChangeQueryItem('query', query);
-    } catch (err) { }
+      onChangeQueryItem("query", query);
+    } catch (err) {}
   };
 
   const onChangeQueryItem = useMemoizedFn(
     <K extends keyof GraphQLRequestBodyQueryItem>(key: K, val: string) => {
-      const index = findIndex(data.query_list, (e) => isEqual(e.param_id, apiData?.search_id));
+      const index = findIndex(data.query_list, (e) =>
+        isEqual(e.param_id, apiData?.search_id),
+      );
       const path = isEqual(index, -1) ? 0 : index;
       const newData = produce(data, (draft) => {
         draft.query_list[path] = { ...draft.query_list[path], [key]: val };
       });
       onChange(newData);
-    }
+    },
   );
 
   const getRealUrl = async () => {
-    return '';
+    return "";
   };
 
   const refreshSchema = async () => {
@@ -528,15 +570,14 @@ const Main = forwardRef((props: Props, ref) => {
       updateSchemaLoading(true);
 
       window?.vscode.postMessage({
-        action: 'getGraphQLSchema',
+        action: "getGraphQLSchema",
         data: {
           apiData,
-          currentServerId
-        }
+          currentServerId,
+        },
       });
-
     } catch (error) {
-      message.error(t('graphql.refresh_fail'));
+      message.error(t("graphql.refresh_fail"));
     }
   };
 
@@ -546,7 +587,7 @@ const Main = forwardRef((props: Props, ref) => {
       let queryAst: any = {};
       try {
         queryAst = parse(searchData.query);
-      } catch (err) { }
+      } catch (err) {}
       const ast = {
         kind: Kind.DOCUMENT,
         definitions: [createOperationDefinition(obj)],
@@ -555,30 +596,36 @@ const Main = forwardRef((props: Props, ref) => {
       const mergeAst = recursiveMerge(
         cloneDeep(queryAst),
         cloneDeep(ast),
-        'Query',
+        "Query",
         checkedKeys,
         allKeys,
-        data
+        data,
       );
       const query = print(mergeAst as ASTNode);
-      onChangeQueryItem('query', query);
-    } catch (err) { }
+      onChangeQueryItem("query", query);
+    } catch (err) {}
   };
 
   return (
-    <GraphQLSchemaProvider.Provider value={{ filterData, setFilterData, refreshCheck }}>
-      <MainContainer>
+    <GraphQLSchemaProvider.Provider
+      value={{ filterData, setFilterData, refreshCheck }}
+    >
+      <div className={styles.main}>
         <ResizablePanels
           panelGroupProps={{
-            autoSaveId: 'graphql_debug_container_resize_save_id',
-            direction: 'horizontal',
+            autoSaveId: "graphql_debug_container_resize_save_id",
+            direction: "horizontal",
           }}
-          leftPanelProps={{ ...panelProps, collapseTitle: 'GraphQL Schema' }}
-          rightPanelProps={{ ...panelProps, collapseTitle: 'queryEdit' }}
+          leftPanelProps={{ ...panelProps, collapseTitle: "GraphQL Schema" }}
+          rightPanelProps={{ ...panelProps, collapseTitle: "queryEdit" }}
           leftPanel={
             <SuspenseContent>
-              <Flex vertical style={{ height: '100%' }}>
-                <Flex className={slots["edit-header"]} align="center" justify="space-between">
+              <Flex vertical style={{ height: "100%" }}>
+                <Flex
+                  className={slots["edit-header"]}
+                  align="center"
+                  justify="space-between"
+                >
                   GraphQL Schema
                   <Button
                     onClick={refreshSchema}
@@ -586,15 +633,23 @@ const Main = forwardRef((props: Props, ref) => {
                     size="small"
                     icon={<IconFont type="icon-refresh" />}
                   >
-                    {t('base.refresh')}
+                    {t("base.refresh")}
                   </Button>
                 </Flex>
                 <Flex flex={1} style={{ height: 0 }}>
-                  <Spin wrapperClassName={'schema-loading'} spinning={schemaLoading}>
+                  <Spin
+                    wrapperClassName={"schema-loading"}
+                    spinning={schemaLoading}
+                  >
                     {isEmpty(treeData) ? (
                       <Empty>
-                        <Button size="small" onClick={refreshSchema} type="primary" mode="light">
-                          {t('graphql.get_schema')}
+                        <Button
+                          size="small"
+                          onClick={refreshSchema}
+                          type="primary"
+                          mode="light"
+                        >
+                          {t("graphql.get_schema")}
                         </Button>
                       </Empty>
                     ) : (
@@ -615,35 +670,54 @@ const Main = forwardRef((props: Props, ref) => {
           }
           rightPanel={
             <SuspenseContent>
-              <Spin wrapperClassName={'schema-loading'} spinning={schemaLoading}>
+              <Spin
+                wrapperClassName={"schema-loading"}
+                spinning={schemaLoading}
+              >
                 <ResizablePanels
                   ref={variablesPanelRef}
                   panelGroupProps={{
-                    autoSaveId: 'graphql_debug_queryEdit_container_resize_save_id',
-                    direction: 'vertical',
+                    autoSaveId:
+                      "graphql_debug_queryEdit_container_resize_save_id",
+                    direction: "vertical",
                   }}
-                  leftPanelProps={{ ...panelProps, defaultSize: 95, collapseTitle: 'Query' }}
-                  rightPanelProps={{ ...panelProps, defaultSize: 5, collapseTitle: 'Variable' }}
+                  leftPanelProps={{
+                    ...panelProps,
+                    defaultSize: 95,
+                    collapseTitle: "Query",
+                  }}
+                  rightPanelProps={{
+                    ...panelProps,
+                    defaultSize: 5,
+                    collapseTitle: "Variable",
+                  }}
                   leftPanel={
                     <SuspenseContent>
-                      <Flex vertical style={{ height: '100%' }}>
-                        <Flex className={slots["edit-header"]} align="center" justify="space-between">
+                      <Flex vertical style={{ height: "100%" }}>
+                        <Flex
+                          className={slots["edit-header"]}
+                          align="center"
+                          justify="space-between"
+                        >
                           Query
                           <Button
                             onClick={() => {
-                              onChangeQueryItem('query', print(parse(searchData.query)));
+                              onChangeQueryItem(
+                                "query",
+                                print(parse(searchData.query)),
+                              );
                             }}
                             type="text"
                             size="small"
                             icon={<IconFont type="icon-clean" />}
                           >
-                            {t('graphql.format')}
+                            {t("graphql.format")}
                           </Button>
                         </Flex>
                         <Flex flex={1} style={{ height: 0 }}>
                           <CodeEditor
                             onChange={(v) => {
-                              onChangeQueryItem('query', v);
+                              onChangeQueryItem("query", v);
                               rawToTree(v);
                             }}
                             ref={codeEditorGraphqlRef}
@@ -656,21 +730,27 @@ const Main = forwardRef((props: Props, ref) => {
                   }
                   rightPanel={
                     <SuspenseContent>
-                      <Flex vertical style={{ height: '100%' }}>
-                        <Flex className={slots["edit-header"]} align="center" justify="space-between">
+                      <Flex vertical style={{ height: "100%" }}>
+                        <Flex
+                          className={slots["edit-header"]}
+                          align="center"
+                          justify="space-between"
+                        >
                           Variables
                           <Button
-                            onClick={() => codeEditorJsonRef?.current?.formatEditor()}
+                            onClick={() =>
+                              codeEditorJsonRef?.current?.formatEditor()
+                            }
                             type="text"
                             size="small"
                             icon={<IconFont type="icon-clean" />}
                           >
-                            {t('graphql.format')}
+                            {t("graphql.format")}
                           </Button>
                         </Flex>
                         <Flex flex={1} style={{ height: 0 }}>
                           <CodeEditor
-                            onChange={(v) => onChangeQueryItem('variables', v)}
+                            onChange={(v) => onChangeQueryItem("variables", v)}
                             ref={codeEditorJsonRef}
                             language="json"
                             value={searchData.variables}
@@ -684,7 +764,7 @@ const Main = forwardRef((props: Props, ref) => {
             </SuspenseContent>
           }
         />
-      </MainContainer>
+      </div>
     </GraphQLSchemaProvider.Provider>
   );
 });

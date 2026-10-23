@@ -1,14 +1,11 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import classNames from 'classnames';
-import { ValueOf } from 'type-fest';
-
-import useTheme from '@/shared/hooks/useTheme';
-
-import { DotWrapper } from './style';
+import classNames from "classnames";
+import { ValueOf } from "type-fest";
 
 const TYPE_MAP = {
-  success: 'success',
-  error: 'error',
+  success: "success",
+  error: "error",
 } as const;
 
 export type DotProps = {
@@ -22,15 +19,19 @@ export type DotProps = {
   color?: string;
 };
 
-const Dot = ({ size = 8, type = TYPE_MAP.success, className = '', color = '' }: DotProps) => {
-  const { themeToken } = useTheme();
+const Dot = ({
+  size = 8,
+  type = TYPE_MAP.success,
+  className = "",
+  color = "",
+}: DotProps) => {
   return (
-    <DotWrapper $token={themeToken} className={className}>
+    <div className={classNames(styles.container, className)}>
       <div
         className={classNames(slots.dot, [{ [TYPE_MAP[type]]: true }])}
         style={{ width: size, height: size, backgroundColor: color }}
       ></div>
-    </DotWrapper>
+    </div>
   );
 };
 

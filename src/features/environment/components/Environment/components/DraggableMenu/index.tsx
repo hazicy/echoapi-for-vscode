@@ -1,21 +1,20 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC } from 'react';
+import { FC } from "react";
 
-import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
-import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import cn from 'classnames';
-import { includes, map } from 'lodash';
-
-import { IconFont } from '@/shared/ui';
-
-import { DraggableMenuProps, GroupProps, ItemProps } from './types';
-
+import { DndContext, PointerSensor, useSensor } from "@dnd-kit/core";
 import {
-  DraggableMenuContainer,
-  DraggableMenuGroupContainer,
-  DraggableMenuItemContainer,
-} from './style';
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import cn from "classnames";
+import { includes, map } from "lodash";
+
+import { IconFont } from "@/shared/ui";
+
+import { DraggableMenuProps, GroupProps, ItemProps } from "./types";
 
 const Item: FC<ItemProps> = ({
   id,
@@ -25,8 +24,14 @@ const Item: FC<ItemProps> = ({
   selectedKeys,
   onItemClick,
 }) => {
-  const { setNodeRef, listeners, transform, transition, attributes, setActivatorNodeRef } =
-    useSortable({ id: `${id}` });
+  const {
+    setNodeRef,
+    listeners,
+    transform,
+    transition,
+    attributes,
+    setActivatorNodeRef,
+  } = useSortable({ id: `${id}` });
 
   const style = {
     transform: transform ? CSS.Transform.toString(transform) : undefined,
@@ -34,7 +39,12 @@ const Item: FC<ItemProps> = ({
   };
 
   return (
-    <DraggableMenuItemContainer ref={setNodeRef} style={style} {...attributes}>
+    <li
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      className={styles.draggableMenuItem}
+    >
       <div
         className={cn(slots["draggable-menu-item"], {
           [slots["draggable-menu-item-selected"]]: includes(selectedKeys, id),
@@ -46,23 +56,23 @@ const Item: FC<ItemProps> = ({
             type="icon-drag"
             className={slots["icon-drag"]}
             ref={setActivatorNodeRef}
-            style={{ touchAction: 'none', cursor: 'move', fontSize: 10 }}
+            style={{ touchAction: "none", cursor: "move", fontSize: 10 }}
             {...listeners}
           />
         )}
         <span className="draggable-menu-item-icon">{icon}</span>
         <div className={slots["draggable-menu-title-content"]}>{children}</div>
       </div>
-    </DraggableMenuItemContainer>
+    </li>
   );
 };
 
 const Group: FC<GroupProps> = ({ title, children }) => {
   return (
-    <DraggableMenuGroupContainer>
+    <li className={styles.draggableMenuGroup}>
       <div className={slots["draggable-menu-item-group-title"]}>{title}</div>
       <ul className="draggable-menu-item-group-list">{children}</ul>
-    </DraggableMenuGroupContainer>
+    </li>
   );
 };
 
@@ -74,13 +84,15 @@ const DraggableMenu: FC<DraggableMenuProps> = ({
   selectedKeys,
   onSelect,
 }) => {
-  const sensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } });
+  const sensor = useSensor(PointerSensor, {
+    activationConstraint: { distance: 10 },
+  });
 
   return (
-    <DraggableMenuContainer className={className} style={style}>
+    <ul style={style} className={cn(styles.container, className)}>
       <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
         {map(items, (menuItem) =>
-          menuItem?.type === 'group' ? (
+          menuItem?.type === "group" ? (
             <Group key={menuItem.key} title={menuItem.label}>
               <SortableContext
                 items={map(menuItem.children, (i) => `${i?.key}`)}
@@ -116,10 +128,10 @@ const DraggableMenu: FC<DraggableMenuProps> = ({
                 {menuItem.label}
               </Item>
             </SortableContext>
-          )
+          ),
         )}
       </DndContext>
-    </DraggableMenuContainer>
+    </ul>
   );
 };
 

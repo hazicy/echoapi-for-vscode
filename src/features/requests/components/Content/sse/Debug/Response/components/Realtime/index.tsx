@@ -1,26 +1,29 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
 import { moduleClassNames } from "@/shared/ui/base/moduleClassNames";
-import { FC, useContext, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC, useContext, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { useSafeState } from 'ahooks';
-import aptTools from 'apipost-tools';
-import cn from 'classnames';
-import i18next from 'i18next';
-import { isArray, isEmpty, isEqual, isObject, isString, size } from 'lodash';
+import { useSafeState } from "ahooks";
+import aptTools from "apipost-tools";
+import cn from "classnames";
+import i18next from "i18next";
+import { isArray, isEmpty, isEqual, isObject, isString, size } from "lodash";
 
-import { ResizablePanels } from '@/shared/components';
-import FlowResponse from '@/features/requests/components/FlowResponse';
-import ResponseResult from '@/features/requests/components/ResponseResult';
+import { ResizablePanels } from "@/shared/components";
+import FlowResponse from "@/features/requests/components/FlowResponse";
+import ResponseResult from "@/features/requests/components/ResponseResult";
 
-import ResponseEmpty from '@/features/requests/components/Response/components/Empty';
-import ResponseRealtimeContext from '@/features/requests/components/Response/components/Realtime/context';
-import { ApiSendingDataSSE, ApiStreamResponseSSEItem } from '@/features/requests/types/send';
-import { DirectionType } from '@/shared/types/common';
-import { TIME_FORMAT, formatTime } from '@/shared/utils/time';
+import ResponseEmpty from "@/features/requests/components/Response/components/Empty";
+import ResponseRealtimeContext from "@/features/requests/components/Response/components/Realtime/context";
+import {
+  ApiSendingDataSSE,
+  ApiStreamResponseSSEItem,
+} from "@/features/requests/types/send";
+import { DirectionType } from "@/shared/types/common";
+import { TIME_FORMAT, formatTime } from "@/shared/utils/time";
 
-import { FlowResponseRenderTitleWrap, PanelsWrap, RealtimeContainer } from './style';
-import { Flex, Tooltip } from '@/shared/ui/base';
+import { Flex, Tooltip } from "@/shared/ui/base";
 
 const panelProps = {
   defaultSize: 50,
@@ -30,10 +33,10 @@ const panelProps = {
 };
 
 const mapTips: { [x: string]: string } = {
-  connect: i18next.t('grpc.grpc_debug.sent') + ':',
+  connect: i18next.t("grpc.grpc_debug.sent") + ":",
   // message: i18next.t('grpc.grpc_debug.received') + ':',
-  complete: i18next.t('grpc.grpc_debug.completed') + ':',
-  disconnect: i18next.t('grpc.grpc_debug.cancelled') + ':',
+  complete: i18next.t("grpc.grpc_debug.completed") + ":",
+  disconnect: i18next.t("grpc.grpc_debug.cancelled") + ":",
 };
 
 interface Props {
@@ -45,18 +48,20 @@ const Realtime: FC<Props> = ({ sendingDataSSE }) => {
 
   const { direction } = useContext(ResponseRealtimeContext);
 
-  const [curDirection, setCurDirection] = useSafeState<DirectionType>('horizontal');
-  const [responseItem, setResponseItem] = useSafeState<ApiStreamResponseSSEItem>();
+  const [curDirection, setCurDirection] =
+    useSafeState<DirectionType>("horizontal");
+  const [responseItem, setResponseItem] =
+    useSafeState<ApiStreamResponseSSEItem>();
 
   useEffect(() => {
     if (!direction) return;
 
-    if (direction === 'vertical') {
-      setCurDirection('horizontal');
+    if (direction === "vertical") {
+      setCurDirection("horizontal");
     }
 
-    if (direction === 'horizontal') {
-      setCurDirection('vertical');
+    if (direction === "horizontal") {
+      setCurDirection("vertical");
     }
   }, [direction]);
 
@@ -75,34 +80,44 @@ const Realtime: FC<Props> = ({ sendingDataSSE }) => {
    * @param parseToJsonStr DOM displays plain strings, CodeEditor displays JSON strings
    * @returns string | JSON string
    */
-  const calcContent = (params?: ApiStreamResponseSSEItem, parseToJsonStr = false) => {
+  const calcContent = (
+    params?: ApiStreamResponseSSEItem,
+    parseToJsonStr = false,
+  ) => {
     try {
       const { action, data } = params || {};
-      if (action === 'message') {
-        
+      if (action === "message") {
         if (!isString(data) && data?.stream?.type && data?.stream?.data) {
-          
           const bufferRaw = aptTools.bufferToRaw(data?.stream?.data, {});
-          
+
           const { raw } = bufferRaw;
           const result = parseSingleSSEMessage(raw);
-         let eventData = result.data;
+          let eventData = result.data;
           if (isJSONString(result.data)) {
             eventData = result.data;
           }
           if (parseToJsonStr) {
             eventData = JSON.stringify(result.data);
           }
-          
-          if(isString(result.event) && !isEmpty(result?.event)){
-            return (<Flex gap={4} align='center'>
-              <Tooltip title={result.event}>
-              <span className={moduleClassNames(slots, `event-message ${result.event}`)}>{result.event.slice(0,10)}</span>
-              </Tooltip>
-         
-              {eventData}
-            </Flex>);
-          }else{
+
+          if (isString(result.event) && !isEmpty(result?.event)) {
+            return (
+              <Flex gap={4} align="center">
+                <Tooltip title={result.event}>
+                  <span
+                    className={moduleClassNames(
+                      slots,
+                      `event-message ${result.event}`,
+                    )}
+                  >
+                    {result.event.slice(0, 10)}
+                  </span>
+                </Tooltip>
+
+                {eventData}
+              </Flex>
+            );
+          } else {
             return eventData;
           }
         }
@@ -111,29 +126,29 @@ const Realtime: FC<Props> = ({ sendingDataSSE }) => {
 
       return parseToJsonStr ? JSON.stringify(data) : String(data);
     } catch (err) {
-      return '';
+      return "";
     }
   };
 
   const parseSingleSSEMessage = (sseMessage: string) => {
     try {
-      const lines = sseMessage.split('\n');
+      const lines = sseMessage.split("\n");
       const result = {
-        event: '',
-        data: '',
-        id: '',
+        event: "",
+        data: "",
+        id: "",
       };
 
       lines.forEach((line) => {
-        if (line.startsWith('event:')) {
+        if (line.startsWith("event:")) {
           result.event = line.slice(6).trim();
-        } else if (line.startsWith('data:')) {
+        } else if (line.startsWith("data:")) {
           if (result.data) {
             result.data += `\n${line.slice(5).trim()}`;
           } else {
             result.data = line.slice(5).trim();
           }
-        } else if (line.startsWith('id:')) {
+        } else if (line.startsWith("id:")) {
           result.id = line.slice(3).trim();
         }
       });
@@ -141,14 +156,17 @@ const Realtime: FC<Props> = ({ sendingDataSSE }) => {
       return result;
     } catch (err) {
       return {
-        event: '',
+        event: "",
         data: sseMessage,
-        id: '',
+        id: "",
       };
     }
   };
 
-  const resultRaw = useMemo(() => calcContent(responseItem, true), [responseItem]);
+  const resultRaw = useMemo(
+    () => calcContent(responseItem, true),
+    [responseItem],
+  );
 
   const customTipsContent = (data: ApiStreamResponseSSEItem) => {
     if (isString(data.data)) return {};
@@ -162,12 +180,20 @@ const Realtime: FC<Props> = ({ sendingDataSSE }) => {
   const renderTitle = (data: ApiStreamResponseSSEItem) => {
     const { action } = data || {};
 
-    if (['message', 'complete', 'connect', 'disconnect', 'sse'].includes(action)) {
+    if (
+      ["message", "complete", "connect", "disconnect", "sse"].includes(action)
+    ) {
       return (
-        <FlowResponseRenderTitleWrap className={cn({ [slots.complete]: isEqual(action, 'complete') })}>
+        <div
+          className={cn(
+            styles.flowResponseRenderTitle,
+            slots.title,
+            cn({ [slots.complete]: isEqual(action, "complete") }),
+          )}
+        >
           {mapTips[action]}
           {calcContent(data)}
-        </FlowResponseRenderTitleWrap>
+        </div>
       );
     }
 
@@ -175,17 +201,17 @@ const Realtime: FC<Props> = ({ sendingDataSSE }) => {
   };
 
   return (
-    <RealtimeContainer>
+    <div className={styles.container}>
       {(size(sendingDataSSE?.streamResponse) > 0 && (
         <ResizablePanels
           showRightCollapseBtn
           panelGroupProps={{ direction: curDirection }}
           leftPanelProps={{
             ...panelProps,
-            collapseTitle: t('common.response_component.title'),
+            collapseTitle: t("common.response_component.title"),
           }}
           leftPanel={
-            <PanelsWrap>
+            <div className={styles.panels}>
               <FlowResponse
                 data={sendingDataSSE?.streamResponse}
                 renderTitle={renderTitle}
@@ -194,20 +220,24 @@ const Realtime: FC<Props> = ({ sendingDataSSE }) => {
                   setResponseItem(item);
                 }}
               />
-            </PanelsWrap>
+            </div>
           }
           rightPanelProps={{
             ...panelProps,
-            collapseTitle: t('supplement.response'),
+            collapseTitle: t("supplement.response"),
           }}
           rightPanel={
-            <PanelsWrap>
-              <ResponseResult isSSE resultIncludesTabs={['beautify', 'native']} rawHtml={resultRaw} />
-            </PanelsWrap>
+            <div className={styles.panels}>
+              <ResponseResult
+                isSSE
+                resultIncludesTabs={["beautify", "native"]}
+                rawHtml={resultRaw}
+              />
+            </div>
           }
         />
       )) || <ResponseEmpty />}
-    </RealtimeContainer>
+    </div>
   );
 };
 

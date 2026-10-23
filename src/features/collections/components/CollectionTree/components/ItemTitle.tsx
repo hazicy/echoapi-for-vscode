@@ -1,13 +1,12 @@
+import styles from "../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, ReactNode, memo, useMemo } from 'react';
+import { FC, ReactNode, memo, useMemo } from "react";
 
-import { Dropdown } from '@/shared/ui/base';
+import { Dropdown } from "@/shared/ui/base";
 
-import { isFunction, isNumber } from 'lodash';
+import { isFunction, isNumber } from "lodash";
 
-import { TreeDataItem } from '@/features/requests/types/api';
-
-import { ItemTitleContainer } from '../style';
+import { TreeDataItem } from "@/features/requests/types/api";
 
 type Props = Partial<
   TreeDataItem & {
@@ -16,7 +15,7 @@ type Props = Partial<
     childrenCount?: number;
     nodeItemTitleExtraContent: (item: Props) => ReactNode;
     nodeItemDropdownContextMenu: any;
-    onClick?:any;
+    onClick?: any;
   }
 >;
 
@@ -28,33 +27,41 @@ const ItemTitle: FC<Props> = memo((props) => {
     nodeItemDropdownContextMenu,
     scrollIng,
     childrenCount,
-    onClick
+    onClick,
   } = props;
 
   const dropdownContextMenu = useMemo(
     () => (!scrollIng ? nodeItemDropdownContextMenu?.(props) : undefined),
-    [nodeItemDropdownContextMenu, props, scrollIng]
+    [nodeItemDropdownContextMenu, props, scrollIng],
   );
 
   const extraContent = useMemo(
-    () => nodeItemTitleExtraContent?.({ ...props, moreOperateMenu: dropdownContextMenu }),
-    [nodeItemTitleExtraContent, props, dropdownContextMenu]
+    () =>
+      nodeItemTitleExtraContent?.({
+        ...props,
+        moreOperateMenu: dropdownContextMenu,
+      }),
+    [nodeItemTitleExtraContent, props, dropdownContextMenu],
   );
 
   const renderContent = (
-    <ItemTitleContainer>
-      <div onClick={()=>{
-        if(isFunction(onClick)){
-          onClick();
-        }
-      }} className={slots.title} title={name}>
+    <div className={styles.itemTitle}>
+      <div
+        onClick={() => {
+          if (isFunction(onClick)) {
+            onClick();
+          }
+        }}
+        className={slots.title}
+        title={name}
+      >
         {name}
         {showChildrenCount && isNumber(childrenCount) && childrenCount > 0 && (
           <span className={slots["children-num"]}>({childrenCount})</span>
         )}
       </div>
       {extraContent}
-    </ItemTitleContainer>
+    </div>
   );
 
   if (props?.scrollIng) {
@@ -66,9 +73,7 @@ const ItemTitle: FC<Props> = memo((props) => {
   }
 
   return (
-    <Dropdown 
-    trigger={['contextMenu']} 
-    menu={dropdownContextMenu}>
+    <Dropdown trigger={["contextMenu"]} menu={dropdownContextMenu}>
       {renderContent}
     </Dropdown>
   );

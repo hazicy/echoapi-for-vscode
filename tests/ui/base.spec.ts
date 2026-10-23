@@ -164,6 +164,16 @@ test("theme changes update CSS variables and extracted conditional styles", asyn
   const state = page.getByText("Styled state", { exact: true });
   await expect(state).toHaveCSS("color", "rgb(22, 119, 255)");
   await expect(state).toHaveCSS("cursor", "not-allowed");
+  const assertion = page.getByText("Assertion state", { exact: true });
+  await expect(assertion).toHaveCSS("color", "rgb(255, 88, 62)");
+  await expect(assertion).toHaveCSS("background-color", "rgba(255, 88, 62, 0.1)");
+  const directionPanels = [
+    page.getByText("GraphQL direction", { exact: true }),
+    page.getByText("SSE direction", { exact: true }),
+  ];
+  for (const panel of directionPanels) {
+    await expect(panel).toHaveCSS("padding-bottom", "0px");
+  }
   const controls = [
     page.getByRole("button", { name: "Theme button" }),
     page.getByRole("textbox", { name: "Theme input" }),
@@ -175,6 +185,11 @@ test("theme changes update CSS variables and extracted conditional styles", asyn
   await page.getByRole("button", { name: "Toggle theme" }).click();
   await expect(state).toHaveCSS("color", "rgb(255, 0, 0)");
   await expect(state).toHaveCSS("cursor", "auto");
+  await expect(assertion).toHaveCSS("color", "rgb(38, 206, 164)");
+  await expect(assertion).toHaveCSS("background-color", "rgba(38, 206, 164, 0.1)");
+  for (const panel of directionPanels) {
+    await expect(panel).toHaveCSS("padding-bottom", "12px");
+  }
   await expect(page.locator("html")).toHaveCSS("--font-size-14", "16px");
   for (const control of controls) {
     await expect(control).toHaveCSS("border-radius", "4px");

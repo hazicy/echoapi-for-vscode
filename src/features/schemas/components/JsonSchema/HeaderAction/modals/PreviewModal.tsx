@@ -1,28 +1,27 @@
-import React, { memo, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import styles from "../style.module.css";
+import React, { memo, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { message } from '@/shared/ui/base';
+import { message } from "@/shared/ui/base";
 
-import { useMemoizedFn } from 'ahooks';
-import { cloneDeep, isObject } from 'lodash';
+import { useMemoizedFn } from "ahooks";
+import { cloneDeep, isObject } from "lodash";
 
-import CodeEditor from '@/shared/components/CodeEditor';
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
-import Modal from '@/shared/ui/Modal';
-import useSchemasHook from '@/features/schemas/hooks/useSchemas';
-import { useSchemas } from '@/app/store';
-import { EditFormat } from '@/shared/utils/common';
-import { parseModelToJsonSchema } from '@/shared/utils/dataModel';
-
-import { PreviewContainer, PreviewTitleContainer } from '../style';
+import CodeEditor from "@/shared/components/CodeEditor";
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
+import Modal from "@/shared/ui/Modal";
+import useSchemasHook from "@/features/schemas/hooks/useSchemas";
+import { useSchemas } from "@/app/store";
+import { EditFormat } from "@/shared/utils/common";
+import { parseModelToJsonSchema } from "@/shared/utils/dataModel";
 
 const PreviewModal: React.FC<any> = (props) => {
   const { value, onCancel, themeToken } = props;
   const { schemasBaseData } = useSchemas((state) => state);
   const { getProxyMockRulesList } = useSchemasHook();
   const { t } = useTranslation();
-  const [viewText, setViewText] = useState('');
+  const [viewText, setViewText] = useState("");
 
   useEffect(() => {
     if (isObject(value)) {
@@ -31,15 +30,23 @@ const PreviewModal: React.FC<any> = (props) => {
   }, [value]);
 
   const handleViewSchemaText = useMemoizedFn(async (dataModel) => {
-    const schema = await parseModelToJsonSchema(dataModel, [], schemasBaseData || {});
+    const schema = await parseModelToJsonSchema(
+      dataModel,
+      [],
+      schemasBaseData || {},
+    );
     const schemaData = cloneDeep(schema);
     if (!isObject(schemaData)) {
       return;
     }
     const mock_rules = getProxyMockRulesList();
-    import('apipost-mock-schema').then(({ default: MockSchema }) => new (MockSchema as any)({ app: 'echoapi' })
-      .mock(schemaData, mock_rules)
-    )
+    import("apipost-mock-schema")
+      .then(({ default: MockSchema }) =>
+        new (MockSchema as any)({ app: "echoapi" }).mock(
+          schemaData,
+          mock_rules,
+        ),
+      )
       .then((mockData: any) => {
         if (isObject(mockData)) {
           const beautifyText = EditFormat(JSON.stringify(mockData)).value;
@@ -49,8 +56,8 @@ const PreviewModal: React.FC<any> = (props) => {
         }
       })
       .catch(() => {
-        message.error(t('supplement.parse_err'));
-        setViewText('');
+        message.error(t("supplement.parse_err"));
+        setViewText("");
       });
   });
 
@@ -63,17 +70,25 @@ const PreviewModal: React.FC<any> = (props) => {
       width={880}
       open
       title={
-        <PreviewTitleContainer>
-          <span>{t('common.schema.view')}</span>
-          <Button onClick={handleUpdateText} icon={<IconFont type="icon-refresh" />}></Button>
-        </PreviewTitleContainer>
+        <div className={styles.previewTitle}>
+          <span>{t("common.schema.view")}</span>
+          <Button
+            onClick={handleUpdateText}
+            icon={<IconFont type="icon-refresh" />}
+          ></Button>
+        </div>
       }
       onCancel={onCancel}
       footer={null}
     >
-      <PreviewContainer $token={themeToken}>
-        <CodeEditor readOnly height={400} language="json" value={viewText || ''} />
-      </PreviewContainer>
+      <div className={styles.preview}>
+        <CodeEditor
+          readOnly
+          height={400}
+          language="json"
+          value={viewText || ""}
+        />
+      </div>
     </Modal>
   );
 };

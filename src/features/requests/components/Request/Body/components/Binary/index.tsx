@@ -1,37 +1,36 @@
+import styles from "../../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Button, Flex, UploadProps, message } from '@/shared/ui/base';
-import { UploadFileStatus } from '@/shared/ui/base';
+import { Button, Flex, UploadProps, message } from "@/shared/ui/base";
+import { UploadFileStatus } from "@/shared/ui/base";
 
-import { UploadOutlined } from '@/shared/ui/base/Icons';
-import { snowflakeId } from 'apipost-tools';
-import produce from 'immer';
-import { isEmpty, isObject } from 'lodash';
+import { UploadOutlined } from "@/shared/ui/base/Icons";
+import { snowflakeId } from "apipost-tools";
+import produce from "immer";
+import { isEmpty, isObject } from "lodash";
 
-import Upload from '@/shared/ui/Upload';
-import { fileTodataUrl } from '@/shared/utils/file';
+import Upload from "@/shared/ui/Upload";
+import { fileTodataUrl } from "@/shared/utils/file";
 
-import { RequestBodyProps } from '../../types';
-
-import { RequestBodyContentContainer } from '../../style';
+import { RequestBodyProps } from "../../types";
 
 const MAX_SIZE = 5 * 1024 * 1024;
 
 const RequestBodyBinary: FC<RequestBodyProps> = ({ value, onChange }) => {
   const { t } = useTranslation();
-  const customRequest: UploadProps['customRequest'] = async (option: any) => {
+  const customRequest: UploadProps["customRequest"] = async (option: any) => {
     // If it is the web version, and the file size exceeds 5M, prohibit uploading
     if (option?.file?.size > MAX_SIZE) {
-      message.error(t('supplement.upload_file_large'));
+      message.error(t("supplement.upload_file_large"));
       return;
     }
 
-    let data_url: string = '';
+    let data_url: string = "";
 
-      // If it is the web version, use base64
-      data_url = await fileTodataUrl(option?.file);
+    // If it is the web version, use base64
+    data_url = await fileTodataUrl(option?.file);
 
     const file_path: any = null;
     const newResult = produce(value, (draft) => {
@@ -42,7 +41,7 @@ const RequestBodyBinary: FC<RequestBodyProps> = ({ value, onChange }) => {
       };
     });
 
-    onChange?.('body', newResult);
+    onChange?.("body", newResult);
     option.onSuccess(null);
   };
 
@@ -51,7 +50,7 @@ const RequestBodyBinary: FC<RequestBodyProps> = ({ value, onChange }) => {
       draft!.binary = null;
     });
 
-    onChange?.('body', newResult);
+    onChange?.("body", newResult);
     return true;
   };
 
@@ -62,14 +61,14 @@ const RequestBodyBinary: FC<RequestBodyProps> = ({ value, onChange }) => {
     return [
       {
         uid: snowflakeId(),
-        name: value?.binary?.file_name || '',
-        status: 'done' as UploadFileStatus,
+        name: value?.binary?.file_name || "",
+        status: "done" as UploadFileStatus,
       },
     ];
   }, [value?.binary]);
 
   return (
-    <RequestBodyContentContainer>
+    <div className={styles.requestBodyContent}>
       <Upload
         fileList={computedFileList}
         onRemove={handleRemoveFile}
@@ -77,10 +76,12 @@ const RequestBodyBinary: FC<RequestBodyProps> = ({ value, onChange }) => {
         className={slots["upload-wrapper"]}
       >
         <Flex vertical align="center" gap={12}>
-          <Button icon={<UploadOutlined />}>{t('supplement.upload_file')}</Button>
+          <Button icon={<UploadOutlined />}>
+            {t("supplement.upload_file")}
+          </Button>
         </Flex>
       </Upload>
-    </RequestBodyContentContainer>
+    </div>
   );
 };
 

@@ -1,13 +1,13 @@
-import React from 'react';
-import { ImportDataWrap } from './style';
-import ImportProjectManual from './ImportProjectManual';
+import styles from "./style.module.css";
+import { Flex } from "@/shared/ui/base";
+
+import ImportProjectManual from "./ImportProjectManual";
 
 const importData = () => {
-  
   return (
-    <ImportDataWrap vertical>
+    <Flex vertical className={styles.container}>
       <ImportProjectManual />
-    </ImportDataWrap>
+    </Flex>
   );
 };
 export default importData;

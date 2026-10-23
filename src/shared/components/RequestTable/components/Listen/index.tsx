@@ -1,13 +1,12 @@
+import styles from "../../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, memo } from 'react';
+import { FC, memo } from "react";
 
-import { Flex, Switch } from '@/shared/ui/base';
+import { Flex, Switch } from "@/shared/ui/base";
 
-import { isEqual } from 'lodash';
+import { isEqual } from "lodash";
 
-import { ItemProps } from '../../types';
-
-import { RowItemWrap } from '../../style';
+import { ItemProps } from "../../types";
 
 type Props = ItemProps;
 
@@ -23,15 +22,15 @@ export const RowDescription: FC<Props> = memo((props) => {
   };
 
   return (
-    <RowItemWrap>
+    <div className={styles.container}>
       <Flex align="center" className={slots["row-listen"]}>
         <Switch
-          checked={isEqual(rowData?.value, '1')}
-          onChange={(checked) => handleChange?.('value', checked ? '1' : '-1')}
+          checked={isEqual(rowData?.value, "1")}
+          onChange={(checked) => handleChange?.("value", checked ? "1" : "-1")}
           disabled={readOnly}
         />
       </Flex>
-    </RowItemWrap>
+    </div>
   );
 });
 

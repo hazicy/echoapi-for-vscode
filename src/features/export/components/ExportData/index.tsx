@@ -1,13 +1,13 @@
-import React from 'react';
-import { ExportDataWrap } from './style';
-import Export from '@/features/export/components/Export';
+import styles from "./style.module.css";
+import { Flex } from "@/shared/ui/base";
+
+import Export from "@/features/export/components/Export";
 
 const exportData = () => {
-  
   return (
-    <ExportDataWrap vertical>
+    <Flex vertical className={styles.container}>
       <Export />
-    </ExportDataWrap>
+    </Flex>
   );
 };
 export default exportData;

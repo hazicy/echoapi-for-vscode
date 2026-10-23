@@ -1,19 +1,19 @@
-import { CSSProperties, FC, useMemo } from 'react';
-import ReactJson from 'react-json-view';
+import styles from "./style.module.css";
+import classNames from "classnames";
+import { CSSProperties, FC, useMemo } from "react";
+import ReactJson from "react-json-view";
 
-import { isPlainObject, isString } from 'lodash';
+import { isPlainObject, isString } from "lodash";
 
-import { useSystemConfig } from '@/app/store';
-import { EditFormat, copyStringToClipboard } from '@/shared/utils/common';
-
-import { NewJsonViewContainer, OtherPreViewWrap } from './style';
+import { useSystemConfig } from "@/app/store";
+import { EditFormat, copyStringToClipboard } from "@/shared/utils/common";
 
 const reactJsonStyle = {
-  fontSize: '12px',
-  height: '100%',
-  overflow: 'auto',
-  backgroundColor: 'transparent',
-  fontFamily: 'inherit',
+  fontSize: "12px",
+  height: "100%",
+  overflow: "auto",
+  backgroundColor: "transparent",
+  fontFamily: "inherit",
 };
 
 interface Props {
@@ -75,22 +75,27 @@ const NewJsonView: FC<Props> = ({ value, wrapStyle, wrapClassName }) => {
   };
 
   return (
-    <NewJsonViewContainer style={wrapStyle} className={wrapClassName}>
+    <div
+      style={wrapStyle}
+      className={classNames(styles.container, wrapClassName)}
+    >
       {jsonView.isJson ? (
         <ReactJson
           src={jsonView.view}
           enableClipboard={handleCopyClipboard}
           name={false}
-          theme={['white', 'orange'].includes(bg_color) ? 'rjv-default' : 'eighties'}
+          theme={
+            ["white", "orange"].includes(bg_color) ? "rjv-default" : "eighties"
+          }
           indentWidth={2}
           style={reactJsonStyle}
           displayDataTypes={false}
           collapsed={1}
         />
       ) : (
-        <OtherPreViewWrap>{jsonView.view as string}</OtherPreViewWrap>
+        <div className={styles.otherPreView}>{jsonView.view as string}</div>
       )}
-    </NewJsonViewContainer>
+    </div>
   );
 };
 

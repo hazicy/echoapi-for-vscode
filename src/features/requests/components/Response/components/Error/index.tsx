@@ -1,15 +1,15 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import { useTranslation } from "react-i18next";
 
-import IconFont from '@/shared/ui/IconFont';
+import IconFont from "@/shared/ui/IconFont";
 
-import { ResponseErrorContainer } from './style';
-import { openUrl } from '@/shared/utils/open';
+import { openUrl } from "@/shared/utils/open";
 
 interface ResponseErrorProps {
   errorMessage: string;
-  onClose?: (string: 'none') => void;
+  onClose?: (string: "none") => void;
 }
 
 const ResponseError: React.FC<ResponseErrorProps> = (props) => {
@@ -22,27 +22,35 @@ const ResponseError: React.FC<ResponseErrorProps> = (props) => {
   };
 
   const handleClose = () => {
-    onClose?.('none');
+    onClose?.("none");
   };
 
   return (
-    <ResponseErrorContainer>
-       {onClose && (
-        <IconFont type="icon-error" className={slots["close-error-wrapper"]} onClick={handleClose} />
+    <div className={styles.container}>
+      {onClose && (
+        <IconFont
+          type="icon-error"
+          className={slots["close-error-wrapper"]}
+          onClick={handleClose}
+        />
       )}
       <div className={slots.container}>
-        {t('supplement.intro_script')}
+        {t("supplement.intro_script")}
         <p className={slots["error-str"]}>{errorMessage}</p>
         {isRenderErrorMessage(errorMessage) && (
-          <p className={[slots["error-str"], slots["proxy-error"]].join(" ")}>{t('supplement.proxy_sys_tip')}</p>
+          <p className={[slots["error-str"], slots["proxy-error"]].join(" ")}>
+            {t("supplement.proxy_sys_tip")}
+          </p>
         )}
         <p className="err-desc-go-index">
-          {t('supplement.go')}&nbsp;
-          <span onClick={() => openUrl('https://www.echoapi.com/')}>https://www.echoapi.com/</span>
-          &nbsp;{t('supplement.proxy_sys_tip1')}
+          {t("supplement.go")}&nbsp;
+          <span onClick={() => openUrl("https://www.echoapi.com/")}>
+            https://www.echoapi.com/
+          </span>
+          &nbsp;{t("supplement.proxy_sys_tip1")}
         </p>
       </div>
-    </ResponseErrorContainer>
+    </div>
   );
 };
 

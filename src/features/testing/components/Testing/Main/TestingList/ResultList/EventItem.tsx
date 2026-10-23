@@ -1,5 +1,6 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import ResponseSize from '@/features/requests/components/ResponseSize';
+import ResponseSize from "@/features/requests/components/ResponseSize";
 
 import HttpExecDetail from "@/features/requests/components/HttpExecDetail";
 import { IconFont } from "@/shared/ui";
@@ -7,12 +8,12 @@ import PrefixIcon from "@/shared/ui/PrefixIcon";
 import useTheme from "@/shared/hooks/useTheme";
 import { RuntimeResponse } from "@/features/testing/types";
 import CustomPopover from "@/shared/ui/Popover";
-import { Checkbox, Flex, Tooltip, Typography } from '@/shared/ui/base';
+import { Checkbox, Flex, Tooltip, Typography } from "@/shared/ui/base";
 import { Drawer } from "@/shared/ui/Drawer";
 import { isArray, isEmpty, toUpper } from "lodash";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CustomPopoverWrap } from "./style";
+
 import { isAssertPass } from "@/shared/utils/common";
 
 type EventItemProps = {
@@ -49,7 +50,7 @@ const EventItem = (props: EventItemProps) => {
   };
 
   const errorContent = (
-    <CustomPopoverWrap style={{ width: 240 }}>
+    <div style={{ width: 240 }} className={styles.customPopover}>
       {toUpper(status.http) !== "OK" && (
         <Flex vertical gap={8}>
           <Typography.Text className={slots["error-title"]}>
@@ -73,7 +74,7 @@ const EventItem = (props: EventItemProps) => {
           ))}
         </Flex>
       )}
-    </CustomPopoverWrap>
+    </div>
   );
 
   return (

@@ -1,16 +1,14 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
-import classNames from 'classnames';
-import { map } from 'lodash';
+import classNames from "classnames";
+import { map } from "lodash";
 
-import Tooltip from '@/shared/ui/Tooltip';
-import useTheme from '@/shared/hooks/useTheme';
+import Tooltip from "@/shared/ui/Tooltip";
 
-import CodeEditor from '../../../../shared/components/CodeEditor';
-import { ASSERT_LIST, SCRIPT_LIST, SCRIPT_TYPE } from './constants';
-
-import { CustomScriptWrapper } from './style';
+import CodeEditor from "../../../../shared/components/CodeEditor";
+import { ASSERT_LIST, SCRIPT_LIST, SCRIPT_TYPE } from "./constants";
 
 type CustomScriptProps = {
   mode: SCRIPT_TYPE;
@@ -23,7 +21,7 @@ type VarItem = {
     name: string;
     value: string;
   };
-  value: CustomScriptProps['value'];
+  value: CustomScriptProps["value"];
   onClick: () => void;
 };
 
@@ -47,7 +45,9 @@ const VarItem = ({ item, value, onClick }: VarItem) => {
   return (
     <div
       ref={itemRef}
-      className={classNames(slots["var-item"], { [slots.active]: item.value === value })}
+      className={classNames(slots["var-item"], {
+        [slots.active]: item.value === value,
+      })}
       onClick={onClick}
     >
       {isEllipsis ? (
@@ -62,10 +62,8 @@ const VarItem = ({ item, value, onClick }: VarItem) => {
 };
 
 const CustomScript = ({ mode, value, onChange }: CustomScriptProps) => {
-  const { themeToken } = useTheme();
-
   const handleOnChange = (val: string) => {
-    if (value === '') {
+    if (value === "") {
       onChange(val);
     } else {
       onChange(`${value}\n${val}`);
@@ -73,25 +71,28 @@ const CustomScript = ({ mode, value, onChange }: CustomScriptProps) => {
   };
 
   return (
-    <CustomScriptWrapper $token={themeToken}>
+    <div className={styles.container}>
       <div className={slots["custom-script-container"]}>
         <div className={slots["code-editor-container"]}>
           <CodeEditor language="javascript" value={value} onChange={onChange} />
         </div>
         <div className={slots["right-var-list"]}>
-          {map(mode === SCRIPT_TYPE.ASSERT ? ASSERT_LIST : SCRIPT_LIST, (item) => {
-            return (
-              <VarItem
-                key={item.value}
-                item={item}
-                value={value}
-                onClick={() => handleOnChange(item.value)}
-              />
-            );
-          })}
+          {map(
+            mode === SCRIPT_TYPE.ASSERT ? ASSERT_LIST : SCRIPT_LIST,
+            (item) => {
+              return (
+                <VarItem
+                  key={item.value}
+                  item={item}
+                  value={value}
+                  onClick={() => handleOnChange(item.value)}
+                />
+              );
+            },
+          )}
         </div>
       </div>
-    </CustomScriptWrapper>
+    </div>
   );
 };
 

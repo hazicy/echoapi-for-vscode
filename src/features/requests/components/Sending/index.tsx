@@ -1,11 +1,11 @@
-import slots from '@/shared/ui/base/slots.module.css';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import styles from "./style.module.css";
+import slots from "@/shared/ui/base/slots.module.css";
+import React from "react";
+import { useTranslation } from "react-i18next";
 
-import Button from '@/shared/ui/Button';
+import Button from "@/shared/ui/Button";
 
-import { ResponseSendContainer } from './style';
-import { useApis } from '@/app/store';
+import { useApis } from "@/app/store";
 
 interface SendingProps {
   hasCancel?: boolean;
@@ -23,38 +23,35 @@ const Sending: React.FC<SendingProps> = ({
     (store) => store.updateCurrentSendingData,
   );
   const handleCancel = () => {
-    updateCurrentSendingData({ sendStatus: 'initial' });
+    updateCurrentSendingData({ sendStatus: "initial" });
 
     // Terminate the sending thread
     window?.vscode.postMessage({
-      action: 'stopSendApi',
+      action: "stopSendApi",
     });
 
     onCancel?.();
   };
 
   return (
-    <ResponseSendContainer
+    <div
       style={{ ...(onlySendingLoadingBar ? { height: 2 } : {}) }}
+      className={styles.container}
     >
-      <div className={slots['sending-loading-bar']} />
+      <div className={slots["sending-loading-bar"]} />
       {!onlySendingLoadingBar && (
-        <div className={slots['sending-loading-content']}>
-          <div className={slots['sending-loading-content-text']}>
-            {t('supplement.sending')}
+        <div className={slots["sending-loading-content"]}>
+          <div className={slots["sending-loading-content-text"]}>
+            {t("supplement.sending")}
           </div>
           {hasCancel && (
-            <Button
-              type="primary"
-              mode="light"
-              onClick={handleCancel}
-            >
-              {t('supplement.cancel_send')}
+            <Button type="primary" mode="light" onClick={handleCancel}>
+              {t("supplement.cancel_send")}
             </Button>
           )}
         </div>
       )}
-    </ResponseSendContainer>
+    </div>
   );
 };
 

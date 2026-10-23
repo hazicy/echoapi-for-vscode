@@ -1,13 +1,19 @@
-import { FC, memo, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import "./style.css";
+import styles from "./style.module.css";
+import { FC, memo, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex, Form, Select } from '@/shared/ui/base';
+import { Flex, Form, Select } from "@/shared/ui/base";
 
-import { concat, isEqual } from 'lodash';
+import { concat, isEqual } from "lodash";
 
-import { AUTH_ENUM, AUTH_INHERIT_OPTIONS, AUTH_OPTIONS } from '@/features/requests/constants/auth';
-import { ApiRequest } from '@/features/requests/types/request';
-import { ChangeFuncType } from '@/shared/types/common';
+import {
+  AUTH_ENUM,
+  AUTH_INHERIT_OPTIONS,
+  AUTH_OPTIONS,
+} from "@/features/requests/constants/auth";
+import { ApiRequest } from "@/features/requests/types/request";
+import { ChangeFuncType } from "@/shared/types/common";
 
 import {
   Asap,
@@ -21,15 +27,14 @@ import {
   Kv,
   Ntlm,
   Oauth1,
-  Oauth2
-} from './components';
+  Oauth2,
+} from "./components";
 
-import { CheckedStyles, RequestAuthContainer } from './style';
-import produce from 'immer';
-import { AuthOauth2 } from '@/features/requests/types/auth';
+import produce from "immer";
+import { AuthOauth2 } from "@/features/requests/types/auth";
 
 interface Props {
-  value: ApiRequest['auth'];
+  value: ApiRequest["auth"];
   onChange: ChangeFuncType<ApiRequest>;
   isSystem?: boolean;
 }
@@ -43,8 +48,8 @@ const RequestAuth: FC<Props> = memo(
       form.setFieldsValue(value);
     }, [value]);
 
-    const handleOnChange = (values: Partial<ApiRequest['auth']>) => {
-      onChange?.('auth', { ...value, ...values });
+    const handleOnChange = (values: Partial<ApiRequest["auth"]>) => {
+      onChange?.("auth", { ...value, ...values });
     };
 
     const oauth2Change = (oauth2: AuthOauth2) => {
@@ -55,7 +60,7 @@ const RequestAuth: FC<Props> = memo(
             ...oauth2,
           };
         });
-        onChange?.('auth', newAuth);
+        onChange?.("auth", newAuth);
       }
     };
 
@@ -88,8 +93,7 @@ const RequestAuth: FC<Props> = memo(
     }, [isSystem]);
 
     return (
-      <RequestAuthContainer>
-        <CheckedStyles />
+      <div className={styles.container}>
         <Flex justify="center">
           <Form
             colon={false}
@@ -98,20 +102,26 @@ const RequestAuth: FC<Props> = memo(
             labelCol={{ span: 7 }}
             wrapperCol={{ span: 17 }}
             labelAlign="left"
-            onValuesChange={(_changedValues, allValues) => handleOnChange(allValues)}
+            onValuesChange={(_changedValues, allValues) =>
+              handleOnChange(allValues)
+            }
           >
-            <Form.Item label={t('common.auth.type')} name="type" initialValue={'noauth'}>
+            <Form.Item
+              label={t("common.auth.type")}
+              name="type"
+              initialValue={"noauth"}
+            >
               <Select options={options} />
             </Form.Item>
-            <Form.Item noStyle dependencies={['type']}>
+            <Form.Item noStyle dependencies={["type"]}>
               {() => renderContent}
             </Form.Item>
           </Form>
         </Flex>
-      </RequestAuthContainer>
+      </div>
     );
   },
-  (prevProps, nextProps) => isEqual(prevProps, nextProps)
+  (prevProps, nextProps) => isEqual(prevProps, nextProps),
 );
 
 export default RequestAuth;

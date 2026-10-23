@@ -1,11 +1,11 @@
+import styles from "./style.module.css";
+import { Flex } from "@/shared/ui/base";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import { Typography } from '@/shared/ui/base';
+import { Typography } from "@/shared/ui/base";
 
-import IconFont from '@/shared/ui/IconFont';
-
-import { InvalidUrlWrapper } from './style';
+import IconFont from "@/shared/ui/IconFont";
 
 type InvalidUrlProps = {
   url: string;
@@ -14,11 +14,17 @@ type InvalidUrlProps = {
 export const InvalidUrl = ({ url }: InvalidUrlProps) => {
   const { t } = useTranslation();
   return (
-    <InvalidUrlWrapper vertical gap={12} align="center" justify="center">
+    <Flex
+      vertical
+      gap={12}
+      align="center"
+      justify="center"
+      className={styles.container}
+    >
       <IconFont className={slots.icon} type="icon-qingqiucuowu" />
       <Typography.Text className={slots.text}>
-        {t('supplement.invalid_url')} {url}
+        {t("supplement.invalid_url")} {url}
       </Typography.Text>
-    </InvalidUrlWrapper>
+    </Flex>
   );
 };

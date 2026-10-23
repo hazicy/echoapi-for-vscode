@@ -1,19 +1,17 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { memo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { memo, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Input } from '@/shared/ui/base';
+import { Input } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import cn from 'classnames';
+import { useSafeState } from "ahooks";
+import cn from "classnames";
 
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
-import useTheme from '@/shared/hooks/useTheme';
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
 
-import LinkModal from '../../modals/Link';
-
-import { EmptyWarper } from './style';
+import LinkModal from "../../modals/Link";
 
 type Props = {
   deepIndex: number;
@@ -24,12 +22,14 @@ type Props = {
 };
 
 const EmptyItem: React.FC<Props> = (props) => {
-  const { deepIndex, nodeKey, onNodeKeyChange, onDeleteNode, onLinkSchema } = props;
+  const { deepIndex, nodeKey, onNodeKeyChange, onDeleteNode, onLinkSchema } =
+    props;
   const { t } = useTranslation();
   const [showModal, setShowModal] = useSafeState(false);
   const isComposition = useRef(false);
-  const [compositionValue, setCompositionValue] = useSafeState<string | undefined>('');
-  const { themeToken } = useTheme();
+  const [compositionValue, setCompositionValue] = useSafeState<
+    string | undefined
+  >("");
 
   const handleLinkSchema = (schema: any) => {
     setShowModal(false);
@@ -45,7 +45,7 @@ const EmptyItem: React.FC<Props> = (props) => {
   };
 
   const onCompositionEnd = (e: any) => {
-    if (e?.type === 'compositionend') {
+    if (e?.type === "compositionend") {
       isComposition.current = false;
       setCompositionValue(undefined);
       onNodeKeyChange(nodeKey, e.target.value);
@@ -65,23 +65,27 @@ const EmptyItem: React.FC<Props> = (props) => {
     <>
       <LinkModal open={showModal} onLinkSchema={handleLinkSchema} />
       <div className={cn(slots["schema-td"], slots["table-td"])}>
-        <EmptyWarper $token={themeToken}>
-          <div className={cn(slots["schema-td-warper"], slots["schema-width-auto"])}>
+        <div className={styles.container}>
+          <div
+            className={cn(
+              slots["schema-td-warper"],
+              slots["schema-width-auto"],
+            )}
+          >
             {IndentPanel(deepIndex)}
             <Input
               size="small"
               spellCheck={false}
               readOnly={false}
-              style={{ width: 140, border: 'none', boxShadow: 'none' }}
-              placeholder={t('common.schema.field_name')}
+              style={{ width: 140, border: "none", boxShadow: "none" }}
+              placeholder={t("common.schema.field_name")}
               value={compositionValue || `${nodeKey}`}
               onChange={handleChangeKey}
               onCompositionStart={onCompositionEnd}
               onCompositionUpdate={onCompositionEnd}
               onCompositionEnd={onCompositionEnd}
             />
-            <div className={slots["text-panel"]}>
-            </div>
+            <div className={slots["text-panel"]}></div>
             <div className={slots["btn-list"]}>
               <Button
                 icon={<IconFont type="icon-delete" />}
@@ -91,7 +95,7 @@ const EmptyItem: React.FC<Props> = (props) => {
               ></Button>
             </div>
           </div>
-        </EmptyWarper>
+        </div>
       </div>
     </>
   );

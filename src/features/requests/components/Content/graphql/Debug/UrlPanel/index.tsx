@@ -1,29 +1,29 @@
+import styles from "../../../style.module.css";
+import styles2 from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { memo, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { memo, useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Dropdown, Flex, MenuProps, Tree } from '@/shared/ui/base';
-import Button from '@/shared/ui/Button';
-import i18next from 'i18next';
-import produce from 'immer';
-import { cloneDeep, head, isEqual } from 'lodash';
+import { Dropdown, Flex, MenuProps, Tree } from "@/shared/ui/base";
+import Button from "@/shared/ui/Button";
+import i18next from "i18next";
+import produce from "immer";
+import { cloneDeep, head, isEqual } from "lodash";
 
-import UrlGroup from '@/features/requests/components/UrlGroup';
-import { IconFont } from '@/shared/ui';
-import { SaveDropDownContainer } from '@/features/requests/components/Content/style';
-import { useApis, useUserConfig } from '@/app/store';
-import { ApiComponentType } from '@/features/requests/types/graphql';
-import { getCollectionServerId } from '@/features/requests/utils/apis';
-import { convertToSaveFolderTree } from '@/shared/utils/common';
+import UrlGroup from "@/features/requests/components/UrlGroup";
+import { IconFont } from "@/shared/ui";
 
-import { UrlPanelContainer } from './style';
-import { useSafeState } from 'ahooks';
-import { AnyObject } from '@/shared/types/common';
+import { useApis, useUserConfig } from "@/app/store";
+import { ApiComponentType } from "@/features/requests/types/graphql";
+import { getCollectionServerId } from "@/features/requests/utils/apis";
+import { convertToSaveFolderTree } from "@/shared/utils/common";
 
-const items: MenuProps['items'] = [
+import { AnyObject } from "@/shared/types/common";
+
+const items: MenuProps["items"] = [
   {
-    label: i18next.t('api.run.send_save'),
-    key: 'send_and_save',
+    label: i18next.t("api.run.send_save"),
+    key: "send_and_save",
   },
 ];
 
@@ -34,9 +34,11 @@ const menuProps = {
 const Index = memo((props: ApiComponentType) => {
   const { t } = useTranslation();
   const { apisData, onApisDataChange } = props;
-  const updateCurrentSendingData = useApis(store => store.updateCurrentSendingData);
+  const updateCurrentSendingData = useApis(
+    (store) => store.updateCurrentSendingData,
+  );
   const curApiSendingData = useApis((state) => state.currentSendingData);
-  const apisActiveData = useApis(store => store.apisActiveData);
+  const apisActiveData = useApis((store) => store.apisActiveData);
   const apiDetailsData = useApis((state) => state.apiDetailsData);
   const apiOriginDetailsList = useApis((store) => store.apiOriginDetailsList);
 
@@ -48,42 +50,48 @@ const Index = memo((props: ApiComponentType) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const tempServerId = getCollectionServerId(apisActiveData?.target_id, apiOriginDetailsList.reduce((pre: any, cur) => {
-      if (cur?.target_id) {
-        pre[cur.target_id] = cur;
-      }
-      return pre;
-    }, {}));
+    const tempServerId = getCollectionServerId(
+      apisActiveData?.target_id,
+      apiOriginDetailsList.reduce((pre: any, cur) => {
+        if (cur?.target_id) {
+          pre[cur.target_id] = cur;
+        }
+        return pre;
+      }, {}),
+    );
     updateCurrentServerId(tempServerId);
   }, [apiOriginDetailsList]);
 
-  const isSending = isEqual(curApiSendingData?.sendStatus, 'sending');
+  const isSending = isEqual(curApiSendingData?.sendStatus, "sending");
 
   const urlGroupData = useMemo(
     () => ({
       url: apisData.url,
     }),
-    [apisData]
+    [apisData],
   );
   const handleChange = (key: string, value: string) => {
     const result = produce(apisData, (draft: AnyObject) => {
-      draft[key] = value || '';
+      draft[key] = value || "";
     });
     onApisDataChange(result);
   };
 
   const handleSend = () => {
-    updateCurrentSendingData({ sendStatus: 'sending' });
+    updateCurrentSendingData({ sendStatus: "sending" });
     window?.vscode.postMessage({
-      action: 'sendApi',
+      action: "sendApi",
       data: apisData,
-      option:{
+      option: {
         server_id: currentServerId,
-      }
+      },
     });
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, isEnvVisible?: boolean) => {
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+    isEnvVisible?: boolean,
+  ) => {
     if (isEnvVisible) {
       return;
     }
@@ -102,8 +110,8 @@ const Index = memo((props: ApiComponentType) => {
     try {
       const result = cloneDeep(apisData);
       window?.vscode.postMessage({
-        action: 'saveApiData',
-        data: result
+        action: "saveApiData",
+        data: result,
       });
     } catch (err) {
     } finally {
@@ -112,7 +120,7 @@ const Index = memo((props: ApiComponentType) => {
   };
 
   const dropdownRender = () => (
-    <SaveDropDownContainer>
+    <div className={styles.saveDropDown}>
       <Tree
         height={250}
         blockNode
@@ -122,21 +130,23 @@ const Index = memo((props: ApiComponentType) => {
           const parent_id = head(keys);
           const result = cloneDeep(apisData);
           window?.vscode.postMessage({
-            action: 'saveApiData',
-            data: { ...result, parent_id: parent_id as string }
+            action: "saveApiData",
+            data: { ...result, parent_id: parent_id as string },
           });
           setOpen(false);
         }}
-        fieldNames={{ title: 'label' }}
+        fieldNames={{ title: "label" }}
         treeData={convertToSaveFolderTree(apiDetailsData)}
         titleRender={(nodeData) => {
-          return <div className={slots["dropdown-tree-title"]}>{nodeData.label}</div>;
+          return (
+            <div className={slots["dropdown-tree-title"]}>{nodeData.label}</div>
+          );
         }}
       />
-    </SaveDropDownContainer>
+    </div>
   );
   return (
-    <UrlPanelContainer>
+    <div className={styles2.container}>
       <UrlGroup
         className={slots["url-group-wrap"]}
         type="graphql"
@@ -149,25 +159,33 @@ const Index = memo((props: ApiComponentType) => {
         style={{
           paddingRight: "0",
         }}
-        urlGroupExtraContent={<Button
-          type="primary"
-          size="large"
-          style={{ width: 'max-content',borderRadius: "0 4px 4px 0",marginLeft:'4px' }}
-          onClick={() => {
-            handleSend();
-          }}
-          disabled={isSending}
-        >
-          {isSending ? `${t('api.run.sending')}...` : t('api.run.send')}
-        </Button>}
+        urlGroupExtraContent={
+          <Button
+            type="primary"
+            size="large"
+            style={{
+              width: "max-content",
+              borderRadius: "0 4px 4px 0",
+              marginLeft: "4px",
+            }}
+            onClick={() => {
+              handleSend();
+            }}
+            disabled={isSending}
+          >
+            {isSending ? `${t("api.run.sending")}...` : t("api.run.send")}
+          </Button>
+        }
       />
-      <Flex style={{marginLeft:'4px'}} gap={12}>
+      <Flex style={{ marginLeft: "4px" }} gap={12}>
         <Dropdown.Button
-          getPopupContainer={(triggerNode) => triggerNode.parentNode as HTMLElement}
+          getPopupContainer={(triggerNode) =>
+            triggerNode.parentNode as HTMLElement
+          }
           placement="bottomRight"
           type="default"
           size="small"
-          trigger={['click']}
+          trigger={["click"]}
           icon={<IconFont type="icon-drop-down" />}
           loading={saveLoading}
           open={open}
@@ -178,10 +196,10 @@ const Index = memo((props: ApiComponentType) => {
           destroyPopupOnHide
           dropdownRender={dropdownRender}
         >
-          {t('api.run.save')}
+          {t("api.run.save")}
         </Dropdown.Button>
       </Flex>
-    </UrlPanelContainer>
+    </div>
   );
 });
 

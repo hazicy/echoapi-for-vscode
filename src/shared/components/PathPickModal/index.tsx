@@ -1,41 +1,54 @@
+import styles from "./style.module.css";
+import Modal from "@/shared/ui/Modal";
+import classNames from "classnames";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, useEffect, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC, useEffect, useMemo, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Input, ModalProps } from '@/shared/ui/base';
+import { Input, ModalProps } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import { isJson, isXml } from 'apipost-tools';
-import { XMLBuilder } from 'fast-xml-parser';
-import jsonpath from 'jsonpath';
-import { isArray, isEmpty, isEqual, isNull, isObject, isString, isUndefined } from 'lodash';
-import X2JS from 'x2js';
-import { DOMParser, XMLSerializer } from 'xmldom';
-import xpath from 'xpath';
+import { useSafeState } from "ahooks";
+import { isJson, isXml } from "apipost-tools";
+import { XMLBuilder } from "fast-xml-parser";
+import jsonpath from "jsonpath";
+import {
+  isArray,
+  isEmpty,
+  isEqual,
+  isNull,
+  isObject,
+  isString,
+  isUndefined,
+} from "lodash";
+import X2JS from "x2js";
+import { DOMParser, XMLSerializer } from "xmldom";
+import xpath from "xpath";
 
-import CodeEditor from '@/shared/components/CodeEditor';
-
-import { PathPickModalContainer } from './style';
+import CodeEditor from "@/shared/components/CodeEditor";
 
 type Props = ModalProps & {
   defaultValue?: string;
-  type: 'json' | 'xml';
+  type: "json" | "xml";
 };
 
-const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) => {
+const PathPickModal: FC<Props> = ({
+  defaultValue = "",
+  type,
+  ...resetProps
+}) => {
   const { t } = useTranslation();
   const refEditor = useRef<any>();
 
   const [value, setValue] = useSafeState(defaultValue);
-  const [expression, setExpression] = useSafeState('');
+  const [expression, setExpression] = useSafeState("");
 
   useEffect(() => {
-    if (isEmpty(defaultValue) && isEqual(type, 'json')) {
-      setValue('{}');
+    if (isEmpty(defaultValue) && isEqual(type, "json")) {
+      setValue("{}");
     } else {
       setValue(defaultValue);
     }
-    setExpression('');
+    setExpression("");
   }, [type]);
 
   useEffect(() => {
@@ -43,7 +56,7 @@ const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) =>
       refEditor.current?.formatEditor();
     }, 0);
     // json
-    if (isEqual(type, 'json')) {
+    if (isEqual(type, "json")) {
       // If it is XML
       if (isXml(defaultValue)) {
         try {
@@ -55,13 +68,13 @@ const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) =>
         return;
       }
       if (isEmpty(defaultValue)) {
-        setValue('{}');
+        setValue("{}");
         return;
       }
     }
 
     // xml
-    if (isEqual(type, 'xml')) {
+    if (isEqual(type, "xml")) {
       // If it is JSON, need to convert to XML
       if (isJson(defaultValue)) {
         try {
@@ -77,8 +90,8 @@ const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) =>
   }, [defaultValue, resetProps.open]);
 
   const computedJsonPathValue = useMemo(() => {
-    let result = t('supplement.no_pick_result');
-    if (!isString(value) || isEqual(type, 'xml')) {
+    let result = t("supplement.no_pick_result");
+    if (!isString(value) || isEqual(type, "xml")) {
       return result;
     }
     try {
@@ -88,13 +101,13 @@ const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) =>
       }
       const queryResult = jsonpath.value(resultObj, expression);
       if (isObject(queryResult)) {
-        return JSON.stringify(queryResult, null, '\t');
+        return JSON.stringify(queryResult, null, "\t");
       }
       if (isNull(queryResult)) {
-        return 'null';
+        return "null";
       }
       if (isUndefined(queryResult)) {
-        return t('supplement.no_pick_result');
+        return t("supplement.no_pick_result");
       }
       return queryResult;
     } catch (err: any) {
@@ -105,12 +118,12 @@ const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) =>
   }, [value, expression, type]);
 
   const computedXmlPathValue = useMemo(() => {
-    let result = t('supplement.no_pick_result');
-    if (!isString(value) || isEqual(type, 'json')) {
+    let result = t("supplement.no_pick_result");
+    if (!isString(value) || isEqual(type, "json")) {
       return result;
     }
     try {
-      const resultObj = new DOMParser().parseFromString(value, 'text/xml');
+      const resultObj = new DOMParser().parseFromString(value, "text/xml");
       const nodes = xpath.select(expression, resultObj);
       const tempResult: any[] = [];
       if (!isArray(nodes)) {
@@ -125,7 +138,7 @@ const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) =>
       if (isEmpty(tempResult)) {
         return result;
       }
-      return tempResult.join('\n');
+      return tempResult.join("\n");
     } catch (err: any) {
       result = err.toString();
     }
@@ -133,31 +146,32 @@ const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) =>
   }, [value, expression, type]);
 
   const computedInfo = useMemo(() => {
-    if (isEqual(type, 'json')) {
+    if (isEqual(type, "json")) {
       return {
-        title: 'JSON',
-        modalTitle: t('supplement.json_path_pick'),
-        placeholder: t('supplement.jsonpath_exp_tip'),
-        language: 'json',
+        title: "JSON",
+        modalTitle: t("supplement.json_path_pick"),
+        placeholder: t("supplement.jsonpath_exp_tip"),
+        language: "json",
         computedPathValue: computedJsonPathValue,
       };
     }
     return {
-      title: 'XML',
-      modalTitle: t('supplement.xpath_tool'),
-      placeholder: t('supplement.xpath_exp_tip'),
-      language: 'xml',
+      title: "XML",
+      modalTitle: t("supplement.xpath_tool"),
+      placeholder: t("supplement.xpath_exp_tip"),
+      language: "xml",
       computedPathValue: computedXmlPathValue,
     };
   }, [type, computedJsonPathValue, computedXmlPathValue]);
 
   return (
-    <PathPickModalContainer
+    <Modal
       width={760}
       footer={null}
       destroyOnClose
       title={computedInfo.modalTitle}
       {...resetProps}
+      className={classNames(styles.container, resetProps.className)}
     >
       <Input
         placeholder={computedInfo.placeholder}
@@ -179,7 +193,9 @@ const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) =>
           </div>
         </div>
         <div className={slots["layout-item"]}>
-          <div className={slots["item-title"]}>{t('supplement.pick_result')}</div>
+          <div className={slots["item-title"]}>
+            {t("supplement.pick_result")}
+          </div>
           <div className={slots["item-content"]}>
             <CodeEditor
               language="text"
@@ -190,7 +206,7 @@ const PathPickModal: FC<Props> = ({ defaultValue = '', type, ...resetProps }) =>
           </div>
         </div>
       </div>
-    </PathPickModalContainer>
+    </Modal>
   );
 };
 

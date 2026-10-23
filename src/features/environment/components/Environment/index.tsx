@@ -1,18 +1,19 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useEffect, useState } from 'react';
-import { Button } from '@/shared/ui/base';
-import { IconFont } from '@/shared/ui';
-import { useTranslation } from 'react-i18next';
-import { LeftMenuContainer, Render, EnvironmentContainer } from './style.ts';
-import { ENV_LOCAL_ITEM, ENV_MANAGE_ENUM } from './constants';
-import CookieManage from './components/CookieManage';
-import EnvManage from './components/EnvManage';
-import ParamsManage from './components/ParamsManage';
-import VariableManage from './components/VariableManage';
-import { head } from 'lodash';
-import Menus from './Menus';
-import { useProjectConfig } from '@/app/store';
-import { snowflakeId } from 'apipost-tools';
+import { useEffect, useState } from "react";
+import { Button } from "@/shared/ui/base";
+import { IconFont } from "@/shared/ui";
+import { useTranslation } from "react-i18next";
+
+import { ENV_LOCAL_ITEM, ENV_MANAGE_ENUM } from "./constants";
+import CookieManage from "./components/CookieManage";
+import EnvManage from "./components/EnvManage";
+import ParamsManage from "./components/ParamsManage";
+import VariableManage from "./components/VariableManage";
+import { head } from "lodash";
+import Menus from "./Menus";
+import { useProjectConfig } from "@/app/store";
+import { snowflakeId } from "apipost-tools";
 
 interface Props {
   open: boolean;
@@ -32,31 +33,30 @@ const Environment = (props: Props) => {
     updateEstablish,
     updateEnvSettingKeys,
   } = useProjectConfig();
-  
+
   useEffect(() => {
-    
     if (open) {
       // setSelectedKeys([ENV_MANAGE_ENUM.cookie]);
       envMenusInit();
     } else {
       updateEnvList(envList?.filter((e) => !e.isLocal));
-      updateEnvSettingKeys('');
+      updateEnvSettingKeys("");
     }
   }, [open, envSettingKeys]);
 
   const envMenusInit = async () => {
     try {
-     if (envSettingKeys) {
+      if (envSettingKeys) {
         if (
           [
             ENV_MANAGE_ENUM.cookie,
             ENV_MANAGE_ENUM.globalParm,
             ENV_MANAGE_ENUM.globalVariable,
-          ].includes(envSettingKeys as ENV_MANAGE_ENUM) || 
+          ].includes(envSettingKeys as ENV_MANAGE_ENUM) ||
           envList.some((e) => e.env_id === envSettingKeys)
         ) {
           setSelectedKeys([envSettingKeys]);
-        }else{
+        } else {
           setSelectedKeys([ENV_MANAGE_ENUM.cookie]);
         }
       } else {
@@ -80,7 +80,7 @@ const Environment = (props: Props) => {
       if (envList?.some((e) => e.isLocal)) return;
       const info = {
         ...ENV_LOCAL_ITEM,
-        server_list: serverList?.map((e) => ({ ...e, uri: '' })),
+        server_list: serverList?.map((e) => ({ ...e, uri: "" })),
         env_id: snowflakeId(),
       };
       setSelectedKeys([info.env_id]);
@@ -91,10 +91,13 @@ const Environment = (props: Props) => {
   };
 
   return (
-    <EnvironmentContainer>
-      <LeftMenuContainer>
+    <div className={styles.container}>
+      <div className={styles.leftMenu}>
         <div className={slots["env-menu-top"]}>
-          <Menus selectedKeys={selectedKeys} setSelectedKeys={setSelectedKeys} />
+          <Menus
+            selectedKeys={selectedKeys}
+            setSelectedKeys={setSelectedKeys}
+          />
         </div>
         <Button
           className={slots["env-menu-new"]}
@@ -102,28 +105,32 @@ const Environment = (props: Props) => {
           type="dashed"
           icon={<IconFont type="icon-add-line" />}
         >
-          {t('global_setting.create')}
+          {t("global_setting.create")}
         </Button>
-      </LeftMenuContainer>
+      </div>
 
-      <Render>
+      <div className={styles.render}>
         {head(selectedKeys) === ENV_MANAGE_ENUM.cookie && <CookieManage />}
-        {head(selectedKeys) === ENV_MANAGE_ENUM.globalParm && <ParamsManage defaultTabKey={globalParamsTabKey}/>}
-        {head(selectedKeys) === ENV_MANAGE_ENUM.globalVariable && <VariableManage />}
+        {head(selectedKeys) === ENV_MANAGE_ENUM.globalParm && (
+          <ParamsManage defaultTabKey={globalParamsTabKey} />
+        )}
+        {head(selectedKeys) === ENV_MANAGE_ENUM.globalVariable && (
+          <VariableManage />
+        )}
         {![
           ENV_MANAGE_ENUM.cookie,
           ENV_MANAGE_ENUM.globalParm,
           ENV_MANAGE_ENUM.globalVariable,
         ].includes(head(selectedKeys)) && (
-            <EnvManage
-              changeKey={setSelectedKeys}
-              editEnvId={head(selectedKeys)}
-              envMenus={envList}
-            />
-          )}
-      </Render>
-    </EnvironmentContainer>
-  )
-}
+          <EnvManage
+            changeKey={setSelectedKeys}
+            editEnvId={head(selectedKeys)}
+            envMenus={envList}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
 
-export default Environment
+export default Environment;

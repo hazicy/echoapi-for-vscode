@@ -1,28 +1,37 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import { forwardRef, memo, useEffect, useImperativeHandle, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import {
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+} from "react";
+import { useTranslation } from "react-i18next";
 
-import {Flex, SegmentedProps, Select, message } from '@/shared/ui/base';
+import { Flex, SegmentedProps, Select, message } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import { find, forEach, isArray, isPlainObject, map } from 'lodash';
+import { useSafeState } from "ahooks";
+import { find, forEach, isArray, isPlainObject, map } from "lodash";
 
-import SegmentedTabs from '@/shared/components/SegmentedTabs';
-import IconFont from '@/shared/ui/IconFont';
-import { BaseResponse } from '@/features/requests/types/response';
-import { ApiSendingData } from '@/features/requests/types/send';
-import { copyStringToClipboard } from '@/shared/utils/common';
-import { parseStreamToRaw } from '@/shared/utils/parse';
+import SegmentedTabs from "@/shared/components/SegmentedTabs";
+import IconFont from "@/shared/ui/IconFont";
+import { BaseResponse } from "@/features/requests/types/response";
+import { ApiSendingData } from "@/features/requests/types/send";
+import { copyStringToClipboard } from "@/shared/utils/common";
+import { parseStreamToRaw } from "@/shared/utils/parse";
 
-import { RAW_ENCODE, RESPONSE_RESULT_TABS_LIST, RESPONSE_TYPE } from './constants';
+import {
+  RAW_ENCODE,
+  RESPONSE_RESULT_TABS_LIST,
+  RESPONSE_TYPE,
+} from "./constants";
 
-import { ResponseResultWrap } from './style';
-import styles from './style.module.css';
+import styles from "./style.module.css";
 
 interface Props {
   rawHtml?: string;
   mode?: string;
-  data?: ApiSendingData['response'];
+  data?: ApiSendingData["response"];
   defaultRawEncode?: string;
   html?: string | null;
   resultIncludesTabs?: string[];
@@ -37,7 +46,7 @@ interface Props {
 const ResponseResult = forwardRef((props: Props, ref) => {
   const { t } = useTranslation();
   const {
-    resultIncludesTabs = ['beautify', 'native', 'preview', 'visualization'],
+    resultIncludesTabs = ["beautify", "native", "preview", "visualization"],
     defaultRawEncode,
     data,
     rawHtml,
@@ -46,13 +55,13 @@ const ResponseResult = forwardRef((props: Props, ref) => {
     setMode,
   } = props || {};
 
-  const [rawEncode, setRawEncode] = useSafeState(defaultRawEncode || 'utf8');
-  const [rawType, setRawType] = useSafeState<string>('');
+  const [rawEncode, setRawEncode] = useSafeState(defaultRawEncode || "utf8");
+  const [rawType, setRawType] = useSafeState<string>("");
   const [tabsValue, setTabsValue] = useSafeState<string | number>();
   const [warp, setWarp] = useSafeState(true);
 
   useEffect(() => {
-    setRawType(data?.mime_type.ext || 'json');
+    setRawType(data?.mime_type.ext || "json");
   }, [data?.mime_type.ext]);
 
   useImperativeHandle(ref, () => {
@@ -64,7 +73,10 @@ const ResponseResult = forwardRef((props: Props, ref) => {
   const result = useMemo(() => {
     const resultList: any = [];
     forEach(resultIncludesTabs, (key: string) => {
-      const item = find(RESPONSE_RESULT_TABS_LIST, (item) => item.value === key);
+      const item = find(
+        RESPONSE_RESULT_TABS_LIST,
+        (item) => item.value === key,
+      );
       if (item) {
         resultList.push(item);
       }
@@ -79,20 +91,24 @@ const ResponseResult = forwardRef((props: Props, ref) => {
 
   const parsedRawHtml = useMemo(() => {
     if (data?.stream?.data && isPlainObject(data?.mime_type)) {
-      if (rawType === 'auto') {
+      if (rawType === "auto") {
         return parseStreamToRaw(data?.stream?.data, data?.mime_type, rawEncode);
       } else {
         const mime_type = RESPONSE_TYPE?.find((e) => e.ext === rawType);
-        return parseStreamToRaw(data?.stream?.data, mime_type || data?.mime_type, rawEncode);
+        return parseStreamToRaw(
+          data?.stream?.data,
+          mime_type || data?.mime_type,
+          rawEncode,
+        );
       }
     }
 
-    return '';
+    return "";
   }, [data?.stream?.data, data?.mime_type, rawEncode, rawType]);
 
   const beautifyProps = {
     mode: rawType,
-    editorOptions: warp ? {} : { wordWrap: 'off' },
+    editorOptions: warp ? {} : { wordWrap: "off" },
   };
 
   const segmentedOptions =
@@ -113,24 +129,26 @@ const ResponseResult = forwardRef((props: Props, ref) => {
       }))) ||
     [];
 
-  const handleOptionsChange: SegmentedProps['onChange'] = (value) => {
+  const handleOptionsChange: SegmentedProps["onChange"] = (value) => {
     setTabsValue(value);
   };
 
   const handleCopy = () => {
     if (!rawHtml) {
-      message.error(t('supplement.clipboard_error'));
+      message.error(t("supplement.clipboard_error"));
       return;
     }
 
-    copyStringToClipboard(rawHtml, () => message.success(t('supplement.clipboard_success')));
+    copyStringToClipboard(rawHtml, () =>
+      message.success(t("supplement.clipboard_success")),
+    );
   };
 
   useEffect(() => {
     setMode?.(rawType);
   }, [rawType]);
   return (
-    <ResponseResultWrap>
+    <div className={styles.container}>
       <SegmentedTabs
         options={segmentedOptions}
         value={tabsValue}
@@ -145,10 +163,10 @@ const ResponseResult = forwardRef((props: Props, ref) => {
                 value: ext,
               }))}
               popupMatchSelectWidth={false}
-              value={rawType || 'json'}
+              value={rawType || "json"}
               onChange={(newVal: string) => {
-                if (newVal === 'auto') {
-                  setRawType(data?.mime_type?.ext || 'json');
+                if (newVal === "auto") {
+                  setRawType(data?.mime_type?.ext || "json");
                 } else {
                   setRawType(newVal);
                 }
@@ -161,14 +179,27 @@ const ResponseResult = forwardRef((props: Props, ref) => {
                 value: RAW_ENCODE[key],
               }))}
               popupMatchSelectWidth={false}
-              value={rawEncode || 'utf8'}
+              value={rawEncode || "utf8"}
               onChange={(newVal: string) => setRawEncode(newVal)}
             />
-            <button type="button" className={styles.toolButton} aria-label="Copy response" title={t('common.copy')} onClick={handleCopy}>
+            <button
+              type="button"
+              className={styles.toolButton}
+              aria-label="Copy response"
+              title={t("common.copy")}
+              onClick={handleCopy}
+            >
               <IconFont type="icon-copy" />
             </button>
             {warpVisible && (
-              <button type="button" className={styles.toolButton} aria-label="Toggle word wrap" aria-pressed={warp} title="Toggle word wrap" onClick={() => setWarp(!warp)}>
+              <button
+                type="button"
+                className={styles.toolButton}
+                aria-label="Toggle word wrap"
+                aria-pressed={warp}
+                title="Toggle word wrap"
+                onClick={() => setWarp(!warp)}
+              >
                 <IconFont type="icon-huanhang" />
               </button>
             )}
@@ -176,7 +207,7 @@ const ResponseResult = forwardRef((props: Props, ref) => {
           </Flex>
         }
       />
-    </ResponseResultWrap>
+    </div>
   );
 });
 

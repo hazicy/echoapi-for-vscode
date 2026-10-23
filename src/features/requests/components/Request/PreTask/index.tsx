@@ -1,33 +1,32 @@
-import { FC, FunctionComponent, memo } from 'react';
-import { useTranslation } from 'react-i18next';
+import styles from "./style.module.css";
+import { FC, FunctionComponent, memo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex } from '@/shared/ui/base';
+import { Flex } from "@/shared/ui/base";
 
-import { useMemoizedFn, useSafeState } from 'ahooks';
-import { snowflakeId } from 'apipost-tools';
-import produce from 'immer';
-import { find, findIndex, isEqual, map } from 'lodash';
+import { useMemoizedFn, useSafeState } from "ahooks";
+import { snowflakeId } from "apipost-tools";
+import produce from "immer";
+import { find, findIndex, isEqual, map } from "lodash";
 
-import { SCRIPT_TYPE } from '@/features/requests/components/CustomScript/constants';
-import SortableCollapse from '@/shared/components/SortableCollapse';
-import { DRAG_MODE } from '@/shared/components/SortableCollapse/types';
-import { Tooltip } from '@/shared/ui';
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
-import Popover from '@/shared/ui/Popover';
-import { APIS_TASK_TYPES_ENUM } from '@/features/requests/constants';
-import { STATUS_CODE } from '@/shared/constants/common';
-import useTheme from '@/shared/hooks/useTheme';
-import { ApiRequest, TaskBaseItem } from '@/features/requests/types/request';
-import { ChangeFuncType } from '@/shared/types/common';
-import { openUrl } from '@/shared/utils/open';
+import { SCRIPT_TYPE } from "@/features/requests/components/CustomScript/constants";
+import SortableCollapse from "@/shared/components/SortableCollapse";
+import { DRAG_MODE } from "@/shared/components/SortableCollapse/types";
+import { Tooltip } from "@/shared/ui";
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
+import Popover from "@/shared/ui/Popover";
+import { APIS_TASK_TYPES_ENUM } from "@/features/requests/constants";
+import { STATUS_CODE } from "@/shared/constants/common";
+import useTheme from "@/shared/hooks/useTheme";
+import { ApiRequest, TaskBaseItem } from "@/features/requests/types/request";
+import { ChangeFuncType } from "@/shared/types/common";
+import { openUrl } from "@/shared/utils/open";
 
-import CustomScriptContent from '../TaskComponents/CustomScript';
-import TaskHeader from '../TaskComponents/TaskHeader';
-import Wait from '../TaskComponents/Wait';
-import { DEFAULT_DATA, PRE_TASK_ADD_MENUS_LIST } from '../constants';
-
-import { RequestPreTaskContainer } from './style';
+import CustomScriptContent from "../TaskComponents/CustomScript";
+import TaskHeader from "../TaskComponents/TaskHeader";
+import Wait from "../TaskComponents/Wait";
+import { DEFAULT_DATA, PRE_TASK_ADD_MENUS_LIST } from "../constants";
 
 const TASK_CONTENT_MAP: {
   [key: string]: FunctionComponent<{
@@ -41,7 +40,7 @@ const TASK_CONTENT_MAP: {
 } as const;
 
 interface Props {
-  value: ApiRequest['pre_tasks'];
+  value: ApiRequest["pre_tasks"];
   onChange: ChangeFuncType<ApiRequest>;
 }
 
@@ -57,12 +56,15 @@ const RequestPreTask: FC<Props> = memo(
           block
           type="text"
           mode="menu-item"
-          style={{ width: 200, justifyContent: 'flex-start' }}
+          style={{ width: 200, justifyContent: "flex-start" }}
           icon={<IconFont style={{ color: item.color }} type={item.icon} />}
           key={item.key}
           onClick={() => handleAdd(item.key)}
         >
-          <Flex justify="space-between" style={{ display: 'flex', width: '100%' }}>
+          <Flex
+            justify="space-between"
+            style={{ display: "flex", width: "100%" }}
+          >
             {item.name}
             {item?.tips && (
               <Tooltip
@@ -104,7 +106,7 @@ const RequestPreTask: FC<Props> = memo(
           });
         });
 
-        onChange('pre_tasks', newRequestData);
+        onChange("pre_tasks", newRequestData);
       } catch (err) {
         // err
       } finally {
@@ -112,13 +114,15 @@ const RequestPreTask: FC<Props> = memo(
       }
     };
 
-    const handleTaskItemChange = useMemoizedFn((index: number, newValue: TaskBaseItem) => {
-      const newRequestData = produce(value, (draft) => {
-        draft![index] = newValue;
-      });
+    const handleTaskItemChange = useMemoizedFn(
+      (index: number, newValue: TaskBaseItem) => {
+        const newRequestData = produce(value, (draft) => {
+          draft![index] = newValue;
+        });
 
-      onChange('pre_tasks', newRequestData);
-    });
+        onChange("pre_tasks", newRequestData);
+      },
+    );
 
     const handleOpenChange = (newOpen: boolean) => {
       setPopoverOpen(newOpen);
@@ -126,14 +130,16 @@ const RequestPreTask: FC<Props> = memo(
 
     const renderCustomHeader = useMemoizedFn((item: TaskBaseItem) => {
       const currentIndex = findIndex(value, (findItem: TaskBaseItem) =>
-        isEqual(item.id, findItem?.id)
+        isEqual(item.id, findItem?.id),
       );
 
       if (item.type === APIS_TASK_TYPES_ENUM.WAIT) {
         return (
           <Wait
             value={item}
-            onChange={(value: TaskBaseItem) => handleTaskItemChange(currentIndex, value)}
+            onChange={(value: TaskBaseItem) =>
+              handleTaskItemChange(currentIndex, value)
+            }
           />
         );
       }
@@ -141,7 +147,9 @@ const RequestPreTask: FC<Props> = memo(
       return (
         <TaskHeader
           value={item}
-          onChange={(value: TaskBaseItem) => handleTaskItemChange(currentIndex, value)}
+          onChange={(value: TaskBaseItem) =>
+            handleTaskItemChange(currentIndex, value)
+          }
         />
       );
     });
@@ -157,41 +165,45 @@ const RequestPreTask: FC<Props> = memo(
 
       const Component = TASK_CONTENT_MAP[item.type];
       const currentIndex = findIndex(value, (findItem: TaskBaseItem) =>
-        isEqual(item.id, findItem?.id)
+        isEqual(item.id, findItem?.id),
       );
 
       return (
         <Component
           value={item}
           mode={SCRIPT_TYPE.SCRIPT}
-          onChange={(value: TaskBaseItem) => handleTaskItemChange(currentIndex, value)}
+          onChange={(value: TaskBaseItem) =>
+            handleTaskItemChange(currentIndex, value)
+          }
         />
       );
     });
 
-    const onSwitchChange = useMemoizedFn((checked: boolean, record: TaskBaseItem) => {
-      const newRequestData = produce(value, (draft) => {
-        const currentIndex = findIndex(value, (findItem: TaskBaseItem) =>
-          isEqual(record.id, findItem?.id)
-        );
-        draft![currentIndex] = {
-          ...record,
-          enabled: checked ? STATUS_CODE.ENABLE : STATUS_CODE.DISABLE,
-        };
-      });
+    const onSwitchChange = useMemoizedFn(
+      (checked: boolean, record: TaskBaseItem) => {
+        const newRequestData = produce(value, (draft) => {
+          const currentIndex = findIndex(value, (findItem: TaskBaseItem) =>
+            isEqual(record.id, findItem?.id),
+          );
+          draft![currentIndex] = {
+            ...record,
+            enabled: checked ? STATUS_CODE.ENABLE : STATUS_CODE.DISABLE,
+          };
+        });
 
-      onChange('pre_tasks', newRequestData);
-    });
+        onChange("pre_tasks", newRequestData);
+      },
+    );
 
     const onDelete = useMemoizedFn((item: TaskBaseItem) => {
       const newRequestData = produce(value, (draft) => {
         const currentIndex = findIndex(value, (findItem: TaskBaseItem) =>
-          isEqual(item.id, findItem?.id)
+          isEqual(item.id, findItem?.id),
         );
         draft?.splice(currentIndex, 1);
       });
 
-      onChange('pre_tasks', newRequestData);
+      onChange("pre_tasks", newRequestData);
     });
 
     const handleDragEnd = useMemoizedFn(
@@ -204,8 +216,12 @@ const RequestPreTask: FC<Props> = memo(
         if (!current || !target) return;
 
         const newRequestData = produce(value, (draft) => {
-          const currentIdx = findIndex(value, (findItem) => isEqual(findItem?.id, current?.id));
-          const targetIdx = findIndex(value, (findItem) => isEqual(findItem?.id, target?.id));
+          const currentIdx = findIndex(value, (findItem) =>
+            isEqual(findItem?.id, current?.id),
+          );
+          const targetIdx = findIndex(value, (findItem) =>
+            isEqual(findItem?.id, target?.id),
+          );
 
           draft?.splice(currentIdx, 1);
 
@@ -218,24 +234,26 @@ const RequestPreTask: FC<Props> = memo(
           }
         });
 
-        onChange('pre_tasks', newRequestData);
-      }
+        onChange("pre_tasks", newRequestData);
+      },
     );
 
     return (
-      <RequestPreTaskContainer>
+      <div className={styles.container}>
         <SortableCollapse
           rowKey="id"
           isTree={false}
           showOrderNumber={false}
           notChildren={[APIS_TASK_TYPES_ENUM.WAIT]}
           isDefaultActiveItems={[APIS_TASK_TYPES_ENUM.CUSTOM_SCRIPT]}
-          sortItemList={(value || []).filter(i=> !['database'].includes(i?.type) )}
+          sortItemList={(value || []).filter(
+            (i) => !["database"].includes(i?.type),
+          )}
           customHeader={renderCustomHeader}
           customContent={renderCustomContent}
           handleDragEnd={handleDragEnd}
           defaultTools={{
-            switchKey: 'enabled',
+            switchKey: "enabled",
             onSwitchChange,
             onDelete,
           }}
@@ -248,14 +266,18 @@ const RequestPreTask: FC<Props> = memo(
           open={popoverOpen}
           onOpenChange={handleOpenChange}
         >
-          <Button size="large" icon={<IconFont type="icon-add-line" />} type="dashed">
-            {t('common.add')}
+          <Button
+            size="large"
+            icon={<IconFont type="icon-add-line" />}
+            type="dashed"
+          >
+            {t("common.add")}
           </Button>
         </Popover>
-      </RequestPreTaskContainer>
+      </div>
     );
   },
-  (prevProps, nextProps) => isEqual(prevProps, nextProps)
+  (prevProps, nextProps) => isEqual(prevProps, nextProps),
 );
 
 export default RequestPreTask;

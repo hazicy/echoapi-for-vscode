@@ -1,14 +1,13 @@
-import { FC, ReactNode, useMemo } from 'react';
+import styles from "./style.module.css";
+import { FC, ReactNode, useMemo } from "react";
 
-import { TabPaneProps, Tabs, TabsProps } from '@/shared/ui/base';
+import { TabPaneProps, Tabs, TabsProps } from "@/shared/ui/base";
 
-import { map } from 'lodash';
+import { map } from "lodash";
 
-import HeaderCount from './HeaderCount';
+import HeaderCount from "./HeaderCount";
 
-import { LineTabsContainer } from './style';
-
-type LineTabsItems = Omit<TabPaneProps, 'tab'> & {
+type LineTabsItems = Omit<TabPaneProps, "tab"> & {
   key: string;
   label: ReactNode;
   countParams?: {
@@ -24,7 +23,6 @@ type Props = TabsProps & {
 };
 
 const LineTabs: FC<Props> = ({ items, wrapStyle, ...resetProps }) => {
-  
   const finalItems = useMemo(() => {
     return map(items, (item) => {
       return {
@@ -41,9 +39,9 @@ const LineTabs: FC<Props> = ({ items, wrapStyle, ...resetProps }) => {
   }, [items]);
 
   return (
-    <LineTabsContainer style={{ ...wrapStyle }}>
+    <div style={{ ...wrapStyle }} className={styles.container}>
       <Tabs items={finalItems} {...resetProps} animated={false} />
-    </LineTabsContainer>
+    </div>
   );
 };
 

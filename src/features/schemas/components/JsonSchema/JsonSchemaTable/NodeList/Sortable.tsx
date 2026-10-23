@@ -1,3 +1,4 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
 import {
   DndContext,
@@ -6,51 +7,60 @@ import {
   closestCenter,
   useSensor,
   useSensors,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 import {
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-import IconFont from '@/shared/ui/IconFont';
+import IconFont from "@/shared/ui/IconFont";
 
-import ItemNode from '../ItemNode';
-
-import { DragContainer } from './style';
+import ItemNode from "../ItemNode";
 
 export const SortableItem = ({ index, nodeProps }: any) => {
-  const { attributes, listeners, setNodeRef, transform, transition, setActivatorNodeRef } =
-    useSortable({
-      id: nodeProps.nodeKey,
-    });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    setActivatorNodeRef,
+  } = useSortable({
+    id: nodeProps.nodeKey,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
   };
   const DragHandle = (click: any) => (
-    <DragContainer>
+    <div className={styles.container}>
       <IconFont
         className={slots["drag-icon"]}
         onMouseDown={click}
         type="icon-drag"
         ref={setActivatorNodeRef}
         style={{
-          touchAction: 'none',
-          cursor: 'move',
+          touchAction: "none",
+          cursor: "move",
           fontSize: 10,
-          width: '20px',
-          justifyContent: 'center',
+          width: "20px",
+          justifyContent: "center",
         }}
         {...listeners}
       />
-    </DragContainer>
+    </div>
   );
   return (
-    <div className={slots["object-item"]} ref={setNodeRef} style={style} {...attributes}>
+    <div
+      className={slots["object-item"]}
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+    >
       <ItemNode DragHandle={DragHandle} key={index} {...nodeProps} />
     </div>
   );
@@ -62,10 +72,14 @@ export const SortableList = ({ listData, nodeProps, onDragEnd }: any) => {
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd} sensors={sensors}>
+    <DndContext
+      collisionDetection={closestCenter}
+      onDragEnd={onDragEnd}
+      sensors={sensors}
+    >
       <div className={slots["object-list"]}>
         <SortableContext
           strategy={verticalListSortingStrategy}

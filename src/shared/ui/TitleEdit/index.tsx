@@ -1,13 +1,19 @@
-import { FC } from 'react';
+import styles from "./style.module.css";
+import { Input } from "@/shared/ui/base";
+import classNames from "classnames";
+import { FC } from "react";
 
-import { InputProps } from '@/shared/ui/base';
-
-import { TitleEditInput } from './style';
+import { InputProps } from "@/shared/ui/base";
 
 type Props = InputProps;
 
 export const TitleEdit: FC<Props> = ({ ...resetProps }) => {
-  return <TitleEditInput {...resetProps} />;
+  return (
+    <Input
+      {...resetProps}
+      className={classNames(styles.container, resetProps.className)}
+    />
+  );
 };
 
 export default TitleEdit;

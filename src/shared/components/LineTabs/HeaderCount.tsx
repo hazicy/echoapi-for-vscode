@@ -1,9 +1,9 @@
-import { FC, useMemo } from 'react';
+import styles from "./style.module.css";
+import { FC, useMemo } from "react";
 
-import { isArray, isPlainObject, keys, size } from 'lodash';
+import { isArray, isPlainObject, keys, size } from "lodash";
 
-import { TabsHeaderCountContainer, TabsHeaderDotContainer } from './style';
-import slots from '@/shared/ui/base/slots.module.css';
+import slots from "@/shared/ui/base/slots.module.css";
 
 interface Props {
   dataSource?: any;
@@ -12,7 +12,12 @@ interface Props {
   label: any;
 }
 
-const HeaderCount: FC<Props> = ({ label, dataSource, showDot = false, customCalcFun }) => {
+const HeaderCount: FC<Props> = ({
+  label,
+  dataSource,
+  showDot = false,
+  customCalcFun,
+}) => {
   const calcCount = useMemo(() => {
     if (showDot) return 0;
 
@@ -31,16 +36,22 @@ const HeaderCount: FC<Props> = ({ label, dataSource, showDot = false, customCalc
   }, [dataSource, customCalcFun, showDot]);
 
   if (showDot) {
-    return <TabsHeaderCountContainer>
-      {label}
-      <TabsHeaderDotContainer />
-    </TabsHeaderCountContainer>;
+    return (
+      <span className={styles.tabsHeaderCount}>
+        {label}
+        <em className={styles.tabsHeaderDot} />
+      </span>
+    );
   }
 
-  return <TabsHeaderCountContainer>
-    {label}
-    {!!calcCount && calcCount > 0 && <span className={slots['tabs-count-badge']}>{calcCount}</span>}
-  </TabsHeaderCountContainer>;
+  return (
+    <span className={styles.tabsHeaderCount}>
+      {label}
+      {!!calcCount && calcCount > 0 && (
+        <span className={slots["tabs-count-badge"]}>{calcCount}</span>
+      )}
+    </span>
+  );
 };
 
 export default HeaderCount;

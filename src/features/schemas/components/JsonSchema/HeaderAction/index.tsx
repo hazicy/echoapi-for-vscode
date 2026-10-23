@@ -1,8 +1,9 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
 import React, { memo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Flex, Tooltip } from '@/shared/ui/base';
+import { Flex, Tooltip } from "@/shared/ui/base";
 
 import { isObject } from "lodash";
 
@@ -13,8 +14,6 @@ import useTheme from "@/shared/hooks/useTheme";
 import EditRow from "./modals/EditRaw";
 import ImportModal from "./modals/ImportModal";
 import PreviewModal from "./modals/PreviewModal";
-
-import { HeaderActionWrap } from "./style";
 
 type Props = {
   value: any;
@@ -30,7 +29,7 @@ const HeaderAction: React.FC<Props> = (props) => {
   const shemaData = isObject(value) ? value : {};
   const { t } = useTranslation();
   return (
-    <HeaderActionWrap $token={themeToken}>
+    <div className={styles.container}>
       {modalType === "import" && (
         <ImportModal
           themeToken={themeToken}
@@ -83,7 +82,7 @@ const HeaderAction: React.FC<Props> = (props) => {
           </Button>
         </Flex>
       </div>
-    </HeaderActionWrap>
+    </div>
   );
 };
 

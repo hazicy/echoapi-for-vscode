@@ -1,3 +1,4 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
 import {
   ReactNode,
@@ -8,8 +9,8 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'react';
-import { useTranslation } from 'react-i18next';
+} from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   Input as AntdInput,
@@ -22,11 +23,11 @@ import {
   TreeSelect,
   TreeSelectProps,
   message,
-} from '@/shared/ui/base';
+} from "@/shared/ui/base";
 
-import { useDebounceFn } from 'ahooks';
-import classNames from 'classnames';
-import { encryptString, getFakerObject, mockExp } from 'exp-mock';
+import { useDebounceFn } from "ahooks";
+import classNames from "classnames";
+import { encryptString, getFakerObject, mockExp } from "exp-mock";
 import {
   cloneDeep,
   concat,
@@ -45,11 +46,11 @@ import {
   mapKeys,
   merge,
   size,
-} from 'lodash';
+} from "lodash";
 
-import { Button, Empty, IconFont, Input, Popover, Tooltip } from '@/shared/ui';
-import { MOCK_LANGUAGE_MAP } from '@/features/settings/constants/settings';
-import { SYSTEM_VARS } from '@/shared/constants/system';
+import { Button, Empty, IconFont, Input, Popover, Tooltip } from "@/shared/ui";
+import { MOCK_LANGUAGE_MAP } from "@/features/settings/constants/settings";
+import { SYSTEM_VARS } from "@/shared/constants/system";
 import {
   ASSIGNMENT_VALUE_KEY,
   FAKERJS_VAR_LIST,
@@ -64,40 +65,39 @@ import {
   FAKERJS_FORMAT_LIST,
   MOCKJS_FORMAT_LIST,
   VAR_FORMAT_LIST,
-  DATE_FORMAT_OPTIONS
-} from '@/features/variables/constants/variable';
-import { VariableInsertContext } from '@/shared/contexts';
-import useTheme from '@/shared/hooks/useTheme';
-import { useProjectConfig, useProjectSetting, useSystemConfig } from '@/app/store';
-import { FuncListRenderItem, InsertAction } from '@/features/requests/types/variable';
-import { copyStringToClipboard } from '@/shared/utils/common';
-import { getGlobals } from '@/features/requests/utils/send/utils';
-import { transFuncName } from '@/features/variables/utils/variable';
-import { transKey } from '@/features/variables/utils/variable';
-
-import FakerParamsList from '../FakerParamsList';
-import FunctionModal from '../FunctionModal';
-import QuoteOption from '../QuoteOption';
-
+  DATE_FORMAT_OPTIONS,
+} from "@/features/variables/constants/variable";
+import { VariableInsertContext } from "@/shared/contexts";
+import useTheme from "@/shared/hooks/useTheme";
 import {
-  ContentContainer,
-  TreeDropDownContainer,
-  TreeTitleContainer,
-  TreeValueContainer,
-} from './style';
+  useProjectConfig,
+  useProjectSetting,
+  useSystemConfig,
+} from "@/app/store";
+import {
+  FuncListRenderItem,
+  InsertAction,
+} from "@/features/requests/types/variable";
+import { copyStringToClipboard } from "@/shared/utils/common";
+import { getGlobals } from "@/features/requests/utils/send/utils";
+import { transFuncName } from "@/features/variables/utils/variable";
+import { transKey } from "@/features/variables/utils/variable";
+
+import FakerParamsList from "../FakerParamsList";
+import FunctionModal from "../FunctionModal";
+import QuoteOption from "../QuoteOption";
 
 const defaultFnItem = {
-  func_name: '',
-  func_desc: '',
+  func_name: "",
+  func_desc: "",
   paras: {},
 };
 
 const offsetHour = Math.floor(-new Date().getTimezoneOffset() / 60);
 const offsetMinutes = Math.abs(-new Date().getTimezoneOffset()) % 60;
-const defaultUtcOffset = `${offsetHour >= 0 ? '+' : '-'}${offsetHour
+const defaultUtcOffset = `${offsetHour >= 0 ? "+" : "-"}${offsetHour
   .toString()
-  .padStart(2, '0')}:${offsetMinutes.toString().padStart(2, '0')}`;
-
+  .padStart(2, "0")}:${offsetMinutes.toString().padStart(2, "0")}`;
 
 const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
   const { t } = useTranslation();
@@ -115,24 +115,34 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
     originFakerJsParamList,
     isInsertDynamic,
     originFormatInfo,
-    step
+    step,
   } = useContext(VariableInsertContext);
   const quoteRef = useRef<any>(null);
-  const [value, setValue] = useState<any>('');
+  const [value, setValue] = useState<any>("");
   const [fnList, setFnList] = useState<FuncListRenderItem[]>([]);
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [funcOpen, setFuncOpen] = useState<boolean>(false);
-  const [previewText, setPreviewText] = useState('');
+  const [previewText, setPreviewText] = useState("");
   const [previewLoading, setPreviewLoading] = useState(false);
-  const [mockTabsKey, setMockTabsKey] = useState<MOCK_TABS_KEY>(MOCK_TABS_KEY.faker);
-  const [descHoverIndex, setDescHoverIndex] = useState<string>('');
+  const [mockTabsKey, setMockTabsKey] = useState<MOCK_TABS_KEY>(
+    MOCK_TABS_KEY.faker,
+  );
+  const [descHoverIndex, setDescHoverIndex] = useState<string>("");
   const [editFn, setEditFn] = useState<FuncListRenderItem>(defaultFnItem);
   const [editIndex, setEditIndex] = useState<number | undefined>(undefined);
-  const [fakerJsParamsMap, setFakerJsParamsMap] = useState<Record<string, any>>({});
-  const [fakerJsTreeData, setFakerJsTreeData] = useState<TreeSelectProps['treeData']>([]);
-  const [fakerJsParamList, setFakerJsParamList] = useState<{ key: string; value: any }[]>([]);
-  const [treeDefaultExpandedKeys, setTreeDefaultExpandedKeys] = useState<any>([]);
+  const [fakerJsParamsMap, setFakerJsParamsMap] = useState<Record<string, any>>(
+    {},
+  );
+  const [fakerJsTreeData, setFakerJsTreeData] = useState<
+    TreeSelectProps["treeData"]
+  >([]);
+  const [fakerJsParamList, setFakerJsParamList] = useState<
+    { key: string; value: any }[]
+  >([]);
+  const [treeDefaultExpandedKeys, setTreeDefaultExpandedKeys] = useState<any>(
+    [],
+  );
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [treeOpen, setTreeOpen] = useState(false);
 
@@ -142,7 +152,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
   const descriptionList = useProjectSetting((state) => state.descriptionList);
   const language = useSystemConfig((state) => state.systemConfig.language);
   const [formatInfo, setFormatInfo] = useState({
-    format: 'YYYY/MM/DD HH:mm:ss',
+    format: "YYYY/MM/DD HH:mm:ss",
     utc: defaultUtcOffset,
   });
   useImperativeHandle(ref, () => {
@@ -160,7 +170,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
         };
         return pre;
       },
-      {} as Record<string, any>
+      {} as Record<string, any>,
     );
     const FuncMap = functionList.reduce(
       (pre, item) => {
@@ -170,7 +180,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
         };
         return pre;
       },
-      {} as Record<string, any>
+      {} as Record<string, any>,
     );
     return merge(FuncMap, innerMap);
   }, [functionList]);
@@ -181,7 +191,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
     }
     if (optionKey === VAR_OPTIONS_KEY.ai_value) {
       if (value === ASSIGNMENT_VALUE_KEY.random) {
-        return '@ai()';
+        return "@ai()";
       } else {
         return `${value}`;
       }
@@ -191,19 +201,19 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
       const systemMap = mapKeys(SYSTEM_VARS, (_value, key) => `$${key}`);
       const varMap = merge(systemMap, globals, environmentMap);
       if (isString(varMap?.[value])) {
-        return varMap?.[value] || t('var_insert.undefine_tip');
+        return varMap?.[value] || t("var_insert.undefine_tip");
       } else {
         return JSON.stringify(varMap?.[value]);
       }
     }
-    return '';
+    return "";
   };
 
   const fakerStr = useMemo(() => {
     const list = fakerJsParamList.map((item) => {
       if (item?.value) {
         if (isArray(item.value)) {
-          const arrStr = encryptString(`[${item.value?.join(',')}]`);
+          const arrStr = encryptString(`[${item.value?.join(",")}]`);
           return `${transKey(item.key)}=${arrStr}`;
         }
         if (isNumber(item.value)) {
@@ -211,13 +221,13 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
         }
         return `${transKey(item.key)}=${encryptString(item.value)}`;
       }
-      return '';
+      return "";
     });
-    const str = list.filter((s) => s !== '').join(',');
+    const str = list.filter((s) => s !== "").join(",");
     if (size(str)) {
       return `(${str})`;
     } else {
-      return '';
+      return "";
     }
   }, [fakerJsParamList]);
 
@@ -226,7 +236,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
       if (isEqual(optionKey, VAR_OPTIONS_KEY.var) && quoteRef.current) {
         setTimeout(() => {
           quoteRef.current!.focus({
-            cursor: 'end',
+            cursor: "end",
           });
         }, 100);
       }
@@ -250,43 +260,45 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
   const showTheDateFormat = fakerShowTheDateFormat || varShowTheDateFormat;
 
   const expression = useMemo(() => {
-    const formatStr = showTheDateFormat ? `|format(${formatInfo.format},${formatInfo.utc})` : '';
+    const formatStr = showTheDateFormat
+      ? `|format(${formatInfo.format},${formatInfo.utc})`
+      : "";
     if (fnList.length) {
       if (optionKey === VAR_OPTIONS_KEY.fixed) {
         return `{{'${value}'|${fnList
           .map((e) => transFuncName(e.func_name, e.paras))
-          ?.join('|')}}}`;
+          ?.join("|")}}}`;
       }
       if (optionKey === VAR_OPTIONS_KEY.ai_value) {
         if (value === ASSIGNMENT_VALUE_KEY.random) {
-          return `{{@ai()|${fnList.map((e) => transFuncName(e.func_name, e.paras))?.join('|')}}}}}`;
+          return `{{@ai()|${fnList.map((e) => transFuncName(e.func_name, e.paras))?.join("|")}}}}}`;
         } else {
           return `{{'${value}'|${fnList
             .map((e) => transFuncName(e.func_name, e.paras))
-            ?.join('|')}}}`;
+            ?.join("|")}}}`;
         }
       }
       if (optionKey === VAR_OPTIONS_KEY.mock) {
         if (mockTabsKey === MOCK_TABS_KEY.mock) {
           return `{{$mockjs.${value}${formatStr}|${fnList
             .map((e) => transFuncName(e.func_name, e.paras))
-            ?.join('|')}}}`;
+            ?.join("|")}}}`;
         } else {
           return `{{$fakerjs.${value}${fakerStr}${formatStr}|${fnList
             .map((e) => transFuncName(e.func_name, e.paras))
-            ?.join('|')}}}`;
+            ?.join("|")}}}`;
         }
       }
       return `{{${value}${formatStr}|${fnList
         .map((e) => transFuncName(e.func_name, e.paras))
-        ?.join('|')}}}`;
+        ?.join("|")}}}`;
     } else {
       if (optionKey === VAR_OPTIONS_KEY.fixed) {
         return `{{'${value}'}}`;
       }
       if (optionKey === VAR_OPTIONS_KEY.ai_value) {
         if (value === ASSIGNMENT_VALUE_KEY.random) {
-          return '{{@ai()}}';
+          return "{{@ai()}}";
         } else {
           return `{{'${value}'}}`;
         }
@@ -300,7 +312,14 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
       }
       return `{{${value}${formatStr}}}`;
     }
-  }, [value, fnList, optionKey, fakerJsParamList, showTheDateFormat, formatInfo]);
+  }, [
+    value,
+    fnList,
+    optionKey,
+    fakerJsParamList,
+    showTheDateFormat,
+    formatInfo,
+  ]);
 
   const functionObj = useMemo(() => {
     return functionList.reduce(
@@ -308,7 +327,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
         pre[item.func_name] = item.func_body;
         return pre;
       },
-      {} as Record<string, any>
+      {} as Record<string, any>,
     );
   }, [functionList]);
 
@@ -319,7 +338,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
       getFakerJsTreeData();
     }
     if (!isEdit) {
-      setValue('');
+      setValue("");
     }
   }, [optionKey]);
 
@@ -334,7 +353,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
     if (originMockTabsKey) {
       setMockTabsKey(originMockTabsKey);
     }
-    setValue(propsValue || '');
+    setValue(propsValue || "");
   }, [propsValue, originMockTabsKey]);
 
   useEffect(() => {
@@ -342,11 +361,12 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
   }, [value, expression, optionKey]);
 
   const updatePreviewText = () => {
-    if ([VAR_OPTIONS_KEY.desc, VAR_OPTIONS_KEY.ai_desc].includes(optionKey)) return;
+    if ([VAR_OPTIONS_KEY.desc, VAR_OPTIONS_KEY.ai_desc].includes(optionKey))
+      return;
     if ([VAR_OPTIONS_KEY.var, VAR_OPTIONS_KEY.fixed].includes(optionKey)) {
       if (!value || !fnList.length) {
         getPreviewTextWithEmptyFn().then((text) => {
-          setPreviewText(text || '');
+          setPreviewText(text || "");
         });
         return;
       }
@@ -354,7 +374,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
     if (optionKey === VAR_OPTIONS_KEY.ai_value) {
       if (value !== ASSIGNMENT_VALUE_KEY.random && !fnList.length) {
         getPreviewTextWithEmptyFn().then((text) => {
-          setPreviewText(text || '');
+          setPreviewText(text || "");
         });
         return;
       }
@@ -366,10 +386,10 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
     const currentEnv = find(envList, (item) => item.env_id === envDetailKeys);
     const environment = entries(currentEnv?.env_var_list).reduce(
       (pre, [key, obj]: any) => {
-        pre[key] = obj?.current_value || '';
+        pre[key] = obj?.current_value || "";
         return pre;
       },
-      {} as Record<string, any>
+      {} as Record<string, any>,
     );
     return environment;
   }, [envList, envDetailKeys]);
@@ -380,7 +400,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
       try {
         const globals = await getGlobals();
 
-        const customFn = fnList.filter((e) => e.func_name?.startsWith('fn_'));
+        const customFn = fnList.filter((e) => e.func_name?.startsWith("fn_"));
         const custom_script = customFn.reduce(
           (pre, item) => {
             if (has(functionObj, item.func_name)) {
@@ -388,21 +408,21 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
             }
             return pre;
           },
-          {} as Record<string, string>
+          {} as Record<string, string>,
         );
         const systemMap = mapKeys(SYSTEM_VARS, (_value, key) => `$${key}`);
         const data = await mockExp(
           expression,
           merge(systemMap, globals, environmentMap),
           language,
-          custom_script
+          custom_script,
         );
         if (isString(data)) {
-          setPreviewText(data || '');
+          setPreviewText(data || "");
         } else if (isObject(data)) {
-          setPreviewText(JSON.stringify(data) || '');
+          setPreviewText(JSON.stringify(data) || "");
         } else {
-          setPreviewText(String(data) || '');
+          setPreviewText(String(data) || "");
         }
       } catch (err) {
         setPreviewText(expression);
@@ -410,69 +430,72 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
         setPreviewLoading(false);
       }
     },
-    { wait: 500 }
+    { wait: 500 },
   );
 
   const assignmentAiOptions = useMemo(() => {
     return [
       {
         value: propsValue,
-        label: t('var_insert.generate_value'),
+        label: t("var_insert.generate_value"),
       },
       {
         value: ASSIGNMENT_VALUE_KEY.random,
-        label: t('var_insert.send_random'),
+        label: t("var_insert.send_random"),
       },
     ];
   }, [propsValue]);
 
   const dropdownRender = (originNode: ReactNode) => {
     return (
-      <TreeDropDownContainer>
+      <div className={styles.treeDropDown}>
         <Tabs
           size="small"
           activeKey={mockTabsKey}
           onChange={(key) => {
-            setValue('');
+            setValue("");
             setMockTabsKey(key as MOCK_TABS_KEY);
           }}
           items={[
             {
               key: MOCK_TABS_KEY.faker,
-              label: t('settings.mock_settings.faker'),
+              label: t("settings.mock_settings.faker"),
             },
           ]}
         />
         {originNode}
-      </TreeDropDownContainer>
+      </div>
     );
   };
 
-  const treeTitleRender: TreeSelectProps['treeTitleRender'] = (props: Record<string, any>) => {
-    if (has(props, 'isLeaf')) {
+  const treeTitleRender: TreeSelectProps["treeTitleRender"] = (
+    props: Record<string, any>,
+  ) => {
+    if (has(props, "isLeaf")) {
       return (
-        <TreeTitleContainer>
+        <div className={styles.treeTitle}>
           <span className={slots.label}>
             <Tooltip title={props?.title}>{props?.title}</Tooltip>
           </span>
           <span className={slots.desc}>
             <Tooltip title={props?.desc}>{props?.desc}</Tooltip>
           </span>
-        </TreeTitleContainer>
+        </div>
       );
     }
     if (props?.value) {
-      const prefix = mockTabsKey === MOCK_TABS_KEY.mock ? '$mockjs.' : '$fakerjs.';
+      const prefix =
+        mockTabsKey === MOCK_TABS_KEY.mock ? "$mockjs." : "$fakerjs.";
       return (
-        <TreeValueContainer>
+        <Flex className={styles.treeValue}>
           <span className={slots.value}>
             {prefix}
-            {props?.value || ''}
+            {props?.value || ""}
           </span>
           <Tooltip title={mockDescMap?.[props?.value]}>
             <IconFont type="icon-tips" />
           </Tooltip>
-        </TreeValueContainer>
+        </Flex>
       );
     }
 
@@ -480,7 +503,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
   };
 
   const getFakerJsTreeData = () => {
-    const result: TreeSelectProps['treeData'] = [];
+    const result: TreeSelectProps["treeData"] = [];
     const map: { [key: string]: any } = {};
     const paramsMap: { [key: string]: any } = {};
     const fakerVarList = getFakerObject() || FAKERJS_VAR_LIST;
@@ -505,8 +528,8 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
         isLeaf: true,
         selectable: true,
         desc: isPlainObject(description)
-          ? description?.[MOCK_LANGUAGE_MAP[language]] || ''
-          : description || '',
+          ? description?.[MOCK_LANGUAGE_MAP[language]] || ""
+          : description || "",
       });
       if (propsValue === `${module}${FAKER_SPLIT_CONST}${func}`) {
         fakerKey = module;
@@ -522,8 +545,8 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
   };
 
   const findParentKey = (
-    treeData: TreeSelectProps['treeData'],
-    targetValue: string | undefined
+    treeData: TreeSelectProps["treeData"],
+    targetValue: string | undefined,
   ) => {
     if (treeData) {
       for (const node of treeData) {
@@ -538,7 +561,6 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
   };
 
   const getDefaultExpand = (fakerKey: string | undefined) => {
-
     if (originMockTabsKey === MOCK_TABS_KEY.mock) {
       const key = findParentKey(mockTreeData, propsValue);
       if (key) {
@@ -549,20 +571,20 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
     }
   };
 
-  const mockTreeData: TreeSelectProps['treeData'] = useMemo(() => {
+  const mockTreeData: TreeSelectProps["treeData"] = useMemo(() => {
     if (mockTabsKey === MOCK_TABS_KEY.mock) {
       return entries(MOCKJS_VARS).map(([key, obj]: any) => {
         return {
           value: key,
           isLeaf: false,
           selectable: false,
-          title: obj?.name || '',
+          title: obj?.name || "",
           children: obj?.list?.map((item: any) => ({
-            value: item?.var || '',
+            value: item?.var || "",
             isLeaf: true,
             selectable: true,
             title: item?.var,
-            desc: item?.description || '',
+            desc: item?.description || "",
           })),
         };
       });
@@ -575,12 +597,12 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
       (pre, item) => {
         item.children?.forEach((e) => {
           if (e.value) {
-            pre[e.value] = e.desc || '';
+            pre[e.value] = e.desc || "";
           }
         });
         return pre;
       },
-      {} as Record<string, string>
+      {} as Record<string, string>,
     );
   }, [mockTreeData]);
 
@@ -608,7 +630,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
             value={value}
             ref={quoteRef}
             onChange={(e) => setValue(e?.target?.value)}
-            placeholder={t('var_insert.var_placeholder')}
+            placeholder={t("var_insert.var_placeholder")}
             onFocus={() => setQuoteOpen(true)}
             onBlur={() => setQuoteOpen(false)}
           />
@@ -620,16 +642,16 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
         <TreeSelect
           treeData={mockTreeData}
           treeDefaultExpandedKeys={treeDefaultExpandedKeys}
-          treeExpandAction={'click'}
+          treeExpandAction={"click"}
           showSearch
           searchValue={searchValue}
           onSearch={(v) => setSearchValue(v)}
-          placeholder={t('var_insert.fixed_placeholder')}
+          placeholder={t("var_insert.fixed_placeholder")}
           dropdownRender={dropdownRender}
           treeTitleRender={treeTitleRender}
           value={value || undefined}
-          style={{ width: '100%' }}
-          dropdownStyle={{ maxHeight: 400, overflow: 'auto', paddingTop: 0 }}
+          style={{ width: "100%" }}
+          dropdownStyle={{ maxHeight: 400, overflow: "auto", paddingTop: 0 }}
           onSelect={(e) => {
             setValue(e);
             if (mockTabsKey === MOCK_TABS_KEY.faker) {
@@ -644,7 +666,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
     if (optionKey === VAR_OPTIONS_KEY.fixed) {
       return (
         <Input
-          placeholder={t('supplement.input_tip')}
+          placeholder={t("supplement.input_tip")}
           maxLength={256}
           value={value}
           onChange={(e) => setValue(e?.target?.value)}
@@ -652,9 +674,15 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
       );
     }
     if (optionKey === VAR_OPTIONS_KEY.ai_value) {
-      return <Select value={value} onChange={(e) => setValue(e)} options={assignmentAiOptions} />;
+      return (
+        <Select
+          value={value}
+          onChange={(e) => setValue(e)}
+          options={assignmentAiOptions}
+        />
+      );
     }
-    return '';
+    return "";
   };
 
   const funcCancel = (v?: FuncListRenderItem) => {
@@ -678,7 +706,6 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
     }
   };
 
-
   const timeZoneOptions = map(TIME_ZONE_OPTIONS, ({ value, label }) => ({
     value,
     label: `${value}(${label})`,
@@ -687,14 +714,14 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
   const dateFormatOptions = map(DATE_FORMAT_OPTIONS, ({ value, label }) => ({
     value,
     label: (
-      <TreeTitleContainer>
+      <div className={styles.treeTitle}>
         <span style={{ maxWidth: 200 }} className={slots.label}>
           <Tooltip title={value}>{value}</Tooltip>
         </span>
         <span className={slots.desc}>
           <Tooltip title={label}>{label}</Tooltip>
         </span>
-      </TreeTitleContainer>
+      </div>
     ),
   }));
 
@@ -721,7 +748,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
         },
       }}
     >
-      <ContentContainer className={_props?.className}>
+      <div className={classNames(styles.container, _props?.className)}>
         <Flex justify="space-between" align="center">
           <Flex
             onClick={() => stepChange({ step: 1, key: optionKey })}
@@ -732,10 +759,14 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
             <IconFont rotate={90} type="icon-download" />
             <span>{OPTIONS_KEY_MAP[optionKey]}</span>
           </Flex>
-          <IconFont onClick={() => setOpen?.(false)} className={slots.cursor} type="icon-client-close" />
+          <IconFont
+            onClick={() => setOpen?.(false)}
+            className={slots.cursor}
+            type="icon-client-close"
+          />
         </Flex>
         {[VAR_OPTIONS_KEY.desc, VAR_OPTIONS_KEY.ai_desc].includes(optionKey) ? (
-          <Flex flex={1} style={{ width: '100%', overflowY: 'auto' }}>
+          <Flex flex={1} style={{ width: "100%", overflowY: "auto" }}>
             {optionKey === VAR_OPTIONS_KEY.desc ? (
               <Flex vertical className={slots["desc-list"]}>
                 {size(descriptionList) ? (
@@ -745,28 +776,39 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                         setDescHoverIndex(item.id);
                         setValue(item.description);
                       }}
-                      className={classNames(slots["desc-item"], { [slots.active]: item.id === descHoverIndex })}
+                      className={classNames(slots["desc-item"], {
+                        [slots.active]: item.id === descHoverIndex,
+                      })}
                       key={item.id}
                     >
                       {item.description}
                     </div>
                   ))
                 ) : (
-                  <Empty wrapStyle={{ width: '100%' }} />
+                  <Empty wrapStyle={{ width: "100%" }} />
                 )}
               </Flex>
             ) : (
               <Flex gap={8} vertical className={slots["desc-ai"]}>
                 <Flex gap={4} vertical>
-                  <span className={slots["desc-ai-title"]}>{t('var_insert.current_key')}</span>
+                  <span className={slots["desc-ai-title"]}>
+                    {t("var_insert.current_key")}
+                  </span>
                   <span className={slots["desc-ai-key"]}>''</span>
                 </Flex>
                 <Flex gap={4} vertical>
-                  <span className={[slots["desc-ai-title"], slots.refresh].join(" ")}>
-                    <span>{t('settings.description.param_desc')}</span>
-                    <span onClick={fixedRefresh} className={slots["params-refresh"]}>
+                  <span
+                    className={[slots["desc-ai-title"], slots.refresh].join(
+                      " ",
+                    )}
+                  >
+                    <span>{t("settings.description.param_desc")}</span>
+                    <span
+                      onClick={fixedRefresh}
+                      className={slots["params-refresh"]}
+                    >
                       <IconFont type="icon-refresh" />
-                      {t('base.refresh')}
+                      {t("base.refresh")}
                     </span>
                   </span>
                   <AntdInput.TextArea
@@ -780,9 +822,11 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
             )}
           </Flex>
         ) : (
-          <Flex gap={8} style={{ overflowY: 'auto' }} flex={1} vertical>
+          <Flex gap={8} style={{ overflowY: "auto" }} flex={1} vertical>
             <Flex gap={8} vertical>
-              <span className={slots["input-label"]}>{OPTIONS_KEY_LABEL_MAP[optionKey]}</span>
+              <span className={slots["input-label"]}>
+                {OPTIONS_KEY_LABEL_MAP[optionKey]}
+              </span>
               {inputRender()}
             </Flex>
             {optionKey === VAR_OPTIONS_KEY.mock &&
@@ -799,17 +843,19 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
             {showTheDateFormat && (
               <Flex gap={8} className="fn-format">
                 <Flex gap={8} flex={1} vertical>
-                  <span className="fn-format-title">{t('var_insert.time_format')}</span>
+                  <span className="fn-format-title">
+                    {t("var_insert.time_format")}
+                  </span>
                   <AutoComplete
                     maxLength={30}
-                    style={{ width: '100%' }}
+                    style={{ width: "100%" }}
                     value={formatInfo.format}
                     onBlur={(e) => {
                       const v = (e?.target as any)?.value?.trim();
                       if (!v) {
                         setFormatInfo({
                           ...formatInfo,
-                          format: 'YYYY-MM-DD HH:mm:ss',
+                          format: "YYYY-MM-DD HH:mm:ss",
                         });
                       }
                     }}
@@ -824,7 +870,9 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                   />
                 </Flex>
                 <Flex gap={8} vertical>
-                  <span className="fn-format-title">{t('var_insert.utc_format')}</span>
+                  <span className="fn-format-title">
+                    {t("var_insert.utc_format")}
+                  </span>
                   <AutoComplete
                     value={formatInfo.utc}
                     maxLength={30}
@@ -871,13 +919,17 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                             setEditFn({ ...item });
                             setFuncOpen(true);
                           }}
-                          className={classNames(slots.name, { [slots.del]: !has(fnKeyMap, item.func_name) })}
+                          className={classNames(slots.name, {
+                            [slots.del]: !has(fnKeyMap, item.func_name),
+                          })}
                         >
                           {transFuncName(item.func_name, item.paras)}
                         </div>
                         <Flex gap={4} className={slots.desc} align="center">
                           <span>
-                            {item?.func_desc || fnKeyMap?.[item.func_name]?.func_desc || ''}
+                            {item?.func_desc ||
+                              fnKeyMap?.[item.func_name]?.func_desc ||
+                              ""}
                           </span>
                           {index === hoverIndex ? (
                             <IconFont
@@ -886,7 +938,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                                 arr.splice(index, 1);
                                 setFnList(arr);
                               }}
-                              style={{ color: '#ff583e', cursor: 'pointer' }}
+                              style={{ color: "#ff583e", cursor: "pointer" }}
                               type="icon-error"
                             />
                           ) : (
@@ -897,7 +949,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                     ))}
                   </div>
                 ) : (
-                  ''
+                  ""
                 )}
                 <Button
                   size="small"
@@ -910,17 +962,17 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                   }}
                   icon={<IconFont type="icon-add-line" />}
                 >
-                  {t('var_insert.add_fn')}
+                  {t("var_insert.add_fn")}
                 </Button>
               </Flex>
             ) : (
               <Empty
                 wrapStyle={{
-                  width: '100%',
+                  width: "100%",
                   flex: 1,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               />
             )}
@@ -928,57 +980,61 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
         )}
         <FunctionModal editFn={editFn} onCancel={funcCancel} open={funcOpen} />
         <Flex gap={16} vertical className={slots.footer}>
-          {value && ![VAR_OPTIONS_KEY.desc, VAR_OPTIONS_KEY.ai_desc].includes(optionKey) && (
-            <Flex gap={8} className={slots["footer-preview"]} vertical>
-              <span className={slots["preview-tip"]}>
-                <span>{t('common.assertion.expression.title')}</span>
-              </span>
-              <div className={slots["preview-content"]}>
-                <span className={slots["preview-content-text"]}>
-                  <Tooltip placement="topLeft" title={expression}>
-                    {expression}
-                  </Tooltip>
+          {value &&
+            ![VAR_OPTIONS_KEY.desc, VAR_OPTIONS_KEY.ai_desc].includes(
+              optionKey,
+            ) && (
+              <Flex gap={8} className={slots["footer-preview"]} vertical>
+                <span className={slots["preview-tip"]}>
+                  <span>{t("common.assertion.expression.title")}</span>
                 </span>
-                <IconFont
-                  onClick={() =>
-                    copyStringToClipboard(expression, () =>
-                      message.success(t('supplement.copy_success'))
-                    )
-                  }
-                  type="icon-copy"
-                />
-              </div>
-              <span className={slots["preview-tip"]}>
-                <Flex gap={4}>
-                  {t('common.api_tab.preview')}
-                  <span onClick={updatePreviewText} className={slots["preview-refresh"]}>
-                    <IconFont type="icon-refresh" />
-                  </span>
-                </Flex>
-              </span>
-              <Spin spinning={previewLoading}>
                 <div className={slots["preview-content"]}>
                   <span className={slots["preview-content-text"]}>
-                    <Tooltip placement="topLeft" title={previewText}>
-                      {previewText}
+                    <Tooltip placement="topLeft" title={expression}>
+                      {expression}
                     </Tooltip>
                   </span>
                   <IconFont
                     onClick={() =>
-                      copyStringToClipboard(previewText, () =>
-                        message.success(t('supplement.copy_success'))
+                      copyStringToClipboard(expression, () =>
+                        message.success(t("supplement.copy_success")),
                       )
                     }
                     type="icon-copy"
                   />
                 </div>
-              </Spin>
-            </Flex>
-          )}
-          <Flex gap={12} className={slots["footer-bth"]}>
-            {optionKey === VAR_OPTIONS_KEY.desc && (
-              <></>
+                <span className={slots["preview-tip"]}>
+                  <Flex gap={4}>
+                    {t("common.api_tab.preview")}
+                    <span
+                      onClick={updatePreviewText}
+                      className={slots["preview-refresh"]}
+                    >
+                      <IconFont type="icon-refresh" />
+                    </span>
+                  </Flex>
+                </span>
+                <Spin spinning={previewLoading}>
+                  <div className={slots["preview-content"]}>
+                    <span className={slots["preview-content-text"]}>
+                      <Tooltip placement="topLeft" title={previewText}>
+                        {previewText}
+                      </Tooltip>
+                    </span>
+                    <IconFont
+                      onClick={() =>
+                        copyStringToClipboard(previewText, () =>
+                          message.success(t("supplement.copy_success")),
+                        )
+                      }
+                      type="icon-copy"
+                    />
+                  </div>
+                </Spin>
+              </Flex>
             )}
+          <Flex gap={12} className={slots["footer-bth"]}>
+            {optionKey === VAR_OPTIONS_KEY.desc && <></>}
             {(isEdit &&
               [
                 VAR_OPTIONS_KEY.var,
@@ -986,15 +1042,15 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                 VAR_OPTIONS_KEY.fixed,
                 VAR_OPTIONS_KEY.ai_value,
               ].includes(optionKey)) ||
-              isInsertDynamic ? (
-              <Flex style={{ width: '100%' }} justify="flex-end">
+            isInsertDynamic ? (
+              <Flex style={{ width: "100%" }} justify="flex-end">
                 <Button
                   disabled={!value}
                   size="small"
                   type="primary"
                   onClick={() => confirm(InsertAction.confirm)}
                 >
-                  {t('common.confirm')}
+                  {t("common.confirm")}
                 </Button>
               </Flex>
             ) : (
@@ -1004,16 +1060,20 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                   onClick={() => confirm(InsertAction.replace)}
                   size="small"
                 >
-                  {t('var_insert.replace')}
+                  {t("var_insert.replace")}
                 </Button>
-                <Button disabled={!value} onClick={() => confirm(InsertAction.insert)} size="small">
-                  {t('var_insert.insert')}
+                <Button
+                  disabled={!value}
+                  onClick={() => confirm(InsertAction.insert)}
+                  size="small"
+                >
+                  {t("var_insert.insert")}
                 </Button>
               </>
             )}
           </Flex>
         </Flex>
-      </ContentContainer>
+      </div>
     </ConfigProvider>
   );
 };

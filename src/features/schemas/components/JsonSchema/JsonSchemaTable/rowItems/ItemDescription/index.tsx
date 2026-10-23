@@ -1,22 +1,28 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { memo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import React, { memo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
-import { Flex, Input, Popconfirm } from '@/shared/ui/base';
+import { Flex, Input, Popconfirm } from "@/shared/ui/base";
 
-import { snowflakeId } from 'apipost-tools';
-import cn from 'classnames';
-import { differenceWith, isArray, isEqual, isString, trim, unionWith } from 'lodash';
+import { snowflakeId } from "apipost-tools";
+import cn from "classnames";
+import {
+  differenceWith,
+  isArray,
+  isEqual,
+  isString,
+  trim,
+  unionWith,
+} from "lodash";
 
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
-import Tooltip from '@/shared/ui/Tooltip';
-import { useProjectSetting } from '@/app/store';
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
+import Tooltip from "@/shared/ui/Tooltip";
+import { useProjectSetting } from "@/app/store";
 
-import ItemSettings from '../ItemSettings';
-
-import { ItemWrapper } from './style';
+import ItemSettings from "../ItemSettings";
 
 const lineHeight = 32;
 
@@ -47,8 +53,12 @@ const ItemMock: React.FC<Props> = (props) => {
   const { projectId } = useParams();
   const [modalType, setModalType] = useState(null);
   const descriptionList = useProjectSetting((state) => state.descriptionList);
-  const updateDescriptionList = useProjectSetting((state) => state.updateDescriptionList);
-  const innerDescriptionList = useProjectSetting((state) => state.innerDescriptionList);
+  const updateDescriptionList = useProjectSetting(
+    (state) => state.updateDescriptionList,
+  );
+  const innerDescriptionList = useProjectSetting(
+    (state) => state.innerDescriptionList,
+  );
 
   const handleUpdateRequired = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -60,18 +70,19 @@ const ItemMock: React.FC<Props> = (props) => {
       scrollHeight = tar?.scrollHeight;
 
     if (scrollHeight <= lineHeight || tar.value.length === 0) {
-      tar.style.height = lineHeight + 'px';
+      tar.style.height = lineHeight + "px";
     } else {
-      tar.style.height = scrollHeight + 'px';
+      tar.style.height = scrollHeight + "px";
     }
   };
 
   const handlerBlur = (e: any) => {
     const tar = e.target as HTMLTextAreaElement;
-    tar.style.height = lineHeight + 'px';
+    tar.style.height = lineHeight + "px";
     if (!nodeKey) return;
 
-    if (!isString(value?.description) || trim(value?.description).length <= 0) return;
+    if (!isString(value?.description) || trim(value?.description).length <= 0)
+      return;
 
     if (!isArray(descriptionList)) return;
 
@@ -80,14 +91,18 @@ const ItemMock: React.FC<Props> = (props) => {
       [
         {
           id: snowflakeId(),
-          project_id: projectId || '',
+          project_id: projectId || "",
           key: nodeKey,
-          description: value?.description || '',
+          description: value?.description || "",
           no_save: 1,
         },
       ],
       descriptionList,
-      (object, other) => isEqual([object.key, object.description], [other.key, other.description])
+      (object, other) =>
+        isEqual(
+          [object.key, object.description],
+          [other.key, other.description],
+        ),
     );
 
     // Filter out data that duplicates with internal description library
@@ -95,16 +110,25 @@ const ItemMock: React.FC<Props> = (props) => {
       _descriptionList,
       innerDescriptionList,
       (obj1, obj2) => {
-        return isEqual([obj1.key, obj1.description], [obj2.key, obj2.description]);
-      }
+        return isEqual(
+          [obj1.key, obj1.description],
+          [obj2.key, obj2.description],
+        );
+      },
     );
 
     updateDescriptionList(uniqueListByInner);
   };
 
   return (
-    <div className={cn(slots["schema-td"], slots["settings-td"], slots["table-td"])}>
-      {isString(modalType) && modalType !== 'null' && modalType !== '' && (
+    <div
+      className={cn(
+        slots["schema-td"],
+        slots["settings-td"],
+        slots["table-td"],
+      )}
+    >
+      {isString(modalType) && modalType !== "null" && modalType !== "" && (
         <ItemSettings
           value={value}
           onChange={onManageChange}
@@ -112,45 +136,52 @@ const ItemMock: React.FC<Props> = (props) => {
           setModalType={setModalType}
         />
       )}
-      <ItemWrapper className={cn(slots["schema-td-warper"])}>
+      <div className={cn(styles.container, cn(slots["schema-td-warper"]))}>
         <div className={slots["desc-row-description"]}>
           <Input.TextArea
             autoSize={false}
-            value={value?.description || ''}
-            style={{ position: 'absolute', minHeight: 32, top: 0, height: 32, lineHeight: '26px' }}
+            value={value?.description || ""}
+            style={{
+              position: "absolute",
+              minHeight: 32,
+              top: 0,
+              height: 32,
+              lineHeight: "26px",
+            }}
             variant="borderless"
             size="small"
             onInput={handlerInput}
             onFocus={handlerInput}
             onBlur={handlerBlur}
-            onChange={(e) => onChange('description', e.target.value)}
-            placeholder={t('common.schema.description')}
+            onChange={(e) => onChange("description", e.target.value)}
+            placeholder={t("common.schema.description")}
           />
         </div>
         <Flex gap={8} className={slots["item-manage"]}>
-          <Tooltip title={t('common.schema.required')}>
+          <Tooltip title={t("common.schema.required")}>
             <div
               onClick={handleUpdateRequired}
-              className={cn(slots["item-required"], { [slots.required]: isRequired })}
+              className={cn(slots["item-required"], {
+                [slots.required]: isRequired,
+              })}
             >
               <IconFont style={{ fontSize: 14 }} type="icon-fuhao" />
             </div>
           </Tooltip>
           <Popconfirm
-            title={t('common.tips')}
+            title={t("common.tips")}
             className={slots["delete-item-icon"]}
             onConfirm={onDeleteNode}
           >
             <Button
-              style={{ visibility: enableDelete ? 'visible' : 'hidden' }}
+              style={{ visibility: enableDelete ? "visible" : "hidden" }}
               icon={<IconFont type="icon-delete" />}
               size="small"
               type="text"
             ></Button>
           </Popconfirm>
-
         </Flex>
-      </ItemWrapper>
+      </div>
     </div>
   );
 };

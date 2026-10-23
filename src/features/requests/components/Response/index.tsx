@@ -1,8 +1,9 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
 import { FC, lazy, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { TabPaneProps, TabsProps } from '@/shared/ui/base';
+import { TabPaneProps, TabsProps } from "@/shared/ui/base";
 
 import { useMemoizedFn, useSafeState, useUpdateEffect } from "ahooks";
 import produce from "immer";
@@ -16,20 +17,21 @@ import {
   map,
   size,
 } from "lodash";
-import ErrorContext from './ErrorContext';
+import ErrorContext from "./ErrorContext";
 
-import { LineTabs, SuspenseContent } from '@/shared/components';
-import ResponseSize from '@/features/requests/components/ResponseSize';
-import Sending from '@/features/requests/components/Sending';
+import { LineTabs, SuspenseContent } from "@/shared/components";
+import ResponseSize from "@/features/requests/components/ResponseSize";
+import Sending from "@/features/requests/components/Sending";
 
 import { STATUS_CODE } from "@/shared/constants/common";
 import { useGlobal, useSystemConfig } from "@/app/store";
 import { BaseResponse } from "@/features/requests/types/response";
-import { ApiSendingData, ApiSendingDataSSE } from "@/features/requests/types/send";
+import {
+  ApiSendingData,
+  ApiSendingDataSSE,
+} from "@/features/requests/types/send";
 
 import { Empty } from "./components";
-
-import { ResponseContainer } from "./style";
 
 const Console = lazy(() => import("./components/Console"));
 const Cookie = lazy(() => import("./components/Cookie"));
@@ -76,14 +78,14 @@ const Response: FC<Props> = memo(
 
     const [showError, setShowError] = useSafeState(false);
     const [activeKey, setActiveKey] = useSafeState(
-      tabsDefaultActiveKey || "realtime"
+      tabsDefaultActiveKey || "realtime",
     );
 
     const isSendDone = useMemo(
       () =>
         !isEmpty(sendingData?.response) &&
         isEqual(sendingData?.sendStatus, "initial"),
-      [sendingData]
+      [sendingData],
     );
 
     const isNotEmpty = useMemo(
@@ -91,8 +93,8 @@ const Response: FC<Props> = memo(
         isSendDone ||
         isEqual(sendingData?.sendStatus, "sending") ||
         size(sendingData?.streamResponse) > 0 ||
-        !_includes(['realtime'], activeKey),
-      [isSendDone, sendingData?.sendStatus, activeKey]
+        !_includes(["realtime"], activeKey),
+      [isSendDone, sendingData?.sendStatus, activeKey],
     );
 
     useUpdateEffect(() => {
@@ -143,7 +145,7 @@ const Response: FC<Props> = memo(
         example: newExample,
       });
     };
-    
+
     const originItems: Array<
       TabPaneProps & { countParams?: any; key: string; label: React.ReactNode }
     > = [
@@ -206,8 +208,8 @@ const Response: FC<Props> = memo(
         size(includesTabs) > 0
           ? compact(
               map(includesTabs, (key: string) =>
-                mergeItems?.find((item) => item?.key === key)
-              )
+                mergeItems?.find((item) => item?.key === key),
+              ),
             )
           : _originItems;
 
@@ -215,47 +217,48 @@ const Response: FC<Props> = memo(
     });
 
     const handleMemoizedChange = useMemoizedFn((data) =>
-      onResponseDataChange(data)
+      onResponseDataChange(data),
     );
 
     return (
-      <ErrorContext.Provider value={{ showError, errorMsg: sendingData?.message || '' }}>
-      <ResponseContainer>
-        {sendingData?.sendStatus === "sending" && showSending && (
-          <Sending
-            onCancel={cancelToken}
-            onlySendingLoadingBar={onlySendingLoadingBar}
+      <ErrorContext.Provider
+        value={{ showError, errorMsg: sendingData?.message || "" }}
+      >
+        <div className={styles.container}>
+          {sendingData?.sendStatus === "sending" && showSending && (
+            <Sending
+              onCancel={cancelToken}
+              onlySendingLoadingBar={onlySendingLoadingBar}
+            />
+          )}
+
+          {!isNotEmpty && (
+            <Empty
+              wrapClassName={showError ? slots["mask-error-mode"] : undefined}
+              maskMode
+            />
+          )}
+
+          <LineTabs
+            activeKey={activeKey}
+            onChange={setActiveKey}
+            items={tabsItems()}
+            tabBarExtraContent={
+              !isEmpty(sendingData) &&
+              showResponseSize && (
+                <ResponseSize
+                  showProxy={showProxy}
+                  showDownload={showDownload && isSendDone}
+                  response={sendingData?.response}
+                  request={sendingData?.request}
+                />
+              )
+            }
           />
-        )}
-
-
-        {!isNotEmpty && (
-          <Empty
-            wrapClassName={showError ? slots["mask-error-mode"] : undefined}
-            maskMode
-          />
-        )}
-
-        <LineTabs
-          activeKey={activeKey}
-          onChange={setActiveKey}
-          items={tabsItems()}
-          tabBarExtraContent={
-            !isEmpty(sendingData) &&
-            showResponseSize && (
-              <ResponseSize
-                showProxy={showProxy}
-                showDownload={showDownload && isSendDone}
-                response={sendingData?.response}
-                request={sendingData?.request}
-              />
-            )
-          }
-        />
-      </ResponseContainer>
+        </div>
       </ErrorContext.Provider>
     );
-  }
+  },
 );
 
 export default Response;

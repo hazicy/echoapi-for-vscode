@@ -1,29 +1,38 @@
+import styles from "../../style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useEffect, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useMemo, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Dropdown } from '@/shared/ui/base';
+import { Dropdown } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import aptTools from 'apipost-tools';
-import { cloneDeep, isArray, isEqual, isFunction, isObject, isString, map, size } from 'lodash';
+import { useSafeState } from "ahooks";
+import aptTools from "apipost-tools";
+import {
+  cloneDeep,
+  isArray,
+  isEqual,
+  isFunction,
+  isObject,
+  isString,
+  map,
+  size,
+} from "lodash";
 
-import Sending from '@/features/requests/components/Sending';
+import Sending from "@/features/requests/components/Sending";
 
-import FlowResponse from '@/features/requests/components/FlowResponse';
-import ResizablePanels from '@/shared/components/ResizablePanels';
-import ResponseResult from '@/features/requests/components/ResponseResult';
+import FlowResponse from "@/features/requests/components/FlowResponse";
+import ResizablePanels from "@/shared/components/ResizablePanels";
+import ResponseResult from "@/features/requests/components/ResponseResult";
 
-import { IconFont, Tooltip } from '@/shared/ui';
-import Empty from '@/shared/ui/Empty';
-import { useApis } from '@/app/store';
-import useWebsocket2Store from '@/features/requests/store/useApis/websocket2';
-import { MessageItem } from '@/features/requests/types/websocket2';
+import { IconFont, Tooltip } from "@/shared/ui";
+import Empty from "@/shared/ui/Empty";
+import { useApis } from "@/app/store";
+import useWebsocket2Store from "@/features/requests/store/useApis/websocket2";
+import { MessageItem } from "@/features/requests/types/websocket2";
 
-import useWebsocket2 from '../../../useWebsocket2';
-import Header from './Header';
-import { handleSocketResponse } from './utils';
-import { ExampleLabelContainer, ExampleListContainer, WebsocketLeftPanelContainer } from '../../style';
+import useWebsocket2 from "../../../useWebsocket2";
+import Header from "./Header";
+import { handleSocketResponse } from "./utils";
 
 interface Props {
   value: any;
@@ -32,15 +41,17 @@ interface Props {
 
 const Realtime: React.FC<Props> = ({ value, onChange }) => {
   const { t } = useTranslation();
-  const websocket2ConnectionPool = useWebsocket2Store((state) => state.websocket2ConnectionPool);
+  const websocket2ConnectionPool = useWebsocket2Store(
+    (state) => state.websocket2ConnectionPool,
+  );
   const { updatePool } = useWebsocket2();
   const apisActiveData = useApis((state) => state.apisActiveData);
   const apisActiveKey = apisActiveData.target_id;
 
-  const [mode, setMode] = useSafeState<any>('text');
+  const [mode, setMode] = useSafeState<any>("text");
   const [data, setData] = useSafeState<any>({});
-  const [filterValue, setFilterValue] = useSafeState<string>('');
-  const [filterType, setFilterType] = useSafeState<string>('all');
+  const [filterValue, setFilterValue] = useSafeState<string>("");
+  const [filterType, setFilterType] = useSafeState<string>("all");
   const [isScrollAuto, setIsScrollAuto] = useSafeState<boolean>(true);
   const lastScrollTop = useRef(0);
   const resultRef = useRef<any>(null);
@@ -51,11 +62,11 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
     collapsedSize: 5,
   };
   const mapTips: any = {
-    connect: '',
-    disconnect: `${t('ws.response.disconnect')}`,
-    error: '',
-    send: '',
-    message: '',
+    connect: "",
+    disconnect: `${t("ws.response.disconnect")}`,
+    error: "",
+    send: "",
+    message: "",
   };
 
   const isJSONString = (str: string): boolean => {
@@ -66,17 +77,17 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
       return false;
     }
   };
-  
+
   const rawHandle = (data: any) => {
-    let str = '';
+    let str = "";
     switch (data?.action) {
-      case 'connect':
+      case "connect":
         str = data?.message?.message;
         break;
-      case 'send':
+      case "send":
         str = data?.message?.data;
         break;
-      case 'message':
+      case "message":
         str = data?.message?.data;
         break;
       default:
@@ -84,14 +95,14 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
         break;
     }
 
-    return str || '';
+    return str || "";
   };
 
   const calcContent = (params?: any, parseToJsonStr = false) => {
     try {
       const { action, message } = params || {};
 
-      if (action === 'message') {
+      if (action === "message") {
         if (!isString(message) && message?.data?.type && message?.data?.data) {
           const bufferRaw = aptTools.bufferToRaw(message?.data?.data, {});
           const { raw } = bufferRaw;
@@ -113,11 +124,11 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
         return rawHandle(params);
       }
     } catch (err) {
-      return '';
+      return "";
     }
   };
   const resultRaw = useMemo(() => {
-    return calcContent(data) || '';
+    return calcContent(data) || "";
   }, [data]);
   const renderTitle = (data: any) => {
     const { action } = data || {};
@@ -125,10 +136,10 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
       <div
         className={slots.title}
         style={{
-          whiteSpace: 'nowrap',
-          maxWidth: '100%',
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
+          whiteSpace: "nowrap",
+          maxWidth: "100%",
+          textOverflow: "ellipsis",
+          overflow: "hidden",
         }}
       >
         {mapTips[action]}
@@ -141,17 +152,17 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
     return handleSocketResponse(
       websocket2ConnectionPool[apisActiveKey]?.socketRes,
       filterValue,
-      filterType
+      filterType,
     );
   }, [websocket2ConnectionPool, apisActiveKey, filterValue, filterType]);
   const DropdownItems = useMemo(() => {
     return map(value?.message, (item: MessageItem) => ({
       label: (
-        <ExampleLabelContainer>
+        <div className={styles.exampleLabel}>
           <span className={slots.name}>
             <Tooltip title={item.name}>{item.name}</Tooltip>
           </span>
-        </ExampleLabelContainer>
+        </div>
       ),
       key: item.param_id,
     }));
@@ -159,9 +170,13 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
 
   const saveSocketMessageDom = (
     <Dropdown
-      trigger={['click']}
+      trigger={["click"]}
       dropdownRender={(menu) => {
-        return <ExampleListContainer style={{ minWidth: 120 }}>{menu}</ExampleListContainer>;
+        return (
+          <div style={{ minWidth: 120 }} className={styles.exampleList}>
+            {menu}
+          </div>
+        );
       }}
       menu={{
         items: DropdownItems,
@@ -177,7 +192,7 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
         },
       }}
     >
-      <Tooltip title={t('api.response_labels.save_response')}>
+      <Tooltip title={t("api.response_labels.save_response")}>
         <IconFont type="icon-save" className={slots["icon-copy"]} />
       </Tooltip>
     </Dropdown>
@@ -195,25 +210,28 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
     if (!isFunction(resultRef?.current?.setTabsValue)) {
       return;
     }
-    if (!isEqual(data?.message?.fitForShow, 'Monaco') && isEqual(data?.action, 'message')) {
-      resultRef?.current?.setTabsValue('preview');
+    if (
+      !isEqual(data?.message?.fitForShow, "Monaco") &&
+      isEqual(data?.action, "message")
+    ) {
+      resultRef?.current?.setTabsValue("preview");
     } else {
-      resultRef?.current?.setTabsValue('beautify');
+      resultRef?.current?.setTabsValue("beautify");
     }
   }, [data]);
 
   useEffect(() => {
-    const el = document.querySelector('.ws2');
+    const el = document.querySelector(".ws2");
     const scroll = el && isScrollAuto;
     if (scroll) {
       el.scrollTop = el?.scrollHeight || 0;
     }
   }, [isScrollAuto, wsTemplateStateList]);
   useEffect(() => {
-    const el = document.querySelector('.ws2');
-    el?.addEventListener('scroll', () => {
-      const el = document.querySelector('.ws2');
-      el?.addEventListener('scroll', function () {
+    const el = document.querySelector(".ws2");
+    el?.addEventListener("scroll", () => {
+      const el = document.querySelector(".ws2");
+      el?.addEventListener("scroll", function () {
         const currentScrollTop = el.scrollTop;
         if (currentScrollTop < lastScrollTop.current) {
           setIsScrollAuto(false);
@@ -223,48 +241,47 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
     });
   }, [setIsScrollAuto]);
   useEffect(() => {
-    if (wsTemplateStateList[size(wsTemplateStateList) - 1]?.action === 'send') {
+    if (wsTemplateStateList[size(wsTemplateStateList) - 1]?.action === "send") {
       setIsScrollAuto(true);
     }
   }, [wsTemplateStateList]);
   return (
     <>
-      {websocket2ConnectionPool[apisActiveKey]?.status === 'connecting' && (
+      {websocket2ConnectionPool[apisActiveKey]?.status === "connecting" && (
         <Sending
           onCancel={() => {
-            
             // Disconnect
             window?.vscode.postMessage({
-              action: 'ws_disconnect',
-              data: value?.target_id
+              action: "ws_disconnect",
+              data: value?.target_id,
             });
 
-            updatePool(value?.target_id, 'disconnect', {});
+            updatePool(value?.target_id, "disconnect", {});
           }}
         />
       )}
 
       <div
         style={{
-          height: '100%',
+          height: "100%",
         }}
       >
         {size(wsTemplateStateList) > -1 ? (
           <ResizablePanels
             panelGroupProps={{
-              autoSaveId: 'ws_realtime_container_resize_save_id',
-              direction: 'horizontal',
+              autoSaveId: "ws_realtime_container_resize_save_id",
+              direction: "horizontal",
             }}
             leftPanelProps={{
               ...panelProps,
-              collapseTitle: t('supplement.socket_realtime_msg'),
+              collapseTitle: t("supplement.socket_realtime_msg"),
             }}
             rightPanelProps={{
               ...panelProps,
-              collapseTitle: t('supplement.socket_realtime_content'),
+              collapseTitle: t("supplement.socket_realtime_content"),
             }}
             leftPanel={
-              <WebsocketLeftPanelContainer>
+              <div className={styles.websocketLeftPanel}>
                 <Header
                   target_id={apisActiveKey}
                   filterValue={filterValue}
@@ -275,10 +292,10 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
                 <div
                   className="ws2"
                   style={{
-                    overflow: 'auto',
-                    maxHeight: 'calc(100% - 50px)',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--border-radius)',
+                    overflow: "auto",
+                    maxHeight: "calc(100% - 50px)",
+                    border: "1px solid var(--color-border)",
+                    borderRadius: "var(--border-radius)",
                   }}
                 >
                   <FlowResponse
@@ -290,11 +307,11 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
                     data={wsTemplateStateList}
                   />
                 </div>
-              </WebsocketLeftPanelContainer>
+              </div>
             }
             rightPanel={
-              <div style={{ height: '100%', padding: 8 }}>
-                {isEqual(data?.action, 'message') && (
+              <div style={{ height: "100%", padding: 8 }}>
+                {isEqual(data?.action, "message") && (
                   <ResponseResult
                     ref={resultRef}
                     data={
@@ -302,16 +319,16 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
                         ...data,
                         fit_for_show: data?.message?.fitForShow,
                         stream: data?.message?.data,
-                        mime_type: { ext: data?.message?.dataType, mime: '' },
+                        mime_type: { ext: data?.message?.dataType, mime: "" },
                       } as any
                     }
                     setMode={setMode}
-                    resultIncludesTabs={['beautify', 'native', 'preview']}
+                    resultIncludesTabs={["beautify", "native", "preview"]}
                     warpVisible={false}
                     rawHtml={resultRaw}
                   />
                 )}
-                {!isEqual(data?.action, 'message') && (
+                {!isEqual(data?.action, "message") && (
                   <ResponseResult
                     ref={resultRef}
                     data={
@@ -319,11 +336,11 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
                         ...data,
                         fit_for_show: data?.message?.fitForShow,
                         stream: data?.message?.data,
-                        mime_type: { ext: data?.message?.dataType, mime: '' },
+                        mime_type: { ext: data?.message?.dataType, mime: "" },
                       } as any
                     }
                     setMode={setMode}
-                    resultIncludesTabs={['beautify', 'native']}
+                    resultIncludesTabs={["beautify", "native"]}
                     warpVisible={false}
                     rawHtml={resultRaw}
                   />

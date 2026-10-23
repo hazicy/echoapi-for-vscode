@@ -1,5 +1,6 @@
+import styles from "../../src/shared/ui/Empty/style.module.css";
 import { useState, type CSSProperties } from "react";
-import { EmptyWrap } from "@/shared/ui/Empty/style";
+
 import {
   App,
   Button,
@@ -39,10 +40,20 @@ function Content() {
       <section aria-label="Module styles">
         <Button size="small">Small module button</Button>
         <Button size="large">Large module button</Button>
-        <EmptyWrap style={{ "--vscode-tab-unfocusedInactiveForeground": "rgb(10, 20, 30)" } as CSSProperties}>
+        <div
+          style={
+            {
+              "--vscode-tab-unfocusedInactiveForeground": "rgb(10, 20, 30)",
+            } as CSSProperties
+          }
+          className={styles.container}
+        >
           <Empty description="Styled empty description" />
-        </EmptyWrap>
-        <Empty description="Plain empty description" style={{ color: "rgb(4, 5, 6)" }} />
+        </div>
+        <Empty
+          description="Plain empty description"
+          style={{ color: "rgb(4, 5, 6)" }}
+        />
       </section>
       <section aria-label="Controls">
         <Input

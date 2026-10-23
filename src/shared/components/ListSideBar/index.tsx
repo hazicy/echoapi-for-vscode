@@ -1,36 +1,51 @@
+import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import { Button, Flex } from '@/shared/ui/base';
+import { Button, Flex } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import classNames from 'classnames';
-import { isEqual, map, size } from 'lodash';
+import { useSafeState } from "ahooks";
+import classNames from "classnames";
+import { isEqual, map, size } from "lodash";
 
-import { IconFont } from '@/shared/ui';
+import { IconFont } from "@/shared/ui";
 
-import InputEdit from './InputEdit';
-
-import { ListSideBarContainer } from './style';
+import InputEdit from "./InputEdit";
 
 interface Props {
   handleSelect: (p: string) => void;
   value: { name: string; param_id: string }[];
   activeId: string | undefined;
-  handleEdit: (i: number, { key, value }: { key: string; value: string }) => void;
+  handleEdit: (
+    i: number,
+    { key, value }: { key: string; value: string },
+  ) => void;
   handleAdd: () => void;
   handleRemove: (p: string) => void;
-  addText?:string;
+  addText?: string;
 }
 
 const ListSideBar = (props: Props) => {
   const { t } = useTranslation();
   const [expand, setExpand] = useSafeState<boolean>(false);
-  const { value, activeId, handleSelect, handleEdit, handleAdd, handleRemove, addText } = props;
+  const {
+    value,
+    activeId,
+    handleSelect,
+    handleEdit,
+    handleAdd,
+    handleRemove,
+    addText,
+  } = props;
 
   return (
-    <ListSideBarContainer>
-      <Flex vertical className={classNames(slots["side-tree-wrap"], { [slots.expand]: expand })}>
+    <Flex className={styles.container}>
+      <Flex
+        vertical
+        className={classNames(slots["side-tree-wrap"], {
+          [slots.expand]: expand,
+        })}
+      >
         <div className={slots["basic-tabs-con"]}>
           <ul>
             {map(value, (item, index) => {
@@ -57,7 +72,7 @@ const ListSideBar = (props: Props) => {
             size="small"
             block
           >
-            {addText || 'New Query'}
+            {addText || "New Query"}
           </Button>
         </div>
       </Flex>
@@ -66,7 +81,7 @@ const ListSideBar = (props: Props) => {
           <IconFont type="icon-drop-down" rotate={expand ? -90 : 90} />
         </div>
       </div>
-    </ListSideBarContainer>
+    </Flex>
   );
 };
 

@@ -1,20 +1,24 @@
+import styles from "../Table/style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { Table as AntdTable } from '@/shared/ui/base';
+import { Table as AntdTable } from "@/shared/ui/base";
 
-import { DndContext } from '@dnd-kit/core';
-import type { DragEndEvent } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { cloneDeep, head, last, map } from 'lodash';
+import { DndContext } from "@dnd-kit/core";
+import type { DragEndEvent } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { cloneDeep, head, last, map } from "lodash";
 
-import ResizableTable from '../ResizableTable';
-import { SORT_KEY } from '../constants';
-import { AnyObject } from '../types';
-import { BasicTableProps, ColumnsType } from '../types';
-import DragEnableRow from './DragEnableRow';
+import ResizableTable from "../ResizableTable";
+import { SORT_KEY } from "../constants";
+import { AnyObject } from "../types";
+import { BasicTableProps, ColumnsType } from "../types";
+import DragEnableRow from "./DragEnableRow";
 
-import { TableContainer, TableWrapper } from '../Table/style';
-
-const DragTable = <DataSource extends AnyObject>(props: BasicTableProps<DataSource>) => {
+const DragTable = <DataSource extends AnyObject>(
+  props: BasicTableProps<DataSource>,
+) => {
   const {
     onDragEnd,
     dataSource,
@@ -40,13 +44,20 @@ const DragTable = <DataSource extends AnyObject>(props: BasicTableProps<DataSour
   });
 
   const tableProps = { ...props, columns: nextColumns };
-  const firstKey = dragFirstDisabled ? head(dataSource)?.[rowKey as any] : '';
-  const lastKey = dragLastDisabled ? last(dataSource)?.[rowKey as any] : '';
+  const firstKey = dragFirstDisabled ? head(dataSource)?.[rowKey as any] : "";
+  const lastKey = dragLastDisabled ? last(dataSource)?.[rowKey as any] : "";
 
   const initialOnDragEnd = (props: DragEndEvent) => {
-    if (dragFirstDisabled && (props?.over?.id === firstKey || props?.active?.id === firstKey))
+    if (
+      dragFirstDisabled &&
+      (props?.over?.id === firstKey || props?.active?.id === firstKey)
+    )
       return;
-    if (dragLastDisabled && (props?.over?.id === lastKey || props?.active?.id === lastKey)) return;
+    if (
+      dragLastDisabled &&
+      (props?.over?.id === lastKey || props?.active?.id === lastKey)
+    )
+      return;
 
     if (onDragEnd) onDragEnd(props);
   };
@@ -58,8 +69,8 @@ const DragTable = <DataSource extends AnyObject>(props: BasicTableProps<DataSour
   }
 
   return (
-    <TableWrapper>
-      <TableContainer>
+    <div className={styles.container}>
+      <div className={styles.table}>
         <DndContext onDragEnd={initialOnDragEnd}>
           <SortableContext
             items={map(dataSource, (item) => {
@@ -77,8 +88,8 @@ const DragTable = <DataSource extends AnyObject>(props: BasicTableProps<DataSour
             />
           </SortableContext>
         </DndContext>
-      </TableContainer>
-    </TableWrapper>
+      </div>
+    </div>
   );
 };
 

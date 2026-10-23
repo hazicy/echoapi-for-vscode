@@ -1,24 +1,41 @@
+import styles2 from "./style.module.css";
+import { Modal } from "@/shared/ui/base";
+import { Spin } from "@/shared/ui/base";
 import slots from "@/shared/ui/base/slots.module.css";
-import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Checkbox, CheckboxProps, Flex, Form, Select, Tabs, TreeSelect, Typography } from '@/shared/ui/base';
+import {
+  Checkbox,
+  CheckboxProps,
+  Flex,
+  Form,
+  Select,
+  Tabs,
+  TreeSelect,
+  Typography,
+} from "@/shared/ui/base";
 
-import { filter, isArray } from 'lodash';
+import { filter, isArray } from "lodash";
 
-import { BasicTable } from '@/shared/components';
-import Tree from '@/features/collections/components/Tree';
+import { BasicTable } from "@/shared/components";
+import Tree from "@/features/collections/components/Tree";
 
-import { Button, Empty, Tooltip } from '@/shared/ui';
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
-import useFolders from '@/features/collections/hooks/useFolders';
-import { APIPOST_FULL_ENV_OPTIONS, EXPORT_PREVIEW_CONFIG_ITEMS, ExportConfigEnum, IMPORT_TYPE_ENUM, ImportLocationEnum, SWAGGER_FULL_MODAL_OPTIONS } from '@/features/settings/constants/settings';
-import { ApiDetailsData } from '@/features/requests/types/api';
-import { EnvList } from '@/features/environment/types';
-import { IDataModel } from '@/features/schemas/types';
-import { arrayToTreeObject } from '@/shared/utils/common';
-
-import { LoadingContainer, PreviewContainer } from './style';
+import { Button, Empty, Tooltip } from "@/shared/ui";
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
+import useFolders from "@/features/collections/hooks/useFolders";
+import {
+  APIPOST_FULL_ENV_OPTIONS,
+  EXPORT_PREVIEW_CONFIG_ITEMS,
+  ExportConfigEnum,
+  IMPORT_TYPE_ENUM,
+  ImportLocationEnum,
+  SWAGGER_FULL_MODAL_OPTIONS,
+} from "@/features/settings/constants/settings";
+import { ApiDetailsData } from "@/features/requests/types/api";
+import { EnvList } from "@/features/environment/types";
+import { IDataModel } from "@/features/schemas/types";
+import { arrayToTreeObject } from "@/shared/utils/common";
 
 interface Props {
   open: boolean;
@@ -58,7 +75,11 @@ const Index = ({
   }, [previewSelectData]);
 
   const setApiCheckedKeys = (apis: string[], e?: any) => {
-    setPreviewSelectData({ ...previewSelectData, apis, apiHalfs: isArray(e?.halfCheckedKeys) ? e?.halfCheckedKeys : [] });
+    setPreviewSelectData({
+      ...previewSelectData,
+      apis,
+      apiHalfs: isArray(e?.halfCheckedKeys) ? e?.halfCheckedKeys : [],
+    });
   };
 
   const modelCheckedKeys = useMemo(() => {
@@ -76,23 +97,22 @@ const Index = ({
   const columns = useMemo(() => {
     return [
       {
-        title: t('global_setting.environment_detail.name'),
-        width: '48%',
+        title: t("global_setting.environment_detail.name"),
+        width: "48%",
         ellipsis: true,
-        dataIndex: 'name',
+        dataIndex: "name",
         render: (text: string) => <Tooltip title={text}>{text}</Tooltip>,
       },
       {
-        title: t('global_setting.environment_detail.url'),
-        width: '50%',
+        title: t("global_setting.environment_detail.url"),
+        width: "50%",
         ellipsis: true,
-        dataIndex: 'url',
+        dataIndex: "url",
         render: (text: string) => <Tooltip title={text}>{text}</Tooltip>,
       },
     ];
   }, []);
-  const onCheckAllChange: CheckboxProps['onChange'] = (e) => {
-    
+  const onCheckAllChange: CheckboxProps["onChange"] = (e) => {
     if (e.target.checked) {
       setApiCheckedKeys(data?.apis?.map((i) => i.target_id));
     } else {
@@ -100,16 +120,19 @@ const Index = ({
     }
   };
 
-  const onModelCheckAllChange: CheckboxProps['onChange'] = (e) => {
+  const onModelCheckAllChange: CheckboxProps["onChange"] = (e) => {
     if (e.target.checked) {
       setModelCheckedKeys(data?.models?.map((i) => i.model_id));
     } else {
       setModelCheckedKeys([]);
     }
   };
-  const onEnvCheckAllChange: CheckboxProps['onChange'] = (e) => {
+  const onEnvCheckAllChange: CheckboxProps["onChange"] = (e) => {
     if (e.target.checked) {
-      setPreviewSelectData({ ...previewSelectData, envs: data?.envs?.map((i) => i.env_id) });
+      setPreviewSelectData({
+        ...previewSelectData,
+        envs: data?.envs?.map((i) => i.env_id),
+      });
     } else {
       setPreviewSelectData({ ...previewSelectData, envs: [] });
     }
@@ -124,7 +147,7 @@ const Index = ({
       return {
         name: item.name,
         env_id: item.env_id,
-        url: '',
+        url: "",
         children: item.server_list?.map((serverItem) => {
           return {
             name: serverItem.name,
@@ -141,17 +164,22 @@ const Index = ({
             <Flex vertical flex={1}>
               <Checkbox
                 indeterminate={
-                  apiCheckedKeys.length > 0 && apiCheckedKeys.length < data?.apis?.length
+                  apiCheckedKeys.length > 0 &&
+                  apiCheckedKeys.length < data?.apis?.length
                 }
                 onChange={onCheckAllChange}
                 checked={apiCheckedKeys.length >= data?.apis?.length}
-                style={{ marginBottom: '10px' }}
+                style={{ marginBottom: "10px" }}
               >
-                <span style={{ minWidth: 'max-content' }}>{t('api.case.select_all')}</span>
+                <span style={{ minWidth: "max-content" }}>
+                  {t("api.case.select_all")}
+                </span>
               </Checkbox>
               <Tree
                 checkable
-                onCheck={(checkedKeys: string[], e: any) => setApiCheckedKeys(checkedKeys, e)}
+                onCheck={(checkedKeys: string[], e: any) =>
+                  setApiCheckedKeys(checkedKeys, e)
+                }
                 checkedKeys={apiCheckedKeys}
                 height={410}
                 className={slots["preview-tree"]}
@@ -159,28 +187,30 @@ const Index = ({
                 defaultExpandAll
                 selectable={false}
                 fieldNames={{
-                  title: 'name',
-                  children: 'children',
-                  key: 'target_id',
-                  type: 'target_type',
+                  title: "name",
+                  children: "children",
+                  key: "target_id",
+                  type: "target_type",
                 }}
               />
             </Flex>
             {importLocation === ImportLocationEnum.append && (
               <Flex
                 style={{
-                  width: '300px',
-                  height: '450px',
-                  padding: '12px',
-                  background: 'var(--color-bg-page)',
-                  borderRadius: '4px',
+                  width: "300px",
+                  height: "450px",
+                  padding: "12px",
+                  background: "var(--color-bg-page)",
+                  borderRadius: "4px",
                 }}
                 className={slots["import-project-append-config"]}
                 gap={16}
                 vertical
               >
                 <Flex vertical gap={8}>
-                  <span className={slots["import-project-full-title"]}>{t('supplement.select_folder')}</span>
+                  <span className={slots["import-project-full-title"]}>
+                    {t("supplement.select_folder")}
+                  </span>
                   <Form.Item noStyle name="chooseFolder">
                     <TreeSelect
                       popupClassName={slots["import-project-full-select"]}
@@ -192,14 +222,14 @@ const Index = ({
                         return treeNode?.name?.includes(input);
                       }}
                       treeDefaultExpandAll
-                      placeholder={t('supplement.select_folder_tip')}
-                      style={{ width: '100%' }}
+                      placeholder={t("supplement.select_folder_tip")}
+                      style={{ width: "100%" }}
                       fieldNames={{
-                        label: 'name',
-                        value: 'target_id',
-                        children: 'children',
+                        label: "name",
+                        value: "target_id",
+                        children: "children",
                       }}
-                      dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                      dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
                       treeData={apisFolders}
                     />
                   </Form.Item>
@@ -217,55 +247,67 @@ const Index = ({
             <Flex vertical flex={1}>
               <Checkbox
                 indeterminate={
-                  modelCheckedKeys.length > 0 && modelCheckedKeys.length < data?.models?.length
+                  modelCheckedKeys.length > 0 &&
+                  modelCheckedKeys.length < data?.models?.length
                 }
                 onChange={onModelCheckAllChange}
                 checked={modelCheckedKeys.length >= data?.models?.length}
-                style={{ marginBottom: '10px' }}
+                style={{ marginBottom: "10px" }}
               >
-                <span style={{ minWidth: 'max-content' }}>{t('api.case.select_all')}</span>
+                <span style={{ minWidth: "max-content" }}>
+                  {t("api.case.select_all")}
+                </span>
               </Checkbox>
               <Tree
                 checkable
-                onCheck={(keys: string[], e: any) => setModelCheckedKeys(keys, e)}
+                onCheck={(keys: string[], e: any) =>
+                  setModelCheckedKeys(keys, e)
+                }
                 checkedKeys={modelCheckedKeys}
                 height={460}
                 className={slots["preview-tree"]}
-                treeData={arrayToTreeObject(data?.models, 'model_id')}
+                treeData={arrayToTreeObject(data?.models, "model_id")}
                 defaultExpandAll
                 selectable={false}
                 titleRender={(nodeData: any) => {
-                  return nodeData.title.props?.display_name || nodeData.title.props?.name;
+                  return (
+                    nodeData.title.props?.display_name ||
+                    nodeData.title.props?.name
+                  );
                 }}
                 fieldNames={{
-                  children: 'children',
-                  key: 'model_id',
-                  type: 'model_type',
+                  children: "children",
+                  key: "model_id",
+                  type: "model_type",
                 }}
               />
             </Flex>
             {importLocation === ImportLocationEnum.append && (
               <Flex
                 style={{
-                  width: '300px',
-                  height: '450px',
-                  padding: '12px',
-                  background: 'var(--color-bg-page)',
-                  borderRadius: '4px',
+                  width: "300px",
+                  height: "450px",
+                  padding: "12px",
+                  background: "var(--color-bg-page)",
+                  borderRadius: "4px",
                 }}
                 className={slots["import-project-append-config"]}
                 gap={16}
                 vertical
               >
-                <span className={slots["import-project-full-title"]}>{t('supplement.overwrite_mode')}</span>
+                <span className={slots["import-project-full-title"]}>
+                  {t("supplement.overwrite_mode")}
+                </span>
                 <Form.Item noStyle name="model_cover_modal">
                   <Select
-                    style={{ width: '100%' }}
-                    placeholder={t('common.select_tip')}
+                    style={{ width: "100%" }}
+                    placeholder={t("common.select_tip")}
                     options={SWAGGER_FULL_MODAL_OPTIONS}
                   />
                 </Form.Item>
-                <span className={slots["import-project-full-tip"]}>{t('supplement.same_model_name')}</span>
+                <span className={slots["import-project-full-tip"]}>
+                  {t("supplement.same_model_name")}
+                </span>
               </Flex>
             )}
           </Flex>
@@ -284,9 +326,11 @@ const Index = ({
                 }
                 onChange={onEnvCheckAllChange}
                 checked={previewSelectData.envs.length >= data?.envs?.length}
-                style={{ marginBottom: '10px' }}
+                style={{ marginBottom: "10px" }}
               >
-                <span style={{ minWidth: 'max-content' }}>{t('api.case.select_all')}</span>
+                <span style={{ minWidth: "max-content" }}>
+                  {t("api.case.select_all")}
+                </span>
               </Checkbox>
               <BasicTable
                 scroll={{ y: 500 }}
@@ -312,23 +356,23 @@ const Index = ({
               fileType === IMPORT_TYPE_ENUM.ECHOAPI && (
                 <Flex
                   style={{
-                    width: '300px',
-                    height: '450px',
-                    padding: '12px',
-                    background: 'var(--color-bg-page)',
-                    borderRadius: '4px',
+                    width: "300px",
+                    height: "450px",
+                    padding: "12px",
+                    background: "var(--color-bg-page)",
+                    borderRadius: "4px",
                   }}
                   className={slots["import-project-append-config"]}
                   gap={16}
                   vertical
                 >
                   <span className={slots["import-project-full-title"]}>
-                    {t('supplement.overwrite_mode')}
+                    {t("supplement.overwrite_mode")}
                   </span>
                   <Form.Item noStyle name="env_cover_modal">
                     <Select
-                      style={{ width: '100%' }}
-                      placeholder={t('common.select_tip')}
+                      style={{ width: "100%" }}
+                      placeholder={t("common.select_tip")}
                       options={APIPOST_FULL_ENV_OPTIONS}
                     />
                   </Form.Item>
@@ -337,7 +381,7 @@ const Index = ({
           </Flex>
         );
       }
-      return '';
+      return "";
     };
 
     const getLength = (key: ExportConfigEnum) => {
@@ -345,35 +389,40 @@ const Index = ({
         const apis = filter(
           data?.apis,
           (item: ApiDetailsData) =>
-            ![APIS_TARGET_TYPE_ENUM.FOLDER, APIS_TARGET_TYPE_ENUM.SOCKET].includes(
-              item?.target_type
-            )
+            ![
+              APIS_TARGET_TYPE_ENUM.FOLDER,
+              APIS_TARGET_TYPE_ENUM.SOCKET,
+            ].includes(item?.target_type),
         );
         const selectApis = filter(
           data?.apis,
           (item: ApiDetailsData) =>
-            ![APIS_TARGET_TYPE_ENUM.FOLDER, APIS_TARGET_TYPE_ENUM.SOCKET].includes(
-              item?.target_type
-            ) && previewSelectData.apis.includes(item?.target_id)
+            ![
+              APIS_TARGET_TYPE_ENUM.FOLDER,
+              APIS_TARGET_TYPE_ENUM.SOCKET,
+            ].includes(item?.target_type) &&
+            previewSelectData.apis.includes(item?.target_id),
         );
         return apis?.length ? `${selectApis.length}/${apis.length}` : 0;
       }
       if (key === ExportConfigEnum.model) {
         const models = filter(
           data?.models,
-          (item) => item?.model_type !== APIS_TARGET_TYPE_ENUM.FOLDER
+          (item) => item?.model_type !== APIS_TARGET_TYPE_ENUM.FOLDER,
         );
         const selectModels = filter(
           data?.models,
           (item) =>
             item?.model_type !== APIS_TARGET_TYPE_ENUM.FOLDER &&
-            previewSelectData.models.includes(item?.model_id)
+            previewSelectData.models.includes(item?.model_id),
         );
         return models?.length ? `${selectModels.length}/${models.length}` : 0;
       }
       if (key === ExportConfigEnum.env) {
         const selectEnvs = previewSelectData.envs;
-        return data?.envs?.length ? `${selectEnvs.length}/${data?.envs.length}` : 0;
+        return data?.envs?.length
+          ? `${selectEnvs.length}/${data?.envs.length}`
+          : 0;
       }
       return 0;
     };
@@ -393,10 +442,10 @@ const Index = ({
   }, [data, previewSelectData, apisFolders]);
 
   return (
-    <PreviewContainer
+    <Modal
       width="80%"
       destroyOnClose
-      title={t('common.api_tab.preview')}
+      title={t("common.api_tab.preview")}
       onCancel={onCancel}
       styles={{
         body: {
@@ -405,18 +454,27 @@ const Index = ({
       }}
       footer={
         <Flex justify="space-between" align="center">
-          <Typography.Text style={{ color: 'var(--font-light-color)' }}>
-            {t('common.import_modal.import_tip')}
+          <Typography.Text style={{ color: "var(--font-light-color)" }}>
+            {t("common.import_modal.import_tip")}
           </Typography.Text>
-          <Button disabled={loading} onClick={() => onProjectImport()} type="primary">
-            {t('settings.synchronize.import_now_tip_confirm')}
+          <Button
+            disabled={loading}
+            onClick={() => onProjectImport()}
+            type="primary"
+          >
+            {t("settings.synchronize.import_now_tip_confirm")}
           </Button>
         </Flex>
       }
       open={open}
+      className={styles2.container}
     >
-      {loading ? <LoadingContainer spinning /> : <Tabs items={items} />}
-    </PreviewContainer>
+      {loading ? (
+        <Spin spinning className={styles2.loading} />
+      ) : (
+        <Tabs items={items} />
+      )}
+    </Modal>
   );
 };
 

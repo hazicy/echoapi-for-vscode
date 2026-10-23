@@ -1,21 +1,16 @@
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import styles from "./style.module.css";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-import {
-  Flex,
-  Select,
-} from '@/shared/ui/base';
+import { Flex, Select } from "@/shared/ui/base";
 
-import {
-  useSafeState,
-} from 'ahooks';
-import { includes, isEqual, size, trim } from 'lodash';
+import { useSafeState } from "ahooks";
+import { includes, isEqual, size, trim } from "lodash";
 
-import Button from '@/shared/ui/Button';
-import { useApis } from '@/app/store';
-import useApisWebsocket2 from '@/features/requests/store/useApis/websocket2';
-import { Websocket2DetailsData } from '@/features/requests/types/websocket2';
-import { MessageHeaderWrap } from './style';
+import Button from "@/shared/ui/Button";
+import { useApis } from "@/app/store";
+import useApisWebsocket2 from "@/features/requests/store/useApis/websocket2";
+import { Websocket2DetailsData } from "@/features/requests/types/websocket2";
 
 interface Props {
   value: any;
@@ -24,30 +19,32 @@ interface Props {
 }
 const MessageHeader = (props: Props) => {
   const { t } = useTranslation();
-  const websocket2ConnectionPool = useApisWebsocket2((state) => state.websocket2ConnectionPool);
+  const websocket2ConnectionPool = useApisWebsocket2(
+    (state) => state.websocket2ConnectionPool,
+  );
   const apisActiveKey = useApis((state) => state.apisActiveKey);
   const { value, onChange } = props || {};
-  const [binaryType, setBinaryType] = useSafeState('');
+  const [binaryType, setBinaryType] = useSafeState("");
 
   useEffect(() => {
-    if (includes(['base64', 'hexadecimal'], value?.mode)) {
-      setBinaryType('binary');
+    if (includes(["base64", "hexadecimal"], value?.mode)) {
+      setBinaryType("binary");
     } else {
-      setBinaryType('');
+      setBinaryType("");
     }
   }, [setBinaryType, value]);
   return (
-    <MessageHeaderWrap>
+    <div className={styles.messageHeader}>
       <Flex align="center" gap={12}>
         <Select
           value={binaryType || value?.mode}
           onChange={(val) => {
-            if (val === 'binary') {
+            if (val === "binary") {
               setBinaryType(val);
-              onChange({ ...value, mode: 'base64' });
+              onChange({ ...value, mode: "base64" });
               return;
             }
-            setBinaryType('');
+            setBinaryType("");
             onChange({ ...value, mode: val });
           }}
           size="small"
@@ -59,7 +56,7 @@ const MessageHeader = (props: Props) => {
           <Select.Option value="html">HTML</Select.Option>
           <Select.Option value="binary">Binary</Select.Option>
         </Select>
-        {binaryType === 'binary' && (
+        {binaryType === "binary" && (
           <Select
             size="small"
             value={value?.mode}
@@ -78,24 +75,27 @@ const MessageHeader = (props: Props) => {
           disabled={
             !(
               size(trim(value?.raw)) > 0 &&
-              isEqual(websocket2ConnectionPool[apisActiveKey]?.status, 'connect')
+              isEqual(
+                websocket2ConnectionPool[apisActiveKey]?.status,
+                "connect",
+              )
             )
           }
           onClick={() => {
             window?.vscode.postMessage({
-              action: 'ws_send',
+              action: "ws_send",
               data: {
                 target_id: apisActiveKey,
                 msg: value?.raw,
                 type: value?.mode,
-              }
+              },
             });
           }}
         >
-          {t('ws.request.sent')}
+          {t("ws.request.sent")}
         </Button>
       </Flex>
-    </MessageHeaderWrap>
+    </div>
   );
 };
 

@@ -1,15 +1,14 @@
-import { FC } from 'react';
+import styles from "./style.module.css";
+import { FC } from "react";
 
-import FolderBaseSettings from '@/features/collections/components/FolderSettings/BaseSettings';
-import { FolderComponentType } from '@/features/requests/types/folder';
-
-import { SettingsContainer } from './style';
+import FolderBaseSettings from "@/features/collections/components/FolderSettings/BaseSettings";
+import { FolderComponentType } from "@/features/requests/types/folder";
 
 const Settings: FC<FolderComponentType> = ({ apisData, onApisDataChange }) => {
   return (
-    <SettingsContainer>
+    <div className={styles.container}>
       <FolderBaseSettings value={apisData} onChange={onApisDataChange} />
-    </SettingsContainer>
+    </div>
   );
 };
 

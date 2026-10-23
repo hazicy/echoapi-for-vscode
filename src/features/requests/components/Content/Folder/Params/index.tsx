@@ -1,15 +1,14 @@
-import { FC } from 'react';
+import styles from "./style.module.css";
+import { FC } from "react";
 
-import FolderParamsSettings from '@/features/collections/components/FolderSettings/ParamsSettings';
-import { FolderComponentType } from '@/features/requests/types/folder';
-
-import { ParamsContainer } from './style';
+import FolderParamsSettings from "@/features/collections/components/FolderSettings/ParamsSettings";
+import { FolderComponentType } from "@/features/requests/types/folder";
 
 const Params: FC<FolderComponentType> = ({ apisData, onApisDataChange }) => {
   return (
-    <ParamsContainer>
+    <div className={styles.container}>
       <FolderParamsSettings value={apisData} onChange={onApisDataChange} />
-    </ParamsContainer>
+    </div>
   );
 };
 

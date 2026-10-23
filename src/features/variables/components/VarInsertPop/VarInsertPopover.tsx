@@ -1,21 +1,28 @@
+import styles from "./style.module.css";
+import classNames from "classnames";
 import slots from "@/shared/ui/base/slots.module.css";
 import { moduleClassNames } from "@/shared/ui/base/moduleClassNames";
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import { PopoverProps } from '@/shared/ui/base';
+import { PopoverProps } from "@/shared/ui/base";
 
-import { mockExp } from 'exp-mock';
+import { mockExp } from "exp-mock";
 
-import { Popover } from '@/shared/ui';
-import { VARIABLE_LIST_CONTENT_KEY } from '@/shared/constants/common';
-import { MOCK_TABS_KEY, VARIABLE_TABS_VALUE, VAR_OPTIONS_KEY } from '@/features/variables/constants/variable';
-import { VariableInsertContext } from '@/shared/contexts';
-import { useSystemConfig } from '@/app/store';
-import { FuncListRenderItem, InsertAction } from '@/features/requests/types/variable';
+import { Popover } from "@/shared/ui";
+import { VARIABLE_LIST_CONTENT_KEY } from "@/shared/constants/common";
+import {
+  MOCK_TABS_KEY,
+  VARIABLE_TABS_VALUE,
+  VAR_OPTIONS_KEY,
+} from "@/features/variables/constants/variable";
+import { VariableInsertContext } from "@/shared/contexts";
+import { useSystemConfig } from "@/app/store";
+import {
+  FuncListRenderItem,
+  InsertAction,
+} from "@/features/requests/types/variable";
 
-import { VarContent, VarList } from './components';
-
-import { ContentContainer } from './style';
+import { VarContent, VarList } from "./components";
 
 export interface Props extends PopoverProps {
   children: React.ReactNode;
@@ -27,7 +34,11 @@ export interface Props extends PopoverProps {
   fnList?: FuncListRenderItem[];
   mockTabsKey?: MOCK_TABS_KEY;
   fakerJsParamList?: { key: string; value: any }[];
-  onChange: (str: string, operation: VAR_OPTIONS_KEY, action: InsertAction) => void;
+  onChange: (
+    str: string,
+    operation: VAR_OPTIONS_KEY,
+    action: InsertAction,
+  ) => void;
   // whether it is dynamic value insertion (no description)
   isInsertDynamic?: boolean;
   formatInfo?: any;
@@ -48,10 +59,14 @@ const Index = ({
   formatInfo: originFormatInfo = {},
   ...restProps
 }: Props) => {
-  const [tabsValue, setTabsValue] = useState<VARIABLE_TABS_VALUE>(VARIABLE_TABS_VALUE.value);
+  const [tabsValue, setTabsValue] = useState<VARIABLE_TABS_VALUE>(
+    VARIABLE_TABS_VALUE.value,
+  );
   const [step, setStep] = useState<number>(1);
-  const [optionKey, setOptionKey] = useState<VAR_OPTIONS_KEY>(VAR_OPTIONS_KEY.var);
-  const [value, setValue] = useState<string>('');
+  const [optionKey, setOptionKey] = useState<VAR_OPTIONS_KEY>(
+    VAR_OPTIONS_KEY.var,
+  );
+  const [value, setValue] = useState<string>("");
   const contentRef = useRef<any>(null);
   const [isEdit, setIsEdit] = useState(false);
   const [height, setHeight] = useState(200);
@@ -64,13 +79,17 @@ const Index = ({
       if (el) {
         setHeight(el?.getBoundingClientRect()?.height);
       }
-      setValue(originValue || '');
+      setValue(originValue || "");
       if (originValue) {
         setIsEdit(true);
       }
       setTabsValue(tabValue || VARIABLE_TABS_VALUE.value);
       if (originOptionKey) {
-        if ([VAR_OPTIONS_KEY.desc, VAR_OPTIONS_KEY.ai_desc].includes(originOptionKey)) {
+        if (
+          [VAR_OPTIONS_KEY.desc, VAR_OPTIONS_KEY.ai_desc].includes(
+            originOptionKey,
+          )
+        ) {
           setTabsValue(VARIABLE_TABS_VALUE.desc);
         }
         setOptionKey(originOptionKey);
@@ -98,10 +117,10 @@ const Index = ({
     setStep(step);
     setOptionKey(key);
     if (step === 1) {
-      setValue('');
+      setValue("");
     } else {
       if (originOptionKey === key) {
-        setValue(originValue || '');
+        setValue(originValue || "");
       }
       if (key === VAR_OPTIONS_KEY.ai_value) {
         fixedRefresh();
@@ -111,7 +130,7 @@ const Index = ({
 
   const fixedRefresh = async () => {
     try {
-      const data = await mockExp('{{@ai()}}', {}, language);
+      const data = await mockExp("{{@ai()}}", {}, language);
       if (data) {
         setValue(data);
       }
@@ -126,17 +145,26 @@ const Index = ({
         style={{
           width,
           height: h,
-          transition: 'width .2s,height .2s',
+          transition: "width .2s,height .2s",
         }}
       >
-        <ContentContainer id={VARIABLE_LIST_CONTENT_KEY} className={moduleClassNames(slots, `${step === 1 && 'active'}`)}>
+        <div
+          id={VARIABLE_LIST_CONTENT_KEY}
+          className={classNames(
+            styles.container,
+            moduleClassNames(slots, `${step === 1 && "active"}`),
+          )}
+        >
           <VarList onChange={stepChange} type={tabsValue} />
-        </ContentContainer>
-        <VarContent className={moduleClassNames(slots, `${step === 2 && 'active'}`)} ref={contentRef} />
+        </div>
+        <VarContent
+          className={moduleClassNames(slots, `${step === 2 && "active"}`)}
+          ref={contentRef}
+        />
       </div>
     );
   }, [step, tabsValue, language, height]);
-  
+
   return (
     <VariableInsertContext.Provider
       value={{
@@ -162,7 +190,7 @@ const Index = ({
           setOpen(open);
         }}
         open={open}
-        trigger={['click']}
+        trigger={["click"]}
         content={content}
         {...restProps}
       >

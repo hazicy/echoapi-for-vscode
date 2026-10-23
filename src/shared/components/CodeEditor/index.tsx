@@ -1,12 +1,21 @@
+import styles from "./style.module.css";
+import classNames from "classnames";
 import slots from "@/shared/ui/base/slots.module.css";
-import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import {
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+} from "react";
 import {
   Annotation,
   Compartment,
   EditorState,
   Transaction,
   type Extension,
-} from '@codemirror/state';
+} from "@codemirror/state";
 import {
   EditorView,
   drawSelection,
@@ -15,29 +24,38 @@ import {
   hoverTooltip,
   keymap,
   lineNumbers,
-} from '@codemirror/view';
-import { bracketMatching, foldGutter, foldKeymap, indentOnInput } from '@codemirror/language';
-import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
+} from "@codemirror/view";
+import {
+  bracketMatching,
+  foldGutter,
+  foldKeymap,
+  indentOnInput,
+} from "@codemirror/language";
+import {
+  defaultKeymap,
+  history,
+  historyKeymap,
+  indentWithTab,
+} from "@codemirror/commands";
 import {
   autocompletion,
   closeBrackets,
   closeBracketsKeymap,
   completionKeymap,
-} from '@codemirror/autocomplete';
-import { highlightSelectionMatches, searchKeymap } from '@codemirror/search';
-import { lintGutter, lintKeymap, linter } from '@codemirror/lint';
-import { useGlobal, useSystemConfig } from '@/app/store';
-import { getEditorVariable } from '@/shared/utils/global';
-import { scriptCompletions } from './completion';
-import { formatDocument } from './format';
-import { jsonDiagnostics } from './jsonDiagnostics';
-import { loadLanguage, normalizeLanguage } from './languages';
-import { editorTheme, isDarkTheme } from './theme';
-import { EditorWrap } from './style';
+} from "@codemirror/autocomplete";
+import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
+import { lintGutter, lintKeymap, linter } from "@codemirror/lint";
+import { useGlobal, useSystemConfig } from "@/app/store";
+import { getEditorVariable } from "@/shared/utils/global";
+import { scriptCompletions } from "./completion";
+import { formatDocument } from "./format";
+import { jsonDiagnostics } from "./jsonDiagnostics";
+import { loadLanguage, normalizeLanguage } from "./languages";
+import { editorTheme, isDarkTheme } from "./theme";
 
 export interface EditorOptions {
-  wordWrap?: 'on' | 'off';
-  lineNumbers?: 'on' | 'off';
+  wordWrap?: "on" | "off";
+  lineNumbers?: "on" | "off";
   hover?: { enabled?: boolean; delay?: number };
 }
 
@@ -62,9 +80,9 @@ const externalChange = Annotation.define<boolean>();
 const CodeEditor = forwardRef<CodeEditorRef, Props>((props, ref) => {
   const {
     className,
-    height = '100%',
+    height = "100%",
     value,
-    language = 'text',
+    language = "text",
     readOnly = false,
     options,
     onMountAutoFormat = true,
@@ -75,10 +93,12 @@ const CodeEditor = forwardRef<CodeEditorRef, Props>((props, ref) => {
   latest.current = props;
   const compartments = useMemo(
     () => ({ language: new Compartment(), config: new Compartment() }),
-    []
+    [],
   );
   const vscodeTheme = useGlobal((state) => state.vscodeTheme);
-  const { font_size, font_family } = useSystemConfig((state) => state.systemConfig);
+  const { font_size, font_family } = useSystemConfig(
+    (state) => state.systemConfig,
+  );
 
   const formatEditor = async (automatic = false) => {
     const view = viewRef.current;
@@ -86,24 +106,26 @@ const CodeEditor = forwardRef<CodeEditorRef, Props>((props, ref) => {
       return;
     }
     const doc = view.state.doc;
-    const formattingLanguage = latest.current.language || 'text';
+    const formattingLanguage = latest.current.language || "text";
     const formatted = await formatDocument(doc.toString(), formattingLanguage);
     // Lazy formatter loading must never overwrite typing, a new response, or an unmounted editor.
     if (
       viewRef.current !== view ||
       view.state.doc !== doc ||
       formatted === doc.toString() ||
-      (latest.current.language || 'text') !== formattingLanguage ||
+      (latest.current.language || "text") !== formattingLanguage ||
       (!automatic && view.state.readOnly)
     ) {
       return;
     }
     view.dispatch({
       changes: { from: 0, to: doc.length, insert: formatted },
-      selection: { anchor: Math.min(view.state.selection.main.head, formatted.length) },
+      selection: {
+        anchor: Math.min(view.state.selection.main.head, formatted.length),
+      },
       annotations: automatic
         ? [externalChange.of(true), Transaction.addToHistory.of(false)]
-        : Transaction.userEvent.of('input.format'),
+        : Transaction.userEvent.of("input.format"),
     });
   };
 
@@ -116,7 +138,7 @@ const CodeEditor = forwardRef<CodeEditorRef, Props>((props, ref) => {
       }
       view.dispatch(view.state.replaceSelection(text), {
         scrollIntoView: true,
-        userEvent: 'input',
+        userEvent: "input",
       });
       view.focus();
     },
@@ -128,7 +150,7 @@ const CodeEditor = forwardRef<CodeEditorRef, Props>((props, ref) => {
       state: EditorState.create({
         doc:
           latest.current.value === null || latest.current.value === undefined
-            ? ''
+            ? ""
             : String(latest.current.value),
         extensions: [
           history(),
@@ -140,7 +162,7 @@ const CodeEditor = forwardRef<CodeEditorRef, Props>((props, ref) => {
           autocompletion(),
           keymap.of([
             {
-              key: 'Alt-Shift-f',
+              key: "Alt-Shift-f",
               run: () => {
                 void formatEditor();
                 return true;
@@ -180,11 +202,14 @@ const CodeEditor = forwardRef<CodeEditorRef, Props>((props, ref) => {
     if (!view) {
       return;
     }
-    const next = value === null || value === undefined ? '' : String(value);
+    const next = value === null || value === undefined ? "" : String(value);
     if (next !== view.state.doc.toString()) {
       view.dispatch({
         changes: { from: 0, to: view.state.doc.length, insert: next },
-        annotations: [externalChange.of(true), Transaction.addToHistory.of(false)],
+        annotations: [
+          externalChange.of(true),
+          Transaction.addToHistory.of(false),
+        ],
       });
     }
   }, [value]);
@@ -200,19 +225,25 @@ const CodeEditor = forwardRef<CodeEditorRef, Props>((props, ref) => {
           return;
         }
         const extensions: Extension[] = [support];
-        if (name === 'javascript' || name === 'typescript') {
-          extensions.push(EditorState.languageData.of(() => [{ autocomplete: scriptCompletions }]));
-        }
-        if (name === 'json' && !readOnly) {
+        if (name === "javascript" || name === "typescript") {
           extensions.push(
-            linter((v) => jsonDiagnostics(v.state.doc.toString())),
-            lintGutter()
+            EditorState.languageData.of(() => [
+              { autocomplete: scriptCompletions },
+            ]),
           );
         }
-        view.dispatch({ effects: compartments.language.reconfigure(extensions) });
+        if (name === "json" && !readOnly) {
+          extensions.push(
+            linter((v) => jsonDiagnostics(v.state.doc.toString())),
+            lintGutter(),
+          );
+        }
+        view.dispatch({
+          effects: compartments.language.reconfigure(extensions),
+        });
       })
       .catch((error) => {
-        console.error('Failed to load editor language', error);
+        console.error("Failed to load editor language", error);
       });
     return () => {
       cancelled = true;
@@ -224,18 +255,21 @@ const CodeEditor = forwardRef<CodeEditorRef, Props>((props, ref) => {
     const config: Extension[] = [
       EditorState.readOnly.of(readOnly),
       EditorView.editable.of(!readOnly),
-      EditorView.contentAttributes.of({ tabindex: '0', 'aria-label': 'Code editor' }),
+      EditorView.contentAttributes.of({
+        tabindex: "0",
+        "aria-label": "Code editor",
+      }),
       EditorState.tabSize.of(2),
       editorTheme(
-        isDarkTheme(vscodeTheme || ''),
-        typeof font_size === 'number' ? font_size : 14,
-        font_family || 'monospace'
+        isDarkTheme(vscodeTheme || ""),
+        typeof font_size === "number" ? font_size : 14,
+        font_family || "monospace",
       ),
     ];
-    if (options?.wordWrap !== 'off') {
+    if (options?.wordWrap !== "off") {
       config.push(EditorView.lineWrapping);
     }
-    if (options?.lineNumbers !== 'off') {
+    if (options?.lineNumbers !== "off") {
       config.push(lineNumbers(), highlightActiveLineGutter(), foldGutter());
     }
     if (!readOnly) {
@@ -261,18 +295,18 @@ const CodeEditor = forwardRef<CodeEditorRef, Props>((props, ref) => {
                 end: to,
                 above: true,
                 create: () => {
-                  const dom = document.createElement('div');
+                  const dom = document.createElement("div");
                   dom.style.cssText =
-                    'padding:6px 10px;white-space:pre-wrap;overflow-wrap:anywhere';
-                  dom.textContent = content.replace(/\*\*/g, '');
+                    "padding:6px 10px;white-space:pre-wrap;overflow-wrap:anywhere";
+                  dom.textContent = content.replace(/\*\*/g, "");
                   return { dom };
                 },
               };
             }
             return null;
           },
-          { hoverTime: options.hover.delay ?? 500 }
-        )
+          { hoverTime: options.hover.delay ?? 500 },
+        ),
       );
     }
     view.dispatch({ effects: compartments.config.reconfigure(config) });
@@ -285,9 +319,17 @@ const CodeEditor = forwardRef<CodeEditorRef, Props>((props, ref) => {
   }, [language, onMountAutoFormat]);
 
   return (
-    <EditorWrap className={slots["code-editor-wrapper"]} style={{ height }}>
-      <div className={[slots["code-editor-host"], className].filter(Boolean).join(' ')} ref={hostRef} />
-    </EditorWrap>
+    <div
+      style={{ height }}
+      className={classNames(styles.container, slots["code-editor-wrapper"])}
+    >
+      <div
+        className={[slots["code-editor-host"], className]
+          .filter(Boolean)
+          .join(" ")}
+        ref={hostRef}
+      />
+    </div>
   );
 });
 

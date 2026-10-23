@@ -1,18 +1,15 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, memo } from 'react';
+import { FC, memo } from "react";
 
-import { Dropdown, Flex, MenuProps } from '@/shared/ui/base';
+import { Dropdown, Flex, MenuProps } from "@/shared/ui/base";
 
-import { useMemoizedFn } from 'ahooks';
-import { includes } from 'lodash';
+import { useMemoizedFn } from "ahooks";
+import { includes } from "lodash";
 
-import IconFont from '@/shared/ui/IconFont';
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
-import { createOpensItem } from '@/features/requests/events/opens';
-import { ApisBaseData } from '@/features/requests/types/base';
-
-
-import { CreateOtherIcon } from './style';
+import IconFont from "@/shared/ui/IconFont";
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
+import { createOpensItem } from "@/features/requests/events/opens";
+import { ApisBaseData } from "@/features/requests/types/base";
 
 interface Props {
   nodeItem: ApisBaseData & {
@@ -26,44 +23,50 @@ const TitleExtraContent: FC<Partial<Props>> = memo(({ nodeItem }) => {
     async (nodeItem: ApisBaseData | undefined, key: APIS_TARGET_TYPE_ENUM) => {
       const result = await createOpensItem({
         target_type: key as APIS_TARGET_TYPE_ENUM,
-        project_id: '',
-        parent_id: nodeItem?.target_id || '0'
+        project_id: "",
+        parent_id: nodeItem?.target_id || "0",
       });
-      if (['api','sse'].includes(key)) {
+      if (["api", "sse"].includes(key)) {
         window?.vscode.postMessage({
-          action: 'openTagPanel',
-          data: result
+          action: "openTagPanel",
+          data: result,
         });
       }
-      if (key === 'folder') {
+      if (key === "folder") {
         window?.vscode.postMessage({
-          action: 'showInputBox',
-          data:{
-            type:'folder',
-            sourceData:result,
-          }
+          action: "showInputBox",
+          data: {
+            type: "folder",
+            sourceData: result,
+          },
         });
       }
-    }
+    },
   );
 
-  const handleStopPropagation = useMemoizedFn((event: MouseEvent<HTMLDivElement>) => {
-    event?.stopPropagation();
-  });
+  const handleStopPropagation = useMemoizedFn(
+    (event: MouseEvent<HTMLDivElement>) => {
+      event?.stopPropagation();
+    },
+  );
 
   return (
-    <div className="apis-tree-title-extra-content-container" onClick={handleStopPropagation}>
-      <Flex gap={8} align="center" className={slots["tree-node-item-title-action-wrap"]}>
+    <div
+      className="apis-tree-title-extra-content-container"
+      onClick={handleStopPropagation}
+    >
+      <Flex
+        gap={8}
+        align="center"
+        className={slots["tree-node-item-title-action-wrap"]}
+      >
         {!includes(
           [APIS_TARGET_TYPE_ENUM.FOLDER, APIS_TARGET_TYPE_ENUM.SOCKET],
-          nodeItem?.target_type
-        ) && (
-          <>
-          </>
-        )}
+          nodeItem?.target_type,
+        ) && <></>}
         {!nodeItem?.scrollIng && (
           <div className={slots["more-operate-wrap"]}>
-            <Dropdown trigger={['click']} menu={nodeItem?.moreOperateMenu}>
+            <Dropdown trigger={["click"]} menu={nodeItem?.moreOperateMenu}>
               <IconFont type="icon-navi-more" className="more-operate" />
             </Dropdown>
           </div>
