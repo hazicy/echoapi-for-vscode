@@ -5,6 +5,8 @@ import { Combobox } from "@base-ui/react/combobox";
 import cx from "classnames";
 import type { SelectProps, Option, UIProps } from "./types";
 import css from "./base.module.css";
+import { Icon } from '@iconify/react';
+import check from '@iconify-icons/lucide/check';
 const scalar = (v: any) => (v && typeof v === "object" ? v.value : v);
 const text = (v: any): string =>
   typeof v === "string" || typeof v === "number"
@@ -42,6 +44,10 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
       rootClassName,
       style,
       placement,
+      popupArrow,
+      popupAnchor,
+      popupSideOffset,
+      popupArrowStyle,
       popupClassName,
       dropdownStyle,
       open,
@@ -174,7 +180,7 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
                 : o.label}
             </span>
             <Combobox.ItemIndicator className={css.itemIndicator}>
-              ✓
+              <Icon icon={check} width={14} />
             </Combobox.ItemIndicator>
           </Combobox.Item>
         ))}
@@ -297,7 +303,13 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
           </Combobox.Trigger>}
         </div>
         <Combobox.Portal>
-          <Combobox.Positioner sideOffset={4} className={css.positioner}>
+          <Combobox.Positioner
+            anchor={popupAnchor}
+            side={placement?.startsWith('top') ? 'top' : 'bottom'}
+            align={placement?.endsWith('Left') ? 'start' : placement?.endsWith('Right') ? 'end' : 'center'}
+            sideOffset={popupSideOffset ?? (popupArrow ? 8 : 4)}
+            className={css.positioner}
+          >
             <Combobox.Popup
               className={cx(
                 css.popup,
@@ -306,6 +318,11 @@ const SelectControl = forwardRef<HTMLInputElement, SelectProps>(
               )}
               style={dropdownStyle}
             >
+              {popupArrow && <Combobox.Arrow className={css.selectPopupArrow} style={popupArrowStyle}>
+                <svg width="14" height="8" viewBox="0 0 14 8" aria-hidden="true">
+                  <path d="M0 8 7 1 14 8" />
+                </svg>
+              </Combobox.Arrow>}
               {renderPopup ? renderPopup(list) : list}
             </Combobox.Popup>
           </Combobox.Positioner>

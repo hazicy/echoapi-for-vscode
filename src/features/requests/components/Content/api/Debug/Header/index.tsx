@@ -110,7 +110,7 @@ const Header: FC<ApiComponentType> = ({ apisData, onApisDataChange, type }) => {
           onClick={() => handleSend()}
           disabled={isSending}
         >
-          <Icon icon={isSending ? loaderCircle : sendHorizontal} width={24} className={isSending ? styles.spinning : undefined} />
+          <Icon icon={isSending ? loaderCircle : sendHorizontal} width={18} className={isSending ? styles.spinning : undefined} />
         </button>}
       />
       <Flex gap={4} align='center'>

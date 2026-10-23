@@ -78,6 +78,10 @@ export interface SelectProps<
   V = any,
   O extends Option = Option,
 > extends UIProps {
+  popupArrow?: boolean;
+  popupAnchor?: React.RefObject<HTMLElement | null>;
+  popupSideOffset?: number;
+  popupArrowStyle?: React.CSSProperties;
   options?: O[];
   value?: V;
   defaultValue?: V;

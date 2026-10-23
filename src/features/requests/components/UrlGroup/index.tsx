@@ -1,25 +1,25 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, ConfigProvider, Divider, Flex, Input, Select, SelectProps, Space, Typography } from '@/shared/ui/base';
+import { Button, ConfigProvider, Flex, Input, Select, SelectProps, Space } from '@/shared/ui/base';
 
-import classnames from 'classnames';
-import { find, includes, isArray, isString, toLower, toUpper } from 'lodash';
+import { find, includes, isArray, isString } from 'lodash';
 
 import IconFont from '@/shared/ui/IconFont';
 import Tooltip from '@/shared/ui/Tooltip';
 import { PROTOCOL_OPTIONS } from '@/features/requests/constants';
 import { METHODS_MAP } from '@/shared/constants/common';
 import useTheme from '@/shared/hooks/useTheme';
-import { openEnvPage, saveProjectConfig } from '@/features/requests/events/env';
+import { openEnvPage } from '@/features/requests/events/env';
 import { useApis, useProjectConfig } from '@/app/store';
 
 import VarInput from '../../../variables/components/VarInput';
 
-import { MethodDropdownWrap, OptionsItemContainer, UrrGroupWrap } from './style';
+import { OptionsItemContainer, UrrGroupWrap } from './style';
 import { getCollectionServerId } from '@/features/requests/utils/apis';
 import { CurlDataType } from '@/features/requests/types/other';
+import styles from './style.module.css';
 
 export interface UrlGroupProps {
   envId?: string;
@@ -77,10 +77,9 @@ const UrlGroup = (props: UrlGroupProps) => {
   const apiOriginDetailsList = useApis((store) => store.apiOriginDetailsList);
   const updateCurrentServerId = useApis((state) => state.updateCurrentServerId);
   const customMethodList = useProjectConfig((state) => state?.customMethodList);
-  const updateCustomMethodList = useProjectConfig((state) => state?.updateCustomMethodList);
 
-  const [methodSearchValue, setMethodSearchValue] = useState('');
   const [methodSelectOpen, setMethodSelectOpen] = useState(false);
+  const requestBarRef = useRef<HTMLElement>(null);
 
   const currentEnv = useMemo(() => {
     const env = envId || envDetailKeys;
@@ -150,96 +149,8 @@ const UrlGroup = (props: UrlGroupProps) => {
     }));
   }, [currentEnv?.server_list]);
 
-  const methodDropdownRender = useCallback((_menu: React.ReactElement) => {
-    let methodList = METHODS_MAP[type].concat(customMethodList);
-    let searchMethodList = methodList.filter(i => (toLower(i).includes(toLower(methodSearchValue)) || !methodSearchValue));
-    let noSearch = methodList.filter(i => (toLower(i) === toLower(methodSearchValue))).length <= 0;
-    return <>
-      <MethodDropdownWrap>
-        <Flex vertical style={{ maxHeight: 256, overflowY: 'auto' }}>
-          {searchMethodList.map(i => <div onClick={() => {
-            handleChange('method', `${i}`);
-            setMethodSelectOpen(false);
-          }} aria-selected="false" className={classnames(slots["beautify-select-item"], slots["beautify-select-item-option"], {
-            "beautify-select-item-option-selected": data?.method === i
-          })} title={i}>
-            <div className={slots["beautify-select-item-option-content"]}>{i}</div>
-            <span onClick={(e) => e.stopPropagation()} className={slots["beautify-select-item-option-state"]} unselectable="on" aria-hidden="true" style={{ "userSelect": "none" }}>
-              {!METHODS_MAP[type].includes(i) && <IconFont className={slots["select-item-icon-delete"]} style={{ cursor: 'pointer' }} onClick={(e) => {
-                e.stopPropagation();
-                onMethodDelete(i);
-              }} type='icon-delete'></IconFont>}
-            </span>
-          </div>)}
-        </Flex>
-        {noSearch && methodSearchValue.length > 0 && <>
-          <Divider style={{ margin: '8px 0' }} />
-          <Flex align='center' className="select-item-add" style={{ cursor: 'pointer', padding: '6px 12px', fontSize: 14, flexWrap: 'nowrap' }} onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            onMethodAddClick();
-          }}>
-            <Typography.Text style={{ color: 'var(--font-light-color)' }}>
-              Use
-            </Typography.Text>
-            '
-            <Typography.Text ellipsis style={{ color: 'var(--font-content-color)', maxWidth: 44 }}>
-              {methodSearchValue}
-            </Typography.Text>
-            '
-          </Flex>
-        </>}
-      </MethodDropdownWrap>
-    </>;
-  }, [customMethodList, methodSearchValue, data]);
-
-  const onMethodDelete = (val: string) => {
-    let newCustomMethodList = [...customMethodList.filter(i => i !== val)]
-    updateCustomMethodList(newCustomMethodList);
-    saveProjectConfig('customMethodList', newCustomMethodList);
-  };
-  useEffect(() => {
-    if (!methodSelectOpen && methodSearchValue.length > 0) {
-      let { customMethodList: list } = useProjectConfig.getState();
-      let methodList = METHODS_MAP[type].concat(list);
-      let searchMethodList = methodList.filter(i => toLower(i) === (toLower(methodSearchValue)));
-      // not saved yet, auto save new method on blur
-      if (searchMethodList.length <= 0 && methodSearchValue.length > 0) {
-        updateCustomMethodList([...list, methodSearchValue]);
-        saveProjectConfig('customMethodList', [...list, methodSearchValue]);
-      }
-      setMethodSearchValue('');
-    }
-  }, [methodSelectOpen, methodSearchValue]);
-  const onMethodBlur = () => {
-    let val = methodSearchValue.trim();
-    // Save selection on blur
-    if (val.length > 0) {
-      handleChange('method', val);
-    } else if (data?.method && data.method.length > 0 && METHODS_MAP[type].concat(customMethodList).filter(i => i === data.method).length <= 0) {
-      let newCustomMethodList = [...customMethodList, data.method];
-      updateCustomMethodList(newCustomMethodList);
-      saveProjectConfig('customMethodList', newCustomMethodList);
-    }
-  };
-
-  const onMethodAddClick = () => {
-    handleChange('method', methodSearchValue);
-    setMethodSearchValue('');
-
-    let newCustomMethodList = [...customMethodList, methodSearchValue];
-    updateCustomMethodList(newCustomMethodList);
-    saveProjectConfig('customMethodList', newCustomMethodList);
-
-
-    setMethodSelectOpen(false);
-  };
-
-  const onInputKeyDown = (event: KeyboardEvent) => {
-    if (event.code === 'Enter') {
-      setMethodSelectOpen(false);
-    }
-  }
+  const labelRender: LabelRender = (option) =>
+    renderUri(serverOptions?.find(server => server.value === option.value)?.uri || '');
 
   const pasteCurlChange = (d: CurlDataType) => {
     if (supportCurlImport) {
@@ -266,7 +177,7 @@ const UrlGroup = (props: UrlGroupProps) => {
         },
       }}
     >
-      <UrrGroupWrap $token={themeToken} className={className} style={style}>
+      <UrrGroupWrap ref={requestBarRef} $token={themeToken} className={className} style={style}>
         {['api', 'sse'].includes(type) && <>
           <Select
             bordered={false}
@@ -279,19 +190,19 @@ const UrlGroup = (props: UrlGroupProps) => {
             value={data?.method || METHODS_MAP[type][0]}
             suffixIcon={<IconFont style={{ pointerEvents: 'none' }} type="icon-drop-down" />}
             size='small'
-            dropdownRender={methodDropdownRender}
+            placement="bottomLeft"
+            popupArrow
+            popupAnchor={requestBarRef}
+            popupSideOffset={12}
+            popupArrowStyle={{ left: 32 }}
+            popupClassName={styles.methodPopup}
             placeholder='METHOD'
-            dropdownStyle={{ width: '110px' }}
-            showSearch={true}
-            searchValue={methodSearchValue}
-            onSearch={(val) => {
-              if (val?.length > 32) return;
-              setMethodSearchValue(toUpper(val));
-            }}
-            onBlur={onMethodBlur}
-            onInputKeyDown={onInputKeyDown}
+            dropdownStyle={{ width: 'max-content', minWidth: 0 }}
+            showSearch={false}
+            onChange={(value) => handleChange('method', value)}
+
           >
-            {METHODS_MAP[type].map((item: string) => (
+            {Array.from(new Set(METHODS_MAP[type].concat(customMethodList))).map((item: string) => (
               <Select.Option key={item} value={item}>
                 {item}
               </Select.Option>

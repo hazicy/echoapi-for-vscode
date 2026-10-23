@@ -1,0 +1,57 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "dev:debug",
+      "dependsOn": ["watch:extension", "dev:webviews"],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    {
+      "label": "watch:extension",
+      "type": "shell",
+      "command": "yarn",
+      "args": ["tsup", "--watch", "--env.ECHOAPI_DEV_SERVER", "true"],
+      "isBackground": true,
+      "options": { "env": { "NO_COLOR": "1" } },
+      "runOptions": { "instanceLimit": 1 },
+      "problemMatcher": {
+        "owner": "tsup",
+        "pattern": { "regexp": "^(?!)$" },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "(CLI Building entry|CJS Build start)",
+          "endsPattern": "CJS.*Build success"
+        }
+      },
+      "presentation": { "reveal": "silent", "panel": "dedicated" }
+    },
+    {
+      "label": "dev:webviews",
+      "type": "shell",
+      "command": "yarn",
+      "args": ["vite", "--host", "127.0.0.1"],
+      "isBackground": true,
+      "options": { "env": { "NO_COLOR": "1" } },
+      "runOptions": { "instanceLimit": 1 },
+      "problemMatcher": {
+        "owner": "vite",
+        "pattern": { "regexp": "^(?!)$" },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "VITE.*ready",
+          "endsPattern": "Local:.*http://127\\.0\\.0\\.1:8080/"
+        }
+      },
+      "presentation": { "reveal": "silent", "panel": "dedicated" }
+    },
+    {
+      "label": "build:debug",
+      "type": "shell",
+      "command": "yarn",
+      "args": ["compile"],
+      "problemMatcher": [],
+      "group": "build"
+    }
+  ]
+}

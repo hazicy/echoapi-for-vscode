@@ -245,7 +245,6 @@
 }
 
 .MethodDropdownWrap {
-  min-width: 120px;
   font-size: 12px;
 }
 .MethodDropdownWrap .slot-beautify-select-item {
@@ -254,9 +253,43 @@
   justify-content: space-between;
   gap: 12px;
   min-height: 28px;
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 3px;
   line-height: 18px;
+}
+.methodPopup {
+  overflow: visible;
+  border-radius: var(--vscode-cornerRadius-small, 4px);
+}
+.methodPopup > .slot-beautify-select-item-list {
+  max-height: min(280px, calc(var(--available-height, 400px) - 64px));
+  overflow-y: auto;
+}
+.methodPopup .slot-beautify-select-item {
+  position: relative;
+  min-height: 26px;
+  padding: 4px 16px 4px 28px;
+  font-size: var(--vscode-font-size, 13px);
+  line-height: 18px;
+}
+.methodPopup .slot-beautify-select-item > :last-child:not(:first-child) {
+  position: absolute;
+  left: 8px;
+  margin: 0;
+}
+.methodPopup .slot-beautify-select-item[data-highlighted] {
+  background: var(--vscode-list-hoverBackground, var(--popover-select-bg-hover-color));
+  color: var(--vscode-list-hoverForeground, inherit);
+}
+.methodCheck {
+  flex-shrink: 0;
+}
+.MethodDropdownWrap .slot-beautify-select-item .slot-beautify-select-item-option-content {
+  flex: 1;
+}
+.MethodDropdownWrap .slot-beautify-select-item[data-selected] {
+  color: var(--vscode-list-activeSelectionForeground, var(--font-content-color));
+  background: var(--vscode-list-activeSelectionBackground, var(--popover-select-bg-hover-color));
 }
 .UrrGroupWrap > .slot-beautify-select:first-child {
   max-width: 110px;

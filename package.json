@@ -23,7 +23,7 @@
     "test:editor": "playwright test --config tests/editor/playwright.config.ts",
     "build": "vsce package",
     "start": "concurrently --kill-others \"tsup --watch --env.ECHOAPI_DEV_SERVER true\" \"vite --host 127.0.0.1\"",
-    "debug": "code --extensionDevelopmentPath=./path/to/your/extension",
+    "debug": "code --extensionDevelopmentPath=.",
     "build:extension": "tsup",
     "build:webviews": "vite build",
     "test:ui": "playwright test --config tests/ui/playwright.config.ts",

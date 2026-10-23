@@ -299,6 +299,17 @@
 .tooltip[data-closed] {
   display: none;
 }
+.selectPopupArrow {
+  display: flex;
+  color: var(--popover-select-bg-color, var(--color-bg-right, #fff));
+}
+.selectPopupArrow[data-side="bottom"] { top: -8px; }
+.selectPopupArrow[data-side="top"] { bottom: -8px; transform: rotate(180deg); }
+.selectPopupArrow path {
+  fill: currentColor;
+  stroke: var(--color-border, #ddd);
+  stroke-width: 1;
+}
 .option,
 .menuItem {
   position: relative;
