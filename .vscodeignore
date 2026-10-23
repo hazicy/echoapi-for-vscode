@@ -1,0 +1,22 @@
+# Build output is included; everything used only for development is excluded.
+node_modules/**
+src/**
+tests/**
+scripts/**
+test-results/**
+public/**
+
+# Project and test configuration
+.git/**
+.vscode-test.mjs
+.vscodeignore-test
+.yarnrc
+*.vsix
+*.ts
+*.mts
+*.cjs
+*.mjs
+tsconfig*.json
+yarn.lock
+index.html
+vsc-extension-quickstart.md
