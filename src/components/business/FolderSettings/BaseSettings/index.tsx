@@ -7,7 +7,6 @@ import { Flex, Input, InputRef, TreeSelect } from '@/components/ui/base';
 import { useDebounceEffect } from 'ahooks';
 import produce from 'immer';
 
-import { Editor as ByteMD } from '@/components/business/ByteMd';
 import useFolders from '@/hooks/useFolders';
 import { useApis } from '@/store';
 import { FolderDetailsData } from '@/types/apis/folder';
@@ -99,14 +98,6 @@ const BaseSettings: FC<Props> = ({ value, onChange }) => {
           </Flex>
         </Flex>
       </div>
-      <Flex className={slots["folder-content-wrap"]} flex={1} vertical gap={16}>
-        <div className={slots["byte-md-wrap"]}>
-          <ByteMD
-            value={value?.description}
-            onChange={(value) => handleChange('description', value)}
-          />
-        </div>
-      </Flex>
     </BaseSettingsContainer>
   );
 };
