@@ -1,5 +1,5 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { forwardRef, memo, useEffect, useImperativeHandle, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {Flex, SegmentedProps, Select, message } from '@/shared/ui/base';

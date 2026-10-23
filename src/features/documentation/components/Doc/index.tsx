@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import { useEffect } from 'react';
 import { DocWrap } from './style';
 import { Button, Flex, Input, message } from '@/shared/ui/base';
 import { IconFont } from '@/shared/ui';

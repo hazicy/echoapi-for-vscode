@@ -1,5 +1,5 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, Key, ReactNode, useEffect } from 'react';
+import { FC, Key, useEffect } from 'react';
 
 import { ConfigProvider, TreeProps } from '@/shared/ui/base';
 

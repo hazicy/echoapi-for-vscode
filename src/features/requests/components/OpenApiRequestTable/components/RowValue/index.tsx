@@ -6,7 +6,6 @@ import { UploadProps, message } from '@/shared/ui/base';
 import { includes, isEqual } from 'lodash';
 
 import VarInput from '@/features/variables/components/VarInput';
-import { Button, IconFont, Upload } from '@/shared/ui';
 import { fileTodataUrl } from '@/shared/utils/file';
 
 import Context from '../../context';

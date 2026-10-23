@@ -1,5 +1,5 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { HistoryReportListWrapper, HistoryReportListItem } from './style';
 import { TestingReportList } from '@/features/testing/types/res';
 import { isArray, last } from 'lodash';

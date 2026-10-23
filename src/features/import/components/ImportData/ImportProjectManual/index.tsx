@@ -17,12 +17,7 @@ import Radio from "@/shared/ui/Radio";
 import Tooltip from "@/shared/ui/Tooltip";
 import useTheme from "@/shared/hooks/useTheme";
 
-import {
-  IMPORT_TYPE_ENUM,
-  IMPORT_TYPE_LIST,
-  IMPORT_TYPE_MAP,
-  ImportLocationEnum,
-} from "@/features/settings/constants/settings";
+import { IMPORT_TYPE_ENUM, IMPORT_TYPE_LIST, ImportLocationEnum } from "@/features/settings/constants/settings";
 import { useSystemConfig } from "@/app/store";
 import { isString } from "lodash";
 

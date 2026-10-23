@@ -1,7 +1,7 @@
 import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from '../constants';
 import * as vscode from 'vscode';
 import path from 'path';
-import { getHtmlForWebview, getProjectConfig } from '../utils';
+import { getHtmlForWebview } from '../utils';
 import { handelEnvMessage } from '../messageHandler/environment';
 import { ENV_MANAGE_ENUM } from '@/features/environment/components/Environment/constants';
 

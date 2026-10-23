@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Divider, Flex, Popconfirm, message } from '@/shared/ui/base';
 
-import { cloneDeep, isArray, map, pullAt, size } from 'lodash';
+import { cloneDeep, isArray, size } from 'lodash';
 
 import Table from '@/shared/components/BasicTable';
 import { ColumnsType } from '@/shared/components/BasicTable/types';

@@ -1,13 +1,12 @@
-import { DEBUG_REQUEST_BODY_MODE_ENUM, OPENAPI_REQUEST_BODY_MODE_ENUM } from '@/features/requests/constants';
+import { OPENAPI_REQUEST_BODY_MODE_ENUM } from '@/features/requests/constants';
 import { CONTENT_TYPES } from '@/shared/constants/common';
-import { ApiDetailsData, echoapiResult, OpenApiData, openapiResult } from '@/features/requests/types/api';
-import { ApisBaseDataItem, TypeFiledType } from '@/features/requests/types/base';
+import { ApiDetailsData, openapiResult } from '@/features/requests/types/api';
 import { RequestBodyContentType } from '@/features/requests/types/request';
 import { snowflakeId } from 'apipost-tools';
-import { forEach, isArray, isEmpty, isPlainObject, isString, toLower, upperCase } from 'lodash';
+import { forEach, isArray, isEmpty, isPlainObject, isString, toLower } from 'lodash';
 import { capitalizeFirstLetter } from '../../requests/utils/apis';
 import { parseModelToJsonSchema } from '@/shared/utils/dataModel';
-import { areKeysOneToOne, EditFormat, isJSON } from '@/shared/utils/common';
+import { EditFormat, isJSON } from '@/shared/utils/common';
 import { useProjectSetting } from '@/app/store';
 import { JSONSchemaType } from '@/shared/types/jsonSchema';
 import { getTypeName } from '@/shared/utils/type';

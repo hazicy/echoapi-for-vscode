@@ -1,13 +1,7 @@
 import slots from "@/shared/ui/base/slots.module.css";
 import styles from './style.module.css';
 import React, { ReactElement, useEffect, useMemo, useRef } from 'react';
-import {
-  Button,
-  Flex,
-  message,
-  Skeleton,
-  Tree,
-} from '@/shared/ui/base';
+import { Button, Flex, Skeleton, Tree } from '@/shared/ui/base';
 import type { GetProps, MenuItemProps, MenuProps, TreeProps } from '@/shared/ui/base';
 import { TreeMenuContainer, CreateOtherIcon, TreeContainer } from './style';
 import Search from './components/Search';
@@ -28,18 +22,7 @@ import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
 import { useDebounceFn, useMemoizedFn, useSafeState } from 'ahooks';
 import apisActionMap from '@/features/requests/events/action';
 import { TreeDataFilterParams } from '@/features/collections/types/tree';
-import {
-  cloneDeep,
-  head,
-  includes,
-  isArray,
-  isEqual,
-  isPlainObject,
-  last,
-  map,
-  omit,
-  reduce,
-} from 'lodash';
+import { head, includes, isEqual, last, map, omit, reduce } from 'lodash';
 import IconFont from '@/shared/ui/IconFont';
 import { createOpensItem } from '@/features/requests/events/opens';
 import useTreeData from '@/features/collections/hooks/useTreeData';

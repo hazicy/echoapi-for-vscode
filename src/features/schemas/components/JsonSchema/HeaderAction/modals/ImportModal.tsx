@@ -1,5 +1,5 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { memo, useState } from 'react';
+import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Segmented, message } from '@/shared/ui/base';

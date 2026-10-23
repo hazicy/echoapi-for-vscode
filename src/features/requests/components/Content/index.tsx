@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {  ApiDebugContainer } from './style';
 import { useApis } from '@/app/store';
 import { ApiDetailsData, ApisData } from '@/features/requests/types/api';

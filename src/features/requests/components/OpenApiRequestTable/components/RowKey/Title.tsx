@@ -2,7 +2,7 @@ import slots from "@/shared/ui/base/slots.module.css";
 import { FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Checkbox, CheckboxProps, Flex } from '@/shared/ui/base';
+import { CheckboxProps, Flex } from '@/shared/ui/base';
 
 import cn from 'classnames';
 import { isEqual, isNumber } from 'lodash';

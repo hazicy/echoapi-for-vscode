@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Flex, Radio, Space, Typography } from '@/shared/ui/base';
 import { PushEnvData } from '../../type';

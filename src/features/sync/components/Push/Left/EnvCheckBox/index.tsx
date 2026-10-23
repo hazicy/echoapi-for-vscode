@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flex } from '@/shared/ui/base';
-import { useApis, useProjectConfig } from '@/app/store';
+import { useProjectConfig } from '@/app/store';
 import TreeCheckbox from '@/features/collections/components/TreeCheckbox';
 import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
 import { PushEnvData } from '../../type';

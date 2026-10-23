@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { TestingResultWrapper } from "./style";
 import useTheme from "@/shared/hooks/useTheme";
-import { Flex, Progress, Spin, Typography } from '@/shared/ui/base';
+import { Flex, Progress, Typography } from '@/shared/ui/base';
 import {
   chunk,
   floor,

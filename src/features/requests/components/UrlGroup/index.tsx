@@ -2,7 +2,7 @@ import slots from "@/shared/ui/base/slots.module.css";
 import React, { KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, ConfigProvider, Flex, Input, Select, SelectProps, Space } from '@/shared/ui/base';
+import { Button, ConfigProvider, Input, Select, SelectProps, Space } from '@/shared/ui/base';
 
 import { find, includes, isArray, isString } from 'lodash';
 

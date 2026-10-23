@@ -1,5 +1,5 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { PushRightWrap } from './style';
 import { useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';

@@ -16,7 +16,6 @@ import { Project, TeamItem } from '@/features/auth/types';
 
 import { MenuItemContainer, TeamMenuWrapper } from './style';
 import { getTeamAndProjectByProjectId } from '@/features/project/events';
-import { getEnvListService, getProjectGlobalParamService, getProjectGlobalVarService } from '@/shared/services/project';
 
 type MenuItem = Required<MenuProps>['items'][number];
 

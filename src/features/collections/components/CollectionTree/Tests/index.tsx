@@ -1,7 +1,7 @@
 import slots from "@/shared/ui/base/slots.module.css";
 import useFolders from '@/features/collections/hooks/useFolders';
 import { Button, Flex, message, TreeSelect } from '@/shared/ui/base';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TestsWrapper } from './style';
 import HistoryReportList from './HistoryReportList';

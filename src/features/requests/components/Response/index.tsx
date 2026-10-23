@@ -27,7 +27,7 @@ import { useGlobal, useSystemConfig } from "@/app/store";
 import { BaseResponse } from "@/features/requests/types/response";
 import { ApiSendingData, ApiSendingDataSSE } from "@/features/requests/types/send";
 
-import { Empty, Error } from "./components";
+import { Empty } from "./components";
 
 import { ResponseContainer } from "./style";
 

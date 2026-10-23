@@ -6,7 +6,7 @@ import { Flex, MenuProps } from '@/shared/ui/base';
 import { useSafeState } from 'ahooks';
 import { cloneDeep, isEqual } from 'lodash';
 
-import { Button, IconFont } from '@/shared/ui';
+import { Button } from '@/shared/ui';
 import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
 
 import { useApis, useProjectConfig, useUserConfig } from '@/app/store';

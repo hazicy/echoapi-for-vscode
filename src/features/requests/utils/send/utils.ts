@@ -1,19 +1,5 @@
 import i18next from 'i18next';
-import {
-  cloneDeep,
-  concat,
-  find,
-  head,
-  includes,
-  indexOf,
-  isArray,
-  isEqual,
-  keys,
-  map,
-  omit,
-  reduce,
-  size,
-} from 'lodash';
+import { cloneDeep, concat, find, head, indexOf, isArray, isEqual, keys, map, omit, reduce, size } from 'lodash';
 
 import JSON5 from 'json5';
 import { useProjectConfig, useProjectSetting } from '@/app/store';

@@ -1,5 +1,5 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/shared/ui/base';
 import { IconFont } from '@/shared/ui';
 import { useTranslation } from 'react-i18next';

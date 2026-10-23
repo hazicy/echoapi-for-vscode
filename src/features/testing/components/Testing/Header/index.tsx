@@ -2,7 +2,7 @@ import slots from "@/shared/ui/base/slots.module.css";
 import useTesting from '@/features/testing/store/useTesting';
 import cn from 'classnames';
 import { Button, Flex } from '@/shared/ui/base';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type TestingHeaderProps = {

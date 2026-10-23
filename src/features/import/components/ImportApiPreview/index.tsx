@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Checkbox, CheckboxProps, Flex, Form, Select, Tabs, TreeSelect, Typography } from '@/shared/ui/base';
 
-import { filter, map, isArray } from 'lodash';
+import { filter, isArray } from 'lodash';
 
 import { BasicTable } from '@/shared/components';
 import Tree from '@/features/collections/components/Tree';
@@ -12,15 +12,7 @@ import Tree from '@/features/collections/components/Tree';
 import { Button, Empty, Tooltip } from '@/shared/ui';
 import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
 import useFolders from '@/features/collections/hooks/useFolders';
-import {
-  APIPOST_FULL_ENV_OPTIONS,
-  EXPORT_PREVIEW_CONFIG_ITEMS,
-  ExportConfigEnum,
-  IMPORT_TYPE_ENUM,
-  ImportLocationEnum,
-  SWAGGER_FULL_API_OPTIONS,
-  SWAGGER_FULL_MODAL_OPTIONS,
-} from '@/features/settings/constants/settings';
+import { APIPOST_FULL_ENV_OPTIONS, EXPORT_PREVIEW_CONFIG_ITEMS, ExportConfigEnum, IMPORT_TYPE_ENUM, ImportLocationEnum, SWAGGER_FULL_MODAL_OPTIONS } from '@/features/settings/constants/settings';
 import { ApiDetailsData } from '@/features/requests/types/api';
 import { EnvList } from '@/features/environment/types';
 import { IDataModel } from '@/features/schemas/types';

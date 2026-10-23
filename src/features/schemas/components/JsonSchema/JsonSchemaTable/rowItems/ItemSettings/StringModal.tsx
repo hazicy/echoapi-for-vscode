@@ -1,5 +1,5 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Flex, Input, InputNumber, Select, Switch } from '@/shared/ui/base';

@@ -25,14 +25,7 @@ import {
 } from "lodash";
 
 import { Button, IconFont, Tooltip } from "@/shared/ui";
-import {
-  APIPOST_FULL_ENV_OPTIONS,
-  IMPORT_TIP_MAP,
-  IMPORT_TYPE_ENUM,
-  IMPORT_TYPE_MAP,
-  ImportLocationEnum,
-  SWAGGER_FULL_ENV_OPTIONS,
-} from "@/features/settings/constants/settings";
+import { IMPORT_TIP_MAP, IMPORT_TYPE_ENUM, IMPORT_TYPE_MAP, ImportLocationEnum } from "@/features/settings/constants/settings";
 import { useSafeState } from "ahooks";
 import { parseSafeBash } from "@/features/curl/utils/curl";
 import ImportApiPreview from "../ImportApiPreview";

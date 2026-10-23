@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { IconFont } from "@/shared/ui";
-import { Dropdown, Flex, Input, MenuProps, message, Typography } from '@/shared/ui/base';
+import { Flex, Input, MenuProps, message, Typography } from '@/shared/ui/base';
 import { ShareContainer } from "./style";
 import { useSafeState } from "ahooks";
 import useDocsData from "./hooks/useDocsData";

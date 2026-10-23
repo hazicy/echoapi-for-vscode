@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { TestingContainer } from './style';
 import Header from './Header';
 import Main from './Main';

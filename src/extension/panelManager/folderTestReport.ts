@@ -1,7 +1,7 @@
 import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from '../constants';
 import * as vscode from 'vscode';
 import path from 'path';
-import { getHtmlForWebview, getProjectConfig, showTabName } from '../utils';
+import { getHtmlForWebview, showTabName } from '../utils';
 import { TestingReportList } from '@/features/testing/types/res';
 import { handelFolderTestReportDataMessage } from '../messageHandler/folderTestReport';
 

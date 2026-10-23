@@ -2,7 +2,7 @@ import slots from "@/shared/ui/base/slots.module.css";
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Flex, Space, Typography } from '@/shared/ui/base';
+import { Flex, Space } from '@/shared/ui/base';
 
 import { useSafeState } from 'ahooks';
 import { find, isEmpty, isEqual, isUndefined } from 'lodash';

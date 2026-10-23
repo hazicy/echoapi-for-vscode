@@ -2,7 +2,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { HotkeysEvent } from "react-hotkeys-hook/dist/types";
 
 import { useMemoizedFn } from "ahooks";
-import { assign, concat, debounce, isEqual, reduce, values } from "lodash";
+import { assign, concat, debounce, reduce, values } from "lodash";
 
 import {
   APIS_HOT_KEYS_ENUM,

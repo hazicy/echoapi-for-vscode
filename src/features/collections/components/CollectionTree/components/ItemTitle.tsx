@@ -1,7 +1,7 @@
 import slots from "@/shared/ui/base/slots.module.css";
 import { FC, ReactNode, memo, useMemo } from 'react';
 
-import { Dropdown, MenuProps } from '@/shared/ui/base';
+import { Dropdown } from '@/shared/ui/base';
 
 import { isFunction, isNumber } from 'lodash';
 

@@ -1,5 +1,5 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { FC, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useSafeState } from 'ahooks';
 import { Flex } from '@/shared/ui/base';
 import produce from 'immer';

@@ -9,7 +9,7 @@ import { RuntimeResponse } from "@/features/testing/types";
 import CustomPopover from "@/shared/ui/Popover";
 import { Checkbox, Flex, Tooltip, Typography } from '@/shared/ui/base';
 import { Drawer } from "@/shared/ui/Drawer";
-import { isArray, isEmpty, isString, toUpper } from "lodash";
+import { isArray, isEmpty, toUpper } from "lodash";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CustomPopoverWrap } from "./style";

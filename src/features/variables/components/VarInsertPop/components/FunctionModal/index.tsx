@@ -7,7 +7,7 @@ import { Flex, Select } from '@/shared/ui/base';
 import classNames from 'classnames';
 import { has, size } from 'lodash';
 
-import { Button, IconFont, Input, InputNumber, Modal, Tooltip } from '@/shared/ui';
+import { Button, Input, InputNumber, Modal, Tooltip } from '@/shared/ui';
 import { FUNCTION_DEFAULT_VALUE, INNER_FUNC_LIST } from '@/features/variables/constants/variable';
 import { useProjectSetting } from '@/app/store';
 import { FuncListRenderItem, InnerFuncListItem } from '@/features/requests/types/variable';

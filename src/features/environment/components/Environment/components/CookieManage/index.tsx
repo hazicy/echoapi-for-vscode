@@ -14,7 +14,7 @@ import { useSystemConfig, useProjectConfig } from '@/app/store';
 
 import AddDomain from './components/AddDomain';
 import DomainItem from './components/DomainItem';
-import { DomainInfoProps, ICookie } from './types';
+import { ICookie } from './types';
 
 import CookieContainer from './style';
 import { useSafeState } from 'ahooks';

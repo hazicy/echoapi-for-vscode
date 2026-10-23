@@ -18,7 +18,7 @@ import { useApis, useProjectConfig, useUserConfig } from '@/app/store';
 import useApisWebsocket2 from '@/features/requests/store/useApis/websocket2';
 import { SocketIoComponentType, SocketIoDetailsData } from '@/features/requests/types/socketio';
 import { AnyObject, DirectionType } from '@/shared/types/common';
-import { genNewWsByUrlChange, genQueryByUrl } from '@/features/requests/utils/apis';
+import { genQueryByUrl } from '@/features/requests/utils/apis';
 import { convertToSaveFolderTree, importDelay } from '@/shared/utils/common';
 
 import useWebsocket2 from '../useWebsocket2';

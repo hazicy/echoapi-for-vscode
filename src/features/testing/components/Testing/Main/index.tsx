@@ -1,5 +1,5 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import {
   TestingConfigWrap,
   FunctionalWrap,

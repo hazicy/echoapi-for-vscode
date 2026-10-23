@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { cloneDeep, isEqual, isString, trim } from 'lodash';
+import { cloneDeep, isEqual } from 'lodash';
 
 import useWebsocket2Store from '@/features/requests/store/useApis/websocket2';
 

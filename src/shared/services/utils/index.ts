@@ -17,13 +17,7 @@ import {
 
 import { useAntdApp, useGlobal, useSystemConfig } from '@/app/store';
 
-import {
-  HTTP_METHODS,
-  PLAN_TIP_CODES,
-  RESPONSE_CODES,
-  RESPONSE_ERROR_CODES,
-  TERMINAL_TYPE,
-} from './constants';
+import { HTTP_METHODS, PLAN_TIP_CODES, RESPONSE_CODES, RESPONSE_ERROR_CODES } from './constants';
 import { RequestConfig } from './types';
 import { responseError } from './util';
 

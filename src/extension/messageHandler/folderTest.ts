@@ -1,8 +1,8 @@
-import { cloneDeep, forEach, isPlainObject } from 'lodash';
+import { cloneDeep } from 'lodash';
 import * as vscode from 'vscode';
 import { globalConfig } from '../constants';
 import { sendAutoTest, stopWorker } from '../apis';
-import { getAllApiChildren, getCurrentProjectConfig, getProjectReportList, getTestingFolderData, getTestingFolderName, setTestingFolderData } from '../utils';
+import { getAllApiChildren, getCurrentProjectConfig, getProjectReportList, getTestingFolderData, setTestingFolderData } from '../utils';
 import { ApiDetailsData } from '@/features/requests/types/api';
 import { ADD_CASE_DEFAULT } from '@/features/testing/constants/default';
 

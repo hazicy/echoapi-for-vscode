@@ -3,7 +3,7 @@
 import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
 import { useApis } from "@/app/store";
 import { ApiDetailsData } from "@/features/requests/types/api";
-import { cloneDeep, concat, find, indexOf, isArray, isEqual, reduce, size } from "lodash";
+import { cloneDeep, concat, find, indexOf, isArray, reduce, size } from "lodash";
 import { getUpwardFolderId } from "../../../../shared/utils/common";
 
 export const getAboutCollections = async (

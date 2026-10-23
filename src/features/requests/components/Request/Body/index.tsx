@@ -1,11 +1,11 @@
 import slots from "@/shared/ui/base/slots.module.css";
 import { FC, lazy, useMemo } from 'react';
 
-import { Flex, message, Select, Tooltip, Typography } from '@/shared/ui/base';
+import { Flex, message, Select, Tooltip } from '@/shared/ui/base';
 import type { RadioChangeEvent, SelectProps } from '@/shared/ui/base';
 
 import produce from 'immer';
-import { cloneDeep, includes, isArray, isEmpty, isEqual, isPlainObject, isString, map, toUpper, values } from 'lodash';
+import { includes, isEqual, isString, map, toUpper, values } from 'lodash';
 
 import SuspenseContent from '@/shared/components/SuspenseContent';
 import Radio from '@/shared/ui/Radio';

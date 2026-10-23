@@ -1,5 +1,5 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import type { SVGProps } from "react";
 type Props = SVGProps<SVGSVGElement> & { rotate?: number; spin?: boolean };
 const icon = (path: string) =>

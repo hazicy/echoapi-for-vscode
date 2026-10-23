@@ -8,7 +8,6 @@ import { Checkbox, Flex, Form, Select, Typography, message } from '@/shared/ui/b
 import { DragEndEvent } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import { snowflakeId } from 'apipost-tools';
-import { SHA256, enc } from 'crypto-js';
 import {
   cloneDeep,
   entries,

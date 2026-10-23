@@ -11,7 +11,7 @@ import { cloneDeep, head, isEqual } from 'lodash';
 import UrlGroup from '@/features/requests/components/UrlGroup';
 import { IconFont } from '@/shared/ui';
 import { SaveDropDownContainer } from '@/features/requests/components/Content/style';
-import { useApis, useProjectConfig, useUserConfig } from '@/app/store';
+import { useApis, useUserConfig } from '@/app/store';
 import { ApiComponentType } from '@/features/requests/types/graphql';
 import { getCollectionServerId } from '@/features/requests/utils/apis';
 import { convertToSaveFolderTree } from '@/shared/utils/common';

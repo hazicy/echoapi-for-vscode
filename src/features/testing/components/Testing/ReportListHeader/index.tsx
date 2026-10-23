@@ -1,5 +1,5 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import { Button, Flex } from '@/shared/ui/base';
+import { Flex } from '@/shared/ui/base';
 import IconFont from '@/shared/ui/IconFont';
 import { ReportListHeaderWrapper } from './style';
 
