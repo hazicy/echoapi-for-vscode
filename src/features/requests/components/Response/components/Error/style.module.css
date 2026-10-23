@@ -1,4 +1,4 @@
-.ResponseErrorContainer {
+.container {
   position: absolute;
   top: 0;
   left: 0;
@@ -6,44 +6,44 @@
   width: 100%;
   height: 100%;
   background: var(--color-bg-right);
-}
-.ResponseErrorContainer .slot-close-error-wrapper {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  font-size: 20px;
-  color: #ff4c4c;
-  cursor: pointer;
-}
-.ResponseErrorContainer .slot-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  font-size: var(--font-size-12);
-  text-align: center;
-  color: var(--font-content-color);
-}
-.ResponseErrorContainer .slot-container p.slot-error-str {
-  margin: 10px auto;
-  padding: 6px 8px;
-  width: max-content;
-  max-width: 100%;
-  border-radius: var(--border-radius);
-  font-size: 14px;
-  background: #ff5806;
-}
-.ResponseErrorContainer .slot-container .slot-error-str.slot-proxy-error {
-  background: #fff9df;
-}
-.ResponseErrorContainer .slot-container span {
-  color: var(--main);
-  cursor: pointer;
-}
-.ResponseErrorContainer .slot-container .slot-chioce-btn {
-  color: #3a86ff;
-}
-.ResponseErrorContainer .slot-container .slot-proxy-img {
-  margin: 0 0 20px;
+  & .slot-close-error-wrapper {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    font-size: 20px;
+    color: #ff4c4c;
+    cursor: pointer;
+  }
+  & .slot-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    font-size: var(--font-size-12);
+    text-align: center;
+    color: var(--font-content-color);
+  }
+  & .slot-container p.slot-error-str {
+    margin: 10px auto;
+    padding: 6px 8px;
+    width: max-content;
+    max-width: 100%;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    background: #ff5806;
+  }
+  & .slot-container .slot-error-str.slot-proxy-error {
+    background: #fff9df;
+  }
+  & .slot-container span {
+    color: var(--main);
+    cursor: pointer;
+  }
+  & .slot-container .slot-chioce-btn {
+    color: #3a86ff;
+  }
+  & .slot-container .slot-proxy-img {
+    margin: 0 0 20px;
+  }
 }

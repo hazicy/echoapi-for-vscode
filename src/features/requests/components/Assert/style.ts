@@ -4,12 +4,6 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 export const AssertWrapper = withStyles<
   "div",
   { $token: Partial<GlobalThemeToken> }
->("div", moduleStyles["AssertWrapper"], {
-  selector: "ui_47182b93_AssertWrapper",
-});
+>("div", moduleStyles["container"]);
 
-export const DescWrapper = withStyles<"span", {}>(
-  "span",
-  moduleStyles["DescWrapper"],
-  { selector: "ui_47182b93_DescWrapper" },
-);
+export const DescWrapper = withStyles<"span", {}>("span", moduleStyles["desc"]);

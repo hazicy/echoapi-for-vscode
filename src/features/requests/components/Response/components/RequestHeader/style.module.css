@@ -1,7 +1,7 @@
-.RequestHeaderContainer {
+.container {
   width: 100%;
   height: 100%;
-}
-.RequestHeaderContainer .slot-table-cell-span {
-  word-break: break-all;
+  & .slot-table-cell-span {
+    word-break: break-all;
+  }
 }

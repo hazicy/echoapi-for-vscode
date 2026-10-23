@@ -3,8 +3,7 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const EmptyWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["EmptyWrap"],
-  { selector: "ui_5dfcc5ec_EmptyWrap" },
+  moduleStyles["container"],
 );
 
 export default EmptyWrap;

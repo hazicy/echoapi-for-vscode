@@ -8,7 +8,6 @@ export function withStyles<C extends ElementType, P extends object = {}>(
   Component: C,
   moduleClass: string,
   options: {
-    selector?: string;
     attrs?: Partial<ComponentPropsWithRef<C> & P>;
     variables?: Record<
       string,
@@ -43,7 +42,6 @@ export function withStyles<C extends ElementType, P extends object = {}>(
       ref,
       className: [
         moduleClass,
-        options.selector,
         options.attrs && "className" in options.attrs
           ? options.attrs.className
           : "",

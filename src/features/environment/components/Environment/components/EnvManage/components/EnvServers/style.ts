@@ -3,24 +3,20 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const ServerNameContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ServerNameContainer"],
-  { selector: "ui_b634fb6a_ServerNameContainer" },
+  moduleStyles["container"],
 );
 
 export const EnvAddContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["EnvAddContainer"],
-  { selector: "ui_b634fb6a_EnvAddContainer" },
+  moduleStyles["envAdd"],
 );
 
 export const EnvServerTitleContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["EnvServerTitleContainer"],
-  { selector: "ui_b634fb6a_EnvServerTitleContainer" },
+  moduleStyles["envServerTitle"],
 );
 
 export const EnvServerContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["EnvServerContainer"],
-  { selector: "ui_b634fb6a_EnvServerContainer" },
+  moduleStyles["envServer"],
 );

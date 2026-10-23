@@ -4,16 +4,12 @@ import { Flex } from "@/shared/ui/base";
 
 export const EnvDropdownWrapper = withStyles<typeof Flex, {}>(
   Flex,
-  moduleStyles["EnvDropdownWrapper"],
-  { selector: "ui_5d025767_EnvDropdownWrapper" },
+  moduleStyles["container"],
 );
 
 export const EnvDropdownRenderContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["EnvDropdownRenderContainer"],
-  { selector: "ui_5d025767_EnvDropdownRenderContainer" },
+  moduleStyles["envDropdownRender"],
 );
 
-export const EnvLabel = withStyles<"div", {}>("div", moduleStyles["EnvLabel"], {
-  selector: "ui_5d025767_EnvLabel",
-});
+export const EnvLabel = withStyles<"div", {}>("div", moduleStyles["envLabel"]);

@@ -1,5 +1,5 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.UrrGroupWrap {
+.container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -13,77 +13,98 @@
   background-color: var(--search-big-bg-color);
   border: 1px solid var(--color-border);
 }
-.UrrGroupWrap .slot-line {
+.container .slot-line {
   height: 18px;
   width: 1px;
   background: var(--color-border);
   margin-right: 4px;
 }
-.UrrGroupWrap .slot-beautify-select-arrow {
+.container .slot-beautify-select-arrow {
   transform: rotate(0deg);
   font-size: var(--font-size-14);
   transition: all 0.3s linear;
 }
-.UrrGroupWrap .slot-beautify-btn {
+.container .slot-beautify-btn {
   height: 36px !important;
 }
-.UrrGroupWrap .slot-beautify-select {
+.container .slot-beautify-select {
   height: 30px;
 }
-.UrrGroupWrap .slot-beautify-select-selector {
+.container .slot-beautify-select-selector {
   box-shadow: none !important;
 }
-.UrrGroupWrap .slot-beautify-select-selector .slot-beautify-select-selection-search input {
+.container
+  .slot-beautify-select-selector
+  .slot-beautify-select-selection-search
+  input {
   height: 100% !important;
 }
-.UrrGroupWrap .slot-beautify-select-open .slot-beautify-select-arrow {
+.container .slot-beautify-select-open .slot-beautify-select-arrow {
   transform: rotate(180deg);
   transition: all 0.3s linear;
 }
-.UrrGroupWrap .slot-right-select-http .slot-beautify-select-selector {
+.container .slot-right-select-http .slot-beautify-select-selector {
   width: 100px;
   border: none !important;
 }
-.UrrGroupWrap .slot-beautify-select:not(.slot-right-select) {
+.container .slot-beautify-select:not(.slot-right-select) {
   /* margin-right: 8px; */
 }
-.UrrGroupWrap .slot-beautify-select:not(.slot-right-select) .slot-beautify-select-selector {
+.container
+  .slot-beautify-select:not(.slot-right-select)
+  .slot-beautify-select-selector {
   background: transparent !important;
   max-width: 110px;
   border: none;
   border-radius: 0;
 }
-.UrrGroupWrap .slot-beautify-select:not(.slot-right-select) .slot-beautify-select-selection-item {
+.container
+  .slot-beautify-select:not(.slot-right-select)
+  .slot-beautify-select-selection-item {
   padding-right: 16px;
   font-weight: 600;
   color: var(--color-success);
 }
-.UrrGroupWrap .slot-beautify-select:not(.slot-right-select).slot-post .slot-beautify-select-selection-item {
+.container
+  .slot-beautify-select:not(.slot-right-select).slot-post
+  .slot-beautify-select-selection-item {
   color: var(--color-warning);
 }
-.UrrGroupWrap .slot-beautify-select:not(.slot-right-select).slot-get .slot-beautify-select-selection-item {
+.container
+  .slot-beautify-select:not(.slot-right-select).slot-get
+  .slot-beautify-select-selection-item {
   color: var(--color-success);
 }
-.UrrGroupWrap .slot-beautify-select:not(.slot-right-select).slot-put .slot-beautify-select-selection-item {
+.container
+  .slot-beautify-select:not(.slot-right-select).slot-put
+  .slot-beautify-select-selection-item {
   color: #ff0;
   color: var(--color-info);
 }
-.UrrGroupWrap .slot-beautify-select:not(.slot-right-select).slot-delete .slot-beautify-select-selection-item {
+.container
+  .slot-beautify-select:not(.slot-right-select).slot-delete
+  .slot-beautify-select-selection-item {
   color: var(--color-error);
 }
-.UrrGroupWrap .slot-beautify-select:not(.slot-right-select).slot-patch .slot-beautify-select-selection-item {
+.container
+  .slot-beautify-select:not(.slot-right-select).slot-patch
+  .slot-beautify-select-selection-item {
   color: undefined;
 }
-.UrrGroupWrap .slot-beautify-select:not(.slot-right-select).slot-raw .slot-beautify-select-selection-item {
+.container
+  .slot-beautify-select:not(.slot-right-select).slot-raw
+  .slot-beautify-select-selection-item {
   color: var(--color-warning);
 }
-.UrrGroupWrap .slot-beautify-select:not(.slot-right-select).slot-socket.slot-io .slot-beautify-select-selection-item {
+.container
+  .slot-beautify-select:not(.slot-right-select).slot-socket.slot-io
+  .slot-beautify-select-selection-item {
   color: var(--color-warning);
 }
-.UrrGroupWrap .slot-beautify-select-selection-item {
+.container .slot-beautify-select-selection-item {
   font-size: 12px !important;
 }
-.UrrGroupWrap .slot-env-desc {
+.container .slot-env-desc {
   overflow: hidden;
   font-size: var(--font-size-14);
   line-height: 36px;
@@ -91,20 +112,22 @@
   color: var(--font-light-color);
   text-overflow: ellipsis;
 }
-.UrrGroupWrap .slot-right-select {
+.container .slot-right-select {
   position: relative;
 }
-.UrrGroupWrap .slot-right-select .slot-beautify-select-selector {
+.container .slot-right-select .slot-beautify-select-selector {
   background: transparent !important;
   border-radius: 0;
 }
-.UrrGroupWrap .slot-right-select:hover .slot-beautify-select-selector {
+.container .slot-right-select:hover .slot-beautify-select-selector {
   /* background-color: var(--popover-select-bg-color) !important; */
 }
-.UrrGroupWrap .slot-right-select.slot-beautify-select-focused .slot-beautify-select-selector {
+.container
+  .slot-right-select.slot-beautify-select-focused
+  .slot-beautify-select-selector {
   /* background-color: var(--popover-select-bg-color) !important; */
 }
-.UrrGroupWrap .slot-mini-editor {
+.container .slot-mini-editor {
   padding: 0 4px;
   height: 30px;
   /* border-radius: var(--border-radius); */
@@ -113,20 +136,20 @@
   line-height: 28px;
   /* background-color: var(--background-color-fifth); */
 }
-.UrrGroupWrap .slot-mini-editor::placeholder {
+.container .slot-mini-editor::placeholder {
   color: var(--vscode-input-placeholderForeground);
 }
-.UrrGroupWrap .slot-mini-editor:hover,
-.UrrGroupWrap .slot-mini-editor.slot-editor-active {
+.container .slot-mini-editor:hover,
+.container .slot-mini-editor.slot-editor-active {
   border: 1px solid var(--color-primary);
   /* color: var(--content-color-primary); */
   background-color: var(--color-bg-right);
   appearance: none;
 }
-.UrrGroupWrap .slot-mini-editor.slot-editor-active {
+.container .slot-mini-editor.slot-editor-active {
   height: 30px;
 }
-.UrrGroupWrap .slot-grpc-url-name {
+.container .slot-grpc-url-name {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -136,56 +159,58 @@
   font-size: var(--font-size-14);
   color: var(--font-content-color);
 }
-.UrrGroupWrap .slot-grpc-method {
+.container .slot-grpc-method {
   color: var(--font-content-color);
 }
-.UrrGroupWrap .slot-url-group-input {
+.container .slot-url-group-input {
   border-color: transparent;
 }
-.UrrGroupWrap .slot-url-group-input:hover {
+.container .slot-url-group-input:hover {
   border-color: var(--color-primary);
 }
-.UrrGroupWrap .slot-url-group-container {
+.container .slot-url-group-container {
   display: flex;
   flex-grow: 1;
   width: 0;
   height: 100%;
 }
-.UrrGroupWrap .slot-url-group-container .slot-env-desc {
+.container .slot-url-group-container .slot-env-desc {
   max-width: 50%;
 }
-.MethodDropdownWrap {
+.methodDropdown {
   display: flex;
   flex-direction: column;
 }
-.MethodDropdownWrap .slot-beautify-select-item {
+.methodDropdown .slot-beautify-select-item {
   cursor: pointer;
 }
-.MethodDropdownWrap .slot-beautify-select-item .slot-select-item-icon-delete {
+.methodDropdown .slot-beautify-select-item .slot-select-item-icon-delete {
   display: none;
 }
-.MethodDropdownWrap .slot-beautify-select-item:hover {
+.methodDropdown .slot-beautify-select-item:hover {
   background: var(--color-bg-folder-hover);
 }
-.MethodDropdownWrap .slot-beautify-select-item:hover .slot-select-item-icon-delete {
+.methodDropdown .slot-beautify-select-item:hover .slot-select-item-icon-delete {
   display: block;
 }
-.MethodDropdownWrap .slot-beautify-select-item:hover .slot-select-item-icon-delete:hover {
+.methodDropdown
+  .slot-beautify-select-item:hover
+  .slot-select-item-icon-delete:hover {
   color: var(--color-primary);
 }
-.OptionsItemContainer {
+.optionsItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 40px;
 }
-.OptionsItemContainer .slot-label {
+.optionsItem .slot-label {
   max-width: 100px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.OptionsItemContainer .slot-uri {
+.optionsItem .slot-uri {
   flex: 1;
   width: 0;
   text-align: right;
@@ -195,8 +220,8 @@
   color: var(--font-light-color);
 }
 
-.UrrGroupWrap > .slot-beautify-select,
-.UrrGroupWrap .slot-url-group-container > .slot-beautify-select {
+.container > .slot-beautify-select,
+.container .slot-url-group-container > .slot-beautify-select {
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -204,50 +229,50 @@
   min-height: 28px;
   flex-wrap: nowrap;
 }
-.UrrGroupWrap > .slot-beautify-select:first-child {
+.container > .slot-beautify-select:first-child {
   min-width: 84px;
   max-width: 100px;
   font-weight: 600;
   color: var(--color-success);
 }
-.UrrGroupWrap > .slot-beautify-select.slot-post {
+.container > .slot-beautify-select.slot-post {
   color: var(--color-warning);
 }
-.UrrGroupWrap > .slot-beautify-select.slot-put {
+.container > .slot-beautify-select.slot-put {
   color: var(--color-info);
 }
-.UrrGroupWrap > .slot-beautify-select.slot-delete {
+.container > .slot-beautify-select.slot-delete {
   color: var(--color-error);
 }
-.UrrGroupWrap .slot-line {
+.container .slot-line {
   flex-shrink: 0;
   height: 20px;
   background: var(--vscode-widget-border, var(--color-border));
 }
-.UrrGroupWrap .slot-url-group-container .slot-mini-editor,
-.UrrGroupWrap .slot-url-group-container .slot-mini-editor:hover,
-.UrrGroupWrap .slot-url-group-container .slot-mini-editor.slot-editor-active {
+.container .slot-url-group-container .slot-mini-editor,
+.container .slot-url-group-container .slot-mini-editor:hover,
+.container .slot-url-group-container .slot-mini-editor.slot-editor-active {
   border-color: transparent;
   background: transparent;
   box-shadow: none;
 }
-.UrrGroupWrap .slot-right-select {
+.container .slot-right-select {
   border-left: 1px solid var(--vscode-widget-border, var(--color-border));
   margin-right: 4px;
 }
-.UrrGroupWrap .slot-beautify-select [role="combobox"]:focus-visible {
+.container .slot-beautify-select [role="combobox"]:focus-visible {
   outline: none;
 }
 
-.UrrGroupWrap > .slot-beautify-select:first-child input::placeholder {
+.container > .slot-beautify-select:first-child input::placeholder {
   color: inherit;
   opacity: 1;
 }
 
-.MethodDropdownWrap {
+.methodDropdown {
   font-size: 12px;
 }
-.MethodDropdownWrap .slot-beautify-select-item {
+.methodDropdown .slot-beautify-select-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -278,19 +303,30 @@
   margin: 0;
 }
 .methodPopup .slot-beautify-select-item[data-highlighted] {
-  background: var(--vscode-list-hoverBackground, var(--popover-select-bg-hover-color));
+  background: var(
+    --vscode-list-hoverBackground,
+    var(--popover-select-bg-hover-color)
+  );
   color: var(--vscode-list-hoverForeground, inherit);
 }
 .methodCheck {
   flex-shrink: 0;
 }
-.MethodDropdownWrap .slot-beautify-select-item .slot-beautify-select-item-option-content {
+.methodDropdown
+  .slot-beautify-select-item
+  .slot-beautify-select-item-option-content {
   flex: 1;
 }
-.MethodDropdownWrap .slot-beautify-select-item[data-selected] {
-  color: var(--vscode-list-activeSelectionForeground, var(--font-content-color));
-  background: var(--vscode-list-activeSelectionBackground, var(--popover-select-bg-hover-color));
+.methodDropdown .slot-beautify-select-item[data-selected] {
+  color: var(
+    --vscode-list-activeSelectionForeground,
+    var(--font-content-color)
+  );
+  background: var(
+    --vscode-list-activeSelectionBackground,
+    var(--popover-select-bg-hover-color)
+  );
 }
-.UrrGroupWrap > .slot-beautify-select:first-child {
+.container > .slot-beautify-select:first-child {
   max-width: 110px;
 }

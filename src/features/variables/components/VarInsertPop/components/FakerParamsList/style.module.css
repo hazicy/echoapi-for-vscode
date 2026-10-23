@@ -1,85 +1,85 @@
-.FakerParamsContainer {
+.container {
   padding: 6px;
   border-radius: 4px;
   background-color: var(--color-primary-opacity);
   box-sizing: border-box;
-}
-.FakerParamsContainer .slot-param {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 6px;
-  padding: 6px;
-  border-radius: 4px;
-  background-color: var(--popover-select-bg-color);
-  box-sizing: border-box;
-}
-.FakerParamsContainer .slot-param.slot-footer {
-  margin-bottom: 0;
-}
-.FakerParamsContainer .slot-param .slot-param-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4px;
-  min-height: 28px;
-  border-radius: 4px;
-  gap: 4px;
-  box-sizing: border-box;
-}
-.FakerParamsContainer .slot-param .slot-param-item .slot-param-item-del {
-  visibility: hidden;
-}
-.FakerParamsContainer .slot-param .slot-param-item:hover {
-  background-color: var(--form-hover-color);
-}
-.FakerParamsContainer .slot-param .slot-param-item:hover .slot-param-item-del {
-  visibility: visible;
-}
-.FakerParamsContainer .slot-param .slot-param-item .slot-param-content {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  gap: 4px;
-}
-.FakerParamsContainer .slot-param .slot-param-item .slot-param-item-desc {
-  width: 120px;
-  font-size: 14px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.FakerParamsContainer .slot-param .slot-param-item .slot-param-item-com {
-  flex: 1;
-  width: 0;
-}
-.FakerParamsContainer .slot-param .slot-param-item .slot-param-item-com > * {
-  width: 100%;
-}
-.FakerParamsContainer .slot-param .slot-param-item .slot-param-item-com .slot-beautify-select {
-  min-width: 88px;
-}
-.FakerParamsContainer .slot-selection {
-  display: flex;
-  flex-wrap: wrap;
-}
-.FakerParamsContainer .slot-selection .slot-select-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 0 5px;
-  min-height: 24px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--font-content-color);
-  box-sizing: border-box;
-  gap: 4px;
-}
-.FakerParamsContainer .slot-selection .slot-select-item:hover {
-  border: 1px solid var(--selected-border-color);
-  color: var(--color-primary);
-  background-color: var(--popover-select-bg-color);
-  cursor: pointer;
+  & .slot-param {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 6px;
+    padding: 6px;
+    border-radius: 4px;
+    background-color: var(--popover-select-bg-color);
+    box-sizing: border-box;
+  }
+  & .slot-param.slot-footer {
+    margin-bottom: 0;
+  }
+  & .slot-param .slot-param-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px;
+    min-height: 28px;
+    border-radius: 4px;
+    gap: 4px;
+    box-sizing: border-box;
+  }
+  & .slot-param .slot-param-item .slot-param-item-del {
+    visibility: hidden;
+  }
+  & .slot-param .slot-param-item:hover {
+    background-color: var(--form-hover-color);
+  }
+  & .slot-param .slot-param-item:hover .slot-param-item-del {
+    visibility: visible;
+  }
+  & .slot-param .slot-param-item .slot-param-content {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 4px;
+  }
+  & .slot-param .slot-param-item .slot-param-item-desc {
+    width: 120px;
+    font-size: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  & .slot-param .slot-param-item .slot-param-item-com {
+    flex: 1;
+    width: 0;
+  }
+  & .slot-param .slot-param-item .slot-param-item-com > * {
+    width: 100%;
+  }
+  & .slot-param .slot-param-item .slot-param-item-com .slot-beautify-select {
+    min-width: 88px;
+  }
+  & .slot-selection {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  & .slot-selection .slot-select-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 5px;
+    min-height: 24px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--font-content-color);
+    box-sizing: border-box;
+    gap: 4px;
+  }
+  & .slot-selection .slot-select-item:hover {
+    border: 1px solid var(--selected-border-color);
+    color: var(--color-primary);
+    background-color: var(--popover-select-bg-color);
+    cursor: pointer;
+  }
 }

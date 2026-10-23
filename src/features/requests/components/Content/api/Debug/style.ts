@@ -3,6 +3,5 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const RequestContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["RequestContainer"],
-  { selector: "ui_7b1bb3e8_RequestContainer" },
+  moduleStyles["container"],
 );

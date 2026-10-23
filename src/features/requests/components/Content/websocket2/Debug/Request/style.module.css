@@ -1,25 +1,27 @@
-.SettingWrap .slot-beautify-input {
-  /* width: 120px; */
-  width: 100%;
+.container {
+  & .slot-beautify-input {
+    /* width: 120px; */
+    width: 100%;
+  }
+  & .slot-beautify-input-number {
+    width: 100%;
+  }
+  & .slot-beautify-select {
+    width: 100%;
+  }
+  & .slot-setting-desc {
+    color: var(--font-light-color);
+  }
 }
-.SettingWrap .slot-beautify-input-number {
-  width: 100%;
-}
-.SettingWrap .slot-beautify-select {
-  width: 100%;
-}
-.SettingWrap .slot-setting-desc {
-  color: var(--font-light-color);
-}
-.MessageHeaderWrap {
+.messageHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 7px;
-}
-.MessageHeaderWrap .slot-beautify-select-selector {
-  font-size: 12px !important;
-}
-.MessageHeaderWrap .slot-beautify-select .slot-beautify-select-arrow {
-  font-size: 10px;
+  & .slot-beautify-select-selector {
+    font-size: 12px !important;
+  }
+  & .slot-beautify-select .slot-beautify-select-arrow {
+    font-size: 10px;
+  }
 }

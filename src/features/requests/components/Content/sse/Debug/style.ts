@@ -4,12 +4,10 @@ import { Flex } from "@/shared/ui/base";
 
 export const ApiDebugContainer = withStyles<typeof Flex, {}>(
   Flex,
-  moduleStyles["ApiDebugContainer"],
-  { selector: "ui_fac039fb_ApiDebugContainer" },
+  moduleStyles["container"],
 );
 
 export const RequestContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["RequestContainer"],
-  { selector: "ui_fac039fb_RequestContainer" },
+  moduleStyles["request"],
 );

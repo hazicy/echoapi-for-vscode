@@ -1,14 +1,14 @@
-.CollapseWrapper {
+.container {
   width: 100%;
-}
-.CollapseWrapper .slot-beautify-collapse .slot-beautify-collapse-header {
-  font-size: var(--font-size-14);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  background-color: var(--table-header-bg-color);
-}
-.CollapseWrapper .slot-beautify-collapse .slot-beautify-collapse-content {
-  background-color: var(--color-bg-right);
+  & .slot-beautify-collapse .slot-beautify-collapse-header {
+    font-size: var(--font-size-14);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--table-header-bg-color);
+  }
+  & .slot-beautify-collapse .slot-beautify-collapse-content {
+    background-color: var(--color-bg-right);
+  }
 }

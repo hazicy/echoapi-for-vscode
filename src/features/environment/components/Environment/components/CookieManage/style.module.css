@@ -1,22 +1,22 @@
-.DefaultStyle {
+.container {
   width: 100%;
   height: 100%;
-}
-.DefaultStyle .slot-cookie-flex {
-  height: 100%;
-}
-.DefaultStyle .slot-cookie-title {
-  width: 100%;
-}
-.DefaultStyle .slot-cookie-content {
-  flex: 1;
-  overflow-y: auto;
-  /* padding-right: 10px; */
-}
-.DefaultStyle .slot-cookie-content .slot-beautify-collapse {
-  background-color: transparent;
-}
-.DefaultStyle .slot-cookie-content .slot-beautify-collapse .slot-beautify-collapse-item {
-  margin-bottom: 8px !important;
-  overflow: hidden;
+  & .slot-cookie-flex {
+    height: 100%;
+  }
+  & .slot-cookie-title {
+    width: 100%;
+  }
+  & .slot-cookie-content {
+    flex: 1;
+    overflow-y: auto;
+    /* padding-right: 10px; */
+  }
+  & .slot-cookie-content .slot-beautify-collapse {
+    background-color: transparent;
+  }
+  & .slot-cookie-content .slot-beautify-collapse .slot-beautify-collapse-item {
+    margin-bottom: 8px !important;
+    overflow: hidden;
+  }
 }

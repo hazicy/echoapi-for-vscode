@@ -3,12 +3,10 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const TreeContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["TreeContainer"],
-  { selector: "ui_11bff46c_TreeContainer" },
+  moduleStyles["container"],
 );
 
 export const ItemTitleContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ItemTitleContainer"],
-  { selector: "ui_11bff46c_ItemTitleContainer" },
+  moduleStyles["itemTitle"],
 );

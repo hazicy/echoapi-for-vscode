@@ -1,51 +1,56 @@
-.RadioWrap label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
+.container {
+  & label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  & .slot-beautify-radio .slot-beautify-radio-inner {
+    /* width: 16px; */
+    /* height: 16px; */
+    background-color: transparent;
+  }
+  & .slot-beautify-radio .slot-beautify-radio-inner::after {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-primary);
+  }
 }
-.RadioWrap .slot-beautify-radio .slot-beautify-radio-inner {
-  /* width: 16px; */
-  /* height: 16px; */
-  background-color: transparent;
-}
-.RadioWrap .slot-beautify-radio .slot-beautify-radio-inner::after {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  width: 8px;
-  height: 8px;
-  background-color: var(--color-primary);
-}
-.RadioGroupWrap {
+.radioGroup {
   /* 1 */
-}
-.RadioGroupWrap .slot-beautify-radio-group {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-}
-.RadioGroupWrap .slot-beautify-radio-group label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-.RadioGroupWrap .slot-beautify-radio-group .slot-beautify-radio .slot-beautify-radio-inner {
-  /* width: 16px; */
-  /* height: 16px; */
-  background-color: transparent;
-}
-.RadioGroupWrap .slot-beautify-radio-group .slot-beautify-radio .slot-beautify-radio-inner::after {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  width: 8px;
-  height: 8px;
-  background-color: var(--color-primary);
+  & .slot-beautify-radio-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  & .slot-beautify-radio-group label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  & .slot-beautify-radio-group .slot-beautify-radio .slot-beautify-radio-inner {
+    /* width: 16px; */
+    /* height: 16px; */
+    background-color: transparent;
+  }
+  &
+    .slot-beautify-radio-group
+    .slot-beautify-radio
+    .slot-beautify-radio-inner::after {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-primary);
+  }
 }

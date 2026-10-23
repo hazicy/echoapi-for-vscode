@@ -1,26 +1,26 @@
-.ResponseEmptyContainer {
+.container {
   height: 100%;
-}
-.ResponseEmptyContainer.slot-mask-mode {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
-  height: calc(100% - 44px);
-  background-color: var(--color-bg-right);
-}
-.ResponseEmptyContainer.slot-mask-error-mode {
-  height: calc(100% - 56px);
-}
-.ResponseEmptyContainer .slot-response-empty-wrap .slot-beautify-empty-image {
-  margin-bottom: 16px;
-}
-.ResponseEmptyContainer .slot-response-empty-wrap .slot-beautify-empty-image .slot-icon-empty-wrap {
-  font-size: 80px;
-  color: var(--vscode-settings-headerBorder);
-}
-.ResponseEmptyContainer .slot-response-empty-wrap .slot-beautify-empty-description {
-  font-size: var(--font-size-12);
-  color: var(--vscode-descriptionForeground, var(--vscode-foreground, #999));
+  &.slot-mask-mode {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    height: calc(100% - 44px);
+    background-color: var(--color-bg-right);
+  }
+  &.slot-mask-error-mode {
+    height: calc(100% - 56px);
+  }
+  & .slot-response-empty-wrap .slot-beautify-empty-image {
+    margin-bottom: 16px;
+  }
+  & .slot-response-empty-wrap .slot-beautify-empty-image .slot-icon-empty-wrap {
+    font-size: 80px;
+    color: var(--vscode-settings-headerBorder);
+  }
+  & .slot-response-empty-wrap .slot-beautify-empty-description {
+    font-size: var(--font-size-12);
+    color: var(--vscode-descriptionForeground, var(--vscode-foreground, #999));
+  }
 }

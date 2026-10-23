@@ -4,15 +4,13 @@ import { Flex } from "@/shared/ui/base";
 
 export const RealRequestContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["RealRequestContainer"],
-  { selector: "ui_58413deb_RealRequestContainer" },
+  moduleStyles["container"],
 );
 
 export const RequestItem = withStyles<typeof Flex, {}>(
   Flex,
-  moduleStyles["RequestItem"],
+  moduleStyles["requestItem"],
   {
-    selector: "ui_58413deb_RequestItem",
     attrs: {
       vertical: true,
       gap: 8,
@@ -22,9 +20,8 @@ export const RequestItem = withStyles<typeof Flex, {}>(
 
 export const TabBarExtraContentWrap = withStyles<typeof Flex, {}>(
   Flex,
-  moduleStyles["TabBarExtraContentWrap"],
+  moduleStyles["tabBarExtraContent"],
   {
-    selector: "ui_58413deb_TabBarExtraContentWrap",
     attrs: {
       align: "center",
     },

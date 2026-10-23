@@ -3,11 +3,9 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const RadioWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["RadioWrap"],
-  { selector: "ui_0e81683d_RadioWrap" },
+  moduleStyles["container"],
 );
 export const RadioGroupWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["RadioGroupWrap"],
-  { selector: "ui_0e81683d_RadioGroupWrap" },
+  moduleStyles["radioGroup"],
 );

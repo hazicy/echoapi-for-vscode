@@ -1,21 +1,23 @@
-.CustomPopoverWrap .slot-response-size-title {
-  color: var(--font-pale-color);
+.container {
+  & .slot-response-size-title {
+    color: var(--font-pale-color);
+  }
+  & .slot-new-response-size-title {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--font-title-color);
+  }
+  & .slot-time {
+    /* color: var(--color-success); */
+  }
+  & .slot-progress {
+    position: relative;
+    width: 100%;
+    height: 26px;
+  }
 }
-.CustomPopoverWrap .slot-new-response-size-title {
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: var(--font-title-color);
-}
-.CustomPopoverWrap .slot-time {
-  /* color: var(--color-success); */
-}
-.CustomPopoverWrap .slot-progress {
-  position: relative;
-  width: 100%;
-  height: 26px;
-}
-.CustomPopoverWrap .slot-progress-left,
-.CustomPopoverWrap .slot-progress-right {
+.container .slot-progress-left,
+.container .slot-progress-right {
   position: absolute;
   top: 0;
   z-index: 1;
@@ -23,133 +25,143 @@
   height: 100%;
   background-color: var(--color-border);
 }
-.CustomPopoverWrap .slot-progress-content {
-  position: relative;
-  z-index: 2;
-  margin-top: 4px;
-  height: 22px;
-  background: #ffb400;
-  box-sizing: border-box;
+.container {
+  & .slot-progress-content {
+    position: relative;
+    z-index: 2;
+    margin-top: 4px;
+    height: 22px;
+    background: #ffb400;
+    box-sizing: border-box;
+  }
+  & .slot-progress-content.slot-download {
+    background: #26cea4;
+  }
 }
-.CustomPopoverWrap .slot-progress-content.slot-download {
-  background: #26cea4;
-}
-.CustomPopoverWrap .slot-progress-content.slot-tcpHandshake,
-.CustomPopoverWrap .slot-progress-content.slot-sslHandshake {
+.container .slot-progress-content.slot-tcpHandshake,
+.container .slot-progress-content.slot-sslHandshake {
   background: #2d99ff;
 }
-.CustomPopoverWrap .slot-progress-content.slot-waiting {
-  border: 1px dashed #fe5a41;
-  background: #fe5a07;
+.container {
+  & .slot-progress-content.slot-waiting {
+    border: 1px dashed #fe5a41;
+    background: #fe5a07;
+  }
 }
-.CustomPopoverWrap .slot-beautify-row.slot-prepare,
-.CustomPopoverWrap .slot-beautify-row.slot-process,
-.CustomPopoverWrap .slot-beautify-row.slot-empty {
+.container .slot-beautify-row.slot-prepare,
+.container .slot-beautify-row.slot-process,
+.container .slot-beautify-row.slot-empty {
   color: var(--font-pale-color);
 }
-.CustomPopoverWrap .slot-beautify-row.slot-prepare .slot-progress-content,
-.CustomPopoverWrap .slot-beautify-row.slot-process .slot-progress-content,
-.CustomPopoverWrap .slot-beautify-row.slot-empty .slot-progress-content {
+.container .slot-beautify-row.slot-prepare .slot-progress-content,
+.container .slot-beautify-row.slot-process .slot-progress-content,
+.container .slot-beautify-row.slot-empty .slot-progress-content {
   background: var(--check-box-border-color);
 }
-.CustomProxyWrap .slot-desc {
-  font-size: 12px;
-  color: var(--font-pale-color);
+.customProxy {
+  & .slot-desc {
+    font-size: 12px;
+    color: var(--font-pale-color);
+  }
+  & .slot-desc > span {
+    display: inline-flex;
+    width: 50%;
+    word-break: break-all;
+    word-wrap: break-word;
+  }
+  & .slot-desc > span:last-child {
+    justify-content: flex-end;
+    text-align: right;
+  }
+  & .slot-name {
+    font-size: 12px;
+    color: var(--font-title-color);
+  }
+  & .slot-icon-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 16px;
+    height: 16px;
+  }
+  & .slot-icon-wrapper .slot-anticon {
+    font-size: 14px;
+  }
+  & .slot-right-wrapper > .slot-beautify-flex {
+    width: 100%;
+  }
 }
-.CustomProxyWrap .slot-desc > span {
-  display: inline-flex;
-  width: 50%;
-  word-break: break-all;
-  word-wrap: break-word;
+.customCodePopover {
+  & .slot-desc {
+    font-size: 12px;
+    color: var(--font-pale-color);
+  }
+  & .slot-name {
+    font-size: 12px;
+    color: var(--font-title-color);
+  }
+  & .slot-icon-code {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: rgba(255, 88, 62, 0.1);
+  }
+  & .slot-icon-code .slot-anticon {
+    color: #ff583e;
+  }
+  & .slot-icon-code.slot-success {
+    background-color: rgba(38, 206, 164, 0.1);
+  }
+  & .slot-icon-code.slot-success .slot-anticon {
+    color: #26cea4;
+  }
 }
-.CustomProxyWrap .slot-desc > span:last-child {
-  justify-content: flex-end;
-  text-align: right;
+.customSizePopover {
+  & .slot-desc {
+    font-size: 12px;
+    color: var(--font-pale-color);
+  }
+  & .slot-name {
+    font-size: 12px;
+    color: var(--font-title-color);
+  }
+  & .slot-icon-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    background-color: #219011;
+  }
+  & .slot-icon-wrapper .slot-anticon {
+    color: var(--color-info);
+  }
+  & .slot-icon-wrapper.slot-request {
+    background-color: #ffc700;
+  }
+  & .slot-icon-wrapper.slot-request .slot-anticon {
+    color: var(--color-warning);
+  }
 }
-.CustomProxyWrap .slot-name {
-  font-size: 12px;
-  color: var(--font-title-color);
-}
-.CustomProxyWrap .slot-icon-wrapper {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 16px;
-  height: 16px;
-}
-.CustomProxyWrap .slot-icon-wrapper .slot-anticon {
-  font-size: 14px;
-}
-.CustomProxyWrap .slot-right-wrapper > .slot-beautify-flex {
-  width: 100%;
-}
-.CustomCodePopoverWrap .slot-desc {
-  font-size: 12px;
-  color: var(--font-pale-color);
-}
-.CustomCodePopoverWrap .slot-name {
-  font-size: 12px;
-  color: var(--font-title-color);
-}
-.CustomCodePopoverWrap .slot-icon-code {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: rgba(255, 88, 62, 0.1);
-}
-.CustomCodePopoverWrap .slot-icon-code .slot-anticon {
-  color: #ff583e;
-}
-.CustomCodePopoverWrap .slot-icon-code.slot-success {
-  background-color: rgba(38, 206, 164, 0.1);
-}
-.CustomCodePopoverWrap .slot-icon-code.slot-success .slot-anticon {
-  color: #26cea4;
-}
-.CustomSizePopoverWrap .slot-desc {
-  font-size: 12px;
-  color: var(--font-pale-color);
-}
-.CustomSizePopoverWrap .slot-name {
-  font-size: 12px;
-  color: var(--font-title-color);
-}
-.CustomSizePopoverWrap .slot-icon-wrapper {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 16px;
-  height: 16px;
-  border-radius: 2px;
-  background-color: #219011;
-}
-.CustomSizePopoverWrap .slot-icon-wrapper .slot-anticon {
-  color: var(--color-info);
-}
-.CustomSizePopoverWrap .slot-icon-wrapper.slot-request {
-  background-color: #ffc700;
-}
-.CustomSizePopoverWrap .slot-icon-wrapper.slot-request .slot-anticon {
-  color: var(--color-warning);
-}
-.ResponseSizeWrap {
+.responseSize {
   font-size: var(--font-size-14);
   color: var(--font-pale-color);
-}
-.ResponseSizeWrap span {
-  /* color: var(--color-success); */
-}
-.ResponseSizeWrap span.slot-error {
-  color: var(--color-error);
-}
-.ResponseSizeWrap .slot-cur-pointer {
-  cursor: pointer;
+  & span {
+    /* color: var(--color-success); */
+  }
+  & span.slot-error {
+    color: var(--color-error);
+  }
+  & .slot-cur-pointer {
+    cursor: pointer;
+  }
 }
 
-.ResponseSizeWrap {
+.responseSize {
   min-height: 28px;
   flex-shrink: 0;
   flex-wrap: wrap;
@@ -159,18 +171,18 @@
   line-height: 20px;
   font-variant-numeric: tabular-nums;
   color: var(--vscode-descriptionForeground, var(--font-light-color));
-}
-.ResponseSizeWrap > svg {
-  flex-shrink: 0;
-}
-.ResponseSizeWrap > .slot-anticon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 3px;
-}
-.ResponseSizeWrap > .slot-anticon:hover {
-  background: var(--vscode-toolbar-hoverBackground);
+  & > svg {
+    flex-shrink: 0;
+  }
+  & > .slot-anticon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+  }
+  & > .slot-anticon:hover {
+    background: var(--vscode-toolbar-hoverBackground);
+  }
 }

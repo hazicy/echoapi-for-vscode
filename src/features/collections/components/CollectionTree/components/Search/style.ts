@@ -3,6 +3,5 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const SearchContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["SearchContainer"],
-  { selector: "ui_9fc555a0_SearchContainer" },
+  moduleStyles["container"],
 );

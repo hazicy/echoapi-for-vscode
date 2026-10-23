@@ -1,4 +1,4 @@
-.SettingsWrapperContainer {
+.container {
   display: flex;
   flex-direction: column;
   font-size: var(--font-size-12);
@@ -6,282 +6,397 @@
   justify-content: space-between;
   /* height: 300px; */
   font-size: 12px;
-}.SettingsWrapperContainer .slot-set-title {
-  padding-left: 10px;
-  height: 26px;
-  line-height: 26px;
-}.SettingsWrapperContainer .slot-base-setting {
-  padding: 10px 0;
-  /* padding-left: 5px; */
-  position: relative;
-}.SettingsWrapperContainer .slot-base-setting .slot-object,
-.SettingsWrapperContainer .slot-base-setting .slot-any,
-.SettingsWrapperContainer .slot-base-setting .slot-allOf,
-.SettingsWrapperContainer .slot-base-setting .slot-oneOf,
-.SettingsWrapperContainer .slot-base-setting .slot-anyOf {
+  & .slot-set-title {
+    padding-left: 10px;
+    height: 26px;
+    line-height: 26px;
+  }
+  & .slot-base-setting {
+    padding: 10px 0;
+    /* padding-left: 5px; */
+    position: relative;
+  }
+}
+.container .slot-base-setting .slot-object,
+.container .slot-base-setting .slot-any,
+.container .slot-base-setting .slot-allOf,
+.container .slot-base-setting .slot-oneOf,
+.container .slot-base-setting .slot-anyOf {
   color: #1890ff;
-}.SettingsWrapperContainer .slot-base-setting .slot-string,
-.SettingsWrapperContainer .slot-base-setting .slot-array {
+}
+.container .slot-base-setting .slot-string,
+.container .slot-base-setting .slot-array {
   color: #43a047;
-}.SettingsWrapperContainer .slot-base-setting .slot-null {
-  color: #fa7600;
-}.SettingsWrapperContainer .slot-base-setting .slot-boolean,
-.SettingsWrapperContainer .slot-base-setting .slot-integer,
-.SettingsWrapperContainer .slot-base-setting .slot-number {
+}
+.container {
+  & .slot-base-setting .slot-null {
+    color: #fa7600;
+  }
+}
+.container .slot-base-setting .slot-boolean,
+.container .slot-base-setting .slot-integer,
+.container .slot-base-setting .slot-number {
   color: #eb2f96;
-}.SettingsWrapperContainer .slot-base-setting.slot-schema-td-warper .slot-indent-panel {
-  margin-right: 8px;
-  margin-left: 8px;
-  width: 18px;
-  height: 32px;
-  border: var(--color-border) 0 solid;
-  border-left-width: 1px;
-}.SettingsWrapperContainer .slot-base-setting.slot-schema-td-warper.slot-schema-width-auto {
-  /* width: auto !important; */
-}.SettingsWrapperContainer .slot-base-setting .slot-caret-icon svg {
-  font-size: 10px;
-}.SettingsWrapperContainer .slot-base-setting .slot-btn-sort {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20px;
-  height: 20px;
-  background-color: transparent;
-  opacity: 0;
-  cursor: move;
-}.SettingsWrapperContainer .slot-base-setting .slot-btn-sort svg {
-  width: 6px;
-  height: 10px;
-}.SettingsWrapperContainer .slot-base-setting .slot-btn-sort:hover {
-  opacity: 1;
-}.SettingsWrapperContainer .slot-base-setting .slot-expand-btn {
-  display: flex;
-  align-items: center;
-  width: 24px;
-  height: 24px;
-}.SettingsWrapperContainer .slot-base-setting .slot-expand-btn svg {
-  width: 8px;
-  height: 8px;
-  fill: var(--color-border);
-}.SettingsWrapperContainer .slot-base-setting .slot-empty-btn {
-  display: flex;
-  position: relative;
-  z-index: 9;
-  flex-direction: column;
-  margin: 0 8px;
-  width: 18px;
-  height: 32px;
-}.SettingsWrapperContainer .slot-base-setting .slot-empty-btn .slot-empty-btn-l {
-  flex: 1;
-  border-bottom: var(--color-border) 1px solid;
-  border-left: var(--color-border) 1px solid;
-}.SettingsWrapperContainer .slot-base-setting .slot-empty-btn .slot-empty-btn-r {
-  flex: 1;
-  border-left: var(--color-border) 1px solid;
-}.SettingsWrapperContainer .slot-base-setting .slot-hidden-input {
-  display: inline-block;
-  padding: 0 8px !important;
-  min-width: 80px;
-  height: 100%;
-  border-radius: 6px;
-  font-size: var(--font-size-12);
-  white-space: nowrap;
-  background: inherit;
-  opacity: 0;
-  box-sizing: border-box;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input-front {
-  position: static !important;
-  border: none;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input-front span {
-  padding: 4px 8px;
-  border-radius: 4px;
-  color: var(--color-primary);
-  background-color: var(--color-primary-opacity);
-}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input {
-  display: flex;
-  position: absolute;
-  top: 0;
-  left: 0;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 4px;
-  /* height: 100%; */
-  height: 32px;
-  border-radius: 0;
-  border: 1px solid transparent;
-  font-size: var(--font-size-12);
-  cursor: text;
-  /* border-bottom: 1px solid var(--color-border); */
-}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input.slot-readonly {
-  position: static;
-  width: auto !important;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input.slot-readonly span {
-  padding: 4px 8px;
-  border-radius: 4px;
-  color: var(--color-primary);
-  background-color: var(--color-primary-opacity);
-}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input-hover {
-  border: none;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-key-input-hover:hover,
-.SettingsWrapperContainer .slot-base-setting .slot-item-key-input-hover:focus {
+}
+.container {
+  & .slot-base-setting.slot-schema-td-warper .slot-indent-panel {
+    margin-right: 8px;
+    margin-left: 8px;
+    width: 18px;
+    height: 32px;
+    border: var(--color-border) 0 solid;
+    border-left-width: 1px;
+  }
+  & .slot-base-setting.slot-schema-td-warper.slot-schema-width-auto {
+    /* width: auto !important; */
+  }
+  & .slot-base-setting .slot-caret-icon svg {
+    font-size: 10px;
+  }
+  & .slot-base-setting .slot-btn-sort {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    opacity: 0;
+    cursor: move;
+  }
+  & .slot-base-setting .slot-btn-sort svg {
+    width: 6px;
+    height: 10px;
+  }
+  & .slot-base-setting .slot-btn-sort:hover {
+    opacity: 1;
+  }
+  & .slot-base-setting .slot-expand-btn {
+    display: flex;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+  }
+  & .slot-base-setting .slot-expand-btn svg {
+    width: 8px;
+    height: 8px;
+    fill: var(--color-border);
+  }
+  & .slot-base-setting .slot-empty-btn {
+    display: flex;
+    position: relative;
+    z-index: 9;
+    flex-direction: column;
+    margin: 0 8px;
+    width: 18px;
+    height: 32px;
+  }
+  & .slot-base-setting .slot-empty-btn .slot-empty-btn-l {
+    flex: 1;
+    border-bottom: var(--color-border) 1px solid;
+    border-left: var(--color-border) 1px solid;
+  }
+  & .slot-base-setting .slot-empty-btn .slot-empty-btn-r {
+    flex: 1;
+    border-left: var(--color-border) 1px solid;
+  }
+  & .slot-base-setting .slot-hidden-input {
+    display: inline-block;
+    padding: 0 8px !important;
+    min-width: 80px;
+    height: 100%;
+    border-radius: 6px;
+    font-size: var(--font-size-12);
+    white-space: nowrap;
+    background: inherit;
+    opacity: 0;
+    box-sizing: border-box;
+  }
+  & .slot-base-setting .slot-item-key-input-front {
+    position: static !important;
+    border: none;
+  }
+  & .slot-base-setting .slot-item-key-input-front span {
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: var(--color-primary);
+    background-color: var(--color-primary-opacity);
+  }
+  & .slot-base-setting .slot-item-key-input {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 4px;
+    /* height: 100%; */
+    height: 32px;
+    border-radius: 0;
+    border: 1px solid transparent;
+    font-size: var(--font-size-12);
+    cursor: text;
+    /* border-bottom: 1px solid var(--color-border); */
+  }
+  & .slot-base-setting .slot-item-key-input.slot-readonly {
+    position: static;
+    width: auto !important;
+  }
+  & .slot-base-setting .slot-item-key-input.slot-readonly span {
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: var(--color-primary);
+    background-color: var(--color-primary-opacity);
+  }
+  & .slot-base-setting .slot-item-key-input-hover {
+    border: none;
+  }
+}
+.container .slot-base-setting .slot-item-key-input-hover:hover,
+.container .slot-base-setting .slot-item-key-input-hover:focus {
   /* border-radius: 4px; */
   border-bottom: 1px solid var(--color-primary);
   background-color: transparent;
-}.SettingsWrapperContainer .slot-base-setting .slot-schema-text-box {
-  flex: 1;
-  margin-left: 8px;
-  width: 0;
-  min-width: 0;
-  height: 100%;
-  border-radius: 0;
-  border: none;
-  border-bottom: transparent 1px solid;
-  color: var(--content-color-fourth);
-  background-color: transparent;
-  /* stylelint-disable-next-line selector-class-pattern */
-}.SettingsWrapperContainer .slot-base-setting .slot-schema-text-box:not(.slot-items,.slot-NodeRoot):hover {
+}
+.container {
+  & .slot-base-setting .slot-schema-text-box {
+    flex: 1;
+    margin-left: 8px;
+    width: 0;
+    min-width: 0;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+    border-bottom: transparent 1px solid;
+    color: var(--content-color-fourth);
+    background-color: transparent;
+    /* stylelint-disable-next-line selector-class-pattern */
+  }
+}
+.container
+  .slot-base-setting
+  .slot-schema-text-box:not(.slot-items, .slot-NodeRoot):hover {
   border-bottom: var(--base-color-brand) 1px solid;
   color: var(--content-color-primary);
-}.SettingsWrapperContainer .slot-base-setting .slot-schema-text-box.slot-item:hover {
-  border-bottom: transparent 1px solid;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-type {
-  display: flex;
-  height: 27px !important;
-  border-radius: 0;
-  border-color: transparent;
-  background-color: transparent;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-type .slot-sel-title {
-  margin-right: 10px;
-  width: 45px;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-type .slot-spn-require {
-  width: 16px;
-  height: 16px;
-  /* display: flex; */
-  /* justify-content: center;
+}
+.container {
+  & .slot-base-setting .slot-schema-text-box.slot-item:hover {
+    border-bottom: transparent 1px solid;
+  }
+  & .slot-base-setting .slot-item-type {
+    display: flex;
+    height: 27px !important;
+    border-radius: 0;
+    border-color: transparent;
+    background-color: transparent;
+  }
+  & .slot-base-setting .slot-item-type .slot-sel-title {
+    margin-right: 10px;
+    width: 45px;
+  }
+  & .slot-base-setting .slot-item-type .slot-spn-require {
+    width: 16px;
+    height: 16px;
+    /* display: flex; */
+    /* justify-content: center;
       align-items: center; */
-  border-radius: 2px;
-  font-size: var(--size-18px);
-  line-height: 20px;
-  text-align: center;
-  color: var(--content-color-fourth);
-  background-color: #ccc;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-type .slot-spn-require.slot-checked {
-  color: var(--base-color-brand);
-}.SettingsWrapperContainer .slot-base-setting .slot-item-type:hover {
-  border-color: var(--base-color-brand) !important;
-}.SettingsWrapperContainer .slot-base-setting .slot-btns-panel {
-  display: flex;
-  align-items: center;
-  width: 80px;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-all-line {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-bottom: 8px;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-all-line.slot-item-necessarily {
-  height: 28px;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-  padding-bottom: 10px;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-beautify-input-number {
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-beautify-input-number .slot-beautify-input-inner-wrapper {
-  height: 28px !important;
-  border: none !important;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-beautify-input,
-.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-beautify-select-selector {
+    border-radius: 2px;
+    font-size: var(--size-18px);
+    line-height: 20px;
+    text-align: center;
+    color: var(--content-color-fourth);
+    background-color: #ccc;
+  }
+  & .slot-base-setting .slot-item-type .slot-spn-require.slot-checked {
+    color: var(--base-color-brand);
+  }
+  & .slot-base-setting .slot-item-type:hover {
+    border-color: var(--base-color-brand) !important;
+  }
+  & .slot-base-setting .slot-btns-panel {
+    display: flex;
+    align-items: center;
+    width: 80px;
+  }
+  & .slot-base-setting .slot-item-all-line {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 8px;
+  }
+  & .slot-base-setting .slot-item-all-line.slot-item-necessarily {
+    height: 28px;
+  }
+  & .slot-base-setting .slot-item-line {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 10px;
+  }
+  & .slot-base-setting .slot-item-line .slot-beautify-input-number {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  &
+    .slot-base-setting
+    .slot-item-line
+    .slot-beautify-input-number
+    .slot-beautify-input-inner-wrapper {
+    height: 28px !important;
+    border: none !important;
+  }
+}
+.container .slot-base-setting .slot-item-line .slot-beautify-input,
+.container .slot-base-setting .slot-item-line .slot-beautify-select-selector {
   font-size: 12px;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-title {
-  display: flex;
-  /* justify-content: flex-end; */
-  align-items: center;
-  padding-right: 10px;
-  min-width: 82px;
-  height: 28px;
-  text-align: right;
-  white-space: nowrap;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-title .slot-beautify-checkbox {
-  margin-right: 8px;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value {
-  display: flex;
-  flex: 1;
-  flex-direction: row-reverse;
-  border-radius: 4px;
-  line-height: 28px;
-  /* .mention_textarea {
+}
+.container {
+  & .slot-base-setting .slot-item-line .slot-case-title {
+    display: flex;
+    /* justify-content: flex-end; */
+    align-items: center;
+    padding-right: 10px;
+    min-width: 82px;
+    height: 28px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  &
+    .slot-base-setting
+    .slot-item-line
+    .slot-case-title
+    .slot-beautify-checkbox {
+    margin-right: 8px;
+  }
+  & .slot-base-setting .slot-item-line .slot-case-value {
+    display: flex;
+    flex: 1;
+    flex-direction: row-reverse;
+    border-radius: 4px;
+    line-height: 28px;
+    /* .mention_textarea {
           border: 1px solid transparent;
           height: 37px;
         } */
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-input,
-.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-textarea {
+  }
+}
+.container
+  .slot-base-setting
+  .slot-item-line
+  .slot-case-value
+  .slot-beautify-input,
+.container
+  .slot-base-setting
+  .slot-item-line
+  .slot-case-value
+  .slot-beautify-textarea {
   min-width: 100px !important;
   height: 28px;
   /* border-radius: 4px; */
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-input-inner-wrapper,
-.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-input-number {
+}
+.container
+  .slot-base-setting
+  .slot-item-line
+  .slot-case-value
+  .slot-beautify-input-inner-wrapper,
+.container
+  .slot-base-setting
+  .slot-item-line
+  .slot-case-value
+  .slot-beautify-input-number {
   min-width: 100px;
   height: 28px;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-textarea-wrapper {
-  min-width: 100px;
-  height: 60px !important;
-  border-color: transparent;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-textarea-wrapper .slot-beautify-textarea {
-  height: 100%;
-  overflow-y: auto;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-textarea:focus {
-  background-color: transparent;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-select {
-  min-width: 100px;
-  height: 28px;
-}.SettingsWrapperContainer .slot-base-setting .slot-item-line .slot-case-value-block {
-  flex: 1;
-}.SettingsWrapperContainer .slot-source-setting {
-  flex: 1;
-  margin: 10px 0;
-  padding-top: 10px;
-  height: 0;
-  border: 1px solid transparent;
-  border: 1px solid var(--color-border);
-}.SettingsWrapperContainer .slot-beautify-popconfirm-description {
-  position: relative;
-}.SettingsWrapperContainer .slot-beautify-input {
-  background-color: var(--search-big-select-color);
-  box-shadow: none;
-}.SettingsWrapperContainer .slot-beautify-input-number {
-  background-color: var(--search-big-select-color);
-  box-shadow: none;
-}.SettingsWrapperContainer .slot-beautify-select {
-  background-color: var(--search-big-select-color);
-}.SettingsWrapperContainer .slot-beautify-select * {
-  box-shadow: none !important;
-}.SettingsWrapperContainer .slot-beautify-select-selector {
-  box-shadow: none;
-}.SettingsWrapperContainer .slot-source-help {
-  position: absolute;
-  bottom: -31px;
-  left: 0;
-  font-size: 12px;
-  line-height: 24px;
-  font-weight: 400;
-  text-align: left;
-}.SettingsWrapperContainer .slot-source-help .slot-source-tip {
-  cursor: pointer;
-}.SettingsWrapperContainer .slot-source-help button {
-  margin-inline-start: 8px;
-  height: 24px;
-}.SettingsWrapperContainer .slot-beautify-segmented {
-  width: 100%;
-}.SettingsWrapperContainer .slot-beautify-segmented .slot-beautify-segmented-item {
-  flex: 1;
-}.SettingContent {
+}
+.container {
+  &
+    .slot-base-setting
+    .slot-item-line
+    .slot-case-value
+    .slot-beautify-textarea-wrapper {
+    min-width: 100px;
+    height: 60px !important;
+    border-color: transparent;
+  }
+  &
+    .slot-base-setting
+    .slot-item-line
+    .slot-case-value
+    .slot-beautify-textarea-wrapper
+    .slot-beautify-textarea {
+    height: 100%;
+    overflow-y: auto;
+  }
+  &
+    .slot-base-setting
+    .slot-item-line
+    .slot-case-value
+    .slot-beautify-textarea:focus {
+    background-color: transparent;
+  }
+  & .slot-base-setting .slot-item-line .slot-case-value .slot-beautify-select {
+    min-width: 100px;
+    height: 28px;
+  }
+  & .slot-base-setting .slot-item-line .slot-case-value-block {
+    flex: 1;
+  }
+  & .slot-source-setting {
+    flex: 1;
+    margin: 10px 0;
+    padding-top: 10px;
+    height: 0;
+    border: 1px solid transparent;
+    border: 1px solid var(--color-border);
+  }
+  & .slot-beautify-popconfirm-description {
+    position: relative;
+  }
+  & .slot-beautify-input {
+    background-color: var(--search-big-select-color);
+    box-shadow: none;
+  }
+  & .slot-beautify-input-number {
+    background-color: var(--search-big-select-color);
+    box-shadow: none;
+  }
+  & .slot-beautify-select {
+    background-color: var(--search-big-select-color);
+  }
+  & .slot-beautify-select * {
+    box-shadow: none !important;
+  }
+  & .slot-beautify-select-selector {
+    box-shadow: none;
+  }
+  & .slot-source-help {
+    position: absolute;
+    bottom: -31px;
+    left: 0;
+    font-size: 12px;
+    line-height: 24px;
+    font-weight: 400;
+    text-align: left;
+  }
+  & .slot-source-help .slot-source-tip {
+    cursor: pointer;
+  }
+  & .slot-source-help button {
+    margin-inline-start: 8px;
+    height: 24px;
+  }
+  & .slot-beautify-segmented {
+    width: 100%;
+  }
+  & .slot-beautify-segmented .slot-beautify-segmented-item {
+    flex: 1;
+  }
+}
+.settingContent {
   min-width: 14px;
-}.SettingContent .slot-set-icon {
-  visibility: hidden;
-  color: var(--font-light-color);
-  cursor: pointer;
+  & .slot-set-icon {
+    visibility: hidden;
+    color: var(--font-light-color);
+    cursor: pointer;
+  }
 }

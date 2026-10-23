@@ -4,6 +4,5 @@ import { Input } from "@/shared/ui/base";
 
 export const TitleEditInput = withStyles<typeof Input, {}>(
   Input,
-  moduleStyles["TitleEditInput"],
-  { selector: "ui_118b9e16_TitleEditInput" },
+  moduleStyles["container"],
 );

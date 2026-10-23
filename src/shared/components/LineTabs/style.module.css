@@ -1,38 +1,45 @@
-.LineTabsContainer {
+.container {
   width: 100%;
   height: 100%;
 }
-.LineTabsContainer .slot-params-count {
+.container .slot-params-count {
   color: #26cea4;
 }
-.LineTabsContainer .slot-beautify-tabs-nav-wrap .slot-beautify-tabs-tab {
+.container .slot-beautify-tabs-nav-wrap .slot-beautify-tabs-tab {
   font-size: var(--font-size-14);
 }
-.LineTabsContainer > .slot-beautify-tabs > .slot-beautify-tabs-content-holder > .slot-beautify-tabs-content {
+.container
+  > .slot-beautify-tabs
+  > .slot-beautify-tabs-content-holder
+  > .slot-beautify-tabs-content {
   height: 100%;
 }
-.LineTabsContainer > .slot-beautify-tabs > .slot-beautify-tabs-content-holder > .slot-beautify-tabs-content .slot-beautify-tabs-tabpane {
+.container
+  > .slot-beautify-tabs
+  > .slot-beautify-tabs-content-holder
+  > .slot-beautify-tabs-content
+  .slot-beautify-tabs-tabpane {
   height: 100%;
   overflow: auto;
 }
-.TabsHeaderCountContainer {
+.tabsHeaderCount {
   /* margin-left: 4px;
   font-size: 12px;
   font-weight: normal; */
   /* color: var(--color-success); */
   /* color: #26cea4; */
 }
-.TabsHeaderCountContainer .slot-tabs-count-badge {
+.tabsHeaderCount .slot-tabs-count-badge {
   font-size: 10px;
   box-shadow: none;
   background: none;
   color: var(--color-primary);
 }
-.TabsHeaderCountContainer .slot-tabs-count-badge-root {
+.tabsHeaderCount .slot-tabs-count-badge-root {
   font-size: 14px;
   color: inherit;
 }
-.TabsHeaderDotContainer {
+.tabsHeaderDot {
   display: inline-block;
   margin-left: 4px;
   width: 4px;
@@ -44,13 +51,13 @@
   right: 2px;
 }
 
-.TabsHeaderCountContainer {
+.tabsHeaderCount {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   line-height: 18px;
 }
-.TabsHeaderCountContainer .slot-tabs-count-badge {
+.tabsHeaderCount .slot-tabs-count-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -58,14 +65,17 @@
   height: 16px;
   padding: 0 4px;
   border-radius: 3px;
-  background: var(--vscode-badge-background, var(--vscode-toolbar-hoverBackground));
+  background: var(
+    --vscode-badge-background,
+    var(--vscode-toolbar-hoverBackground)
+  );
   color: var(--vscode-badge-foreground, var(--font-light-color));
   font-size: 10px;
   font-weight: 500;
   line-height: 16px;
   font-variant-numeric: tabular-nums;
 }
-.TabsHeaderDotContainer {
+.tabsHeaderDot {
   position: static;
   margin: 0;
   flex-shrink: 0;

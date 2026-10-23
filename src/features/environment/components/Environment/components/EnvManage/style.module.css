@@ -1,77 +1,113 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.TitleContainer {
+.container {
   padding-bottom: 12px;
   font-size: 14px;
   font-weight: 400;
   color: var(--font-title-color);
 }
-.EnvManageContainer {
+.envManage {
   width: 100%;
   height: 100%;
+  & .slot-env-manage-flex {
+    height: 100%;
+  }
 }
-.EnvManageContainer .slot-env-manage-flex {
-  height: 100%;
-}
-.EnvManageContainer [class~="beautify-table-tbody"] [class~="beautify-table-cell"],
-.EnvManageContainer [class~="beautify-table-thead"] [class~="beautify-table-cell"] {
+.envManage [class~="beautify-table-tbody"] [class~="beautify-table-cell"],
+.envManage [class~="beautify-table-thead"] [class~="beautify-table-cell"] {
   padding: 0;
   /* height: 32px; */
 }
-.EnvManageContainer [class~="beautify-table-tbody"] [class~="beautify-table-cell"] input,
-.EnvManageContainer [class~="beautify-table-thead"] [class~="beautify-table-cell"] input,
-.EnvManageContainer [class~="beautify-table-tbody"] [class~="beautify-table-cell"] textarea,
-.EnvManageContainer [class~="beautify-table-thead"] [class~="beautify-table-cell"] textarea {
+.envManage [class~="beautify-table-tbody"] [class~="beautify-table-cell"] input,
+.envManage [class~="beautify-table-thead"] [class~="beautify-table-cell"] input,
+.envManage
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  textarea,
+.envManage
+  [class~="beautify-table-thead"]
+  [class~="beautify-table-cell"]
+  textarea {
   height: 36px;
   border-color: transparent;
 }
-.EnvManageContainer [class~="beautify-table-tbody"] [class~="beautify-table-cell"] input:hover,
-.EnvManageContainer [class~="beautify-table-thead"] [class~="beautify-table-cell"] input:hover,
-.EnvManageContainer [class~="beautify-table-tbody"] [class~="beautify-table-cell"] textarea:hover,
-.EnvManageContainer [class~="beautify-table-thead"] [class~="beautify-table-cell"] textarea:hover,
-.EnvManageContainer [class~="beautify-table-tbody"] [class~="beautify-table-cell"] input:focus,
-.EnvManageContainer [class~="beautify-table-thead"] [class~="beautify-table-cell"] input:focus,
-.EnvManageContainer [class~="beautify-table-tbody"] [class~="beautify-table-cell"] textarea:focus,
-.EnvManageContainer [class~="beautify-table-thead"] [class~="beautify-table-cell"] textarea:focus {
+.envManage
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  input:hover,
+.envManage
+  [class~="beautify-table-thead"]
+  [class~="beautify-table-cell"]
+  input:hover,
+.envManage
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  textarea:hover,
+.envManage
+  [class~="beautify-table-thead"]
+  [class~="beautify-table-cell"]
+  textarea:hover,
+.envManage
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  input:focus,
+.envManage
+  [class~="beautify-table-thead"]
+  [class~="beautify-table-cell"]
+  input:focus,
+.envManage
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  textarea:focus,
+.envManage
+  [class~="beautify-table-thead"]
+  [class~="beautify-table-cell"]
+  textarea:focus {
   border-color: var(--color-primary);
   background-color: var(--highlight-change-color);
 }
-.EnvManageContainer .slot-env-manage-content {
-  flex: 1;
-  overflow-y: auto;
+.envManage {
+  & .slot-env-manage-content {
+    flex: 1;
+    overflow-y: auto;
+  }
+  & .slot-env-manage-content .slot-env-manage-input {
+    margin-bottom: 12px;
+  }
+  & .slot-env-manage-content .slot-env-var-name.slot-beautify-input-disabled {
+    background-color: transparent;
+  }
+  &
+    .slot-env-manage-content
+    [class~="beautify-table-tbody"]
+    tr:hover
+    .slot-anticon {
+    visibility: visible;
+  }
+  & [class~="beautify-table-thead"] [class~="beautify-table-cell"] {
+    padding: 0 12px;
+  }
 }
-.EnvManageContainer .slot-env-manage-content .slot-env-manage-input {
-  margin-bottom: 12px;
-}
-.EnvManageContainer .slot-env-manage-content .slot-env-var-name.slot-beautify-input-disabled {
-  background-color: transparent;
-}
-.EnvManageContainer .slot-env-manage-content [class~="beautify-table-tbody"] tr:hover .slot-anticon {
-  visibility: visible;
-}
-.EnvManageContainer [class~="beautify-table-thead"] [class~="beautify-table-cell"] {
-  padding: 0 12px;
-}
-.EnvOpContainer {
+.envOp {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  & .slot-anticon {
+    visibility: hidden;
+    color: var(--icon-color);
+  }
 }
-.EnvOpContainer .slot-anticon {
-  visibility: hidden;
-  color: var(--icon-color);
-}
-.VariableVarsOpContainer {
+.variableVarsOp {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 4px;
   padding: 0 4px;
-}
-.VariableVarsOpContainer .slot-anticon {
-  visibility: hidden;
-  font-size: 16px;
-  color: var(--icon-color);
-  cursor: pointer;
+  & .slot-anticon {
+    visibility: hidden;
+    font-size: 16px;
+    color: var(--icon-color);
+    cursor: pointer;
+  }
 }

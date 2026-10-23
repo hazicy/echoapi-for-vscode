@@ -3,6 +3,5 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const ToolBarContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ToolBarContainer"],
-  { selector: "ui_22bf1ffc_ToolBarContainer" },
+  moduleStyles["container"],
 );

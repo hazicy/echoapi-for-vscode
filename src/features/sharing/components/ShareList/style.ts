@@ -3,38 +3,32 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const ShareContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ShareContainer"],
-  { selector: "ui_ab585b0c_ShareContainer" },
+  moduleStyles["container"],
 );
 
 export const DocListContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["DocListContainer"],
-  { selector: "ui_ab585b0c_DocListContainer" },
+  moduleStyles["docList"],
 );
 
 export const ItemTitleContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ItemTitleContainer"],
-  { selector: "ui_ab585b0c_ItemTitleContainer" },
+  moduleStyles["itemTitle"],
 );
 
 export const TabsWrap = withStyles<
   "div",
   { $token: Partial<GlobalThemeToken> }
->("div", moduleStyles["TabsWrap"], { selector: "ui_ab585b0c_TabsWrap" });
+>("div", moduleStyles["tabs"]);
 
 export const ControlExtraContentStyles = withStyles<
   "div",
   {
     $token: Partial<GlobalThemeToken>;
   }
->("div", moduleStyles["ControlExtraContentStyles"], {
-  selector: "ui_ab585b0c_ControlExtraContentStyles",
-});
+>("div", moduleStyles["controlExtraContent"]);
 
 export const ShareListWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["ShareListWrap"],
-  { selector: "ui_ab585b0c_ShareListWrap" },
+  moduleStyles["shareList"],
 );

@@ -1,26 +1,33 @@
-.ToolBarContainer {
+.container {
   margin-bottom: 12px;
   padding: 0 16px;
-}
-.ToolBarContainer .slot-tab-bar-extra-content-wrap {
-  /* margin-left: 6px; */
-}
-.ToolBarContainer .slot-tab-bar-extra-content-wrap .slot-edit-wrap .slot-apis-title-edit {
-  border-color: transparent;
-  border-bottom-color: var(--color-table-border);
-  font-size: var(--font-size-14);
-  background: transparent;
-}
-.ToolBarContainer .slot-tab-bar-extra-content-wrap .slot-edit-wrap .slot-apis-title-edit:hover {
-  border-bottom-color: var(--selected-border-color);
-}
-.ToolBarContainer .slot-tab-bar-extra-content-wrap .slot-edit-wrap .slot-edit-description {
-  padding: 0;
-  font-size: var(--font-size-16);
-}
-.ToolBarContainer .slot-tab-bar-extra-content-wrap .slot-action-wrap .slot-beautify-btn {
-  padding: 0;
-}
-.ToolBarContainer .slot-tab-bar-extra-content-wrap .slot-action-wrap .slot-beautify-btn .slot-beautify-btn-icon {
-  margin-inline-end: 4px;
+  & .slot-tab-bar-extra-content-wrap {
+    /* margin-left: 6px; */
+  }
+  & .slot-tab-bar-extra-content-wrap .slot-edit-wrap .slot-apis-title-edit {
+    border-color: transparent;
+    border-bottom-color: var(--color-table-border);
+    font-size: var(--font-size-14);
+    background: transparent;
+  }
+  &
+    .slot-tab-bar-extra-content-wrap
+    .slot-edit-wrap
+    .slot-apis-title-edit:hover {
+    border-bottom-color: var(--selected-border-color);
+  }
+  & .slot-tab-bar-extra-content-wrap .slot-edit-wrap .slot-edit-description {
+    padding: 0;
+    font-size: var(--font-size-16);
+  }
+  & .slot-tab-bar-extra-content-wrap .slot-action-wrap .slot-beautify-btn {
+    padding: 0;
+  }
+  &
+    .slot-tab-bar-extra-content-wrap
+    .slot-action-wrap
+    .slot-beautify-btn
+    .slot-beautify-btn-icon {
+    margin-inline-end: 4px;
+  }
 }

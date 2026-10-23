@@ -3,18 +3,15 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const NewJsonViewContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["NewJsonViewContainer"],
-  { selector: "ui_658c9b94_NewJsonViewContainer" },
+  moduleStyles["container"],
 );
 
 export const JsonViewWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["JsonViewWrap"],
-  { selector: "ui_658c9b94_JsonViewWrap" },
+  moduleStyles["jsonView"],
 );
 
 export const OtherPreViewWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["OtherPreViewWrap"],
-  { selector: "ui_658c9b94_OtherPreViewWrap" },
+  moduleStyles["otherPreView"],
 );

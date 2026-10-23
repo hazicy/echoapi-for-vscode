@@ -1,33 +1,33 @@
-.TestsWrapper {
+.container {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-.TestsWrapper .slot-beautify-select {
-  background: var(--vscode-input-background);
-  border-radius: 4px;
-  height: 28px;
-  overflow: hidden !important;
-}
-.TestsWrapper .slot-import-project-full-select {
-  background-color: var(--color-bg-page) !important;
-}
-.TestsWrapper .slot-beautify-btn {
-  height: 28px;
-  padding: 0 15px;
+  & .slot-beautify-select {
+    background: var(--vscode-input-background);
+    border-radius: 4px;
+    height: 28px;
+    overflow: hidden !important;
+  }
+  & .slot-import-project-full-select {
+    background-color: var(--color-bg-page) !important;
+  }
+  & .slot-beautify-btn {
+    height: 28px;
+    padding: 0 15px;
+  }
 }
 
-.TestsWrapper {
+.container {
   min-height: 0;
   width: 100%;
-}
-.TestsWrapper > .slot-beautify-flex {
-  align-items: center;
-  gap: 6px !important;
-  flex-shrink: 0;
-}
-.TestsWrapper .slot-beautify-btn {
-  flex-shrink: 0;
-  padding: 0 10px;
-  font-size: 11px;
+  & > .slot-beautify-flex {
+    align-items: center;
+    gap: 6px !important;
+    flex-shrink: 0;
+  }
+  & .slot-beautify-btn {
+    flex-shrink: 0;
+    padding: 0 10px;
+    font-size: 11px;
+  }
 }

@@ -1,31 +1,31 @@
-.ShareContainer {
+.container {
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 16px;
   background-color: var(--color-bg-right);
+  & .slot-response-empty-wrap .slot-beautify-empty-image {
+    margin-bottom: 16px;
+  }
+  & .slot-response-empty-wrap .slot-beautify-empty-image .slot-icon-empty-wrap {
+    font-size: 80px;
+    color: var(--vscode-settings-headerBorder);
+  }
+  & .slot-beautify-spin-nested-loading {
+    flex: 1;
+  }
+  & .slot-beautify-spin-nested-loading .slot-beautify-spin-container {
+    height: 100%;
+  }
 }
-.ShareContainer .slot-response-empty-wrap .slot-beautify-empty-image {
-  margin-bottom: 16px;
-}
-.ShareContainer .slot-response-empty-wrap .slot-beautify-empty-image .slot-icon-empty-wrap {
-  font-size: 80px;
-  color: var(--vscode-settings-headerBorder);
-}
-.ShareContainer .slot-beautify-spin-nested-loading {
-  flex: 1;
-}
-.ShareContainer .slot-beautify-spin-nested-loading .slot-beautify-spin-container {
-  height: 100%;
-}
-.DocListContainer {
+.docList {
   display: flex;
   flex-direction: column;
   flex: 1;
   gap: 4px;
   overflow-y: hidden;
 }
-.ItemTitleContainer {
+.itemTitle {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -33,87 +33,92 @@
   padding: 16px 8px;
   overflow: hidden;
   border-bottom: 1px solid var(--color-border);
+  & .slot-more-operate-wrap {
+    display: flex;
+    margin-left: 4px;
+    flex: 1;
+    justify-content: flex-end;
+    visibility: hidden;
+  }
+  & .slot-panel-icon {
+    width: 28px;
+    height: 28px;
+  }
+  &:hover .slot-more-operate-wrap {
+    display: flex;
+    visibility: visible;
+  }
 }
-.ItemTitleContainer .slot-more-operate-wrap {
-  display: flex;
-  margin-left: 4px;
-  flex: 1;
-  justify-content: flex-end;
-  visibility: hidden;
-}
-.ItemTitleContainer .slot-panel-icon {
-  width: 28px;
-  height: 28px;
-}
-.ItemTitleContainer:hover .slot-more-operate-wrap {
-  display: flex;
-  visibility: visible;
-}
-.ItemTitleContainer:hover,
-.ItemTitleContainer.slot-select-item {
+.itemTitle:hover,
+.itemTitle.slot-select-item {
   background: var(--vscode-list-hoverBackground, #303030);
 }
-.ItemTitleContainer .slot-time {
-  font-size: 10px;
-  flex: 1;
+.itemTitle {
+  & .slot-time {
+    font-size: 10px;
+    flex: 1;
+  }
+  & .slot-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    flex: 1;
+    overflow: hidden;
+  }
+  & .slot-name svg {
+    font-size: 14px;
+  }
 }
-.ItemTitleContainer .slot-name {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 14px;
-  flex: 1;
-  overflow: hidden;
-}
-.ItemTitleContainer .slot-name svg {
-  font-size: 14px;
-}
-.TabsWrap {
+.tabs {
   position: relative;
   flex: 1;
   overflow-y: auto;
+  & .slot-share-list-delete-btn {
+    display: none;
+  }
+  & .slot-share-list-delete-btn.slot-show {
+    display: flex;
+  }
+  & .slot-beautify-flex .slot-beautify-btn {
+    margin-left: 12px;
+    padding: 4px 8px;
+    height: 28px;
+  }
+  & .slot-beautify-flex .slot-beautify-btn.slot-beautify-btn-link {
+    color: var(--font-light-color);
+  }
+  & .slot-beautify-flex .slot-beautify-btn.slot-beautify-btn-link:hover {
+    color: var(--font-content-color);
+  }
+  & .slot-beautify-tabs {
+    height: 100%;
+  }
+  & .slot-beautify-tabs .slot-beautify-flex {
+    /* margin-bottom: 16px; */
+  }
+  & .slot-beautify-tabs .slot-beautify-tabs-content {
+    height: 100%;
+  }
+  &
+    .slot-beautify-tabs
+    .slot-beautify-tabs-content
+    .slot-beautify-tabs-tabpane {
+    height: 100%;
+  }
+  & .slot-beautify-tabs-tab {
+    padding: 10px;
+  }
+  & .slot-beautify-tabs-tab .slot-beautify-tabs-tab-btn {
+    font-size: var(--font-size-14);
+  }
+  & .slot-beautify-checkbox-group {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 }
-.TabsWrap .slot-share-list-delete-btn {
-  display: none;
-}
-.TabsWrap .slot-share-list-delete-btn.slot-show {
-  display: flex;
-}
-.TabsWrap .slot-beautify-flex .slot-beautify-btn {
-  margin-left: 12px;
-  padding: 4px 8px;
-  height: 28px;
-}
-.TabsWrap .slot-beautify-flex .slot-beautify-btn.slot-beautify-btn-link {
-  color: var(--font-light-color);
-}
-.TabsWrap .slot-beautify-flex .slot-beautify-btn.slot-beautify-btn-link:hover {
-  color: var(--font-content-color);
-}
-.TabsWrap .slot-beautify-tabs {
-  height: 100%;
-}
-.TabsWrap .slot-beautify-tabs .slot-beautify-flex {
-  /* margin-bottom: 16px; */
-}
-.TabsWrap .slot-beautify-tabs .slot-beautify-tabs-content {
-  height: 100%;
-}
-.TabsWrap .slot-beautify-tabs .slot-beautify-tabs-content .slot-beautify-tabs-tabpane {
-  height: 100%;
-}
-.TabsWrap .slot-beautify-tabs-tab {
-  padding: 10px;
-}
-.TabsWrap .slot-beautify-tabs-tab .slot-beautify-tabs-tab-btn {
-  font-size: var(--font-size-14);
-}
-.TabsWrap .slot-beautify-checkbox-group {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.ControlExtraContentStyles {
+.controlExtraContent {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -126,23 +131,26 @@
   height: 36px;
   background-color: var(--color-bg-right);
   box-shadow: 0 2px 16px 0 var(--box-shadow-modal-color);
+  & .slot-beautify-btn {
+    margin-left: 12px;
+    width: 82px;
+    height: 28px;
+  }
+  & .slot-beautify-checkbox-wrapper {
+    align-items: center;
+  }
+  &
+    .slot-beautify-checkbox-wrapper
+    .slot-beautify-checkbox-indeterminate
+    .slot-beautify-checkbox-inner {
+    border-color: var(--color-primary);
+    background-color: var(--color-bg-right);
+  }
+  & .slot-beautify-checkbox-wrapper span span {
+    color: var(--color-primary);
+  }
 }
-.ControlExtraContentStyles .slot-beautify-btn {
-  margin-left: 12px;
-  width: 82px;
-  height: 28px;
-}
-.ControlExtraContentStyles .slot-beautify-checkbox-wrapper {
-  align-items: center;
-}
-.ControlExtraContentStyles .slot-beautify-checkbox-wrapper .slot-beautify-checkbox-indeterminate .slot-beautify-checkbox-inner {
-  border-color: var(--color-primary);
-  background-color: var(--color-bg-right);
-}
-.ControlExtraContentStyles .slot-beautify-checkbox-wrapper span span {
-  color: var(--color-primary);
-}
-.ShareListWrap {
+.shareList {
   display: flex;
   flex-direction: column;
   overflow: auto;

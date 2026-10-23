@@ -3,6 +3,5 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const ResponseResultWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["ResponseResultWrap"],
-  { selector: "ui_1b361a55_ResponseResultWrap" },
+  moduleStyles["container"],
 );

@@ -3,18 +3,15 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const DraggableMenuContainer = withStyles<"ul", {}>(
   "ul",
-  moduleStyles["DraggableMenuContainer"],
-  { selector: "ui_15c3d625_DraggableMenuContainer" },
+  moduleStyles["container"],
 );
 
 export const DraggableMenuGroupContainer = withStyles<"li", {}>(
   "li",
-  moduleStyles["DraggableMenuGroupContainer"],
-  { selector: "ui_15c3d625_DraggableMenuGroupContainer" },
+  moduleStyles["draggableMenuGroup"],
 );
 
 export const DraggableMenuItemContainer = withStyles<"li", {}>(
   "li",
-  moduleStyles["DraggableMenuItemContainer"],
-  { selector: "ui_15c3d625_DraggableMenuItemContainer" },
+  moduleStyles["draggableMenuItem"],
 );

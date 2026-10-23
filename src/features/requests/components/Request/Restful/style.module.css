@@ -1,13 +1,15 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.RestfulQueryContainer [class~="beautify-table-thead"] [class~="beautify-table-cell"] {
-  padding: 4px 10px;
-}
-.RestfulQueryContainer [class~="beautify-table-tbody"] tr .slot-row-description-operation {
-  visibility: hidden;
-}
-.RestfulQueryContainer [class~="beautify-table-tbody"] tr:hover .slot-row-description-operation {
-  visibility: visible;
-}
-.RestfulQueryContainer .slot-table-custom-empty-wrap [class~="beautify-table-tbody"] {
-  display: none;
+.container {
+  & [class~="beautify-table-thead"] [class~="beautify-table-cell"] {
+    padding: 4px 10px;
+  }
+  & [class~="beautify-table-tbody"] tr .slot-row-description-operation {
+    visibility: hidden;
+  }
+  & [class~="beautify-table-tbody"] tr:hover .slot-row-description-operation {
+    visibility: visible;
+  }
+  & .slot-table-custom-empty-wrap [class~="beautify-table-tbody"] {
+    display: none;
+  }
 }

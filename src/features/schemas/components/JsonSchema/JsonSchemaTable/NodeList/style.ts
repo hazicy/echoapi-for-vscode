@@ -3,6 +3,5 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const DragContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["DragContainer"],
-  { selector: "ui_dbb139c3_DragContainer" },
+  moduleStyles["container"],
 );

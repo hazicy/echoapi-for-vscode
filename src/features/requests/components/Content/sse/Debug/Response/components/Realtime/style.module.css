@@ -1,52 +1,52 @@
-.RealtimeContainer {
+.container {
   width: 100%;
   height: 100%;
 }
-.FlowResponseRenderTitleWrap {
+.flowResponseRenderTitle {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   display: flex;
   align-items: center;
+  &.slot-complete {
+    color: var(--color-warning);
+  }
+  & .slot-event-message {
+    border-radius: 4px;
+    color: #0da4a1;
+    background: #0da4a11a;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+  }
+  & .slot-event-message.slot-connected {
+    color: #12b76a;
+    background: #12b76a1a;
+  }
+  & .slot-event-message.slot-error {
+    color: #ff583e;
+    background: #ff583e1a;
+  }
+  & .slot-event-message.slot-message {
+    color: #0787ff;
+    background: #0787ff1a;
+  }
+  & .slot-event-message.slot-completed {
+    color: #6941c6;
+    background: #6941c61a;
+  }
+  & .slot-event-message.slot-reconnecting {
+    color: #fa8c16;
+    background: #facc151a;
+  }
+  & .slot-event-message.slot-close {
+    color: #33363966;
+    background: #f6f8fa;
+  }
 }
-.FlowResponseRenderTitleWrap.slot-complete {
-  color: var(--color-warning);
-}
-.FlowResponseRenderTitleWrap .slot-event-message {
-  border-radius: 4px;
-  color: #0DA4A1;
-  background: #0DA4A11A;
-  height: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 8px;
-}
-.FlowResponseRenderTitleWrap .slot-event-message.slot-connected {
-  color: #12B76A;
-  background: #12B76A1A;
-}
-.FlowResponseRenderTitleWrap .slot-event-message.slot-error {
-  color: #FF583E;
-  background: #FF583E1A;
-}
-.FlowResponseRenderTitleWrap .slot-event-message.slot-message {
-  color: #0787FF;
-  background: #0787FF1A;
-}
-.FlowResponseRenderTitleWrap .slot-event-message.slot-completed {
-  color: #6941C6;
-  background: #6941C61A;
-}
-.FlowResponseRenderTitleWrap .slot-event-message.slot-reconnecting {
-  color: #FA8C16;
-  background: #FACC151A;
-}
-.FlowResponseRenderTitleWrap .slot-event-message.slot-close {
-  color: #33363966;
-  background: #F6F8FA;
-}
-.PanelsWrap {
+.panels {
   padding: 8px;
   padding-left: 0;
   height: 100%;

@@ -1,25 +1,27 @@
-.PathPickModalContainer .slot-json-path-content {
-  display: flex;
-  height: 400px;
-  gap: 10px;
-}
-.PathPickModalContainer .slot-json-path-content .slot-layout-item {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-}
-.PathPickModalContainer .slot-json-path-content .slot-item-title {
-  padding: 10px 0;
-  height: 26px;
-  font-weight: 400;
-  box-sizing: content-box;
-}
-.PathPickModalContainer .slot-json-path-content .slot-item-content {
-  flex: 1;
-  resize: none;
-  color: var(--color-bg-gray);
-}
-.PathPickModalContainer .slot-json-path-content .slot-item-content .slot-code-editor-value {
-  overflow: visible !important;
-  border: 1px solid var(--color-border);
+.container {
+  & .slot-json-path-content {
+    display: flex;
+    height: 400px;
+    gap: 10px;
+  }
+  & .slot-json-path-content .slot-layout-item {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  & .slot-json-path-content .slot-item-title {
+    padding: 10px 0;
+    height: 26px;
+    font-weight: 400;
+    box-sizing: content-box;
+  }
+  & .slot-json-path-content .slot-item-content {
+    flex: 1;
+    resize: none;
+    color: var(--color-bg-gray);
+  }
+  & .slot-json-path-content .slot-item-content .slot-code-editor-value {
+    overflow: visible !important;
+    border: 1px solid var(--color-border);
+  }
 }

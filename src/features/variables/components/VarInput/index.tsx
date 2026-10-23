@@ -183,7 +183,7 @@ export default function VarInput(props: Partial<VarInputProps>) {
   return (
     <VarInputContainer className={cn({ [slots['has-border']]: hasBorder }, wrapClassName)} onKeyDown={handleKeyDown} onBlur={handleBlur}>
       <div
-        className={cn(slots['mini-editor'], styles.EditorShell, {
+        className={cn(slots['mini-editor'], styles.editorShell, {
           [slots['editor-active']]: active,
           [slots['editor-no-wrap']]: !enableNewRow,
         })}
@@ -192,7 +192,7 @@ export default function VarInput(props: Partial<VarInputProps>) {
         {enableNewRow ? (
           <Input.TextArea
             ref={textAreaRef}
-            className={styles.EditorField}
+            className={styles.editorField}
             value={value}
             placeholder={placeholder}
             readOnly={readOnly}
@@ -205,7 +205,7 @@ export default function VarInput(props: Partial<VarInputProps>) {
           <Input
             ref={inputRef}
             bordered={false}
-            className={styles.EditorField}
+            className={styles.editorField}
             value={value}
             placeholder={placeholder}
             readOnly={readOnly}

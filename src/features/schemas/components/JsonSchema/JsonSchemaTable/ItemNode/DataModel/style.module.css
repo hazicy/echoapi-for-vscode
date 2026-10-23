@@ -1,107 +1,107 @@
-.ModelWarper {
+.container {
   position: relative;
-}
-.ModelWarper .slot-item-manage {
-  display: none !important;
-}
-.ModelWarper .slot-drag-icon {
-  visibility: hidden !important;
-}
-.ModelWarper .slot-item-key-input {
-  pointer-events: none;
-  caret-color: transparent;
-}
-.ModelWarper .slot-desc-row-description .slot-beautify-input {
-  pointer-events: none;
-  caret-color: transparent;
-}
-.ModelWarper .slot-outer-box {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: calc(100% - 2px);
-  border: 1px solid transparent;
-}
-.ModelWarper .slot-outer-box .slot-edit-form {
-  display: none;
-  position: absolute;
-  top: -26px;
-  left: 50%;
-  transform: translateX(-50%);
-  justify-content: space-around;
-  align-items: center;
-  width: 200px;
-  height: 26px;
-  border-radius: 4px 4px 0 0;
-  background-color: var(--color-primary);
-}
-.ModelWarper .slot-outer-box .slot-edit-form .slot-btn-item {
-  display: flex;
-  align-items: center;
-  padding: 0 4px;
-  width: auto;
-  height: 18px;
-  border-radius: 3px;
-  font-size: var(--font-size-12);
-  white-space: nowrap;
-  color: #fff;
-  cursor: pointer;
-}
-.ModelWarper .slot-outer-box .slot-edit-form .slot-btn-item svg {
-  margin-right: 3px;
-  width: 15px;
-  height: 15px;
-  fill: #fff;
-}
-.ModelWarper .slot-outer-box .slot-edit-form .slot-btn-item:hover {
-  background-color: var(--highlight-background-color-brand);
-}
-.ModelWarper:hover .slot-outer-box {
-  z-index: 999;
-  border-radius: 4px;
-  border-color: var(--color-primary);
-  background: #cccccc26;
-  cursor: not-allowed;
-}
-.ModelWarper:hover .slot-outer-box .slot-edit-form {
-  display: flex;
-}
-.ModelWarper:hover .slot-data-item {
-  cursor: not-allowed;
-}
-.ModelWarper:hover .slot-data-item .slot-beautify-btn {
-  z-index: 1000;
-}
-.ModelWarper:hover .slot-data-item .slot-beautify-input {
-  cursor: not-allowed;
-}
-.ModelWarper:hover .slot-data-item:hover .slot-btn-hide {
-  display: flex;
-}
-.ModelWarper:hover .slot-data-item:hover .slot-set-icon {
-  visibility: visible !important;
-}
-.ModelWarper:hover .slot-is-model-item {
-  z-index: 202;
-}
-.ModelWarper .slot-expand-btn {
-  position: relative;
-  z-index: 202;
-}
-.ModelWarper .slot-loop-link-item {
-  padding: 5px 0 5px 20px;
-  height: 28px;
-}
-.ModelWarper .slot-loop-empty-model {
-  display: flex;
-  z-index: 100;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  padding-left: 36px;
-  height: 32px;
-  border-right: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
-  border-left: 1px solid var(--color-border);
-  color: var(--font-light-color);
+  & .slot-item-manage {
+    display: none !important;
+  }
+  & .slot-drag-icon {
+    visibility: hidden !important;
+  }
+  & .slot-item-key-input {
+    pointer-events: none;
+    caret-color: transparent;
+  }
+  & .slot-desc-row-description .slot-beautify-input {
+    pointer-events: none;
+    caret-color: transparent;
+  }
+  & .slot-outer-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 2px);
+    border: 1px solid transparent;
+  }
+  & .slot-outer-box .slot-edit-form {
+    display: none;
+    position: absolute;
+    top: -26px;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: space-around;
+    align-items: center;
+    width: 200px;
+    height: 26px;
+    border-radius: 4px 4px 0 0;
+    background-color: var(--color-primary);
+  }
+  & .slot-outer-box .slot-edit-form .slot-btn-item {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    width: auto;
+    height: 18px;
+    border-radius: 3px;
+    font-size: var(--font-size-12);
+    white-space: nowrap;
+    color: #fff;
+    cursor: pointer;
+  }
+  & .slot-outer-box .slot-edit-form .slot-btn-item svg {
+    margin-right: 3px;
+    width: 15px;
+    height: 15px;
+    fill: #fff;
+  }
+  & .slot-outer-box .slot-edit-form .slot-btn-item:hover {
+    background-color: var(--highlight-background-color-brand);
+  }
+  &:hover .slot-outer-box {
+    z-index: 999;
+    border-radius: 4px;
+    border-color: var(--color-primary);
+    background: #cccccc26;
+    cursor: not-allowed;
+  }
+  &:hover .slot-outer-box .slot-edit-form {
+    display: flex;
+  }
+  &:hover .slot-data-item {
+    cursor: not-allowed;
+  }
+  &:hover .slot-data-item .slot-beautify-btn {
+    z-index: 1000;
+  }
+  &:hover .slot-data-item .slot-beautify-input {
+    cursor: not-allowed;
+  }
+  &:hover .slot-data-item:hover .slot-btn-hide {
+    display: flex;
+  }
+  &:hover .slot-data-item:hover .slot-set-icon {
+    visibility: visible !important;
+  }
+  &:hover .slot-is-model-item {
+    z-index: 202;
+  }
+  & .slot-expand-btn {
+    position: relative;
+    z-index: 202;
+  }
+  & .slot-loop-link-item {
+    padding: 5px 0 5px 20px;
+    height: 28px;
+  }
+  & .slot-loop-empty-model {
+    display: flex;
+    z-index: 100;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding-left: 36px;
+    height: 32px;
+    border-right: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    border-left: 1px solid var(--color-border);
+    color: var(--font-light-color);
+  }
 }

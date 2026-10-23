@@ -1,10 +1,10 @@
-.ResponseWrapper {
+.container {
   width: 100%;
+  & .slot-beautify-tabs-tabpane ::-webkit-scrollbar {
+    display: none;
+  }
 }
-.ResponseWrapper .slot-beautify-tabs-tabpane ::-webkit-scrollbar {
-  display: none;
-}
-.EmptyWrapper {
+.empty {
   display: flex;
   justify-content: center;
   align-items: center;

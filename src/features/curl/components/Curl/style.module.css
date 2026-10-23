@@ -1,13 +1,13 @@
-.CurlWrap {
+.container {
   height: 100vh;
   align-items: end;
   background: var(--color-bg-right);
   padding-top: 8px;
-}
-.CurlWrap .slot-beautify-btn {
-  width: 120px;
-  margin: 20px 10px;
-}
-.CurlWrap .slot-curl-code-editor {
-  height: calc(100% - 70px);
+  & .slot-beautify-btn {
+    width: 120px;
+    margin: 20px 10px;
+  }
+  & .slot-curl-code-editor {
+    height: calc(100% - 70px);
+  }
 }

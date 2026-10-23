@@ -3,10 +3,7 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const LinkWarper = withStyles<"div", {}>(
   "div",
-  moduleStyles["LinkWarper"],
-  { selector: "ui_e0b1c5a7_LinkWarper" },
+  moduleStyles["container"],
 );
 
-export const Footer = withStyles<"div", {}>("div", moduleStyles["Footer"], {
-  selector: "ui_e0b1c5a7_Footer",
-});
+export const Footer = withStyles<"div", {}>("div", moduleStyles["footer"]);

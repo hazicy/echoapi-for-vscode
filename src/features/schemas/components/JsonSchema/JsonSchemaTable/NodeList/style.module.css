@@ -1,3 +1,5 @@
-.DragContainer .slot-drag-icon {
-  visibility: hidden;
+.container {
+  & .slot-drag-icon {
+    visibility: hidden;
+  }
 }

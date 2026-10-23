@@ -1,43 +1,47 @@
-.ApisTypeTag {
+.container {
   height: 24px;
   font-size: 12px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  &.slot-post {
+    color: var(--color-warning);
+    background-color: var(--color-warning-bg);
+  }
 }
-.ApisTypeTag.slot-post {
-  color: var(--color-warning);
-  background-color: var(--color-warning-bg);
-}
-.ApisTypeTag.slot-get,
-.ApisTypeTag.slot-api-extra,
-.ApisTypeTag.slot-socket,
-.ApisTypeTag.slot-socket-service {
+.container.slot-get,
+.container.slot-api-extra,
+.container.slot-socket,
+.container.slot-socket-service {
   color: var(--color-success);
   background-color: var(--color-success-bg);
 }
-.ApisTypeTag.slot-put {
-  color: var(--color-info);
-  background-color: var(--color-info-bg);
+.container {
+  &.slot-put {
+    color: var(--color-info);
+    background-color: var(--color-info-bg);
+  }
 }
-.ApisTypeTag.slot-socket,
-.ApisTypeTag.slot-testing,
-.ApisTypeTag.slot-kit {
+.container.slot-socket,
+.container.slot-testing,
+.container.slot-kit {
   width: auto;
 }
-.ApisTypeTag.slot-socket-method,
-.ApisTypeTag.slot-doc {
+.container.slot-socket-method,
+.container.slot-doc {
   color: var(--color-info);
   background-color: var(--color-info-bg);
 }
-.ApisTypeTag.slot-delete {
-  color: var(--color-error);
-  background-color: var(--color-error-bg);
+.container {
+  &.slot-delete {
+    color: var(--color-error);
+    background-color: var(--color-error-bg);
+  }
 }
-.ApisTypeTag.slot-grpc,
-.ApisTypeTag.slot-ws,
-.ApisTypeTag.slot-patch {
+.container.slot-grpc,
+.container.slot-ws,
+.container.slot-patch {
   color: var(--color-success);
   background-color: var(--color-success-bg);
 }

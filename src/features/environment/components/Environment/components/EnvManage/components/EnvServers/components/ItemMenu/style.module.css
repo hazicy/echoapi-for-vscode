@@ -1,16 +1,18 @@
-.DeleteContainer {
+.container {
   cursor: var(--style-0f0fd159-DeleteContainer-0);
+  & .slot-anticon {
+    margin-right: 4px;
+  }
+  &:hover {
+    /* color: var(--color-primary); */
+    color: var(--style-0f0fd159-DeleteContainer-1);
+  }
 }
-.DeleteContainer .slot-anticon {
-  margin-right: 4px;
-}
-.DeleteContainer:hover {
-  /* color: var(--color-primary); */
-  color: var(--style-0f0fd159-DeleteContainer-1);
-}
-.EditContainer .slot-anticon {
-  margin-right: 4px;
-}
-.EditContainer:hover {
-  color: var(--color-primary);
+.edit {
+  & .slot-anticon {
+    margin-right: 4px;
+  }
+  &:hover {
+    color: var(--color-primary);
+  }
 }

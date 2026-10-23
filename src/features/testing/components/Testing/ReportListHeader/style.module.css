@@ -1,7 +1,7 @@
-.ReportListHeaderWrapper {
+.container {
   display: flex;
   justify-content: space-between;
-}
-.ReportListHeaderWrapper svg:hover {
-  color: var(--color-primary);
+  & svg:hover {
+    color: var(--color-primary);
+  }
 }

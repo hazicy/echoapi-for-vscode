@@ -30,21 +30,21 @@
   pointer-events: auto;
   transform: translate(0, 0);
   transition: transform 180ms ease;
-}
 
-.popup[data-horizontal] {
-  top: 0;
-  bottom: 0;
-  width: var(--drawer-width);
-}
+  &[data-horizontal] {
+    top: 0;
+    bottom: 0;
+    width: var(--drawer-width);
+  }
 
-.popup[data-placement="right"] {
-  right: 0;
-  --drawer-offset-x: 100%;
-}
-.popup[data-placement="left"] {
-  left: 0;
-  --drawer-offset-x: -100%;
+  &[data-placement="right"] {
+    right: 0;
+    --drawer-offset-x: 100%;
+  }
+  &[data-placement="left"] {
+    left: 0;
+    --drawer-offset-x: -100%;
+  }
 }
 .popup[data-placement="top"],
 .popup[data-placement="bottom"] {
@@ -52,13 +52,15 @@
   right: 0;
   height: var(--drawer-height);
 }
-.popup[data-placement="top"] {
-  top: 0;
-  --drawer-offset-y: -100%;
-}
-.popup[data-placement="bottom"] {
-  bottom: 0;
-  --drawer-offset-y: 100%;
+.popup {
+  &[data-placement="top"] {
+    top: 0;
+    --drawer-offset-y: -100%;
+  }
+  &[data-placement="bottom"] {
+    bottom: 0;
+    --drawer-offset-y: 100%;
+  }
 }
 
 .popup[data-starting-style],
@@ -109,12 +111,12 @@
   background: transparent;
   color: var(--icon-color, currentColor);
   cursor: pointer;
-}
-.close:hover {
-  background: var(--color-primary-opacity, #eee);
-}
-.close:focus-visible {
-  outline: 2px solid var(--color-primary, #1677ff);
+  &:hover {
+    background: var(--color-primary-opacity, #eee);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--color-primary, #1677ff);
+  }
 }
 .extra {
   margin-left: auto;

@@ -1,92 +1,92 @@
-.EnvironmentContainer {
+.container {
   display: flex;
   width: 100%;
   height: 100%;
   background: var(--color-bg-right);
+  & .slot-env-menu-top {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border-right: 1px solid var(--color-table-border);
+  }
+  & .slot-env-menu-top .slot-beautify-menu {
+    border-inline-end: none;
+  }
+  & .slot-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 16px;
+    line-height: normal;
+    font-weight: 400;
+    color: var(--font-title-color);
+    font-style: normal;
+  }
+  & .slot-tip {
+    padding: 8px 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--font-content-color);
+    background-color: var(--color-bg-page);
+    border-radius: 4px;
+  }
+  & .slot-column {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
-.EnvironmentContainer .slot-env-menu-top {
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 20px;
-  border-right: 1px solid var(--color-table-border);
-}
-.EnvironmentContainer .slot-env-menu-top .slot-beautify-menu {
-  border-inline-end: none;
-}
-.EnvironmentContainer .slot-title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 16px;
-  line-height: normal;
-  font-weight: 400;
-  color: var(--font-title-color);
-  font-style: normal;
-}
-.EnvironmentContainer .slot-tip {
-  padding: 8px 16px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--font-content-color);
-  background-color: var(--color-bg-page);
-  border-radius: 4px;
-}
-.EnvironmentContainer .slot-column {
-  flex-direction: column;
-  align-items: flex-start;
-}
-.Render {
+.render {
   padding: 20px 20px;
   width: 100%;
   height: 100%;
 }
-.EnvLabel {
+.envLabel {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  & .slot-operation {
+    visibility: hidden;
+    color: var(--icon-color);
+  }
+  & .slot-operation .slot-anticon:hover {
+    color: var(--color-primary);
+  }
+  & .slot-operation .slot-anticon:last-child {
+    margin-inline-start: 10px;
+  }
+  &:hover .slot-operation {
+    visibility: visible;
+  }
+  & .slot-name {
+    width: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  & .slot-private {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    /* width: 16px; */
+    height: 16px;
+    border-radius: 2px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    color: #22c55e;
+    background-color: rgba(34, 197, 94, 0.1);
+  }
 }
-.EnvLabel .slot-operation {
-  visibility: hidden;
-  color: var(--icon-color);
-}
-.EnvLabel .slot-operation .slot-anticon:hover {
-  color: var(--color-primary);
-}
-.EnvLabel .slot-operation .slot-anticon:last-child {
-  margin-inline-start: 10px;
-}
-.EnvLabel:hover .slot-operation {
-  visibility: visible;
-}
-.EnvLabel .slot-name {
-  width: auto;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.EnvLabel .slot-private {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;
-  /* width: 16px; */
-  height: 16px;
-  border-radius: 2px;
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 400;
-  color: #22c55e;
-  background-color: rgba(34, 197, 94, 0.1);
-}
-.LeftMenuContainer {
+.leftMenu {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -94,31 +94,31 @@
   border-radius: 4px 0 0 4px;
   padding-right: 0;
   /* background-color: var(--color-bg-page); */
+  & .slot-beautify-menu-item {
+    display: flex;
+    align-items: center;
+  }
+  & .slot-beautify-menu-item .slot-beautify-menu-title-content {
+    flex: 1;
+  }
+  & .slot-env-menu-new {
+    background-color: transparent;
+  }
 }
-.LeftMenuContainer .slot-beautify-menu-item {
-  display: flex;
-  align-items: center;
-}
-.LeftMenuContainer .slot-beautify-menu-item .slot-beautify-menu-title-content {
-  flex: 1;
-}
-.LeftMenuContainer .slot-env-menu-new {
-  background-color: transparent;
-}
-.MenuTitle {
+.menuTitle {
   font-size: 12px;
   font-weight: 400;
   color: var(--font-light-color);
   font-style: normal;
 }
-.MenuChildTitle {
+.menuChildTitle {
   font-size: 14px;
   font-weight: 400;
   color: var(--font-content-color);
 }
-.MenuIconContainer .slot-icon-cookie,
-.MenuIconContainer .slot-icon-global-param,
-.MenuIconContainer .slot-icon-global-var {
+.menuIcon .slot-icon-cookie,
+.menuIcon .slot-icon-global-param,
+.menuIcon .slot-icon-global-var {
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -127,25 +127,27 @@
   height: 18px;
   border-radius: 4px;
 }
-.MenuIconContainer .slot-icon-cookie {
-  background-color: rgba(255, 140, 0, 0.1);
+.menuIcon {
+  & .slot-icon-cookie {
+    background-color: rgba(255, 140, 0, 0.1);
+  }
+  & .slot-icon-cookie > .slot-anticon {
+    color: #ff8c00;
+  }
+  & .slot-icon-global-param {
+    background-color: rgba(34, 162, 255, 0.1);
+  }
+  & .slot-icon-global-param > .slot-anticon {
+    color: #22a2ff;
+  }
+  & .slot-icon-global-var {
+    background-color: rgba(175, 113, 255, 0.1);
+  }
+  & .slot-icon-global-var > .slot-anticon {
+    color: #b071ff;
+  }
 }
-.MenuIconContainer .slot-icon-cookie > .slot-anticon {
-  color: #ff8c00;
-}
-.MenuIconContainer .slot-icon-global-param {
-  background-color: rgba(34, 162, 255, 0.1);
-}
-.MenuIconContainer .slot-icon-global-param > .slot-anticon {
-  color: #22a2ff;
-}
-.MenuIconContainer .slot-icon-global-var {
-  background-color: rgba(175, 113, 255, 0.1);
-}
-.MenuIconContainer .slot-icon-global-var > .slot-anticon {
-  color: #b071ff;
-}
-.EnvIconContainer {
+.envIcon {
   display: flex;
   text-transform: uppercase;
   justify-content: center;

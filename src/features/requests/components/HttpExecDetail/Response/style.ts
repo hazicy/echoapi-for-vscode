@@ -3,12 +3,7 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const ResponseWrapper = withStyles<"div", {}>(
   "div",
-  moduleStyles["ResponseWrapper"],
-  { selector: "ui_7291bf63_ResponseWrapper" },
+  moduleStyles["container"],
 );
 
-export const EmptyWrapper = withStyles<"div", {}>(
-  "div",
-  moduleStyles["EmptyWrapper"],
-  { selector: "ui_7291bf63_EmptyWrapper" },
-);
+export const EmptyWrapper = withStyles<"div", {}>("div", moduleStyles["empty"]);

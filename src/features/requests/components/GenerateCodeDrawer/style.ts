@@ -5,12 +5,10 @@ import IconFont from "@/shared/ui/IconFont";
 
 export const GenerateCodeWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["GenerateCodeWrap"],
-  { selector: "ui_a6d546c5_GenerateCodeWrap" },
+  moduleStyles["container"],
 );
 
 export const LanguagesIcon = withStyles<typeof IconFont, {}>(
   IconFont,
-  moduleStyles["LanguagesIcon"],
-  { selector: "ui_a6d546c5_LanguagesIcon" },
+  moduleStyles["languagesIcon"],
 );

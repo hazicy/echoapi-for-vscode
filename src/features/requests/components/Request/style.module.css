@@ -1,15 +1,17 @@
-.RequestContainer {
+.container {
   padding: 0;
   /* padding-bottom: var(--style-bfdb18be-RequestContainer-0); */
   width: 100%;
   height: 100%;
 }
-.RequestContainer .slot-beautify-tabs,
-.RequestContainer .slot-beautify-tabs-content,
-.RequestContainer .slot-beautify-tabs-tabpane {
+.container .slot-beautify-tabs,
+.container .slot-beautify-tabs-content,
+.container .slot-beautify-tabs-tabpane {
   width: 100%;
   height: 100%;
 }
-.RequestContainer .slot-beautify-tabs-top > .slot-beautify-tabs-nav {
-  margin-bottom: 8px;
+.container {
+  & .slot-beautify-tabs-top > .slot-beautify-tabs-nav {
+    margin-bottom: 8px;
+  }
 }

@@ -1,42 +1,42 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.RealRequestContainer {
+.container {
   height: 100%;
 }
-.RequestItem {
+.requestItem {
   margin-bottom: 16px;
+  & .slot-content-warp.slot-base-info-wrap {
+    padding: 12px;
+    border: 1px solid var(--color-border);
+  }
+  & .slot-content-warp.slot-base-info-wrap .slot-url {
+    flex: 1;
+    margin-left: 8px;
+    word-break: break-all;
+  }
+  & .slot-content-warp [class~="beautify-table-cell"] {
+    word-break: break-all;
+  }
+  & .slot-content-warp .slot-segmented-tabs-header {
+    padding: 0;
+  }
+  & .slot-content-warp.slot-content-request .slot-segmented-tabs-header {
+    padding: 0;
+  }
 }
-.RequestItem .slot-content-warp.slot-base-info-wrap {
-  padding: 12px;
-  border: 1px solid var(--color-border);
-}
-.RequestItem .slot-content-warp.slot-base-info-wrap .slot-url {
-  flex: 1;
-  margin-left: 8px;
-  word-break: break-all;
-}
-.RequestItem .slot-content-warp [class~="beautify-table-cell"] {
-  word-break: break-all;
-}
-.RequestItem .slot-content-warp .slot-segmented-tabs-header {
-  padding: 0;
-}
-.RequestItem .slot-content-warp.slot-content-request .slot-segmented-tabs-header {
-  padding: 0;
-}
-.TabBarExtraContentWrap {
+.tabBarExtraContent {
   margin-left: 12px;
   height: 100%;
-}
-.TabBarExtraContentWrap .slot-title {
-  font-size: var(--font-size-14);
-  color: var(--font-content-color);
-}
-.TabBarExtraContentWrap .slot-content {
-  margin-left: 8px;
-  padding: 4px;
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-12);
-  font-weight: 500;
-  color: var(--color-primary);
-  background-color: var(--color-primary-opacity);
+  & .slot-title {
+    font-size: var(--font-size-14);
+    color: var(--font-content-color);
+  }
+  & .slot-content {
+    margin-left: 8px;
+    padding: 4px;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-12);
+    font-weight: 500;
+    color: var(--color-primary);
+    background-color: var(--color-primary-opacity);
+  }
 }

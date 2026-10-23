@@ -3,12 +3,10 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const ConsoleWrapper = withStyles<"div", {}>(
   "div",
-  moduleStyles["ConsoleWrapper"],
-  { selector: "ui_9f9653f1_ConsoleWrapper" },
+  moduleStyles["container"],
 );
 
 export const ConsoleContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ConsoleContainer"],
-  { selector: "ui_9f9653f1_ConsoleContainer" },
+  moduleStyles["console"],
 );

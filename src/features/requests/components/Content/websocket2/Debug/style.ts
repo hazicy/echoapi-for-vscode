@@ -3,42 +3,35 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const WsDebugContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["WsDebugContainer"],
-  { selector: "ui_6e296277_WsDebugContainer" },
+  moduleStyles["container"],
 );
 
 export const LineBarContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["LineBarContainer"],
-  { selector: "ui_6e296277_LineBarContainer" },
+  moduleStyles["lineBar"],
 );
 
 export const SaveDropDownContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["SaveDropDownContainer"],
-  { selector: "ui_6e296277_SaveDropDownContainer" },
+  moduleStyles["saveDropDown"],
 );
 
 export const ExampleLabelContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ExampleLabelContainer"],
-  { selector: "ui_6e296277_ExampleLabelContainer" },
+  moduleStyles["exampleLabel"],
 );
 
 export const ExampleModalContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ExampleModalContainer"],
-  { selector: "ui_6e296277_ExampleModalContainer" },
+  moduleStyles["exampleModal"],
 );
 
 export const ExampleListContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ExampleListContainer"],
-  { selector: "ui_6e296277_ExampleListContainer" },
+  moduleStyles["exampleList"],
 );
 
 export const WebsocketLeftPanelContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["WebsocketLeftPanelContainer"],
-  { selector: "ui_6e296277_WebsocketLeftPanelContainer" },
+  moduleStyles["websocketLeftPanel"],
 );

@@ -3,12 +3,10 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const RequestBodyContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["RequestBodyContainer"],
-  { selector: "ui_0abf6f3a_RequestBodyContainer" },
+  moduleStyles["container"],
 );
 
 export const RequestBodyContentContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["RequestBodyContentContainer"],
-  { selector: "ui_0abf6f3a_RequestBodyContentContainer" },
+  moduleStyles["requestBodyContent"],
 );

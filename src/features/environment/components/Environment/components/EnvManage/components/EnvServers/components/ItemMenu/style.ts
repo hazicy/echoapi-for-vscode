@@ -3,9 +3,8 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const DeleteContainer = withStyles<"div", { $disable: boolean }>(
   "div",
-  moduleStyles["DeleteContainer"],
+  moduleStyles["container"],
   {
-    selector: "ui_0f0fd159_DeleteContainer",
     variables: {
       "--style-0f0fd159-DeleteContainer-0": (props) =>
         props?.$disable && "not-allowed",
@@ -15,8 +14,4 @@ export const DeleteContainer = withStyles<"div", { $disable: boolean }>(
   },
 );
 
-export const EditContainer = withStyles<"div", {}>(
-  "div",
-  moduleStyles["EditContainer"],
-  { selector: "ui_0f0fd159_EditContainer" },
-);
+export const EditContainer = withStyles<"div", {}>("div", moduleStyles["edit"]);

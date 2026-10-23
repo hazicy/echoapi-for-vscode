@@ -3,6 +3,5 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const TreeCheckboxContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["TreeCheckboxContainer"],
-  { selector: "ui_47755a7e_TreeCheckboxContainer" },
+  moduleStyles["container"],
 );

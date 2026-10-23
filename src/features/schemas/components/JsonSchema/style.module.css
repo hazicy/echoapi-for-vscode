@@ -1,20 +1,23 @@
-.DefaultStyle {
+.container {
   width: 100%;
   border-radius: 4px;
   padding: 8px;
   border: 1px solid var(--color-border);
   /* border-right: 0; */
   /* border-left: 0; */
-}
-.DefaultStyle .slot-beautify-input {
-  background: transparent;
-}
-.DefaultStyle .slot-template-table .slot-table-tr.slot-data-item .slot-schema-td:last-child {
-  flex: 1;
-}
-.DefaultStyle .slot-template-table .slot-table-tr .slot-table-td {
-  border-right: none;
-}
-.DefaultStyle .slot-action-right {
-  display: block !important;
+  & .slot-beautify-input {
+    background: transparent;
+  }
+  &
+    .slot-template-table
+    .slot-table-tr.slot-data-item
+    .slot-schema-td:last-child {
+    flex: 1;
+  }
+  & .slot-template-table .slot-table-tr .slot-table-td {
+    border-right: none;
+  }
+  & .slot-action-right {
+    display: block !important;
+  }
 }

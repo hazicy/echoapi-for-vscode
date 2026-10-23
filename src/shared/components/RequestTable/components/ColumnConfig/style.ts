@@ -4,9 +4,8 @@ import { Flex } from "@/shared/ui/base";
 
 export const DescMoreItemWrap = withStyles<typeof Flex, {}>(
   Flex,
-  moduleStyles["DescMoreItemWrap"],
+  moduleStyles["container"],
   {
-    selector: "ui_42e19a8d_DescMoreItemWrap",
     attrs: {
       align: "center",
       justify: "space-between",
@@ -16,6 +15,5 @@ export const DescMoreItemWrap = withStyles<typeof Flex, {}>(
 
 export const ColumnConfigContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ColumnConfigContainer"],
-  { selector: "ui_42e19a8d_ColumnConfigContainer" },
+  moduleStyles["columnConfig"],
 );

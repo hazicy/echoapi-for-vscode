@@ -3,12 +3,10 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const VarsTableWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["VarsTableWrap"],
-  { selector: "ui_50a811f9_VarsTableWrap" },
+  moduleStyles["container"],
 );
 
 export const PopoverContentWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["PopoverContentWrap"],
-  { selector: "ui_50a811f9_PopoverContentWrap" },
+  moduleStyles["popoverContent"],
 );

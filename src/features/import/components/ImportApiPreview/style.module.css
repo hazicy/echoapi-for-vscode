@@ -1,22 +1,27 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.PreviewContainer .slot-preview-tree {
-  background: transparent;
+.container {
+  & .slot-preview-tree {
+    background: transparent;
+  }
+  & [class~="beautify-table-body"] {
+    overflow-y: auto !important;
+  }
+  & .slot-import-project-full-tip {
+    font-size: var(--font-size-12);
+    color: var(--font-light-color);
+  }
+  & [class~="beautify-tree"] [class~="beautify-tree-checkbox"] {
+    margin-top: 0;
+    align-self: auto;
+  }
+  &
+    .slot-import-project-append-config
+    .slot-beautify-select-outlined:not(.slot-beautify-select-customize-input)
+    .slot-beautify-select-selector {
+    /* background: var(--color-bg-right); */
+  }
 }
-.PreviewContainer [class~="beautify-table-body"] {
-  overflow-y: auto !important;
-}
-.PreviewContainer .slot-import-project-full-tip {
-  font-size: var(--font-size-12);
-  color: var(--font-light-color);
-}
-.PreviewContainer [class~="beautify-tree"] [class~="beautify-tree-checkbox"] {
-  margin-top: 0;
-  align-self: auto;
-}
-.PreviewContainer .slot-import-project-append-config .slot-beautify-select-outlined:not(.slot-beautify-select-customize-input) .slot-beautify-select-selector {
-  /* background: var(--color-bg-right); */
-}
-.LoadingContainer {
+.loading {
   width: 100%;
   min-height: 500px;
   display: flex;

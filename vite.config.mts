@@ -35,6 +35,10 @@ export default defineConfig(({ mode }) => {
       // Full builds run before tsup; watchers preserve its sibling extension.js.
       emptyOutDir: !process.argv.includes('--watch'),
       target: 'es2020',
+      // VS Code 1.74 embeds Chromium 102; lower native CSS nesting for it.
+      cssTarget: 'chrome102',
+      // Vite otherwise skips CSS lowering when development JS is unminified.
+      cssMinify: 'esbuild',
       sourcemap: mode !== 'production',
       minify: mode === 'production',
       cssCodeSplit: false,

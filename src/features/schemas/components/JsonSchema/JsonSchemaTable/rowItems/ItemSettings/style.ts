@@ -4,14 +4,12 @@ import "./style.css";
 
 export const SettingsWrapperContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["SettingsWrapperContainer"],
-  { selector: "ui_c879b96a_SettingsWrapperContainer" },
+  moduleStyles["container"],
 );
 
 export const SettingContent = withStyles<"div", {}>(
   "div",
-  moduleStyles["SettingContent"],
-  { selector: "ui_c879b96a_SettingContent" },
+  moduleStyles["settingContent"],
 );
 
 export const SchemasPopStyle = () => null;

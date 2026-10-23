@@ -3,24 +3,20 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const RowItemWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["RowItemWrap"],
-  { selector: "ui_5a0771f7_RowItemWrap" },
+  moduleStyles["container"],
 );
 
 export const BasicTableWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["BasicTableWrap"],
-  { selector: "ui_5a0771f7_BasicTableWrap" },
+  moduleStyles["basicTable"],
 );
 
 export const SelectFieldTypeOptionItem = withStyles<"span", {}>(
   "span",
-  moduleStyles["SelectFieldTypeOptionItem"],
-  { selector: "ui_5a0771f7_SelectFieldTypeOptionItem" },
+  moduleStyles["selectFieldTypeOptionItem"],
 );
 
 export const RequestTableContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["RequestTableContainer"],
-  { selector: "ui_5a0771f7_RequestTableContainer" },
+  moduleStyles["requestTable"],
 );

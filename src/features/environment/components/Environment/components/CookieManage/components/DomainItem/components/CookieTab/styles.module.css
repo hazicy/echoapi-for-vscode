@@ -1,13 +1,13 @@
-.TabContainer {
+.container {
   padding: 16px;
   width: 100%;
   border-radius: 0 0 4px 4px;
   border: 1px solid var(--color-table-border);
+  & .slot-cookie-item-add {
+    border: 1px dashed var(--color-border);
+  }
 }
-.TabContainer .slot-cookie-item-add {
-  border: 1px dashed var(--color-border);
-}
-.BtnListContainer {
+.btnList {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -15,12 +15,12 @@
   text-align: right;
   margin-top: 8px;
   gap: 8px;
+  & .slot-apipost-btn {
+    margin-top: 8px;
+    margin-left: 8px;
+  }
 }
-.BtnListContainer .slot-apipost-btn {
-  margin-top: 8px;
-  margin-left: 8px;
-}
-.TabItemContainer {
+.tabItem {
   display: inline-flex;
   align-items: center;
   margin-right: 8px;
@@ -34,21 +34,21 @@
   color: var(--font-content-color);
   background-color: var(--color-bg-page);
   cursor: pointer;
-}
-.TabItemContainer .slot-cookie-name {
-  padding: 0 5px;
-}
-.TabItemContainer .slot-cookie-item-close .slot-anticon {
-  width: 8px;
-  height: 8px;
-}
-.TabItemContainer:hover {
-  border-color: var(--selected-border-color);
-  color: var(--color-primary);
-  background-color: var(--highlight-background-color-tertiary);
-}
-.TabItemContainer.slot-active {
-  border-color: var(--selected-border-color);
-  color: var(--color-primary);
-  background-color: var(--highlight-background-color-tertiary);
+  & .slot-cookie-name {
+    padding: 0 5px;
+  }
+  & .slot-cookie-item-close .slot-anticon {
+    width: 8px;
+    height: 8px;
+  }
+  &:hover {
+    border-color: var(--selected-border-color);
+    color: var(--color-primary);
+    background-color: var(--highlight-background-color-tertiary);
+  }
+  &.slot-active {
+    border-color: var(--selected-border-color);
+    color: var(--color-primary);
+    background-color: var(--highlight-background-color-tertiary);
+  }
 }

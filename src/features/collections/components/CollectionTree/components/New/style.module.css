@@ -1,51 +1,63 @@
-.NewBtnsContainer {
+.container {
   display: flex;
   flex-shrink: 0;
-}
-.NewBtnsContainer .slot-beautify-new-http-more {
-  display: inline-flex;
-  gap: 0;
-  border: 1px solid color-mix(in srgb, var(--vscode-foreground) 8%, transparent);
-  border-radius: 4px;
-}
-.NewBtnsContainer .slot-beautify-new-http-more > button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 26px;
-  font-size: 12px;
-  line-height: 20px;
-  transition: background-color 120ms ease, color 120ms ease;
-  padding: 0;
-  background: color-mix(in srgb, var(--vscode-foreground) 6%, var(--vscode-sideBar-background));
-  color: var(--vscode-foreground);
-  border: 0;
-  border-radius: 0;
-}
-.NewBtnsContainer .slot-beautify-new-http-more > button:first-child {
-  border-start-start-radius: 4px;
-  border-end-start-radius: 4px;
-  width: auto;
-  gap: 4px;
-  padding: 0 8px;
-  white-space: nowrap;
-}
-.NewBtnsContainer .slot-beautify-new-http-more > .slot-beautify-btn-compact-last-item {
-  border-start-end-radius: 4px;
-  border-end-end-radius: 4px;
-  width: 22px;
-  min-width: 22px;
-  max-width: 22px;
-  flex: 0 0 22px;
-  padding: 0;
-  color: var(--vscode-descriptionForeground);
-  border-inline-start: 1px solid color-mix(in srgb, currentColor 10%, transparent);
-}
-.NewBtnsContainer .slot-beautify-new-http-more > button:hover {
-  background: color-mix(in srgb, var(--vscode-foreground) 11%, var(--vscode-sideBar-background));
-  color: var(--vscode-foreground);
-}
-.NewBtnsContainer .slot-beautify-new-http-more > button:focus-visible {
-  outline: 1px solid var(--vscode-focusBorder);
-  outline-offset: -1px;
+  & .slot-beautify-new-http-more {
+    display: inline-flex;
+    gap: 0;
+    border: 1px solid
+      color-mix(in srgb, var(--vscode-foreground) 8%, transparent);
+    border-radius: 4px;
+  }
+  & .slot-beautify-new-http-more > button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 26px;
+    font-size: 12px;
+    line-height: 20px;
+    transition:
+      background-color 120ms ease,
+      color 120ms ease;
+    padding: 0;
+    background: color-mix(
+      in srgb,
+      var(--vscode-foreground) 6%,
+      var(--vscode-sideBar-background)
+    );
+    color: var(--vscode-foreground);
+    border: 0;
+    border-radius: 0;
+  }
+  & .slot-beautify-new-http-more > button:first-child {
+    border-start-start-radius: 4px;
+    border-end-start-radius: 4px;
+    width: auto;
+    gap: 4px;
+    padding: 0 8px;
+    white-space: nowrap;
+  }
+  & .slot-beautify-new-http-more > .slot-beautify-btn-compact-last-item {
+    border-start-end-radius: 4px;
+    border-end-end-radius: 4px;
+    width: 22px;
+    min-width: 22px;
+    max-width: 22px;
+    flex: 0 0 22px;
+    padding: 0;
+    color: var(--vscode-descriptionForeground);
+    border-inline-start: 1px solid
+      color-mix(in srgb, currentColor 10%, transparent);
+  }
+  & .slot-beautify-new-http-more > button:hover {
+    background: color-mix(
+      in srgb,
+      var(--vscode-foreground) 11%,
+      var(--vscode-sideBar-background)
+    );
+    color: var(--vscode-foreground);
+  }
+  & .slot-beautify-new-http-more > button:focus-visible {
+    outline: 1px solid var(--vscode-focusBorder);
+    outline-offset: -1px;
+  }
 }

@@ -1,26 +1,42 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.VarsTableWrap [class~="beautify-table-thead"] [class~="beautify-table-cell"] {
-  padding: 4px 10px;
+.container {
+  & [class~="beautify-table-thead"] [class~="beautify-table-cell"] {
+    padding: 4px 10px;
+  }
 }
-.VarsTableWrap [class~="beautify-table-tbody"] [class~="beautify-table-cell"] .slot-beautify-input-outlined,
-.VarsTableWrap [class~="beautify-table-tbody"] [class~="beautify-table-cell"] .slot-beautify-select-selector {
+.container
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  .slot-beautify-input-outlined,
+.container
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  .slot-beautify-select-selector {
   border-radius: 0;
   border-color: transparent;
 }
-.VarsTableWrap [class~="beautify-table-tbody"] [class~="beautify-table-cell"] .slot-beautify-input-outlined:hover,
-.VarsTableWrap [class~="beautify-table-tbody"] [class~="beautify-table-cell"] .slot-beautify-input-outlined:focus {
+.container
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  .slot-beautify-input-outlined:hover,
+.container
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  .slot-beautify-input-outlined:focus {
   border-color: var(--color-primary);
 }
-.VarsTableWrap .slot-tool-icon:hover {
-  color: var(--color-primary);
+.container {
+  & .slot-tool-icon:hover {
+    color: var(--color-primary);
+  }
+  & .slot-delete-vars-params-icon:hover {
+    color: #ff583e;
+  }
 }
-.VarsTableWrap .slot-delete-vars-params-icon:hover {
-  color: #ff583e;
-}
-.PopoverContentWrap {
+.popoverContent {
   padding: 10px;
   background-color: var(--color-bg-folder);
-}
-.PopoverContentWrap pre {
-  color: #fa7600;
+  & pre {
+    color: #fa7600;
+  }
 }

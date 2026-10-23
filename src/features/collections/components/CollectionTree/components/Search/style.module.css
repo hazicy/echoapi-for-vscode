@@ -1,13 +1,13 @@
-.SearchContainer {
+.container {
   width: 100%;
   flex-shrink: 0;
 }
-.SearchContainer .slot-search-wrap {
+.container .slot-search-wrap {
   display: flex;
   align-items: center;
   min-width: 0;
 }
-.SearchContainer .slot-search-wrap .slot-beautify-input-affix-wrapper {
+.container .slot-search-wrap .slot-beautify-input-affix-wrapper {
   display: flex;
   align-items: center;
   flex: 1;
@@ -21,13 +21,16 @@
   border: 1px solid var(--vscode-input-border, transparent);
   transition: border-color 120ms ease;
 }
-.SearchContainer .slot-search-wrap .slot-beautify-input-affix-wrapper:hover {
-  border-color: var(--vscode-input-border, var(--vscode-widget-border, transparent));
+.container .slot-search-wrap .slot-beautify-input-affix-wrapper:hover {
+  border-color: var(
+    --vscode-input-border,
+    var(--vscode-widget-border, transparent)
+  );
 }
-.SearchContainer .slot-search-wrap .slot-beautify-input-affix-wrapper:focus-within {
+.container .slot-search-wrap .slot-beautify-input-affix-wrapper:focus-within {
   border-color: var(--vscode-focusBorder);
 }
-.SearchContainer .slot-search-wrap .slot-beautify-input {
+.container .slot-search-wrap .slot-beautify-input {
   height: 100%;
   padding: 0;
   border: 0;
@@ -36,11 +39,11 @@
   font-size: 12px;
   line-height: 20px;
 }
-.SearchContainer .slot-beautify-input::placeholder {
+.container .slot-beautify-input::placeholder {
   color: var(--vscode-input-placeholderForeground);
   opacity: 1;
 }
-.SearchContainer .slot-search-wrap .slot-anticon {
+.container .slot-search-wrap .slot-anticon {
   flex-shrink: 0;
   font-size: 14px;
 }

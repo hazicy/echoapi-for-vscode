@@ -1,25 +1,25 @@
-.TestingContainer {
+.container {
   display: flex;
   flex-direction: column;
   height: 100vh;
   background: var(--color-bg-right);
   padding: 16px;
   gap: 12px;
-}
-.TestingContainer .slot-folder-name {
-  font-weight: 600;
-  font-size: 16px;
-  color: var(--font-title-color);
-}
-.TestingContainer .slot-history-report {
-  font-size: 12px;
-  cursor: pointer;
-  color: var(--font-light-color);
-  text-decoration: underline;
-}
-.TestingContainer .slot-history-report:hover {
-  color: var(--color-primary);
-}
-.TestingContainer .slot-folder-sending-btn {
-  background: var(--icon-color);
+  & .slot-folder-name {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--font-title-color);
+  }
+  & .slot-history-report {
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--font-light-color);
+    text-decoration: underline;
+  }
+  & .slot-history-report:hover {
+    color: var(--color-primary);
+  }
+  & .slot-folder-sending-btn {
+    background: var(--icon-color);
+  }
 }

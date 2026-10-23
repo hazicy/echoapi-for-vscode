@@ -1,4 +1,4 @@
-.ResponseAssertionContainer {
+.container {
   display: flex;
   flex-direction: column;
   padding: 0 17px 17px;
@@ -6,80 +6,82 @@
   height: 100%;
   padding-top: 5px;
   padding-right: 0;
+  & .slot-assert-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(51, 54, 57, 0.8);
+  }
+  & .slot-beautify-space-item {
+    /* color: var(--font-content-color); */
+  }
+  & .slot-beautify-space-item .slot-content-title {
+    color: var(--font-content-color);
+  }
+  & .slot-assert-pot {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow: auto;
+  }
+  & .slot-assert-pot .slot-assert-content {
+    flex-direction: column;
+    justify-content: center;
+  }
+  & .slot-assert-pot .slot-assert-content .slot-content-title {
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--font-content-color);
+  }
+  & .slot-assert-pot .slot-assert-content .slot-content-title:first-child {
+    padding-top: 12px;
+  }
+  & .slot-assert-pot .slot-assert-content .slot-content-item {
+    padding: 2px 16px;
+    width: 100%;
+    border-radius: 4px;
+  }
 }
-.ResponseAssertionContainer .slot-assert-title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--color-border);
-  font-size: 14px;
-  font-weight: 400;
-  color: rgba(51, 54, 57, 0.8);
-}
-.ResponseAssertionContainer .slot-beautify-space-item {
-  /* color: var(--font-content-color); */
-}
-.ResponseAssertionContainer .slot-beautify-space-item .slot-content-title {
-  color: var(--font-content-color);
-}
-.ResponseAssertionContainer .slot-assert-pot {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  overflow: auto;
-}
-.ResponseAssertionContainer .slot-assert-pot .slot-assert-content {
-  flex-direction: column;
-  justify-content: center;
-}
-.ResponseAssertionContainer .slot-assert-pot .slot-assert-content .slot-content-title {
-  padding: 8px 0;
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--font-content-color);
-}
-.ResponseAssertionContainer .slot-assert-pot .slot-assert-content .slot-content-title:first-child {
-  padding-top: 12px;
-}
-.ResponseAssertionContainer .slot-assert-pot .slot-assert-content .slot-content-item {
-  padding: 2px 16px;
-  width: 100%;
-  border-radius: 4px;
-}
-.ResponseAssertItemContainer {
+.responseAssertItem {
   display: block;
   border-radius: 2px;
   font-size: var(--font-size-14);
   color: var(--style-f9a1fed8-ResponseAssertItemContainer-0);
   background-color: var(--style-f9a1fed8-ResponseAssertItemContainer-1);
+  & .slot-anticon {
+    font-size: var(--font-size-16);
+  }
+  &:not(:last-child) {
+    margin-bottom: 4px;
+  }
 }
-.ResponseAssertItemContainer .slot-anticon {
-  font-size: var(--font-size-16);
+.bodyList {
+  & .slot-big-title {
+    height: 30px;
+    line-height: 30px;
+  }
+  & .slot-big-title .slot-test-success {
+    color: #26cea4;
+  }
+  & .slot-big-title .slot-test-error {
+    color: #ff4c4c;
+  }
+  & .slot-big-title .slot-link-more {
+    margin-left: 10px;
+    color: var(--font-title-color);
+    cursor: pointer;
+  }
 }
-.ResponseAssertItemContainer:not(:last-child) {
-  margin-bottom: 4px;
-}
-.BodyListContainer .slot-big-title {
-  height: 30px;
-  line-height: 30px;
-}
-.BodyListContainer .slot-big-title .slot-test-success {
-  color: #26cea4;
-}
-.BodyListContainer .slot-big-title .slot-test-error {
-  color: #ff4c4c;
-}
-.BodyListContainer .slot-big-title .slot-link-more {
-  margin-left: 10px;
-  color: var(--font-title-color);
-  cursor: pointer;
-}
-.ScriptErrorContainer {
+.scriptError {
   font-size: var(--font-size-14);
   background-color: rgba(255, 88, 62, 0.1);
-}
-.ScriptErrorContainer .slot-runtime-script-error {
-  color: #ff4c4c;
+  & .slot-runtime-script-error {
+    color: #ff4c4c;
+  }
 }

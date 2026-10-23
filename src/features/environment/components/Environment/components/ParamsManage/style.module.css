@@ -1,14 +1,14 @@
-.ParamsManageContainer {
+.container {
   width: 100%;
   height: 100%;
-}
-.ParamsManageContainer .slot-params-flex {
-  height: 100%;
-}
-.ParamsManageContainer .slot-params-content {
-  flex: 1;
-  overflow-y: auto;
-}
-.ParamsManageContainer .slot-params-content > div {
-  padding: 0;
+  & .slot-params-flex {
+    height: 100%;
+  }
+  & .slot-params-content {
+    flex: 1;
+    overflow-y: auto;
+  }
+  & .slot-params-content > div {
+    padding: 0;
+  }
 }

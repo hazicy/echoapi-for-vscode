@@ -1,53 +1,58 @@
-.HeaderContainer {
+.container {
   display: flex;
   align-items: center;
   width: 100%;
   gap: 8px;
   padding-bottom: 8px;
+  & > .slot-url-group-wrap {
+    flex: 1;
+    min-width: 0;
+    height: 32px;
+    padding: 0 4px 0 8px;
+    box-sizing: border-box;
+    border: 1px solid var(--vscode-input-border, #dfe4ee);
+    border-radius: var(--vscode-cornerRadius-small, 4px);
+    background: var(--vscode-input-background, var(--color-bg-right));
+    font-family: var(--vscode-editor-font-family, monospace);
+  }
+  & > .slot-url-group-wrap:focus-within {
+    border-color: var(--vscode-focusBorder, var(--color-primary));
+  }
+  & .slot-url-group-wrap > .slot-beautify-select:first-child {
+    min-width: 64px;
+    max-width: 110px;
+    color: var(--vscode-descriptionForeground, #666);
+    font-weight: 400;
+    font-size: var(--vscode-font-size, 13px);
+  }
 }
-.HeaderContainer > .slot-url-group-wrap {
-  flex: 1;
-  min-width: 0;
-  height: 32px;
-  padding: 0 4px 0 8px;
-  box-sizing: border-box;
-  border: 1px solid var(--vscode-input-border, #dfe4ee);
-  border-radius: var(--vscode-cornerRadius-small, 4px);
-  background: var(--vscode-input-background, var(--color-bg-right));
-  font-family: var(--vscode-editor-font-family, monospace);
-}
-.HeaderContainer > .slot-url-group-wrap:focus-within {
-  border-color: var(--vscode-focusBorder, var(--color-primary));
-}
-.HeaderContainer .slot-url-group-wrap > .slot-beautify-select:first-child {
-  min-width: 64px;
-  max-width: 110px;
-  color: var(--vscode-descriptionForeground, #666);
-  font-weight: 400;
-  font-size: var(--vscode-font-size, 13px);
-}
-.HeaderContainer .slot-url-group-wrap > .slot-beautify-select:first-child .slot-beautify-select-arrow,
-.HeaderContainer .slot-line {
+.container
+  .slot-url-group-wrap
+  > .slot-beautify-select:first-child
+  .slot-beautify-select-arrow,
+.container .slot-line {
   display: none;
 }
-.HeaderContainer .slot-url-group-container {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  min-width: 0;
-  height: 100%;
-  font-size: var(--vscode-font-size, 13px);
-}
-.HeaderContainer .slot-url-group-container .slot-env-desc {
-  max-width: 50%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: var(--font-light-color);
-}
-.HeaderContainer .slot-url-group-container .slot-mini-editor {
-  height: 100%;
-  font: inherit;
+.container {
+  & .slot-url-group-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    height: 100%;
+    font-size: var(--vscode-font-size, 13px);
+  }
+  & .slot-url-group-container .slot-env-desc {
+    max-width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--font-light-color);
+  }
+  & .slot-url-group-container .slot-mini-editor {
+    height: 100%;
+    font: inherit;
+  }
 }
 .sendButton {
   display: inline-flex;
@@ -62,24 +67,28 @@
   background: transparent;
   color: var(--vscode-textLink-foreground, #647da8);
   cursor: pointer;
-}
-.sendButton:hover {
-  background: var(--vscode-toolbar-hoverBackground, #647da814);
-}
-.sendButton:focus-visible {
-  outline: 1px solid var(--vscode-focusBorder, var(--color-primary));
-  outline-offset: 1px;
-}
-.sendButton:disabled {
-  opacity: .5;
-  cursor: default;
+  &:hover {
+    background: var(--vscode-toolbar-hoverBackground, #647da814);
+  }
+  &:focus-visible {
+    outline: 1px solid var(--vscode-focusBorder, var(--color-primary));
+    outline-offset: 1px;
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
 }
 .spinning {
   animation: spin 1s linear infinite;
 }
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .spinning { animation: none; }
+  .spinning {
+    animation: none;
+  }
 }

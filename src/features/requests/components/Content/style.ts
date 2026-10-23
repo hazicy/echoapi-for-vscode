@@ -4,18 +4,15 @@ import { Flex } from "@/shared/ui/base";
 
 export const FlexSegmented = withStyles<"div", {}>(
   "div",
-  moduleStyles["FlexSegmented"],
-  { selector: "ui_c0cea99d_FlexSegmented" },
+  moduleStyles["container"],
 );
 
 export const ApiDebugContainer = withStyles<typeof Flex, {}>(
   Flex,
-  moduleStyles["ApiDebugContainer"],
-  { selector: "ui_c0cea99d_ApiDebugContainer" },
+  moduleStyles["apiDebug"],
 );
 
 export const SaveDropDownContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["SaveDropDownContainer"],
-  { selector: "ui_c0cea99d_SaveDropDownContainer" },
+  moduleStyles["saveDropDown"],
 );

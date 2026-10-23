@@ -4,26 +4,19 @@ import "./style.css";
 
 export const RequestAuthContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["RequestAuthContainer"],
-  { selector: "ui_a48315f8_RequestAuthContainer" },
+  moduleStyles["container"],
 );
 
 export const MoreTipContainer = withStyles<"span", {}>(
   "span",
-  moduleStyles["MoreTipContainer"],
-  { selector: "ui_a48315f8_MoreTipContainer" },
+  moduleStyles["moreTip"],
 );
 
-export const CodeContainer = withStyles<"div", {}>(
-  "div",
-  moduleStyles["CodeContainer"],
-  { selector: "ui_a48315f8_CodeContainer" },
-);
+export const CodeContainer = withStyles<"div", {}>("div", moduleStyles["code"]);
 
 export const CheckedStyles = () => null;
 
 export const Oauth2Container = withStyles<"div", {}>(
   "div",
-  moduleStyles["Oauth2Container"],
-  { selector: "ui_a48315f8_Oauth2Container" },
+  moduleStyles["oauth2"],
 );

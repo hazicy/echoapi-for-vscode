@@ -1,4 +1,4 @@
-.ButtonWrap {
+.container {
   box-shadow: none;
   display: flex;
   flex-direction: row;
@@ -7,106 +7,108 @@
   padding: 4px 16px;
   font-size: var(--font-size-14);
   line-height: 1;
+  &.slot-beautify-btn-default {
+    /* color: var(--font-content-color); */
+    background: transparent;
+  }
+  &:has(.slot-beautify-btn-icon) {
+    padding: 4px 8px;
+  }
+  & > div {
+    /* remove ripple */
+    display: none;
+  }
+  &.slot-large {
+    height: 40px;
+    font-size: var(--font-size-14);
+  }
+  &.slot-middle {
+    height: 32px;
+    font-size: var(--font-size-14);
+  }
+  &.slot-small {
+    height: 26px;
+    font-size: var(--font-size-12);
+  }
+  &.slot-mini {
+    padding-right: 8px;
+    padding-left: 8px;
+    height: 24px;
+    font-size: var(--font-size-12);
+  }
+  &.slot-beautify-btn-dashed {
+    border-color: var(--color-dashed);
+    box-shadow: none;
+  }
+  &.slot-beautify-btn-dashed.slot-normal {
+    color: var(--font-content-color);
+    background: transparent;
+  }
+  &.slot-beautify-btn-dashed.slot-normal.slot-solid {
+    border-style: solid;
+  }
+  &.slot-beautify-btn-dashed:hover {
+    border-color: var(--selected-border-color);
+    color: var(--color-primary);
+  }
+  &.slot-beautify-btn-dashed:hover.slot-solid {
+    border-style: solid;
+  }
+  &.slot-beautify-btn-primary.slot-light.slot-beautify-btn-primary {
+    color: var(--color-primary);
+    background-color: var(--color-primary-opacity);
+  }
+  &.slot-beautify-btn-primary.slot-light:hover {
+    color: var(--color-font-light-hover);
+    background-color: var(--color-bg-light-hover);
+  }
+  &.slot-beautify-btn-primary.slot-success {
+    color: #26cea4;
+    background-color: #26ce10;
+  }
+  &.slot-beautify-btn-primary.slot-error {
+    color: #ff583e;
+    background-color: #ff5806;
+  }
 }
-.ButtonWrap.slot-beautify-btn-default {
-  /* color: var(--font-content-color); */
-  background: transparent;
-}
-.ButtonWrap:has(.slot-beautify-btn-icon) {
-  padding: 4px 8px;
-}
-.ButtonWrap > div {
-  /* remove ripple */
-  display: none;
-}
-.ButtonWrap.slot-large {
-  height: 40px;
-  font-size: var(--font-size-14);
-}
-.ButtonWrap.slot-middle {
-  height: 32px;
-  font-size: var(--font-size-14);
-}
-.ButtonWrap.slot-small {
-  height: 26px;
-  font-size: var(--font-size-12);
-}
-.ButtonWrap.slot-mini {
-  padding-right: 8px;
-  padding-left: 8px;
-  height: 24px;
-  font-size: var(--font-size-12);
-}
-.ButtonWrap.slot-beautify-btn-dashed {
-  border-color: var(--color-dashed);
-  box-shadow: none;
-}
-.ButtonWrap.slot-beautify-btn-dashed.slot-normal {
-  color: var(--font-content-color);
-  background: transparent;
-}
-.ButtonWrap.slot-beautify-btn-dashed.slot-normal.slot-solid {
-  border-style: solid;
-}
-.ButtonWrap.slot-beautify-btn-dashed:hover {
-  border-color: var(--selected-border-color);
-  color: var(--color-primary);
-}
-.ButtonWrap.slot-beautify-btn-dashed:hover.slot-solid {
-  border-style: solid;
-}
-.ButtonWrap.slot-beautify-btn-primary.slot-light.slot-beautify-btn-primary {
-  color: var(--color-primary);
-  background-color: var(--color-primary-opacity);
-}
-.ButtonWrap.slot-beautify-btn-primary.slot-light:hover {
-  color: var(--color-font-light-hover);
-  background-color: var(--color-bg-light-hover);
-}
-.ButtonWrap.slot-beautify-btn-primary.slot-success {
-  color: #26cea4;
-  background-color: #26ce10;
-}
-.ButtonWrap.slot-beautify-btn-primary.slot-error {
-  color: #ff583e;
-  background-color: #ff5806;
-}
-.ButtonWrap.slot-beautify-btn-primary.slot-error,
-.ButtonWrap.slot-beautify-btn-primary.slot-success {
+.container.slot-beautify-btn-primary.slot-error,
+.container.slot-beautify-btn-primary.slot-success {
   border: none;
 }
-.ButtonWrap.slot-beautify-btn-primary.slot-error:hover,
-.ButtonWrap.slot-beautify-btn-primary.slot-success:hover {
+.container.slot-beautify-btn-primary.slot-error:hover,
+.container.slot-beautify-btn-primary.slot-success:hover {
   /* background: initial; */
 }
-.ButtonWrap.slot-beautify-btn-text {
-  color: var(--vscode-tab-inactiveForeground);
-}
-.ButtonWrap.slot-beautify-btn-text.slot-background {
-  color: var(--font-title-color);
-  background-color: var(--color-bg-gray);
-}
-.ButtonWrap.slot-beautify-btn-text.slot-background:hover {
-  color: var(--color-primary);
-  background-color: var(--color-primary-opacity);
-}
-.ButtonWrap.slot-beautify-btn-text.slot-light:hover {
-  color: var(--color-primary);
-  text-decoration: underline;
-  /* background-color: var(--color-primary-opacity); */
-}
-.ButtonWrap.slot-beautify-btn-text.slot-menu-item {
-  color: var(--font-title-color);
-}
-.ButtonWrap.slot-beautify-btn-text.slot-menu-item:hover {
-  /* color: var(--color-primary); */
-  background-color: var(--vscode-list-inactiveSelectionBackground);
-}
-.ButtonWrap.slot-beautify-btn-text:active {
-  background: none !important;
-}
-.ButtonWrap.slot-beautify-btn-text:hover {
-  color: var(--color-primary);
-  background-color: none;
-  text-decoration: underline;
+.container {
+  &.slot-beautify-btn-text {
+    color: var(--vscode-tab-inactiveForeground);
+  }
+  &.slot-beautify-btn-text.slot-background {
+    color: var(--font-title-color);
+    background-color: var(--color-bg-gray);
+  }
+  &.slot-beautify-btn-text.slot-background:hover {
+    color: var(--color-primary);
+    background-color: var(--color-primary-opacity);
+  }
+  &.slot-beautify-btn-text.slot-light:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+    /* background-color: var(--color-primary-opacity); */
+  }
+  &.slot-beautify-btn-text.slot-menu-item {
+    color: var(--font-title-color);
+  }
+  &.slot-beautify-btn-text.slot-menu-item:hover {
+    /* color: var(--color-primary); */
+    background-color: var(--vscode-list-inactiveSelectionBackground);
+  }
+  &.slot-beautify-btn-text:active {
+    background: none !important;
+  }
+  &.slot-beautify-btn-text:hover {
+    color: var(--color-primary);
+    background-color: none;
+    text-decoration: underline;
+  }
 }

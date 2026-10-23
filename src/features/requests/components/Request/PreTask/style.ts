@@ -3,6 +3,5 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const RequestPreTaskContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["RequestPreTaskContainer"],
-  { selector: "ui_95502896_RequestPreTaskContainer" },
+  moduleStyles["container"],
 );

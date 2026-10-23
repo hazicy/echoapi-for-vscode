@@ -1,10 +1,10 @@
-.VarInputContainer {
+.container {
   flex: 1;
   width: 100%;
   height: 100%;
   min-width: 0;
 }
-.EditorShell {
+.editorShell {
   display: flex;
   align-items: center;
   width: 100%;
@@ -12,38 +12,40 @@
   height: 100%;
   box-sizing: border-box;
   background: transparent;
+  & .editorField {
+    flex: 1;
+    width: 0;
+    min-width: 0;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+  }
+  & .editorField:focus {
+    border: 0;
+    outline: none;
+    box-shadow: none;
+  }
+  & textarea.editorField {
+    resize: vertical;
+    min-height: 32px;
+  }
 }
-.EditorShell .EditorField {
-  flex: 1;
-  width: 0;
-  min-width: 0;
-  height: 100%;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  outline: none;
-  box-shadow: none;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  line-height: inherit;
-}
-.EditorShell .EditorField:focus {
-  border: 0;
-  outline: none;
-  box-shadow: none;
-}
-.EditorShell textarea.EditorField {
-  resize: vertical;
-  min-height: 32px;
-}
-.VarInputContainer.slot-has-border .slot-mini-editor {
-  padding: 6.6px 11px;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--color-table-border);
-  line-height: 1.4;
-  transition: all 0.3s;
-}
-.VarInputContainer.slot-has-border .slot-mini-editor:hover {
-  border: 1px solid var(--color-primary);
+.container {
+  &.slot-has-border .slot-mini-editor {
+    padding: 6.6px 11px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-table-border);
+    line-height: 1.4;
+    transition: all 0.3s;
+  }
+  &.slot-has-border .slot-mini-editor:hover {
+    border: 1px solid var(--color-primary);
+  }
 }

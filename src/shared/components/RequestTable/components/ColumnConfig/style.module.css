@@ -1,24 +1,24 @@
-.DescMoreItemWrap {
+.container {
   height: 26px;
+  &.slot-tips-item-wrap {
+    color: var(--font-light-color);
+  }
 }
-.DescMoreItemWrap.slot-tips-item-wrap {
-  color: var(--font-light-color);
-}
-.ColumnConfigContainer {
+.columnConfig {
   position: absolute;
   top: 0;
   right: 0;
   height: 36px;
   padding-inline: 8px;
   background-color: transparent;
-}
-.ColumnConfigContainer .slot-raw-parameter-pilot-bubble-tooltip {
-  max-width: 320px;
-}
-.ColumnConfigContainer .slot-icon-navi-more {
-  cursor: pointer;
-  color: var(--font-light-color);
-}
-.ColumnConfigContainer .slot-icon-navi-more:hover {
-  color: var(--color-primary);
+  & .slot-raw-parameter-pilot-bubble-tooltip {
+    max-width: 320px;
+  }
+  & .slot-icon-navi-more {
+    cursor: pointer;
+    color: var(--font-light-color);
+  }
+  & .slot-icon-navi-more:hover {
+    color: var(--color-primary);
+  }
 }

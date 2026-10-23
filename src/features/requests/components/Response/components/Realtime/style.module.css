@@ -1,23 +1,31 @@
-.RealtimeContainer {
+.container {
   width: 100%;
   height: 100%;
 }
 
-.RealtimeContainer {
+.container {
   min-height: 0;
-}
-.RealtimeContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap {
-  background: transparent;
-}
-.RealtimeContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap:hover {
-  background: var(--vscode-toolbar-hoverBackground);
-}
-.RealtimeContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap .slot-beautify-flex .slot-collapse-title {
-  font-size: 11px;
-  letter-spacing: 1px;
-  color: var(--vscode-descriptionForeground, var(--font-light-color));
-}
-.RealtimeContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-horizontal {
-  margin-top: 6px;
-  letter-spacing: 1px;
+  & .slot-resizable-panel-right-wrap .slot-right-collapse-wrap {
+    background: transparent;
+  }
+  & .slot-resizable-panel-right-wrap .slot-right-collapse-wrap:hover {
+    background: var(--vscode-toolbar-hoverBackground);
+  }
+  &
+    .slot-resizable-panel-right-wrap
+    .slot-right-collapse-wrap
+    .slot-beautify-flex
+    .slot-collapse-title {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--vscode-descriptionForeground, var(--font-light-color));
+  }
+  &
+    .slot-resizable-panel-right-wrap
+    .slot-right-collapse-wrap
+    .slot-beautify-flex
+    .slot-collapse-title.slot-horizontal {
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
 }

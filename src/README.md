@@ -55,3 +55,18 @@ src/
   Relative imports are suitable within a component or feature.
 - Public panel IDs and generated bundle names remain camelCase. Their source
   files under `app/webviews/` use PascalCase in both Vite and development URLs.
+
+## CSS Modules
+
+- Use short, local camelCase class names such as `container`, `header`,
+  `itemTitle`, and `toolbar`; the module already scopes them to the component.
+- Keep nesting shallow (one or two levels). Group related descendants and
+  states with `&` without increasing specificity or changing cascade order.
+- Use pseudo-classes or `data-*` attributes for states, and CSS custom
+  properties for dynamic values and component customization.
+- Shared `slot-*` names are cross-component contracts; update consumers
+  together when changing them. Empty slot exports are intentional.
+- Do not add compatibility marker classes. Use module exports for styling
+  and accessible roles and names for test locators.
+- The production build lowers CSS nesting for Chromium 102, matching the
+  minimum supported VS Code version.

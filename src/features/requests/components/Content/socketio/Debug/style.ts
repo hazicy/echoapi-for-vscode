@@ -3,41 +3,34 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const WsDebugContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["WsDebugContainer"],
-  { selector: "ui_8c831a54_WsDebugContainer" },
+  moduleStyles["container"],
 );
 
 export const LineBarContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["LineBarContainer"],
-  { selector: "ui_8c831a54_LineBarContainer" },
+  moduleStyles["lineBar"],
 );
 export const ExampleModalContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ExampleModalContainer"],
-  { selector: "ui_8c831a54_ExampleModalContainer" },
+  moduleStyles["exampleModal"],
 );
 
 export const SaveDropDownContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["SaveDropDownContainer"],
-  { selector: "ui_8c831a54_SaveDropDownContainer" },
+  moduleStyles["saveDropDown"],
 );
 
 export const ExampleLabelContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ExampleLabelContainer"],
-  { selector: "ui_8c831a54_ExampleLabelContainer" },
+  moduleStyles["exampleLabel"],
 );
 
 export const ExampleListContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ExampleListContainer"],
-  { selector: "ui_8c831a54_ExampleListContainer" },
+  moduleStyles["exampleList"],
 );
 
 export const SocketIoLeftPanelContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["SocketIoLeftPanelContainer"],
-  { selector: "ui_8c831a54_SocketIoLeftPanelContainer" },
+  moduleStyles["socketIoLeftPanel"],
 );

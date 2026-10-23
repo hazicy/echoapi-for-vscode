@@ -4,18 +4,14 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 export const UrrGroupWrap = withStyles<
   "div",
   { $token: Partial<GlobalThemeToken> }
->("div", moduleStyles["UrrGroupWrap"], {
-  selector: "ui_fc21231a_UrrGroupWrap",
-});
+>("div", moduleStyles["container"]);
 
 export const MethodDropdownWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["MethodDropdownWrap"],
-  { selector: "ui_fc21231a_MethodDropdownWrap" },
+  moduleStyles["methodDropdown"],
 );
 
 export const OptionsItemContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["OptionsItemContainer"],
-  { selector: "ui_fc21231a_OptionsItemContainer" },
+  moduleStyles["optionsItem"],
 );

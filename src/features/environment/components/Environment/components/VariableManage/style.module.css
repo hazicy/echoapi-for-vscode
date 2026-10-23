@@ -1,51 +1,114 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.VariableContainer {
+.container {
   width: 100%;
   height: 100%;
+  & .slot-variable-flex {
+    height: 100%;
+  }
+  & .slot-variable-content {
+    flex: 1;
+    overflow-y: auto;
+  }
+  &
+    .slot-variable-content
+    [class~="beautify-table-tbody"]
+    tr:hover
+    .slot-anticon {
+    visibility: visible;
+  }
 }
-.VariableContainer .slot-variable-flex {
-  height: 100%;
-}
-.VariableContainer .slot-variable-content {
-  flex: 1;
-  overflow-y: auto;
-}
-.VariableContainer .slot-variable-content [class~="beautify-table-tbody"] tr:hover .slot-anticon {
-  visibility: visible;
-}
-.VariableContainer .slot-variable-content [class~="beautify-table-tbody"] [class~="beautify-table-cell"],
-.VariableContainer .slot-variable-content [class~="beautify-table-thead"] [class~="beautify-table-cell"] {
+.container
+  .slot-variable-content
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"],
+.container
+  .slot-variable-content
+  [class~="beautify-table-thead"]
+  [class~="beautify-table-cell"] {
   padding: 0;
   /* height: 32px; */
 }
-.VariableContainer .slot-variable-content [class~="beautify-table-tbody"] [class~="beautify-table-cell"] input,
-.VariableContainer .slot-variable-content [class~="beautify-table-thead"] [class~="beautify-table-cell"] input,
-.VariableContainer .slot-variable-content [class~="beautify-table-tbody"] [class~="beautify-table-cell"] textarea,
-.VariableContainer .slot-variable-content [class~="beautify-table-thead"] [class~="beautify-table-cell"] textarea {
+.container
+  .slot-variable-content
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  input,
+.container
+  .slot-variable-content
+  [class~="beautify-table-thead"]
+  [class~="beautify-table-cell"]
+  input,
+.container
+  .slot-variable-content
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  textarea,
+.container
+  .slot-variable-content
+  [class~="beautify-table-thead"]
+  [class~="beautify-table-cell"]
+  textarea {
   height: 36px;
   border-color: transparent;
 }
-.VariableContainer .slot-variable-content [class~="beautify-table-tbody"] [class~="beautify-table-cell"] input:hover,
-.VariableContainer .slot-variable-content [class~="beautify-table-thead"] [class~="beautify-table-cell"] input:hover,
-.VariableContainer .slot-variable-content [class~="beautify-table-tbody"] [class~="beautify-table-cell"] textarea:hover,
-.VariableContainer .slot-variable-content [class~="beautify-table-thead"] [class~="beautify-table-cell"] textarea:hover,
-.VariableContainer .slot-variable-content [class~="beautify-table-tbody"] [class~="beautify-table-cell"] input:focus,
-.VariableContainer .slot-variable-content [class~="beautify-table-thead"] [class~="beautify-table-cell"] input:focus,
-.VariableContainer .slot-variable-content [class~="beautify-table-tbody"] [class~="beautify-table-cell"] textarea:focus,
-.VariableContainer .slot-variable-content [class~="beautify-table-thead"] [class~="beautify-table-cell"] textarea:focus {
+.container
+  .slot-variable-content
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  input:hover,
+.container
+  .slot-variable-content
+  [class~="beautify-table-thead"]
+  [class~="beautify-table-cell"]
+  input:hover,
+.container
+  .slot-variable-content
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  textarea:hover,
+.container
+  .slot-variable-content
+  [class~="beautify-table-thead"]
+  [class~="beautify-table-cell"]
+  textarea:hover,
+.container
+  .slot-variable-content
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  input:focus,
+.container
+  .slot-variable-content
+  [class~="beautify-table-thead"]
+  [class~="beautify-table-cell"]
+  input:focus,
+.container
+  .slot-variable-content
+  [class~="beautify-table-tbody"]
+  [class~="beautify-table-cell"]
+  textarea:focus,
+.container
+  .slot-variable-content
+  [class~="beautify-table-thead"]
+  [class~="beautify-table-cell"]
+  textarea:focus {
   border-color: var(--color-primary);
   background-color: var(--highlight-change-color);
 }
-.VariableContainer .slot-variable-content [class~="beautify-table-thead"] [class~="beautify-table-cell"] {
-  padding: 0 12px;
+.container {
+  &
+    .slot-variable-content
+    [class~="beautify-table-thead"]
+    [class~="beautify-table-cell"] {
+    padding: 0 12px;
+  }
 }
-.VariableOpContainer {
+.variableOp {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-}
-.VariableOpContainer .slot-anticon {
-  visibility: hidden;
-  color: var(--icon-color);
+  & .slot-anticon {
+    visibility: hidden;
+    color: var(--icon-color);
+  }
 }

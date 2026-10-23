@@ -3,6 +3,5 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const HeaderContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["HeaderContainer"],
-  { selector: "ui_56bab6ef_HeaderContainer" },
+  moduleStyles["container"],
 );

@@ -1,40 +1,43 @@
-.SortableCollapseWrapper {
+.container {
   width: 100%;
-}
-.SortableCollapseWrapper .slot-custom-header {
-  flex: 1;
-  margin-right: 12px;
-}
-.SortableCollapseWrapper .slot-custom-header .slot-anticon {
-  opacity: 0;
-}
-.SortableCollapseWrapper .slot-header-container:hover .slot-hover-show-custom-header.slot-custom-header .slot-anticon {
-  opacity: 1;
-}
-.SortableCollapseWrapper .slot-item-container {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-}
-.SortableCollapseWrapper .slot-item-container.slot-top {
-  border-top: 2px solid var(--color-primary);
-}
-.SortableCollapseWrapper .slot-item-container.slot-inside {
-  background-color: var(--color-primary);
-}
-.SortableCollapseWrapper .slot-item-container.slot-bottom {
-  border-bottom: 2px solid var(--color-primary);
-}
-.SortableCollapseWrapper .slot-item-container .slot-icon {
-  margin-top: -8px;
-  margin-right: 8px;
-  cursor: move;
-}
-.SortableCollapseWrapper .slot-item-container .slot-beautify-collapse-expand-icon {
-  display: none !important;
-}
-.SortableCollapseWrapper .slot-children-container {
-  padding: 16px;
+  & .slot-custom-header {
+    flex: 1;
+    margin-right: 12px;
+  }
+  & .slot-custom-header .slot-anticon {
+    opacity: 0;
+  }
+  &
+    .slot-header-container:hover
+    .slot-hover-show-custom-header.slot-custom-header
+    .slot-anticon {
+    opacity: 1;
+  }
+  & .slot-item-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  & .slot-item-container.slot-top {
+    border-top: 2px solid var(--color-primary);
+  }
+  & .slot-item-container.slot-inside {
+    background-color: var(--color-primary);
+  }
+  & .slot-item-container.slot-bottom {
+    border-bottom: 2px solid var(--color-primary);
+  }
+  & .slot-item-container .slot-icon {
+    margin-top: -8px;
+    margin-right: 8px;
+    cursor: move;
+  }
+  & .slot-item-container .slot-beautify-collapse-expand-icon {
+    display: none !important;
+  }
+  & .slot-children-container {
+    padding: 16px;
+  }
 }

@@ -4,12 +4,10 @@ import { Modal, Spin } from "@/shared/ui/base";
 
 export const PreviewContainer = withStyles<typeof Modal, {}>(
   Modal,
-  moduleStyles["PreviewContainer"],
-  { selector: "ui_848512ea_PreviewContainer" },
+  moduleStyles["container"],
 );
 
 export const LoadingContainer = withStyles<typeof Spin, {}>(
   Spin,
-  moduleStyles["LoadingContainer"],
-  { selector: "ui_848512ea_LoadingContainer" },
+  moduleStyles["loading"],
 );

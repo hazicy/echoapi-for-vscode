@@ -3,12 +3,10 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const ContentWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["ContentWrap"],
-  { selector: "ui_9639ada5_ContentWrap" },
+  moduleStyles["container"],
 );
 
 export const VersionEditWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["VersionEditWrap"],
-  { selector: "ui_9639ada5_VersionEditWrap" },
+  moduleStyles["versionEdit"],
 );

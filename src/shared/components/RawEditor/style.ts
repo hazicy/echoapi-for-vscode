@@ -3,12 +3,10 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const RawEditorContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["RawEditorContainer"],
-  { selector: "ui_0b82a8ee_RawEditorContainer" },
+  moduleStyles["container"],
 );
 
 export const ParamsFieldEditorContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ParamsFieldEditorContainer"],
-  { selector: "ui_0b82a8ee_ParamsFieldEditorContainer" },
+  moduleStyles["paramsFieldEditor"],
 );

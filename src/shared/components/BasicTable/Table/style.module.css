@@ -1,79 +1,86 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.TableWrapper {
+.container {
   height: 100%;
 }
-.TableWrapper table::-webkit-scrollbar-corner {
+.container table::-webkit-scrollbar-corner {
   background-color: transparent;
 }
-.TableWrapper .slot-beautify-table {
+.container .slot-beautify-table {
   height: 100%;
   border-radius: var(--border-radius);
   border: 1px solid var(--color-table-border);
   border-bottom: none;
 }
-.TableWrapper .slot-beautify-table tr {
+.container .slot-beautify-table tr {
   height: 36px;
 }
-.TableWrapper .slot-beautify-table td,
-.TableWrapper .slot-beautify-table th {
+.container .slot-beautify-table td,
+.container .slot-beautify-table th {
   padding: 4px 10px;
   border-right: none !important;
 }
-.TableWrapper .slot-beautify-table td .slot-beautify-input,
-.TableWrapper .slot-beautify-table th .slot-beautify-input {
+.container .slot-beautify-table td .slot-beautify-input,
+.container .slot-beautify-table th .slot-beautify-input {
   font-size: var(--font-size-14);
   background: transparent;
 }
-.TableWrapper .slot-beautify-table td .slot-beautify-select,
-.TableWrapper .slot-beautify-table th .slot-beautify-select,
-.TableWrapper .slot-beautify-table td .slot-beautify-select-selector,
-.TableWrapper .slot-beautify-table th .slot-beautify-select-selector {
+.container .slot-beautify-table td .slot-beautify-select,
+.container .slot-beautify-table th .slot-beautify-select,
+.container .slot-beautify-table td .slot-beautify-select-selector,
+.container .slot-beautify-table th .slot-beautify-select-selector {
   background: transparent;
 }
-.TableWrapper .slot-beautify-table .slot-action {
+.container .slot-beautify-table .slot-action {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
 }
-.TableWrapper .slot-beautify-table .slot-action .slot-beautify-divider {
+.container .slot-beautify-table .slot-action .slot-beautify-divider {
   margin-top: 4px;
 }
-.TableWrapper .slot-beautify-table .slot-action .slot-beautify-btn {
+.container .slot-beautify-table .slot-action .slot-beautify-btn {
   padding: 0;
   height: auto;
   font-size: var(--font-size-14);
   color: var(--color-primary);
 }
-.TableWrapper .slot-beautify-table [class~="beautify-table-container"] {
+.container .slot-beautify-table [class~="beautify-table-container"] {
   border: none !important;
 }
-.TableWrapper .slot-beautify-table [class~="beautify-table-column-sorter"] {
+.container .slot-beautify-table [class~="beautify-table-column-sorter"] {
   color: var(--font-content-color);
 }
-.TableWrapper .slot-beautify-table [class~="beautify-table-thead"] th[class~="beautify-table-column-has-sorters"] {
+.container
+  .slot-beautify-table
+  [class~="beautify-table-thead"]
+  th[class~="beautify-table-column-has-sorters"] {
   transition: none;
 }
-.TableWrapper .slot-beautify-pagination .slot-beautify-pagination-item {
+.container .slot-beautify-pagination .slot-beautify-pagination-item {
   width: 32px;
   height: 32px;
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border);
   color: var(--font-content-color);
 }
-.TableWrapper .slot-beautify-pagination .slot-beautify-pagination-item-active {
+.container .slot-beautify-pagination .slot-beautify-pagination-item-active {
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
   background-color: transparent;
 }
-.TableWrapper .slot-beautify-pagination .slot-beautify-pagination-item:not(.slot-beautify-pagination-item-active):hover {
+.container
+  .slot-beautify-pagination
+  .slot-beautify-pagination-item:not(
+    .slot-beautify-pagination-item-active
+  ):hover {
   background-color: transparent;
 }
-.TableWrapper [class~="react-resizable"] {
+.container [class~="react-resizable"] {
   position: relative;
   background-clip: padding-box;
 }
-.TableWrapper [class~="react-resizable-handle"] {
+.container [class~="react-resizable-handle"] {
   position: absolute;
   right: -5px;
   bottom: 0;
@@ -84,7 +91,7 @@
   user-select: none;
   touch-action: none;
 }
-.TableWrapper [class~="react-resizable-handle"]::before {
+.container [class~="react-resizable-handle"]::before {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -92,37 +99,40 @@
   width: 1px;
   height: 1.4em;
   background-color: var(--color-border);
-  content: '';
+  content: "";
   transition: background-color 0.2s;
 }
-.TableWrapper [class~="react-resizable-handle"]:hover::before,
-.TableWrapper [class~="react-resizable-handle"]:active::before {
+.container [class~="react-resizable-handle"]:hover::before,
+.container [class~="react-resizable-handle"]:active::before {
   background-color: var(--color-primary) !important;
 }
-.TableContainer {
+.table {
   flex: 1;
   height: 100%;
 }
-.TableContainer .slot-sort-handle {
+.table .slot-sort-handle {
   width: 30px;
   min-width: 30px;
   text-align: center;
 }
-.TableContainer .slot-reset-padding [class~="beautify-table-cell"] {
+.table .slot-reset-padding [class~="beautify-table-cell"] {
   padding: 0;
 }
 
-.TableWrapper .slot-beautify-table th {
-  background: var(--vscode-editorWidget-background, var(--vscode-input-background));
+.container .slot-beautify-table th {
+  background: var(
+    --vscode-editorWidget-background,
+    var(--vscode-input-background)
+  );
   color: var(--vscode-foreground, var(--font-title-color));
   font-size: 12px;
   font-weight: 500;
 }
-.TableWrapper .slot-beautify-table td {
+.container .slot-beautify-table td {
   font-size: 12px;
 }
 
 /* Cells grow through the table layout; native textarea grips break row alignment. */
-.TableWrapper .slot-beautify-table td textarea {
+.container .slot-beautify-table td textarea {
   resize: none;
 }

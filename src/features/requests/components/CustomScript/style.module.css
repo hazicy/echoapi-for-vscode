@@ -1,34 +1,42 @@
-.CustomScriptWrapper .slot-custom-script-container {
-  width: 100%;
-  height: 280px;
-  border: 1px solid var(--color-border);
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
+.container {
+  & .slot-custom-script-container {
+    width: 100%;
+    height: 280px;
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  & .slot-custom-script-container .slot-code-editor-container {
+    flex: 1;
+    width: 10px;
+    height: 280px;
+  }
+  & .slot-custom-script-container .slot-right-var-list {
+    width: 240px;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+  & .slot-custom-script-container .slot-right-var-list .slot-var-item {
+    padding: 8px 16px;
+    width: 100%;
+    /* background-color: var(--color-bg-page); */
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: all 0.3s;
+  }
 }
-.CustomScriptWrapper .slot-custom-script-container .slot-code-editor-container {
-  flex: 1;
-  width: 10px;
-  height: 280px;
-}
-.CustomScriptWrapper .slot-custom-script-container .slot-right-var-list {
-  width: 240px;
-  height: 100%;
-  overflow: hidden;
-  overflow-y: auto;
-}
-.CustomScriptWrapper .slot-custom-script-container .slot-right-var-list .slot-var-item {
-  padding: 8px 16px;
-  width: 100%;
-  /* background-color: var(--color-bg-page); */
-  cursor: pointer;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  transition: all 0.3s;
-}
-.CustomScriptWrapper .slot-custom-script-container .slot-right-var-list .slot-var-item:hover,
-.CustomScriptWrapper .slot-custom-script-container .slot-right-var-list .slot-var-item.slot-active {
+.container
+  .slot-custom-script-container
+  .slot-right-var-list
+  .slot-var-item:hover,
+.container
+  .slot-custom-script-container
+  .slot-right-var-list
+  .slot-var-item.slot-active {
   background-color: var(--vscode-list-inactiveSelectionBackground);
 }

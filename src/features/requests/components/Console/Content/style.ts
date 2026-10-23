@@ -4,27 +4,23 @@ import { Flex } from "@/shared/ui/base";
 
 export const ConsoleContentWrapper = withStyles<"div", {}>(
   "div",
-  moduleStyles["ConsoleContentWrapper"],
-  { selector: "ui_0c40a20c_ConsoleContentWrapper" },
+  moduleStyles["container"],
 );
 
 export const LabelContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["LabelContainer"],
-  { selector: "ui_0c40a20c_LabelContainer" },
+  moduleStyles["label"],
 );
 
 export const ChildrenContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ChildrenContainer"],
-  { selector: "ui_0c40a20c_ChildrenContainer" },
+  moduleStyles["children"],
 );
 
 export const ConsoleItemWrap = withStyles<typeof Flex, {}>(
   Flex,
-  moduleStyles["ConsoleItemWrap"],
+  moduleStyles["consoleItem"],
   {
-    selector: "ui_0c40a20c_ConsoleItemWrap",
     attrs: {
       align: "center",
     },

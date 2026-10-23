@@ -1,64 +1,64 @@
-.HistoryReportListWrapper {
+.container {
   display: flex;
   flex-direction: column;
   flex: 1;
   gap: 4px;
   overflow-y: auto;
   margin-top: 12px;
+  & .slot-icon-ok {
+    width: 12px;
+    color: #26cea4;
+  }
+  & .slot-icon-small-close {
+    width: 12px;
+    color: #ec3e3e;
+  }
 }
-.HistoryReportListWrapper .slot-icon-ok {
-  width: 12px;
-  color: #26CEA4;
-}
-.HistoryReportListWrapper .slot-icon-small-close {
-  width: 12px;
-  color: #EC3E3E;
-}
-.HistoryReportListItem {
+.historyReportListItem {
   display: flex;
   justify-content: space-between;
   padding: 5px 8px;
   align-items: center;
   border-radius: 4px;
   cursor: pointer;
-}
-.HistoryReportListItem:hover {
-  background: var(--vscode-list-hoverBackground, #303030);
-}
-.HistoryReportListItem.slot-select-item {
-  background: var(--vscode-list-hoverBackground, #303030);
+  &:hover {
+    background: var(--vscode-list-hoverBackground, #303030);
+  }
+  &.slot-select-item {
+    background: var(--vscode-list-hoverBackground, #303030);
+  }
 }
 
-.HistoryReportListWrapper {
+.container {
   min-height: 0;
   gap: 2px;
   margin-top: 10px;
 }
-.HistoryReportListItem {
+.historyReportListItem {
   gap: 10px;
   min-width: 0;
   min-height: 32px;
   padding: 6px;
-}
-.HistoryReportListItem > :first-child {
-  flex: 1;
-  overflow: hidden;
-}
-.HistoryReportListItem > :last-child {
-  flex-shrink: 0;
-}
-.HistoryReportListItem svg {
-  flex-shrink: 0;
+  & > :first-child {
+    flex: 1;
+    overflow: hidden;
+  }
+  & > :last-child {
+    flex-shrink: 0;
+  }
+  & svg {
+    flex-shrink: 0;
+  }
 }
 @media (max-width: 300px) {
-  .HistoryReportListItem {
+  .historyReportListItem {
     flex-wrap: wrap;
     gap: 2px 8px;
   }
-  .HistoryReportListItem > :first-child {
+  .historyReportListItem > :first-child {
     flex-basis: 100%;
   }
-  .HistoryReportListItem > :last-child {
+  .historyReportListItem > :last-child {
     padding-left: 18px;
   }
 }

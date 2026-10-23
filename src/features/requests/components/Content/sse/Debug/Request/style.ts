@@ -6,8 +6,7 @@ import { DirectionType } from "@/shared/types/common";
 export const RequestContainer = withStyles<
   "div",
   { $direction: DirectionType }
->("div", moduleStyles["RequestContainer"], {
-  selector: "ui_fa30f745_RequestContainer",
+>("div", moduleStyles["container"], {
   variables: {
     "--style-fa30f745-RequestContainer-0": (props) =>
       String(

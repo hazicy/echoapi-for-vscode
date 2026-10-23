@@ -1,112 +1,147 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.ListSideBarContainer > .slot-side-tree-wrap {
-  width: 180px;
-  background: var(--color-bg-page);
-  transition: width 0.1s linear;
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con {
-  flex: 1;
-  padding-top: 8px;
-  height: 100%;
-  box-sizing: border-box;
-  overflow-y: auto;
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con ul {
-  width: 100%;
-  height: 100%;
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-icon-close {
-  visibility: hidden;
-  transform: rotate(90deg);
-  font-size: var(--font-size-14);
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 8px;
-  margin-bottom: 4px;
-  padding: 0 12px;
-  height: 32px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar-active {
-  background-color: var(--color-bg-folder-hover);
-  color: var(--vscode-foreground);
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar-active .slot-beautify-typography {
-  color: var(--vscode-foreground);
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar:hover {
-  background-color: var(--color-bg-folder-hover);
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar:hover .slot-beautify-typography {
-  color: var(--color-primary);
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar:hover .slot-icon-close {
-  visibility: visible;
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar .slot-beautify-input {
-  box-shadow: none;
-  border-radius: 0;
-  border-color: transparent;
-  cursor: pointer;
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar .slot-beautify-input.slot-edit-input {
-  border-color: var(--color-primary);
-  cursor: text;
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar .slot-beautify-dropdown-menu-item {
-  padding: 0;
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar .slot-item-label {
-  padding: 8px 12px;
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar .slot-item-label .slot-anticon {
-  font-size: 16px;
-  margin-inline-end: 8px;
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-add-btn-con {
-  padding: 12px 10px;
-}
-.ListSideBarContainer > .slot-side-tree-wrap .slot-add-btn-con button {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-.ListSideBarContainer > .slot-side-tree-wrap.slot-expand {
-  width: 0;
-  overflow: hidden;
-  transition: width 0.1s linear;
-}
-.ListSideBarContainer > .slot-side-tree-wrap.slot-expand .slot-beautify-input-affix-wrapper {
-  display: none;
-}
-.ListSideBarContainer > .slot-side-tree-wrap.slot-expand [class~="beautify-tree"] {
-  overflow: hidden;
-}
-.ListSideBarContainer > .slot-side-tree-wrap.slot-expand .slot-beautify-empty {
-  display: none;
-}
-.ListSideBarContainer .slot-expand-divider {
-  display: flex;
-  align-items: center;
-  width: 8px;
-  border-radius: 78px;
-  background-color: var(--color-bg-page);
-}
-.ListSideBarContainer .slot-expand-divider .slot-icon-wrap {
-  width: 8px;
-  height: 24px;
-  border-radius: 65px;
-  line-height: 24px;
-  text-align: center;
-  background-color: var(--vscode-badge-background);
-  cursor: pointer;
-}
-.ListSideBarContainer .slot-expand-divider .slot-icon-wrap .slot-anticon {
-  margin-left: -2px;
-  font-size: var(--font-size-12);
-  color: var(--white-color);
+.container {
+  & > .slot-side-tree-wrap {
+    width: 180px;
+    background: var(--color-bg-page);
+    transition: width 0.1s linear;
+  }
+  & > .slot-side-tree-wrap .slot-basic-tabs-con {
+    flex: 1;
+    padding-top: 8px;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+  & > .slot-side-tree-wrap .slot-basic-tabs-con ul {
+    width: 100%;
+    height: 100%;
+  }
+  & > .slot-side-tree-wrap .slot-basic-tabs-con .slot-icon-close {
+    visibility: hidden;
+    transform: rotate(90deg);
+    font-size: var(--font-size-14);
+  }
+  & > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 8px;
+    margin-bottom: 4px;
+    padding: 0 12px;
+    height: 32px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  & > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar-active {
+    background-color: var(--color-bg-folder-hover);
+    color: var(--vscode-foreground);
+  }
+  &
+    > .slot-side-tree-wrap
+    .slot-basic-tabs-con
+    .slot-basic-tab-bar-active
+    .slot-beautify-typography {
+    color: var(--vscode-foreground);
+  }
+  & > .slot-side-tree-wrap .slot-basic-tabs-con .slot-basic-tab-bar:hover {
+    background-color: var(--color-bg-folder-hover);
+  }
+  &
+    > .slot-side-tree-wrap
+    .slot-basic-tabs-con
+    .slot-basic-tab-bar:hover
+    .slot-beautify-typography {
+    color: var(--color-primary);
+  }
+  &
+    > .slot-side-tree-wrap
+    .slot-basic-tabs-con
+    .slot-basic-tab-bar:hover
+    .slot-icon-close {
+    visibility: visible;
+  }
+  &
+    > .slot-side-tree-wrap
+    .slot-basic-tabs-con
+    .slot-basic-tab-bar
+    .slot-beautify-input {
+    box-shadow: none;
+    border-radius: 0;
+    border-color: transparent;
+    cursor: pointer;
+  }
+  &
+    > .slot-side-tree-wrap
+    .slot-basic-tabs-con
+    .slot-basic-tab-bar
+    .slot-beautify-input.slot-edit-input {
+    border-color: var(--color-primary);
+    cursor: text;
+  }
+  &
+    > .slot-side-tree-wrap
+    .slot-basic-tabs-con
+    .slot-basic-tab-bar
+    .slot-beautify-dropdown-menu-item {
+    padding: 0;
+  }
+  &
+    > .slot-side-tree-wrap
+    .slot-basic-tabs-con
+    .slot-basic-tab-bar
+    .slot-item-label {
+    padding: 8px 12px;
+  }
+  &
+    > .slot-side-tree-wrap
+    .slot-basic-tabs-con
+    .slot-basic-tab-bar
+    .slot-item-label
+    .slot-anticon {
+    font-size: 16px;
+    margin-inline-end: 8px;
+  }
+  & > .slot-side-tree-wrap .slot-add-btn-con {
+    padding: 12px 10px;
+  }
+  & > .slot-side-tree-wrap .slot-add-btn-con button {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+  & > .slot-side-tree-wrap.slot-expand {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.1s linear;
+  }
+  & > .slot-side-tree-wrap.slot-expand .slot-beautify-input-affix-wrapper {
+    display: none;
+  }
+  & > .slot-side-tree-wrap.slot-expand [class~="beautify-tree"] {
+    overflow: hidden;
+  }
+  & > .slot-side-tree-wrap.slot-expand .slot-beautify-empty {
+    display: none;
+  }
+  & .slot-expand-divider {
+    display: flex;
+    align-items: center;
+    width: 8px;
+    border-radius: 78px;
+    background-color: var(--color-bg-page);
+  }
+  & .slot-expand-divider .slot-icon-wrap {
+    width: 8px;
+    height: 24px;
+    border-radius: 65px;
+    line-height: 24px;
+    text-align: center;
+    background-color: var(--vscode-badge-background);
+    cursor: pointer;
+  }
+  & .slot-expand-divider .slot-icon-wrap .slot-anticon {
+    margin-left: -2px;
+    font-size: var(--font-size-12);
+    color: var(--white-color);
+  }
 }

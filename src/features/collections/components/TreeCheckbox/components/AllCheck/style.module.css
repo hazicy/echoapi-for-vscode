@@ -1,4 +1,4 @@
-.AllCheckContainer {
+.container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -11,27 +11,27 @@
   /* border-radius: 4px 4px 0 0; */
   border-bottom: 1px solid var(--color-table-border);
   flex-wrap: nowrap;
-}
-.AllCheckContainer label span {
-  white-space: nowrap;
-}
-.AllCheckContainer .slot-beautify-checkbox-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  /* .beautify-checkbox-inner {
+  & label span {
+    white-space: nowrap;
+  }
+  & .slot-beautify-checkbox-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    /* .beautify-checkbox-inner {
       background-color: var(--color-bg-tree-page);
     } */
-}
-.AllCheckContainer .slot-all-check-desc {
-  font-size: 12px;
-  color: var(--font-light-color);
-  margin-left: 8px;
-}
-.AllCheckContainer .slot-all-check-text {
-  font-size: 14px;
-}
-.AllCheckContainer .slot-all-check-text .slot-all-check-num {
-  color: var(--color-primary);
+  }
+  & .slot-all-check-desc {
+    font-size: 12px;
+    color: var(--font-light-color);
+    margin-left: 8px;
+  }
+  & .slot-all-check-text {
+    font-size: 14px;
+  }
+  & .slot-all-check-text .slot-all-check-num {
+    color: var(--color-primary);
+  }
 }

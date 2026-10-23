@@ -1,33 +1,33 @@
-.HeaderContainer {
+.container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   width: 100%;
   gap: 4px;
-}
-.HeaderContainer > .slot-url-group-wrap {
-  flex: 1;
-}
-.HeaderContainer .slot-url-group-container {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  height: 28px;
-}
-.HeaderContainer .slot-url-group-container .slot-env-desc {
-  max-width: 50%;
-  overflow: hidden;
-  font-size: var(--font-size-14);
-  line-height: 36px;
-  white-space: nowrap;
-  color: var(--font-light-color);
-  text-overflow: ellipsis;
-}
-.HeaderContainer .slot-url-group-container .slot-beautify-input {
-  flex: 1;
-  height: 100%;
-}
-.HeaderContainer .slot-beautify-btn {
-  height: 36px !important;
+  & > .slot-url-group-wrap {
+    flex: 1;
+  }
+  & .slot-url-group-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    height: 28px;
+  }
+  & .slot-url-group-container .slot-env-desc {
+    max-width: 50%;
+    overflow: hidden;
+    font-size: var(--font-size-14);
+    line-height: 36px;
+    white-space: nowrap;
+    color: var(--font-light-color);
+    text-overflow: ellipsis;
+  }
+  & .slot-url-group-container .slot-beautify-input {
+    flex: 1;
+    height: 100%;
+  }
+  & .slot-beautify-btn {
+    height: 36px !important;
+  }
 }

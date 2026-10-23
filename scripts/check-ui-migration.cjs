@@ -17,7 +17,13 @@ function visit(directory) {
         if (!slots.has(match[1])) failures.push(`${path.relative(root, filename)}: unknown module slot ${match[1]}`);
       }
     }
-    else if (/\.[cm]?[jt]sx?$/.test(filename) && forbidden.test(fs.readFileSync(filename, 'utf8'))) failures.push(path.relative(root, filename));
+    else if (/\.[cm]?[jt]sx?$/.test(filename)) {
+      const source = fs.readFileSync(filename, 'utf8');
+      if (forbidden.test(source)) failures.push(path.relative(root, filename));
+      if (/\bui_[a-f0-9]{8}_\w+\b/.test(source)) {
+        failures.push(`${path.relative(root, filename)}: compatibility marker class`);
+      }
+    }
   }
 }
 visit(path.join(root, 'src'));

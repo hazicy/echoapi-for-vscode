@@ -1,167 +1,195 @@
-.SchemaWrapper {
+.container {
   display: flex;
   flex-direction: column;
+  & .slot-beautify-btn {
+    padding: 0;
+    width: 20px;
+    height: 20px;
+  }
+  & .slot-template-table {
+    position: relative;
+    flex: 1;
+  }
+  & .slot-template-table .slot-sel-title {
+    font-size: var(--font-size-12);
+    text-transform: capitalize;
+    color: #43a047;
+  }
+  & .slot-template-table .slot-table-tr {
+    display: flex;
+    height: 32px;
+    /* border-top: 1px solid var(--color-border); */
+    /* border-right: 1px solid var(--color-border); */
+    /* border-left: 1px solid var(--color-border); */
+    /* border-left: 1px solid var(--color-border); */
+  }
+  & .slot-template-table .slot-table-tr:hover {
+    background-color: var(--color-bg-page);
+  }
+  & .slot-template-table .slot-table-tr:hover .slot-set-icon {
+    visibility: visible !important;
+  }
+  & .slot-template-table .slot-table-tr:hover .slot-ai-icon {
+    visibility: visible !important;
+  }
+  & .slot-template-table .slot-table-tr:hover .slot-delete-item-icon {
+    visibility: visible !important;
+  }
+  & .slot-template-table .slot-table-tr.slot-is-hidden {
+    background-color: var(--color-bg-page);
+  }
+  & .slot-template-table .slot-table-tr .slot-table-td {
+    height: 32px;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    /* border-bottom: 1px solid var(--color-border); */
+    border-left: none;
+    /* flex: 1; */
+    /* &:last-child { */
+    /* flex: 1; */
+    /* } */
+  }
+  &
+    .slot-template-table
+    .slot-object-list
+    .slot-object-item:last-child
+    .slot-table-tr:last-of-type {
+    border-radius: 0 0 4px 4px;
+  }
+  &
+    .slot-template-table
+    .slot-object-list
+    .slot-object-item:last-child
+    .slot-table-tr:last-of-type
+    .slot-empty-btn-r {
+    border-left: 0;
+  }
+  &
+    .slot-template-table
+    .slot-object-item:last-child
+    .slot-table-tr
+    .slot-table-td {
+    /* border-radius: 0 0 */
+  }
+  &
+    .slot-template-table
+    .slot-object-item:last-child
+    .slot-table-tr
+    .slot-table-td:first-child {
+    border-radius: 0 0 0 4px;
+  }
+  &
+    .slot-template-table
+    .slot-object-item:last-child
+    .slot-table-tr
+    .slot-table-td:last-child {
+    border-radius: 0 0 0 4px;
+  }
+  & .slot-template-table .slot-empty-row-panel {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 36px;
+    height: 32px;
+    border-right: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    border-left: 1px solid var(--color-border);
+    /* border-right: 1px solid transparent; */
+    /* border-bottom: 1px solid transparent; */
+    /* border-left: 1px solid transparent; */
+    color: var(--font-title-color);
+  }
+  & .slot-template-table .slot-empty-row-panel .slot-btn-add-item {
+    margin-left: 10px;
+    color: var(--color-primary);
+    cursor: pointer;
+  }
+  & .slot-template-table .slot-empty-row-panel .slot-empty-row-tip {
+    color: var(--font-light-color);
+  }
 }
-.SchemaWrapper .slot-beautify-btn {
-  padding: 0;
-  width: 20px;
-  height: 20px;
-}
-.SchemaWrapper .slot-template-table {
-  position: relative;
-  flex: 1;
-}
-.SchemaWrapper .slot-template-table .slot-sel-title {
-  font-size: var(--font-size-12);
-  text-transform: capitalize;
-  color: #43a047;
-}
-.SchemaWrapper .slot-template-table .slot-table-tr {
-  display: flex;
-  height: 32px;
-  /* border-top: 1px solid var(--color-border); */
-  /* border-right: 1px solid var(--color-border); */
-  /* border-left: 1px solid var(--color-border); */
-  /* border-left: 1px solid var(--color-border); */
-}
-.SchemaWrapper .slot-template-table .slot-table-tr:hover {
-  background-color: var(--color-bg-page);
-}
-.SchemaWrapper .slot-template-table .slot-table-tr:hover .slot-set-icon {
-  visibility: visible !important;
-}
-.SchemaWrapper .slot-template-table .slot-table-tr:hover .slot-ai-icon {
-  visibility: visible !important;
-}
-.SchemaWrapper .slot-template-table .slot-table-tr:hover .slot-delete-item-icon {
-  visibility: visible !important;
-}
-.SchemaWrapper .slot-template-table .slot-table-tr.slot-is-hidden {
-  background-color: var(--color-bg-page);
-}
-.SchemaWrapper .slot-template-table .slot-table-tr .slot-table-td {
-  height: 32px;
-  border-top: none;
-  border-right: none;
-  border-bottom: none;
-  /* border-bottom: 1px solid var(--color-border); */
-  border-left: none;
-  /* flex: 1; */
-  /* &:last-child { */
-  /* flex: 1; */
-  /* } */
-}
-.SchemaWrapper .slot-template-table .slot-object-list .slot-object-item:last-child .slot-table-tr:last-of-type {
-  border-radius: 0 0 4px 4px;
-}
-.SchemaWrapper .slot-template-table .slot-object-list .slot-object-item:last-child .slot-table-tr:last-of-type .slot-empty-btn-r {
-  border-left: 0;
-}
-.SchemaWrapper .slot-template-table .slot-object-item:last-child .slot-table-tr .slot-table-td {
-  /* border-radius: 0 0 */
-}
-.SchemaWrapper .slot-template-table .slot-object-item:last-child .slot-table-tr .slot-table-td:first-child {
-  border-radius: 0 0 0 4px;
-}
-.SchemaWrapper .slot-template-table .slot-object-item:last-child .slot-table-tr .slot-table-td:last-child {
-  border-radius: 0 0 0 4px;
-}
-.SchemaWrapper .slot-template-table .slot-empty-row-panel {
-  display: flex;
-  flex: 1;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 36px;
-  height: 32px;
-  border-right: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
-  border-left: 1px solid var(--color-border);
-  /* border-right: 1px solid transparent; */
-  /* border-bottom: 1px solid transparent; */
-  /* border-left: 1px solid transparent; */
-  color: var(--font-title-color);
-}
-.SchemaWrapper .slot-template-table .slot-empty-row-panel .slot-btn-add-item {
-  margin-left: 10px;
-  color: var(--color-primary);
-  cursor: pointer;
-}
-.SchemaWrapper .slot-template-table .slot-empty-row-panel .slot-empty-row-tip {
-  color: var(--font-light-color);
-}
-.SchemaWrapper .slot-template-table tr,
-.SchemaWrapper .slot-template-table td {
+.container .slot-template-table tr,
+.container .slot-template-table td {
   height: 32px;
   border-collapse: collapse;
 }
-.SchemaWrapper .slot-template-table tr:hover {
-  background-color: var(--color-bg-page);
+.container {
+  & .slot-template-table tr:hover {
+    background-color: var(--color-bg-page);
+  }
+  & .slot-template-table .slot-item-key-types {
+    font-size: 12px;
+    cursor: pointer;
+  }
+  & .slot-template-table .slot-item-key-types:hover {
+    text-decoration: underline;
+  }
+  &
+    .slot-template-table
+    .slot-beautify-select-single:hover
+    .slot-item-key-types {
+    text-decoration: underline;
+  }
 }
-.SchemaWrapper .slot-template-table .slot-item-key-types {
-  font-size: 12px;
-  cursor: pointer;
-}
-.SchemaWrapper .slot-template-table .slot-item-key-types:hover {
-  text-decoration: underline;
-}
-.SchemaWrapper .slot-template-table .slot-beautify-select-single:hover .slot-item-key-types {
-  text-decoration: underline;
-}
-.SchemaWrapper .slot-template-table .slot-is-hidden .slot-schema-text-box,
-.SchemaWrapper .slot-template-table .slot-is-hidden .slot-sel-title,
-.SchemaWrapper .slot-template-table .slot-is-hidden .slot-item-key-types,
-.SchemaWrapper .slot-template-table .slot-is-hidden .slot-beautify-input {
+.container .slot-template-table .slot-is-hidden .slot-schema-text-box,
+.container .slot-template-table .slot-is-hidden .slot-sel-title,
+.container .slot-template-table .slot-is-hidden .slot-item-key-types,
+.container .slot-template-table .slot-is-hidden .slot-beautify-input {
   text-decoration: line-through !important;
   font-size: var(--font-size-12) !important;
 }
-.SchemaWrapper .slot-template-table .slot-is-hidden .slot-schema-text-box:hover,
-.SchemaWrapper .slot-template-table .slot-is-hidden .slot-sel-title:hover,
-.SchemaWrapper .slot-template-table .slot-is-hidden .slot-item-key-types:hover,
-.SchemaWrapper .slot-template-table .slot-is-hidden .slot-beautify-input:hover {
+.container .slot-template-table .slot-is-hidden .slot-schema-text-box:hover,
+.container .slot-template-table .slot-is-hidden .slot-sel-title:hover,
+.container .slot-template-table .slot-is-hidden .slot-item-key-types:hover,
+.container .slot-template-table .slot-is-hidden .slot-beautify-input:hover {
   color: var(--font-title-color);
 }
-.SchemaWrapper .slot-template-table tbody > tr:nth-child(2) {
-  border-top: 0;
-}
-.SchemaWrapper .slot-template-table tbody > tr:nth-child(2) td {
-  border-top: 0;
-}
-.SchemaWrapper .slot-template-table .slot-schema-td {
-  padding: 0;
-  border: 1px solid #000;
-}
-.SchemaWrapper .slot-template-table .slot-schema-td-warper {
-  display: flex;
-  float: left;
-  position: relative;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-.SchemaWrapper .slot-template-table .slot-schema-td .slot-td-scale {
-  display: flex;
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 200;
-  transform: translateX(-7.5px);
-  justify-content: center;
-  width: 15px;
-  height: 100%;
-  cursor: ew-resize;
-  content: '';
-}
-.SchemaWrapper .slot-template-table .slot-schema-td .slot-td-scale::after {
-  visibility: hidden;
-  width: 1px;
-  height: 100%;
-  background-color: var(--color-primary);
-  content: '';
-}
-.SchemaWrapper .slot-template-table .slot-schema-td .slot-td-scale:hover::after {
-  visibility: visible;
-}
-.SchemaWrapper .slot-template-table .slot-schema-td .slot-td-scale.slot-scaling::after {
-  visibility: visible;
+.container {
+  & .slot-template-table tbody > tr:nth-child(2) {
+    border-top: 0;
+  }
+  & .slot-template-table tbody > tr:nth-child(2) td {
+    border-top: 0;
+  }
+  & .slot-template-table .slot-schema-td {
+    padding: 0;
+    border: 1px solid #000;
+  }
+  & .slot-template-table .slot-schema-td-warper {
+    display: flex;
+    float: left;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  & .slot-template-table .slot-schema-td .slot-td-scale {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 200;
+    transform: translateX(-7.5px);
+    justify-content: center;
+    width: 15px;
+    height: 100%;
+    cursor: ew-resize;
+    content: "";
+  }
+  & .slot-template-table .slot-schema-td .slot-td-scale::after {
+    visibility: hidden;
+    width: 1px;
+    height: 100%;
+    background-color: var(--color-primary);
+    content: "";
+  }
+  & .slot-template-table .slot-schema-td .slot-td-scale:hover::after {
+    visibility: visible;
+  }
+  & .slot-template-table .slot-schema-td .slot-td-scale.slot-scaling::after {
+    visibility: visible;
+  }
 }

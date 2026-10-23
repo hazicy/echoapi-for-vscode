@@ -6,8 +6,7 @@ import { hexToRGBA } from "@/shared/utils/common";
 
 export const ResponseAssertionContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ResponseAssertionContainer"],
-  { selector: "ui_f9a1fed8_ResponseAssertionContainer" },
+  moduleStyles["container"],
 );
 
 interface AssertItemProps {
@@ -16,9 +15,8 @@ interface AssertItemProps {
 
 export const ResponseAssertItemContainer = withStyles<"span", AssertItemProps>(
   "span",
-  moduleStyles["ResponseAssertItemContainer"],
+  moduleStyles["responseAssertItem"],
   {
-    selector: "ui_f9a1fed8_ResponseAssertItemContainer",
     variables: {
       "--style-f9a1fed8-ResponseAssertItemContainer-0": (props) =>
         props?.$status ? "#26CEA4" : "#FF583E",
@@ -30,15 +28,13 @@ export const ResponseAssertItemContainer = withStyles<"span", AssertItemProps>(
 
 export const BodyListContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["BodyListContainer"],
-  { selector: "ui_f9a1fed8_BodyListContainer" },
+  moduleStyles["bodyList"],
 );
 
 export const ScriptErrorContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ScriptErrorContainer"],
+  moduleStyles["scriptError"],
   {
-    selector: "ui_f9a1fed8_ScriptErrorContainer",
     attrs: {
       className: slots["content-item"],
     },

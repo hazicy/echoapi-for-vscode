@@ -4,4 +4,4 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 export const EmptyWarper = withStyles<
   "div",
   { $token: Partial<GlobalThemeToken> }
->("div", moduleStyles["EmptyWarper"], { selector: "ui_977da8ba_EmptyWarper" });
+>("div", moduleStyles["container"]);

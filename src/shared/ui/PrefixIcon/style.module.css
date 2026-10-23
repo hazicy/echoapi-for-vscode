@@ -1,4 +1,4 @@
-.PrefixIconContainer {
+.container {
   display: inline-flex;
   align-items: center;
   width: 36px;
@@ -8,63 +8,69 @@
   font-weight: 700;
   text-align: left;
   color: var(--color-success);
+  & svg {
+    font-size: var(--font-size-14);
+  }
+  &.slot-post {
+    color: var(--color-warning);
+  }
+  &.slot-DEFAULT {
+    color: var(--color-success);
+  }
+  &.slot-get {
+    color: var(--color-success);
+  }
 }
-.PrefixIconContainer svg {
-  font-size: var(--font-size-14);
-}
-.PrefixIconContainer.slot-post {
-  color: var(--color-warning);
-}
-.PrefixIconContainer.slot-DEFAULT {
-  color: var(--color-success);
-}
-.PrefixIconContainer.slot-get {
-  color: var(--color-success);
-}
-.PrefixIconContainer.slot-put,
-.PrefixIconContainer.slot-socket {
+.container.slot-put,
+.container.slot-socket {
   color: var(--color-info);
 }
-.PrefixIconContainer.slot-socket,
-.PrefixIconContainer.slot-testing,
-.PrefixIconContainer.slot-kit {
+.container.slot-socket,
+.container.slot-testing,
+.container.slot-kit {
   width: auto;
 }
-.PrefixIconContainer.slot-socket-method,
-.PrefixIconContainer.slot-doc {
+.container.slot-socket-method,
+.container.slot-doc {
   color: var(--color-info);
 }
-.PrefixIconContainer.slot-delete {
-  color: var(--color-error);
+.container {
+  &.slot-delete {
+    color: var(--color-error);
+  }
+  &.slot-gql {
+    color: #f80ba0;
+  }
 }
-.PrefixIconContainer.slot-gql {
-  color: #f80ba0;
-}
-.PrefixIconContainer.slot-grpc,
-.PrefixIconContainer.slot-ws,
-.PrefixIconContainer.slot-patch {
+.container.slot-grpc,
+.container.slot-ws,
+.container.slot-patch {
   color: var(--color-success);
 }
-.PrefixIconContainer.slot-notes {
+.container {
+  &.slot-notes {
+    width: auto;
+    color: #f7b300;
+  }
+  &.slot-testing {
+    color: #067ced;
+  }
+  &.slot-kit {
+    color: #7879f1;
+  }
+}
+.container.slot-data-model,
+.container.slot-api-sample {
   width: auto;
-  color: #f7b300;
 }
-.PrefixIconContainer.slot-testing {
-  color: #067ced;
-}
-.PrefixIconContainer.slot-kit {
-  color: #7879f1;
-}
-.PrefixIconContainer.slot-data-model,
-.PrefixIconContainer.slot-api-sample {
-  width: auto;
-}
-.PrefixIconContainer.slot-data-model {
-  color: #30d4ad;
-}
-.PrefixIconContainer.slot-api-sample {
-  color: #4c80ff;
-}
-.PrefixIconContainer.slot-sse {
-  color: #65e0ff;
+.container {
+  &.slot-data-model {
+    color: #30d4ad;
+  }
+  &.slot-api-sample {
+    color: #4c80ff;
+  }
+  &.slot-sse {
+    color: #65e0ff;
+  }
 }

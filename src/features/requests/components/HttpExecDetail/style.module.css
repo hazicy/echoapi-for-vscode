@@ -1,24 +1,24 @@
-.HttpExecDetailWrapper {
+.container {
   width: 100%;
-}
-.HttpExecDetailWrapper .slot-url-container .slot-icon {
-  width: auto;
-}
-.HttpExecDetailWrapper .slot-url-container .slot-url {
-  margin-left: 8px;
-  font-size: var(--font-size-14);
-  color: var(--font-content-color);
-  word-break: break-all;
-}
-.HttpExecDetailWrapper .slot-beautify-tabs-tab {
-  padding: 4px 8px 12px;
-}
-.HttpExecDetailWrapper .slot-assert-item {
-  padding: 2px 12px;
-  padding-left: 16px;
-  border-radius: 4px;
-  font-size: var(--font-size-14);
-}
-.HttpExecDetailWrapper .slot-assert-item .slot-beautify-alert-message {
-  max-width: 510px;
+  & .slot-url-container .slot-icon {
+    width: auto;
+  }
+  & .slot-url-container .slot-url {
+    margin-left: 8px;
+    font-size: var(--font-size-14);
+    color: var(--font-content-color);
+    word-break: break-all;
+  }
+  & .slot-beautify-tabs-tab {
+    padding: 4px 8px 12px;
+  }
+  & .slot-assert-item {
+    padding: 2px 12px;
+    padding-left: 16px;
+    border-radius: 4px;
+    font-size: var(--font-size-14);
+  }
+  & .slot-assert-item .slot-beautify-alert-message {
+    max-width: 510px;
+  }
 }

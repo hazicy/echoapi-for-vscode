@@ -4,10 +4,9 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 export const SettingWrap = withStyles<
   "div",
   { $token: Partial<GlobalThemeToken> }
->("div", moduleStyles["SettingWrap"], { selector: "ui_41311e70_SettingWrap" });
+>("div", moduleStyles["container"]);
 
 export const MessageHeaderWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["MessageHeaderWrap"],
-  { selector: "ui_41311e70_MessageHeaderWrap" },
+  moduleStyles["messageHeader"],
 );

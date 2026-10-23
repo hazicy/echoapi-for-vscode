@@ -1,64 +1,83 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.RequestAuthContainer {
+.container {
   width: 100%;
   /* .beautify-collapse-header {
     background-color: transparent;
   } */
-}.RequestAuthContainer .slot-beautify-form-item {
-  margin-bottom: 12px;
-}.RequestAuthContainer .slot-beautify-form-item input,
-.RequestAuthContainer .slot-beautify-form-item .slot-beautify-select-selector {
+  & .slot-beautify-form-item {
+    margin-bottom: 12px;
+  }
+}
+.container .slot-beautify-form-item input,
+.container .slot-beautify-form-item .slot-beautify-select-selector {
   font-size: var(--font-size-14) !important;
-}.RequestAuthContainer .slot-beautify-form-item .slot-mini-editor {
-  padding: 5.2px 11px;
-  background: var(--vscode-input-background);
-  border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
-}.RequestAuthContainer .slot-beautify-collapse-ghost .slot-beautify-collapse-header {
-  margin-bottom: 4px;
-  background: transparent;
-}.RequestAuthContainer .slot-beautify-collapse-ghost .slot-beautify-collapse-header:hover {
-  color: var(--color-primary);
-}.RequestAuthContainer .slot-beautify-collapse-ghost .slot-beautify-collapse-expand-icon svg {
-  color: var(--color-primary);
-}.MoreTipContainer {
+}
+.container {
+  & .slot-beautify-form-item .slot-mini-editor {
+    padding: 5.2px 11px;
+    background: var(--vscode-input-background);
+    border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
+  }
+  & .slot-beautify-collapse-ghost .slot-beautify-collapse-header {
+    margin-bottom: 4px;
+    background: transparent;
+  }
+  & .slot-beautify-collapse-ghost .slot-beautify-collapse-header:hover {
+    color: var(--color-primary);
+  }
+  & .slot-beautify-collapse-ghost .slot-beautify-collapse-expand-icon svg {
+    color: var(--color-primary);
+  }
+}
+.moreTip {
   display: flex;
   font-size: 14px;
   color: var(--color-primary);
-}.CodeContainer {
+}
+.code {
   height: 150px;
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border);
 }
-.Oauth2Container .slot-tag-env.slot-oauth-tag {
-  color: #26cea4 !important;
-}
-.Oauth2Container .slot-tag-env:not(.Oauth2Container .slot-tag-env.slot-oauth-tag) {
-  font-size: 12px;
-  font-weight: 300;
-  text-decoration: line-through;
-  color: #ff4c4c;
-  background-color: #e452521a;
-}
-.Oauth2Container .slot-beautify-form-item-label > label .slot-beautify-form-item-tooltip {
-  font-size: 12px;
-  color: var(--font-light-color);
-  cursor: pointer;
-}
-.Oauth2Container .slot-beautify-form-item-label > label.slot-beautify-form-item-required:not(.slot-beautify-form-item-required-mark-optional)::before {
-  display: none;
-}
-.Oauth2Container .slot-divider {
-  margin-bottom: 20px;
-  width: 100%;
-  border-bottom: 1px solid var(--color-border);
-}
-.Oauth2Container [class~="beautify-table-cell"] {
-  padding: 0 !important;
-}
-.Oauth2Container [class~="beautify-table-cell"] .slot-beautify-select {
-  width: 100%;
-  height: 36px !important;
-}
-.Oauth2Container [class~="beautify-table-cell"] .slot-beautify-select .slot-beautify-select-selector {
-  border: none !important;
+.oauth2 {
+  & .slot-tag-env.slot-oauth-tag {
+    color: #26cea4 !important;
+  }
+  & .slot-tag-env:not(.oauth2 .slot-tag-env.slot-oauth-tag) {
+    font-size: 12px;
+    font-weight: 300;
+    text-decoration: line-through;
+    color: #ff4c4c;
+    background-color: #e452521a;
+  }
+  & .slot-beautify-form-item-label > label .slot-beautify-form-item-tooltip {
+    font-size: 12px;
+    color: var(--font-light-color);
+    cursor: pointer;
+  }
+  &
+    .slot-beautify-form-item-label
+    > label.slot-beautify-form-item-required:not(
+      .slot-beautify-form-item-required-mark-optional
+    )::before {
+    display: none;
+  }
+  & .slot-divider {
+    margin-bottom: 20px;
+    width: 100%;
+    border-bottom: 1px solid var(--color-border);
+  }
+  & [class~="beautify-table-cell"] {
+    padding: 0 !important;
+  }
+  & [class~="beautify-table-cell"] .slot-beautify-select {
+    width: 100%;
+    height: 36px !important;
+  }
+  &
+    [class~="beautify-table-cell"]
+    .slot-beautify-select
+    .slot-beautify-select-selector {
+    border: none !important;
+  }
 }

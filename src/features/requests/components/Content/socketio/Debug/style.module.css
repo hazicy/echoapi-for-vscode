@@ -1,24 +1,23 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.WsDebugContainer {
+.container {
   width: 100%;
   height: 100%;
   height: calc(100% - 40px);
   display: flex;
   flex-direction: column;
   flex: 1;
-}
-.WsDebugContainer .slot-beautify-dropdown-trigger {
-  border-color: var(--vscode-settings-headerBorder);
-}
-.WsDebugContainer > * {
-  /* padding: 0 16px; */
-}
-.WsDebugContainer .slot-beautify-tabs {
-  width: 100%;
-  height: 100%;
-}
-.WsDebugContainer .slot-url-panel {
-  /* .beautify-btn {
+  & .slot-beautify-dropdown-trigger {
+    border-color: var(--vscode-settings-headerBorder);
+  }
+  & > * {
+    /* padding: 0 16px; */
+  }
+  & .slot-beautify-tabs {
+    width: 100%;
+    height: 100%;
+  }
+  & .slot-url-panel {
+    /* .beautify-btn {
       margin-left: 8px;
 
       &:last-child,
@@ -27,116 +26,147 @@
         width: 24px;
       }
     } */
+  }
+  & .slot-url-panel .slot-beautify-flex .slot-url-group {
+    flex: 1;
+  }
+  & .slot-url-panel .slot-actions-btn-wrap {
+    margin-left: 8px;
+  }
 }
-.WsDebugContainer .slot-url-panel .slot-beautify-flex .slot-url-group {
-  flex: 1;
-}
-.WsDebugContainer .slot-url-panel .slot-actions-btn-wrap {
-  margin-left: 8px;
-}
-.WsDebugContainer .slot-url-panel .slot-actions-btn-wrap .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item,
-.WsDebugContainer .slot-url-panel .slot-actions-btn-wrap .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-submenu {
+.container
+  .slot-url-panel
+  .slot-actions-btn-wrap
+  .slot-beautify-dropdown-menu
+  .slot-beautify-dropdown-menu-item,
+.container
+  .slot-url-panel
+  .slot-actions-btn-wrap
+  .slot-beautify-dropdown-menu
+  .slot-beautify-dropdown-menu-submenu {
   font-size: 14px;
 }
-.WsDebugContainer .slot-url-panel .slot-actions-btn-wrap .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item .slot-beautify-dropdown-menu-title-content,
-.WsDebugContainer .slot-url-panel .slot-actions-btn-wrap .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-submenu .slot-beautify-dropdown-menu-title-content {
+.container
+  .slot-url-panel
+  .slot-actions-btn-wrap
+  .slot-beautify-dropdown-menu
+  .slot-beautify-dropdown-menu-item
+  .slot-beautify-dropdown-menu-title-content,
+.container
+  .slot-url-panel
+  .slot-actions-btn-wrap
+  .slot-beautify-dropdown-menu
+  .slot-beautify-dropdown-menu-submenu
+  .slot-beautify-dropdown-menu-title-content {
   font-size: 14px;
 }
-.WsDebugContainer .slot-url-panel .slot-beautify-btn {
-  height: 36px;
-  font-size: var(--font-size-14);
+.container {
+  & .slot-url-panel .slot-beautify-btn {
+    height: 36px;
+    font-size: var(--font-size-14);
+  }
+  & .slot-url-panel .slot-beautify-btn:first-child {
+    width: 70px;
+  }
+  & .slot-beautify-tabs-content {
+    height: 100%;
+    /* height: calc(100% - 60px); */
+  }
+  & .slot-ws-header {
+    margin-bottom: 16px;
+  }
+  & .slot-ws-header .slot-icon-color {
+    margin-left: 4px;
+    font-size: var(--font-size-12);
+    line-height: 1;
+    color: var(--icon-color);
+  }
+  & .slot-ws-header .slot-beautify-input-outlined {
+    height: 32px;
+    font-size: var(--font-size-12);
+    background: var(--vscode-input-background);
+    border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
+  }
+  & .slot-ws-header .slot-beautify-select {
+    height: 32px;
+  }
+  & .slot-ws-header .slot-beautify-select-selector {
+    font-size: var(--font-size-12);
+  }
+  & .slot-ws-header .slot-beautify-select-dropdown .slot-beautify-select-item {
+    font-size: var(--font-size-12) !important;
+  }
 }
-.WsDebugContainer .slot-url-panel .slot-beautify-btn:first-child {
-  width: 70px;
-}
-.WsDebugContainer .slot-beautify-tabs-content {
+.lineBar {
   height: 100%;
-  /* height: calc(100% - 60px); */
+  & .slot-beautify-tabs-nav {
+    margin-bottom: 0;
+  }
 }
-.WsDebugContainer .slot-ws-header {
-  margin-bottom: 16px;
-}
-.WsDebugContainer .slot-ws-header .slot-icon-color {
-  margin-left: 4px;
-  font-size: var(--font-size-12);
-  line-height: 1;
-  color: var(--icon-color);
-}
-.WsDebugContainer .slot-ws-header .slot-beautify-input-outlined {
-  height: 32px;
-  font-size: var(--font-size-12);
-  background: var(--vscode-input-background);
-  border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
-}
-.WsDebugContainer .slot-ws-header .slot-beautify-select {
-  height: 32px;
-}
-.WsDebugContainer .slot-ws-header .slot-beautify-select-selector {
-  font-size: var(--font-size-12);
-}
-.WsDebugContainer .slot-ws-header .slot-beautify-select-dropdown .slot-beautify-select-item {
-  font-size: var(--font-size-12) !important;
-}
-.LineBarContainer {
-  height: 100%;
-}
-.LineBarContainer .slot-beautify-tabs-nav {
-  margin-bottom: 0;
-}
-.ExampleModalContainer {
+.exampleModal {
   width: 100%;
+  & .slot-raw-editor-example {
+    margin-top: 12px;
+    min-height: 400px;
+    /* overflow-y: auto; */
+  }
 }
-.ExampleModalContainer .slot-raw-editor-example {
-  margin-top: 12px;
-  min-height: 400px;
-  /* overflow-y: auto; */
-}
-.SaveDropDownContainer {
+.saveDropDown {
   padding: 8px;
   padding-right: 0;
   width: 200px;
   height: 100%;
   border-radius: 4px;
   background-color: var(--popover-select-bg-color);
-  box-shadow: 0 6px 16px 0 #000000, 0 3px 6px -4px #000000, 0 9px 28px 8px #000000;
+  box-shadow:
+    0 6px 16px 0 #000000,
+    0 3px 6px -4px #000000,
+    0 9px 28px 8px #000000;
+  & [class~="beautify-tree"] {
+    width: 100%;
+    background-color: var(--popover-select-bg-color);
+  }
+  & [class~="beautify-tree"] [class~="beautify-tree-list"] {
+    padding-right: 12px;
+  }
+  & [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 0;
+    height: 100%;
+  }
+  &
+    [class~="beautify-tree"]
+    [class~="beautify-tree-node-content-wrapper"]
+    [class~="beautify-tree-title"] {
+    display: flex;
+    width: 100%;
+  }
+  &
+    [class~="beautify-tree"]
+    [class~="beautify-tree-node-content-wrapper"]
+    [class~="beautify-tree-title"]
+    .slot-dropdown-tree-title {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
-.SaveDropDownContainer [class~="beautify-tree"] {
-  width: 100%;
-  background-color: var(--popover-select-bg-color);
-}
-.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-list"] {
-  padding-right: 12px;
-}
-.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 0;
-  height: 100%;
-}
-.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] [class~="beautify-tree-title"] {
-  display: flex;
-  width: 100%;
-}
-.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] [class~="beautify-tree-title"] .slot-dropdown-tree-title {
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.ExampleLabelContainer {
+.exampleLabel {
   display: flex;
   max-width: 200px;
+  & .slot-name {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
-.ExampleLabelContainer .slot-name {
-  flex: 1;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.ExampleListContainer {
+.exampleList {
   display: flex;
   flex-direction: column;
   padding: 8px;
@@ -145,29 +175,29 @@
   border: 1px solid var(--color-border);
   background-color: var(--popover-select-bg-color);
   box-shadow: 0 12px 18px -4px var(--box-shadow-modal-color);
+  & .slot-beautify-dropdown-menu {
+    margin-top: 8px;
+    padding: 0;
+    box-shadow: none;
+    max-height: 260px;
+    overflow-y: auto;
+  }
 }
-.ExampleListContainer .slot-beautify-dropdown-menu {
-  margin-top: 8px;
-  padding: 0;
-  box-shadow: none;
-  max-height: 260px;
-  overflow-y: auto;
-}
-.SocketIoLeftPanelContainer {
+.socketIoLeftPanel {
   height: 100%;
   padding: 8px;
   padding-left: 0;
-}
-.SocketIoLeftPanelContainer .slot-beautify-btn {
-  border: none;
-  padding: 4px 0;
-}
-.SocketIoLeftPanelContainer .slot-beautify-select .slot-beautify-select-selector {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  background: transparent;
-  font-size: 12px;
-  padding: 0 4px;
-  padding-left: 6px;
+  & .slot-beautify-btn {
+    border: none;
+    padding: 4px 0;
+  }
+  & .slot-beautify-select .slot-beautify-select-selector {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    background: transparent;
+    font-size: 12px;
+    padding: 0 4px;
+    padding-left: 6px;
+  }
 }

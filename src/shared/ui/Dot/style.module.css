@@ -1,9 +1,11 @@
-.DotWrapper .slot-dot {
-  border-radius: 50%;
-}
-.DotWrapper .slot-dot.slot-success {
-  background-color: var(--color-success);
-}
-.DotWrapper .slot-dot.slot-error {
-  background-color: var(--color-error);
+.container {
+  & .slot-dot {
+    border-radius: 50%;
+  }
+  & .slot-dot.slot-success {
+    background-color: var(--color-success);
+  }
+  & .slot-dot.slot-error {
+    background-color: var(--color-error);
+  }
 }

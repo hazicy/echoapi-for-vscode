@@ -1,66 +1,76 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.FlexSegmented {
+.container {
   display: flex;
   width: 100%;
   height: 100%;
   overflow: auto;
+  & .slot-custom-segmented-tabs-wrap {
+    padding-top: 12px;
+  }
+  & .slot-custom-segmented-tabs-wrap .slot-segmented-tabs-header {
+    padding: 0 16px;
+  }
 }
-.FlexSegmented .slot-custom-segmented-tabs-wrap {
-  padding-top: 12px;
-}
-.FlexSegmented .slot-custom-segmented-tabs-wrap .slot-segmented-tabs-header {
-  padding: 0 16px;
-}
-.ApiDebugContainer {
+.apiDebug {
   width: 100%;
   height: 100%;
   background-color: var(--color-bg-right);
   padding-top: 12px;
   overflow: auto;
+  & > header {
+    padding: 0 16px;
+  }
+  & > header .slot-beautify-btn {
+    height: 32px;
+    width: 70px;
+  }
+  & > main {
+    flex: 1;
+    height: 0;
+  }
 }
-.ApiDebugContainer > header {
-  padding: 0 16px;
-}
-.ApiDebugContainer > header .slot-beautify-btn {
-  height: 32px;
-  width: 70px;
-}
-.ApiDebugContainer > main {
-  flex: 1;
-  height: 0;
-}
-.SaveDropDownContainer {
+.saveDropDown {
   padding: 8px;
   padding-right: 0;
   width: 200px;
   height: 100%;
   border-radius: 4px;
   background-color: var(--popover-select-bg-color);
-  box-shadow: 0 6px 16px 0 #000000, 0 3px 6px -4px #000000, 0 9px 28px 8px #000000;
-}
-.SaveDropDownContainer [class~="beautify-tree"] {
-  width: 100%;
-  background-color: var(--popover-select-bg-color);
-}
-.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-list"] {
-  padding-right: 12px;
-}
-.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 0;
-  height: 100%;
-}
-.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] [class~="beautify-tree-title"] {
-  display: flex;
-  width: 100%;
-}
-.SaveDropDownContainer [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] [class~="beautify-tree-title"] .slot-dropdown-tree-title {
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  box-shadow:
+    0 6px 16px 0 #000000,
+    0 3px 6px -4px #000000,
+    0 9px 28px 8px #000000;
+  & [class~="beautify-tree"] {
+    width: 100%;
+    background-color: var(--popover-select-bg-color);
+  }
+  & [class~="beautify-tree"] [class~="beautify-tree-list"] {
+    padding-right: 12px;
+  }
+  & [class~="beautify-tree"] [class~="beautify-tree-node-content-wrapper"] {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 0;
+    height: 100%;
+  }
+  &
+    [class~="beautify-tree"]
+    [class~="beautify-tree-node-content-wrapper"]
+    [class~="beautify-tree-title"] {
+    display: flex;
+    width: 100%;
+  }
+  &
+    [class~="beautify-tree"]
+    [class~="beautify-tree-node-content-wrapper"]
+    [class~="beautify-tree-title"]
+    .slot-dropdown-tree-title {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }

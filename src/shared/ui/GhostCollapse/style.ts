@@ -4,6 +4,4 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 export const GhostCollapseWrapper = withStyles<
   "div",
   { $token: Partial<GlobalThemeToken> }
->("div", moduleStyles["GhostCollapseWrapper"], {
-  selector: "ui_5a2bcc7d_GhostCollapseWrapper",
-});
+>("div", moduleStyles["container"]);

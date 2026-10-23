@@ -1,22 +1,22 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.ReportWrapper {
+.container {
   width: 100%;
   height: 100%;
-}
-.ReportWrapper .slot-operate .slot-beautify-btn {
-  padding: 0;
-  font-size: var(--font-size-14);
-}
-.ReportWrapper .slot-operate .slot-btn-divider {
-  line-height: 1;
-  color: var(--color-border);
-}
-.ReportWrapper .slot-beautify-pagination {
-  position: fixed;
-  bottom: 22px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.ReportWrapper [class~="beautify-table-body"] {
-  overflow-y: hidden !important;
+  & .slot-operate .slot-beautify-btn {
+    padding: 0;
+    font-size: var(--font-size-14);
+  }
+  & .slot-operate .slot-btn-divider {
+    line-height: 1;
+    color: var(--color-border);
+  }
+  & .slot-beautify-pagination {
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  & [class~="beautify-table-body"] {
+    overflow-y: hidden !important;
+  }
 }

@@ -3,12 +3,7 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const ParameterContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ParameterContainer"],
-  { selector: "ui_50cd73b9_ParameterContainer" },
+  moduleStyles["container"],
 );
 
-export const TipContainer = withStyles<"span", {}>(
-  "span",
-  moduleStyles["TipContainer"],
-  { selector: "ui_50cd73b9_TipContainer" },
-);
+export const TipContainer = withStyles<"span", {}>("span", moduleStyles["tip"]);

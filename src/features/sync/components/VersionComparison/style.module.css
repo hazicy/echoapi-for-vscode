@@ -1,38 +1,40 @@
-.VersionModalWrap .slot-version-tip {
-  font-size: var(--font-size-14);
-  padding: 10px 0 10px 12px;
-  border: 1px solid var(--color-table-border);
-  border-radius: 4px;
-  color: var(--font-content-color);
-  flex: 1;
+.container {
+  & .slot-version-tip {
+    font-size: var(--font-size-14);
+    padding: 10px 0 10px 12px;
+    border: 1px solid var(--color-table-border);
+    border-radius: 4px;
+    color: var(--font-content-color);
+    flex: 1;
+  }
+  & .slot-beautify-select {
+    height: 40px;
+  }
+  & .slot-beautify-select .slot-beautify-select-selector {
+    font-size: var(--font-size-14);
+  }
+  & .slot-beautify-collapse-header {
+    font-size: var(--font-size-14);
+  }
+  & .slot-prev-tag {
+    right: 0;
+    padding: 0 4px;
+    height: 24px;
+    border-radius: var(--border-radius);
+    line-height: 24px;
+    color: #ff583e;
+    background-color: #ff583e1a;
+  }
+  & .slot-next-tag {
+    padding: 0 4px;
+    height: 24px;
+    border-radius: var(--border-radius);
+    line-height: 24px;
+    color: #26cea4;
+    background-color: #26cea41a;
+  }
 }
-.VersionModalWrap .slot-beautify-select {
-  height: 40px;
-}
-.VersionModalWrap .slot-beautify-select .slot-beautify-select-selector {
-  font-size: var(--font-size-14);
-}
-.VersionModalWrap .slot-beautify-collapse-header {
-  font-size: var(--font-size-14);
-}
-.VersionModalWrap .slot-prev-tag {
-  right: 0;
-  padding: 0 4px;
-  height: 24px;
-  border-radius: var(--border-radius);
-  line-height: 24px;
-  color: #ff583e;
-  background-color: #ff583e1a;
-}
-.VersionModalWrap .slot-next-tag {
-  padding: 0 4px;
-  height: 24px;
-  border-radius: var(--border-radius);
-  line-height: 24px;
-  color: #26cea4;
-  background-color: #26cea41a;
-}
-.DiffUserEditWrap {
+.diffUserEdit {
   width: 156px;
   overflow: hidden;
   white-space: nowrap;

@@ -1,38 +1,40 @@
-.ServerNameContainer {
+.container {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 0 10px;
   width: 100%;
+  & .slot-env-name {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  & .slot-env-name .slot-icon-default {
+    margin-left: 10px;
+    padding: 0 5px;
+    height: 20px;
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--color-primary);
+    background-color: var(--color-primary-opacity);
+  }
+  & .slot-env-more {
+    cursor: pointer;
+    padding: 0 2px;
+  }
 }
-.ServerNameContainer .slot-env-name {
-  display: flex;
-  flex: 1;
-  justify-content: flex-start;
-  align-items: center;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.envAdd {
+  & .slot-anticon {
+    color: #22c55e;
+  }
 }
-.ServerNameContainer .slot-env-name .slot-icon-default {
-  margin-left: 10px;
-  padding: 0 5px;
-  height: 20px;
-  border-radius: 3px;
-  font-size: 12px;
-  line-height: 20px;
-  font-weight: 400;
-  color: var(--color-primary);
-  background-color: var(--color-primary-opacity);
-}
-.ServerNameContainer .slot-env-more {
-  cursor: pointer;
-  padding: 0 2px;
-}
-.EnvAddContainer .slot-anticon {
-  color: #22c55e;
-}
-.EnvServerTitleContainer {
+.envServerTitle {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -41,16 +43,16 @@
   font-size: 14px;
   font-weight: 400;
   color: var(--font-content-color);
+  & .slot-anticon {
+    font-size: 16px;
+  }
+  & .slot-server-add {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--font-light-color);
+    font-style: normal;
+  }
 }
-.EnvServerTitleContainer .slot-anticon {
-  font-size: 16px;
-}
-.EnvServerTitleContainer .slot-server-add {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--font-light-color);
-  font-style: normal;
-}
-.EnvServerContainer {
+.envServer {
   padding-bottom: 12px;
 }

@@ -1,4 +1,4 @@
-.PushRightWrap {
+.container {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -8,32 +8,34 @@
   border-left: 1px solid var(--color-table-border);
   font-size: 14px;
   gap: 16px;
+  & .slot-title {
+    font-size: 16px;
+    font-family: 600;
+    line-height: 28px;
+    color: var(--font-title-color);
+  }
+  & .slot-team-project-manage-space {
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 5px 8px;
+    width: 100%;
+  }
+  & .slot-team-project-manage-space .slot-beautify-space-item {
+    width: 100%;
+  }
+  & .slot-team-project-manage-space:hover {
+    border: 1px solid var(--color-primary);
+  }
 }
-.PushRightWrap .slot-title {
-  font-size: 16px;
-  font-family: 600;
-  line-height: 28px;
-  color: var(--font-title-color);
-}
-.PushRightWrap .slot-team-project-manage-space {
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  padding: 5px 8px;
-  width: 100%;
-}
-.PushRightWrap .slot-team-project-manage-space .slot-beautify-space-item {
-  width: 100%;
-}
-.PushRightWrap .slot-team-project-manage-space:hover {
-  border: 1px solid var(--color-primary);
-}
-.PushRightWrap .slot-team-project-manage-space .slot-project-name,
-.PushRightWrap .slot-team-project-manage-space .slot-team-name {
+.container .slot-team-project-manage-space .slot-project-name,
+.container .slot-team-project-manage-space .slot-team-name {
   max-width: 150px;
 }
-.PushRightWrap .slot-beautify-radio-group {
-  padding: 12px;
-  background: var(--color-bg-right);
-  border-top: 1px solid var(--color-table-border);
-  border-bottom: 1px solid var(--color-table-border);
+.container {
+  & .slot-beautify-radio-group {
+    padding: 12px;
+    background: var(--color-bg-right);
+    border-top: 1px solid var(--color-table-border);
+    border-bottom: 1px solid var(--color-table-border);
+  }
 }

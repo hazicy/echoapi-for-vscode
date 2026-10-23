@@ -4,6 +4,5 @@ import { Flex } from "@/shared/ui/base";
 
 export const CurlWrap = withStyles<typeof Flex, {}>(
   Flex,
-  moduleStyles["CurlWrap"],
-  { selector: "ui_8df0fbee_CurlWrap" },
+  moduleStyles["container"],
 );

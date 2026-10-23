@@ -4,30 +4,25 @@ import { Flex } from "@/shared/ui/base";
 
 export const CustomPopoverWrap = withStyles<"div", {}>(
   "div",
-  moduleStyles["CustomPopoverWrap"],
-  { selector: "ui_c7dcbf0f_CustomPopoverWrap" },
+  moduleStyles["container"],
 );
 
 export const CustomProxyWrap = withStyles<typeof Flex, {}>(
   Flex,
-  moduleStyles["CustomProxyWrap"],
-  { selector: "ui_c7dcbf0f_CustomProxyWrap" },
+  moduleStyles["customProxy"],
 );
 
 export const CustomCodePopoverWrap = withStyles<typeof Flex, {}>(
   Flex,
-  moduleStyles["CustomCodePopoverWrap"],
-  { selector: "ui_c7dcbf0f_CustomCodePopoverWrap" },
+  moduleStyles["customCodePopover"],
 );
 
 export const CustomSizePopoverWrap = withStyles<typeof Flex, {}>(
   Flex,
-  moduleStyles["CustomSizePopoverWrap"],
-  { selector: "ui_c7dcbf0f_CustomSizePopoverWrap" },
+  moduleStyles["customSizePopover"],
 );
 
 export const ResponseSizeWrap = withStyles<typeof Flex, {}>(
   Flex,
-  moduleStyles["ResponseSizeWrap"],
-  { selector: "ui_c7dcbf0f_ResponseSizeWrap" },
+  moduleStyles["responseSize"],
 );

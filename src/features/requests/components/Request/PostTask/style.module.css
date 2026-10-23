@@ -1,22 +1,22 @@
-.RequestPostTaskContainer {
+.container {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-}
-.RequestPostTaskContainer > .slot-beautify-btn {
-  width: 100%;
-  font-size: var(--font-size-14);
-}
-.RequestPostTaskContainer .slot-item-container .slot-beautify-typography {
-  font-size: var(--font-size-14);
-  white-space: nowrap;
-}
-.RequestPostTaskContainer .slot-item-container .slot-beautify-input {
-  font-size: var(--font-size-14);
-}
-.RequestPostTaskContainer .slot-item-container .slot-beautify-collapse-header .slot-beautify-input {
-  height: 24px;
-}
-.RequestPostTaskContainer .slot-item-container .slot-beautify-select-selector {
-  font-size: var(--font-size-14);
+  & > .slot-beautify-btn {
+    width: 100%;
+    font-size: var(--font-size-14);
+  }
+  & .slot-item-container .slot-beautify-typography {
+    font-size: var(--font-size-14);
+    white-space: nowrap;
+  }
+  & .slot-item-container .slot-beautify-input {
+    font-size: var(--font-size-14);
+  }
+  & .slot-item-container .slot-beautify-collapse-header .slot-beautify-input {
+    height: 24px;
+  }
+  & .slot-item-container .slot-beautify-select-selector {
+    font-size: var(--font-size-14);
+  }
 }

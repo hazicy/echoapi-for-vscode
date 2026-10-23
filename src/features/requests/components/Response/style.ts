@@ -3,6 +3,5 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 
 export const ResponseContainer = withStyles<"div", {}>(
   "div",
-  moduleStyles["ResponseContainer"],
-  { selector: "ui_10398320_ResponseContainer" },
+  moduleStyles["container"],
 );

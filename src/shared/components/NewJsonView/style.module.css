@@ -1,46 +1,50 @@
 /* Third-party DOM classes are matched only within the component selectors below. */
-.NewJsonViewContainer {
+.container {
   height: 100%;
   max-height: 400px;
   overflow: auto;
+  & .slot-string-value {
+    word-break: break-all;
+  }
+  & .slot-object-key > span {
+    word-break: break-all;
+  }
 }
-.NewJsonViewContainer .slot-string-value {
-  word-break: break-all;
+.jsonView {
+  & [class~="react-json-view"] {
+    padding: 12px;
+    min-height: 200px;
+    background-color: var(--background-color-primary) !important;
+    word-break: break-all;
+  }
+  & .slot-object-key {
+    color: var(--content-color-primary) !important;
+  }
+  & .slot-object-size {
+    color: var(--content-color-secondary) !important;
+  }
 }
-.NewJsonViewContainer .slot-object-key > span {
-  word-break: break-all;
-}
-.JsonViewWrap [class~="react-json-view"] {
-  padding: 12px;
-  min-height: 200px;
-  background-color: var(--background-color-primary) !important;
-  word-break: break-all;
-}
-.JsonViewWrap .slot-object-key {
-  color: var(--content-color-primary) !important;
-}
-.JsonViewWrap .slot-object-size {
-  color: var(--content-color-secondary) !important;
-}
-.JsonViewWrap .slot-variable-row,
-.JsonViewWrap .slot-object-key-val {
+.jsonView .slot-variable-row,
+.jsonView .slot-object-key-val {
   border-left-color: var(--border-color-default) !important;
 }
-.JsonViewWrap .slot-object-key-val > span:first-child span:last-child {
-  color: '#5AB8D1' !important;
+.jsonView {
+  & .slot-object-key-val > span:first-child span:last-child {
+    color: "#5AB8D1" !important;
+  }
+  & .slot-brace-row {
+    /* stylelint-disable-next-line no-descending-specificity */
+  }
+  & .slot-brace-row span {
+    color: "#5AB8D1" !important;
+  }
 }
-.JsonViewWrap .slot-brace-row {
-  /* stylelint-disable-next-line no-descending-specificity */
-}
-.JsonViewWrap .slot-brace-row span {
-  color: '#5AB8D1' !important;
-}
-.OtherPreViewWrap {
+.otherPreView {
   padding: 12px;
   min-height: 200px;
   overflow: hidden;
   background-color: var(--background-color-primary);
-}
-.OtherPreViewWrap pre {
-  overflow-x: auto;
+  & pre {
+    overflow-x: auto;
+  }
 }

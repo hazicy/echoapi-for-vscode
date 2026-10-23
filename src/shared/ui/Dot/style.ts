@@ -4,4 +4,4 @@ import { withStyles } from "@/shared/ui/base/withStyles";
 export const DotWrapper = withStyles<
   "div",
   { $token: Partial<GlobalThemeToken> }
->("div", moduleStyles["DotWrapper"], { selector: "ui_36d11b71_DotWrapper" });
+>("div", moduleStyles["container"]);
