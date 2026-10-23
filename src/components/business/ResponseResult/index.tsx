@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import {Flex, SegmentedProps, Select, message } from '@/components/ui/base';
 
 import { useSafeState } from 'ahooks';
-import classNames from 'classnames';
 import { find, forEach, isArray, isPlainObject, map } from 'lodash';
 
 import SegmentedTabs from '@/components/business/SegmentedTabs';
@@ -18,6 +17,7 @@ import { parseStreamToRaw } from '@/utils/parse';
 import { RAW_ENCODE, RESPONSE_RESULT_TABS_LIST, RESPONSE_TYPE } from './constants';
 
 import { ResponseResultWrap } from './style';
+import styles from './style.module.css';
 
 interface Props {
   rawHtml?: string;
@@ -164,13 +164,13 @@ const ResponseResult = forwardRef((props: Props, ref) => {
               value={rawEncode || 'utf8'}
               onChange={(newVal: string) => setRawEncode(newVal)}
             />
-            <IconFont type="icon-copy" className={slots["icon-copy"]} onClick={handleCopy} />
+            <button type="button" className={styles.toolButton} aria-label="Copy response" title={t('common.copy')} onClick={handleCopy}>
+              <IconFont type="icon-copy" />
+            </button>
             {warpVisible && (
-              <IconFont
-                type="icon-huanhang"
-                className={classNames(slots["icon-copy"], warp && slots["wrap-show"])}
-                onClick={() => setWarp(!warp)}
-              />
+              <button type="button" className={styles.toolButton} aria-label="Toggle word wrap" aria-pressed={warp} title="Toggle word wrap" onClick={() => setWarp(!warp)}>
+                <IconFont type="icon-huanhang" />
+              </button>
             )}
             {saveSocketMessageDom}
           </Flex>

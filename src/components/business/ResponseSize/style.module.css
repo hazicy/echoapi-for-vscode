@@ -148,3 +148,29 @@
 .ResponseSizeWrap .slot-cur-pointer {
   cursor: pointer;
 }
+
+.ResponseSizeWrap {
+  min-height: 28px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 2px 0;
+  font-size: 11px;
+  line-height: 20px;
+  font-variant-numeric: tabular-nums;
+  color: var(--vscode-descriptionForeground, var(--font-light-color));
+}
+.ResponseSizeWrap > svg {
+  flex-shrink: 0;
+}
+.ResponseSizeWrap > .slot-anticon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+}
+.ResponseSizeWrap > .slot-anticon:hover {
+  background: var(--vscode-toolbar-hoverBackground);
+}

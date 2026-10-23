@@ -256,6 +256,38 @@ for (const panel of [
       await expect(method.getByRole('combobox')).toHaveAttribute('placeholder', 'POST');
       await expect(page.getByTitle('POST', {exact:true})).toBeHidden();
       await page.screenshot({path: test.info().outputPath('request.png')});
+      await page.evaluate(() => {
+        window.postMessage({action:'setSystemConfig', data:{tab_direction:1, assertions_and_validation_results:-1, send_after_auto_beautify:1, raw_parameter_pilot_bubble_switch:false}}, '*');
+        window.postMessage({action:'apiSendResult', data:JSON.stringify({
+          target_id:'test-api', sendStatus:'initial', timestamp:Date.now(),
+          responseHeaders:{'content-type':'text/html', server:'test'},
+          cookies:[], asserts:[], consoleList:[], requestHeaders:{},
+          response:{code:200, status:'OK', response_time:572, response_size:580000,
+            mime_type:{ext:'html',mime:'text/html'}, fit_for_show:'Monaco',
+            raw_body:'<!DOCTYPE html>\n<html lang="en">\n<head><title>Response preview</title></head>\n<body><h1>Sample response</h1></body>\n</html>',
+          },
+        })}, '*');
+      });
+      for (const width of [760, 1200]) {
+        await page.setViewportSize({width,height:900});
+        const toolbar = page.locator(slotSelector('response-result-tabs-wrap'));
+        const wrapButton = toolbar.getByRole('button', {name:'Toggle word wrap'});
+        await expect(wrapButton).toBeVisible();
+        await expect(wrapButton).toHaveCSS('height','28px');
+        const tools = toolbar.locator(slotSelector('tab-bar-extra-content-wrap')).last();
+        const controls = tools.locator(slotSelector('beautify-select'));
+        for (const control of await controls.all()) {
+          const box = await control.boundingBox();
+          const buttonBox = await wrapButton.boundingBox();
+          expect(Math.abs(box!.y + box!.height / 2 - buttonBox!.y - buttonBox!.height / 2)).toBeLessThanOrEqual(2);
+        }
+        await wrapButton.click();
+        await expect(wrapButton).toHaveAttribute('aria-pressed','false');
+        await wrapButton.click();
+        await expect(wrapButton).toHaveAttribute('aria-pressed','true');
+        await expect(page.getByRole('textbox',{name:'Code editor'}).first()).toBeVisible();
+        await page.screenshot({path:test.info().outputPath(`response-${width}.png`)});
+      }
     }
     expect(errors).toEqual([]);
   });

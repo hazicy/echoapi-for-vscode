@@ -85,3 +85,79 @@
   border-bottom: 0;
   background: var(--vscode-toolbar-hoverBackground, var(--color-bg-right));
 }
+
+.ResponseResultWrap {
+  min-height: 0;
+  padding-top: 8px;
+}
+.ResponseResultWrap .slot-response-result-tabs-wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.ResponseResultWrap .slot-response-result-tabs-wrap .slot-segmented-tabs-header {
+  flex-shrink: 0;
+  margin-bottom: 8px;
+  padding-right: 8px;
+}
+.ResponseResultWrap .slot-segmented-tabs-header > .slot-beautify-flex {
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+.ResponseResultWrap .slot-beautify-segmented {
+  padding: 2px;
+  border: 1px solid var(--vscode-widget-border, var(--color-border));
+  border-radius: 4px;
+  background: transparent;
+}
+.ResponseResultWrap .slot-beautify-segmented [role="tablist"] {
+  gap: 2px;
+}
+.ResponseResultWrap .slot-beautify-segmented [role="tab"] {
+  height: 26px;
+  min-height: 26px;
+  padding: 3px 10px;
+  font-size: 11px;
+  line-height: 18px;
+}
+.ResponseResultWrap .slot-response-result-tabs-wrap .slot-tab-bar-extra-content-wrap {
+  margin-left: 0;
+  gap: 6px;
+  align-items: center;
+}
+.ResponseResultWrap .slot-tab-bar-extra-content-wrap .slot-beautify-select {
+  min-width: 76px;
+  height: 28px;
+  min-height: 28px;
+  border-radius: 4px;
+  background: transparent;
+}
+.ResponseResultWrap .slot-response-result-tabs-wrap .slot-segmented-tabs-content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.toolButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--vscode-icon-foreground, var(--font-light-color));
+  font-size: 14px;
+  cursor: pointer;
+}
+.toolButton:hover,
+.toolButton[aria-pressed="true"] {
+  background: var(--vscode-toolbar-hoverBackground);
+  color: var(--color-primary);
+}
+.toolButton:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder, var(--color-primary));
+  outline-offset: -1px;
+}

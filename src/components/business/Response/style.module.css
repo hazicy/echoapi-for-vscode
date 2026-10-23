@@ -34,3 +34,27 @@
   color: var(--vscode-descriptionForeground, var(--font-light-color));
   font-size: 12px;
 }
+
+/* Keep response navigation and transfer metadata on one baseline when space permits. */
+.ResponseContainer .slot-beautify-tabs > .slot-beautify-tabs-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  padding: 0 0 6px;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--vscode-widget-border, var(--color-border));
+}
+.ResponseContainer .slot-beautify-tabs-nav-wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.ResponseContainer .slot-beautify-tabs-nav-list {
+  gap: 4px;
+  border-bottom: 0;
+}
+.ResponseContainer .slot-beautify-tabs-nav-list > [role="tab"] {
+  min-height: 36px;
+  padding: 8px 10px;
+}

@@ -22,9 +22,9 @@ import { RealtimeContainer } from './style';
 
 const panelProps = {
   defaultSize: 50,
-  minSize: 4,
+  minSize: 3,
   collapsible: true,
-  collapsedSize: 4,
+  collapsedSize: 3,
 };
 
 interface Props {

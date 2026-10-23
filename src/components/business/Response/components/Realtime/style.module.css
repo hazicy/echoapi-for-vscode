@@ -2,3 +2,22 @@
   width: 100%;
   height: 100%;
 }
+
+.RealtimeContainer {
+  min-height: 0;
+}
+.RealtimeContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap {
+  background: transparent;
+}
+.RealtimeContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap:hover {
+  background: var(--vscode-toolbar-hoverBackground);
+}
+.RealtimeContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap .slot-beautify-flex .slot-collapse-title {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--vscode-descriptionForeground, var(--font-light-color));
+}
+.RealtimeContainer .slot-resizable-panel-right-wrap .slot-right-collapse-wrap .slot-beautify-flex .slot-collapse-title.slot-horizontal {
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
