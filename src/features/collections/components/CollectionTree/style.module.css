@@ -176,29 +176,6 @@
 .TreeContainer [class~="beautify-tree"] [class~="beautify-tree-list"] [class~="beautify-tree-treenode"]:hover .slot-node-item-del {
   display: block;
 }
-.TreeContainer [class~="beautify-tree"] [class~="beautify-tree-list"] .slot-tree-bottom-node-wrap,
-.TreeContainer [class~="beautify-tree"] [class~="beautify-tree-list"] .slot-tree-top-node-wrap {
-  padding-right: 0;
-}
-.TreeContainer [class~="beautify-tree"] [class~="beautify-tree-list"] .slot-tree-bottom-node-wrap:hover::before,
-.TreeContainer [class~="beautify-tree"] [class~="beautify-tree-list"] .slot-tree-top-node-wrap:hover::before {
-  background-color: transparent;
-}
-.TreeContainer [class~="beautify-tree"] [class~="beautify-tree-list"] .slot-tree-bottom-node-wrap [class~="beautify-tree-switcher"],
-.TreeContainer [class~="beautify-tree"] [class~="beautify-tree-list"] .slot-tree-top-node-wrap [class~="beautify-tree-switcher"] {
-  display: none;
-}
-.TreeContainer [class~="beautify-tree"] [class~="beautify-tree-list"] .slot-tree-bottom-node-wrap [class~="beautify-tree-node-content-wrapper"],
-.TreeContainer [class~="beautify-tree"] [class~="beautify-tree-list"] .slot-tree-top-node-wrap [class~="beautify-tree-node-content-wrapper"] {
-  padding: 0;
-  width: 100%;
-  cursor: default;
-  /* stylelint-disable-next-line selector-class-pattern */
-}
-.TreeContainer [class~="beautify-tree"] [class~="beautify-tree-list"] .slot-tree-bottom-node-wrap [class~="beautify-tree-node-content-wrapper"] [class~="beautify-tree-iconEle"],
-.TreeContainer [class~="beautify-tree"] [class~="beautify-tree-list"] .slot-tree-top-node-wrap [class~="beautify-tree-node-content-wrapper"] [class~="beautify-tree-iconEle"] {
-  display: none;
-}
 .TreeContainer .slot-root-context-menu-holder-placeholder {
   flex: 1;
   width: 100%;
@@ -409,4 +386,8 @@
   .TreeContainer [class~="beautify-tree-treenode"] {
     transition: none;
   }
+}
+
+.TreeContainer [class~="beautify-tree-list-holder-inner"] {
+  padding-bottom: 100px;
 }

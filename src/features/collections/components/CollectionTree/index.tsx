@@ -478,39 +478,9 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
     },
   );
 
-  const defaultBottomNode = useMemo(
-    () => (
-      <div
-        className="tree-bottom-node-empty"
-        style={{ height: 100 }}
-      ></div>
-    ),
-    [createMenus, t],
-  );
-
-  const renderTreeData = useMemoizedFn(
-    (data: TreeDataItem[]): TreeDataItem[] => {
-      const result = computedTreeData(data);
-
-      if (defaultBottomNode) {
-        result.push({
-          className: slots["tree-bottom-node-wrap"],
-          title: defaultBottomNode,
-          key: 'tree-bottom-node-key',
-          isLeaf: true,
-          icon: <div />,
-          selectable: false,
-        } as TreeDataItem);
-      }
-
-      return result;
-    },
-  );
-
-  // NOTE: Can internal computedTreeData get the latest data?
   const finalTreeData = useMemo(() => {
-    return renderTreeData(treeData);
-  }, [treeData, renderTreeData]);
+    return computedTreeData(treeData);
+  }, [treeData, computedTreeData]);
 
   const titleRender = useMemoizedFn((item: TreeDataItem) => {
     return React.cloneElement(item.title as any, {
