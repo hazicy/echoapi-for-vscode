@@ -109,6 +109,11 @@
     "menus": {
       "view/title": [
         {
+          "command": "echoapi.switchWorkspace",
+          "when": "view == myView",
+          "group": "navigation@1"
+        },
+        {
           "command": "echoapi.openEnv",
           "when": "view == myView",
           "group": "@2",
@@ -135,6 +140,11 @@
       ]
     },
     "commands": [
+      {
+        "command": "echoapi.switchWorkspace",
+        "title": "%command.switchWorkspace%",
+        "icon": "$(window)"
+      },
       {
         "command": "echoapi.openEnv",
         "title": "%command.openEnv%"

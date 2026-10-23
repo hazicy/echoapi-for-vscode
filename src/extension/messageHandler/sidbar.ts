@@ -246,7 +246,7 @@ export const handleMessage = async (
         new_user_config.currentTeam = team;
         new_user_config.currentProject = project;
 
-        context.globalState.update("userConfig", new_user_config);
+        await context.globalState.update("userConfig", new_user_config);
 
         // Restore local apiList
         sidePanelWebView?.webview.postMessage({

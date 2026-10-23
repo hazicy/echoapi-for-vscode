@@ -24,8 +24,8 @@ const TeamProjectManage = (props: { currentTeam: TeamItem; currentProject: Proje
   const teamProjectList = useUserConfig(store => store.teamProjectList);
 
   const [isOpen, setIsOpen] = useState(false);
-
   const [searchValue, setSearchValue] = useState('');
+
   const throttledSearchValue = useThrottle(searchValue, { wait: 300 });
 
   const onSearchProject = (e: React.ChangeEvent<HTMLInputElement>) => {

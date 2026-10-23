@@ -3,6 +3,7 @@
   "configuration.documentServicePort.description": "本地文档服务的默认端口号",
   "submenu.commit": "提交",
   "command.openEnv": "环境管理",
+  "command.switchWorkspace": "切换 Okapi 工作区",
   "command.openExtenisonSettings": "扩展设置",
   "command.feedBack": "问题反馈",
   "command.openHelpDoc": "帮助文档"

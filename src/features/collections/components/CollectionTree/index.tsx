@@ -60,7 +60,6 @@ import useTreeSort from '@/features/collections/hooks/useTreeSort';
 import TitleExtraContent from './TitleExtraContent';
 import { useTranslation } from 'react-i18next';
 import { useApis } from '@/app/store';
-import TreeMenuHeader from './components/TreeMenuHeader';
 import { Empty } from '@/shared/ui';
 import { SegmentedTabs } from '@/shared/components';
 
@@ -823,7 +822,6 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
     <>
       <TreeMenuContainer>
         <div className={styles.workspaceToolbar}>
-          <TreeMenuHeader />
           <NewBtns createMenus={createMenus} />
         </div>
 
