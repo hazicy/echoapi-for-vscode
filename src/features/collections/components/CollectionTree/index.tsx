@@ -30,8 +30,6 @@ import apisActionMap from '@/features/requests/events/action';
 import { TreeDataFilterParams } from '@/features/collections/types/tree';
 import {
   cloneDeep,
-  concat,
-  forEach,
   head,
   includes,
   isArray,
@@ -65,7 +63,6 @@ import { SegmentedTabs } from '@/shared/components';
 
 import NewBtns from './components/New';
 import Tests from './Tests';
-import { SCHEMAS_MODEL_TYPE_ENUM } from '@/features/schemas/constants/schemas';
 
 type TreeDataItem = ApiTreeDataItem & DataNode;
 
@@ -657,59 +654,6 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
     });
   };
 
-  const onExpandAll = (isExpanded: boolean) => {
-    if (isExpanded) {
-      setTreeExpandedKeys([]);
-      return;
-    }
-
-    const _keys: string[] = [];
-
-    forEach(value, (item) => {
-      if (
-        includes(
-          [
-            APIS_TARGET_TYPE_ENUM.FOLDER,
-            APIS_TARGET_TYPE_ENUM.SOCKET,
-            SCHEMAS_MODEL_TYPE_ENUM.MODEL,
-          ],
-          item[(customFieldNames as any)?.type],
-        )
-      ) {
-        _keys.push(item[(customFieldNames as any)?.key]);
-      }
-    });
-
-    setTreeExpandedKeys(_keys);
-  };
-
-  const findPositionExpandKeys = (originKey: string) => {
-    const result: string[] = [];
-    const handle = (key: string) => {
-      const target = value.find((i) => i?.target_id === key);
-      if (target?.[(customFieldNames as any)?.key]) {
-        result.unshift(target?.[(customFieldNames as any)?.key]);
-      }
-      if (target?.parent_id) {
-        handle(target?.parent_id);
-      }
-    };
-
-    handle(originKey);
-
-    return result;
-  };
-
-  const onPosition = (key: string) => {
-    const targetId = `${key}`;
-    const keys = findPositionExpandKeys(targetId);
-
-    setTreeExpandedKeys(concat([], treeExpandedKeys, keys));
-    setTimeout(() => {
-      treeRef?.current?.scrollTo({ key, align: 'auto' });
-    }, 300);
-  };
-
   const TESTING_CONFIG_TAB_LIST = [
     {
       label: (
@@ -727,10 +671,6 @@ const TreeAdd: React.FC<TreeMenuProps> = ({
             treeDataFilterParams={treeDataFilterParams}
             setTreeDataFilterParams={setTreeDataFilterParams}
             searchInputPlaceholder={searchInputPlaceholder}
-            onPosition={onPosition}
-            onExpandAll={onExpandAll}
-            apisActiveKey={apisActiveKey}
-            showActions={true}
           />
           <Skeleton
             active

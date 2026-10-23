@@ -48,25 +48,6 @@
 .SearchContainer .slot-search-wrap .slot-apis-mark-select-wrap .slot-beautify-select-selector {
   padding-left: 0;
 }
-.SearchContainer .slot-search-wrap .slot-actions-wrap > .slot-anticon {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-right: 4px;
-  width: 16px;
-  height: 16px;
-  border-radius: 2px;
-  font-size: 18px;
-  color: var(--icon-color);
-  transition: all 0.3s;
-}
-.SearchContainer .slot-search-wrap .slot-actions-wrap > .slot-anticon:hover {
-  background-color: var(--vscode-toolbar-hoverBackground);
-}
-.SearchContainer .slot-search-wrap .slot-actions-wrap > .slot-anticon:last-of-type {
-  margin: 0;
-}
 .SearchContainer .slot-add-btn {
   margin-left: 4px;
   width: 32px;
@@ -84,15 +65,4 @@
   border-radius: 4px;
   background: var(--vscode-input-background);
   border-color: var(--vscode-input-border, transparent);
-}
-.SearchContainer .slot-search-wrap .slot-actions-wrap {
-  flex-shrink: 0;
-  gap: 2px;
-}
-.SearchContainer .slot-search-wrap .slot-actions-wrap > .slot-anticon {
-  width: 24px;
-  height: 26px;
-  margin: 0;
-  font-size: 14px;
-  transition: background-color 120ms;
 }
