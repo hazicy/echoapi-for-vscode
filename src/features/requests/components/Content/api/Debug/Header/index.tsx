@@ -9,13 +9,16 @@ import { isArray, isEqual } from 'lodash';
 import { genQueryByUrl, genRestfulByUrl, getNewApisDataByCurlChange } from '@/features/requests/utils/apis';
 import UrlGroup from '@/features/requests/components/UrlGroup';
 import { useApis } from '@/app/store';
-import useTheme from '@/shared/hooks/useTheme';
+import { Icon } from '@iconify/react';
+import sendHorizontal from '@iconify-icons/lucide/send-horizontal';
+import loaderCircle from '@iconify-icons/lucide/loader-circle';
+import save from '@iconify-icons/lucide/save';
+import styles from './style.module.css';
 import { HeaderContainer } from './style';
 import { CurlDataType } from '@/features/requests/types/other';
 
 const Header: FC<ApiComponentType> = ({ apisData, onApisDataChange, type }) => {
   const { t } = useTranslation();
-  const { themeToken } = useTheme();
   const currentSendingData = useApis(store => store.currentSendingData);
   const updateCurrentSendingData = useApis(store => store.updateCurrentSendingData);
 
@@ -94,25 +97,27 @@ const Header: FC<ApiComponentType> = ({ apisData, onApisDataChange, type }) => {
         curServerId={curServerId}
         SetCurServerId={SetCurServerId}
         curlChange={curlChange}
+        hideProtocol
         supportCurlImport
         style={{
           paddingRight:'0'
         }}
-        urlGroupExtraContent={<Button
-          type="primary"
-          size='middle'
-          onClick={() => {
-            handleSend();
-          }}
-          style={{padding:0,fontSize:'13px',borderRadius: "0 4px 4px 0"}}
+        urlGroupExtraContent={<button
+          type="button"
+          className={styles.sendButton}
+          aria-label={t(isSending ? 'api.run.sending' : 'api.run.send')}
+          title={t(isSending ? 'api.run.sending' : 'api.run.send')}
+          onClick={() => handleSend()}
           disabled={isSending}
         >
-          {isSending ? `${t('api.run.sending')}...` : t('api.run.send')}
-        </Button>}
+          <Icon icon={isSending ? loaderCircle : sendHorizontal} width={24} className={isSending ? styles.spinning : undefined} />
+        </button>}
       />
       <Flex gap={4} align='center'>
         <Button
-          type="default"
+          type="text"
+          aria-label={t('api.run.save')}
+          title={t('api.run.save')}
           size="middle"
           onClick={() => {
             window?.vscode.postMessage({
@@ -122,7 +127,7 @@ const Header: FC<ApiComponentType> = ({ apisData, onApisDataChange, type }) => {
           }}
           style={{padding:0,fontSize:'13px'}}
         >
-          {t('api.run.save')}
+          <Icon icon={save} width={18} />
         </Button>
       </Flex>
     </HeaderContainer>
