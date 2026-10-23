@@ -1,4 +1,4 @@
-import slots from "@/components/ui/base/slots.module.css";
+import slots from '@/components/ui/base/slots.module.css';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -19,7 +19,9 @@ const Sending: React.FC<SendingProps> = ({
   onCancel,
 }) => {
   const { t } = useTranslation();
-  const updateCurrentSendingData = useApis(store => store.updateCurrentSendingData);
+  const updateCurrentSendingData = useApis(
+    (store) => store.updateCurrentSendingData,
+  );
   const handleCancel = () => {
     updateCurrentSendingData({ sendStatus: 'initial' });
 
@@ -32,13 +34,21 @@ const Sending: React.FC<SendingProps> = ({
   };
 
   return (
-    <ResponseSendContainer style={{ ...(onlySendingLoadingBar ? { height: 2 } : {}) }}>
-      <div className={slots["sending-loading-bar"]} />
+    <ResponseSendContainer
+      style={{ ...(onlySendingLoadingBar ? { height: 2 } : {}) }}
+    >
+      <div className={slots['sending-loading-bar']} />
       {!onlySendingLoadingBar && (
-        <div className={slots["sending-loading-content"]}>
-          <div className={slots["sending-loading-content-text"]}>{t('supplement.sending')}</div>
+        <div className={slots['sending-loading-content']}>
+          <div className={slots['sending-loading-content-text']}>
+            {t('supplement.sending')}
+          </div>
           {hasCancel && (
-            <Button type="primary" mode="light" onClick={handleCancel}>
+            <Button
+              type="primary"
+              mode="light"
+              onClick={handleCancel}
+            >
               {t('supplement.cancel_send')}
             </Button>
           )}
