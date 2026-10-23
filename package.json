@@ -157,7 +157,6 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",
-    "@types/draft-js": "^0.11.17",
     "@types/file-saver": "^2.0.7",
     "@types/jsonpath": "^0.2.4",
     "@types/lodash": "^4.14.202",
@@ -227,7 +226,6 @@
     "csvtojson": "^2.0.10",
     "curl-to-postmanv2": "^1.8.1",
     "dayjs": "^1.11.10",
-    "draft-js": "^0.11.7",
     "echoapi-converter": "0.0.89",
     "exp-mock": "^2.0.15",
     "express": "^4.21.1",

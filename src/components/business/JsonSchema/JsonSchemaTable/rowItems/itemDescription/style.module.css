@@ -10,14 +10,15 @@
   border-color: transparent;
   line-height: 32px;
 }
-.ItemWrapper .slot-txt-description:not(.slot-draft-active) {
+.ItemWrapper .slot-txt-description:not(.slot-editor-active) {
   height: 33px;
 }
-.ItemWrapper .slot-txt-description.slot-draft-active {
+.ItemWrapper .slot-txt-description.slot-editor-active {
   min-height: 33px;
   /* background-color: var(--background-color-primary); */
 }
-.ItemWrapper .slot-txt-description [class~="DraftEditor-root"] {
+.ItemWrapper .slot-txt-description input,
+.ItemWrapper .slot-txt-description textarea {
   padding: 0 4px;
 }
 .ItemWrapper .slot-item-manage {

@@ -56,10 +56,11 @@
 .RowItemWrap .slot-mini-editor.slot-editor-active .slot-insert-icon:hover {
   color: var(--color-primary);
 }
-.RowItemWrap .slot-mini-editor [class~="DraftEditor-root"] {
+.RowItemWrap .slot-mini-editor input,
+.RowItemWrap .slot-mini-editor textarea {
   line-height: 24px;
 }
-.RowItemWrap .slot-mini-editor [class~="DraftEditor-editorContainer"] {
+.RowItemWrap .slot-mini-editor input {
   margin: 0;
   border: 1px solid transparent;
   white-space: nowrap;
@@ -72,7 +73,8 @@
   background-color: var(--highlight-change-color);
   /* stylelint-disable-next-line selector-class-pattern */
 }
-.RowItemWrap .slot-mini-editor.slot-editor-active [class~="DraftEditor-editorContainer"] {
+.RowItemWrap .slot-mini-editor.slot-editor-active input,
+.RowItemWrap .slot-mini-editor.slot-editor-active textarea {
   color: var(--font-content-color);
 }
 .RowItemWrap .slot-beautify-select .slot-beautify-select-selector {

@@ -126,12 +126,6 @@
 .UrrGroupWrap .slot-mini-editor.slot-editor-active {
   height: auto;
 }
-.UrrGroupWrap .slot-mini-editor.slot-editor-no-wrap [class~="DraftEditor-root"] [class~="DraftEditor-editorContainer"] {
-  white-space: pre-wrap;
-}
-.UrrGroupWrap .slot-mini-editor.slot-editor-no-wrap [class~="DraftEditor-root"] [class~="DraftEditor-editorContainer"] .slot-public-DraftStyleDefault-block {
-  white-space: pre-wrap;
-}
 .UrrGroupWrap .slot-grpc-url-name {
   display: flex;
   flex-direction: row;

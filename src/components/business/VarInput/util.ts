@@ -1,26 +1,41 @@
-export function getElementTextOffset(element: HTMLElement, index: number) {
-  const textHtml = element.innerText.substr(0, index);
-  const elementStyle = window.getComputedStyle(element);
-  const sourceOffset = element.getBoundingClientRect();
+export function getElementTextOffset(
+  element: HTMLInputElement | HTMLTextAreaElement,
+  index: number,
+) {
+  const sourceStyle = window.getComputedStyle(element);
+  const sourceRect = element.getBoundingClientRect();
+  const measure = document.createElement('div');
+  const marker = document.createElement('span');
+  const text = element.value.slice(0, index);
 
-  // Apply input box styles to the span element
-  const cloneDom = document.createElement('div');
-  cloneDom.style.width = elementStyle.width;
-  cloneDom.style.font = elementStyle.font;
-  cloneDom.style.position = 'fixed';
-  cloneDom.innerHTML = `<span>${textHtml.replace(/\n/g, '<br />')}</span><span>.</span>`;
-  element && element.parentNode && element.parentNode.appendChild(cloneDom);
+  Object.assign(measure.style, {
+    boxSizing: sourceStyle.boxSizing,
+    position: 'fixed',
+    left: `${sourceRect.left}px`,
+    top: `${sourceRect.top}px`,
+    width: `${element.clientWidth}px`,
+    height: `${element.clientHeight}px`,
+    padding: sourceStyle.padding,
+    border: sourceStyle.border,
+    font: sourceStyle.font,
+    letterSpacing: sourceStyle.letterSpacing,
+    lineHeight: sourceStyle.lineHeight,
+    whiteSpace: element instanceof HTMLTextAreaElement ? 'pre-wrap' : 'pre',
+    overflowWrap: element instanceof HTMLTextAreaElement ? 'break-word' : 'normal',
+    wordBreak: sourceStyle.wordBreak,
+    visibility: 'hidden',
+    overflow: 'hidden',
+  });
+  measure.textContent = text;
+  marker.textContent = '\u200b';
+  measure.appendChild(marker);
+  document.body.appendChild(measure);
 
-  const cloneDomOffset = cloneDom.getBoundingClientRect();
-
-  // Cursor position
-  const AnchorOffset = cloneDom?.children?.[1]?.getBoundingClientRect();
-
+  const markerRect = marker.getBoundingClientRect();
   const result = {
-    left: AnchorOffset.left,
-    top: sourceOffset.top + cloneDomOffset.height + 5,
+    left: markerRect.left - (element instanceof HTMLTextAreaElement ? element.scrollLeft : 0),
+    top: markerRect.bottom - (element instanceof HTMLTextAreaElement ? element.scrollTop : 0) + 5,
   };
-  cloneDom.remove();
-
+  measure.remove();
   return result;
 }
