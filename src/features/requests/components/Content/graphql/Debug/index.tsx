@@ -22,7 +22,9 @@ import { ApiDetailsData } from "@/features/requests/types/api";
 import { Flex } from "@/shared/ui/base";
 import { Button } from "@/shared/ui";
 import { useApis } from "@/app/store";
-import GenerateCodeDrawer from "@/features/requests/components/GenerateCodeDrawer";
+const GenerateCodeDrawer = lazy(
+  () => import("@/features/requests/components/GenerateCodeDrawer"),
+);
 const Request = lazy(() => importDelay(import("./Request")));
 const Response = lazy(() => importDelay(import("./Response")));
 
@@ -129,10 +131,12 @@ const Index: FC<ApiComponentType> = ({ apisData, onApisDataChange }) => {
           </DirectionContext.Provider>
         </main>
         {openGenerateCode && (
-          <GenerateCodeDrawer
-            value={apisData}
-            onClose={() => setOpenGenerateCode(false)}
-          />
+          <SuspenseContent>
+            <GenerateCodeDrawer
+              value={apisData}
+              onClose={() => setOpenGenerateCode(false)}
+            />
+          </SuspenseContent>
         )}
       </Flex>
     </>

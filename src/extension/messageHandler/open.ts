@@ -121,6 +121,20 @@ export const handelOpenMessage = async (
   const { action, data } = message;
 
   switch (action) {
+    case 'getInitialData':
+      panel.webview.postMessage({
+        action: 'setInitialData',
+        data: {
+          apiData,
+          projectConfig: getCurrentProjectConfig(context),
+          systemConfig: context.globalState.get('systemConfig') || {},
+          vscodeTheme: vscode.workspace
+            .getConfiguration('workbench')
+            .get('colorTheme'),
+          docBaseUrl: getDocBaseUrl(context),
+        },
+      });
+      break;
     case 'getVscodeTheme':
       const vscodeTheme = vscode.workspace
         .getConfiguration('workbench')

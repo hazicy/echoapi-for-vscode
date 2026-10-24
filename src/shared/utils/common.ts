@@ -6,7 +6,6 @@ import {
 } from "@/shared/constants/common";
 import ATools from "apipost-tools";
 import i18next from "i18next";
-import csvToJson from "csvtojson";
 import { divide, format, round } from "mathjs";
 import FileSaver from "file-saver";
 import {
@@ -402,6 +401,7 @@ export const str2testData = async (_str: string) => {
   let jsonObj: any;
 
   if (!isJSON(_str)) {
+    const { default: csvToJson } = await import("csvtojson");
     returnList = await csvToJson().fromString(_str);
   } else {
     jsonObj = JSON.parse(_str);

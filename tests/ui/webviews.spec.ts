@@ -103,7 +103,12 @@ for (const panel of [
           eventAllCount: 0,
         });
       if (panel === "tagPanel")
-        send("setApiData", {
+        send("setInitialData", {
+          projectConfig: {},
+          systemConfig: { raw_parameter_pilot_bubble_switch: false },
+          vscodeTheme: "Default Dark Modern",
+          docBaseUrl: "http://localhost:3000",
+          apiData: {
           target_id: "test-api",
           target_type: "api",
           project_id: "-1",
@@ -136,6 +141,7 @@ for (const panel of [
             post_tasks: [],
           },
           response: { is_check_result: 1, example: [] },
+          },
         });
     }, panel);
     if (panel === "folderTestReportPanel") {
@@ -146,6 +152,11 @@ for (const panel of [
       await expect(page.locator(`#root ${slotSelector("beautify-skeleton")}`)).toHaveCount(0);
     }
     await expect(page.locator("#root")).not.toHaveText("");
+    if (panel === "tagPanel") {
+      await expect.poll(() => page.evaluate(() =>
+        performance.getEntriesByName("okapi:content-ready").length,
+      )).toBe(1);
+    }
     await page.evaluate(
       () =>
         new Promise<void>((resolve) =>

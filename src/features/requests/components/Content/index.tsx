@@ -1,15 +1,17 @@
 import styles from "./style.module.css";
 import { Flex } from "@/shared/ui/base";
-import React from "react";
+import React, { lazy, useEffect } from "react";
 
 import { useApis } from "@/app/store";
 import { ApiDetailsData, ApisData } from "@/features/requests/types/api";
-import ApiDebug from "./api/Debug";
-import SseDebug from "./sse/Debug";
-import Folder from "./Folder";
-import Websocket2Debug from "./websocket2/Debug";
-import SocketioDebug from "./socketio/Debug";
-import GraphqlDebug from "./graphql/Debug";
+import SuspenseContent from "@/shared/components/SuspenseContent";
+
+const ApiDebug = lazy(() => import("./api/Debug"));
+const SseDebug = lazy(() => import("./sse/Debug"));
+const Folder = lazy(() => import("./Folder"));
+const Websocket2Debug = lazy(() => import("./websocket2/Debug"));
+const SocketioDebug = lazy(() => import("./socketio/Debug"));
+const GraphqlDebug = lazy(() => import("./graphql/Debug"));
 import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
 import { Websocket2DetailsData } from "@/features/requests/types/websocket2";
 import { SocketIoDetailsData } from "@/features/requests/types/socketio";
@@ -18,6 +20,39 @@ import { GraphQLDetailsData } from "@/features/requests/types/graphql";
 interface ContentProps {
   value?: ApiDetailsData;
   curApiSendingData?: any;
+}
+
+// Inside the Suspense boundary: runs after the selected protocol has committed.
+function ContentReady() {
+  useEffect(() => {
+    performance.mark("okapi:content-ready");
+    if (performance.getEntriesByName("okapi:data-ready").length) {
+      performance.measure(
+        "okapi:data-to-content",
+        "okapi:data-ready",
+        "okapi:content-ready",
+      );
+    }
+    if (performance.getEntriesByName("okapi:html-ready").length) {
+      performance.measure(
+        "okapi:html-to-content",
+        "okapi:html-ready",
+        "okapi:content-ready",
+      );
+    }
+    let secondFrame = 0;
+    // Load the collection only after the selected protocol has committed and painted.
+    const firstFrame = requestAnimationFrame(() => {
+      secondFrame = requestAnimationFrame(() => {
+        window.vscode.postMessage({ action: "getApiList" });
+      });
+    });
+    return () => {
+      cancelAnimationFrame(firstFrame);
+      cancelAnimationFrame(secondFrame);
+    };
+  }, []);
+  return null;
 }
 
 const Content: React.FC<ContentProps> = () => {
@@ -96,7 +131,10 @@ const Content: React.FC<ContentProps> = () => {
     <>
       {
         <Flex vertical className={styles.apiDebug}>
-          {renderContainer()}
+          <SuspenseContent>
+            {renderContainer()}
+            {apisActiveData.target_id && <ContentReady />}
+          </SuspenseContent>
         </Flex>
       }
     </>

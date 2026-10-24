@@ -1128,6 +1128,7 @@ export const getHtmlForWebview = (
         <div id="loading">loading...</div>
       </div>
       <script>
+      performance.mark("okapi:html-ready");
       window.isMac = ${os.platform() === "darwin" ? "true" : "false"}
       window.vscode = acquireVsCodeApi();
       window.vscodeData = ${data && JSON.stringify(data)};

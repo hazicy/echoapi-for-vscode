@@ -1,6 +1,6 @@
 import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, useMemo, useState } from "react";
+import { FC, lazy, useMemo, useState } from "react";
 import { useSafeState } from "ahooks";
 import { Flex } from "@/shared/ui/base";
 import produce from "immer";
@@ -20,7 +20,9 @@ import {
 } from "@/features/requests/types/api";
 import { genUrlByQuery } from "@/features/requests/utils/apis";
 import { Button } from "@/shared/ui";
-import GenerateCodeDrawer from "@/features/requests/components/GenerateCodeDrawer";
+const GenerateCodeDrawer = lazy(
+  () => import("@/features/requests/components/GenerateCodeDrawer"),
+);
 import context from "@/shared/components/RawEditor/visualizationContext";
 import { openEnvPage } from "@/features/requests/events/env";
 
@@ -170,10 +172,12 @@ const ApiDebug: FC<ApiComponentType> = ({ apisData, onApisDataChange }) => {
         />
       </main>
       {openGenerateCode && (
-        <GenerateCodeDrawer
-          value={apisData}
-          onClose={() => setOpenGenerateCode(false)}
-        />
+        <SuspenseContent>
+          <GenerateCodeDrawer
+            value={apisData}
+            onClose={() => setOpenGenerateCode(false)}
+          />
+        </SuspenseContent>
       )}
     </>
   );

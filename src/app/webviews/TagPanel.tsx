@@ -75,40 +75,44 @@ function TagPanel() {
   const { handelGraphQLSchemaFetchResult } = useGraphQLQuery();
 
   useEffect(() => {
-    // Initialize and pass current API data
-    window?.vscode.postMessage({
-      action: "getApiData",
-    });
-
-    // Get doc base URL
-    window?.vscode.postMessage({
-      action: "getDocBaseUrl",
-    });
-
-    // Get global configuration
-    window?.vscode.postMessage({
-      action: "getSystemConfig",
-    });
-
-    window?.vscode.postMessage({
-      action: "getProjectConfig",
-    });
-
-    // First time get directory list
-    window?.vscode.postMessage({
-      action: "getApiList",
-    });
-
-    window?.vscode.postMessage({
-      action: "getVscodeTheme",
-    });
-  }, []);
-
-  useEffect(() => {
+    performance.mark("okapi:react-mounted");
+    if (performance.getEntriesByName("okapi:html-ready").length) {
+      performance.measure(
+        "okapi:html-to-react",
+        "okapi:html-ready",
+        "okapi:react-mounted",
+      );
+    }
     const messageHandler = async (event: { data: any }) => {
       const message = event.data; // The JSON data our extension sent
 
       switch (message.action) {
+        case "setInitialData": {
+          const {
+            apiData,
+            projectConfig,
+            systemConfig,
+            vscodeTheme,
+            docBaseUrl,
+          } = message.data;
+          updateProjectConfig(projectConfig);
+          updateSystemConfig({
+            ...useSystemConfig.getState().systemConfig,
+            ...systemConfig,
+          });
+          updateVscodeTheme(vscodeTheme);
+          updateDocBaseUrl(docBaseUrl);
+          updateApisActiveData(apiData);
+          updateApisActiveKey(apiData.target_id);
+          performance.mark("okapi:data-ready");
+          performance.measure(
+            "okapi:react-to-data",
+            "okapi:react-mounted",
+            "okapi:data-ready",
+          );
+          setLodaing(false);
+          break;
+        }
         case "setApiList":
           updateApiOriginDetailsList(message?.data || []);
           updateAllApiDetailsData(
@@ -200,6 +204,8 @@ function TagPanel() {
       }
     };
     window.addEventListener("message", messageHandler);
+    // Register the listener before requesting data, including fast local replies.
+    window.vscode.postMessage({ action: "getInitialData" });
     return () => {
       window.removeEventListener("message", messageHandler);
     };
