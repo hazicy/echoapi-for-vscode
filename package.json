@@ -134,17 +134,17 @@
         {
           "command": "echoapi.switchWorkspace",
           "when": "view == myView || view == okapiRequests",
-          "group": "navigation@1"
+          "group": "1_workspace@1"
         },
         {
           "command": "openImportDataPanel",
           "when": "view == myView || view == okapiRequests",
-          "group": "navigation@2"
+          "group": "1_workspace@2"
         },
         {
           "command": "openExportDataPanel",
           "when": "view == myView || view == okapiRequests",
-          "group": "navigation@3"
+          "group": "1_workspace@3"
         },
         {
           "command": "echoapi.openEnv",
@@ -183,7 +183,7 @@
         {
           "command": "okapi.tree.refresh",
           "when": "view == okapiRequests",
-          "group": "navigation@6"
+          "group": "2_view@1"
         },
         {
           "command": "okapi.tree.runTests",
