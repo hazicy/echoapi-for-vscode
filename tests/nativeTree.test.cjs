@@ -185,6 +185,7 @@ test("native sidebar panels, test commands and workspace request history", async
       assert.equal(item.description, method);
     }
     assert.equal(requests.getTreeItem({ kind: "request", data: rows[0] }).iconPath.id, "folder");
+    assert.equal(requests.getTreeItem({ kind: "request", data: rows[0] }).iconPath.color.id, "textLink.foreground");
     assert.equal(requests.getTreeItem({ kind: "request", data: { ...rows[2], target_type: "graphql" } }).iconPath.id, "type-hierarchy");
     assert.equal(requests.getTreeItem({ kind: "request", data: { ...rows[2], method: "CUSTOM" } }).iconPath.id, "globe");
     for (const [protocol, icon] of Object.entries({ sse: "broadcast", graphql: "type-hierarchy", websocket2: "debug-disconnect", socketio: "plug", grpc: "server-process", socket: "plug", socket_method: "symbol-method", doc: "file-text" })) {

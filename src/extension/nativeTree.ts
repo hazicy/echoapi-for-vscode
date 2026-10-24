@@ -65,7 +65,10 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
     item.description = folder
       ? undefined
       : requestLabel;
-    item.iconPath = new vscode.ThemeIcon(protocolThemeIcons[data.target_type] || "globe");
+    item.iconPath = new vscode.ThemeIcon(
+      protocolThemeIcons[data.target_type] || "globe",
+      folder ? new vscode.ThemeColor("textLink.foreground") : undefined,
+    );
     item.tooltip = [data.name, folder ? undefined : requestLabel, data.url].filter(Boolean).join(" ");
     return item;
   };
