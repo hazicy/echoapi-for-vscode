@@ -82,25 +82,6 @@ export const DEFAULT_WEBSOCKET2_MESSAGE = {
   },
 };
 
-// websocket default request
-export const DEFAULT_WEBSOCKET_REQUEST = {
-  event: {
-    parameter: [],
-  },
-  header: {
-    parameter: [],
-  },
-  query: {
-    parameter: [],
-  },
-  message: {
-    mode: 'text',
-    raw: '',
-    raw_parameter: [],
-    raw_schema: { type: 'object' },
-  },
-};
-
 export const PARAMETER_ITEM: ApisBaseDataItem = {
   description: '',
   field_type: 'String' as ApisBaseDataItem['field_type'],

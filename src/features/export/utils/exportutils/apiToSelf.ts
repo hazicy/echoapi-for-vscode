@@ -17,13 +17,11 @@ import {
   GraphQLRequest,
   GraphQLRequestBodyQueryItem,
   SocketRequestBody,
-  WebSocketRequest,
 } from '@/features/requests/types/request';
 import { BaseResponse } from '@/features/requests/types/response';
 import { SocketDetailsData } from '@/features/requests/types/socket';
 import { SocketServiceDetailsData } from '@/features/requests/types/socketService';
 import { SocketIoConfig, SocketIoRequest } from '@/features/requests/types/socketio';
-import { WebsocketConfig } from '@/features/requests/types/websocket';
 import { MessageItem, WebSocket2Request, Websocket2Config } from '@/features/requests/types/websocket2';
 import { EnvListItem, ServerItem } from '@/features/environment/types';
 import { RequestGlobalParams } from '@/features/project/types';
@@ -753,57 +751,6 @@ export const completionSocketIoConfig = (config: SocketIoConfig | undefined) => 
   };
 };
 
-export const completionWsConfig = (config: WebsocketConfig | undefined) => {
-  if (isPlainObject(config)) {
-    return {
-      information_size: config?.information_size || 5,
-      certificate_verification: -1,
-      reconnect_num: config?.reconnect_num || 5,
-      reconnect_time: config?.reconnect_time || 5000,
-      shake_hands_timeout: config?.shake_hands_timeout || 0,
-    };
-  }
-  return {
-    certificate_verification: -1,
-    information_size: 5,
-    reconnect_num: 5,
-    reconnect_time: 5000,
-    shake_hands_timeout: 0,
-  };
-};
-
-export const completionWsMessage = (
-  msg: WebSocketRequest['message'],
-  modelsMap: { [key: string]: string }
-) => {
-  if (!msg || !isPlainObject(msg)) {
-    return [
-      {
-        ...DEFAULT_WEBSOCKET2_MESSAGE,
-        param_id: snowflakeId(),
-      },
-    ];
-  }
-  return [
-    {
-      name: i18next.t('supplement.msg'),
-      param_id: snowflakeId(),
-      request: {
-        mode: msg?.mode || 'text',
-        raw: msg?.raw || '',
-        raw_parameter: completionBodyRawParameter(msg?.raw_parameter),
-        raw_schema: recursionSchema(msg?.raw_schema, modelsMap),
-      },
-      response: {
-        mode: 'text',
-        raw: '',
-        raw_parameter: [],
-        raw_schema: { type: 'object' },
-      },
-    },
-  ];
-};
-
 export const completionWs2Message = (
   msg: Array<MessageItem>,
   modelsMap: { [key: string]: string }
@@ -892,24 +839,6 @@ export const completionWs2Request = (request: WebSocket2Request) => {
       parameter: completionParameter(
         request?.cookie?.parameter as RequestGlobalParams['cookie']['parameter']
       ),
-    },
-  };
-};
-
-export const completionWsRequest = (request: WebSocketRequest) => {
-  return {
-    header: {
-      parameter: completionParameter(
-        request?.header?.parameter as RequestGlobalParams['header']['parameter']
-      ),
-    },
-    query: {
-      parameter: completionParameter(
-        request?.query?.parameter as RequestGlobalParams['header']['parameter']
-      ),
-    },
-    cookie: {
-      parameter: [],
     },
   };
 };
@@ -1176,50 +1105,6 @@ export const completionApis = (
             tags,
             is_force: -1,
           });
-        }
-        if (target_type === APIS_TARGET_TYPE_ENUM.WEBSOCKET) {
-          if (isEqual(method, 'Socket.IO')) {
-            pre.push({
-              ...baseApiInfo,
-              target_type: APIS_TARGET_TYPE_ENUM.SOCKETIO,
-              method: '',
-              url:
-                url && isArray(request?.query?.parameter)
-                  ? genUrlByQuery(url, request?.query?.parameter)
-                  : url,
-              request: completionSocketIoRequest(request as unknown as SocketIoRequest),
-              message: (request as any)?.message
-                ? completionWsMessage((request as any)?.message, modelsMap)
-                : [
-                    {
-                      ...DEFAULT_WEBSOCKET2_MESSAGE,
-                      param_id: snowflakeId(),
-                    },
-                  ],
-              attribute_info: completionAttributeInfo(attribute_info),
-              tags,
-              config: completionSocketIoConfig(config as unknown as SocketIoConfig),
-            });
-          } else {
-            pre.push({
-              ...baseApiInfo,
-              target_type: APIS_TARGET_TYPE_ENUM.WEBSOCKET2,
-              method,
-              mark_id,
-              url,
-              is_socket,
-              config: completionWsConfig(config as WebsocketConfig),
-              request: completionWsRequest(request as unknown as WebSocketRequest),
-              message: (request as any)?.message
-                ? completionWsMessage((request as any)?.message, modelsMap)
-                : [
-                    {
-                      ...DEFAULT_WEBSOCKET2_MESSAGE,
-                      param_id: snowflakeId(),
-                    },
-                  ],
-            });
-          }
         }
         if (target_type === APIS_TARGET_TYPE_ENUM.WEBSOCKET2) {
           pre.push({

@@ -15,7 +15,7 @@ export const isSnowflakeId = (str: string) => {
   return true;
 };
 
-const markdownUm = ['api', 'doc', 'grpc', 'websocket', 'folder'];
+const markdownUm = ['api', 'doc', 'grpc', 'websocket2', 'socketio', 'folder'];
 export const openUrlAndOpenTab = (url: string) => {
   const urlLast = url?.split('/');
   const str = urlLast[urlLast?.length - 1];

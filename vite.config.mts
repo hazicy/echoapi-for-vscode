@@ -9,13 +9,15 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 const panels = ['sidePanel', 'tagPanel', 'environmentPanel', 'pushPanel',
   'importDataPanel', 'folderTestPanel', 'folderTestReportPanel', 'shareListPanel', 'exportDataPanel'];
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), 'ECHOAPI_');
   const language = env.ECHOAPI_LANGUAGE || 'auto';
   if (!['auto', 'en', 'zh-cn'].includes(language)) {
     throw new Error('ECHOAPI_LANGUAGE must be auto, en, or zh-cn.');
   }
   return {
+    // Builds must not invalidate optimized dependencies used by the running dev server.
+    cacheDir: `node_modules/.vite-webviews-${command}`,
     css: { modules: { generateScopedName }, postcss: { plugins: [sharedSlots()] } },
     base: './',
     resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },

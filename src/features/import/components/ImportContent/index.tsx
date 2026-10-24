@@ -2,6 +2,7 @@ import slots from "@/shared/ui/base/slots.module.css";
 import React, { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CodeEditor from "@/shared/components/CodeEditor";
+import useTheme from "@/shared/hooks/useTheme";
 
 
 import {
@@ -58,6 +59,7 @@ const Index = ({
   setImportLoading,
 }: Props) => {
   const { t } = useTranslation();
+  const { themeToken } = useTheme();
   const [value, setValue] = useSafeState<string>("");
   const {
     preview,

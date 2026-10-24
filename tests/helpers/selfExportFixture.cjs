@@ -1,5 +1,5 @@
 const load = require('./loadTypeScript.cjs');
-const types = Object.fromEntries(['api', 'sse', 'folder', 'doc', 'websocket', 'grpc', 'socket', 'socket_method', 'websocket2', 'socketio', 'graphql'].map(type => [type.toUpperCase(), type]));
+const types = Object.fromEntries(['api', 'sse', 'folder', 'doc', 'grpc', 'socket', 'socket_method', 'websocket2', 'socketio', 'graphql'].map(type => [type.toUpperCase(), type]));
 const loadConverter = (filename = 'src/features/export/utils/exportutils/apiToSelf.ts') => {
   let nextId = 0;
   let clones = 0;

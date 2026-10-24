@@ -50,23 +50,44 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
     );
     item.id = `${prefix}:${data.target_id}`;
     item.contextValue = folder ? "okapiFolder" : "okapiRequest";
+    const protocolLabels: Record<string, string> = {
+      sse: "SSE",
+      graphql: "GraphQL",
+      websocket2: "WebSocket",
+      socketio: "Socket.IO",
+      grpc: "gRPC",
+    };
+    const requestLabel = protocolLabels[data.target_type] ||
+      String(data.method || data.target_type).toUpperCase();
     item.description = folder
       ? undefined
-      : String(data.method || data.target_type).toUpperCase();
+      : requestLabel;
     const method = String(data.method || "").toUpperCase();
-    const color =
-      method === "POST"
-        ? "charts.yellow"
-        : method === "DELETE"
-          ? "charts.red"
-          : method === "PUT" || method === "PATCH"
-            ? "charts.blue"
-            : "charts.green";
+    const methodColors: Record<string, string> = {
+      GET: "charts.green",
+      POST: "charts.yellow",
+      PUT: "charts.blue",
+      PATCH: "charts.purple",
+      DELETE: "charts.red",
+      HEAD: "charts.blue",
+      OPTIONS: "descriptionForeground",
+    };
+    const protocolIcons: Record<string, { icon: string; color: string }> = {
+      graphql: { icon: "type-hierarchy", color: "charts.purple" },
+      websocket2: { icon: "arrow-swap", color: "charts.blue" },
+      socketio: { icon: "plug", color: "charts.yellow" },
+      sse: { icon: "broadcast", color: "charts.orange" },
+    };
+    const protocol = protocolIcons[data.target_type];
     item.iconPath = new vscode.ThemeIcon(
-      folder ? "folder" : "symbol-event",
-      folder ? undefined : new vscode.ThemeColor(color),
+      folder ? "folder" : protocol?.icon || "globe",
+      folder
+        ? undefined
+        : new vscode.ThemeColor(
+            protocol?.color || methodColors[method] || "charts.green",
+          ),
     );
-    item.tooltip = [data.name, data.method, data.url].filter(Boolean).join(" ");
+    item.tooltip = [data.name, folder ? undefined : requestLabel, data.url].filter(Boolean).join(" ");
     return item;
   };
   const provider = (section: Section): vscode.TreeDataProvider<TreeNode> => ({
@@ -154,7 +175,7 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
           item.id = `history:${node.data.id}`;
           item.collapsibleState = vscode.TreeItemCollapsibleState.None;
           item.contextValue = "okapiHistory";
-          item.description = `${node.data.request.method || node.data.request.target_type.toUpperCase()} · ${new Date(node.data.sentAt).toLocaleTimeString()}`;
+          item.description = `${item.description} · ${new Date(node.data.sentAt).toLocaleTimeString()}`;
           item.tooltip = `${item.tooltip}\n${new Date(node.data.sentAt).toLocaleString()}`;
           item.command = {
             command: "okapi.tree.openHistory",
@@ -364,7 +385,7 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
       APIS_TARGET_TYPE_ENUM.API,
       APIS_TARGET_TYPE_ENUM.SSE,
       APIS_TARGET_TYPE_ENUM.GRAPHQL,
-      APIS_TARGET_TYPE_ENUM.WEBSOCKET,
+      APIS_TARGET_TYPE_ENUM.WEBSOCKET2,
       APIS_TARGET_TYPE_ENUM.SOCKETIO,
       APIS_TARGET_TYPE_ENUM.FOLDER,
     ];

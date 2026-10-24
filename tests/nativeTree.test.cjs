@@ -100,7 +100,7 @@ test("native sidebar panels, test commands and workspace request history", async
     common: {
       APIS_BASE_DEFAULT_DATA: { api: { response: { restored: true } } },
     },
-    constants: { APIS_TARGET_TYPE_ENUM: { API: "api", FOLDER: "folder", SSE: "sse", GRAPHQL: "graphql", WEBSOCKET: "websocket", SOCKETIO: "socketio" } },
+    constants: { APIS_TARGET_TYPE_ENUM: { API: "api", FOLDER: "folder", SSE: "sse", GRAPHQL: "graphql", WEBSOCKET2: "websocket2", SOCKETIO: "socketio" } },
     "apipost-tools": { snowflakeId: () => String(++nextId) },
   };
   globalThis.__okapiNativeMocks = mocks;
@@ -165,6 +165,16 @@ test("native sidebar panels, test commands and workspace request history", async
     mocks.sidbar.handleMessage = () => true;
     await commands.get("okapi.tree.new")();
     assert.equal(executed.at(-1)[0], "openTabPanel");
+    const originalPicker = mocks.vscode.window.showQuickPick;
+    mocks.common.APIS_BASE_DEFAULT_DATA.websocket2 = { message: [{ request: { raw: "" } }] };
+    mocks.vscode.window.showQuickPick = async (items) => {
+      assert.equal(items.some((item) => item.type === "websocket"), false);
+      return items.find((item) => item.type === "websocket2");
+    };
+    await commands.get("okapi.tree.new")();
+    assert.equal(executed.at(-1)[1].target_type, "websocket2");
+    assert.equal(executed.at(-1)[1].message.length, 1);
+    mocks.vscode.window.showQuickPick = originalPicker;
     const requests = views.get("okapiRequests");
     const tests = views.get("okapiTests");
     const history = views.get("okapiHistory");

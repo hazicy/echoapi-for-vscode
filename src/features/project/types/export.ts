@@ -1,6 +1,7 @@
 import { ApiDetailsData } from '@/features/requests/types/api';
 import { GrpcProtos } from '@/features/requests/types/grpc';
-import { WebsocketConfig } from '@/features/requests/types/websocket';
+import { Websocket2Config } from '@/features/requests/types/websocket2';
+import { SocketIoConfig } from '@/features/requests/types/socketio';
 import { EnvListItem } from '@/features/environment/types';
 import {
   ConnectToDatabaseItem,
@@ -78,7 +79,7 @@ export type GlobalVars = {
 };
 
 export type ImportApis = ApiDetailsData & {
-  config?: WebsocketConfig;
+  config?: Websocket2Config | SocketIoConfig;
   protos: GrpcProtos[];
   server_id: string;
 };

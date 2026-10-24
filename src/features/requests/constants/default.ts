@@ -10,7 +10,6 @@ import { GrpcDetailsData } from "@/features/requests/types/grpc";
 import { SocketDetailsData } from "@/features/requests/types/socket";
 import { SocketServiceDetailsData } from "@/features/requests/types/socketService";
 import { SSEDetailsData } from "@/features/requests/types/sse";
-import { WebsocketDetailsData } from "@/features/requests/types/websocket";
 
 import {
   APIS_PRESSURE_MODE,
@@ -20,7 +19,6 @@ import {
 import {
   DEFAULT_API_REQUEST,
   DEFAULT_FOLDER_REQUEST,
-  DEFAULT_WEBSOCKET_REQUEST,
   DEFAULT_WEBSOCKET2_REQUEST,
   DEFAULT_WEBSOCKET2_MESSAGE,
   DEFAULT_GRAPHQL_REQUEST,
@@ -105,24 +103,6 @@ export const DEFAULT_DOC_DATA: DocDetailsData = {
   tags: [],
   attribute_info: {},
   description: "",
-};
-
-// websocket default request parameters
-export const DEFAULT_WEBSOCKET_DATA: WebsocketDetailsData = {
-  ...DEFAULT_APIS_BASE_DATA,
-  name: i18next.t("supplement.new_websocket"),
-  target_type: APIS_TARGET_TYPE_ENUM.WEBSOCKET,
-  method: "Raw",
-  request: DEFAULT_WEBSOCKET_REQUEST,
-  url: "",
-  config: {
-    information_size: 5,
-    reconnect_num: 5,
-    reconnect_time: 5000,
-    shake_hands_path: "",
-    shake_hands_timeout: 0,
-    socket_version: "v4",
-  },
 };
 
 // websocket2 default request parameters

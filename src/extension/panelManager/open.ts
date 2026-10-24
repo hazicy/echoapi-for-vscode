@@ -29,14 +29,10 @@ export const createOpenPanel = (data: any, context: vscode.ExtensionContext) => 
     },
   );
 
-  let iconName = panelOptions?.iconObj?.[data?.target_type] || '';
-
-  // Get icon path
-  const iconPath = vscode.Uri.file(
-    path.join(context.extensionPath, 'dist', 'images', iconName)
+  const iconName = panelOptions?.iconObj?.[data?.target_type] || "";
+  panel.iconPath = vscode.Uri.file(
+    path.join(context.extensionPath, "dist", "images", iconName)
   );
-
-  panel.iconPath = iconPath;
   let scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', `${panelOptions.viewType}.js`)));
   if(process.env.ECHOAPI_DEV_SERVER === "true"){
     scriptUri = `http://localhost:${LOCAL_PORT}/src/app/webviews/${panelOptions.viewType[0].toUpperCase()}${panelOptions.viewType.slice(1)}.tsx`;

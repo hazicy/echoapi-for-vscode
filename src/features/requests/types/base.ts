@@ -9,7 +9,6 @@ import { GrpcDetailsData } from './grpc';
 import { SocketDetailsData } from './socket';
 import { SocketServiceDetailsData } from './socketService';
 import { SSEDetailsData } from './sse';
-import { WebsocketDetailsData } from './websocket';
 import { Websocket2DetailsData } from './websocket2';
 import { SocketIoDetailsData } from './socketio';
 import { GraphQLDetailsData } from './graphql';
@@ -32,8 +31,6 @@ export type ApiTypeMethod =
   | 'PROPFIND'
   | 'VIEW';
 
-// WebSocket request method
-export type WebsocketMethod = 'Raw' | 'Socket.IO';
 
 export interface ApisBaseData {
   // Parent directory ID
@@ -159,7 +156,6 @@ export type ApisDataTypeMapping = {
   [APIS_TARGET_TYPE_ENUM.SSE]: SSEDetailsData;
   [APIS_TARGET_TYPE_ENUM.FOLDER]: FolderDetailsData;
   [APIS_TARGET_TYPE_ENUM.DOC]: DocDetailsData;
-  [APIS_TARGET_TYPE_ENUM.WEBSOCKET]: WebsocketDetailsData;
   [APIS_TARGET_TYPE_ENUM.GRPC]: GrpcDetailsData;
   [APIS_TARGET_TYPE_ENUM.API_SAMPLE]: Omit<ApiDetailsData, 'description' | 'attribute_info'>;
   [APIS_TARGET_TYPE_ENUM.API_SAMPLE_GROUP]: SampleGroupsDetailsData;

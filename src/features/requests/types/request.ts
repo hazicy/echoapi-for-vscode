@@ -113,22 +113,6 @@ export interface SocketRequest {
   };
 }
 
-export interface WebSocketRequest {
-  // Request header info
-  header: { parameter: Array<ApisBaseDataItem> };
-  // Request query info
-  query: { parameter: Array<ApisBaseDataItem> };
-  // API request URL
-  event: { parameter: Array<ApisBaseDataItem> };
-  // Description
-  message: {
-    mode: string;
-    raw: string;
-    raw_parameter: Array<ApisBaseDataItem>;
-    raw_schema: any;
-  };
-}
-
 export type DefaultRequestSystemHeaders = {
   key: string;
   value: string;

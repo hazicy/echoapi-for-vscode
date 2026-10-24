@@ -16,14 +16,12 @@ import {
 import { useSafeState } from "ahooks";
 import classNames from "classnames";
 import { get, map } from "lodash";
-import { useShallow } from "zustand/react/shallow";
 
 import Button from "@/shared/ui/Button";
 import IconFont from "@/shared/ui/IconFont";
 import Tooltip from "@/shared/ui/Tooltip";
-import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
 import { getProjectConfig, openEnvPage } from "@/features/requests/events/env";
-import { useApis, useProjectConfig } from "@/app/store";
+import { useProjectConfig } from "@/app/store";
 import { EnvListItem } from "@/features/environment/types";
 
 type EnvDropdownProps = {
@@ -37,7 +35,6 @@ type EnvDropdownProps = {
 const EnvDropdown: React.FC<EnvDropdownProps> = ({
   value,
   onEnvClick,
-  isApis = false,
   disabled = false,
   style,
 }: EnvDropdownProps) => {
@@ -50,17 +47,6 @@ const EnvDropdown: React.FC<EnvDropdownProps> = ({
   const updateEnvSettingKeys = useProjectConfig(
     (state) => state.updateEnvSettingKeys,
   );
-  const { apisActiveKey } = useApis(
-    useShallow((state) => ({
-      apisActiveKey: state.apisActiveKey,
-    })),
-  );
-  const apisData = useApis(
-    (state) =>
-      state.opensApiDetailsData[apisActiveKey] ||
-      state.apiBaseData[apisActiveKey],
-  );
-
   const envDetails = useMemo(() => {
     return envList?.find((e) => e.env_id === value) || get(envList, "[0]");
   }, [envList, value]);
@@ -73,15 +59,7 @@ const EnvDropdown: React.FC<EnvDropdownProps> = ({
     );
   }, [filterValue, envList]);
 
-  const envDisabled = useMemo(() => {
-    if (
-      (isApis && apisData?.target_type === APIS_TARGET_TYPE_ENUM.WEBSOCKET) ||
-      disabled
-    ) {
-      return true;
-    }
-    return false;
-  }, [isApis, apisData]);
+  const envDisabled = disabled;
 
   const envCreate = async () => {
     updateEstablish(true);
