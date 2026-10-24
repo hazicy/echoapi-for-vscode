@@ -11,11 +11,14 @@ import { useProjectConfig } from "@/app/store";
 import { ApiDetailsData } from "@/features/requests/types/api";
 import { ChangeFuncType } from "@/shared/types/common";
 
+import LayoutControl from "@/shared/components/ResizablePanels/LayoutControl";
+
 interface Props {
+  showLayoutControl?: boolean;
   apisData: ApiDetailsData;
   onApisDataChange: (data: ApiDetailsData) => void;
 }
-const ToolBar: FC<Props> = ({ apisData, onApisDataChange }) => {
+const ToolBar: FC<Props> = ({ apisData, onApisDataChange, showLayoutControl }) => {
   const envDetailKeys = useProjectConfig((state) => state.envDetailKeys);
   const updateEnvDetailKeys = useProjectConfig(
     (state) => state.updateEnvDetailKeys,
@@ -52,7 +55,8 @@ const ToolBar: FC<Props> = ({ apisData, onApisDataChange }) => {
             onChange={(event) => handleChange("name", event.target.value)}
           />
         </Flex>
-        <Flex style={{ height: 26 }}>
+        <Flex style={{ height: 26 }} gap={8} align="center">
+          {showLayoutControl && <LayoutControl />}
           <EnvDropdown isApis value={envDetailKeys} onEnvClick={envClick} />
         </Flex>
       </Flex>

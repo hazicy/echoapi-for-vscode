@@ -109,6 +109,7 @@ const ApiDebug: FC<ApiComponentType> = ({ apisData, onApisDataChange }) => {
   return (
     <>
       <ToolBar
+        showLayoutControl
         apisData={apisData as ApiDetailsData}
         onApisDataChange={onApisDataChange}
       />

@@ -145,6 +145,7 @@ const SocketIoDebug: FC<SocketIoComponentType> = ({
   return (
     <>
       <ToolBar
+        showLayoutControl
         apisData={apisData as unknown as ApiDetailsData}
         onApisDataChange={(val) => {
           onApisDataChange(val as unknown as SocketIoDetailsData);

@@ -68,6 +68,7 @@ const Index: FC<ApiComponentType> = ({ apisData, onApisDataChange }) => {
   return (
     <>
       <ToolBar
+        showLayoutControl
         apisData={apisData as unknown as ApiDetailsData}
         onApisDataChange={(val) => {
           onApisDataChange(val as unknown as GraphQLDetailsData);

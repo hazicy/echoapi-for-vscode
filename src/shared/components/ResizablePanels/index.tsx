@@ -17,16 +17,12 @@ import {
   PanelResizeHandleProps,
 } from "react-resizable-panels";
 
-import { Flex, Space } from "@/shared/ui/base";
+import { Flex } from "@/shared/ui/base";
 
-import { useDebounceFn, useSafeState } from "ahooks";
+import { useSafeState } from "ahooks";
 import cn from "classnames";
-import { t } from "i18next";
-import produce from "immer";
 import { isEqual, omit } from "lodash";
 
-import Popover from "@/shared/ui/Popover";
-import Button from "@/shared/ui/Button";
 import IconFont from "@/shared/ui/IconFont";
 import { STATUS_CODE } from "@/shared/constants/common";
 
@@ -108,39 +104,6 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
     resetLayout,
   }));
 
-  // Update system config for split-screen direction
-  const { run: saveSystemSetting } = useDebounceFn(
-    async (_direction) => {
-      if (!showDirectionBtn) return;
-
-      const { systemConfig, updateSystemConfig } = useSystemConfig.getState();
-      const systemValue =
-        _direction === "vertical" ? STATUS_CODE.ENABLE : STATUS_CODE.DISABLE;
-
-      const newSystemConfig = produce(systemConfig, (draft) => {
-        draft["tab_direction"] = systemValue;
-      });
-
-      updateSystemConfig(newSystemConfig);
-
-      window?.vscode.postMessage({
-        action: "setSystemConfig",
-        data: { tab_direction: systemValue },
-      });
-
-      // await saveSystemSettingRequest({ configure: { tab_direction: systemValue } });
-    },
-    {
-      wait: 1000,
-    },
-  );
-
-  const handleChangeDirection = (direction: DirectionType) => {
-    setDirection(direction);
-    onDirectionChange?.(direction);
-    showDirectionBtn && saveSystemSetting(direction);
-  };
-
   const setPanelGroupLayout = (layout: number[]) => {
     panelGroupRef.current?.setLayout(layout);
   };
@@ -157,36 +120,6 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
     const size = rightPanelProps.collapsedSize || defaultPanelProps.minSize;
     setPanelGroupLayout([100 - size, size]);
   };
-
-  const popoverContent = (
-    <Space className="direction-popover-content" direction="vertical">
-      <Flex
-        className={cn(slots["direction-item-btn"], isVertical && slots.active)}
-        align="center"
-        justify="left"
-        onClick={() => handleChangeDirection("vertical")}
-      >
-        <IconFont type="icon-up-down" />
-        <span className={slots.title}>
-          {t("common.response_component.single_pane")}
-        </span>
-      </Flex>
-      <Flex
-        className={cn(
-          slots["direction-item-btn"],
-          isHorizontal && slots.active,
-        )}
-        align="center"
-        justify="left"
-        onClick={() => handleChangeDirection("horizontal")}
-      >
-        <IconFont type="icon-left-right" />
-        <span className={slots.title}>
-          {t("common.response_component.two_pane")}
-        </span>
-      </Flex>
-    </Space>
-  );
 
   const leftCollapse = (
     <div className={slots["left-collapse-wrap"]} onClick={resetLayout}>
@@ -279,26 +212,7 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
           )}
         >
           {!collapse.right ? rightPanel : rightCollapse}
-          {/* Split screen toggle */}
-          {showDirectionBtn && !collapse.right && (
-            <div className={slots["direction-wrap"]}>
-              <Popover
-                content={popoverContent}
-                overlayInnerStyle={{ padding: 8 }}
-                placement="left"
-                getPopupContainer={(triggerNode: HTMLElement) =>
-                  triggerNode.parentNode as HTMLElement
-                }
-              >
-                <Button>
-                  <IconFont
-                    style={{ color: "var(--icon-color)" }}
-                    type="icon-direction"
-                  />
-                </Button>
-              </Popover>
-            </div>
-          )}
+
         </Panel>
       </PanelGroup>
     </div>
