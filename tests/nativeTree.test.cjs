@@ -76,6 +76,7 @@ test("native sidebar panels, test commands and workspace request history", async
           return { dispose() {} };
         },
         showInputBox: async () => "Get user",
+        showQuickPick: async (items) => items[0],
       },
       commands: {
         registerCommand: (id, fn) => {
@@ -95,11 +96,11 @@ test("native sidebar panels, test commands and workspace request history", async
         writes.get(key) ?? fallback,
       setDataToGlobalStorage: (_, key, value) => writes.set(key, value),
     },
-    sidbar: { handleMessage: () => {} },
+    sidbar: { handleMessage: () => true },
     common: {
       APIS_BASE_DEFAULT_DATA: { api: { response: { restored: true } } },
     },
-    constants: { APIS_TARGET_TYPE_ENUM: { API: "api", FOLDER: "folder" } },
+    constants: { APIS_TARGET_TYPE_ENUM: { API: "api", FOLDER: "folder", SSE: "sse", GRAPHQL: "graphql", WEBSOCKET: "websocket", SOCKETIO: "socketio" } },
     "apipost-tools": { snowflakeId: () => String(++nextId) },
   };
   globalThis.__okapiNativeMocks = mocks;
@@ -157,6 +158,13 @@ test("native sidebar panels, test commands and workspace request history", async
       [...views.keys()],
       ["okapiRequests", "okapiTests", "okapiHistory"],
     );
+    const beforeCreate = executed.length;
+    mocks.sidbar.handleMessage = () => false;
+    await commands.get("okapi.tree.new")();
+    assert.equal(executed.length, beforeCreate);
+    mocks.sidbar.handleMessage = () => true;
+    await commands.get("okapi.tree.new")();
+    assert.equal(executed.at(-1)[0], "openTabPanel");
     const requests = views.get("okapiRequests");
     const tests = views.get("okapiTests");
     const history = views.get("okapiHistory");

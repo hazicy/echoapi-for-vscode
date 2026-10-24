@@ -1,7 +1,7 @@
 import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from '../constants';
 import * as vscode from 'vscode';
 import path from 'path';
-import { getApiList, getHtmlForWebview } from '../utils';
+import { getApiList, getApiListName, getHtmlForWebview } from '../utils';
 import { handelPushMessage } from '../messageHandler/push';
 
 export const createPushPanel = (data:any, context: vscode.ExtensionContext) => {
@@ -42,9 +42,11 @@ export const createPushPanel = (data:any, context: vscode.ExtensionContext) => {
   // And set its HTML content
   panel.webview.html = getHtmlForWebview(scriptUri, resourceBaseUrl, null);
 
+  const source = { panel, apiListName: getApiListName(context) };
+
   // Receive messages from Webview
   panel.webview.onDidReceiveMessage(async (message: { action: string, data: any }) => {
-    handelPushMessage(message, context);
+    await handelPushMessage(message, context, source);
   });
 
 
@@ -71,7 +73,9 @@ export const createPushPanel = (data:any, context: vscode.ExtensionContext) => {
   // Triggered when tab is closed
   panel.onDidDispose(
     () => {
-      globalConfig.pushWebView = null;
+      if (globalConfig.pushWebView === panel) {
+        globalConfig.pushWebView = null;
+      }
       // When the panel is closed, cancel any future updates to the webview content
     },
     null,

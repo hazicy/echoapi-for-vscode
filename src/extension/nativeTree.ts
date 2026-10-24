@@ -405,7 +405,10 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
       is_changed: 1,
       is_deleted: -1,
     } as ApiDetailsData;
-    await handleMessage({ action: "saveFolder", data }, context);
+    const saved = await handleMessage({ action: "saveFolder", data }, context);
+    if (saved === false) {
+      return;
+    }
     if (type.type !== "folder") {
       await vscode.commands.executeCommand("openTabPanel", data);
     }

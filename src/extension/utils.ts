@@ -1,3 +1,4 @@
+import { getCollectionApis, getCollectionChildIds } from './utils/collectionTree';
 import { language } from '@/shared/locale/language';
 import { ApiDetailsData } from "@/features/requests/types/api";
 import { assign, cloneDeep, concat, find, findIndex, forEach, groupBy, head, isArray, isEmpty, isEqual, isNull, isNumber, isObject, isPlainObject, isString, isUndefined, keys, map, omit, pullAt, reduce, size, trim, values } from "lodash";
@@ -493,29 +494,8 @@ export const transformGlobalVars = (localGlobalVars: any, globalVariables?: ApiS
   );
 };
 
-export const getAllChildIds = (apiList: ApiDetailsData[], apisData: ApiDetailsData) => {
-  try {
-    const resultData: string[] = [];
-
-    const deepFind = (curApisData: ApiDetailsData) => {
-      forEach(apiList, (forItem) => {
-        if (forItem.parent_id === curApisData.target_id) {
-          resultData.push(forItem.target_id);
-
-          if (isEqual(forItem.target_type, APIS_TARGET_TYPE_ENUM.FOLDER)) {
-            deepFind(forItem);
-          }
-        }
-      });
-    };
-
-    // Push current data to result set first
-    resultData.push(apisData.target_id);
-    deepFind(apisData);
-
-    return resultData;
-  } catch (err) { }
-};
+export const getAllChildIds = (apiList: ApiDetailsData[], apisData: ApiDetailsData) =>
+  getCollectionChildIds(apiList, apisData);
 
 export const getMaxSort = (apiList: ApiDetailsData[], parent_id: string = '0') => {
   const childList = apiList.filter((i: ApiDetailsData) => i?.parent_id === parent_id);
@@ -568,65 +548,31 @@ export const curlImport = (parsedValue: string) => {
   });
 };
 
-export const getApiList = (context: vscode.ExtensionContext) => {
+export const getApiList = (context: vscode.ExtensionContext): ApiDetailsData[] => {
   try {
-    let user_config: any = context.globalState.get('userConfig') || {};
-    let apiList: any[] = [];
-    let apiListName = 'apiList';
-    if (user_config?.currentProject && user_config?.currentProject?.project_id !== '-1') {
-      apiListName = apiListName + `:${user_config.currentProject.project_id}`;
-      apiList = getDataFromGlobalStorage(context, apiListName, []);
-    } else {
-      apiList = getDataFromGlobalStorage(context, apiListName, []);
-    };
-    return apiList;
+    return getDataFromGlobalStorage(context, getApiListName(context), []);
   } catch (error) {
     return [];
   }
 };
 
-export const getAllApiChildren = (folder_id: string, context: vscode.ExtensionContext) => {
-  const apiList = getApiList(context);
-  const result: EventItem[] = [];
-  const getChild = (id: string, list: EventItem[]) => {
-    const childList = apiList.filter(i => i?.parent_id === id).sort((a, b) => a?.sort - b?.sort);
-    if (childList.length > 0) {
-      let folderIds: string[] = [];
-      childList.forEach(child => {
-        if (child.target_type === CASE_ITEM_TYPE.API) {
-          result.push({
-            event_id: child.target_id,
-            test_id: folder_id,
-            type: CASE_ITEM_TYPE.API,
-            enabled: 1,
-            sort: 1,
-            data: child,
-            parent_event_id: '0',
-            /** Whether bidirectional sync */
-            auto_sync: true,
-            project_id: "-1"
-          });
-        }
-        if (child.target_type === 'folder') {
-          folderIds.push(child.target_id);
-        }
-      });
-      if (folderIds.length > 0) {
-        folderIds.forEach(f_id => {
-          getChild(f_id, list);
-        });
-      }
-    }
-  };
-  getChild(folder_id, result);
-  return result;
-};
+export const getAllApiChildren = (folder_id: string, context: vscode.ExtensionContext): EventItem[] =>
+  getCollectionApis(getApiList(context), folder_id).map(child => ({
+    event_id: child.target_id,
+    test_id: folder_id,
+    type: CASE_ITEM_TYPE.API,
+    enabled: 1,
+    sort: 1,
+    data: child,
+    parent_event_id: '0',
+    auto_sync: true,
+    project_id: '-1',
+  }));
 
 export const setApiList = (newList: ApiDetailsData[], context: vscode.ExtensionContext) => {
   try {
     let apiListName = getApiListName(context);
-    setDataToGlobalStorage(context, apiListName, newList);
-    return true;
+    return setDataToGlobalStorage(context, apiListName, newList);
   } catch (error) {
     return false;
   }
@@ -754,16 +700,15 @@ export const deleteProjectReport = (report_id: string, context: vscode.Extension
   }
 };
 
-export const deleteTestingFolderData = (folder_id: string, context: vscode.ExtensionContext) => {
-
+export const deleteTestingFoldersData = (folderIds: Iterable<string>, context: vscode.ExtensionContext) => {
   try {
-    let projectTestName = getProjectTestName(context);
-
-    let projectTestData: any = getDataFromGlobalStorage(context, projectTestName);
-    delete projectTestData[folder_id];
-    setDataToGlobalStorage(context, projectTestName, projectTestData)
-    return true;
-  } catch (error) {
+    const projectTestName = getProjectTestName(context);
+    const projectTestData: any = getDataFromGlobalStorage(context, projectTestName);
+    for (const id of folderIds) {
+      delete projectTestData[id];
+    }
+    return setDataToGlobalStorage(context, projectTestName, projectTestData);
+  } catch {
     return false;
   }
 };
@@ -859,9 +804,9 @@ export const setProjectConfig = (context: vscode.ExtensionContext, new_project_c
   }
 };
 
-export const setProjectApisVersion = (context: vscode.ExtensionContext, apis: ApiDetailsData[]) => {
+export const setProjectApisVersion = async (context: vscode.ExtensionContext, apis: Pick<ApiDetailsData, 'project_id' | 'target_id' | 'version'>[]) => {
   try {
-    let project_apis_version: any = context.globalState.get('projectApisVersion') || {};
+    const project_apis_version: any = cloneDeep(context.globalState.get('projectApisVersion') || {});
     if (isArray(apis)) {
       forEach(apis, (item) => {
         if (item?.target_id && item?.project_id && item.project_id !== '-1' && isNumber(item?.version)) {
@@ -872,8 +817,11 @@ export const setProjectApisVersion = (context: vscode.ExtensionContext, apis: Ap
         }
       });
     }
-    context.globalState.update("projectApisVersion", project_apis_version);
-  } catch (error) { }
+    await context.globalState.update("projectApisVersion", project_apis_version);
+    return true;
+  } catch {
+    return false;
+  }
 };
 
 export const getProjectApisVersion = (context: vscode.ExtensionContext) => {

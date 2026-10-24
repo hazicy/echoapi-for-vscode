@@ -15,16 +15,16 @@ import {
   cloneDeep,
   forEach,
   isArray,
-  isNumber,
   isPlainObject,
-  some,
 } from "lodash";
 import Left from "./Left";
 import Right from "./Right";
 import {
   completeServiceList,
-  getEnvConficList,
+  getEnvConflictList,
 } from "@/features/sync/utils/push";
+import { resolveEnvironmentConflicts } from "@/features/sync/utils/environmentDiff";
+import { findApiConflicts } from "@/features/sync/utils/apiVersions";
 import { PushApiData, PushEnvData } from "./type";
 import produce from "immer";
 import {
@@ -102,6 +102,18 @@ const Push = () => {
     setPushEnvData(newPushEnvData);
   };
 
+  const completePush = (uploaded: Array<{ target_id: string; version: number }> = [], selectedIds?: Set<string>) => {
+    window?.vscode.postMessage({
+      action: "completePush",
+      data: {
+        project_id: currentProject.project_id,
+        versions: uploaded
+          .filter(item => !selectedIds || selectedIds.has(item.target_id))
+          .map(({ target_id, version }) => ({ target_id, version })),
+      },
+    });
+  };
+
   const handlePush = async () => {
     if (!currentProject?.project_id || currentProject?.project_id === "-1") {
       message.error(t("common.choose_target_tip"));
@@ -122,75 +134,28 @@ const Push = () => {
     );
 
     // Handle environment and service conflicts (get conflicting environment list)
-    const envConflictList = await getEnvConficList(
-      pushEnvData?.checkedKeys || [],
-      currentProject?.project_id,
-    );
-
-    // Get all API versions from cloud
-    const res = await getApisListService({
-      project_id: currentProject.project_id,
-    });
-    const cloudList = res?.list || [];
-
-    // Conflicting API list
-    const conflictList: any = [];
-    // Conflicting API ID list
-    const conflictIdList: Array<string> = [];
-
-    // Local API version records for target project
-    let localApisVersion: any =
-      localProjectApisVersion?.[currentProject.project_id] || {};
-
-    // Compare local and cloud for conflicts, prefer using recorded version numbers
-    forEach(checkedItems, (item) => {
-      if (
-        some(cloudList, (i) => {
-          let localVersion = localApisVersion?.[i?.target_id];
-          // If local has version record, prefer using local project version record for comparison
-          if (isNumber(localVersion)) {
-            return (
-              i?.target_id === item?.target_id &&
-              [
-                "api",
-                "sse",
-                "websocket2",
-                "socketio",
-                "folder",
-                "graphql",
-              ].includes(item?.target_type) &&
-              i?.version > localVersion
-            );
-          } else {
-            return (
-              i?.target_id === item?.target_id &&
-              [
-                "api",
-                "sse",
-                "websocket2",
-                "socketio",
-                "folder",
-                "graphql",
-              ].includes(item?.target_type) &&
-              i?.version > item.version
-            );
-          }
-        })
-      ) {
-        conflictList.push({ ...item, parent_id: "0" });
-        conflictIdList.push(item?.target_id);
+    let envConflictList: Awaited<ReturnType<typeof getEnvConflictList>>;
+    let cloudList: Awaited<ReturnType<typeof getApisListService>>["list"];
+    try {
+      envConflictList = await getEnvConflictList(
+        pushEnvData?.checkedKeys || [],
+        currentProject.project_id,
+      );
+      const response = await getApisListService({ project_id: currentProject.project_id });
+      if (!isArray(response?.list)) {
+        throw new Error("Unable to load API versions for conflict checking.");
       }
-    });
+      cloudList = response.list;
+    } catch (error) {
+      message.error(error instanceof Error ? error.message : String(error));
+      return;
+    }
+
+    const localApisVersion = localProjectApisVersion?.[currentProject.project_id] || {};
+    const conflictList = findApiConflicts(checkedItems, cloudList, localApisVersion);
+    const conflictIdList = conflictList.map(item => item.target_id);
     // API or environment has conflict, proceed to conflict resolution step
     if (conflictList.length > 0 || envConflictList.diffEnvs.length > 0) {
-      conflictList.sort((a: any, b: any) => {
-        if (a.target_type === "folder" && b.target_type !== "folder") {
-          return -1;
-        } else if (a.target_type !== "folder" && b.target_type === "folder") {
-          return 1;
-        }
-        return 0;
-      });
       if (conflictType === "manual") {
         updatePushApiData({
           conflictItems: conflictList,
@@ -260,9 +225,7 @@ const Push = () => {
 
       if (checkedItems.length <= 0) {
         // Close upload page and show success message
-        window?.vscode.postMessage({
-          action: "pushSuccess",
-        });
+        completePush();
         return;
       }
 
@@ -271,28 +234,15 @@ const Push = () => {
         project_id: currentProject.project_id,
         apis: checkedItems,
       });
-      // After uploading APIs, use cloud's latest version number to overwrite local version
-      if (isArray(result?.list) && result.list.length > 0) {
-        forEach(result.list, (i) => {
-          let localIndex = localApiList.findIndex(
-            (it) => it?.target_id === i?.target_id,
-          );
-          if (isNumber(i.version)) {
-            localApiList[localIndex].version = i.version;
-          }
-        });
-        // Save updated version data locally
-        window?.vscode.postMessage({
-          action: "setApiList",
-          data: localApiList,
-        });
+      if (!isArray(result?.list)) {
+        throw new Error("The upload response did not contain API versions.");
       }
-      // Close upload page and show success message
-      window?.vscode.postMessage({
-        action: "pushSuccess",
-      });
-    } catch (error) {}
-    setSpinning(false);
+      completePush(result.list, new Set(checkedItems.map(item => item.target_id)));
+    } catch (error) {
+      message.error(error instanceof Error ? error.message : String(error));
+    } finally {
+      setSpinning(false);
+    }
   };
   const conflictPush = async (keys?: React.Key[], uploadItem?: any[]) => {
     let checkedKeys = (pushApiData?.checkedKeys || []).concat(halfCheckedKeys);
@@ -371,9 +321,7 @@ const Push = () => {
       });
       if (checkedItems.length <= 0) {
         // Close upload page and show success message
-        window?.vscode.postMessage({
-          action: "pushSuccess",
-        });
+        completePush();
         return;
       }
       const result = await batchSaveApiService({
@@ -381,31 +329,15 @@ const Push = () => {
         apis: checkedItems,
       });
 
-      // After uploading APIs, use cloud's latest version number to overwrite local version
-      if (isArray(result?.list) && result.list.length > 0) {
-        forEach(result.list, (i) => {
-          let localIndex = localApiList.findIndex(
-            (it) => it?.target_id === i?.target_id,
-          );
-          if (isNumber(i.version)) {
-            localApiList[localIndex].version = i.version;
-          }
-        });
-        // Save updated version data locally
-        window?.vscode.postMessage({
-          action: "setApiList",
-          data: localApiList,
-        });
+      if (!isArray(result?.list)) {
+        throw new Error("The upload response did not contain API versions.");
       }
-      //#endregion Upload APIs end
-
-      // Close upload page and show success message
-      window?.vscode.postMessage({
-        action: "pushSuccess",
-      });
-    } catch (error) {}
-
-    setSpinning(false);
+      completePush(result.list, new Set(checkedItems.map(item => item.target_id)));
+    } catch (error) {
+      message.error(error instanceof Error ? error.message : String(error));
+    } finally {
+      setSpinning(false);
+    }
   };
 
   const handleFix = async () => {
@@ -413,226 +345,97 @@ const Push = () => {
       let envConflictItems = pushEnvData?.conflictItems || [];
       let conflictItems = pushApiData?.conflictItems || [];
       if (tabValue === "apis") {
-        let checkedKeys = (pushApiData?.checkedKeys || []).concat(
-          halfCheckedKeys,
-        );
-        let useClond = pushApiData?.conflictType;
-        let conflictCheckedKeys = pushApiData?.conflictCheckedKeys || [];
-        if (useClond === undefined) {
+        const checkedKeys = [...new Set((pushApiData?.checkedKeys || []).concat(halfCheckedKeys))];
+        const mode = pushApiData?.conflictType;
+        const conflictCheckedKeys = new Set(pushApiData?.conflictCheckedKeys || []);
+        if (!mode) {
           message.error(t("common.select_conflict_mode_tip"));
           return;
         }
-
-        if (useClond === "local") {
-          // Use local data
-          updatePushApiData(
-            "conflictItems",
-            conflictItems.filter(
-              (i: any) => !conflictCheckedKeys.includes(i?.target_id),
-            ),
-          );
-          // Handle last conflict and resubmit data to cloud
-          if (conflictCheckedKeys.length === conflictItems.length) {
-            if (envConflictItems.length <= 0) {
-              conflictPush();
-            } else {
-              setTabValue("env");
-            }
-          }
-        } else if (useClond === "cloud") {
-          // Use cloud data
-          updatePushApiData({
-            conflictItems: conflictItems.filter(
-              (i: any) => !conflictCheckedKeys.includes(i?.target_id),
-            ),
-            checkedKeys: checkedKeys.filter(
-              (i: React.Key) => !conflictCheckedKeys.includes(i),
-            ),
-          });
-
-          // Handle last conflict and resubmit data to cloud
-          if (conflictCheckedKeys.length === conflictItems.length) {
-            if (envConflictItems.length <= 0) {
-              conflictPush(
-                checkedKeys.filter(
-                  (i: React.Key) => !conflictCheckedKeys.includes(i),
-                ),
-              );
-            } else {
-              setTabValue("env");
-            }
+        if (conflictCheckedKeys.size === 0) {
+          message.error(t("common.least_one_item_tip"));
+          return;
+        }
+        const remaining = conflictItems.filter(item => !conflictCheckedKeys.has(item.target_id));
+        const uploadKeys = mode === "cloud"
+          ? checkedKeys.filter(key => !conflictCheckedKeys.has(key))
+          : checkedKeys;
+        updatePushApiData({ conflictItems: remaining, checkedKeys: uploadKeys, conflictCheckedKeys: [] });
+        if (remaining.length === 0) {
+          if (envConflictItems.length === 0) {
+            await conflictPush(uploadKeys);
+          } else {
+            setTabValue("env");
           }
         }
         return;
       }
       if (tabValue === "env") {
-        let conflictCheckedKeys = pushEnvData?.conflictCheckedKeys || [];
-        let uploadItems = cloneDeep(pushEnvData?.uploadItems) || [];
-        switch (pushEnvData?.conflictType) {
-          case "local":
-            const newServiceList = pushEnvData?.newServiceList || [];
-
-            // Check for service changes before conflict resolution, show modal if changed
-            if (newServiceList.length !== serverList.length) {
-              const res = await modal?.confirm({
-                title: "Push Confirmation",
-                content: (
-                  <Flex vertical gap={20}>
-                    <Flex
-                      gap={8}
-                      vertical
-                      style={{
-                        padding: 12,
-                        background: "var(--color-bg-page)",
-                      }}
-                    >
-                      <Typography.Text
-                        style={{ color: "var(--font-content-color)" }}
-                      >
-                        After selecting "Use Local Data", the system will
-                        automatically add any missing cloud services to ensure
-                        everything functions properly.
-                      </Typography.Text>
-                    </Flex>
-                    <span>Do you want to continue?</span>
-                  </Flex>
-                ),
-                width: 800,
-                okText: "Continue",
-                cancelText: "Cancel",
-              });
-              if (!res) {
-                return;
-              }
-            }
-
-            // Use local data (but need to merge services)
-            forEach(envConflictItems, (i) => {
-              let item = cloneDeep(i);
-
-              // Checked environments
-              if (conflictCheckedKeys.includes(i?.localEnv?.env_id)) {
-                completeServiceList(item.localEnv, newServiceList);
-              }
-              uploadItems.push(item.localEnv);
-            });
-
-            updatePushEnvData({
-              uploadItems,
-              conflictItems: envConflictItems.filter(
-                (i: any) => !conflictCheckedKeys.includes(i?.localEnv?.env_id),
-              ),
-            });
-
-            break;
-          case "cloud":
-            // Use cloud data
-            updatePushEnvData(
-              "conflictItems",
-              envConflictItems.filter(
-                (i: any) => !conflictCheckedKeys.includes(i?.localEnv?.env_id),
-              ),
-            );
-            break;
-          case "mergeCloud":
-            // Merge data, use cloud data for conflicting fields
-            forEach(envConflictItems, (i) => {
-              let item = cloneDeep(i);
-              // Checked environments
-              if (conflictCheckedKeys.includes(i?.localEnv?.env_id)) {
-                // Merge cloud services.
-                if (
-                  isArray(i?.cloudEnv?.server_list) &&
-                  i.cloudEnv.server_list.length > 0
-                ) {
-                  forEach(i.cloudEnv.server_list, (cloudService) => {
-                    let localServiceIndex = item.localEnv.server_list.findIndex(
-                      (f: any) => f?.server_id == cloudService?.server_id,
-                    );
-                    if (localServiceIndex > -1) {
-                      item.localEnv.server_list[localServiceIndex] =
-                        cloudService;
-                    } else {
-                      item.localEnv.server_list.push(cloudService);
-                    }
-                  });
-                }
-                // Use cloud environment name
-                item.localEnv.name = item.cloudEnv.name;
-
-                // Use cloud data for environment variables
-                item.localEnv.env_var_list = {
-                  ...(item?.localEnv?.env_var_list || {}),
-                  ...(item?.cloudEnv?.env_var_list || {}),
-                };
-
-                // Use cloud is_private setting
-                item.localEnv.is_private = item.cloudEnv.is_private;
-              }
-              uploadItems.push(item.localEnv);
-            });
-
-            updatePushEnvData({
-              uploadItems,
-              conflictItems: envConflictItems.filter(
-                (i: any) => !conflictCheckedKeys.includes(i?.localEnv?.env_id),
-              ),
-            });
-            break;
-          case "mergeLocal":
-            // Merge data, use local data for conflicting fields
-            forEach(envConflictItems, (i) => {
-              let item = cloneDeep(i);
-              // Checked environments
-              if (conflictCheckedKeys.includes(i?.localEnv?.env_id)) {
-                // Merge cloud services.
-                if (
-                  isArray(i?.cloudEnv?.server_list) &&
-                  i.cloudEnv.server_list.length > 0
-                ) {
-                  forEach(i.cloudEnv.server_list, (cloudService) => {
-                    let localServiceIndex = item.localEnv.server_list.findIndex(
-                      (f: any) => f?.server_id == cloudService?.server_id,
-                    );
-                    if (localServiceIndex > -1) {
-                    } else {
-                      item.localEnv.server_list.push(cloudService);
-                    }
-                  });
-                }
-
-                // Environment variables prefer local data
-                item.localEnv.env_var_list = {
-                  ...(item?.cloudEnv?.env_var_list || {}),
-                  ...(item?.localEnv?.env_var_list || {}),
-                };
-
-                // Use cloud is_private setting
-                item.localEnv.is_private = item.cloudEnv.is_private;
-              }
-              uploadItems.push(item.localEnv);
-            });
-
-            updatePushEnvData({
-              uploadItems,
-              conflictItems: envConflictItems.filter(
-                (i: any) => !conflictCheckedKeys.includes(i?.localEnv?.env_id),
-              ),
-            });
-            break;
-          default:
-            break;
+        const conflictCheckedKeys = pushEnvData?.conflictCheckedKeys || [];
+        const mode = pushEnvData?.conflictType;
+        if (!mode) {
+          message.error(t("common.select_conflict_mode_tip"));
+          return;
         }
-        // Handle last conflict and resubmit data to cloud
-        if (conflictCheckedKeys.length === envConflictItems.length) {
-          if (conflictItems.length <= 0) {
-            conflictPush(pushApiData?.checkedKeys || [], uploadItems);
+        if (conflictCheckedKeys.length === 0) {
+          message.error(t("common.least_one_item_tip"));
+          return;
+        }
+        const newServiceList = pushEnvData?.newServiceList || [];
+        if (mode === "local") {
+          // Check for service changes before conflict resolution, show modal if changed
+          if (newServiceList.length !== serverList.length) {
+            const res = await modal?.confirm({
+              title: "Push Confirmation",
+              content: (
+                <Flex vertical gap={20}>
+                  <Flex
+                    gap={8}
+                    vertical
+                    style={{
+                      padding: 12,
+                      background: "var(--color-bg-page)",
+                    }}
+                  >
+                    <Typography.Text
+                      style={{ color: "var(--font-content-color)" }}
+                    >
+                      After selecting "Use Local Data", the system will
+                      automatically add any missing cloud services to ensure
+                      everything functions properly.
+                    </Typography.Text>
+                  </Flex>
+                  <span>Do you want to continue?</span>
+                </Flex>
+              ),
+              width: 800,
+              okText: "Continue",
+              cancelText: "Cancel",
+            });
+            if (!res) {
+              return;
+            }
+          }
+        }
+        const resolved = resolveEnvironmentConflicts(
+          envConflictItems,
+          conflictCheckedKeys.map(String),
+          mode,
+          newServiceList,
+          pushEnvData?.uploadItems || [],
+        );
+        updatePushEnvData({ ...resolved, conflictCheckedKeys: [] });
+        if (resolved.conflictItems.length === 0) {
+          if (conflictItems.length === 0) {
+            await conflictPush(pushApiData?.checkedKeys || [], resolved.uploadItems);
           } else {
             setTabValue("apis");
           }
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      message.error(error instanceof Error ? error.message : String(error));
+    }
   };
 
   const handlePushCancel = () => {

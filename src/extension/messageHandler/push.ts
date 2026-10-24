@@ -1,50 +1,79 @@
 import * as vscode from 'vscode';
-import { getApiList, getApiListName, getCurrentProjectConfig, setProjectApisVersion } from '../utils';
+import { getApiList, getApiListName, getCurrentProjectConfig, setApiList, setProjectApisVersion } from '../utils';
 import { globalConfig } from '../constants';
-import { setDataToGlobalStorage } from '../db';
+import { applyApiVersions } from '@/features/sync/utils/apiVersions';
 
-export const handelPushMessage = (message: { action: string, data: any }, context: vscode.ExtensionContext) => {
-  const { pushWebView } = globalConfig;
+type PushSource = { panel: vscode.WebviewPanel; apiListName: string };
+
+export const handelPushMessage = async (
+  message: { action: string; data: any },
+  context: vscode.ExtensionContext,
+  source: PushSource,
+) => {
+  const isCurrentSource = () => globalConfig.pushWebView === source.panel && getApiListName(context) === source.apiListName;
+  if (!isCurrentSource()) {
+    return;
+  }
+  const pushWebView = source.panel;
 
   switch (message.action) {
     case 'getPushPanelData':
-      // Get API list information
-      const local_api_list = getApiList(context);
-      // Get current user information
-      let user_config: any = context.globalState.get('userConfig') || {};
-      // Get version record of local project APIs
-      let project_apis_version: any = context.globalState.get('projectApisVersion') || {};
-
-      pushWebView?.webview.postMessage({
+      pushWebView.webview.postMessage({
         action: 'setPushPanelData', data: {
-          local_api_list,
-          user_config,
-          project_apis_version
-        }
+          local_api_list: getApiList(context),
+          user_config: context.globalState.get('userConfig') || {},
+          project_apis_version: context.globalState.get('projectApisVersion') || {},
+        },
       });
       break;
     case 'openNewWindow':
       vscode.env.openExternal(vscode.Uri.parse(message.data));
       break;
-    case 'pushSuccess':
-      pushWebView?.dispose();
+    case 'completePush': {
+      const { project_id, versions } = message.data || {};
+      if (typeof project_id !== 'string' || !project_id || project_id === '-1' || !Array.isArray(versions)) {
+        vscode.window.showErrorMessage('Unable to save push results: invalid project or versions.');
+        return;
+      }
+      const validVersions = versions.filter(item => typeof item?.target_id === 'string' && item.target_id.length > 0 &&
+        typeof item.version === 'number' && Number.isFinite(item.version));
+      if (validVersions.length !== versions.length) {
+        vscode.window.showErrorMessage('Upload succeeded, but the returned API versions are invalid.');
+        return;
+      }
+      if (validVersions.length > 0) {
+        const recorded = await setProjectApisVersion(context, validVersions.map(item => ({ ...item, project_id })));
+        // A workspace switch or replacement panel can occur during the global-state write.
+        if (!isCurrentSource()) {
+          return;
+        }
+        if (!recorded) {
+          vscode.window.showErrorMessage('Upload succeeded, but project version records could not be saved.');
+          return;
+        }
+        // Read after awaiting metadata persistence, so concurrent local edits survive.
+        const latest = getApiList(context);
+        if (applyApiVersions(latest, validVersions)) {
+          if (!setApiList(latest, context)) {
+            vscode.window.showErrorMessage('Upload succeeded, but local request versions could not be saved.');
+            return;
+          }
+          globalConfig.sidePanelWebView?.webview.postMessage({ action: 'setApiList', data: latest });
+          globalConfig.shareListWebView?.webview.postMessage({ action: 'setApiList', data: latest });
+        }
+      }
+      pushWebView.dispose();
       vscode.window.showInformationMessage('Push Successfully！🎉');
       break;
-    case 'setApiList':
-      let apiListName = getApiListName(context);
-      setDataToGlobalStorage(context, apiListName, message.data);
-      // Record project API versions for later conflict comparison
-      setProjectApisVersion(context, message.data);
-      break;
+    }
     case 'getSystemConfig':
-      pushWebView?.webview.postMessage({ action: 'setSystemConfig', data: context.globalState.get('systemConfig') || {} });
+      pushWebView.webview.postMessage({ action: 'setSystemConfig', data: context.globalState.get('systemConfig') || {} });
       break;
     case 'getProjectConfig':
-      pushWebView?.webview.postMessage({ action: 'setProjectConfig', data: getCurrentProjectConfig(context) });
+      pushWebView.webview.postMessage({ action: 'setProjectConfig', data: getCurrentProjectConfig(context) });
       break;
     case 'openEnv':
       vscode.commands.executeCommand('echoapi.openEnv', message.data);
       break;
   }
-
-}
+};

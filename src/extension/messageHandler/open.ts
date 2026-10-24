@@ -17,7 +17,7 @@ import {
   stopWorker,
 } from "../apis";
 import { globalConfig, DEFAULT_TARGET_NAME } from "../constants";
-import { forEach, isPlainObject, trim } from "lodash";
+import { cloneDeep, forEach, isPlainObject, trim } from "lodash";
 import {
   createShare,
   getDocBaseUrl,
@@ -49,7 +49,7 @@ const saveApiData = (
   const { sidePanelWebView } = globalConfig;
   const apiList: ApiDetailsData[] = getApiList(context);
   // Local stored data collection
-  let newData: ApiDetailsData = data;
+  const newData: ApiDetailsData = cloneDeep(data);
   const index = apiList.findIndex((e) => e?.target_id === newData?.target_id);
   newData.is_create = -1;
   if (trim(newData?.name).length <= 0) {
@@ -62,6 +62,10 @@ const saveApiData = (
     newData.sort = getMaxSort(apiList, newData.parent_id);
     apiList.push(newData); // Add element
   }
+  if (!setApiList(apiList, context)) {
+    vscode.window.showErrorMessage("Failed to save requests. Please try again.");
+    return false;
+  }
   // Save and update open
   panel.webview.postMessage({ action: "setApiData", data: newData });
 
@@ -69,7 +73,6 @@ const saveApiData = (
   // Update title
   panel.title = showTabName(newData?.name);
 
-  setApiList(apiList, context);
   // Update left sidebar directory
   sidePanelWebView &&
     sidePanelWebView.webview.postMessage({
@@ -168,6 +171,9 @@ export const handelOpenMessage = async (
       const curData = getApiList(context).find(
         (i: ApiDetailsData) => i?.target_id === message.data,
       );
+      if (!curData) {
+        break;
+      }
       curData.is_create = -1;
       vscode.commands.executeCommand("openTabPanel", curData);
       break;

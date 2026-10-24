@@ -1,7 +1,7 @@
 import { ApisBaseDataItem, ApiTypeMethod, TypeFiledType } from "@/features/requests/types/base";
 import urlParse from 'url-parse';
 import { isURL, getUrlQueryToArray, createUrl, isJSON } from '../../../shared/utils/common';
-import { cloneDeep, filter, find, findIndex, forEach, head, isArray, isEqual, isPlainObject, isString, isUndefined, map, toUpper } from "lodash";
+import { cloneDeep, filter, find, forEach, head, isArray, isEqual, isPlainObject, isString, isUndefined, map, toUpper } from "lodash";
 import { CONTENT_TYPES, OPENAPI_TYPES, STATUS_CODE } from "@/shared/constants/common";
 import { snowflakeId } from "apipost-tools";
 import { AnyObject, CustomNumberBooleanType } from "@/shared/types/common";
@@ -24,7 +24,6 @@ export const genQueryByUrl = (
   url: string,
   oldParameter: Array<ApisBaseDataItem>
 ): Array<ApisBaseDataItem> => {
-  let queryList: Array<ApisBaseDataItem> = [];
   // Auto-prepend url http://
   if (!isURL(url)) {
     url = `http://${url}`;
@@ -35,17 +34,16 @@ export const genQueryByUrl = (
   // Extract query
   const searchParams = getUrlQueryToArray(urlQuery);
 
-  queryList = filter(oldParameter, (item: ApisBaseDataItem) =>
+  const queryList = filter(oldParameter, (item: ApisBaseDataItem) =>
     isEqual(item?.is_checked, STATUS_CODE.DISABLE)
   );
 
-  let index = 0;
+  const enabledParameters = filter(oldParameter, (item: ApisBaseDataItem) =>
+    isEqual(item?.is_checked, STATUS_CODE.ENABLE)
+  );
 
-  forEach(searchParams, (item) => {
-    const originObj =
-      filter(oldParameter, (item: ApisBaseDataItem) =>
-        isEqual(item?.is_checked, STATUS_CODE.ENABLE)
-      )?.[index] || {};
+  forEach(searchParams, (item, index) => {
+    const originObj = enabledParameters[index];
 
     queryList.push({
       param_id: originObj?.param_id || snowflakeId(),
@@ -57,7 +55,6 @@ export const genQueryByUrl = (
       description: originObj?.description || '', // Field description
     });
 
-    index++;
   });
 
   return queryList;
@@ -68,70 +65,42 @@ export const genRestfulByUrl = (
   url: string,
   oldParameter: Array<ApisBaseDataItem>
 ): Array<ApisBaseDataItem> => {
-  const restfulList: any = [];
-  // Auto-prepend url http://
-  if (!isURL(url)) {
-    url = `http://${url}`;
-  }
-  const urlObj = createUrl(url);
-  const paths = urlObj.pathname.split('/');
-
-  forEach(paths, (pathsItem: any) => {
-    if (pathsItem.substring(0, 1) === ':' && pathsItem.length > 1) {
-      let obj: ApisBaseDataItem | null = null;
-
-      const oldIndex = findIndex(oldParameter, {
-        key: pathsItem.substring(1, pathsItem.length),
-      });
-
-      if (oldIndex !== -1) {
-        obj = oldParameter[oldIndex];
-      }
-
-      restfulList.push({
-        param_id: obj?.param_id || snowflakeId(),
-        field_type: 'String',
-        is_checked: 1,
-        key: pathsItem.substring(1, pathsItem.length),
-        not_null: 1,
-        value: obj?.value || '',
-        description: obj?.description || '',
-      });
+  const restfulList: ApisBaseDataItem[] = [];
+  // Keep the first matching row, including when saved parameters contain duplicates.
+  const parametersByKey = new Map<string, ApisBaseDataItem>();
+  forEach(oldParameter, (item) => {
+    if (!parametersByKey.has(item.key)) {
+      parametersByKey.set(item.key, item);
     }
   });
 
-  const regex = /(?<!{){([^{}]+)}(?!})/g;
+  const appendParameter = (key: string) => {
+    const previous = parametersByKey.get(key);
+    restfulList.push({
+      param_id: previous?.param_id || snowflakeId(),
+      field_type: 'String',
+      is_checked: 1,
+      key,
+      not_null: 1,
+      value: previous?.value || '',
+      description: previous?.description || '',
+    });
+  };
 
-  try {
-    const matches = url.match(regex);
-
-    if (isArray(matches) && matches.length > 0) {
-      forEach(matches, (matchesItem) => {
-        if (matchesItem.length > 0) {
-          matchesItem = matchesItem.replace(/^{|}$/g, '');
-
-          let obj: ApisBaseDataItem | null = null;
-          const oldIndex = findIndex(oldParameter, {
-            key: matchesItem,
-          });
-
-          if (oldIndex !== -1) {
-            obj = oldParameter[oldIndex];
-          }
-
-          restfulList.push({
-            param_id: obj?.param_id || snowflakeId(),
-            field_type: 'String',
-            is_checked: 1,
-            key: matchesItem,
-            not_null: 1,
-            value: obj?.value || '',
-            description: obj?.description || '',
-          });
-        }
-      });
+  if (!isURL(url)) {
+    url = `http://${url}`;
+  }
+  const paths = createUrl(url).pathname.split('/');
+  forEach(paths, (segment) => {
+    if (segment.startsWith(':') && segment.length > 1) {
+      appendParameter(segment.slice(1));
     }
-  } catch (error) { }
+  });
+
+  // Double braces represent variables rather than REST path parameters.
+  for (const match of url.matchAll(/(?<!{){([^{}]+)}(?!})/g)) {
+    appendParameter(match[1]);
+  }
   return restfulList;
 };
 

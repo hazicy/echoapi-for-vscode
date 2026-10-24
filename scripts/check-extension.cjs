@@ -7,7 +7,11 @@ const Module = require('node:module');
 const originalLoad = Module._load;
 try {
   Module._load = function (id, ...args) {
-    return id === 'vscode' ? {} : originalLoad.call(this, id, ...args);
+    return id === 'vscode' ? { EventEmitter: class {
+      event = () => ({ dispose() {} });
+      fire() {}
+      dispose() {}
+    } } : originalLoad.call(this, id, ...args);
   };
   const extension = require('../dist/extension.js');
   assert.equal(typeof extension.activate, 'function');

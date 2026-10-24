@@ -145,7 +145,7 @@ export const completionParameter = (parameter: RequestGlobalParams['header']['pa
           value,
           not_null,
           schema,
-        }
+        };
         return param;
       }
     );
@@ -524,8 +524,8 @@ export const completionCustomFunc = (custom_func: any) => {
 };
 
 export const recursionSchema = (schemaObj: any, modelsMap: Record<string, string>): any => {
-  try {
-    const schema = cloneDeep(schemaObj);
+  // Clone once at the boundary; recursion only touches this private copy.
+  const visit = (schema: any): any => {
     // 1. Non-object/array - return directly
     if (typeof schema !== 'object' || schema === null) {
       return schema;
@@ -533,23 +533,23 @@ export const recursionSchema = (schemaObj: any, modelsMap: Record<string, string
 
     // 2. Handle arrays (recursively process each item)
     if (Array.isArray(schema)) {
-      return schema.map((item) => recursionSchema(item, modelsMap));
+      return schema.map(visit);
     }
-    // 3. Handle objects (deep copy then recursively process all properties)
+    // 3. Process the cloned object in place.
     for (const key in schema) {
       const value = schema[key];
       if (['ECHOAPI_REFS', 'x-schema-refs'].includes(key) && isPlainObject(value)) {
-        keys(value)?.map((e) => {
+        keys(value).forEach((e) => {
           const $ref = value[e]?.$ref;
           if (has(value[e], 'ref')) {
-            schema[key][e]['$ref'] = cloneDeep(modelsMap?.[value[e]['ref']]);
+            schema[key][e]['$ref'] = modelsMap?.[value[e]['ref']];
             delete schema[key][e]['ref'];
           } else if (has(value[e], '$ref') && $ref) {
             const refId = $ref.split('/').pop() || '';
-            schema[key][e].$ref = cloneDeep(modelsMap?.[refId]);
+            schema[key][e].$ref = modelsMap?.[refId];
           }
           // Recursively process refEntry
-          schema[key][e] = recursionSchema(value[e], modelsMap);
+          schema[key][e] = visit(value[e]);
         });
         schema['x-schema-refs'] = schema[key];
         delete schema['ECHOAPI_REFS'];
@@ -562,20 +562,24 @@ export const recursionSchema = (schemaObj: any, modelsMap: Record<string, string
         !isEmpty(schema[key])
       ) {
         schema[key] = keys(schema[key])?.reduce((pre: { [key: string]: any }, propertiesKey) => {
-          pre[propertiesKey] = recursionSchema(schema[key][propertiesKey], modelsMap);
+          pre[propertiesKey] = visit(schema[key][propertiesKey]);
           return pre;
         }, {});
       } else if (key === '$ref' && isString(schema[key])) {
         // Handle direct model reference in properties
         const refId = schema[key].split('/').pop() || '';
         if (modelsMap?.[refId]) {
-          schema[key] = cloneDeep(modelsMap?.[refId]);
+          schema[key] = modelsMap?.[refId];
         }
       } else {
-        schema[key] = recursionSchema(value, modelsMap);
+        schema[key] = visit(value);
       }
     }
     return schema;
+  };
+
+  try {
+    return visit(cloneDeep(schemaObj));
   } catch (err) {
     return schemaObj;
   }
@@ -1151,7 +1155,7 @@ export const completionApis = (
             is_socket,
           });
         }
-        if (target_type === APIS_TARGET_TYPE_ENUM.API) {
+        if (target_type === APIS_TARGET_TYPE_ENUM.API || target_type === APIS_TARGET_TYPE_ENUM.SSE) {
           pre.push({
             ...baseApiInfo,
             method,
@@ -1285,28 +1289,6 @@ export const completionApis = (
             mark_id,
             protos: completionGrpcProtos(protos, modelsMap),
             status: 1,
-          });
-        }
-        if (target_type === APIS_TARGET_TYPE_ENUM.SSE) {
-          pre.push({
-            ...baseApiInfo,
-            method,
-            url:
-              url && isArray(request?.query?.parameter)
-                ? genUrlByQuery(url, request?.query?.parameter)
-                : url,
-            mark_id,
-            protocol,
-            request: {
-              ...completionGlobalParam(request as unknown as RequestGlobalParams),
-              body: {
-                ...completionBody(request?.body as ApisBaseRequestBody, modelsMap),
-              },
-            },
-            response: completionResponse(response, modelsMap),
-            attribute_info: completionAttributeInfo(attribute_info),
-            tags,
-            is_force: -1,
           });
         }
         if (target_type === APIS_TARGET_TYPE_ENUM.GRAPHQL) {

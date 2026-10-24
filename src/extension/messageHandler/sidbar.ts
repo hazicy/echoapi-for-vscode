@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { storageChanged } from '../storageEvents';
 import {
   deleteProjectReport,
-  deleteTestingFolderData,
+  deleteTestingFoldersData,
   downloadFile,
   getAllApiChildren,
   getAllChildIds,
@@ -39,32 +39,18 @@ import {
 } from "../utils/share";
 import { snowflakeId } from "apipost-tools";
 import { ApiDetailsData } from "@/features/requests/types/api";
-import { isWin } from "../db";
-import path from "path";
-import os from "os";
-import fs from "fs";
+import { getStorageFilePath } from "../db";
 
-const saveApiListItem = (
-  data: ApiDetailsData,
-  context: vscode.ExtensionContext,
-) => {
-  const {
-    sidePanelWebView,
-    openedPanels,
-    pushWebView,
-    shareListWebView,
-    openedFolderTestPanels,
-  } = globalConfig;
-
-  const apiList: any[] = getApiList(context);
-  const index = apiList.findIndex((e: any) => e?.target_id === data?.target_id);
-  if (index > -1) {
-    apiList.splice(index, 1, data); // Replace target element
-      updateOpenData(openedPanels, data);
-  } else {
-    data.sort = getMaxSort(apiList, data.parent_id);
-    apiList.push(data); // Add element
+const persistApiList = (list: ApiDetailsData[], context: vscode.ExtensionContext) => {
+  if (setApiList(list, context)) {
+    return true;
   }
+  vscode.window.showErrorMessage("Failed to save requests. Please try again.");
+  return false;
+};
+
+const notifyApiListChanged = (apiList: ApiDetailsData[], context: vscode.ExtensionContext) => {
+  const { sidePanelWebView, pushWebView, shareListWebView, openedFolderTestPanels } = globalConfig;
   // Update page
   sidePanelWebView?.webview.postMessage({
     action: "setApiList",
@@ -104,6 +90,37 @@ const saveApiListItem = (
       }
     });
   }
+};
+
+const saveApiListItem = (
+  data: ApiDetailsData,
+  context: vscode.ExtensionContext,
+) => {
+  const { openedPanels } = globalConfig;
+
+  const apiList: any[] = getApiList(context);
+  const index = apiList.findIndex((e: any) => e?.target_id === data?.target_id);
+  if (index > -1) {
+    apiList.splice(index, 1, data); // Replace target element
+  } else {
+    data.sort = getMaxSort(apiList, data.parent_id);
+    apiList.push(data); // Add element
+  }
+  if (!persistApiList(apiList, context)) {
+    return false;
+  }
+  if (index > -1) {
+    updateOpenData(openedPanels, data);
+    if (data.target_type === "folder") {
+      const testPanel = globalConfig.openedFolderTestPanels[getTestingFolderName(data.target_id, context)];
+      if (testPanel) {
+        testPanel.title = data.name;
+        testPanel.webview.postMessage({ action: "setTestData", data: { testingName: data.name } });
+      }
+    }
+  }
+  notifyApiListChanged(apiList, context);
+  return true;
 };
 
 export const handleMessage = async (
@@ -156,7 +173,9 @@ export const handleMessage = async (
       });
       break;
     case "setApiList":
-      setApiList(message.data, context);
+      if (!persistApiList(message.data, context)) {
+        return false;
+      }
       // Record project API versions for later conflict comparison
       setProjectApisVersion(context, message.data);
       // Update open data to latest
@@ -280,6 +299,9 @@ export const handleMessage = async (
       const curData = apiList.find(
         (i: ApiDetailsData) => i?.target_id === message.data,
       );
+      if (!curData) {
+        break;
+      }
       curData.is_create = -1;
       curData.is_changed = -1;
       vscode.commands.executeCommand("openTabPanel", curData);
@@ -308,39 +330,10 @@ export const handleMessage = async (
           sourceData: message?.data?.sourceData,
         },
       });
-      // Modify directory name and also modify directory automated test name
-      if (!message?.data?.type || message?.data?.type === "folder") {
-        const folderName = getTestingFolderName(
-          message?.data?.sourceData?.target_id,
-          context,
-        );
-
-        // Whether run all interface is open
-        if (openedFolderTestPanels[folderName]) {
-          openedFolderTestPanels[folderName].title = userInput || "";
-
-          openedFolderTestPanels[folderName].webview.postMessage({
-            action: "setTestData",
-            data: {
-              testingName: userInput, // Test name
-            },
-          });
-        }
-
-        // Whether directory settings interface is open
-        if (openedPanels[message?.data?.sourceData?.target_id]) {
-          // Update tab content and title
-          updateOpenData(openedPanels, {
-            ...message?.data?.sourceData,
-            name: userInput,
-          });
-        }
-      }
 
       break;
     case "saveFolder":
-      saveApiListItem(message?.data, context);
-      break;
+      return saveApiListItem(message?.data, context);
     case "cloneApi":
       const target = apiList.find(
         (i) => i?.target_id === message.data.target_id,
@@ -356,12 +349,13 @@ export const handleMessage = async (
       }
       dataNew.name += ` Copy`;
 
-      saveApiListItem(dataNew, context);
-
-      vscode.window.showInformationMessage("Duplicate Successfully");
+      if (saveApiListItem(dataNew, context)) {
+        vscode.window.showInformationMessage("Duplicate Successfully");
+      }
 
       break;
     case "showConfirmation":
+      const projectKey = getApiListName(context);
       const result = await vscode.window.showInformationMessage(
         message.data.title,
         { modal: true },
@@ -369,197 +363,80 @@ export const handleMessage = async (
         "No",
       );
       if (result === "Yes") {
-        const curData = apiList.find(
-          (i: any) => i?.target_id === message.data.target_id,
-        );
-        let list = [];
-        if (curData.target_type === "folder") {
-          // Find all child ids and delete together
-          const delIds: string[] = getAllChildIds(apiList, curData) || [];
-          list = apiList.filter((i: any) => !delIds.includes(i?.target_id));
-          forEach(delIds, (k) => {
-            if (openedPanels[k]) {
-              // Tab already exists, close tab
-              openedPanels[k].dispose();
-              // delete openedPanels[message.data.target_id];
-            }
-            // Delete directory-related automated test data
-            const folderName = getTestingFolderName(k, context);
-            if (openedFolderTestPanels[folderName]) {
-              // Tab already exists, close tab
-              openedFolderTestPanels[folderName].dispose();
-            }
-            // Delete test data
-            deleteTestingFolderData(k, context);
-          });
-        } else {
-          list = apiList.filter(
-            (i: any) => i?.target_id !== message.data.target_id,
-          );
-          if (openedPanels[message.data.target_id]) {
-            // Tab already exists, close tab
-            openedPanels[message.data.target_id].dispose();
-            // delete openedPanels[message.data.target_id];
+        if (getApiListName(context) !== projectKey) {
+          return;
+        }
+        // Confirmation is asynchronous; preserve edits made while it was open.
+        const currentList = getApiList(context);
+        const curData = currentList.find(item => item.target_id === message.data.target_id);
+        if (!curData) {
+          return;
+        }
+        const deletedIds = new Set(curData.target_type === "folder"
+          ? getAllChildIds(currentList, curData)
+          : [curData.target_id]);
+        const list = currentList.filter(item => !deletedIds.has(item.target_id));
+        if (!persistApiList(list, context)) {
+          return false;
+        }
+        for (const id of deletedIds) {
+          openedPanels[id]?.dispose();
+          if (curData.target_type === "folder") {
+            const folderName = getTestingFolderName(id, context);
+            openedFolderTestPanels[folderName]?.dispose();
           }
         }
 
-        setApiList(list, context);
-        // Update page
-        sidePanelWebView?.webview.postMessage({
-          action: "setApiList",
-          data: list || [],
-        });
-
-        if (pushWebView) {
-          pushWebView?.webview.postMessage({
-            action: "setPushPanelData",
-            data: {
-              local_api_list: list,
-            },
-          });
+        if (curData.target_type === "folder" && !deleteTestingFoldersData(deletedIds, context)) {
+          vscode.window.showErrorMessage("Requests were deleted, but saved test data could not be cleaned up.");
         }
-
-        if (shareListWebView) {
-          shareListWebView?.webview.postMessage({
-            action: "setApiList",
-            data: list,
-          });
-        }
-
-        // Update API list in run all
-        if (
-          isPlainObject(openedFolderTestPanels) &&
-          !isEmpty(openedFolderTestPanels)
-        ) {
-          Object.keys(openedFolderTestPanels).forEach((folderName) => {
-            let folder_id = folderName.split(":")[1];
-            if (folder_id) {
-              openedFolderTestPanels[folderName].webview.postMessage({
-                action: "setTestData",
-                data: {
-                  ventList: getAllApiChildren(folder_id, context), // API list under directory (flat)
-                },
-              });
-            }
-          });
-        }
+        notifyApiListChanged(list, context);
       }
       break;
     case "onDrop":
       // Find all elements under the moved directory
       if (isArray(message?.data?.target_ids)) {
-        forEach(message?.data?.target_ids, (target_id) => {
-          // Find element current position
-          const index = apiList.findIndex(
-            (e: any) => e?.target_id === target_id,
-          );
-          if (index < 0) {
+        const changedItems = new Map<string, ApiDetailsData>();
+        forEach(message.data.target_ids, (target_id) => {
+          const moved = apiList.find(item => item.target_id === target_id);
+          if (!moved) {
             return;
           }
-          // Drag element into directory
-          if (
-            message?.data?.after_target_id === "0" &&
-            message?.data?.before_target_id === "0"
-          ) {
-            apiList[index].parent_id = message?.data?.parent_id || "0";
-            apiList[index].sort = getMaxSort(apiList, apiList[index].parent_id);
-          } else if (
-            message?.data?.after_target_id === "0" &&
-            message?.data?.before_target_id !== "0"
-          ) {
-            // Drag element after target element
-
-            // Get all elements under target directory (excluding moved elements)
-            const curFolderChildrens = apiList
-              .filter(
-                (i: any) =>
-                  i?.parent_id === (message?.data?.parent_id || "0") &&
-                  i?.target_id !== target_id,
-              )
-              .sort((a: any, b: any) => a.sort - b.sort);
-
-            // Get target element position
-            const goalIndex = curFolderChildrens.findIndex(
-              (e: any) => e?.target_id === message?.data?.before_target_id,
-            );
+          const parentId = message.data.parent_id || "0";
+          const { after_target_id: after, before_target_id: before } = message.data;
+          if (after === "0" && before === "0") {
+            moved.parent_id = parentId;
+            moved.sort = getMaxSort(apiList, parentId);
+          } else {
+            const insertAfter = after === "0" && before !== "0";
+            const insertBefore = after !== "0" && before === "0";
+            if (!insertAfter && !insertBefore) {
+              return;
+            }
+            const siblings = apiList
+              .filter(item => item.parent_id === parentId && item.target_id !== target_id)
+              .sort((a, b) => a.sort - b.sort);
+            const goalIndex = siblings.findIndex(item => item.target_id === (insertAfter ? before : after));
             if (goalIndex < 0) {
               return;
             }
-
-            // Modify directory id
-            apiList[index].parent_id = message?.data?.parent_id || "0";
-            // Insert at corresponding position
-            curFolderChildrens.splice(goalIndex + 1, 0, apiList[index]);
-            // Re-sort
-            forEach(curFolderChildrens, (newData, sort) => {
-              // Find element original position
-              const childIndex = apiList.findIndex(
-                (e: any) => e?.target_id === newData?.target_id,
-              );
-              if (childIndex > -1) {
-                apiList[childIndex].sort = sort + 1;
-                // Modify open data
-                updateOpenData(openedPanels, apiList[childIndex]);
-              }
-            });
-          } else if (
-            message?.data?.after_target_id !== "0" &&
-            message?.data?.before_target_id === "0"
-          ) {
-            // Drag element before target element
-
-            // Get all elements under target directory (excluding moved elements)
-            const curFolderChildrens = apiList
-              .filter(
-                (i: any) =>
-                  i?.parent_id === (message?.data?.parent_id || "0") &&
-                  i?.target_id !== target_id,
-              )
-              .sort((a: any, b: any) => a.sort - b.sort);
-
-            // Get target element position
-            const goalIndex = curFolderChildrens.findIndex(
-              (e: any) => e?.target_id === message?.data?.after_target_id,
-            );
-            if (goalIndex < 0) {
-              return;
-            }
-
-            // Modify directory id
-            apiList[index].parent_id = message?.data?.parent_id || "0";
-            // Insert at corresponding position
-            curFolderChildrens.splice(goalIndex, 0, apiList[index]);
-            // Re-sort
-            forEach(curFolderChildrens, (newData, sort) => {
-              // Find element original position
-              const childIndex = apiList.findIndex(
-                (e: any) => e?.target_id === newData?.target_id,
-              );
-              if (childIndex > -1) {
-                apiList[childIndex].sort = sort + 1;
-                // Modify open data
-                updateOpenData(openedPanels, apiList[childIndex]);
-              }
+            moved.parent_id = parentId;
+            siblings.splice(goalIndex + (insertAfter ? 1 : 0), 0, moved);
+            siblings.forEach((item, index) => {
+              item.sort = index + 1;
+              changedItems.set(item.target_id, item);
             });
           }
-          // Update open page data after drag
-          updateOpenData(openedPanels, apiList[index]);
+          changedItems.set(moved.target_id, moved);
         });
-
-        setApiList(apiList, context);
-        // Update page
-        sidePanelWebView?.webview.postMessage({
-          action: "setApiList",
-          data: apiList || [],
-        });
-
-        // If push page is open, update push page data
-        pushWebView?.webview.postMessage({
-          action: "setPushPanelData",
-          data: {
-            local_api_list: apiList || [],
-          },
-        });
+        if (changedItems.size === 0) {
+          return;
+        }
+        if (!persistApiList(apiList, context)) {
+          return false;
+        }
+        changedItems.forEach(item => updateOpenData(openedPanels, item));
+        notifyApiListChanged(apiList, context);
 
         vscode.window.showInformationMessage("Move Success");
       }
@@ -681,26 +558,7 @@ export const handleMessage = async (
       });
       break;
     case "openVscodeFileExplorer":
-      let apiListName = getApiListName(context);
-      if (apiListName.includes(":") && isWin()) {
-        apiListName = apiListName.replace(/:/g, "_");
-      }
-
-      const cachePath = path.join(
-        os.homedir(),
-        "echoapi_for_vscode",
-        `${apiListName}.json`,
-      );
-      const filePath = path.join(
-        context.globalStorageUri.fsPath,
-        `${apiListName}.json`,
-      );
-      const normalizedPath = path.normalize(cachePath);
-      if (fs.existsSync(normalizedPath)) {
-        openInFileExplorer(cachePath);
-      } else {
-        openInFileExplorer(filePath);
-      }
+      openInFileExplorer(getStorageFilePath(context, getApiListName(context)));
 
       break;
   }

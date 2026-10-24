@@ -111,7 +111,10 @@ export const handelImportDataMessage = async (
         });
 
         // Save modified environment and services locally
-        setProjectConfig(context, currentProjectConfig);
+        if (!setProjectConfig(context, currentProjectConfig)) {
+          vscode.window.showErrorMessage("Failed to save imported environments. Please try again.");
+          return false;
+        }
       }
 
       if (!newApis) {
@@ -122,7 +125,14 @@ export const handelImportDataMessage = async (
 
       const saveList = apiList.concat(newList);
       // Save locally
-      setApiList(saveList, context);
+      if (!setApiList(saveList, context)) {
+        vscode.window.showErrorMessage(
+          isArray(newEnvs) && newEnvs.length > 0
+            ? "Imported environments were saved, but requests could not be saved. Retry importing requests only."
+            : "Failed to save imported requests. Please try again.",
+        );
+        return false;
+      }
 
       // Update left sidebar directory
       sidePanelWebView &&

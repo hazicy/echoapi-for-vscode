@@ -6,7 +6,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
-  Checkbox,
   Flex,
   Form,
   Select,
@@ -14,28 +13,15 @@ import {
   message,
 } from "@/shared/ui/base";
 
-import { DragEndEvent } from "@dnd-kit/core";
-import { arrayMove } from "@dnd-kit/sortable";
-import { snowflakeId } from "apipost-tools";
 import {
-  cloneDeep,
-  entries,
   find,
   has,
   includes,
-  isArray,
-  isEmpty,
   isEqual,
-  isNull,
-  isString,
-  keys,
-  last,
-  merge,
-  reduce,
   setWith,
 } from "lodash";
 
-import { BasicTable, SegmentedTabs } from "@/shared/components";
+import { SegmentedTabs } from "@/shared/components";
 import VarInput from "@/features/variables/components/VarInput";
 
 import { Button, IconFont, Tooltip } from "@/shared/ui";
@@ -47,7 +33,6 @@ import {
   AUTH_OAUTH2_GRANT_TYPE,
   AUTH_OAUTH2_GRANT_TYPE_MAP,
   AUTH_OAUTH2_LOCATION,
-  AUTH_OAUTH2_SEND_IN,
 } from "@/features/requests/constants/auth";
 import {
   useApis,
@@ -58,14 +43,10 @@ import {
 import { AuthOauth2, RequestParamsItem } from "@/features/requests/types/auth";
 import { openUrl } from "@/shared/utils/open";
 
-type DataSourceItem = {
-  key: string;
-  value: string;
-  enabled: boolean;
-  send_as: string;
-  static?: boolean;
-  param_id?: string;
-};
+import { buildOAuth2VariableMap, resolveOAuth2Parameters, resolveOAuth2Variables } from "@/features/requests/utils/oauth2Variables";
+
+
+import Oauth2ParamsTable, { type DataSourceItem } from "./Oauth2ParamsTable";
 
 type ObjectItem = { [key: string]: string };
 
@@ -85,158 +66,12 @@ type TokenInfo = Omit<
   | "refreshRequestParams"
 >;
 
-interface TableProps {
-  value?: DataSourceItem[];
-  onChange?: any;
-  hasSendIn?: boolean;
-}
 
 interface Props {
   onChange: (v: AuthOauth2) => void;
   target_id?: string | undefined;
 }
 
-export const DEFAULT_ITEM = {
-  key: "",
-  value: "",
-  send_as: "request_body",
-  param_id: "",
-  static: true,
-  enabled: true,
-};
-
-const ParamsTable = ({ value, onChange, hasSendIn = false }: TableProps) => {
-  const lastRowDataRef = useRef<any>(null);
-  const handleItemChange = (rowData: any, index: number, newVal: any) => {
-    const newList: Array<DataSourceItem> = cloneDeep(value || []);
-    delete rowData.static;
-    newList[index] = {
-      ...rowData,
-      ...newVal,
-    };
-    onChange?.([...newList]);
-  };
-
-  const columns = [
-    {
-      title: "",
-      width: 24,
-      dataIndex: "enabled",
-      render: (text: boolean, rowData: DataSourceItem, rowIndex: number) => {
-        return (
-          <Flex style={{ paddingInline: 4 }} align="center">
-            <Checkbox
-              checked={text}
-              onChange={(e) =>
-                handleItemChange(rowData, rowIndex, {
-                  enabled: e?.target?.checked,
-                })
-              }
-              disabled={!!rowData?.static}
-            />
-          </Flex>
-        );
-      },
-    },
-    {
-      title: "Key",
-      width: 150,
-      dataIndex: "key",
-      render: (text: string, rowData: DataSourceItem, rowIndex: number) => (
-        <VarInput
-          wrapClassName={"oauth-input"}
-          value={text}
-          onChange={(e) => {
-            handleItemChange(rowData, rowIndex, { key: e });
-          }}
-        />
-      ),
-    },
-    {
-      title: "Value",
-      dataIndex: "value",
-      render: (text: string, rowData: DataSourceItem, rowIndex: number) => (
-        <VarInput
-          wrapClassName={"oauth-input"}
-          value={text}
-          onChange={(e) =>
-            handleItemChange(rowData, rowIndex, {
-              value: e,
-            })
-          }
-        />
-      ),
-    },
-  ];
-
-  const sendColumns = [
-    {
-      title: "Send In",
-      width: 150,
-      dataIndex: "send_as",
-      render: (text: string, rowData: DataSourceItem, rowIndex: number) => (
-        <Select
-          value={text}
-          onChange={(e) =>
-            handleItemChange(rowData, rowIndex, {
-              send_as: e,
-            })
-          }
-          options={AUTH_OAUTH2_SEND_IN}
-        />
-      ),
-    },
-  ];
-
-  const tableDataList = useMemo(() => {
-    if (!isArray(value) || isEmpty(value)) {
-      DEFAULT_ITEM.param_id = snowflakeId();
-
-      return [{ ...DEFAULT_ITEM }];
-    }
-
-    const hasStatic = value?.some((item) => item?.static);
-
-    if (!hasStatic) {
-      // Record the last row data to avoid duplicate generation of new param_id, causing unnecessary refresh
-      const usedLastRowData =
-        isNull(lastRowDataRef.current) ||
-        isEqual(last(value)?.param_id, lastRowDataRef.current?.param_id);
-
-      if (usedLastRowData) {
-        DEFAULT_ITEM.param_id = snowflakeId();
-        lastRowDataRef.current = DEFAULT_ITEM;
-
-        return [...value, DEFAULT_ITEM];
-      }
-
-      return [...value, lastRowDataRef.current as DataSourceItem];
-    }
-
-    return value;
-  }, [value]);
-
-  const onDragEnd = ({ active, over }: DragEndEvent) => {
-    if (isEqual(active.id, over?.id)) return;
-    const _dataSource = cloneDeep(value as DataSourceItem[]);
-    const activeIndex = _dataSource.findIndex((i) => i.param_id === active.id);
-    const overIndex = _dataSource.findIndex((i) => i.param_id === over?.id);
-    const newDataSource = arrayMove(_dataSource, activeIndex, overIndex);
-
-    onChange?.(newDataSource);
-  };
-
-  return (
-    <BasicTable
-      dragEnable
-      onDragEnd={onDragEnd}
-      dataSource={tableDataList}
-      rowKey="param_id"
-      columns={hasSendIn ? [...columns, ...sendColumns] : columns}
-      pagination={false}
-    />
-  );
-};
 
 const Oauth2 = (props: Props) => {
   const { t } = useTranslation();
@@ -374,7 +209,7 @@ const Oauth2 = (props: Props) => {
             {t("common.auth.auth_table_tip")}
           </Typography.Text>
           <Form.Item noStyle name={[AUTH_ENUM.OAUTH2, "authRequestParams"]}>
-            <ParamsTable />
+            <Oauth2ParamsTable />
           </Form.Item>
         </Flex>
       ),
@@ -391,7 +226,7 @@ const Oauth2 = (props: Props) => {
             {t("common.auth.token_table_tip")}
           </Typography.Text>
           <Form.Item noStyle name={[AUTH_ENUM.OAUTH2, "tokenRequestParams"]}>
-            <ParamsTable hasSendIn />
+            <Oauth2ParamsTable hasSendIn />
           </Form.Item>
         </Flex>
       ),
@@ -408,7 +243,7 @@ const Oauth2 = (props: Props) => {
             {t("common.auth.refresh_table_tip")}
           </Typography.Text>
           <Form.Item noStyle name={[AUTH_ENUM.OAUTH2, "refreshRequestParams"]}>
-            <ParamsTable hasSendIn />
+            <Oauth2ParamsTable hasSendIn />
           </Form.Item>
         </Flex>
       ),
@@ -428,105 +263,13 @@ const Oauth2 = (props: Props) => {
     return [authRequest, tokenRequest, refreshRequest];
   }, [grantType]);
 
-  const globalsMap = useMemo(() => {
-    return reduce(
-      keys(globalVars),
-      (prev: any, curr) => {
-        prev[curr] = isString(globalVars[curr]?.current_value)
-          ? globalVars[curr]?.current_value
-          : JSON.stringify(globalVars[curr]?.current_value);
+  const variableMap = useMemo(() => {
+    const currentEnv = find(envList, item => item.env_id === envDetailKeys);
+    return buildOAuth2VariableMap(globalVars, currentEnv?.env_var_list);
+  }, [globalVars, envList, envDetailKeys]);
 
-        return prev;
-      },
-      {},
-    );
-  }, [globalVars]);
-
-  const environmentMap = useMemo(() => {
-    const currentEnv = find(envList, (item) => item.env_id === envDetailKeys);
-    return entries(currentEnv?.env_var_list).reduce(
-      (pre, [key, obj]: any) => {
-        pre[key] = isString(obj?.current_value)
-          ? obj?.current_value
-          : JSON.stringify(obj?.current_value);
-        return pre;
-      },
-      {} as Record<string, any>,
-    );
-  }, [envList, envDetailKeys]);
-
-  const validateUrl = (str: string = ""): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reg = /\{\{(?![\$!])[^\{\}]+\}\}/g;
-      const matches = str.match(reg);
-      if (!matches) {
-        resolve(str);
-      }
-      const varMap = merge(globalsMap, environmentMap);
-      for (let i = 0; i < (matches?.length || 0); i++) {
-        const e = (matches as RegExpMatchArray)[i];
-        const v = e.slice(2, -2);
-        if (!has(varMap, v)) {
-          reject(v);
-          break;
-        }
-      }
-      const newStr = str.replace(reg, (match) => {
-        const key = match.slice(2, -2);
-        return varMap[key];
-      });
-      resolve(newStr);
-    });
-
-  const validateTableParams = (
-    arr: DataSourceItem[],
-  ): Promise<DataSourceItem[]> =>
-    new Promise((resolve, reject) => {
-      const reg = /\{\{(?![\$!])[^\{\}]+\}\}/g;
-      const varMap = merge(globalsMap, environmentMap);
-      const newArr = [];
-      let shouldBreak = false;
-      const effectiveArr = arr.filter((item) => !!item?.key);
-      for (let i = 0; i < effectiveArr.length; i++) {
-        const item = effectiveArr[i];
-        const keyMatches = item.key.match(reg);
-        const valueMatches = item.value.match(reg);
-        if (keyMatches || valueMatches) {
-          const key = keyMatches?.find((e) => !has(varMap, e.slice(2, -2)));
-          if (key) {
-            reject(key.slice(2, -2));
-            shouldBreak = true;
-            break;
-          }
-          const value = valueMatches?.find((e) => !has(varMap, e.slice(2, -2)));
-          if (value) {
-            reject(value.slice(2, -2));
-            shouldBreak = true;
-            break;
-          }
-          const newItem = {
-            ...item,
-            key: item.key.replace(reg, (match) => {
-              const key = match.slice(2, -2);
-              return varMap[key];
-            }),
-            value: item.value.replace(reg, (match) => {
-              const key = match.slice(2, -2);
-              return varMap[key];
-            }),
-          };
-          if (newItem.key) {
-            newArr.push(newItem);
-          }
-        } else {
-          newArr.push(item);
-        }
-        if (shouldBreak) {
-          break;
-        }
-      }
-      resolve(newArr);
-    });
+  const validateUrl = (value = "") => resolveOAuth2Variables(value, variableMap);
+  const validateTableParams = (parameters: DataSourceItem[]) => resolveOAuth2Parameters(parameters, variableMap);
 
   const handleGetTokenByPassword = async () => {
     const { oauth2 = {} } = await form.validateFields();
