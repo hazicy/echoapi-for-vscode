@@ -29,7 +29,8 @@ import {
   reverse,
   size,
 } from "lodash";
-import { LineTabs, SuspenseContent } from "@/shared/components";
+import LineTabs from "@/shared/components/LineTabs";
+import SuspenseContent from "@/shared/components/SuspenseContent";
 
 import { useTranslation } from "react-i18next";
 import { useApis, useProjectConfig } from "@/app/store";
@@ -38,7 +39,7 @@ import { ApisData } from "@/features/requests/types/api";
 import { APIS_TASK_TYPES_ENUM } from "@/features/requests/constants";
 
 const RequestHeader = lazy(() => import("./components/Header"));
-const RequestQuery = lazy(() => import("./components/Query"));
+const LazyRequestQuery = lazy(() => import("./components/Query"));
 const RequestCookie = lazy(() => import("./components/Cookie"));
 const RequestRestful = lazy(() => import("./Restful"));
 const RequestBody = lazy(() => import("./Body"));
@@ -51,12 +52,16 @@ const Request: FC<
     direction?: DirectionType;
     tabBarExtraContent?: ReactNode;
     tabOptions?: any;
+    queryComponent?: React.ComponentType<
+      React.ComponentProps<typeof LazyRequestQuery>
+    >;
   }
 > = ({
   target_id,
   isSystem,
   direction,
   tabOptions = {},
+  queryComponent: RequestQuery = LazyRequestQuery,
   requestData,
   apiData,
   onRequestDataChange,

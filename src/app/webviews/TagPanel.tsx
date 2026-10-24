@@ -1,5 +1,5 @@
 import { getPopupContainer } from "@/shared/utils/popupContainer";
-import { useEffect, useState } from "react";
+import { Suspense, use, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { App as AntdApp, ConfigProvider, Skeleton } from "@/shared/ui/base";
 import useGlobalTheme from "@/shared/theme";
@@ -9,7 +9,9 @@ import antdLocale from "@/shared/locale/antd";
 import "@/shared/assets/css/reset.css";
 
 import "@/shared/locale";
-import Content from "@/features/requests/components/Content";
+import Content, {
+  preloadRequestProtocol,
+} from "@/features/requests/components/Content";
 import { ThemeProvider } from "@/shared/ui/base/Theme";
 import GlobalThemeStyle from "../../shared/theme/global";
 import GlobalStyle from "../../shared/theme/globalStyle";
@@ -35,6 +37,18 @@ import { ApiDetailsData } from "@/features/requests/types/api";
 import useWebsocket2 from "@/features/requests/components/Content/websocket2/useWebsocket2";
 import useSocketIo from "@/features/requests/components/Content/socketio/useWebsocket2";
 import useGraphQLQuery from "@/features/requests/components/GraphQLQuery/hooks";
+
+let resolveInitialData: () => void;
+const initialDataReady = new Promise<void>((resolve) => {
+  resolveInitialData = resolve;
+});
+
+function InitializedContent({ loading }: { loading: boolean }) {
+  if (loading) {
+    use(initialDataReady);
+  }
+  return <Content />;
+}
 
 function TagPanel() {
   const customTheme = useGlobalTheme();
@@ -95,6 +109,7 @@ function TagPanel() {
             vscodeTheme,
             docBaseUrl,
           } = message.data;
+          preloadRequestProtocol(apiData.target_type);
           updateProjectConfig(projectConfig);
           updateSystemConfig({
             ...useSystemConfig.getState().systemConfig,
@@ -110,6 +125,7 @@ function TagPanel() {
             "okapi:react-mounted",
             "okapi:data-ready",
           );
+          resolveInitialData();
           setLodaing(false);
           break;
         }
@@ -170,11 +186,13 @@ function TagPanel() {
           updateProjectConfig({ ...message.data });
           break;
         case "setApiData":
+          preloadRequestProtocol(message.data.target_type);
           updateApisActiveData({ ...message.data });
           if (message?.data?.target_id) {
             updateApisActiveKey(message?.data?.target_id);
           }
 
+          resolveInitialData();
           setLodaing(false);
           break;
         case "setVscodeTheme":
@@ -229,13 +247,17 @@ function TagPanel() {
             <GlobalStyle />
             <ErrorBoundary>
               <DndProvider backend={HTML5Backend}>
-                <Skeleton
-                  active
-                  paragraph={{ rows: 15, width: "100%" }}
-                  loading={lodaing}
+                <Suspense
+                  fallback={
+                    <Skeleton
+                      active
+                      paragraph={{ rows: 15, width: "100%" }}
+                      loading
+                    />
+                  }
                 >
-                  <Content />
-                </Skeleton>
+                  <InitializedContent loading={lodaing} />
+                </Suspense>
               </DndProvider>
             </ErrorBoundary>
           </ThemeProvider>

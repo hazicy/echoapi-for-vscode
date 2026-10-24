@@ -1,6 +1,6 @@
 import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, lazy, memo, useMemo } from "react";
+import { FC, lazy, memo, Suspense, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { TabPaneProps, TabsProps } from "@/shared/ui/base";
@@ -19,8 +19,8 @@ import {
 } from "lodash";
 import ErrorContext from "./ErrorContext";
 
-import { LineTabs, SuspenseContent } from "@/shared/components";
-import ResponseSize from "@/features/requests/components/ResponseSize";
+import LineTabs from "@/shared/components/LineTabs";
+import SuspenseContent from "@/shared/components/SuspenseContent";
 import Sending from "@/features/requests/components/Sending";
 
 import { STATUS_CODE } from "@/shared/constants/common";
@@ -31,7 +31,11 @@ import {
   ApiSendingDataSSE,
 } from "@/features/requests/types/send";
 
-import { Empty } from "./components";
+import Empty from "./components/Empty";
+
+const ResponseSize = lazy(
+  () => import("@/features/requests/components/ResponseSize"),
+);
 
 const Console = lazy(() => import("./components/Console"));
 const Cookie = lazy(() => import("./components/Cookie"));
@@ -79,6 +83,9 @@ const Response: FC<Props> = memo(
     const [showError, setShowError] = useSafeState(false);
     const [activeKey, setActiveKey] = useSafeState(
       tabsDefaultActiveKey || "realtime",
+    );
+    const [visitedTabs, setVisitedTabs] = useState(
+      () => new Set([tabsDefaultActiveKey || "realtime"]),
     );
 
     const isSendDone = useMemo(
@@ -199,7 +206,12 @@ const Response: FC<Props> = memo(
       const _originItems = map(originItems, (item) => ({
         ...item,
         children: (
-          <SuspenseContent key={item.key}>{item.children}</SuspenseContent>
+          <SuspenseContent key={item.key}>
+            {(visitedTabs.has(item.key) || activeKey === item.key) &&
+            (item.key !== "realtime" || !isEmpty(sendingData))
+              ? item.children
+              : null}
+          </SuspenseContent>
         ) as React.ReactNode,
       }));
 
@@ -241,17 +253,22 @@ const Response: FC<Props> = memo(
 
           <LineTabs
             activeKey={activeKey}
-            onChange={setActiveKey}
+            onChange={(key) => {
+              setVisitedTabs((previous) => new Set([...previous, key]));
+              setActiveKey(key);
+            }}
             items={tabsItems()}
             tabBarExtraContent={
               !isEmpty(sendingData) &&
               showResponseSize && (
-                <ResponseSize
-                  showProxy={showProxy}
-                  showDownload={showDownload && isSendDone}
-                  response={sendingData?.response}
-                  request={sendingData?.request}
-                />
+                <Suspense fallback={null}>
+                  <ResponseSize
+                    showProxy={showProxy}
+                    showDownload={showDownload && isSendDone}
+                    response={sendingData?.response}
+                    request={sendingData?.request}
+                  />
+                </Suspense>
               )
             }
           />

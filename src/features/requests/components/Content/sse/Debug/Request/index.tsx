@@ -5,6 +5,7 @@ import { useMemoizedFn } from "ahooks";
 
 import context from "@/shared/components/RawEditor/visualizationContext";
 import RequestPanel from "@/features/requests/components/Request";
+import RequestQuery from "@/features/requests/components/Request/components/Query";
 import {
   ApiComponentType,
   ApiDetailsData,
@@ -44,6 +45,7 @@ const Request = memo(
           }}
         >
           <RequestPanel
+            queryComponent={RequestQuery}
             tabOptions={tabOptions}
             tabBarExtraContent={tabBarExtraContent}
             includesTabs={[

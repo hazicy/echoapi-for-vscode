@@ -76,7 +76,7 @@ export const createOpenPanel = (
   panel.webview.html = getHtmlForWebview(
     scriptUri,
     resourceBaseUrl,
-    null,
+    { target_type: data?.target_type },
     true,
   );
 

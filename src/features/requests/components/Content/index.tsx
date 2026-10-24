@@ -4,14 +4,30 @@ import React, { lazy, useEffect } from "react";
 
 import { useApis } from "@/app/store";
 import { ApiDetailsData, ApisData } from "@/features/requests/types/api";
-import SuspenseContent from "@/shared/components/SuspenseContent";
-
-const ApiDebug = lazy(() => import("./api/Debug"));
-const SseDebug = lazy(() => import("./sse/Debug"));
-const Folder = lazy(() => import("./Folder"));
-const Websocket2Debug = lazy(() => import("./websocket2/Debug"));
-const SocketioDebug = lazy(() => import("./socketio/Debug"));
-const GraphqlDebug = lazy(() => import("./graphql/Debug"));
+const protocolLoaders = {
+  api: () => import("./api/Debug"),
+  sse: () => import("./sse/Debug"),
+  folder: () => import("./Folder"),
+  websocket2: () => import("./websocket2/Debug"),
+  socketio: () => import("./socketio/Debug"),
+  graphql: () => import("./graphql/Debug"),
+};
+export function preloadRequestProtocol(type: string) {
+  const load = protocolLoaders[type as keyof typeof protocolLoaders];
+  // Prefetch is optional; React.lazy still reports a real load failure.
+  if (load) {
+    void load().catch(() => {});
+  }
+}
+const ApiDebug = lazy(protocolLoaders.api);
+const SseDebug = lazy(protocolLoaders.sse);
+const Folder = lazy(protocolLoaders.folder);
+const Websocket2Debug = lazy(protocolLoaders.websocket2);
+const SocketioDebug = lazy(protocolLoaders.socketio);
+const GraphqlDebug = lazy(protocolLoaders.graphql);
+if (window.vscodeData?.target_type) {
+  preloadRequestProtocol(window.vscodeData.target_type);
+}
 import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
 import { Websocket2DetailsData } from "@/features/requests/types/websocket2";
 import { SocketIoDetailsData } from "@/features/requests/types/socketio";
@@ -131,10 +147,8 @@ const Content: React.FC<ContentProps> = () => {
     <>
       {
         <Flex vertical className={styles.apiDebug}>
-          <SuspenseContent>
-            {renderContainer()}
-            {apisActiveData.target_id && <ContentReady />}
-          </SuspenseContent>
+          {renderContainer()}
+          {apisActiveData.target_id && <ContentReady />}
         </Flex>
       }
     </>

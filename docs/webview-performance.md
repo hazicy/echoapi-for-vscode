@@ -58,6 +58,51 @@ The entry's largest shared chunk is still 1,960,785 bytes; changing request tabs
 does not reduce that entry cost. Further optimization requires tracing the
 remaining shared editor/parser/mock dependencies.
 
+### Response dependency follow-up
+
+Importing the response empty state directly, replacing shared component barrel
+imports, and deferring response indicators removes heavy dependencies from the
+HTTP protocol static graph. Response tabs now mount on first selection; the
+realtime implementation waits until sending data exists. The response download
+decoder loads when downloading, preserving the existing decoding behavior.
+
+| Uncompressed JavaScript | Before follow-up | After follow-up |
+| --- | ---: | ---: |
+| Additional HTTP protocol static dependencies | 1,783,060 B | 96,850 B |
+| Entry plus HTTP protocol | 3,810,207 B / 34 files | 2,124,090 B / 22 files |
+
+This is a 94.6% reduction in the additional protocol static payload. The browser
+startup fixture also measures all JS resources after network idle, including
+nested lazy modules: one local Chromium run loaded 2,879,717 bytes across 29 JS
+files. This larger number is the full fixture startup load, not just the static
+protocol graph. It excludes later tab visits, response handling, and code
+generation. The browser fixture mocks immediate host initialization; its timing
+does not represent VS Code Webview startup latency.
+
+The startup regression verifies that Console fetches modules when selected and
+that deferred response components handle both errors and successful responses.
+
+### Single startup transition
+
+The request root now uses one Suspense boundary for initial data and the selected
+protocol. Its 15-row placeholder stays in place until both are ready, instead of
+switching to a separate 3-row protocol placeholder. Params loads with the protocol
+because it is the HTTP/SSE first screen; hidden request tabs remain lazy.
+The shared Request component defaults to a lazy Params implementation. HTTP and
+SSE explicitly supply the eager implementation, so GraphQL and other shared
+consumers do not statically import Params through Request.
+The host supplies a protocol-only hint in the HTML so protocol fetching can begin
+before the initialization message round trip.
+
+Moving Params into the protocol raises the additional static graph to 421,209
+bytes; this is a scheduling change rather than extra first-screen functionality.
+The complete browser fixture startup load is 2,878,788 bytes across 25 JS files
+(previously 2,879,717 bytes / 29 files). Fast and 250ms-delayed initialization
+tests verify that the 3-row protocol placeholder never appears during startup.
+One local run measured approximately 427ms and 430ms to content commit,
+respectively; these are browser fixture measurements, not VS Code latency or
+guarantees of instant opening.
+
 The extension uses ESM code splitting; import/export converters and Mock expression
 libraries load when used. The variable insertion editor also loads on opening its
 popover. Shared host utilities must import individual stores, rather than the

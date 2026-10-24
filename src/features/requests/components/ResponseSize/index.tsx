@@ -48,7 +48,6 @@ import {
   hexToRGBA,
   toFixed,
 } from "@/shared/utils/common";
-import { parseStreamToRaw } from "@/shared/utils/parse";
 
 interface ResponseSizeProps {
   response?: ApiSendingData["response"];
@@ -87,12 +86,13 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
   const network = response?.network;
   const isNewTimings = !isNil(response?.formatTimings);
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!response) {
       return;
     }
 
     const { mime_type, fit_for_show, stream, filename } = response;
+    const { parseStreamToRaw } = await import("@/shared/utils/parse");
 
     const rawHtml =
       !isUndefined(stream?.data) && isPlainObject(mime_type)

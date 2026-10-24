@@ -5,11 +5,13 @@ import { useSafeState } from "ahooks";
 import { Flex } from "@/shared/ui/base";
 import produce from "immer";
 import { DirectionType } from "@/shared/types/common";
-import { ResizablePanels, SuspenseContent } from "@/shared/components";
+import ResizablePanels from "@/shared/components/ResizablePanels";
+import SuspenseContent from "@/shared/components/SuspenseContent";
 
 import { isEqual } from "lodash";
 import { useApis } from "@/app/store";
 import Request from "@/features/requests/components/Request";
+import RequestQuery from "@/features/requests/components/Request/components/Query";
 import Response from "./Response";
 import Header from "./Header";
 import ToolBar from "./ToolBar";
@@ -145,6 +147,7 @@ const ApiDebug: FC<ApiComponentType> = ({ apisData, onApisDataChange }) => {
               >
                 <div className={styles.container}>
                   <Request
+                    queryComponent={RequestQuery}
                     tabOptions={{
                       activeKey: requestTabActiveKey,
                       onChange: (key: string) => setRequestTabActiveKey(key),
