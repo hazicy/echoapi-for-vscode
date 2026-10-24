@@ -1,7 +1,9 @@
+import { copyAsCurl } from "./apis";
+import { getMethodIcon } from "./methodIcon";
 import * as vscode from "vscode";
 import { snowflakeId } from "apipost-tools";
 import { cloneDeep } from "lodash";
-import { getApiList, getProjectReportList } from "./utils";
+import { getApiList, getApiListName, getProjectReportList } from "./utils";
 import { getRequestHistory } from "./requestHistory";
 import { storageChanged } from "./storageEvents";
 import {
@@ -49,7 +51,8 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
         : vscode.TreeItemCollapsibleState.None,
     );
     item.id = `${prefix}:${data.target_id}`;
-    item.contextValue = folder ? "okapiFolder" : "okapiRequest";
+    item.contextValue = folder ? "okapiFolder"
+      : ["api", "graphql"].includes(data.target_type) ? "okapiRequestHttp" : "okapiRequest";
     const protocolLabels: Record<string, string> = {
       sse: "SSE",
       graphql: "GraphQL",
@@ -62,16 +65,6 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
     item.description = folder
       ? undefined
       : requestLabel;
-    const method = String(data.method || "").toUpperCase();
-    const methodColors: Record<string, string> = {
-      GET: "charts.green",
-      POST: "charts.yellow",
-      PUT: "charts.blue",
-      PATCH: "charts.purple",
-      DELETE: "charts.red",
-      HEAD: "charts.blue",
-      OPTIONS: "descriptionForeground",
-    };
     const protocolIcons: Record<string, { icon: string; color: string }> = {
       graphql: { icon: "type-hierarchy", color: "charts.purple" },
       websocket2: { icon: "arrow-swap", color: "charts.blue" },
@@ -79,14 +72,11 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
       sse: { icon: "broadcast", color: "charts.orange" },
     };
     const protocol = protocolIcons[data.target_type];
-    item.iconPath = new vscode.ThemeIcon(
-      folder ? "folder" : protocol?.icon || "globe",
-      folder
-        ? undefined
-        : new vscode.ThemeColor(
-            protocol?.color || methodColors[method] || "charts.green",
-          ),
-    );
+    item.iconPath = getMethodIcon(context, data)
+      ?? new vscode.ThemeIcon(
+          folder ? "folder" : protocol?.icon || "globe",
+          folder ? undefined : new vscode.ThemeColor(protocol?.color || "charts.green"),
+        );
     item.tooltip = [data.name, folder ? undefined : requestLabel, data.url].filter(Boolean).join(" ");
     return item;
   };
@@ -359,6 +349,61 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
       return vscode.commands.executeCommand("openTabPanel", data);
     },
   );
+  const selectedData = (node?: TreeNode) => {
+    if (!node || (node.kind !== "request" && node.kind !== "testFolder")) return;
+    return list().find((item) => item.target_id === node.data.target_id);
+  };
+  command("okapi.tree.rename", async (node?: TreeNode) => {
+    const data = selectedData(node);
+    if (!data) return;
+    const projectKey = getApiListName(context);
+    const name = await vscode.window.showInputBox({
+      title: zh ? "重命名" : "Rename",
+      value: data.name,
+      validateInput: (value) => value.trim() ? undefined : zh ? "请输入名称" : "Enter a name",
+    });
+    if (!name?.trim() || name.trim() === data.name || getApiListName(context) !== projectKey) return;
+    // Read again after the prompt so concurrent edits are preserved.
+    const current = selectedData(node);
+    if (!current) return;
+    await handleMessage({ action: "saveFolder", data: { ...cloneDeep(current), name: name.trim() } }, context);
+    changed.fire(undefined);
+  });
+  command("okapi.tree.clone", async (node?: TreeNode) => {
+    const data = selectedData(node);
+    if (!data || data.target_type === "folder") return;
+    await handleMessage({ action: "cloneApi", data: { target_id: data.target_id } }, context);
+    changed.fire(undefined);
+  });
+  command("okapi.tree.delete", async (node?: TreeNode) => {
+    const data = selectedData(node);
+    if (!data) return;
+    await handleMessage({ action: "showConfirmation", data: {
+      target_id: data.target_id,
+      title: zh ? `确定删除“${data.name}”${data.target_type === "folder" ? "及其所有内容" : ""}？`
+        : `Delete "${data.name}"${data.target_type === "folder" ? " and all its contents" : ""}?`,
+    } }, context);
+    changed.fire(undefined);
+  });
+  command("okapi.tree.copyCurl", async (node?: TreeNode) => {
+    const data = selectedData(node);
+    if (!data || !["api", "graphql"].includes(data.target_type)) return;
+    await copyAsCurl({ ...cloneDeep(data), parent_id: "0" }, context);
+  });
+  command("okapi.tree.revealStorage", (node?: TreeNode) => {
+    if (!selectedData(node)) return;
+    return handleMessage({ action: "openVscodeFileExplorer", data: undefined }, context);
+  });
+  command("okapi.tree.folderSettings", (node?: TreeNode) => {
+    const data = selectedData(node);
+    if (data?.target_type !== "folder") return;
+    return handleMessage({ action: "openTagPanelById", data: data.target_id }, context);
+  });
+  command("okapi.tree.folderReports", (node?: TreeNode) => {
+    const data = selectedData(node);
+    if (data?.target_type !== "folder") return;
+    return vscode.commands.executeCommand("echoapi.folderTest", data, { openHistoryReport: true });
+  });
   command("okapi.tree.refresh", () => changed.fire(undefined));
   command("okapi.tree.filter", async () => {
     const value = await vscode.window.showInputBox({
@@ -376,7 +421,11 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
     historyView.message = view.message;
     changed.fire(undefined);
   });
-  command("okapi.tree.new", async (node?: TreeNode) => {
+  for (const type of ["api", "sse", "graphql", "websocket2", "socketio", "folder"]) {
+    command(`okapi.tree.new.${type}`, (node?: TreeNode) =>
+      vscode.commands.executeCommand("okapi.tree.new", node, type));
+  }
+  command("okapi.tree.new", async (node?: TreeNode, targetType?: string) => {
     const parent =
       node && (node.kind === "request" || node.kind === "testFolder")
         ? node.data
@@ -389,7 +438,8 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
       APIS_TARGET_TYPE_ENUM.SOCKETIO,
       APIS_TARGET_TYPE_ENUM.FOLDER,
     ];
-    const type = await vscode.window.showQuickPick(
+    const type = targetType && types.includes(targetType as APIS_TARGET_TYPE_ENUM)
+      ? { type: targetType } : await vscode.window.showQuickPick(
       types.map((type) => ({
         label:
           type === "folder" ? (zh ? "目录" : "Folder") : type.toUpperCase(),

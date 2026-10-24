@@ -16,5 +16,18 @@
   "command.tree.deleteReport": "删除测试报告",
   "view.requests": "接口",
   "view.tests": "自动化测试",
-  "view.history": "请求历史"
+  "view.history": "请求历史",
+  "command.tree.rename": "重命名",
+  "command.tree.clone": "克隆",
+  "command.tree.delete": "删除",
+  "command.tree.copyCurl": "复制为 cURL",
+  "command.tree.revealStorage": "在文件管理器中显示",
+  "command.tree.folderSettings": "目录设置",
+  "command.tree.folderReports": "历史测试报告",
+  "command.tree.new.api": "新建 HTTP 请求",
+  "command.tree.new.sse": "新建 SSE 请求",
+  "command.tree.new.graphql": "新建 GraphQL 请求",
+  "command.tree.new.websocket2": "新建 WebSocket 请求",
+  "command.tree.new.socketio": "新建 Socket.IO 请求",
+  "command.tree.new.folder": "新建子目录"
 }

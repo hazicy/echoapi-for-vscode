@@ -216,6 +216,76 @@
           "command": "okapi.tree.deleteReport",
           "when": "view == okapiTests && viewItem == okapiReport",
           "group": "management"
+        },
+        {
+          "command": "okapi.tree.rename",
+          "when": "view == okapiRequests && viewItem =~ /^(okapiFolder|okapiRequest|okapiRequestHttp)$/",
+          "group": "3_edit@1"
+        },
+        {
+          "command": "okapi.tree.clone",
+          "when": "view == okapiRequests && viewItem =~ /^okapiRequest/",
+          "group": "3_edit@2"
+        },
+        {
+          "command": "okapi.tree.delete",
+          "when": "view == okapiRequests && viewItem =~ /^(okapiFolder|okapiRequest|okapiRequestHttp)$/",
+          "group": "4_delete"
+        },
+        {
+          "command": "okapi.tree.copyCurl",
+          "when": "view == okapiRequests && viewItem == okapiRequestHttp",
+          "group": "2_copy"
+        },
+        {
+          "command": "okapi.tree.revealStorage",
+          "when": "view == okapiRequests && viewItem =~ /^(okapiFolder|okapiRequest|okapiRequestHttp)$/",
+          "group": "2_reveal"
+        },
+        {
+          "command": "okapi.tree.folderSettings",
+          "when": "view == okapiRequests && viewItem == okapiFolder",
+          "group": "3_edit@0"
+        },
+        {
+          "command": "okapi.tree.folderReports",
+          "when": "view == okapiRequests && viewItem == okapiFolder",
+          "group": "1_test@2"
+        },
+        {
+          "command": "okapi.tree.new.api",
+          "when": "view == okapiRequests && viewItem == okapiFolder",
+          "group": "0_new@0"
+        },
+        {
+          "command": "okapi.tree.new.sse",
+          "when": "view == okapiRequests && viewItem == okapiFolder",
+          "group": "0_new@1"
+        },
+        {
+          "command": "okapi.tree.new.graphql",
+          "when": "view == okapiRequests && viewItem == okapiFolder",
+          "group": "0_new@2"
+        },
+        {
+          "command": "okapi.tree.new.websocket2",
+          "when": "view == okapiRequests && viewItem == okapiFolder",
+          "group": "0_new@3"
+        },
+        {
+          "command": "okapi.tree.new.socketio",
+          "when": "view == okapiRequests && viewItem == okapiFolder",
+          "group": "0_new@4"
+        },
+        {
+          "command": "okapi.tree.new.folder",
+          "when": "view == okapiRequests && viewItem == okapiFolder",
+          "group": "0_new@5"
+        },
+        {
+          "command": "okapi.tree.runTests",
+          "when": "view == okapiRequests && viewItem == okapiFolder",
+          "group": "1_test@1"
         }
       ]
     },
@@ -284,6 +354,71 @@
         "command": "okapi.tree.deleteReport",
         "title": "%command.tree.deleteReport%",
         "icon": "$(trash)"
+      },
+      {
+        "command": "okapi.tree.rename",
+        "title": "%command.tree.rename%",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "okapi.tree.clone",
+        "title": "%command.tree.clone%",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "okapi.tree.delete",
+        "title": "%command.tree.delete%",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "okapi.tree.copyCurl",
+        "title": "%command.tree.copyCurl%",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "okapi.tree.revealStorage",
+        "title": "%command.tree.revealStorage%",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "okapi.tree.folderSettings",
+        "title": "%command.tree.folderSettings%",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "okapi.tree.folderReports",
+        "title": "%command.tree.folderReports%",
+        "icon": "$(history)"
+      },
+      {
+        "command": "okapi.tree.new.api",
+        "title": "%command.tree.new.api%",
+        "icon": "$(add)"
+      },
+      {
+        "command": "okapi.tree.new.sse",
+        "title": "%command.tree.new.sse%",
+        "icon": "$(add)"
+      },
+      {
+        "command": "okapi.tree.new.graphql",
+        "title": "%command.tree.new.graphql%",
+        "icon": "$(add)"
+      },
+      {
+        "command": "okapi.tree.new.websocket2",
+        "title": "%command.tree.new.websocket2%",
+        "icon": "$(add)"
+      },
+      {
+        "command": "okapi.tree.new.socketio",
+        "title": "%command.tree.new.socketio%",
+        "icon": "$(add)"
+      },
+      {
+        "command": "okapi.tree.new.folder",
+        "title": "%command.tree.new.folder%",
+        "icon": "$(new-folder)"
       }
     ]
   },

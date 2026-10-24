@@ -49,10 +49,11 @@ test("native sidebar panels, test commands and workspace request history", async
     fire = (value) => this.listeners.forEach((listener) => listener(value));
     dispose() {}
   }
-  const context = { subscriptions: [], project: "one" };
+  const context = { subscriptions: [], project: "one", extensionUri: "/extension" };
   const mocks = {
     vscode: {
       EventEmitter,
+      Uri: { joinPath: (...parts) => parts.join("/") },
       TreeItem: class {
         constructor(label, collapsibleState) {
           Object.assign(this, { label, collapsibleState });
@@ -97,6 +98,7 @@ test("native sidebar panels, test commands and workspace request history", async
       setDataToGlobalStorage: (_, key, value) => writes.set(key, value),
     },
     sidbar: { handleMessage: () => true },
+    apis: { copyAsCurl: (...args) => executed.push(["copyAsCurl", ...args]) },
     common: {
       APIS_BASE_DEFAULT_DATA: { api: { response: { restored: true } } },
     },
@@ -122,7 +124,7 @@ test("native sidebar panels, test commands and workspace request history", async
             builder.onResolve(
               {
                 filter:
-                  /^(vscode|apipost-tools)$|(^|\/)(utils|db|sidbar|common)$|^@\/features\/requests\/constants$/,
+                  /^(vscode|apipost-tools)$|(^|\/)(utils|db|sidbar|common|apis)$|^@\/features\/requests\/constants$/,
               },
               (args) => {
                 const key =
@@ -176,6 +178,60 @@ test("native sidebar panels, test commands and workspace request history", async
     assert.equal(executed.at(-1)[1].message.length, 1);
     mocks.vscode.window.showQuickPick = originalPicker;
     const requests = views.get("okapiRequests");
+    for (const method of ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]) {
+      const item = requests.getTreeItem({ kind: "request", data: { ...rows[2], method } });
+      assert.deepEqual(item.iconPath, {
+        light: `/extension/dist/images/methods/${method.toLowerCase()}-letter-light.svg`,
+        dark: `/extension/dist/images/methods/${method.toLowerCase()}-letter.svg`,
+      });
+      assert.equal(item.description, method);
+      assert.ok(require("node:fs").existsSync(path.join(__dirname, "../public/images/methods", `${method.toLowerCase()}-letter.svg`)));
+    }
+    assert.equal(requests.getTreeItem({ kind: "request", data: rows[0] }).iconPath.id, "folder");
+    assert.equal(requests.getTreeItem({ kind: "request", data: { ...rows[2], target_type: "graphql" } }).iconPath.id, "type-hierarchy");
+    assert.equal(requests.getTreeItem({ kind: "request", data: { ...rows[2], method: "CUSTOM" } }).iconPath.id, "globe");
+    const folderNode = { kind: "request", data: rows[0] };
+    const requestNode = { kind: "request", data: rows[2] };
+    const messages = [];
+    mocks.sidbar.handleMessage = (message) => { messages.push(message); return true; };
+    const originalInput = mocks.vscode.window.showInputBox;
+    mocks.vscode.window.showInputBox = async () => " Renamed ";
+    await commands.get("okapi.tree.rename")(requestNode);
+    assert.equal(messages.at(-1).action, "saveFolder");
+    assert.equal(messages.at(-1).data.name, "Renamed");
+    assert.equal(rows[2].name, "Get user");
+    const messageCount = messages.length;
+    mocks.vscode.window.showInputBox = async () => undefined;
+    await commands.get("okapi.tree.rename")(folderNode);
+    assert.equal(messages.length, messageCount);
+    mocks.vscode.window.showInputBox = async () => { context.project = "two"; return "Wrong workspace"; };
+    await commands.get("okapi.tree.rename")(folderNode);
+    assert.equal(messages.length, messageCount);
+    context.project = "one";
+    mocks.vscode.window.showInputBox = originalInput;
+    await commands.get("okapi.tree.clone")(requestNode);
+    assert.deepEqual(messages.at(-1), { action: "cloneApi", data: { target_id: "request" } });
+    await commands.get("okapi.tree.delete")(folderNode);
+    assert.equal(messages.at(-1).action, "showConfirmation");
+    assert.equal(messages.at(-1).data.target_id, "folder");
+    await commands.get("okapi.tree.folderSettings")(folderNode);
+    assert.deepEqual(messages.at(-1), { action: "openTagPanelById", data: "folder" });
+    await commands.get("okapi.tree.revealStorage")(requestNode);
+    assert.equal(messages.at(-1).action, "openVscodeFileExplorer");
+    await commands.get("okapi.tree.folderReports")(folderNode);
+    assert.deepEqual(executed.at(-1), ["echoapi.folderTest", rows[0], { openHistoryReport: true }]);
+    await commands.get("okapi.tree.copyCurl")(requestNode);
+    assert.equal(executed.at(-1)[0], "copyAsCurl");
+    assert.equal(executed.at(-1)[1].parent_id, "0");
+    assert.equal(rows[2].parent_id, "nested");
+    await commands.get("okapi.tree.new")(folderNode, "folder");
+    assert.equal(messages.at(-1).data.parent_id, "folder");
+    assert.equal(messages.at(-1).data.target_type, "folder");
+    const manifest = require("../package.json");
+    for (const item of manifest.contributes.menus["view/item/context"].filter((item) => item.command.startsWith("okapi.tree."))) {
+      assert.ok(commands.has(item.command), `missing handler: ${item.command}`);
+    }
+    mocks.sidbar.handleMessage = () => true;
     const tests = views.get("okapiTests");
     const history = views.get("okapiHistory");
     let refreshes = 0;
