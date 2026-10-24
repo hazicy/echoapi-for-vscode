@@ -1,25 +1,17 @@
 import * as vscode from "vscode";
 
-export const protocolThemeIcons: Record<string, string> = {
-  api: "globe",
-  sse: "broadcast",
-  graphql: "type-hierarchy",
-  websocket2: "debug-disconnect",
-  socketio: "plug",
-  grpc: "server-process",
-  socket: "plug",
-  socket_method: "symbol-method",
-  folder: "folder",
-  doc: "file-text",
-};
+const protocolIcons = new Set([
+  "api", "sse", "graphql", "websocket2", "socketio", "grpc",
+  "socket", "socket_method", "folder", "doc",
+]);
 
-/** Webview editor tabs accept URI icons, so supply monochrome theme variants. */
+/** Shared custom SVG icons for native request trees and editor tabs. */
 export function getProtocolIcon(
   context: vscode.ExtensionContext,
   data: { target_type?: string },
 ): { light: vscode.Uri; dark: vscode.Uri } | undefined {
   const type = data.target_type || "";
-  if (!protocolThemeIcons[type]) return undefined;
+  if (!protocolIcons.has(type)) return undefined;
   const name = type === "api" ? "http" : type;
   return {
     light: vscode.Uri.joinPath(context.extensionUri, "dist", "images", `${name}.svg`),

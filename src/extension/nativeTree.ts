@@ -1,7 +1,7 @@
 import { requestDecoration, requestStatusChanged } from "./requestStatus";
 import { getCurrentProjectConfig } from "./utils";
 import { copyAsCurl } from "./apis";
-import { protocolThemeIcons } from "./protocolIcon";
+import { getProtocolIcon } from "./protocolIcon";
 import * as vscode from "vscode";
 import { snowflakeId } from "apipost-tools";
 import { cloneDeep } from "lodash";
@@ -67,10 +67,9 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
       String(data.method || data.target_type).toUpperCase();
     const count = folder ? countFolderRequests(list(), data.target_id) : 0;
     item.description = count ? `(${count})` : undefined;
-    item.iconPath = new vscode.ThemeIcon(
-      protocolThemeIcons[data.target_type] || "globe",
-      folder ? new vscode.ThemeColor("textLink.foreground") : undefined,
-    );
+    item.iconPath = folder
+      ? new vscode.ThemeIcon("folder", new vscode.ThemeColor("textLink.foreground"))
+      : getProtocolIcon(context, data);
     if (data.target_type === "api") {
       const method = String(data.method || "GET").toLowerCase();
       const icon = ["get", "post", "put", "patch", "delete", "head", "options"].includes(method)
