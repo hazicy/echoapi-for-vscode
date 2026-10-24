@@ -13,7 +13,7 @@ const IconFont = forwardRef<
 >(({ type, rotate, spin, style, className, ...props }, ref) => {
   useEffect(() => {
     const src = `${window.resourceBaseUrl || ""}/fonts/iconfont.js`;
-    if (loaded.has(src)) return;
+    if (loaded.has(src)) {return;}
     loaded.add(src);
     const script = document.createElement("script");
     script.src = src;

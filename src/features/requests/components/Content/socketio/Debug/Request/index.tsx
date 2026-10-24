@@ -113,7 +113,7 @@ const Request: React.FC<Props> = (props) => {
     forEach(reverseFolder, (item: any) => {
       const { request } = item || {};
 
-      if (!request) return;
+      if (!request) {return;}
 
       forEach(keys(folderParams), (key) => {
         if (request[key]) {

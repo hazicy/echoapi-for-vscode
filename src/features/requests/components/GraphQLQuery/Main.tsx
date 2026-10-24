@@ -111,7 +111,7 @@ const Main = forwardRef((props: Props, ref) => {
   }));
 
   useMount(() => {
-    if (!searchData.query) return;
+    if (!searchData.query) {return;}
     rawToTree(searchData.query);
   });
 

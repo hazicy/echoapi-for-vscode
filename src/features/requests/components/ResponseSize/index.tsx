@@ -88,7 +88,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
   const isNewTimings = !isNil(response?.formatTimings);
 
   const handleDownload = () => {
-    if (!response) return;
+    if (!response) {return;}
 
     const { mime_type, fit_for_show, stream, filename } = response;
 
@@ -291,7 +291,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
   };
 
   const timeContentList = useMemo(() => {
-    if (!formatTimings) return [];
+    if (!formatTimings) {return [];}
     const total = sumBy(values(omit(formatTimings, ["total"])), "duration");
     const left = Number(
       toFixed(divide(formatTimings?.prepare.duration, total)),
@@ -354,7 +354,7 @@ const ResponseSize: React.FC<ResponseSizeProps> = (props) => {
   }, [responseCode]);
 
   const responseSizeFormat = useMemo(() => {
-    if (!formatSize) return {};
+    if (!formatSize) {return {};}
     const resSize = convertResponseBytes(
       add(formatSize.responseHeaders, formatSize.responseBody),
     );

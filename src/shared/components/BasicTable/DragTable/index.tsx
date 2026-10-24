@@ -52,14 +52,14 @@ const DragTable = <DataSource extends AnyObject>(
       dragFirstDisabled &&
       (props?.over?.id === firstKey || props?.active?.id === firstKey)
     )
-      return;
+      {return;}
     if (
       dragLastDisabled &&
       (props?.over?.id === lastKey || props?.active?.id === lastKey)
     )
-      return;
+      {return;}
 
-    if (onDragEnd) onDragEnd(props);
+    if (onDragEnd) {onDragEnd(props);}
   };
 
   let RenderTable = AntdTable;

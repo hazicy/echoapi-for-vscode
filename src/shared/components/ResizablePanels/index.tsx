@@ -89,7 +89,7 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
 
   // Watch system config for split-screen direction changes
   useEffect(() => {
-    if (!showDirectionBtn || !systemConfigTabDirection) return;
+    if (!showDirectionBtn || !systemConfigTabDirection) {return;}
 
     const _direction = isEqual(systemConfigTabDirection, STATUS_CODE.ENABLE)
       ? "vertical"

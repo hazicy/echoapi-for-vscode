@@ -19,7 +19,7 @@ const HeaderCount: FC<Props> = ({
   customCalcFun,
 }) => {
   const calcCount = useMemo(() => {
-    if (showDot) return 0;
+    if (showDot) {return 0;}
 
     if (customCalcFun) {
       return customCalcFun(dataSource);

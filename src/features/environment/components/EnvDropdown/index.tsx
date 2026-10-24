@@ -193,7 +193,7 @@ const EnvDropdown: React.FC<EnvDropdownProps> = ({
             <IconFont
               className={slots["env-select-setting"]}
               onClick={(e) => {
-                if (envDisabled) return;
+                if (envDisabled) {return;}
                 e.stopPropagation();
                 setOpen(false);
                 // Open environment page
@@ -220,7 +220,7 @@ const EnvDropdown: React.FC<EnvDropdownProps> = ({
 
       <div
         onClick={() => {
-          if (envDisabled) return;
+          if (envDisabled) {return;}
           setOpen(false);
           openEnvPage({ cookie: true });
         }}

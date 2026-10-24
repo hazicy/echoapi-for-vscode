@@ -312,14 +312,14 @@ const convertSendingData = async (
   _isDownload?: boolean,
   sendError?: boolean,
 ) => {
-  if (isEmpty(sendResponse)) return;
+  if (isEmpty(sendResponse)) {return;}
 
   let _result: Partial<ApiSendingData> = {};
 
   const { target_id } = sendResponse;
   const { request, response } = sendResponse?.data || {};
 
-  if (!request) return;
+  if (!request) {return;}
 
   const { stream, mime_type, arr_cookies } = response || {};
 
@@ -412,7 +412,7 @@ export const handleResponseCookies = async (
 
   const _domainInfo = cookie || {};
 
-  if (size(cookies) <= 0 || isUndefined(cookies)) return;
+  if (size(cookies) <= 0 || isUndefined(cookies)) {return;}
 
   const cookieObj: any = {};
   const localList = reduce(
@@ -545,7 +545,7 @@ export const transformEnvVars = async (
   currentEnvData: EnvListItem,
   envVariables?: ApiSendResponseDataVariables["environment"],
 ) => {
-  if (!envVariables) return;
+  if (!envVariables) {return;}
 
   const newList: { [key: string]: any } = {};
   const localList: { [key: string]: any } = currentEnvData?.env_var_list || {};
@@ -570,7 +570,7 @@ export const transformGlobalVars = (
   localGlobalVars: any,
   globalVariables?: ApiSendResponseDataVariables["globals"],
 ) => {
-  if (!globalVariables) return;
+  if (!globalVariables) {return;}
 
   return reduce(
     keys(globalVariables),

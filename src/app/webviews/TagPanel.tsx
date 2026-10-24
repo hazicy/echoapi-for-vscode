@@ -130,7 +130,7 @@ function TagPanel() {
           const { streamResponse, ...reset } = message.data;
           const { currentSseSendingData } = useApis.getState();
 
-          if (!currentSseSendingData) return;
+          if (!currentSseSendingData) {return;}
 
           const newCurApiSendingDataSSE = produce(
             currentSseSendingData,

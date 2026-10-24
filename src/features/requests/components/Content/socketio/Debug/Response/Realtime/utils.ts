@@ -26,7 +26,7 @@ export const handleSocketResponse = (
             trim(filterValue).length > 0 &&
             !includes(res?.message?.message, trim(filterValue))
           )
-            continue;
+            {continue;}
           resArr.push({
             ...res,
             id: res?.id || snowflakeId(),
@@ -66,7 +66,7 @@ export const handleSocketResponse = (
           trim(filterValue).length > 0 &&
           !includes(res?.message?.data, trim(filterValue))
         )
-          continue;
+          {continue;}
 
         resArr.push({
           ...res,
@@ -79,7 +79,7 @@ export const handleSocketResponse = (
           trim(filterValue).length > 0 &&
           !includes(getSendStr(res?.message?.message?.data), trim(filterValue))
         )
-          continue;
+          {continue;}
 
         resArr.push({
           ...res,
@@ -92,7 +92,7 @@ export const handleSocketResponse = (
           trim(filterValue).length > 0 &&
           !includes(res?.message, trim(filterValue))
         )
-          continue;
+          {continue;}
         resArr.push({
           ...res,
           id: res?.id || snowflakeId(),
@@ -104,7 +104,7 @@ export const handleSocketResponse = (
           trim(filterValue).length > 0 &&
           !includes(res?.message, trim(filterValue))
         )
-          continue;
+          {continue;}
         resArr.push({
           ...res,
           id: res?.id || snowflakeId(),
@@ -116,7 +116,7 @@ export const handleSocketResponse = (
           trim(filterValue).length > 0 &&
           !includes(getSendStr(res?.message?.message?.data), trim(filterValue))
         )
-          continue;
+          {continue;}
         resArr.push({
           ...res,
           id: res?.id || snowflakeId(),
@@ -141,9 +141,9 @@ export const stringToColor = (str: string) => {
     b = 0;
   for (let i = 0; i < 3; i++) {
     const value = (hash >> (i * 8)) & 0xff;
-    if (i === 0) r = value;
-    if (i === 1) g = value;
-    if (i === 2) b = value;
+    if (i === 0) {r = value;}
+    if (i === 1) {g = value;}
+    if (i === 2) {b = value;}
   }
 
   // Ensure at least two components are not less than 80

@@ -54,7 +54,7 @@ const Realtime: FC<Props> = ({ sendingDataSSE }) => {
     useSafeState<ApiStreamResponseSSEItem>();
 
   useEffect(() => {
-    if (!direction) return;
+    if (!direction) {return;}
 
     if (direction === "vertical") {
       setCurDirection("horizontal");
@@ -169,7 +169,7 @@ const Realtime: FC<Props> = ({ sendingDataSSE }) => {
   );
 
   const customTipsContent = (data: ApiStreamResponseSSEItem) => {
-    if (isString(data.data)) return {};
+    if (isString(data.data)) {return {};}
 
     return {
       size: data?.data?.size,

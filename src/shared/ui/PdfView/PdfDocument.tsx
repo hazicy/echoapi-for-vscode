@@ -22,7 +22,7 @@ const PdfDocument: React.FC<Props> = ({ file }) => {
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container) {return;}
 
     const observer = new ResizeObserver(([entry]) => {
       setPageWidth(Math.max(1, Math.floor(entry.contentRect.width)));

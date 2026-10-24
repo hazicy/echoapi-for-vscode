@@ -35,10 +35,10 @@ export function countFolderRequests(
   while (pending.length) {
     for (const item of children.get(pending.pop()!) || []) {
       const id = String(item.target_id);
-      if (visited.has(id)) continue;
+      if (visited.has(id)) {continue;}
       visited.add(id);
       if (!["folder", "socket", "sample_group"].includes(item.target_type))
-        count++;
+        {count++;}
       pending.push(id);
     }
   }

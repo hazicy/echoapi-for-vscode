@@ -26,7 +26,7 @@ export const handleSocketResponse = (
             isString(res?.message?.message) &&
             res?.message?.message?.indexOf(trim(filterValue)) === -1
           )
-            continue;
+            {continue;}
           resArr.push({
             ...res,
             id: res?.id || snowflakeId(),
@@ -68,7 +68,7 @@ export const handleSocketResponse = (
           isString(res?.message?.data) &&
           res?.message?.data?.indexOf(trim(filterValue)) === -1
         )
-          continue;
+          {continue;}
 
         resArr.push({
           ...res,
@@ -81,7 +81,7 @@ export const handleSocketResponse = (
           trim(filterValue).length > 0 &&
           getSendStr(res?.message?.data).indexOf(trim(filterValue)) === -1
         )
-          continue;
+          {continue;}
 
         resArr.push({
           ...res,

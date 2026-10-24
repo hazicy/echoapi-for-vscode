@@ -213,7 +213,7 @@ const Index = (props: Props) => {
   ) => {};
 
   const onDragEnd = ({ active, over }: DragEndEvent) => {
-    if (isEqual(active.id, over?.id)) return;
+    if (isEqual(active.id, over?.id)) {return;}
 
     const activeIndex = findIndex(dataList, (i) => i.server_id === active.id);
     const overIndex = findIndex(dataList, (i) => i.server_id === over?.id);

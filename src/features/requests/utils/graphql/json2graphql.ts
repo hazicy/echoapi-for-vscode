@@ -22,7 +22,7 @@ export function createOperationDefinition(tree) {
 }
 
 function createName(name) {
-  if (!name) return null;
+  if (!name) {return null;}
   return {
     kind: Kind.NAME,
     value: name,
@@ -30,7 +30,7 @@ function createName(name) {
 }
 
 function createVariableDefinitions(variables) {
-  if (!variables || !variables.length) return [];
+  if (!variables || !variables.length) {return [];}
 
   return variables.map((variable) => ({
     kind: Kind.VARIABLE_DEFINITION,
@@ -62,10 +62,10 @@ function createType(type, required) {
 
 function createSelectionSet(fields) {
   if (!fields || !fields.length)
-    return {
+    {return {
       kind: Kind.SELECTION_SET,
       selections: [],
-    };
+    };}
 
   return {
     kind: Kind.SELECTION_SET,
@@ -84,7 +84,7 @@ function createField(field) {
 }
 
 export function createArguments(args) {
-  if (!args || !args.length) return [];
+  if (!args || !args.length) {return [];}
 
   return args.map((arg) => ({
     kind: Kind.ARGUMENT,
@@ -94,7 +94,7 @@ export function createArguments(args) {
 }
 
 function createDirectives(directives) {
-  if (!directives || !directives.length) return [];
+  if (!directives || !directives.length) {return [];}
 
   return directives.map((directive) => ({
     kind: Kind.DIRECTIVE,

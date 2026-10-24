@@ -74,7 +74,7 @@ const LinkPanel: React.FC<Props> = (props) => {
     return (
       <div
         onClick={() => {
-          if (item.model_type === "folder" || item.key === model_id) return;
+          if (item.model_type === "folder" || item.key === model_id) {return;}
           onNodeClick(item.key);
         }}
         className={slots["model-node-item"]}

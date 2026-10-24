@@ -362,7 +362,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
 
   const updatePreviewText = () => {
     if ([VAR_OPTIONS_KEY.desc, VAR_OPTIONS_KEY.ai_desc].includes(optionKey))
-      return;
+      {return;}
     if ([VAR_OPTIONS_KEY.var, VAR_OPTIONS_KEY.fixed].includes(optionKey)) {
       if (!value || !fnList.length) {
         getPreviewTextWithEmptyFn().then((text) => {
@@ -914,7 +914,7 @@ const Index = (_props: { ref: any; className: any }, ref: React.Ref<any>) => {
                       >
                         <div
                           onClick={() => {
-                            if (!has(fnKeyMap, item.func_name)) return;
+                            if (!has(fnKeyMap, item.func_name)) {return;}
                             setEditIndex(index);
                             setEditFn({ ...item });
                             setFuncOpen(true);

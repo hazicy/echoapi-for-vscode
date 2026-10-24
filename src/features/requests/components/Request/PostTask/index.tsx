@@ -218,12 +218,12 @@ const RequestPostTask: FC<Props> = memo(
 
     const handleDragEnd = useMemoizedFn(
       (currentKey: string, targetKey: string, mode: DRAG_MODE) => {
-        if (isEqual(currentKey, targetKey)) return;
+        if (isEqual(currentKey, targetKey)) {return;}
 
         const current = find(value, (item) => item.id === currentKey);
         const target = find(value, (item) => item.id === targetKey);
 
-        if (!current || !target) return;
+        if (!current || !target) {return;}
 
         const newRequestData = produce(value, (draft) => {
           const currentIdx = findIndex(value, (findItem) =>

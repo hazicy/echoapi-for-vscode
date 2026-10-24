@@ -43,7 +43,7 @@ const TitleRender = memo((props: DataNode | any) => {
   const { filterData } = useContext(GraphQLSchemaProvider);
 
   const count = useMemo(() => {
-    if (isEmpty(args)) return 0;
+    if (isEmpty(args)) {return 0;}
     const filterArgs = find(args, (e: any) => has(e, "inputObjects"));
     if (filterArgs) {
       if (isArray(filterArgs?.inputObjects)) {
@@ -126,7 +126,7 @@ const TitleRender = memo((props: DataNode | any) => {
                   className={[slots["action-outer"], slots.primary].join(" ")}
                   onClick={(e) => {
                     e?.stopPropagation();
-                    if (readOnly) return;
+                    if (readOnly) {return;}
                     setFilterOpen(true);
                   }}
                   justify="center"

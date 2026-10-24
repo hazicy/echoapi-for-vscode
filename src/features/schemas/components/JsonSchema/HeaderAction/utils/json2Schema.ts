@@ -3,7 +3,7 @@ import { getTypeName } from "@/shared/utils/type";
 function getPropertyFormat(value: any) {
   const type = getTypeName(value).toLowerCase();
 
-  if (type === "date") return "date-time";
+  if (type === "date") {return "date-time";}
 
   return null;
 }
@@ -11,10 +11,10 @@ function getPropertyFormat(value: any) {
 function getPropertyType(value: any) {
   const type = getTypeName(value).toLowerCase();
 
-  if (type === "number") return Number.isInteger(value) ? "integer" : type;
-  if (type === "date") return "string";
-  if (type === "regexp") return "string";
-  if (type === "function") return "string";
+  if (type === "number") {return Number.isInteger(value) ? "integer" : type;}
+  if (type === "date") {return "string";}
+  if (type === "regexp") {return "string";}
+  if (type === "function") {return "string";}
 
   return type;
 }

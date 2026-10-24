@@ -30,7 +30,7 @@ export const createOpenPanel = (
   if (openedPanels[data?.target_id]) {
     // Tab already exists, switch to it
     const protocolIcon = getProtocolIcon(context, data);
-    if (protocolIcon) openedPanels[data?.target_id].iconPath = protocolIcon;
+    if (protocolIcon) {openedPanels[data?.target_id].iconPath = protocolIcon;}
     openedPanels[data?.target_id].reveal(vscode.ViewColumn.One);
     return;
   }

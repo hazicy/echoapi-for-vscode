@@ -193,7 +193,7 @@ const ItemNode: React.FC<ItemNodeProps> = (props) => {
   });
 
   const handleCancelLinkSchema = useMemoizedFn(() => {
-    if (onCancelLinkSchema) onCancelLinkSchema(nodeKey);
+    if (onCancelLinkSchema) {onCancelLinkSchema(nodeKey);}
   });
 
   const handleChangeRef = (...args: any) => {

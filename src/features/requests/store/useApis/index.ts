@@ -220,7 +220,7 @@ const useApis = create<State & Action>()(
       updateApiSendingData: (apiSendingData) => set(() => ({ apiSendingData })),
       updateApiSendingDataByTargetId: (payload) =>
         set((state) => {
-          if (!payload.target_id) return state;
+          if (!payload.target_id) {return state;}
 
           return {
             apiSendingData: {
@@ -234,7 +234,7 @@ const useApis = create<State & Action>()(
         }),
       coverApiSendingConsole: (payload) =>
         set((state) => {
-          if (!payload.target_id) return state;
+          if (!payload.target_id) {return state;}
 
           return {
             apiSendingData: {

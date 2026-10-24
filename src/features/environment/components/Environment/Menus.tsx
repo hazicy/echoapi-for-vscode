@@ -144,7 +144,7 @@ const Menus: FC<Props> = ({ selectedKeys, setSelectedKeys }) => {
                         setSelectedKeys([res[res.length - 1].env_id]);
                       }
                       if (!res.length)
-                        setSelectedKeys([ENV_MANAGE_ENUM.cookie]);
+                        {setSelectedKeys([ENV_MANAGE_ENUM.cookie]);}
                       updateEnvList(res);
                       return;
                     }
@@ -230,7 +230,7 @@ const Menus: FC<Props> = ({ selectedKeys, setSelectedKeys }) => {
   };
 
   const onDragEnd = ({ active, over }: DragEndEvent) => {
-    if (isEqual(active.id, over?.id)) return;
+    if (isEqual(active.id, over?.id)) {return;}
 
     const activeIndex = findIndex(envList, (i) => i.env_id === active.id);
     const overIndex = findIndex(envList, (i) => i.env_id === over?.id);

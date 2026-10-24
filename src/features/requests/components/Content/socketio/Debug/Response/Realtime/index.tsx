@@ -225,7 +225,7 @@ const Realtime: React.FC<Props> = ({
   }, [value]);
 
   const customTipsContent = (data: any) => {
-    if (isString(data?.message)) return {};
+    if (isString(data?.message)) {return {};}
 
     return {
       size: data?.message?.size,
@@ -253,9 +253,9 @@ const Realtime: React.FC<Props> = ({
   useEffect(() => {
     flowRef.current?.addEventListener("scroll", () => {
       if (!lastScrollTop.current)
-        lastScrollTop.current = {
+        {lastScrollTop.current = {
           [apisActiveKey]: 0,
-        };
+        };}
       const currentScrollTop = flowRef.current.scrollTop;
       if (currentScrollTop < lastScrollTop.current[apisActiveKey]) {
         setIsScrollAuto(false);

@@ -101,7 +101,7 @@ const RequestBody: FC<RequestBodyProps> = (props) => {
   }, [calcRadioValue, value, value?.parameter, value?.parameter?.length]);
 
   const handleModeChange = (newValue: RequestBodyContentType) => {
-    if (!value) return;
+    if (!value) {return;}
 
     const newRequestData = produce(value, (draft: { mode: string }) => {
       draft.mode = newValue;
@@ -124,7 +124,7 @@ const RequestBody: FC<RequestBodyProps> = (props) => {
     import("auto-json-faker")
       .then(({ default: autoJsonFaker }) => autoJsonFaker(value?.raw))
       .then((mockData: any) => {
-        if (!value) return;
+        if (!value) {return;}
         const newRequestData = produce(value, (draft) => {
           if (isString(mockData) && mockData?.length > 0) {
             draft.raw = mockData;

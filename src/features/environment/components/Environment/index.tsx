@@ -77,7 +77,7 @@ const Environment = (props: Props) => {
   const envCreate = async () => {
     updateEstablish(false);
     try {
-      if (envList?.some((e) => e.isLocal)) return;
+      if (envList?.some((e) => e.isLocal)) {return;}
       const info = {
         ...ENV_LOCAL_ITEM,
         server_list: serverList?.map((e) => ({ ...e, uri: "" })),

@@ -118,7 +118,7 @@ const EnvVar = (props: EnvVarsProps) => {
       document.getElementById("scroll-env-vars");
     if (i === 1) {
       const isScroll = varDom && varDom.scrollTop + 8 * 28 < (x + 1) * 28;
-      if (isScroll) varDom.scrollTop = (x - 7) * 28;
+      if (isScroll) {varDom.scrollTop = (x - 7) * 28;}
       if (refItemIndex.current >= 0) {
         refItemIndex.current -= 1;
       }
@@ -140,10 +140,10 @@ const EnvVar = (props: EnvVarsProps) => {
 
   const listener = useMemoizedFn((e) => {
     if (e.code === "ArrowDown") {
-      if (itemIndex < markVarsList?.length - 1) changeActive(1);
+      if (itemIndex < markVarsList?.length - 1) {changeActive(1);}
     }
     if (e.code === "ArrowUp") {
-      if (itemIndex > 0) changeActive(-1);
+      if (itemIndex > 0) {changeActive(-1);}
     }
     if (e.code === "Enter") {
       const markItem: {

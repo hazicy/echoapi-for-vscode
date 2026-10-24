@@ -104,7 +104,7 @@ export async function activate(context: vscode.ExtensionContext) {
         title: zh ? "切换 Okapi 工作区" : "Switch Okapi Workspace",
         matchOnDescription: true,
       });
-      if (!selected) return;
+      if (!selected) {return;}
       if (!selected.project) {
         const name = await vscode.window.showInputBox({
           title: zh ? "新建 Okapi 工作区" : "New Okapi Workspace",
@@ -112,7 +112,7 @@ export async function activate(context: vscode.ExtensionContext) {
           ignoreFocusOut: true,
           validateInput: (value) => {
             if (!value.trim())
-              return zh ? "请输入工作区名称" : "Enter a workspace name";
+              {return zh ? "请输入工作区名称" : "Enter a workspace name";}
             if (
               items.some(
                 (item) =>
@@ -127,7 +127,7 @@ export async function activate(context: vscode.ExtensionContext) {
             return undefined;
           },
         });
-        if (!name?.trim()) return;
+        if (!name?.trim()) {return;}
         const project: Project = {
           ...DEFAULT_PROJECT,
           project_id: randomUUID(),
@@ -145,8 +145,8 @@ export async function activate(context: vscode.ExtensionContext) {
           (item) => item.team_id === team.team_id,
         );
         if (existingTeam)
-          existingTeam.project = [...(existingTeam.project || []), project];
-        else teamProjectList.push(team);
+          {existingTeam.project = [...(existingTeam.project || []), project];}
+        else {teamProjectList.push(team);}
         await context.globalState.update("userConfig", {
           ...userConfig,
           teamProjectList,
@@ -156,7 +156,7 @@ export async function activate(context: vscode.ExtensionContext) {
       if (
         selected.project?.project_id === userConfig.currentProject?.project_id
       )
-        return;
+        {return;}
       await handleMessage({ action: "switchProject", data: selected }, context);
       await globalConfig.sidePanelWebView?.webview.postMessage({
         action: "setUserConfig",
