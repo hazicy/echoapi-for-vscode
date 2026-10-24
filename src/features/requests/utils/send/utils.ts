@@ -15,7 +15,8 @@ import {
 } from "lodash";
 
 import JSON5 from "json5";
-import { useProjectConfig, useProjectSetting } from "@/app/store";
+import useProjectConfig from "@/features/project/store/useProjectConfig";
+import useProjectSetting from "@/features/project/store/useProjectSetting";
 import { ApiDetailsData } from "@/features/requests/types/api";
 import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
 import { getUpwardFolderId } from "../../../../shared/utils/common";

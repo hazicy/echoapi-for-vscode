@@ -22,7 +22,6 @@ import {
   trim,
 } from "lodash";
 import { ComponentType } from "react";
-import { message } from "@/shared/ui/base";
 import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
 import { ApisBaseData, ApisBaseDataItem } from "@/features/requests/types/base";
 /**
@@ -145,13 +144,6 @@ export const EditFormat = (value: any) => {
   return ATools.beautifyRaw(value);
 };
 
-export const catchError = (error: any, errorText?: string) => {
-  if (error) {
-    return message.error(error?.msg || error?.message || `${error}`);
-  }
-
-  return message.error(errorText || i18next.t("supplement.catch_err"));
-};
 
 /**
  * Check if it is a valid URL

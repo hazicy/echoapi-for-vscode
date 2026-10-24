@@ -29,6 +29,23 @@ bootstrap. A commit does not guarantee that every nested asynchronous editor has
 finished loading or that the browser has painted. Compare cold opens separately
 from existing panel reveals, which retain their context.
 
+The extension uses ESM code splitting; import/export converters and Mock expression
+libraries load when used. The variable insertion editor also loads on opening its
+popover. Shared host utilities must import individual stores, rather than the
+application store barrel, to avoid pulling UI initialization into the extension.
+
+Both build tools use `scripts/faker-locales.mjs`. Faker v9 keeps the seven locales
+supported by the expression parser, including its English fallback. The legacy
+Mock adapter retains its v6 English instance and API; it no longer includes every
+locale. Do not force the legacy dependency to v9 without migrating its removed
+APIs. `tests/mockBundling.test.mjs` checks legacy generators, expression languages,
+Schema generation, and request-body generation against the optimized bundle.
+
+To measure the extension, build with `yarn tsup --minify --metafile` and inspect
+`dist/metafile-esm.json`. Count the entry and its recursive static imports as the
+startup payload; a smaller entry alone does not prove that startup loads less.
+The separate HTTP Worker runtime is excluded from these extension bundle totals.
+
 The production startup regression is in `tests/ui/startup.spec.ts`. Run it after
 building Webviews:
 

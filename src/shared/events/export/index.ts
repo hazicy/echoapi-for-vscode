@@ -1,4 +1,5 @@
-import { useProjectConfig, useUserConfig } from "@/app/store";
+import useProjectConfig from "@/features/project/store/useProjectConfig";
+import useUserConfig from "@/features/auth/store/useUserConfig";
 import { ImportConfig } from "@/features/project/types/export";
 import { getSubstring } from "@/shared/utils/common";
 import { snowflakeId } from "apipost-tools";

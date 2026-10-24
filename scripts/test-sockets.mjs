@@ -1,5 +1,6 @@
 import { fileURLToPath } from "node:url";
 import { build } from "esbuild";
+import { fakerLocalesEsbuild } from "./faker-locales.mjs";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 
@@ -20,6 +21,7 @@ async function main() {
     ],
     outfile,
     bundle: true,
+    plugins: [fakerLocalesEsbuild()],
     packages: process.argv.includes("--bundled") ? undefined : "external",
     platform: "node",
     target: "node20",

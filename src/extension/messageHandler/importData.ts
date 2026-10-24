@@ -222,7 +222,7 @@ export const handelImportDataMessage = async (
           envs: (res?.global?.envs || []).filter((i: any) => i.env_id !== "2"), // Filter mock environment
         };
       } else if (fileType === IMPORT_TYPE_ENUM.THUNDER_CLIENT) {
-        const res = importMethod.thunderToApipost(json, "");
+        const res = await importMethod.thunderToApipost(json, "");
         if (res?.status === "success") {
           data = {
             ...data,

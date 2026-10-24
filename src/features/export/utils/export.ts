@@ -1,10 +1,3 @@
-import {
-  PostmanToApipost,
-  SwaggerToApipost,
-  ThunderToApipost,
-  ApipostToPostman,
-  ApiToSwagger,
-} from "echoapi-converter";
 import { ApiDetailsData } from "@/features/requests/types/api";
 import { validate } from "jsonschema";
 import schemaRule2 from "../../import/utils/postmanSchema/postman_schema2.0";
@@ -22,12 +15,11 @@ export const throwResult = (
   };
 };
 
-const ApiToSwaggerClass = new ApiToSwagger();
+const loadConverters = (() => {
+  let pending: Promise<typeof import("echoapi-converter")> | undefined;
+  return () => (pending ??= import("echoapi-converter"));
+})();
 
-const PostmanToApipostClass = new PostmanToApipost();
-const SwaggerToApipostClass = new SwaggerToApipost();
-const ThunderToApipostClass = new ThunderToApipost();
-const ApipostToPostmanClass = new ApipostToPostman();
 export const exportMethod = {
   apiToSwagger: async (
     data: any,
@@ -35,7 +27,8 @@ export const exportMethod = {
     language?: "en" | "zh-cn" | "ja" | "zh-hant" | "id",
   ) => {
     try {
-      return await ApiToSwaggerClass.apiToswagger(
+      const { ApiToSwagger } = await loadConverters();
+      return await new ApiToSwagger().apiToswagger(
         data,
         version as "2.0" | "3.0",
         language,
@@ -46,7 +39,8 @@ export const exportMethod = {
   },
   apiToPostman: async (data: any) => {
     try {
-      return await ApipostToPostmanClass.convert(data);
+      const { ApipostToPostman } = await loadConverters();
+      return await new ApipostToPostman().convert(data);
     } catch (err) {
       return throwResult("error", String(err));
     }
@@ -64,16 +58,18 @@ export const importMethod = {
           "Import Failed: Unsupported file format. Please upload a vaild Postman file or a compatible format",
         );
       }
-      return await PostmanToApipostClass.convert(data, project_id, {
+      const { PostmanToApipost } = await loadConverters();
+      return await new PostmanToApipost().convert(data, project_id, {
         source: "vscode",
       });
     } catch (err) {
       return throwResult("error", String(err));
     }
   },
-  thunderToApipost: (data: any, project_id: string) => {
+  thunderToApipost: async (data: any, project_id: string) => {
     try {
-      return ThunderToApipostClass.convert(data, project_id);
+      const { ThunderToApipost } = await loadConverters();
+      return await new ThunderToApipost().convert(data, project_id);
     } catch (err) {
       return throwResult("error", String(err));
     }
@@ -83,7 +79,8 @@ export const importMethod = {
     options: { basePath: boolean; host: boolean } | null,
   ) => {
     try {
-      return await SwaggerToApipostClass.convert(data, options);
+      const { SwaggerToApipost } = await loadConverters();
+      return await new SwaggerToApipost().convert(data, options);
     } catch (err) {
       return throwResult("error", String(err));
     }

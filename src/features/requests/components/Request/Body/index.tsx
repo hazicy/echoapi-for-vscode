@@ -123,8 +123,8 @@ const RequestBody: FC<RequestBodyProps> = (props) => {
   };
 
   const handleGenerateParameterByAi = () => {
-    import("auto-json-faker")
-      .then(({ default: autoJsonFaker }) => autoJsonFaker(value?.raw))
+    import("@/features/requests/utils/generateMockBody")
+      .then(({ generateMockBody }) => generateMockBody(value?.raw))
       .then((mockData: any) => {
         if (!value) {
           return;

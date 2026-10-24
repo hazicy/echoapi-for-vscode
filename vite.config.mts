@@ -1,3 +1,4 @@
+import { fakerLocalesVite } from './scripts/faker-locales.mjs';
 import { generateScopedName, sharedSlots } from './scripts/css-modules.mjs';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig, loadEnv } from 'vite';
@@ -24,6 +25,7 @@ export default defineConfig(({ mode, command }) => {
     define: { __ECHOAPI_LANGUAGE__: JSON.stringify(language) },
     esbuild: { drop: mode === 'production' ? ['console', 'debugger'] : [] },
     plugins: [
+      fakerLocalesVite(),
       react(),
       svgr({ include: /\.svg(?:\?react)?$/ }),
       nodePolyfills(),

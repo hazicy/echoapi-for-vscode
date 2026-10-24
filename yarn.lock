@@ -2917,28 +2917,6 @@ apipost-mock-schema@^0.0.37:
     swagger-client "^3.18.5"
     uuid "^8.3.2"
 
-apipost-mock-schema@^0.0.49:
-  version "0.0.49"
-  resolved "https://registry.npmmirror.com/apipost-mock-schema/-/apipost-mock-schema-0.0.49.tgz#3d6443948a03f9a94263780bb95cc90c6a71be7d"
-  integrity sha512-hlpQqxET2KjCSsmQM8EjUAToZ9BX7kiOIpNc+UFNZ6JI6ykJCFgYPELIs4Lj8Bj0hvVk9+RA8YJETQCukeX3PQ==
-  dependencies:
-    "@apidevtools/json-schema-ref-parser" "^9.0.9"
-    "@faker-js/faker" "^9.2.0"
-    "@rollup/plugin-node-resolve" "^13.3.0"
-    core-js "^3.9.0"
-    json2json-schema "^0.2.11"
-    lodash "^4.17.21"
-    minimatch "^9.0.3"
-    mockjs5-pro "^1.0.3"
-    rollup "^2.74.1"
-    rollup-plugin-dts "^4.2.2"
-    rollup-plugin-node-resolve "^5.2.0"
-    rollup-plugin-terser "^7.0.2"
-    rollup-plugin-typescript "^1.0.1"
-    rollup-plugin-typescript2 "^0.31.2"
-    swagger-client "^3.18.5"
-    uuid "^8.3.2"
-
 apipost-mock-schema@^0.0.53:
   version "0.0.53"
   resolved "https://registry.npmmirror.com/apipost-mock-schema/-/apipost-mock-schema-0.0.53.tgz#a8cb8ec4ef87a4ddb7902a626bebc2660a604a92"
@@ -3126,16 +3104,6 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.npmmirror.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
-
-auto-json-faker@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.npmmirror.com/auto-json-faker/-/auto-json-faker-1.0.8.tgz#3525e31bf3e81bfe1dd28f993c8b93867aceadec"
-  integrity sha512-wwVP6INLyc7F/fblO4U7exZMvY2dha/B8w93IaE9uoU7wE93L+rKBlsLvV9iXyn8L3jK0UKcxqFJkP2nXiUE5w==
-  dependencies:
-    apipost-mock-schema "^0.0.49"
-    json2json-schema "^0.2.11"
-    json5 "^2.2.3"
-    lodash "^4.17.21"
 
 available-typed-arrays@^1.0.7:
   version "1.0.7"

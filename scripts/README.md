@@ -25,6 +25,9 @@ Vite's client/React refresh runtime in development server mode. `yarn compile`
 and `yarn watch` use local bundles; only `yarn start` enables the server URLs.
 
 The extension and its HTTP Worker load as native ESM and require VS Code 1.100+.
+Keep `extension-*.js` beside `extension.js`: these are shared and lazy extension
+chunks, separate from the Webview `chunks/` directory. Copy the complete output
+directory when testing or packaging the extension.
 The extension build converts the vendored HTTP engine to ESM after copying public
 assets. Run tsup after Vite; copying public assets alone does not produce a complete
 extension. Bundled third-party Node dependencies retain a `createRequire` bridge

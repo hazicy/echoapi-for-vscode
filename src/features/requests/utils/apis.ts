@@ -37,7 +37,7 @@ import {
   ParametersItem,
 } from "@/features/requests/types/api";
 import { EnvListItem } from "@/features/environment/types";
-import { useApis } from "@/app/store";
+import useApis from "@/features/requests/store/useApis";
 import { ApiSendResponseData } from "@/features/requests/types/send";
 import { formatTime, TIME_FORMAT } from "../../../shared/utils/time";
 import dayjs from "dayjs";

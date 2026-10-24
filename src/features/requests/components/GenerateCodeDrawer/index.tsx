@@ -15,7 +15,8 @@ import Button from "@/shared/ui/Button";
 import Drawer from "@/shared/ui/Drawer";
 import IconFont from "@/shared/ui/IconFont";
 import useVarReplaces from "@/features/variables/hooks/useVarReplaces";
-import { catchError, copyStringToClipboard } from "@/shared/utils/common";
+import { copyStringToClipboard } from "@/shared/utils/common";
+import { catchError } from "@/shared/utils/notify";
 
 import { useApis, useSystemConfig } from "@/app/store";
 

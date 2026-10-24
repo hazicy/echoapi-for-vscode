@@ -2,11 +2,9 @@ import styles from "./style.module.css";
 import classNames from "classnames";
 import slots from "@/shared/ui/base/slots.module.css";
 import { moduleClassNames } from "@/shared/ui/base/moduleClassNames";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 
 import { PopoverProps } from "@/shared/ui/base";
-
-import { mockExp } from "exp-mock";
 
 import { Popover } from "@/shared/ui";
 import { VARIABLE_LIST_CONTENT_KEY } from "@/shared/constants/common";
@@ -22,7 +20,8 @@ import {
   InsertAction,
 } from "@/features/requests/types/variable";
 
-import { VarContent, VarList } from "./components";
+import VarList from "./components/VarList";
+const VarContent = lazy(() => import("./components/VarContent"));
 
 export interface Props extends PopoverProps {
   children: React.ReactNode;
@@ -130,6 +129,7 @@ const Index = ({
 
   const fixedRefresh = async () => {
     try {
+      const { mockExp } = await import("exp-mock");
       const data = await mockExp("{{@ai()}}", {}, language);
       if (data) {
         setValue(data);
@@ -157,13 +157,17 @@ const Index = ({
         >
           <VarList onChange={stepChange} type={tabsValue} />
         </div>
-        <VarContent
-          className={moduleClassNames(slots, `${step === 2 && "active"}`)}
-          ref={contentRef}
-        />
+        {open && (
+          <Suspense fallback={null}>
+            <VarContent
+              className={moduleClassNames(slots, `${step === 2 && "active"}`)}
+              ref={contentRef}
+            />
+          </Suspense>
+        )}
       </div>
     );
-  }, [step, tabsValue, language, height]);
+  }, [open, step, tabsValue, language, height]);
 
   return (
     <VariableInsertContext.Provider

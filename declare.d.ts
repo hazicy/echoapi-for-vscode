@@ -13,3 +13,7 @@ declare module "*.module.css" {
 }
 
 declare module "*.css" {}
+
+declare module "json2json-schema" {
+  export function toJsonSchema(value: unknown): Record<string, unknown>;
+}

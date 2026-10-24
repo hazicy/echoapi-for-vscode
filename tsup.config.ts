@@ -1,4 +1,5 @@
 import { defineConfig } from "tsup";
+import { fakerLocalesEsbuild } from "./scripts/faker-locales.mjs";
 import { loadEnv } from "vite";
 import path from "node:path";
 import { cp, readFile, rm } from "node:fs/promises";
@@ -32,7 +33,8 @@ export default defineConfig((options) => {
     target: "node20",
     external: ["vscode"],
     noExternal: [/^(?!vscode$)/],
-    splitting: false,
+    splitting: true,
+    esbuildPlugins: [fakerLocalesEsbuild()],
     clean: false,
     publicDir: false,
     banner: { js: nodeCompatibility },
@@ -71,6 +73,9 @@ export default defineConfig((options) => {
       ),
     },
     esbuildOptions(build) {
+      // Keep extension chunks beside the entry: runtime asset URLs are relative
+      // to import.meta.url, and Webview chunks use their own chunks/ directory.
+      build.chunkNames = "extension-[name]-[hash]";
       build.mainFields = ["module", "main"];
       build.drop = production ? ["console", "debugger"] : [];
       build.alias = {
