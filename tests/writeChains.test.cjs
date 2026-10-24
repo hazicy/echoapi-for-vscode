@@ -17,6 +17,8 @@ function fixture(file, { succeeds = true, environmentSucceeds = true, cleanupSuc
   const tree = load('src/extension/utils/collectionTree.ts', () => ({}));
   const exports = load(`src/extension/messageHandler/${file}.ts`, (id) => {
     if (id === 'lodash') return require(id);
+    if (id === '../requestStatus') return { setRequestDraft: () => {} };
+    if (id === '../protocolIcon') return { getProtocolIcon: () => undefined };
     if (id === '../constants') return { globalConfig: config, DEFAULT_TARGET_NAME: { api: 'HTTP Request' } };
     if (id === '../utils') return {
       getApiList: () => structuredClone(rows),
@@ -65,6 +67,25 @@ test('editor save commits before clearing dirty state, broadcasting or reporting
   assert.equal(f.editor.title, 'Renamed');
   assert.equal(f.rows()[1].is_create, -1);
   assert.equal(f.calls.at(-1)[0], 'success');
+});
+
+test('HTTP edits persist the latest content without resetting the editor or showing a success popup', async () => {
+  const f = fixture('open');
+  for (const url of ['https://example.com/a', 'https://example.com/ab']) {
+    await f.run('updateApiActiveData', { target_id: 'request', target_type: 'api', name: 'Original', url });
+  }
+  assert.equal(f.rows()[1].url, 'https://example.com/ab');
+  assert.equal(f.rows()[1].is_changed, -1);
+  assert.equal(f.editor.title, 'Original');
+  assert.ok(!f.calls.some(([name]) => name === 'editor' || name === 'success'));
+});
+
+test('failed HTTP autosave keeps stored content and marks the editor dirty', async () => {
+  const f = fixture('open', { succeeds: false });
+  await f.run('updateApiActiveData', { target_id: 'request', target_type: 'api', name: 'Changed', url: 'https://example.com' });
+  assert.equal(f.rows()[1].name, 'Original');
+  assert.equal(f.editor.title, 'Changed ⚈');
+  assert.deepEqual(f.calls.map(([name]) => name), ['write', 'error']);
 });
 
 for (const succeeds of [true, false]) {

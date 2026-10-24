@@ -504,8 +504,8 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
       target_id: snowflakeId(),
       name: name.trim(),
       parent_id: parent?.target_type === "folder" ? parent.target_id : "0",
-      is_create: 1,
-      is_changed: 1,
+      is_create: type.type === "api" ? -1 : 1,
+      is_changed: type.type === "api" ? -1 : 1,
       is_deleted: -1,
     } as ApiDetailsData;
     const saved = await handleMessage({ action: "saveFolder", data }, context);

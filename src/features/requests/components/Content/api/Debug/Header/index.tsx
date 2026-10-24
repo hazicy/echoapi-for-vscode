@@ -1,7 +1,6 @@
 import slots from "@/shared/ui/base/slots.module.css";
 import { ApiComponentType } from "@/features/requests/types/api";
 import { AnyObject } from "@/shared/types/common";
-import { Button, Flex } from "@/shared/ui/base";
 import produce from "immer";
 import React, { FC, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,7 +15,6 @@ import { useApis } from "@/app/store";
 import { Icon } from "@iconify/react";
 import sendHorizontal from "@iconify-icons/lucide/send-horizontal";
 import loaderCircle from "@iconify-icons/lucide/loader-circle";
-import save from "@iconify-icons/lucide/save";
 import styles from "./style.module.css";
 
 import { CurlDataType } from "@/features/requests/types/other";
@@ -125,23 +123,6 @@ const Header: FC<ApiComponentType> = ({ apisData, onApisDataChange, type }) => {
           </button>
         }
       />
-      <Flex gap={4} align="center">
-        <Button
-          type="text"
-          aria-label={t("api.run.save")}
-          title={t("api.run.save")}
-          size="middle"
-          onClick={() => {
-            window?.vscode.postMessage({
-              action: "saveApiData",
-              data: apisData,
-            });
-          }}
-          style={{ padding: 0, fontSize: "13px" }}
-        >
-          <Icon icon={save} width={18} />
-        </Button>
-      </Flex>
     </div>
   );
 };

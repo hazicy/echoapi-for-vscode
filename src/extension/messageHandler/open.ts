@@ -48,6 +48,7 @@ const saveApiData = (
   data: any,
   context: vscode.ExtensionContext,
   panel: vscode.WebviewPanel,
+  automatic = false,
 ) => {
   const { sidePanelWebView } = globalConfig;
   const apiList: ApiDetailsData[] = getApiList(context);
@@ -67,12 +68,19 @@ const saveApiData = (
     apiList.push(newData); // Add element
   }
   if (!setApiList(apiList, context)) {
+    if (automatic) {
+      setRequestDraft(getApiListName(context), data.target_id, cloneDeep(data));
+      panel.title = showTabName(data?.name) + " ⚈";
+    }
     vscode.window.showErrorMessage("Failed to save requests. Please try again.");
     return false;
   }
   setRequestDraft(getApiListName(context), newData.target_id);
   // Save and update open
-  panel.webview.postMessage({ action: "setApiData", data: newData });
+  // Automatic saves must not replace newer edits already in the Webview.
+  if (!automatic) {
+    panel.webview.postMessage({ action: "setApiData", data: newData });
+  }
 
 
   // Update title
@@ -100,7 +108,9 @@ const saveApiData = (
       });
   }
 
-  vscode.window.showInformationMessage("Save Successfully！🎉");
+  if (!automatic) {
+    vscode.window.showInformationMessage("Save Successfully！🎉");
+  }
 };
 
 export const handelOpenMessage = async (
@@ -133,6 +143,10 @@ export const handelOpenMessage = async (
       saveApiData(data, context, panel);
       break;
     case "updateApiActiveData":
+      if (data.target_type === "api") {
+        saveApiData(data, context, panel, true);
+        break;
+      }
       setRequestDraft(getApiListName(context), data.target_id, cloneDeep(data));
       // Update title
       panel.title = showTabName(data?.name) + " ⚈";
