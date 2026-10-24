@@ -5,7 +5,6 @@ declare module "*.png" {
   export default src;
 }
 declare global {
-  module "remark-admonitions";
   module "mockjs5-pro";
   module "type-of-is";
   module "auto-json-faker";
