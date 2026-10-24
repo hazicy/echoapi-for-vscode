@@ -5,18 +5,18 @@ declare module "*.png" {
   export default src;
 }
 declare global {
-  declare module "remark-admonitions";
-  declare module "mockjs5-pro";
-  declare module "type-of-is";
-  declare module "auto-json-faker";
-  declare module "exp-mock";
+  module "remark-admonitions";
+  module "mockjs5-pro";
+  module "type-of-is";
+  module "auto-json-faker";
+  module "exp-mock";
 
-  declare module "*.png" {
+  module "*.png" {
     const src: string;
     export default src;
   }
 
-  declare module "*.svg?react" {
+  module "*.svg?react" {
     import * as React from "react";
 
     const ReactComponent: React.FunctionComponent<

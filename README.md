@@ -35,6 +35,21 @@ yarn package
 See [the development guide](./scripts/README.md) for webview builds, localization, and browser tests.
 See [the source layout guide](./src/README.md) for feature ownership and component naming.
 
+Lint and format project code with Oxlint and Oxfmt:
+
+```sh
+yarn lint
+yarn lint:fix
+yarn format
+yarn format:check
+```
+
+Formatting excludes bundled public assets and build output. Prettier remains a
+runtime dependency for formatting request content inside the API editor.
+Oxlint keeps the previous curly-brace, equality, and thrown-value checks;
+Oxfmt handles semicolons. The previous import naming-convention rule has no
+direct Oxlint equivalent and is not enabled.
+
 ## Brand assets
 
 - [Logo](./public/images/okapi-logo.svg)

@@ -113,7 +113,7 @@ export const getEnvPreUrls = (envData: EnvListItem, server_id: string) => {
 export const getEnvOptions = (
   envData: EnvListItem | undefined,
   serverList: ServerItem[] | undefined,
-  curServerId?: string,
+  curServerId: string | undefined,
   target_id: string,
   collections: any,
 ) => {

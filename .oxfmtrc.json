@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80,
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": false,
+  "ignorePatterns": [
+    "node_modules/**",
+    "dist/**",
+    "out/**",
+    "test-results/**",
+    "playwright-report/**",
+    ".vscode-test/**",
+    "public/**",
+    "yarn.lock"
+  ]
+}
