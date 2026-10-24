@@ -9,6 +9,7 @@ import { getApiList, getApiListName, getProjectReportList } from "./utils";
 import { getRequestHistory } from "./requestHistory";
 import { storageChanged } from "./storageEvents";
 import {
+  countFolderRequests,
   dayKey,
   requestChildren,
   type Section,
@@ -64,13 +65,21 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
     };
     const requestLabel = protocolLabels[data.target_type] ||
       String(data.method || data.target_type).toUpperCase();
-    item.description = folder
-      ? undefined
-      : requestLabel;
+    const count = folder ? countFolderRequests(list(), data.target_id) : 0;
+    item.description = count ? `(${count})` : undefined;
     item.iconPath = new vscode.ThemeIcon(
       protocolThemeIcons[data.target_type] || "globe",
       folder ? new vscode.ThemeColor("textLink.foreground") : undefined,
     );
+    if (data.target_type === "api") {
+      const method = String(data.method || "GET").toLowerCase();
+      const icon = ["get", "post", "put", "patch", "delete", "head", "options"].includes(method)
+        ? method : "http";
+      item.iconPath = {
+        light: vscode.Uri.joinPath(context.extensionUri, "dist", "images", "methods", `${icon}-badge-light.svg`),
+        dark: vscode.Uri.joinPath(context.extensionUri, "dist", "images", "methods", `${icon}-badge.svg`),
+      };
+    }
     item.tooltip = [data.name, folder ? undefined : requestLabel, data.url].filter(Boolean).join(" ");
     return item;
   };
@@ -166,7 +175,7 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
           item.id = `history:${node.data.id}`;
           item.collapsibleState = vscode.TreeItemCollapsibleState.None;
           item.contextValue = "okapiHistory";
-          item.description = `${item.description} · ${new Date(node.data.sentAt).toLocaleTimeString()}`;
+          item.description = new Date(node.data.sentAt).toLocaleTimeString();
           item.tooltip = `${item.tooltip}\n${new Date(node.data.sentAt).toLocaleString()}`;
           item.command = {
             command: "okapi.tree.openHistory",
@@ -293,7 +302,7 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
           return;
         }
         const status = requestDecoration(getApiListName(context), data, getCurrentProjectConfig(context), rows);
-        return status ? { ...status, color: new vscode.ThemeColor(status.color), propagate: false } : undefined;
+        return status ? { badge: status.badge, tooltip: status.tooltip, propagate: false } : undefined;
       },
     }),
     requestStatusChanged.event(() => decorationsChanged.fire(undefined)),

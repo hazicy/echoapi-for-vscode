@@ -17,6 +17,30 @@ export function dayKey(timestamp: number): string {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 }
 
+/** Count descendants, excluding containers, without looping on malformed ancestry. */
+export function countFolderRequests(all: ApiDetailsData[], folderId: string): number {
+  const children = new Map<string, ApiDetailsData[]>();
+  for (const item of all) {
+    const parent = String(item.parent_id);
+    const siblings = children.get(parent) || [];
+    siblings.push(item);
+    children.set(parent, siblings);
+  }
+  const pending = [String(folderId)];
+  const visited = new Set(pending);
+  let count = 0;
+  while (pending.length) {
+    for (const item of children.get(pending.pop()!) || []) {
+      const id = String(item.target_id);
+      if (visited.has(id)) continue;
+      visited.add(id);
+      if (!["folder", "socket", "sample_group"].includes(item.target_type)) count++;
+      pending.push(id);
+    }
+  }
+  return count;
+}
+
 /** Preserve matching requests and their ancestors while keeping root ordering stable. */
 export function requestChildren(
   all: ApiDetailsData[],

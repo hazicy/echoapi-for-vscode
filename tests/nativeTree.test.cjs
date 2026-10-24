@@ -181,16 +181,31 @@ test("native sidebar panels, test commands and workspace request history", async
     assert.equal(executed.at(-1)[1].message.length, 1);
     mocks.vscode.window.showQuickPick = originalPicker;
     const requests = views.get("okapiRequests");
+    const folderDescription = (data) => requests.getTreeItem({ kind: "request", data }).description;
+    assert.equal(folderDescription(rows[0]), "(1)");
+    assert.equal(folderDescription(rows[1]), "(1)");
+    const extraRows = [
+      { target_id: "deleted", parent_id: "folder", target_type: "api", is_deleted: 1 },
+      { target_id: "empty", parent_id: "folder", target_type: "folder", is_deleted: -1 },
+      { target_id: "socket", parent_id: "folder", target_type: "socket", is_deleted: -1 },
+      { target_id: "method", parent_id: "socket", target_type: "socket_method", is_deleted: -1 },
+      { target_id: "samples", parent_id: "folder", target_type: "sample_group", is_deleted: -1 },
+    ];
+    rows.push(...extraRows);
+    assert.equal(folderDescription(rows[0]), "(2)");
+    assert.equal(folderDescription(extraRows[1]), undefined);
+    rows.splice(3);
     for (const method of ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]) {
       const item = requests.getTreeItem({ kind: "request", data: { ...rows[2], method } });
-      assert.equal(item.iconPath.id, "globe");
-      assert.equal(item.iconPath.color, undefined);
-      assert.equal(item.description, method);
+      assert.ok(item.iconPath.dark.endsWith(`/methods/${method.toLowerCase()}-badge.svg`));
+      assert.ok(item.iconPath.light.endsWith(`/methods/${method.toLowerCase()}-badge-light.svg`));
+      assert.equal(item.description, undefined);
+      assert.ok(item.tooltip.includes(method));
     }
     assert.equal(requests.getTreeItem({ kind: "request", data: rows[0] }).iconPath.id, "folder");
     assert.equal(requests.getTreeItem({ kind: "request", data: rows[0] }).iconPath.color.id, "textLink.foreground");
     assert.equal(requests.getTreeItem({ kind: "request", data: { ...rows[2], target_type: "graphql" } }).iconPath.id, "type-hierarchy");
-    assert.equal(requests.getTreeItem({ kind: "request", data: { ...rows[2], method: "CUSTOM" } }).iconPath.id, "globe");
+    assert.ok(requests.getTreeItem({ kind: "request", data: { ...rows[2], method: "CUSTOM" } }).iconPath.dark.endsWith("/methods/http-badge.svg"));
     for (const [protocol, icon] of Object.entries({ sse: "broadcast", graphql: "type-hierarchy", websocket2: "debug-disconnect", socketio: "plug", grpc: "server-process", socket: "plug", socket_method: "symbol-method", doc: "file-text" })) {
       const item = requests.getTreeItem({ kind: "request", data: { ...rows[2], target_type: protocol } });
       assert.equal(item.iconPath.id, icon);
@@ -202,6 +217,8 @@ test("native sidebar panels, test commands and workspace request history", async
     assert.equal(decorations.provideFileDecoration({ ...resource, scheme: "file" }), undefined);
     rows[2].url = "";
     assert.equal(decorations.provideFileDecoration(resource).badge, "!");
+    assert.equal(decorations.provideFileDecoration(resource).color, undefined);
+    assert.match(decorations.provideFileDecoration(resource).tooltip, /Missing URL/);
     rows[2].url = "/users";
     context.project = "two";
     assert.equal(decorations.provideFileDecoration(resource), undefined);
@@ -274,6 +291,7 @@ test("native sidebar panels, test commands and workspace request history", async
     );
     const testFolder = tests.getChildren()[0];
     assert.equal(testFolder.kind, "testFolder");
+    assert.equal(tests.getTreeItem(testFolder).description, "(1)");
     await commands.get("okapi.tree.runTests")(testFolder);
     assert.equal(executed.at(-1)[0], "echoapi.folderTest");
     const reports = tests.getChildren().find((node) => node.kind === "reports");
