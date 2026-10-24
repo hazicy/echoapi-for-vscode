@@ -53,7 +53,9 @@ const Realtime: FC<Props> = memo((props) => {
   const resizablePanelsRef = useRef<any>(null);
 
   useEffect(() => {
-    if (!systemConfigTabDirection) {return;}
+    if (!systemConfigTabDirection) {
+      return;
+    }
 
     if (systemConfigTabDirection === 1) {
       setCurDirection("horizontal");
@@ -70,8 +72,9 @@ const Realtime: FC<Props> = memo((props) => {
   useEffect(() => {
     const { systemConfig } = useSystemConfig.getState();
 
-    if (isEmpty(sendingData) || !isEqual(sendingData?.sendStatus, "initial"))
-      {return;}
+    if (isEmpty(sendingData) || !isEqual(sendingData?.sendStatus, "initial")) {
+      return;
+    }
 
     // according to system config, whether to show assertion and validation results by default
     if (

@@ -49,7 +49,9 @@ const SegmentedTabs: FC<Props> = forwardRef(
     });
 
     useEffect(() => {
-      if (isEqual(value, tabValue)) {return;}
+      if (isEqual(value, tabValue)) {
+        return;
+      }
 
       setTabValue(value);
 

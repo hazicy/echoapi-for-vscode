@@ -102,7 +102,9 @@ const Content: FC<ApiComponentType> = ({ apisData }) => {
     },
   );
 
-  if (!result) {return null;}
+  if (!result) {
+    return null;
+  }
 
   return (
     <>

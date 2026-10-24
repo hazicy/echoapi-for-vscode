@@ -79,13 +79,17 @@ export default function GlobalThemeStyle() {
     const previous = new Map<string, string>();
     for (const [name, value] of Object.entries(values)) {
       previous.set(name, root.style.getPropertyValue(name));
-      if (value !== undefined && value !== null)
-        {root.style.setProperty(name, String(value));}
+      if (value !== undefined && value !== null) {
+        root.style.setProperty(name, String(value));
+      }
     }
     return () => {
       for (const [name, value] of previous) {
-        if (value) {root.style.setProperty(name, value);}
-        else {root.style.removeProperty(name);}
+        if (value) {
+          root.style.setProperty(name, value);
+        } else {
+          root.style.removeProperty(name);
+        }
       }
     };
   }, [themeToken]);

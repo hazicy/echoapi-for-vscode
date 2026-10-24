@@ -26,7 +26,9 @@ function processAST(ast) {
 }
 
 function processSelectionSet(selectionSet) {
-  if (!selectionSet) {return null;}
+  if (!selectionSet) {
+    return null;
+  }
 
   return selectionSet.selections.map((selection) => {
     const node = {

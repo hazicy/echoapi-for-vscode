@@ -37,8 +37,12 @@ class InspectSchema {
 
   // Parse type reference
   parseTypeRef(type, depth = 0) {
-    if (!type) {return null;}
-    if (depth > 7) {return null;} // Prevent infinite recursion
+    if (!type) {
+      return null;
+    }
+    if (depth > 7) {
+      return null;
+    } // Prevent infinite recursion
 
     const typeInfo = {
       kind: type.kind,
@@ -54,7 +58,9 @@ class InspectSchema {
 
   // Parse input value (parameter or input field)
   parseInputValue(input) {
-    if (!input) {return null;}
+    if (!input) {
+      return null;
+    }
     return {
       name: input.name,
       description: input.description,
@@ -65,7 +71,9 @@ class InspectSchema {
 
   // Parse field
   parseField(field) {
-    if (!field) {return null;}
+    if (!field) {
+      return null;
+    }
     return {
       name: field.name,
       description: field.description,
@@ -130,7 +138,9 @@ class InspectSchema {
 
     // Process all types
     schemaData.types.forEach((type) => {
-      if (type.name.startsWith("__")) {return;} // Skip built-in types
+      if (type.name.startsWith("__")) {
+        return;
+      } // Skip built-in types
 
       const parsedType = this.parseFullType(type);
 
@@ -181,7 +191,9 @@ class InspectSchema {
 
   // Get full type name (including non-null and list modifiers)
   getFullTypeName(type) {
-    if (!type) {return "Unknown";}
+    if (!type) {
+      return "Unknown";
+    }
     if (type.kind === "NON_NULL") {
       return `${this.getFullTypeName(type.ofType)}!`;
     }
@@ -200,14 +212,20 @@ class InspectSchema {
       doc += "# Queries\n\n";
       this.schema.queries.fields.forEach((field) => {
         doc += `## ${field.name}\n`;
-        if (field.description) {doc += `${field.description}\n\n`;}
+        if (field.description) {
+          doc += `${field.description}\n\n`;
+        }
         doc += `Type: ${this.getFullTypeName(field.type)}\n\n`;
         if (field.args.length > 0) {
           doc += "Arguments:\n";
           field.args.forEach((arg) => {
             doc += `- ${arg.name}: ${this.getFullTypeName(arg.type)}`;
-            if (arg.defaultValue) {doc += ` = ${arg.defaultValue}`;}
-            if (arg.description) {doc += ` - ${arg.description}`;}
+            if (arg.defaultValue) {
+              doc += ` = ${arg.defaultValue}`;
+            }
+            if (arg.description) {
+              doc += ` - ${arg.description}`;
+            }
             doc += "\n";
           });
         }

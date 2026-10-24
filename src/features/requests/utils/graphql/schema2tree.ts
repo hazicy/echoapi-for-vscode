@@ -270,7 +270,9 @@ export function getObjectByPath(obj, path) {
   let current = obj;
 
   for (const part of parts) {
-    if (!current) {return undefined;}
+    if (!current) {
+      return undefined;
+    }
 
     // If current node has children array, find the object with matching name
     if (Array.isArray(current.children)) {
@@ -297,7 +299,9 @@ export function updateObjectByPath(obj, path, updates) {
   // Find the parent node of target node
   for (let i = 0; i < parts.length - 1; i++) {
     const part = parts[i];
-    if (!current) {return false;}
+    if (!current) {
+      return false;
+    }
 
     if (Array.isArray(current.children)) {
       const found = current.children.find((child) => child.name === part);

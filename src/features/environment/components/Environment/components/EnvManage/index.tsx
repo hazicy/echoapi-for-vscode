@@ -59,7 +59,9 @@ const Index = (props: EnvModifyModalProps) => {
       ({ env_id }) => env_id === editEnvId,
     ) as EnvListItem;
 
-    if (!data) {return;}
+    if (!data) {
+      return;
+    }
 
     if (latestEnvDataRef.current?.env_id !== editEnvId) {
       setEnvData({ ...data });
@@ -254,7 +256,9 @@ const Index = (props: EnvModifyModalProps) => {
   const onOk = (options?: any) => {
     const tempEnvData = options?.envData || envData;
 
-    if (!tempEnvData.name?.trim()) {return;}
+    if (!tempEnvData.name?.trim()) {
+      return;
+    }
     try {
       const envVarList = options?.envList || envList;
       const params = {

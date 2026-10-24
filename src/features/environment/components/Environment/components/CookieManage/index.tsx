@@ -62,14 +62,18 @@ const Index = () => {
 
   useEffect(() => {
     const { activeId, cookieObj, isShowArea } = domainInfo;
-    if (!activeId) {return;}
+    if (!activeId) {
+      return;
+    }
     if (!isArray(cookieObj[isShowArea])) {
       return;
     }
     const arr = cookieObj[isShowArea].filter(
       (t: ICookie) => t.cookie_id === activeId,
     );
-    if (arr.length === 0) {return;}
+    if (arr.length === 0) {
+      return;
+    }
     let cookieString = `${arr[0].key}=${arr[0].value};Path=${arr[0].path};Domain=${arr[0].domain};`;
     if (arr[0].expires) {
       cookieString = `${cookieString}Expires=${arr[0].expires}`;

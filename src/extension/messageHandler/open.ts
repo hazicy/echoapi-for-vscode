@@ -1,8 +1,8 @@
-import { setRequestDraft } from '../requestStatus';
-import { getApiListName } from '../utils';
-import { getProtocolIcon } from '../protocolIcon';
-import * as vscode from 'vscode';
-import { recordRequestHistory } from '../requestHistory';
+import { setRequestDraft } from "../requestStatus";
+import { getApiListName } from "../utils";
+import { getProtocolIcon } from "../protocolIcon";
+import * as vscode from "vscode";
+import { recordRequestHistory } from "../requestHistory";
 import {
   downloadFile,
   getApiList,
@@ -12,32 +12,32 @@ import {
   setApiList,
   setProjectConfig,
   showTabName,
-} from '../utils';
-import { getCodeHarRequest, sendApi, sendSse, stopWorker } from '../apis';
-import { globalConfig, DEFAULT_TARGET_NAME } from '../constants';
-import { cloneDeep, forEach, isPlainObject, trim } from 'lodash';
+} from "../utils";
+import { getCodeHarRequest, sendApi, sendSse, stopWorker } from "../apis";
+import { globalConfig, DEFAULT_TARGET_NAME } from "../constants";
+import { cloneDeep, forEach, isPlainObject, trim } from "lodash";
 import {
   createShare,
   getDocBaseUrl,
   getOpenApi,
   getProjectShareData,
   setProjectShareData,
-} from '../utils/share';
-import { ApiDetailsData } from '@/features/requests/types/api';
+} from "../utils/share";
+import { ApiDetailsData } from "@/features/requests/types/api";
 import {
   getWebsocketOption,
   wsConnect,
   wsDisconnect,
   wsSend,
-} from '../send/websocket';
+} from "../send/websocket";
 import {
   getSocketIoOption,
   socketioConnect,
   socketioDisconnect,
   socketioSend,
   socketioUpdateEvent,
-} from '../send/socketio';
-import { proxyFetch, proxyFetch2 } from '../utils/fetch';
+} from "../send/socketio";
+import { proxyFetch, proxyFetch2 } from "../utils/fetch";
 
 const saveApiData = (
   data: any,
@@ -54,7 +54,7 @@ const saveApiData = (
   newData.is_changed = -1;
   if (trim(newData?.name).length <= 0) {
     newData.name =
-      DEFAULT_TARGET_NAME?.[newData?.target_type] || 'HTTP Request';
+      DEFAULT_TARGET_NAME?.[newData?.target_type] || "HTTP Request";
   }
   if (index > -1) {
     apiList.splice(index, 1, newData); // Replace element
@@ -65,10 +65,10 @@ const saveApiData = (
   if (!setApiList(apiList, context)) {
     if (automatic) {
       setRequestDraft(getApiListName(context), data.target_id, cloneDeep(data));
-      panel.title = showTabName(data?.name) + ' ⚈';
+      panel.title = showTabName(data?.name) + " ⚈";
     }
     vscode.window.showErrorMessage(
-      'Failed to save requests. Please try again.',
+      "Failed to save requests. Please try again.",
     );
     return false;
   }
@@ -76,7 +76,7 @@ const saveApiData = (
   // Save and update open
   // Automatic saves must not replace newer edits already in the Webview.
   if (!automatic) {
-    panel.webview.postMessage({ action: 'setApiData', data: newData });
+    panel.webview.postMessage({ action: "setApiData", data: newData });
   }
 
   // Update title
@@ -89,7 +89,7 @@ const saveApiData = (
   // Update left sidebar directory
   sidePanelWebView &&
     sidePanelWebView.webview.postMessage({
-      action: 'setApiList',
+      action: "setApiList",
       data: apiList || [],
     });
 
@@ -101,13 +101,13 @@ const saveApiData = (
     // Refresh share list
     sidePanelWebView &&
       sidePanelWebView.webview.postMessage({
-        action: 'setProjectShareData',
+        action: "setProjectShareData",
         data: shareData,
       });
   }
 
   if (!automatic) {
-    vscode.window.showInformationMessage('Save Successfully！🎉');
+    vscode.window.showInformationMessage("Save Successfully！🎉");
   }
 };
 
@@ -121,38 +121,38 @@ export const handelOpenMessage = async (
   const { action, data } = message;
 
   switch (action) {
-    case 'getVscodeTheme':
+    case "getVscodeTheme":
       const vscodeTheme = vscode.workspace
-        .getConfiguration('workbench')
-        .get('colorTheme');
+        .getConfiguration("workbench")
+        .get("colorTheme");
       panel?.webview.postMessage({
-        action: 'setVscodeTheme',
+        action: "setVscodeTheme",
         data: vscodeTheme,
       });
       break;
-    case 'getApiList':
+    case "getApiList":
       panel?.webview.postMessage({
-        action: 'setApiList',
+        action: "setApiList",
         data: getApiList(context),
       });
       break;
-    case 'saveApiData':
+    case "saveApiData":
       saveApiData(data, context, panel);
       break;
-    case 'updateApiActiveData':
-      if (data.target_type === 'api') {
+    case "updateApiActiveData":
+      if (data.target_type === "api") {
         saveApiData(data, context, panel, true);
         break;
       }
       setRequestDraft(getApiListName(context), data.target_id, cloneDeep(data));
       // Update title
-      panel.title = showTabName(data?.name) + ' ⚈';
+      panel.title = showTabName(data?.name) + " ⚈";
       const activeProtocolIcon = getProtocolIcon(context, data);
       if (activeProtocolIcon) {
         panel.iconPath = activeProtocolIcon;
       }
       break;
-    case 'sendApi':
+    case "sendApi":
       recordRequestHistory(context, data);
       // Get global parameters
       const result = await sendApi(
@@ -163,11 +163,11 @@ export const handelOpenMessage = async (
       );
       // Send request results back to Webview
       panel.webview.postMessage({
-        action: 'apiSendResult',
+        action: "apiSendResult",
         data: JSON.stringify(result),
       });
       break;
-    case 'sendSse':
+    case "sendSse":
       recordRequestHistory(context, data);
       sendSse(
         data,
@@ -175,22 +175,22 @@ export const handelOpenMessage = async (
         environmentWebView,
         (vl: any) => {
           // Send request results back to Webview
-          panel.webview.postMessage({ action: 'sseSendResult', data: vl });
+          panel.webview.postMessage({ action: "sseSendResult", data: vl });
         },
         message?.option,
       );
 
       break;
-    case 'stopSendApi':
+    case "stopSendApi":
       stopWorker();
       break;
-    case 'openNewWindow':
+    case "openNewWindow":
       vscode.env.openExternal(vscode.Uri.parse(data));
       break;
-    case 'openEnv':
-      vscode.commands.executeCommand('echoapi.openEnv', data);
+    case "openEnv":
+      vscode.commands.executeCommand("echoapi.openEnv", data);
       break;
-    case 'openTagPanelById':
+    case "openTagPanelById":
       const curData = getApiList(context).find(
         (i: ApiDetailsData) => i?.target_id === message.data,
       );
@@ -198,72 +198,72 @@ export const handelOpenMessage = async (
         break;
       }
       curData.is_create = -1;
-      vscode.commands.executeCommand('openTabPanel', curData);
+      vscode.commands.executeCommand("openTabPanel", curData);
       break;
-    case 'getProjectConfig':
+    case "getProjectConfig":
       panel.webview.postMessage({
-        action: 'setProjectConfig',
+        action: "setProjectConfig",
         data: getCurrentProjectConfig(context),
       });
       break;
-    case 'setProjectConfig':
+    case "setProjectConfig":
       const { key, value } = data;
       // Local stored data collection
       let project_config: any = getCurrentProjectConfig(context);
       project_config[key] = value;
       setProjectConfig(context, project_config);
       break;
-    case 'closeOpenTag':
+    case "closeOpenTag":
       panel.dispose();
       break;
-    case 'getSystemConfig':
+    case "getSystemConfig":
       let local_system_config: any =
-        context.globalState.get('systemConfig') || {};
+        context.globalState.get("systemConfig") || {};
       panel.webview.postMessage({
-        action: 'setSystemConfig',
+        action: "setSystemConfig",
         data: local_system_config,
       });
       break;
-    case 'setSystemConfig':
+    case "setSystemConfig":
       // Local stored data collection
       let default_system_config: any =
-        context.globalState.get('systemConfig') || {};
+        context.globalState.get("systemConfig") || {};
       if (isPlainObject(data)) {
         forEach(data, (value, key) => {
           default_system_config[key] = value;
         });
       }
 
-      context.globalState.update('systemConfig', default_system_config);
+      context.globalState.update("systemConfig", default_system_config);
 
       // Notify other open tabs
       forEach(globalConfig.openedPanels, (openedPanel, key) => {
         openedPanel.webview.postMessage({
-          action: 'setSystemConfig',
+          action: "setSystemConfig",
           data: default_system_config || {},
         });
       });
 
       break;
-    case 'createShare':
+    case "createShare":
       createShare(data, context);
       // Refresh share list
       sidePanelWebView?.webview.postMessage({
-        action: 'setProjectShareData',
+        action: "setProjectShareData",
         data: getProjectShareData(context),
       });
       break;
-    case 'getApiData':
-      panel.webview.postMessage({ action: 'setApiData', data: apiData });
+    case "getApiData":
+      panel.webview.postMessage({ action: "setApiData", data: apiData });
       break;
-    case 'getDocBaseUrl':
+    case "getDocBaseUrl":
       panel &&
         panel.webview.postMessage({
-          action: 'setDocBaseUrl',
+          action: "setDocBaseUrl",
           data: getDocBaseUrl(context),
         });
       break;
-    case 'exportOpenApiById':
+    case "exportOpenApiById":
       const localApiList: ApiDetailsData[] = getApiList(context);
       const openData = localApiList.find(
         (i) => i?.target_id === data?.target_id,
@@ -276,10 +276,10 @@ export const handelOpenMessage = async (
         await downloadFile(fileObj.fileName, fileObj.openApiStr);
       }
       break;
-    case 'getCodeHar':
+    case "getCodeHar":
       // Fix: cannot carry global parameters under directory (temporarily modify directory id)
       if (data.apiData?.parent_id) {
-        data.apiData.parent_id = '0';
+        data.apiData.parent_id = "0";
       }
       const codeHar = await getCodeHarRequest(
         data.apiData,
@@ -287,12 +287,12 @@ export const handelOpenMessage = async (
         message?.option,
       );
       // Send HAR request results back to Webview
-      panel.webview.postMessage({ action: 'setCodeHar', data: codeHar });
+      panel.webview.postMessage({ action: "setCodeHar", data: codeHar });
       break;
-    case 'copyAsCurl':
+    case "copyAsCurl":
       // Fix: cannot carry global parameters under directory (temporarily modify directory id)
       if (data.apiData?.parent_id) {
-        data.apiData.parent_id = '0';
+        data.apiData.parent_id = "0";
       }
       const har = await getCodeHarRequest(
         data.apiData,
@@ -300,46 +300,46 @@ export const handelOpenMessage = async (
         message?.option,
       );
       // Send HAR request results back to Webview
-      panel.webview.postMessage({ action: 'copyAsCurl', data: har });
+      panel.webview.postMessage({ action: "copyAsCurl", data: har });
       break;
-    case 'ws_connect':
+    case "ws_connect":
       recordRequestHistory(context, data);
       data.option = await getWebsocketOption(data, context);
 
       wsConnect(data);
       break;
-    case 'ws_disconnect':
+    case "ws_disconnect":
       wsDisconnect(data);
       break;
-    case 'ws_send':
+    case "ws_send":
       wsSend(data);
       break;
-    case 'socketio_connect':
+    case "socketio_connect":
       recordRequestHistory(context, data);
       data.option = await getSocketIoOption(data, context);
 
       socketioConnect(data);
       break;
-    case 'socketio_disconnect':
+    case "socketio_disconnect":
       socketioDisconnect(data);
       break;
-    case 'socketio_send':
+    case "socketio_send":
       socketioSend(data);
       break;
-    case 'socketio_update_event':
+    case "socketio_update_event":
       socketioUpdateEvent(data);
       break;
-    case '/proxy/fetch':
+    case "/proxy/fetch":
       proxyFetch(data, panel);
       break;
-    case 'getGraphQLSchema':
+    case "getGraphQLSchema":
       const server = getCurrentEnvCurrentServer(context, data?.currentServerId);
       if (!data?.apiData.url && !server?.uri) {
         panel.webview.postMessage({
-          action: 'graphQLSchemaFetchResult',
+          action: "graphQLSchemaFetchResult",
           data: {
             code: 200,
-            error: 'Enter the server URL to retrieve the GraphQL Schema',
+            error: "Enter the server URL to retrieve the GraphQL Schema",
           },
         });
         return;
@@ -350,13 +350,13 @@ export const handelOpenMessage = async (
         server_id: data?.currentServerId,
       });
       const url =
-        harObj?.log?.entries?.[0]?.request?.url?.split('#')?.[0] || '';
+        harObj?.log?.entries?.[0]?.request?.url?.split("#")?.[0] || "";
       if (!url) {
         panel.webview.postMessage({
-          action: 'graphQLSchemaFetchResult',
+          action: "graphQLSchemaFetchResult",
           data: {
             code: 200,
-            error: 'Enter the server URL to retrieve the GraphQL Schema',
+            error: "Enter the server URL to retrieve the GraphQL Schema",
           },
         });
         return;
@@ -459,13 +459,13 @@ export const handelOpenMessage = async (
 
       const param = {
         url: url,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         data: { query: introspectionQuery },
       };
 
       const res = await proxyFetch2(param);
       panel.webview.postMessage({
-        action: 'graphQLSchemaFetchResult',
+        action: "graphQLSchemaFetchResult",
         data: res,
       });
       break;

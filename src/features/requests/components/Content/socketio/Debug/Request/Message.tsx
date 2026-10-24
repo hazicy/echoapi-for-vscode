@@ -122,7 +122,9 @@ const Message = (props: Props) => {
     );
   }, [value.message, value.active_id]);
 
-  if (!curItem) {return;}
+  if (!curItem) {
+    return;
+  }
   return (
     <Flex gap={12} style={{ height: "100%" }}>
       <ListSideBar

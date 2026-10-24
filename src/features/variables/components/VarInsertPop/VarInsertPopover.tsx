@@ -186,7 +186,9 @@ const Index = ({
     >
       <Popover
         onOpenChange={(open) => {
-          if (!open && contentRef?.current?.funcOpen) {return;}
+          if (!open && contentRef?.current?.funcOpen) {
+            return;
+          }
           setOpen(open);
         }}
         open={open}

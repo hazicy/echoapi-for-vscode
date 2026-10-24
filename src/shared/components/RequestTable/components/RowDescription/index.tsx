@@ -69,13 +69,16 @@ export const RowDescription: FC<Props> = memo((props) => {
     const tar = e.target as HTMLTextAreaElement;
     tar.style.height = lineHeight + "px";
 
-    if (!rowData?.key) {return;}
+    if (!rowData?.key) {
+      return;
+    }
 
     if (
       !isString(rowData?.description) ||
       trim(rowData.description).length <= 0
-    )
-      {return;}
+    ) {
+      return;
+    }
   };
 
   return (

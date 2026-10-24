@@ -102,7 +102,9 @@ const ParameterConversion = (props: Props) => {
   }, [parameterType, t]);
 
   useEffect(() => {
-    if (!open) {return;}
+    if (!open) {
+      return;
+    }
 
     if (
       includes(
@@ -163,10 +165,18 @@ const ParameterConversion = (props: Props) => {
     if (isArray(importList) && importList.length > 0) {
       for (let i = 0; i < importList.length; i++) {
         const ite: any = importList[i];
-        if (!hasIn(ite, "type")) {ite.type = "Text";}
-        if (ite?.field_type === "Text") {ite.field_type = "String";}
-        if (!isString(ite.value)) {ite.value = "";}
-        if (!hasIn(ite, "param_id")) {ite.param_id = snowflakeId();}
+        if (!hasIn(ite, "type")) {
+          ite.type = "Text";
+        }
+        if (ite?.field_type === "Text") {
+          ite.field_type = "String";
+        }
+        if (!isString(ite.value)) {
+          ite.value = "";
+        }
+        if (!hasIn(ite, "param_id")) {
+          ite.param_id = snowflakeId();
+        }
       }
 
       if (importChange) {

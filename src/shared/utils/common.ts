@@ -140,7 +140,9 @@ export const TEN_MB = 5 * 1024 * 1024;
  */
 export const EditFormat = (value: any) => {
   const size = getSize(value);
-  if (size > TEN_MB) {return { mode: "text", value };}
+  if (size > TEN_MB) {
+    return { mode: "text", value };
+  }
   return ATools.beautifyRaw(value);
 };
 
@@ -379,7 +381,7 @@ export const sizeFormat = (size: number | string | undefined): string => {
     let exponent = 0;
 
     // Find appropriate power
-    while (size >= powersOf1024[++exponent]){;}
+    while (size >= powersOf1024[++exponent]) {}
 
     // Use template string and abstract function to simplify code
     return formatSize(size / powersOf1024[exponent - 1], exponent - 1);
@@ -407,7 +409,9 @@ export const str2testData = async (_str: string) => {
       returnList = jsonObj;
     } else {
       for (const key in jsonObj) {
-        if (!isString(jsonObj[key])) {jsonObj[key] = "";}
+        if (!isString(jsonObj[key])) {
+          jsonObj[key] = "";
+        }
       }
       returnList.push(jsonObj);
     }
@@ -535,7 +539,9 @@ export const getAllParentDirectories = (
 
   function getParent(directoryId: string) {
     const directory = jsonData[directoryId];
-    if (!directory) {return;}
+    if (!directory) {
+      return;
+    }
 
     const parentId = directory.parent_id;
     if (parentId !== "0") {
@@ -573,7 +579,9 @@ export const getSubstring = (str: string, length: number) => {
 };
 
 export const convertResponseTime = (responseTime: number | undefined) => {
-  if (!responseTime) {return "0ms";}
+  if (!responseTime) {
+    return "0ms";
+  }
   if (responseTime < 1000) {
     return `${responseTime}ms`;
   } else if (responseTime < 60000) {

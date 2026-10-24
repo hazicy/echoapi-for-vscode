@@ -198,7 +198,9 @@ const Realtime: React.FC<Props> = ({ value, onChange }) => {
     </Dropdown>
   );
   const customTipsContent = (data: any) => {
-    if (isString(data?.message)) {return {};}
+    if (isString(data?.message)) {
+      return {};
+    }
 
     return {
       size: data?.message?.size,

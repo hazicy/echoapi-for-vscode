@@ -94,7 +94,9 @@ const Request: FC<
     forEach(reverseFolder, (item: ApisData) => {
       const { request } = item || {};
 
-      if (!request) {return;}
+      if (!request) {
+        return;
+      }
 
       forEach(keys(folderParams), (key) => {
         if (request[key]) {

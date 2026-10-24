@@ -423,13 +423,16 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
     },
   );
   const selectedData = (node?: TreeNode) => {
-    if (!node || (node.kind !== "request" && node.kind !== "testFolder"))
-      {return;}
+    if (!node || (node.kind !== "request" && node.kind !== "testFolder")) {
+      return;
+    }
     return list().find((item) => item.target_id === node.data.target_id);
   };
   command("okapi.tree.rename", async (node?: TreeNode) => {
     const data = selectedData(node);
-    if (!data) {return;}
+    if (!data) {
+      return;
+    }
     const projectKey = getApiListName(context);
     const name = await vscode.window.showInputBox({
       title: zh ? "重命名" : "Rename",
@@ -441,11 +444,14 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
       !name?.trim() ||
       name.trim() === data.name ||
       getApiListName(context) !== projectKey
-    )
-      {return;}
+    ) {
+      return;
+    }
     // Read again after the prompt so concurrent edits are preserved.
     const current = selectedData(node);
-    if (!current) {return;}
+    if (!current) {
+      return;
+    }
     await handleMessage(
       {
         action: "saveFolder",
@@ -457,7 +463,9 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
   });
   command("okapi.tree.clone", async (node?: TreeNode) => {
     const data = selectedData(node);
-    if (!data || data.target_type === "folder") {return;}
+    if (!data || data.target_type === "folder") {
+      return;
+    }
     await handleMessage(
       { action: "cloneApi", data: { target_id: data.target_id } },
       context,
@@ -466,7 +474,9 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
   });
   command("okapi.tree.delete", async (node?: TreeNode) => {
     const data = selectedData(node);
-    if (!data) {return;}
+    if (!data) {
+      return;
+    }
     await handleMessage(
       {
         action: "showConfirmation",
@@ -483,11 +493,15 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
   });
   command("okapi.tree.copyCurl", async (node?: TreeNode) => {
     const data = selectedData(node);
-    if (!data || !["api", "graphql"].includes(data.target_type)) {return;}
+    if (!data || !["api", "graphql"].includes(data.target_type)) {
+      return;
+    }
     await copyAsCurl({ ...cloneDeep(data), parent_id: "0" }, context);
   });
   command("okapi.tree.revealStorage", (node?: TreeNode) => {
-    if (!selectedData(node)) {return;}
+    if (!selectedData(node)) {
+      return;
+    }
     return handleMessage(
       { action: "openVscodeFileExplorer", data: undefined },
       context,
@@ -495,7 +509,9 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
   });
   command("okapi.tree.folderSettings", (node?: TreeNode) => {
     const data = selectedData(node);
-    if (data?.target_type !== "folder") {return;}
+    if (data?.target_type !== "folder") {
+      return;
+    }
     return handleMessage(
       { action: "openTagPanelById", data: data.target_id },
       context,
@@ -503,7 +519,9 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
   });
   command("okapi.tree.folderReports", (node?: TreeNode) => {
     const data = selectedData(node);
-    if (data?.target_type !== "folder") {return;}
+    if (data?.target_type !== "folder") {
+      return;
+    }
     return vscode.commands.executeCommand("echoapi.folderTest", data, {
       openHistoryReport: true,
     });

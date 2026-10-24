@@ -79,12 +79,17 @@ const ItemMock: React.FC<Props> = (props) => {
   const handlerBlur = (e: any) => {
     const tar = e.target as HTMLTextAreaElement;
     tar.style.height = lineHeight + "px";
-    if (!nodeKey) {return;}
+    if (!nodeKey) {
+      return;
+    }
 
-    if (!isString(value?.description) || trim(value?.description).length <= 0)
-      {return;}
+    if (!isString(value?.description) || trim(value?.description).length <= 0) {
+      return;
+    }
 
-    if (!isArray(descriptionList)) {return;}
+    if (!isArray(descriptionList)) {
+      return;
+    }
 
     // Filter out data that duplicates with custom description library
     const _descriptionList = unionWith(

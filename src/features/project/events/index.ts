@@ -15,7 +15,9 @@ export const getTeamAndProjectByProjectId = ({
   projectId?: string;
   teamProjectList: TeamItem[];
 }) => {
-  if (isEmpty(teamProjectList)) {return;}
+  if (isEmpty(teamProjectList)) {
+    return;
+  }
   const allProjects = filter(
     map(teamProjectList, (item) => item.project).flat(),
     (project) => project?.upgrade_status === MIGRATE_RESULT_STATUS.NORMAL,

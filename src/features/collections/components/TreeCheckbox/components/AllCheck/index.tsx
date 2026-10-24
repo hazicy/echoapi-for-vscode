@@ -42,7 +42,9 @@ const AllCheck: FC<Props> = ({
   }, [checkedKeys, filteredTreeList]);
 
   const calcCheckTotal = useMemo(() => {
-    if (!dataSource) {return 0;}
+    if (!dataSource) {
+      return 0;
+    }
 
     return reduce(
       checkedKeys,
