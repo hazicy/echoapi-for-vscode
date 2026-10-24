@@ -1,3 +1,5 @@
+import { setRequestResult } from "./requestStatus";
+import { getApiListName } from "./utils";
 const { Worker } = require('worker_threads');
 import path from 'path';
 import * as vscode from 'vscode';
@@ -185,18 +187,23 @@ export const stopWorker = () => {
 
 
 export const sendApi = async (apiData: any, context: vscode.ExtensionContext, environmentWebView: vscode.WebviewPanel | null, option?: { server_id: string }) => {
+  const statusWorkspace = getApiListName(context);
   try {
     const projectConfig = getCurrentProjectConfig(context) as ProjectConfigType;
     const systemConfig = context.globalState.get('systemConfig') as SysConfig || {};
     const { params } = await getSendData(apiData, projectConfig, systemConfig, context, option);
     const result = await runWorker('httpSend', [params.option, params.test_events]) as string;
-    return await handleSendResponse(context, JSON.parse(result) as ApiSendResponse, environmentWebView, false, -1);
+    const response = JSON.parse(result) as ApiSendResponse;
+    setRequestResult(statusWorkspace, apiData.target_id, response.data?.response, response.error);
+    return await handleSendResponse(context, response, environmentWebView, false, -1);
   } catch (error: any) {
+    setRequestResult(statusWorkspace, apiData.target_id, undefined, error);
     vscode.window.showInformationMessage(error.message);
   }
 };
 
 export const sendSse = async (apiData: any, context: vscode.ExtensionContext, environmentWebView: vscode.WebviewPanel | null, callback: any, option?: { server_id: string }) => {
+  const statusWorkspace = getApiListName(context);
   try {
     const projectConfig = getCurrentProjectConfig(context) as ProjectConfigType;
     const systemConfig = context.globalState.get('systemConfig') as SysConfig || {};
@@ -210,6 +217,7 @@ export const sendSse = async (apiData: any, context: vscode.ExtensionContext, en
         callback({ streamResponse: [{ ...result, action: 'message', id: snowflakeId() }] });
       }
       if (result.action === 'request') {
+        setRequestResult(statusWorkspace, apiData.target_id, result.data?.data?.response, result.data?.error);
         const responseResult = await handleSendResponse(context, result.data as ApiSendResponse, environmentWebView, false, -1)
         callback({
           ...responseResult,
@@ -227,6 +235,7 @@ export const sendSse = async (apiData: any, context: vscode.ExtensionContext, en
 
     });
   } catch (error: any) {
+    setRequestResult(statusWorkspace, apiData.target_id, undefined, error);
   }
 }
 

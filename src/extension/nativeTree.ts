@@ -1,3 +1,5 @@
+import { requestDecoration, requestStatusChanged } from "./requestStatus";
+import { getCurrentProjectConfig } from "./utils";
 import { copyAsCurl } from "./apis";
 import { protocolThemeIcons } from "./protocolIcon";
 import * as vscode from "vscode";
@@ -78,6 +80,13 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
       switch (node.kind) {
         case "request": {
           const item = requestItem(node.data, "request");
+          if (node.data.target_type !== "folder") {
+            item.resourceUri = vscode.Uri.from({
+              scheme: "okapi-request",
+              authority: "status",
+              path: `/${encodeURIComponent(getApiListName(context))}/${encodeURIComponent(node.data.target_id)}`,
+            });
+          }
           if (node.data.target_type !== "folder") {
             item.command = {
               command: "okapi.tree.open",
@@ -265,7 +274,30 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
     treeDataProvider: provider("history"),
     showCollapseAll: true,
   });
+  const decorationsChanged = new vscode.EventEmitter<vscode.Uri | vscode.Uri[] | undefined>();
   context.subscriptions.push(
+    decorationsChanged,
+    vscode.window.registerFileDecorationProvider({
+      onDidChangeFileDecorations: decorationsChanged.event,
+      provideFileDecoration(uri) {
+        if (uri.scheme !== "okapi-request" || uri.authority !== "status") {
+          return;
+        }
+        const [, workspace, id] = uri.path.split("/");
+        if (workspace !== encodeURIComponent(getApiListName(context))) {
+          return;
+        }
+        const rows = list();
+        const data = rows.find((row) => encodeURIComponent(row.target_id) === id);
+        if (!data) {
+          return;
+        }
+        const status = requestDecoration(getApiListName(context), data, getCurrentProjectConfig(context), rows);
+        return status ? { ...status, color: new vscode.ThemeColor(status.color), propagate: false } : undefined;
+      },
+    }),
+    requestStatusChanged.event(() => decorationsChanged.fire(undefined)),
+    storageChanged.event(() => decorationsChanged.fire(undefined)),
     view,
     testsView,
     historyView,

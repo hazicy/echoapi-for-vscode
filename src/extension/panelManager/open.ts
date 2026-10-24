@@ -1,3 +1,5 @@
+import { setRequestDraft } from "../requestStatus";
+import { getApiListName } from "../utils";
 import { getProtocolIcon } from "../protocolIcon";
 import { globalConfig, LOCAL_PORT, PANEL_OPTIONS, socketIoStore, websocketStore } from '../constants';
 import * as vscode from 'vscode';
@@ -8,6 +10,7 @@ import { handelOpenMessage } from '../messageHandler/open';
 export const createOpenPanel = (data: any, context: vscode.ExtensionContext) => {
   const { openedPanels, sidePanelWebView } = globalConfig;
 
+  const statusWorkspace = getApiListName(context);
   const panelOptions = PANEL_OPTIONS.OPEN;
 
   if (openedPanels[data?.target_id]) {
@@ -76,6 +79,7 @@ export const createOpenPanel = (data: any, context: vscode.ExtensionContext) => 
   panel.onDidDispose(
     () => {
       // When the panel is closed, cancel any future updates to the webview content
+      setRequestDraft(statusWorkspace, data.target_id);
       delete openedPanels[data?.target_id];
       if (websocketStore?.[data?.target_id]) {
         websocketStore[data?.target_id]?.close(); //Close existing

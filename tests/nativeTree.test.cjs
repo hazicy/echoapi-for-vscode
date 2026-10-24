@@ -9,6 +9,7 @@ test("native sidebar panels, test commands and workspace request history", async
   const commands = new Map();
   const writes = new Map();
   const executed = [];
+  let decorations;
   const rows = [
     {
       target_id: "folder",
@@ -53,7 +54,7 @@ test("native sidebar panels, test commands and workspace request history", async
   const mocks = {
     vscode: {
       EventEmitter,
-      Uri: { joinPath: (...parts) => parts.join("/") },
+      Uri: { from: (parts) => parts, joinPath: (...parts) => parts.join("/") },
       TreeItem: class {
         constructor(label, collapsibleState) {
           Object.assign(this, { label, collapsibleState });
@@ -72,6 +73,7 @@ test("native sidebar panels, test commands and workspace request history", async
       TreeItemCollapsibleState: { None: 0, Collapsed: 1, Expanded: 2 },
       env: { language: "zh-cn" },
       window: {
+        registerFileDecorationProvider: (provider) => { decorations = provider; return { dispose() {} }; },
         createTreeView: (id, options) => {
           views.set(id, options.treeDataProvider);
           return { dispose() {} };
@@ -89,6 +91,7 @@ test("native sidebar panels, test commands and workspace request history", async
     },
     utils: {
       getApiList: () => rows,
+      getCurrentProjectConfig: () => ({}),
       getProjectReportList: () => [report],
       getApiListName: (ctx) => `apiList:${ctx.project}`,
     },
@@ -193,6 +196,16 @@ test("native sidebar panels, test commands and workspace request history", async
       assert.equal(item.iconPath.id, icon);
       assert.equal(item.iconPath.color, undefined);
     }
+    const resource = requests.getTreeItem({ kind: "request", data: rows[2] }).resourceUri;
+    assert.equal(resource.scheme, "okapi-request");
+    assert.equal(decorations.provideFileDecoration(resource), undefined);
+    assert.equal(decorations.provideFileDecoration({ ...resource, scheme: "file" }), undefined);
+    rows[2].url = "";
+    assert.equal(decorations.provideFileDecoration(resource).badge, "!");
+    rows[2].url = "/users";
+    context.project = "two";
+    assert.equal(decorations.provideFileDecoration(resource), undefined);
+    context.project = "one";
     const folderNode = { kind: "request", data: rows[0] };
     const requestNode = { kind: "request", data: rows[2] };
     const messages = [];

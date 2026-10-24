@@ -1,3 +1,5 @@
+import { setRequestDraft } from "../requestStatus";
+import { getApiListName } from "../utils";
 import { getProtocolIcon } from "../protocolIcon";
 import * as vscode from "vscode";
 import { recordRequestHistory } from '../requestHistory';
@@ -53,6 +55,7 @@ const saveApiData = (
   const newData: ApiDetailsData = cloneDeep(data);
   const index = apiList.findIndex((e) => e?.target_id === newData?.target_id);
   newData.is_create = -1;
+  newData.is_changed = -1;
   if (trim(newData?.name).length <= 0) {
     newData.name =
       DEFAULT_TARGET_NAME?.[newData?.target_type] || "HTTP Request";
@@ -67,6 +70,7 @@ const saveApiData = (
     vscode.window.showErrorMessage("Failed to save requests. Please try again.");
     return false;
   }
+  setRequestDraft(getApiListName(context), newData.target_id);
   // Save and update open
   panel.webview.postMessage({ action: "setApiData", data: newData });
 
@@ -129,6 +133,7 @@ export const handelOpenMessage = async (
       saveApiData(data, context, panel);
       break;
     case "updateApiActiveData":
+      setRequestDraft(getApiListName(context), data.target_id, cloneDeep(data));
       // Update title
       panel.title = showTabName(data?.name) + " ⚈";
       const activeProtocolIcon = getProtocolIcon(context, data);
