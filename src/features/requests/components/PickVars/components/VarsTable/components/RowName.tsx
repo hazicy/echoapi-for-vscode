@@ -1,8 +1,8 @@
-import { ChangeEvent, FC, memo } from 'react';
+import { ChangeEvent, FC, memo } from "react";
 
-import { Input } from '@/shared/ui/base';
+import { Input } from "@/shared/ui/base";
 
-import { DataSource } from '../../../types';
+import { DataSource } from "../../../types";
 
 interface Props {
   rowData: DataSource;

@@ -2,13 +2,13 @@ export const fileTodataUrl = (file: File): Promise<string> => {
   return new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result?.toString() || '');
+    reader.onload = () => resolve(reader.result?.toString() || "");
     reader.onerror = (error) => reject(error);
   });
 };
 
 export const dataURLtoFile = (dataurl: any, filename: any) => {
-  const arr: any = dataurl.split(',');
+  const arr: any = dataurl.split(",");
   const mime: any = arr[0].match(/:(.*?);/)[1];
   const bstr: any = atob(arr[arr.length - 1]);
 

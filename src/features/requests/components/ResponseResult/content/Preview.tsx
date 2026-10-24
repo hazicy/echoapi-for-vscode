@@ -1,20 +1,20 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import { isPlainObject, isUndefined } from 'lodash';
+import { isPlainObject, isUndefined } from "lodash";
 
-import Empty from '@/shared/ui/Empty';
-import PdfView from '@/shared/ui/PdfView';
-import { ApiSendingData } from '@/features/requests/types/send';
-import { parseStreamToBody } from '@/shared/utils/parse';
+import Empty from "@/shared/ui/Empty";
+import PdfView from "@/shared/ui/PdfView";
+import { ApiSendingData } from "@/features/requests/types/send";
+import { parseStreamToBody } from "@/shared/utils/parse";
 
 interface Props {
-  data?: ApiSendingData['response'];
+  data?: ApiSendingData["response"];
   rawEncode?: string;
 }
 
 const Preview = (props: Props) => {
   const { t } = useTranslation();
-  const { data, rawEncode = 'utf8' } = props || {};
+  const { data, rawEncode = "utf8" } = props || {};
 
   const streamData =
     !isUndefined(data?.stream?.data) && isPlainObject(data?.mime_type)
@@ -22,7 +22,7 @@ const Preview = (props: Props) => {
       : null;
 
   const setBodyColor = (html: any) => {
-    const bgcolor = 'white';
+    const bgcolor = "white";
     let str = `<style>
           body{
             background:${bgcolor};
@@ -32,11 +32,11 @@ const Preview = (props: Props) => {
   };
   const responsePreview =
     data?.response_size && data?.response_size / 1024 / 1024 > 20 ? (
-      <Empty description={t('supplement.file_big')} />
+      <Empty description={t("supplement.file_big")} />
     ) : (
       <>
-        {data?.fit_for_show === 'Monaco' ? (
-          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+        {data?.fit_for_show === "Monaco" ? (
+          <div style={{ width: "100%", height: "100%", position: "relative" }}>
             <iframe
               sandbox=""
               srcDoc={setBodyColor(streamData?.rawBody)}
@@ -47,16 +47,16 @@ const Preview = (props: Props) => {
               height="100%"
             ></iframe>
           </div>
-        ) : data?.fit_for_show === 'Image' ? (
+        ) : data?.fit_for_show === "Image" ? (
           <div style={{ width: 300 }}>
-            <img src={streamData?.base64Body} style={{ maxWidth: '100%' }} />
+            <img src={streamData?.base64Body} style={{ maxWidth: "100%" }} />
           </div>
-        ) : data?.fit_for_show === 'Pdf' ? (
+        ) : data?.fit_for_show === "Pdf" ? (
           <div>
             <PdfView file={streamData?.base64Body} />
           </div>
         ) : (
-          <Empty description={t('supplement.no_view')} />
+          <Empty description={t("supplement.no_view")} />
         )}
       </>
     );

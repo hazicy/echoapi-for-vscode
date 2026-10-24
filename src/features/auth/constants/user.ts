@@ -5,12 +5,12 @@ export const WECHAT_TOKEN_STATUS = {
   UN_REGISTER: -1,
 } as const;
 
-export const APIPOST_MACHINE = 'echoapi-machine';
-export const APIPOST_TERMINAL = 'echoapi-terminal';
-export const APIPOST_VERSION = 'echoapi-version';
-export const APIPOST_LANGUAGE = 'echoapi-language';
-export const APIPOST_PLATFORM = 'echoapi-platform';
-export const APIPOST_CLIENT_ID = 'echoapi-client-id';
+export const APIPOST_MACHINE = "echoapi-machine";
+export const APIPOST_TERMINAL = "echoapi-terminal";
+export const APIPOST_VERSION = "echoapi-version";
+export const APIPOST_LANGUAGE = "echoapi-language";
+export const APIPOST_PLATFORM = "echoapi-platform";
+export const APIPOST_CLIENT_ID = "echoapi-client-id";
 
 export enum AUTHORITY {
   /** Read only */

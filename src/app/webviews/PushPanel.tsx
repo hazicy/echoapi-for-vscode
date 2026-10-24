@@ -1,24 +1,24 @@
-import { getPopupContainer } from '@/shared/utils/popupContainer';
-import { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom/client';
-import { App as AntdApp, ConfigProvider, Skeleton } from '@/shared/ui/base';
-import useGlobalTheme from '@/shared/theme';
-import antdLocale from '@/shared/locale/antd';
+import { getPopupContainer } from "@/shared/utils/popupContainer";
+import { useEffect, useState } from "react";
+import ReactDOM from "react-dom/client";
+import { App as AntdApp, ConfigProvider, Skeleton } from "@/shared/ui/base";
+import useGlobalTheme from "@/shared/theme";
+import antdLocale from "@/shared/locale/antd";
 
-import '@/shared/assets/css/reset.css';
+import "@/shared/assets/css/reset.css";
 
-import '@/shared/locale';
-import Push from '@/features/sync/components/Push';
-import { ThemeProvider } from '@/shared/ui/base/Theme';
-import GlobalThemeStyle from '../../shared/theme/global';
-import GlobalStyle from '../../shared/theme/globalStyle';
-import { isArray, isPlainObject } from 'lodash';
+import "@/shared/locale";
+import Push from "@/features/sync/components/Push";
+import { ThemeProvider } from "@/shared/ui/base/Theme";
+import GlobalThemeStyle from "../../shared/theme/global";
+import GlobalStyle from "../../shared/theme/globalStyle";
+import { isArray, isPlainObject } from "lodash";
 import {
   useApis,
   useProjectConfig,
   useSystemConfig,
   useUserConfig,
-} from '../../app/store';
+} from "../../app/store";
 
 function PushPanel() {
   const customTheme = useGlobalTheme();
@@ -39,17 +39,17 @@ function PushPanel() {
 
   useEffect(() => {
     window?.vscode.postMessage({
-      action: 'getPushPanelData',
+      action: "getPushPanelData",
     });
 
     // Get global configuration
     window?.vscode.postMessage({
-      action: 'getSystemConfig',
+      action: "getSystemConfig",
     });
 
     // Get project information
     window?.vscode.postMessage({
-      action: 'getProjectConfig',
+      action: "getProjectConfig",
     });
   }, []);
 
@@ -58,7 +58,7 @@ function PushPanel() {
       const message = event.data; // The JSON data our extension sent
 
       switch (message.action) {
-        case 'setPushPanelData':
+        case "setPushPanelData":
           if (isPlainObject(message?.data)) {
             if (isPlainObject(message?.data?.user_config)) {
               updateUserConfig(message?.data?.user_config);
@@ -74,27 +74,27 @@ function PushPanel() {
           }
           setLodaing(false);
           break;
-        case 'setSystemConfig':
+        case "setSystemConfig":
           const { systemConfig, updateSystemConfig } =
             useSystemConfig.getState();
 
           updateSystemConfig({ ...systemConfig, ...message.data });
           break;
-        case 'setProjectConfig':
+        case "setProjectConfig":
           updateProjectConfig({ ...message.data });
           break;
       }
     };
-    window.addEventListener('message', messageHandler);
+    window.addEventListener("message", messageHandler);
     return () => {
-      window.removeEventListener('message', messageHandler);
+      window.removeEventListener("message", messageHandler);
     };
   }, []);
 
   return (
     <ConfigProvider
       getPopupContainer={getPopupContainer}
-      prefixCls={'beautify'}
+      prefixCls={"beautify"}
       // theme={{ ...customTheme, cssVar: true }}
       theme={{
         token: customTheme.token,
@@ -108,7 +108,7 @@ function PushPanel() {
           <GlobalStyle />
           <Skeleton
             active
-            paragraph={{ rows: 15, width: '100%' }}
+            paragraph={{ rows: 15, width: "100%" }}
             loading={lodaing}
           >
             <Push />
@@ -119,4 +119,4 @@ function PushPanel() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')!).render(<PushPanel />);
+ReactDOM.createRoot(document.getElementById("root")!).render(<PushPanel />);

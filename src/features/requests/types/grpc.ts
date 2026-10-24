@@ -1,9 +1,12 @@
-import { APIS_GRPC_PROTO_TYPE_ENUM } from '@/features/requests/constants';
+import { APIS_GRPC_PROTO_TYPE_ENUM } from "@/features/requests/constants";
 
-import { AnyObject, CustomNumberBooleanType } from '../../../shared/types/common';
-import { ApisBaseData, ApisBaseDataItem } from './base';
-import { ApisBaseRequestBody } from './request';
-import { BaseResponse } from './response';
+import {
+  AnyObject,
+  CustomNumberBooleanType,
+} from "../../../shared/types/common";
+import { ApisBaseData, ApisBaseDataItem } from "./base";
+import { ApisBaseRequestBody } from "./request";
+import { BaseResponse } from "./response";
 
 export interface GrpcDetailsData extends ApisBaseData {
   // Imported proto file collection
@@ -50,7 +53,7 @@ export interface GrpcProtosServicesMethods {
   response_stream?: CustomNumberBooleanType;
   reconnect_num?: number;
   request: GrpcProtosServicesMethodsRequest;
-  response: Pick<BaseResponse, 'example'>;
+  response: Pick<BaseResponse, "example">;
 }
 
 export interface GrpcProtosServicesMethodsRequest {
@@ -62,7 +65,7 @@ export interface GrpcProtosServicesMethodsRequest {
 
 export type GrpcProtosServicesMethodsRequestMessage = Pick<
   ApisBaseRequestBody,
-  'raw' | 'raw_parameter'
+  "raw" | "raw_parameter"
 > & {
   param_id: string;
   name: string;
@@ -112,10 +115,12 @@ export type GrpcComponentType = {
 
 export type RequestMockRequestParams = {
   proto_is_cloud?: CustomNumberBooleanType;
-  option: Partial<Pick<GrpcProtos, 'proto_content' | 'include_dirs' | 'include_files'>>;
+  option: Partial<
+    Pick<GrpcProtos, "proto_content" | "include_dirs" | "include_files">
+  >;
   data: Partial<{
-    url: GrpcProtos['url'];
-    service: GrpcProtosServices['service_name'];
-    method: GrpcProtosServicesMethods['name'];
+    url: GrpcProtos["url"];
+    service: GrpcProtosServices["service_name"];
+    method: GrpcProtosServicesMethods["name"];
   }>;
 };

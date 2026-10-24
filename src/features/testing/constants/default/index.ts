@@ -2,11 +2,11 @@
  * Default data for adding test cases
  */
 export const ADD_CASE_DEFAULT = {
-  parent_id: '',
-  project_id: '',
-  name: '',
+  parent_id: "",
+  project_id: "",
+  name: "",
   settings: {
-    env_id: '',
+    env_id: "",
     /**Whether to use test data */
     enable_request: -1,
     /**Execution count */
@@ -22,8 +22,8 @@ export const ADD_CASE_DEFAULT = {
     /**unknown */
     iterates_data_list: [],
     /**unknown */
-    iterates_data_id: '0',
+    iterates_data_id: "0",
   },
-  testing_type: 'testing',
+  testing_type: "testing",
   event_list: [],
 };

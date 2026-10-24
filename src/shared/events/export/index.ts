@@ -1,8 +1,8 @@
-import { useProjectConfig, useUserConfig } from '@/app/store';
-import { ImportConfig } from '@/features/project/types/export';
-import { getSubstring } from '@/shared/utils/common';
-import { snowflakeId } from 'apipost-tools';
-import { cloneDeep, has, isArray, isEmpty, isPlainObject, keys } from 'lodash';
+import { useProjectConfig, useUserConfig } from "@/app/store";
+import { ImportConfig } from "@/features/project/types/export";
+import { getSubstring } from "@/shared/utils/common";
+import { snowflakeId } from "apipost-tools";
+import { cloneDeep, has, isArray, isEmpty, isPlainObject, keys } from "lodash";
 import {
   completionApis,
   completionAttributes,
@@ -18,20 +18,20 @@ import {
   completionModels,
   completionSamples,
   completionServers,
-} from '@/features/export/utils/exportutils/apiToSelf';
+} from "@/features/export/utils/exportutils/apiToSelf";
 import {
   completionSwaggerApis,
   completionSwaggerEnv,
-} from '@/features/export/utils/exportutils/apiToSwagger';
-import { ApiDetailsData } from '@/features/requests/types/api';
+} from "@/features/export/utils/exportutils/apiToSwagger";
+import { ApiDetailsData } from "@/features/requests/types/api";
 
 export const getExportData = (apiData: ApiDetailsData, rest: any = {}) => {
   const { currentProject } = useUserConfig.getState();
   const { envList } = useProjectConfig.getState();
   const envs = envList
-    ?.filter((item) => item?.env_id !== '2')
+    ?.filter((item) => item?.env_id !== "2")
     ?.map(({ env_var_list, name, server_list }) => {
-      const url = server_list?.find((e) => e?.server_id === '1')?.uri || '';
+      const url = server_list?.find((e) => e?.server_id === "1")?.uri || "";
       return {
         env_var_list,
         url,
@@ -78,11 +78,11 @@ export const recursionSetSchemaOrder = (originSchema: any) => {
   try {
     const schema = cloneDeep(originSchema);
     if (
-      has(schema, 'properties') &&
-      Object.prototype.toString.call(schema?.properties) === '[object Object]'
+      has(schema, "properties") &&
+      Object.prototype.toString.call(schema?.properties) === "[object Object]"
     ) {
-      schema['ECHOAPI_ORDERS'] = getApiOrders(schema || {});
-      schema['properties'] = keys(schema?.properties)?.reduce(
+      schema["ECHOAPI_ORDERS"] = getApiOrders(schema || {});
+      schema["properties"] = keys(schema?.properties)?.reduce(
         (pre: any, key) => {
           if (key && !isEmpty(schema?.properties[key])) {
             pre[key] = recursionSetSchemaOrder(schema?.properties[key]);
@@ -92,11 +92,11 @@ export const recursionSetSchemaOrder = (originSchema: any) => {
         {},
       );
     }
-    if (schema?.type === 'array' && has(schema, 'items')) {
+    if (schema?.type === "array" && has(schema, "items")) {
       if (
-        has(schema?.items, 'properties') &&
+        has(schema?.items, "properties") &&
         Object.prototype.toString.call(schema?.items?.properties) ===
-          '[object Object]'
+          "[object Object]"
       ) {
         schema.items = recursionSetSchemaOrder(schema?.items);
       }
@@ -109,8 +109,8 @@ export const recursionSetSchemaOrder = (originSchema: any) => {
 
 export const apiConverFormat = (json: any, project_id: string) => {
   const {
-    name: projectName = '',
-    intro: projectIntro = '',
+    name: projectName = "",
+    intro: projectIntro = "",
     global,
     models,
     apis,
@@ -131,7 +131,7 @@ export const apiConverFormat = (json: any, project_id: string) => {
   } = global || {};
   const serversMap = servers?.reduce(
     (pre: { [key: string]: string }, item: any) => {
-      if (['1', '2'].includes(item?.server_id)) {
+      if (["1", "2"].includes(item?.server_id)) {
         pre[item?.server_id] = item?.server_id;
       } else {
         pre[item?.server_id] = snowflakeId();
@@ -151,7 +151,7 @@ export const apiConverFormat = (json: any, project_id: string) => {
       }
       return pre;
     },
-    { '0': '0' } as { [key: string]: string },
+    { "0": "0" } as { [key: string]: string },
   );
   const apiMap = apis?.reduce(
     (pre: { [key: string]: string }, e: any) => {
@@ -163,7 +163,7 @@ export const apiConverFormat = (json: any, project_id: string) => {
       }
       return pre;
     },
-    { '0': '0' } as { [key: string]: string },
+    { "0": "0" } as { [key: string]: string },
   );
   const sampleMap = samples?.reduce(
     (pre: { [key: string]: string }, e: any) => {
@@ -175,7 +175,7 @@ export const apiConverFormat = (json: any, project_id: string) => {
       }
       return pre;
     },
-    { '0': '0' },
+    { "0": "0" },
   );
 
   try {

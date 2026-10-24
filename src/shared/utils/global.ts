@@ -1,8 +1,8 @@
-import { getI18n } from 'react-i18next';
-import { getGlobals } from '../../features/requests/utils/send/utils';
-import { useProjectConfig } from '@/app/store';
-import { entries, find, has, merge } from 'lodash';
-import { convertVarFormat } from './common';
+import { getI18n } from "react-i18next";
+import { getGlobals } from "../../features/requests/utils/send/utils";
+import { useProjectConfig } from "@/app/store";
+import { entries, find, has, merge } from "lodash";
+import { convertVarFormat } from "./common";
 
 export const getEditorVariable = async (originKey: string) => {
   try {
@@ -13,16 +13,16 @@ export const getEditorVariable = async (originKey: string) => {
     const currentEnv = find(envList, (item) => item.env_id === envDetailKeys);
     const environmentMap = entries(currentEnv?.env_var_list).reduce(
       (pre, [key, obj]: any) => {
-        pre[key] = obj?.current_value || '';
+        pre[key] = obj?.current_value || "";
         return pre;
       },
-      {} as Record<string, any>
+      {} as Record<string, any>,
     );
     const varMap = merge(global, environmentMap);
     if (has(varMap, keyName)) {
-      return `**${t('supplement.current_value')}**  **:** ${convertVarFormat(varMap[keyName])}`;
+      return `**${t("supplement.current_value")}**  **:** ${convertVarFormat(varMap[keyName])}`;
     }
   } catch (err) {
-    return '';
+    return "";
   }
 };

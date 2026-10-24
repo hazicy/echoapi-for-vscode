@@ -1,4 +1,4 @@
-import { ThemeToken } from '@/shared/hooks/useTheme';
+import { ThemeToken } from "@/shared/hooks/useTheme";
 
 export const getTheme = (themeToken: ThemeToken, { cellPadding = 8.5 }) => {
   return {
@@ -9,13 +9,13 @@ export const getTheme = (themeToken: ThemeToken, { cellPadding = 8.5 }) => {
         /**Header background color */
         headerBg: themeToken.colorBgRight,
         /**Mouse hover background color */
-        rowHoverBg: 'var(--vscode-settings-rowHoverBackground)',
+        rowHoverBg: "var(--vscode-settings-rowHoverBackground)",
         /**Cell padding */
         padding: cellPadding,
         /**Selected background color */
-        rowSelectedBg: 'var(--vscode-settings-rowHoverBackground)',
+        rowSelectedBg: "var(--vscode-settings-rowHoverBackground)",
         /**Selected hover background color */
-        rowSelectedHoverBg: 'var(--vscode-settings-rowHoverBackground)',
+        rowSelectedHoverBg: "var(--vscode-settings-rowHoverBackground)",
         /**Header color */
         headerColor: themeToken.fontContentColor,
         /** Remove small vertical line */
@@ -28,7 +28,7 @@ export const getTheme = (themeToken: ThemeToken, { cellPadding = 8.5 }) => {
         /**Focused background color */
         activeBorderColor: themeToken.colorPrimary,
         /**Focused shadow */
-        activeShadow: 'none',
+        activeShadow: "none",
         /**borderRadius */
         borderRadius: 0,
       },

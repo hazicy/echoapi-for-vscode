@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import CodeEditor from "@/shared/components/CodeEditor";
 import useTheme from "@/shared/hooks/useTheme";
 
-
 import {
   Flex,
   Form,
@@ -13,20 +12,20 @@ import {
   Switch,
   Upload,
   message,
-} from '@/shared/ui/base';
-import type { RcFile, UploadChangeParam } from '@/shared/ui/base';
+} from "@/shared/ui/base";
+import type { RcFile, UploadChangeParam } from "@/shared/ui/base";
 
 import { isJson5 } from "apipost-tools";
 import JSON5 from "json5";
-import {
-  cloneDeep,
-  includes,
-  isArray,
-  isEqual,
-} from "lodash";
+import { cloneDeep, includes, isArray, isEqual } from "lodash";
 
 import { Button, IconFont, Tooltip } from "@/shared/ui";
-import { IMPORT_TIP_MAP, IMPORT_TYPE_ENUM, IMPORT_TYPE_MAP, ImportLocationEnum } from "@/features/settings/constants/settings";
+import {
+  IMPORT_TIP_MAP,
+  IMPORT_TYPE_ENUM,
+  IMPORT_TYPE_MAP,
+  ImportLocationEnum,
+} from "@/features/settings/constants/settings";
 import { useSafeState } from "ahooks";
 import { parseSafeBash } from "@/features/curl/utils/curl";
 import ImportApiPreview from "../ImportApiPreview";
@@ -133,7 +132,7 @@ const Index = ({
           setTimeout(async () => {
             await completePreviewData(file?.name, content);
             setImportLoading && setImportLoading(false);
-        // Force reset after processing file
+            // Force reset after processing file
             setUploadKey(Date.now());
           }, 100);
         } catch (error) {}
@@ -146,8 +145,7 @@ const Index = ({
   const completePreviewData = async (_fileName: string, text: string) => {
     try {
       setPreviewLoading(true);
-      const formData =
-      await form.validateFields();
+      const formData = await form.validateFields();
 
       window?.vscode.postMessage({
         action: "getImportData",
@@ -158,7 +156,7 @@ const Index = ({
     }
   };
 
-  const curlImportData = ()=>{
+  const curlImportData = () => {
     if (fileType === IMPORT_TYPE_ENUM.CURL) {
       try {
         const parsedValue = parseSafeBash(value);
@@ -170,7 +168,7 @@ const Index = ({
       } catch (error) {}
       return;
     }
-  }
+  };
 
   const projectImport2 = async () => {
     try {
@@ -181,19 +179,19 @@ const Index = ({
         (i) =>
           previewSelectData.apis.includes(i.target_id) ||
           (isArray(previewSelectData?.apiHalfs) &&
-            previewSelectData.apiHalfs.includes(i.target_id))
+            previewSelectData.apiHalfs.includes(i.target_id)),
       );
       importData.models = importData.models.filter(
         (i) =>
           previewSelectData.models.includes(i.model_id) ||
           (isArray(previewSelectData?.modelHalfs) &&
-            previewSelectData.modelHalfs.includes(i.model_id))
+            previewSelectData.modelHalfs.includes(i.model_id)),
       );
       if (!importData?.global) {
         importData.global = {};
       }
       importData.global.envs = importData.envs.filter((i) =>
-        previewSelectData.envs.includes(i.env_id)
+        previewSelectData.envs.includes(i.env_id),
       );
       delete importData.envs;
       const {
@@ -204,7 +202,12 @@ const Index = ({
       } = await form.validateFields();
       window?.vscode.postMessage({
         action: "importData",
-        data: { newApis: importData.apis, newEnvs: importData?.global?.envs || [], chooseFolder:chooseFolder || "0", fileType },
+        data: {
+          newApis: importData.apis,
+          newEnvs: importData?.global?.envs || [],
+          chooseFolder: chooseFolder || "0",
+          fileType,
+        },
       });
 
       if (onCancel) {
@@ -235,11 +238,10 @@ const Index = ({
           let text;
           const result = await axios.get(swaggerUrl);
           text = result?.data || {};
-          const formData =
-          await form.validateFields();
+          const formData = await form.validateFields();
           window?.vscode.postMessage({
             action: "getImportData",
-            data: { json: text, fileType,formData },
+            data: { json: text, fileType, formData },
           });
         } catch (err: any) {
           message.error(t("supplement.upload_right_file"));
@@ -254,7 +256,7 @@ const Index = ({
   return (
     <>
       {fileType === IMPORT_TYPE_ENUM.CURL && (
-        <Flex flex={1} style={{minHeight:0}}>
+        <Flex flex={1} style={{ minHeight: 0 }}>
           <CodeEditor
             className={slots["curl-code-editor"]}
             onChange={setValue}
@@ -284,7 +286,10 @@ const Index = ({
                     align="center"
                     gap={20}
                   >
-                    <Flex className={slots["import-project-full-title"]} gap={8}>
+                    <Flex
+                      className={slots["import-project-full-title"]}
+                      gap={8}
+                    >
                       {t("supplement.path_handle")}
                       <Tooltip placement="top" title={t("supplement.swagger2")}>
                         <IconFont
@@ -325,7 +330,7 @@ const Index = ({
                 <div className={slots["import-project-item-content"]}>
                   {!includes(
                     [IMPORT_TYPE_ENUM.SWAGGERURL, IMPORT_TYPE_ENUM.CURL],
-                    fileType
+                    fileType,
                   ) && (
                     <Dragger
                       key={uploadKey}
@@ -357,7 +362,10 @@ const Index = ({
                     </Dragger>
                   )}
                   {fileType === IMPORT_TYPE_ENUM.SWAGGERURL && (
-                    <div className={slots["swagger-input"]} style={{ marginBottom: 24 }}>
+                    <div
+                      className={slots["swagger-input"]}
+                      style={{ marginBottom: 24 }}
+                    >
                       <Input
                         value={swaggerUrl}
                         onChange={(e) => {
@@ -411,7 +419,6 @@ const Index = ({
           </Button>
         </Flex>
       )}
-
     </>
   );
 };

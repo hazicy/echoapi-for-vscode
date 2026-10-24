@@ -1,18 +1,21 @@
-import { FC, FunctionComponent, memo } from 'react';
+import { FC, FunctionComponent, memo } from "react";
 
-import { useMemoizedFn } from 'ahooks';
+import { useMemoizedFn } from "ahooks";
 
-import { SuspenseContent } from '@/shared/components';
+import { SuspenseContent } from "@/shared/components";
 
-import { updateApisActiveItem } from '@/features/requests/events/opens';
-import { ApiDetailsData, ApisData } from '@/features/requests/types/api';
+import { updateApisActiveItem } from "@/features/requests/events/opens";
+import { ApiDetailsData, ApisData } from "@/features/requests/types/api";
 
 interface Props {
   apisData: ApiDetailsData;
   // onApisDataChange:(val:ApiDetailsData)=>void;
   contentType?: string;
   activeContentType?: string | number;
-  element: FunctionComponent<{ apisData: ApisData; onApisDataChange: (param: ApiDetailsData) => void }>;
+  element: FunctionComponent<{
+    apisData: ApisData;
+    onApisDataChange: (param: ApiDetailsData) => void;
+  }>;
 }
 
 const ContentItemWrap: FC<Props> = memo((props) => {

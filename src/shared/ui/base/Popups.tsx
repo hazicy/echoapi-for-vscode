@@ -242,7 +242,11 @@ export function Dropdown({
   const Root = context ? BaseContextMenu.Root : BaseMenu.Root;
   const body = (
     <BaseMenu.Popup
-      className={cx(css.popup, slots["beautify-dropdown-menu"], overlayClassName)}
+      className={cx(
+        css.popup,
+        slots["beautify-dropdown-menu"],
+        overlayClassName,
+      )}
       style={overlayStyle}
     >
       {overlay ?? <MenuItems {...menu} />}

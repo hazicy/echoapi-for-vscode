@@ -1,9 +1,9 @@
-import { getTypeName } from '@/shared/utils/type';
+import { getTypeName } from "@/shared/utils/type";
 
 function getPropertyFormat(value: any) {
   const type = getTypeName(value).toLowerCase();
 
-  if (type === 'date') return 'date-time';
+  if (type === "date") return "date-time";
 
   return null;
 }
@@ -11,10 +11,10 @@ function getPropertyFormat(value: any) {
 function getPropertyType(value: any) {
   const type = getTypeName(value).toLowerCase();
 
-  if (type === 'number') return Number.isInteger(value) ? 'integer' : type;
-  if (type === 'date') return 'string';
-  if (type === 'regexp') return 'string';
-  if (type === 'function') return 'string';
+  if (type === "number") return Number.isInteger(value) ? "integer" : type;
+  if (type === "date") return "string";
+  if (type === "regexp") return "string";
+  if (type === "function") return "string";
 
   return type;
 }
@@ -28,7 +28,11 @@ function getUniqueKeys(a: any, b: any, c: any) {
   let cIndex;
   let aIndex;
 
-  for (let keyIndex = 0, keyLength = b.length; keyIndex < keyLength; keyIndex++) {
+  for (
+    let keyIndex = 0, keyLength = b.length;
+    keyIndex < keyLength;
+    keyIndex++
+  ) {
     value = b[keyIndex];
     aIndex = a.indexOf(value);
     cIndex = c.indexOf(value);
@@ -62,7 +66,11 @@ function processArray(array: any, output?: any, nested?: any) {
   }
 
   // Determine whether each item is different
-  for (let arrIndex = 0, arrLength = array.length; arrIndex < arrLength; arrIndex++) {
+  for (
+    let arrIndex = 0, arrLength = array.length;
+    arrIndex < arrLength;
+    arrIndex++
+  ) {
     const elementType = getPropertyType(array[arrIndex]);
     const elementFormat = getPropertyFormat(array[arrIndex]);
 
@@ -82,7 +90,7 @@ function processArray(array: any, output?: any, nested?: any) {
     if (format) {
       output.items.format = format;
     }
-  } else if (oneOf && type !== 'object') {
+  } else if (oneOf && type !== "object") {
     output.items = {
       oneOf: [{ type }],
       required: output.items.required,
@@ -90,23 +98,35 @@ function processArray(array: any, output?: any, nested?: any) {
   }
 
   // Process each item depending
-  if (typeof output.items.oneOf !== 'undefined' || type === 'object') {
-    for (let itemIndex = 0, itemLength = array.length; itemIndex < itemLength; itemIndex++) {
+  if (typeof output.items.oneOf !== "undefined" || type === "object") {
+    for (
+      let itemIndex = 0, itemLength = array.length;
+      itemIndex < itemLength;
+      itemIndex++
+    ) {
       const value = array[itemIndex];
       const itemType = getPropertyType(value);
       const itemFormat = getPropertyFormat(value);
       let arrayItem: any;
-      if (itemType === 'object') {
+      if (itemType === "object") {
         if (output.items.properties) {
           output.items.required = getUniqueKeys(
             output.items.properties,
             value,
-            output.items.required
+            output.items.required,
           );
         }
-        arrayItem = processObject(value, oneOf ? {} : output.items.properties, true);
-      } else if (itemType === 'array') {
-        arrayItem = processArray(value, oneOf ? {} : output.items.properties, true);
+        arrayItem = processObject(
+          value,
+          oneOf ? {} : output.items.properties,
+          true,
+        );
+      } else if (itemType === "array") {
+        arrayItem = processArray(
+          value,
+          oneOf ? {} : output.items.properties,
+          true,
+        );
       } else {
         arrayItem = {};
         arrayItem.type = itemType;
@@ -117,14 +137,14 @@ function processArray(array: any, output?: any, nested?: any) {
       if (oneOf) {
         const childType = getTypeName(value).toLowerCase();
         const tempObj: any = {};
-        if (!arrayItem.type && childType === 'object') {
+        if (!arrayItem.type && childType === "object") {
           tempObj.properties = arrayItem;
-          tempObj.type = 'object';
+          tempObj.type = "object";
           arrayItem = tempObj;
         }
         output.items.oneOf.push(arrayItem);
       } else {
-        if (output.items.type !== 'object') {
+        if (output.items.type !== "object") {
           continue;
         }
         output.items.properties = arrayItem;
@@ -149,14 +169,14 @@ function processObject(object: any, output?: any, nested?: any) {
     let type = getPropertyType(value);
     const format = getPropertyFormat(value);
 
-    type = type === 'undefined' ? 'null' : type;
+    type = type === "undefined" ? "null" : type;
 
-    if (type === 'object') {
+    if (type === "object") {
       output.properties[key] = processObject(value, output.properties[key]);
       continue;
     }
 
-    if (type === 'array') {
+    if (type === "array") {
       output.properties[key] = processArray(value, output.properties[key]);
       continue;
     }
@@ -195,11 +215,10 @@ function processObject(object: any, output?: any, nested?: any) {
 
 export default function Process(title: any, object?: any) {
   let processOutput;
-  const output: any = {
-  };
+  const output: any = {};
 
   // Determine title exists
-  if (typeof title !== 'string') {
+  if (typeof title !== "string") {
     object = title;
     title = undefined;
   } else {
@@ -210,23 +229,23 @@ export default function Process(title: any, object?: any) {
   output.type = getTypeName(object).toLowerCase();
 
   // Process object
-  if (output.type === 'object') {
+  if (output.type === "object") {
     processOutput = processObject(object);
     output.type = processOutput.type;
     output.properties = processOutput.properties;
     output.required = Object.keys(object).filter(function (key) {
-      return !key.startsWith('$');
+      return !key.startsWith("$");
     });
   }
 
-  if (output.type === 'array') {
+  if (output.type === "array") {
     processOutput = processArray(object);
     output.type = processOutput.type;
     output.items = processOutput.items;
 
     if (output.title) {
       output.items.title = output.title;
-      output.title += ' Set';
+      output.title += " Set";
     }
   }
 

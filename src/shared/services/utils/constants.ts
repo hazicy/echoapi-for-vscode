@@ -1,10 +1,10 @@
-import i18next from 'i18next';
+import i18next from "i18next";
 
 export const TERMINAL_TYPE = {
   /** Client */
-  CLIENT: 'client',
+  CLIENT: "client",
   /** Web */
-  WEB: 'web',
+  WEB: "web",
 } as const;
 
 export const RESPONSE_CODES = {
@@ -24,7 +24,7 @@ export const RESPONSE_ERROR_CODES = {
   /** Data conflict */
   DATA_CONFLICTED: 14005,
   /** Cancel send */
-  ERR_CANCELED: 'ERR_CANCELED',
+  ERR_CANCELED: "ERR_CANCELED",
   /** Force upgrade server shutdown */
   SERVER_CLOSE: 10006,
   /** User not found */
@@ -82,10 +82,10 @@ export const PLAN_TIP_CODES = {
 };
 
 export const REPLACE_ERROR_BY_CODES: { [key: number]: string } = {
-  10001: i18next.t('supplement.cloud_param_err'),
+  10001: i18next.t("supplement.cloud_param_err"),
 };
 
 export const HTTP_METHODS = {
-  POST: 'post',
-  GET: 'get',
+  POST: "post",
+  GET: "get",
 } as const;

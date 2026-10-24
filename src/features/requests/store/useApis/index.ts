@@ -1,11 +1,18 @@
-import { omit } from 'lodash';
+import { omit } from "lodash";
 
-import { DEFAULT_REQUEST_SYSTEM_HEADERS } from '@/features/requests/constants/request';
-import { create, devtools } from '@/app/store/utils';
-import { ApiDetailsData, ApiPressureData, MockDetails } from '@/features/requests/types/api';
-import { ApisBaseData } from '@/features/requests/types/base';
-import { DefaultRequestSystemHeaders } from '@/features/requests/types/request';
-import { ApiSendingData, ApiSendingDataSSE } from '@/features/requests/types/send';
+import { DEFAULT_REQUEST_SYSTEM_HEADERS } from "@/features/requests/constants/request";
+import { create, devtools } from "@/app/store/utils";
+import {
+  ApiDetailsData,
+  ApiPressureData,
+  MockDetails,
+} from "@/features/requests/types/api";
+import { ApisBaseData } from "@/features/requests/types/base";
+import { DefaultRequestSystemHeaders } from "@/features/requests/types/request";
+import {
+  ApiSendingData,
+  ApiSendingDataSSE,
+} from "@/features/requests/types/send";
 
 type State = {
   /**apis raw base data flat list */
@@ -62,49 +69,75 @@ type State = {
 
 type Action = {
   updateApisStore: (apisData: State) => void;
-  updateApiBaseData: (apiBaseData: State['apiBaseData']) => void;
-  updateApiDetailsData: (apiDetailsData: State['apiDetailsData']) => void;
-  updateAllApiDetailsData: (apiDetailsData: State['apiDetailsData']) => void;
-  updateApiOriginBaseList: (apiOriginBaseList: State['apiOriginBaseList']) => void;
-  updateApiOriginDetailsList: (apiOriginDetailsList: State['apiOriginDetailsList']) => void;
+  updateApiBaseData: (apiBaseData: State["apiBaseData"]) => void;
+  updateApiDetailsData: (apiDetailsData: State["apiDetailsData"]) => void;
+  updateAllApiDetailsData: (apiDetailsData: State["apiDetailsData"]) => void;
+  updateApiOriginBaseList: (
+    apiOriginBaseList: State["apiOriginBaseList"],
+  ) => void;
+  updateApiOriginDetailsList: (
+    apiOriginDetailsList: State["apiOriginDetailsList"],
+  ) => void;
 
-  updateApiCodeHar: (apiCodeHar: State['apiCodeHar']) => void;
-  updateSchemaLoading: (schemaLoading: State['schemaLoading']) => void;
-  updateOpensApiList: (opensApiList: State['opensApiList']) => void;
-  updateOpensApiDetailsDataByTargetId: (opensApiDetailsData: ApiDetailsData) => void;
-  updateOpensApiDetailsData: (opensApiDetailsData: State['opensApiDetailsData']) => void;
-  updateAllOpensApiDetailsData: (opensApiDetailsData: State['opensApiDetailsData']) => void;
+  updateApiCodeHar: (apiCodeHar: State["apiCodeHar"]) => void;
+  updateSchemaLoading: (schemaLoading: State["schemaLoading"]) => void;
+  updateOpensApiList: (opensApiList: State["opensApiList"]) => void;
+  updateOpensApiDetailsDataByTargetId: (
+    opensApiDetailsData: ApiDetailsData,
+  ) => void;
+  updateOpensApiDetailsData: (
+    opensApiDetailsData: State["opensApiDetailsData"],
+  ) => void;
+  updateAllOpensApiDetailsData: (
+    opensApiDetailsData: State["opensApiDetailsData"],
+  ) => void;
 
-  updateApisActiveKey: (apisActiveKey: State['apisActiveKey']) => void;
-  updateTestsActiveKey: (testsActiveKey: State['testsActiveKey']) => void;
-  updateDocsActiveKey: (docsActiveKey: State['docsActiveKey']) => void;
-  updateCurrentServerId: (currentServerId: State['currentServerId']) => void;
+  updateApisActiveKey: (apisActiveKey: State["apisActiveKey"]) => void;
+  updateTestsActiveKey: (testsActiveKey: State["testsActiveKey"]) => void;
+  updateDocsActiveKey: (docsActiveKey: State["docsActiveKey"]) => void;
+  updateCurrentServerId: (currentServerId: State["currentServerId"]) => void;
 
-  updateTreeLoading: (treeLoading: State['treeLoading']) => void;
-  updateDetailsLoading: (detailsLoading: State['detailsLoading']) => void;
+  updateTreeLoading: (treeLoading: State["treeLoading"]) => void;
+  updateDetailsLoading: (detailsLoading: State["detailsLoading"]) => void;
 
-  updateApiSendingDataByTargetId: (apiSendingData: Partial<ApiSendingData>) => void;
-  updateApiSendingData: (apiSendingData: State['apiSendingData']) => void;
-  updateCurrentSendingData: (currentSendingData: State['currentSendingData']) => void;
+  updateApiSendingDataByTargetId: (
+    apiSendingData: Partial<ApiSendingData>,
+  ) => void;
+  updateApiSendingData: (apiSendingData: State["apiSendingData"]) => void;
+  updateCurrentSendingData: (
+    currentSendingData: State["currentSendingData"],
+  ) => void;
 
-  updateCurrentSseSendingData: (currentSseSendingData: State['currentSseSendingData']) => void;
+  updateCurrentSseSendingData: (
+    currentSseSendingData: State["currentSseSendingData"],
+  ) => void;
 
   coverApiSendingConsole: (apiSendingData: Partial<ApiSendingData>) => void;
-  updateMockDetailsData: (mockDetailsData: State['mockDetailsData']) => void;
-  updateLocalProjectApisVersion: (pressureData: State['localProjectApisVersion']) => void;
+  updateMockDetailsData: (mockDetailsData: State["mockDetailsData"]) => void;
+  updateLocalProjectApisVersion: (
+    pressureData: State["localProjectApisVersion"],
+  ) => void;
 
   updateTabsOperatesMenusConfig: (
-    tabsOperatesMenusConfig: State['tabsOperatesMenusConfig']
+    tabsOperatesMenusConfig: State["tabsOperatesMenusConfig"],
   ) => void;
-  updateSystemRequestHeader: (systemRequestHeader: State['systemRequestHeader']) => void;
+  updateSystemRequestHeader: (
+    systemRequestHeader: State["systemRequestHeader"],
+  ) => void;
 
-  updateApiSendingDataSSE: (apiSendingDataSSE: State['apiSendingDataSSE']) => void;
-  updateApiSendingDataSSEItem: (apiSendingDataSSE: State['apiSendingDataSSE']) => void;
-  updateTabsReuseTargetId: (tabsReuseTargetId: State['tabsReuseTargetId']) => void;
+  updateApiSendingDataSSE: (
+    apiSendingDataSSE: State["apiSendingDataSSE"],
+  ) => void;
+  updateApiSendingDataSSEItem: (
+    apiSendingDataSSE: State["apiSendingDataSSE"],
+  ) => void;
+  updateTabsReuseTargetId: (
+    tabsReuseTargetId: State["tabsReuseTargetId"],
+  ) => void;
 
-  updatePressureData: (pressureData: State['pressureData']) => void;
+  updatePressureData: (pressureData: State["pressureData"]) => void;
 
-  updateApisActiveData: (apisActiveData: State['apisActiveData']) => void
+  updateApisActiveData: (apisActiveData: State["apisActiveData"]) => void;
 };
 
 const useApis = create<State & Action>()(
@@ -117,7 +150,7 @@ const useApis = create<State & Action>()(
       apiOriginDetailsList: [],
       opensApiList: [],
       opensApiDetailsData: {},
-      apisActiveKey: '',
+      apisActiveKey: "",
       treeLoading: false,
       detailsLoading: false,
       apiSendingData: {},
@@ -125,39 +158,50 @@ const useApis = create<State & Action>()(
       systemRequestHeader: DEFAULT_REQUEST_SYSTEM_HEADERS,
       mockDetailsData: {},
       tabsOperatesMenusConfig: { saveAllLoading: false },
-      testsActiveKey: '',
-      docsActiveKey: '',
+      testsActiveKey: "",
+      docsActiveKey: "",
       pressureData: {},
       apisActiveData: {} as ApiDetailsData,
       currentSseSendingData: {} as ApiSendingDataSSE,
       apiSendingDataSSE: {},
-      tabsReuseTargetId: '',
+      tabsReuseTargetId: "",
       localProjectApisVersion: {},
-      currentServerId: '',
+      currentServerId: "",
       schemaLoading: false,
-      updateCurrentSseSendingData: (currentSseSendingData) => set(() => ({ currentSseSendingData })),
-      updateCurrentSendingData: (currentSendingData) => set(() => ({ currentSendingData })),
+      updateCurrentSseSendingData: (currentSseSendingData) =>
+        set(() => ({ currentSseSendingData })),
+      updateCurrentSendingData: (currentSendingData) =>
+        set(() => ({ currentSendingData })),
       // store full update
       updateApisStore: (apisData) => set(() => apisData),
 
       updateApiBaseData: (apiBaseData) => set(() => ({ apiBaseData })),
       // update apis details data
       updateApiDetailsData: (payload) =>
-        set((state) => ({ apiDetailsData: { ...state.apiDetailsData, ...payload } })),
+        set((state) => ({
+          apiDetailsData: { ...state.apiDetailsData, ...payload },
+        })),
       // full update apis details data
-      updateAllApiDetailsData: (apiDetailsData) => set(() => ({ apiDetailsData })),
+      updateAllApiDetailsData: (apiDetailsData) =>
+        set(() => ({ apiDetailsData })),
 
-      updateApiOriginBaseList: (apiOriginBaseList) => set(() => ({ apiOriginBaseList })),
-      updateApiOriginDetailsList: (apiOriginDetailsList) => set(() => ({ apiOriginDetailsList })),
+      updateApiOriginBaseList: (apiOriginBaseList) =>
+        set(() => ({ apiOriginBaseList })),
+      updateApiOriginDetailsList: (apiOriginDetailsList) =>
+        set(() => ({ apiOriginDetailsList })),
 
       updateApiCodeHar: (apiCodeHar) => set(() => ({ apiCodeHar })),
-      updateCurrentServerId: (currentServerId) => set(() => ({ currentServerId })),
+      updateCurrentServerId: (currentServerId) =>
+        set(() => ({ currentServerId })),
       updateOpensApiList: (opensApiList) => set(() => ({ opensApiList })),
       // update opens apis details data
       updateOpensApiDetailsData: (payload) =>
-        set((state) => ({ opensApiDetailsData: { ...state.opensApiDetailsData, ...payload } })),
+        set((state) => ({
+          opensApiDetailsData: { ...state.opensApiDetailsData, ...payload },
+        })),
       // full update opens apis details data
-      updateAllOpensApiDetailsData: (opensApiDetailsData) => set(() => ({ opensApiDetailsData })),
+      updateAllOpensApiDetailsData: (opensApiDetailsData) =>
+        set(() => ({ opensApiDetailsData })),
 
       updateOpensApiDetailsDataByTargetId: (payload) =>
         set((state) => ({
@@ -203,27 +247,37 @@ const useApis = create<State & Action>()(
             },
           };
         }),
-      updateMockDetailsData: (mockDetailsData) => set(() => ({ mockDetailsData })),
+      updateMockDetailsData: (mockDetailsData) =>
+        set(() => ({ mockDetailsData })),
       updatePressureData: (pressureData) => set(() => ({ pressureData })),
 
       updateTabsOperatesMenusConfig: (payload) =>
         set((state) => ({
-          tabsOperatesMenusConfig: { ...state.tabsOperatesMenusConfig, ...payload },
+          tabsOperatesMenusConfig: {
+            ...state.tabsOperatesMenusConfig,
+            ...payload,
+          },
         })),
 
-      updateSystemRequestHeader: (systemRequestHeader) => set(() => ({ systemRequestHeader })),
+      updateSystemRequestHeader: (systemRequestHeader) =>
+        set(() => ({ systemRequestHeader })),
 
       /**update SSE api sending data */
-      updateApiSendingDataSSE: (apiSendingDataSSE) => set(() => ({ apiSendingDataSSE })),
+      updateApiSendingDataSSE: (apiSendingDataSSE) =>
+        set(() => ({ apiSendingDataSSE })),
       /**update SSE api sending data item */
       updateApiSendingDataSSEItem: (payload) =>
-        set((state) => ({ apiSendingDataSSE: { ...state.apiSendingDataSSE, ...payload } })),
-      updateTabsReuseTargetId: (tabsReuseTargetId) => set(() => ({ tabsReuseTargetId })),
-      updateLocalProjectApisVersion: (localProjectApisVersion) => set(() => ({ localProjectApisVersion })),
+        set((state) => ({
+          apiSendingDataSSE: { ...state.apiSendingDataSSE, ...payload },
+        })),
+      updateTabsReuseTargetId: (tabsReuseTargetId) =>
+        set(() => ({ tabsReuseTargetId })),
+      updateLocalProjectApisVersion: (localProjectApisVersion) =>
+        set(() => ({ localProjectApisVersion })),
       updateApisActiveData: (apisActiveData) => set(() => ({ apisActiveData })),
     }),
-    { name: 'useApis' }
-  )
+    { name: "useApis" },
+  ),
 );
 
 export default useApis;

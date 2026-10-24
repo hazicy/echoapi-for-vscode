@@ -5,7 +5,7 @@ export enum PARAMETER_TYPE {
 }
 
 export enum EXPORT_ENUM {
-  DESC = 'json-desc',
-  KEY = 'key-value',
-  RAW = 'json',
+  DESC = "json-desc",
+  KEY = "key-value",
+  RAW = "json",
 }

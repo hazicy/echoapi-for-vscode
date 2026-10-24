@@ -1,14 +1,13 @@
-import { FC, memo } from 'react';
+import { FC, memo } from "react";
 
-import { isEqual } from 'lodash';
+import { isEqual } from "lodash";
 
-import RequestTable from '@/shared/components/RequestTable';
-import { useTableColumnSwitchConfig } from '@/shared/hooks';
+import RequestTable from "@/shared/components/RequestTable";
+import { useTableColumnSwitchConfig } from "@/shared/hooks";
 
-import { ApisBaseDataItem } from '@/features/requests/types/base';
+import { ApisBaseDataItem } from "@/features/requests/types/base";
 
-import { RequestTabsItemProps } from '../../types';
-
+import { RequestTabsItemProps } from "../../types";
 
 type Props = RequestTabsItemProps & {
   dataSource: ApisBaseDataItem[];
@@ -20,9 +19,8 @@ const RequestHeader: FC<Props> = memo(
   (props) => {
     const { dataSource, onChange, ...otherProps } = props;
 
-    const { columnSwitchConfig, onColumnSwitchConfig } = useTableColumnSwitchConfig(
-      'request_cookie_column_switch'
-    );
+    const { columnSwitchConfig, onColumnSwitchConfig } =
+      useTableColumnSwitchConfig("request_cookie_column_switch");
 
     return (
       <RequestTable
@@ -30,10 +28,11 @@ const RequestHeader: FC<Props> = memo(
         onChange={onChange}
         {...otherProps}
         columnSwitchConfig={columnSwitchConfig}
-        onColumnSwitchConfig={onColumnSwitchConfig} />
+        onColumnSwitchConfig={onColumnSwitchConfig}
+      />
     );
   },
-  (prevProps, nextProps) => isEqual(prevProps, nextProps)
+  (prevProps, nextProps) => isEqual(prevProps, nextProps),
 );
 
 export default RequestHeader;

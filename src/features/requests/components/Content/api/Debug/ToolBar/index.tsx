@@ -18,7 +18,11 @@ interface Props {
   apisData: ApiDetailsData;
   onApisDataChange: (data: ApiDetailsData) => void;
 }
-const ToolBar: FC<Props> = ({ apisData, onApisDataChange, showLayoutControl }) => {
+const ToolBar: FC<Props> = ({
+  apisData,
+  onApisDataChange,
+  showLayoutControl,
+}) => {
   const envDetailKeys = useProjectConfig((state) => state.envDetailKeys);
   const updateEnvDetailKeys = useProjectConfig(
     (state) => state.updateEnvDetailKeys,

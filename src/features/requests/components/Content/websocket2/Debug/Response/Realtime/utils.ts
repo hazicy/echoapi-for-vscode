@@ -1,20 +1,24 @@
-import { snowflakeId } from 'apipost-tools';
-import { isPlainObject, isString, trim, toString } from 'lodash';
+import { snowflakeId } from "apipost-tools";
+import { isPlainObject, isString, trim, toString } from "lodash";
 
 // Handle websocket data
 export const handleSocketResponse = (
   response: any[],
   filterValue?: string,
-  filterType?: string
+  filterType?: string,
 ) => {
   const resArr: any[] = [];
-  
+
   for (const res of response || []) {
-    if (isString(filterType) && filterType !== 'all' && res?.action !== filterType) {
+    if (
+      isString(filterType) &&
+      filterType !== "all" &&
+      res?.action !== filterType
+    ) {
       continue;
     }
     switch (res?.action) {
-      case 'connect':
+      case "connect":
         {
           if (
             isString(filterValue) &&
@@ -29,7 +33,7 @@ export const handleSocketResponse = (
           });
         }
         break;
-      case 'disconnect':
+      case "disconnect":
         if (
           isString(filterValue) &&
           trim(filterValue).length > 0 &&
@@ -43,7 +47,7 @@ export const handleSocketResponse = (
           id: res?.id || snowflakeId(),
         });
         break;
-      case 'error':
+      case "error":
         if (
           isString(filterValue) &&
           trim(filterValue).length > 0 &&
@@ -57,7 +61,7 @@ export const handleSocketResponse = (
           id: res?.id || snowflakeId(),
         });
         break;
-      case 'message':
+      case "message":
         if (
           isString(filterValue) &&
           trim(filterValue).length > 0 &&
@@ -71,7 +75,7 @@ export const handleSocketResponse = (
           id: res?.id || snowflakeId(),
         });
         break;
-      case 'send':
+      case "send":
         if (
           isString(filterValue) &&
           trim(filterValue).length > 0 &&

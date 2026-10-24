@@ -1,10 +1,10 @@
-import { FC } from 'react';
+import { FC } from "react";
 
-import { useMemoizedFn } from 'ahooks';
-import produce from 'immer';
+import { useMemoizedFn } from "ahooks";
+import produce from "immer";
 
-import PickVars from '@/features/requests/components/PickVars';
-import { TaskBaseItem } from '@/features/requests/types/request';
+import PickVars from "@/features/requests/components/PickVars";
+import { TaskBaseItem } from "@/features/requests/types/request";
 
 interface Props {
   value: TaskBaseItem;

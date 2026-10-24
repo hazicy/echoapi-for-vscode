@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import { message } from '@/shared/ui/base';
-import { version } from '@/../package.json';
-import axios, { AxiosRequestConfig } from 'axios';
-import { includes, omit, values } from 'lodash';
-import { stringify } from 'qs';
+import { message } from "@/shared/ui/base";
+import { version } from "@/../package.json";
+import axios, { AxiosRequestConfig } from "axios";
+import { includes, omit, values } from "lodash";
+import { stringify } from "qs";
 
 import {
   APIPOST_CLIENT_ID,
@@ -13,24 +13,29 @@ import {
   APIPOST_PLATFORM,
   APIPOST_TERMINAL,
   APIPOST_VERSION,
-} from '@/features/auth/constants/user';
+} from "@/features/auth/constants/user";
 
-import { useAntdApp, useGlobal, useSystemConfig } from '@/app/store';
+import { useAntdApp, useGlobal, useSystemConfig } from "@/app/store";
 
-import { HTTP_METHODS, PLAN_TIP_CODES, RESPONSE_CODES, RESPONSE_ERROR_CODES } from './constants';
-import { RequestConfig } from './types';
-import { responseError } from './util';
+import {
+  HTTP_METHODS,
+  PLAN_TIP_CODES,
+  RESPONSE_CODES,
+  RESPONSE_ERROR_CODES,
+} from "./constants";
+import { RequestConfig } from "./types";
+import { responseError } from "./util";
 
 export const requestBaseHeader = {
-  [APIPOST_MACHINE]: '',
-  [APIPOST_TERMINAL]: 'vscode',
-  [APIPOST_VERSION]: version || '1.0.0',
-  [APIPOST_LANGUAGE]:'en',
-  [APIPOST_PLATFORM]: '',
+  [APIPOST_MACHINE]: "",
+  [APIPOST_TERMINAL]: "vscode",
+  [APIPOST_VERSION]: version || "1.0.0",
+  [APIPOST_LANGUAGE]: "en",
+  [APIPOST_PLATFORM]: "",
 };
 
 const request = ({
-  url = '',
+  url = "",
   data = {},
   method = HTTP_METHODS.GET,
   options = {},
@@ -39,14 +44,14 @@ const request = ({
   showSuccessMsg = false,
   responseAll = false,
   hasCancelToken = false,
-  rewriteHost = process.env.NODE_ENV === 'production' ? 'https://open.echoapi.com' : 'http://be-foreign.apipost.cc',
+  rewriteHost = process.env.NODE_ENV === "production"
+    ? "https://open.echoapi.com"
+    : "http://be-foreign.apipost.cc",
   // rewriteHost = 'http://be-foreign.apipost.cc',
 }: RequestConfig) => {
-  
   // Create cancel token
   const { token, cancel } = axios.CancelToken.source();
   const { clientId, updateCancelToken } = useGlobal.getState();
-
 
   const { modal } = useAntdApp.getState();
 
@@ -61,7 +66,8 @@ const request = ({
       ...requestBaseHeader,
       ...headers,
       ...(clientId ? { [APIPOST_CLIENT_ID]: clientId } : {}),
-      [APIPOST_LANGUAGE]: useSystemConfig.getState()?.systemConfig?.language || 'en',
+      [APIPOST_LANGUAGE]:
+        useSystemConfig.getState()?.systemConfig?.language || "en",
     },
     withCredentials: false,
     ...options,
@@ -79,7 +85,7 @@ const request = ({
         if (res.data.code === RESPONSE_CODES.SUCCESS) {
           if (showSuccessMsg) {
             message.destroy();
-            message.success(res.data.msg || 'Operation successful');
+            message.success(res.data.msg || "Operation successful");
           }
           return responseAll ? res.data : res.data.data;
         } else {
@@ -92,12 +98,16 @@ const request = ({
       // Pre-embed force refresh frontend capability for server
       if (err.code == 302) {
         window.location.href = err.msg;
-        return Promise.reject('');
+        return Promise.reject("");
       }
 
       if (
         values(
-          omit(RESPONSE_ERROR_CODES, ['ERR_CANCELED', 'DATA_CONFLICTED', 'GUEST_NEED_LOGIN_SCENE'])
+          omit(RESPONSE_ERROR_CODES, [
+            "ERR_CANCELED",
+            "DATA_CONFLICTED",
+            "GUEST_NEED_LOGIN_SCENE",
+          ]),
         ).includes(err.code)
       ) {
         // Prompt logged in from another device
@@ -108,14 +118,11 @@ const request = ({
               RESPONSE_ERROR_CODES.SERVER_CLOSE,
               RESPONSE_ERROR_CODES.NOT_FOUND_USER,
             ],
-            err.code
+            err.code,
           )
         ) {
           responseError(err);
         }
-
-
-
 
         // NOTE: Temporarily hide restore default config
         // useSystemConfig.getState().updateSystemConfig(SYS_CONFIG);
@@ -130,27 +137,27 @@ const request = ({
         responseError(err);
       }
       if (PLAN_TIP_CODES.PLAN_MODAL.includes(err.code) && modal) {
-        const { title = 'This is a notification message', upgrade_team = -1 } =
+        const { title = "This is a notification message", upgrade_team = -1 } =
           err?.extra_err || {};
         const instance = modal.warning({
           title,
-          content: React.createElement('div', null, [
+          content: React.createElement("div", null, [
             React.createElement(
-              'span',
+              "span",
               null,
               err?.msg ||
-                'The current team has reached capacity andcannot accept new members. Please contact the inviter to expand the team'
+                "The current team has reached capacity andcannot accept new members. Please contact the inviter to expand the team",
             ),
-            React.createElement('br', null),
+            React.createElement("br", null),
             upgrade_team === 1 &&
               React.createElement(
-                'a',
+                "a",
                 {
                   onClick: () => {
                     instance.destroy();
                   },
                 },
-                'Upgrade your team'
+                "Upgrade your team",
               ),
           ]),
         });
@@ -159,20 +166,20 @@ const request = ({
     });
 };
 
-export const get = (config: Omit<RequestConfig, 'method'>) => {
-  return request({ method: 'get', ...config });
+export const get = (config: Omit<RequestConfig, "method">) => {
+  return request({ method: "get", ...config });
 };
 
-export const post = (config: Omit<RequestConfig, 'method'>) => {
-  return request({ method: 'post', ...config });
+export const post = (config: Omit<RequestConfig, "method">) => {
+  return request({ method: "post", ...config });
 };
 
-export const put = (config: Omit<RequestConfig, 'method'>) => {
-  return request({ method: 'put', ...config });
+export const put = (config: Omit<RequestConfig, "method">) => {
+  return request({ method: "put", ...config });
 };
 
-export const del = (config: Omit<RequestConfig, 'method'>) => {
-  return request({ method: 'delete', ...config });
+export const del = (config: Omit<RequestConfig, "method">) => {
+  return request({ method: "delete", ...config });
 };
 
 export default request;

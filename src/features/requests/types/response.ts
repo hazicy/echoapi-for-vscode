@@ -1,4 +1,4 @@
-import { ApisBaseDataItem, ExpectItem } from './base';
+import { ApisBaseDataItem, ExpectItem } from "./base";
 
 export interface BaseResponseExample {
   // Example ID

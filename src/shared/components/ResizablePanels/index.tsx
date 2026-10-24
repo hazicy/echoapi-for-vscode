@@ -212,7 +212,6 @@ const ResizablePanels = forwardRef((props: Props, ref) => {
           )}
         >
           {!collapse.right ? rightPanel : rightCollapse}
-
         </Panel>
       </PanelGroup>
     </div>

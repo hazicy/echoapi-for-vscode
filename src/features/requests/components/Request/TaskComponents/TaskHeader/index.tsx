@@ -1,13 +1,13 @@
-import { ChangeEvent, FC, MouseEvent, useEffect, useRef } from 'react';
+import { ChangeEvent, FC, MouseEvent, useEffect, useRef } from "react";
 
-import { Flex, Input, InputRef, Typography } from '@/shared/ui/base';
+import { Flex, Input, InputRef, Typography } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
+import { useSafeState } from "ahooks";
 
-import IconFont from '@/shared/ui/IconFont';
-import { TaskBaseItem } from '@/features/requests/types/request';
+import IconFont from "@/shared/ui/IconFont";
+import { TaskBaseItem } from "@/features/requests/types/request";
 
-import { PRE_TASK_NAME_MAP } from '../../constants';
+import { PRE_TASK_NAME_MAP } from "../../constants";
 
 interface Props {
   value: TaskBaseItem;
@@ -41,7 +41,7 @@ const TaskHeader: FC<Props> = ({ value, onChange }) => {
     if (!value?.name || !value?.name?.trim()) {
       onChange({
         ...value,
-        name: PRE_TASK_NAME_MAP?.[value?.type] || '',
+        name: PRE_TASK_NAME_MAP?.[value?.type] || "",
       });
     }
   };
@@ -60,7 +60,9 @@ const TaskHeader: FC<Props> = ({ value, onChange }) => {
         </Flex>
       ) : (
         <Flex flex={1} align="center" gap={12}>
-          <Typography.Text style={{maxWidth:400}} ellipsis>{value?.name}</Typography.Text>
+          <Typography.Text style={{ maxWidth: 400 }} ellipsis>
+            {value?.name}
+          </Typography.Text>
           <IconFont type="icon-edit" onClick={handleEdit} />
         </Flex>
       )}

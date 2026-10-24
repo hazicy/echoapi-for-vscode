@@ -1,6 +1,6 @@
-import { create as _create } from 'zustand';
-import type { StateCreator } from 'zustand';
-import { DevtoolsOptions, devtools as _devtools } from 'zustand/middleware';
+import { create as _create } from "zustand";
+import type { StateCreator } from "zustand";
+import { DevtoolsOptions, devtools as _devtools } from "zustand/middleware";
 
 /**
  * docs: {@link https://docs.pmnd.rs/zustand/guides/how-to-reset-state}
@@ -39,5 +39,5 @@ const isDevelopment = false;
  */
 export const devtools = <T extends object>(
   fn: StateCreator<T>,
-  options?: Omit<DevtoolsOptions, 'enabled'>
+  options?: Omit<DevtoolsOptions, "enabled">,
 ) => _devtools(fn, { ...options, enabled: isDevelopment });

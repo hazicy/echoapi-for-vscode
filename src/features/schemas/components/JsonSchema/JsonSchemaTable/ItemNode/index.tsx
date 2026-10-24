@@ -1,10 +1,10 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { useMemoizedFn } from 'ahooks';
-import cn from 'classnames';
-import produce from 'immer';
+import { useMemoizedFn } from "ahooks";
+import cn from "classnames";
+import produce from "immer";
 import {
   isArray,
   isEmpty,
@@ -14,14 +14,14 @@ import {
   isString,
   isUndefined,
   trim,
-} from 'lodash';
+} from "lodash";
 
-import { getItemType } from '../common';
-import { ItemNodeProps } from '../interface';
-import NodeList from '../NodeList';
-import DataModel from './DataModel';
-import EditRow from './EditItem';
-import EmptyRow from './Empty';
+import { getItemType } from "../common";
+import { ItemNodeProps } from "../interface";
+import NodeList from "../NodeList";
+import DataModel from "./DataModel";
+import EditRow from "./EditItem";
+import EmptyRow from "./Empty";
 
 const ItemNode: React.FC<ItemNodeProps> = (props) => {
   const {
@@ -60,7 +60,7 @@ const ItemNode: React.FC<ItemNodeProps> = (props) => {
     const preData = isObject(value) ? value : {};
     const newObject = produce(preData, (draft: any) => {
       draft[attr] = newVal;
-      if (attr === 'type') {
+      if (attr === "type") {
         delete draft.mock;
       }
     });
@@ -106,60 +106,68 @@ const ItemNode: React.FC<ItemNodeProps> = (props) => {
   // Add new node
   const handleAddNode = useMemoizedFn(() => {
     const preData = isPlainObject(value) ? value : {};
-    if (nodeType === 'object') {
+    if (nodeType === "object") {
       const initData = isPlainObject(preData?.properties)
         ? preData
         : { ...preData, properties: {} };
 
       // If existing key with empty value exists, prevent adding
-      if (Object.keys(initData?.properties)?.some((item) => isEmpty(trim(item)))) {
+      if (
+        Object.keys(initData?.properties)?.some((item) => isEmpty(trim(item)))
+      ) {
         return;
       }
 
-      const newKey = '';
+      const newKey = "";
       const newObject = produce(initData, (draft: any) => {
         draft.properties[newKey] = {
-          type: 'string',
+          type: "string",
           ECHOAPI_NEW_EMPTY_ROW: true,
         };
       });
       onChange(nodeKey, newObject);
     }
-    if (nodeType === 'array') {
+    if (nodeType === "array") {
       if (!isUndefined(preData?.items)) {
         return;
       }
       const newObject = produce(preData, (draft: any) => {
         draft.items = {
-          type: 'string',
-          title: 'Items',
+          type: "string",
+          title: "Items",
         };
       });
       onChange(nodeKey, newObject);
     }
-    if (nodeType === 'oneOf') {
-      const initData = isArray(preData?.oneOf) ? preData : { ...preData, oneOf: [] };
+    if (nodeType === "oneOf") {
+      const initData = isArray(preData?.oneOf)
+        ? preData
+        : { ...preData, oneOf: [] };
       const newObject = produce(initData, (draft: any) => {
         draft.oneOf.push({
-          type: 'string',
+          type: "string",
         });
       });
       onChange(nodeKey, newObject);
     }
-    if (nodeType === 'anyOf') {
-      const initData = isArray(preData?.anyOf) ? preData : { ...preData, anyOf: [] };
+    if (nodeType === "anyOf") {
+      const initData = isArray(preData?.anyOf)
+        ? preData
+        : { ...preData, anyOf: [] };
       const newObject = produce(initData, (draft: any) => {
         draft.anyOf.push({
-          type: 'string',
+          type: "string",
         });
       });
       onChange(nodeKey, newObject);
     }
-    if (nodeType === 'allOf') {
-      const initData = isArray(preData?.allOf) ? preData : { ...preData, allOf: [] };
+    if (nodeType === "allOf") {
+      const initData = isArray(preData?.allOf)
+        ? preData
+        : { ...preData, allOf: [] };
       const newObject = produce(initData, (draft: any) => {
         draft.allOf.push({
-          type: 'string',
+          type: "string",
         });
       });
       onChange(nodeKey, newObject);
@@ -171,12 +179,14 @@ const ItemNode: React.FC<ItemNodeProps> = (props) => {
     onAddSiblingNode(nodeKey);
   });
 
-  const handleEmptyKeyChange = useMemoizedFn((oldKey: string, newKey: string) => {
-    onNodeKeyChange(oldKey, newKey);
-    setTimeout(() => {
-      txtKeyRef.current?.focus();
-    }, 0);
-  });
+  const handleEmptyKeyChange = useMemoizedFn(
+    (oldKey: string, newKey: string) => {
+      onNodeKeyChange(oldKey, newKey);
+      setTimeout(() => {
+        txtKeyRef.current?.focus();
+      }, 0);
+    },
+  );
 
   const handleLinkSchema = useMemoizedFn((schema: any) => {
     onLinkSchema(nodeKey, schema);
@@ -207,25 +217,31 @@ const ItemNode: React.FC<ItemNodeProps> = (props) => {
   };
 
   const isEmptyJson = useMemo(() => {
-    const isEmptyObject = value?.type === 'object' && isEmpty(value?.properties);
-    const isEmptyArray = value?.type === 'array' && isEmpty(value?.items);
-    const isEmptyOneOf = value?.type === 'oneOf' && isEmpty(value?.oneOf);
-    const isEmptyAnyOf = value?.type === 'anyOf' && isEmpty(value?.anyOf);
-    const isEmptyAllOf = value?.type === 'allOf' && isEmpty(value?.allOf);
+    const isEmptyObject =
+      value?.type === "object" && isEmpty(value?.properties);
+    const isEmptyArray = value?.type === "array" && isEmpty(value?.items);
+    const isEmptyOneOf = value?.type === "oneOf" && isEmpty(value?.oneOf);
+    const isEmptyAnyOf = value?.type === "anyOf" && isEmpty(value?.anyOf);
+    const isEmptyAllOf = value?.type === "allOf" && isEmpty(value?.allOf);
     const isEmptyRef =
-      isUndefined(value?.ECHOAPI_REFS) || Object.keys(value?.ECHOAPI_REFS).length === 0;
+      isUndefined(value?.ECHOAPI_REFS) ||
+      Object.keys(value?.ECHOAPI_REFS).length === 0;
 
     return (
       deepIndex === 0 &&
       isEmptyRef &&
-      (isEmptyObject || isEmptyArray || isEmptyOneOf || isEmptyAnyOf || isEmptyAllOf)
+      (isEmptyObject ||
+        isEmptyArray ||
+        isEmptyOneOf ||
+        isEmptyAnyOf ||
+        isEmptyAllOf)
     );
   }, [value, deepIndex]);
   if (value === undefined) {
     return <></>;
   }
 
-  if (value.type === 'dataModel') {
+  if (value.type === "dataModel") {
     return (
       <DataModel
         {...{
@@ -293,13 +309,15 @@ const ItemNode: React.FC<ItemNodeProps> = (props) => {
       </div>
       {isEmptyJson && (
         <div className={slots["empty-row-panel"]}>
-          <span className={slots["empty-row-tip"]}>{t('common.schema.no_field')}</span>
+          <span className={slots["empty-row-tip"]}>
+            {t("common.schema.no_field")}
+          </span>
           <span onClick={handleAddNode} className={slots["btn-add-item"]}>
-            {t('common.schema.please_add')}
+            {t("common.schema.please_add")}
           </span>
         </div>
       )}
-      {(expand || value.type === 'dataModel') && (
+      {(expand || value.type === "dataModel") && (
         <NodeList
           {...{
             deepIndex,

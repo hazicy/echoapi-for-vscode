@@ -1,14 +1,18 @@
-import type { TableProps as AntdTableProps, SelectProps, TableColumnType } from '@/shared/ui/base';
+import type {
+  TableProps as AntdTableProps,
+  SelectProps,
+  TableColumnType,
+} from "@/shared/ui/base";
 
-import type { DragEndEvent } from '@dnd-kit/core';
+import type { DragEndEvent } from "@dnd-kit/core";
 
-import { COMPARE_METHODS } from './constants';
+import { COMPARE_METHODS } from "./constants";
 
 export type FilterOption = {
   /**key of label, corresponding one-to-one with columns */
   key: string;
   /**filter values */
-  values: SelectProps['options'];
+  values: SelectProps["options"];
   /**key for value extraction */
   getKey: string;
   /**match key, e.g. filter is create_user.nickname, match needs uid, required for secondary lookup, not needed in normal cases */
@@ -41,25 +45,30 @@ export type ToolbarConfig = {
   };
   updateStatus?: {
     /**update status dropdown options */
-    statusOptions: SelectProps['options'];
+    statusOptions: SelectProps["options"];
     /**change status callback */
     onUpdateStatus: (value: string) => Promise<void>;
   };
   tag?: {
     /**add tag dropdown options */
-    tagOptions: SelectProps['options'];
+    tagOptions: SelectProps["options"];
     /**delete tag dropdown options */
-    tagDelOptions: SelectProps['options'];
+    tagDelOptions: SelectProps["options"];
     /**change tag callback */
     onUpdateTag: (values: string[], type: TagType) => void;
   };
   exp?: {
     /**export callback */
-    onExport?: ({ exportType, version }: { [k: string]: string }) => Promise<void>;
+    onExport?: ({
+      exportType,
+      version,
+    }: {
+      [k: string]: string;
+    }) => Promise<void>;
   };
   move?: {
     /**move options */
-    moveOptions: SelectProps['options'];
+    moveOptions: SelectProps["options"];
     /**move callback */
     onMove: (value: string) => Promise<void>;
     /**custom field names */
@@ -113,6 +122,6 @@ export type AnyObject = Record<string, any>;
 export type ToolbarProps<DataSource> = ToolbarConfig & TableProps<DataSource>;
 
 export enum TagType {
-  Add = 'add',
-  REMOVE = 'remove',
+  Add = "add",
+  REMOVE = "remove",
 }

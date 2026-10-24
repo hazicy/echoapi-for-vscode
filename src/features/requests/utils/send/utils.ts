@@ -1,16 +1,27 @@
-import i18next from 'i18next';
-import { cloneDeep, concat, find, head, indexOf, isArray, isEqual, keys, map, omit, reduce, size } from 'lodash';
+import i18next from "i18next";
+import {
+  cloneDeep,
+  concat,
+  find,
+  head,
+  indexOf,
+  isArray,
+  isEqual,
+  keys,
+  map,
+  omit,
+  reduce,
+  size,
+} from "lodash";
 
-import JSON5 from 'json5';
-import { useProjectConfig, useProjectSetting } from '@/app/store';
-import { ApiDetailsData } from '@/features/requests/types/api';
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
-import { getUpwardFolderId } from '../../../../shared/utils/common';
-import { ServerItem } from '@/features/environment/types';
-import { SysConfig } from '@/features/settings/types/settings';
-import { GraphQLDetailsData } from '@/features/requests/types/graphql';
-
-
+import JSON5 from "json5";
+import { useProjectConfig, useProjectSetting } from "@/app/store";
+import { ApiDetailsData } from "@/features/requests/types/api";
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
+import { getUpwardFolderId } from "../../../../shared/utils/common";
+import { ServerItem } from "@/features/environment/types";
+import { SysConfig } from "@/features/settings/types/settings";
+import { GraphQLDetailsData } from "@/features/requests/types/graphql";
 
 // Get global variables
 export const getGlobals = async () => {
@@ -19,11 +30,11 @@ export const getGlobals = async () => {
   return reduce(
     keys(globalVars),
     (prev: any, curr) => {
-      prev[curr] = globalVars[curr]?.current_value || '';
+      prev[curr] = globalVars[curr]?.current_value || "";
 
       return prev;
     },
-    {}
+    {},
   );
 };
 
@@ -37,25 +48,25 @@ export const getGlobalFunctionMap = async () => {
       }
       return prev;
     },
-    {}
+    {},
   );
 };
 
 // Get current API and all parent directory information of the current API
 export const getAboutCollections = async (
   apisData: ApiDetailsData & {
-    type?: APIS_TARGET_TYPE_ENUM.API_SAMPLE | APIS_TARGET_TYPE_ENUM.API_SAMPLE_GROUP;
+    type?:
+      APIS_TARGET_TYPE_ENUM.API_SAMPLE | APIS_TARGET_TYPE_ENUM.API_SAMPLE_GROUP;
     sample_id?: string;
     server_id?: string;
     search_id?: string;
   },
   apiDetailsDatas: Array<ApiDetailsData>,
-  systemConfig:SysConfig,
+  systemConfig: SysConfig,
   omitResponse?: boolean,
   temporaryServerId?: string,
 ) => {
-
-  let parentId = apisData?.parent_id || '';
+  let parentId = apisData?.parent_id || "";
 
   // Special handling for API sample parentId
   if (
@@ -72,28 +83,30 @@ export const getAboutCollections = async (
   }
 
   if (isEqual(APIS_TARGET_TYPE_ENUM.GRAPHQL, originApisData.target_type)) {
-    const graphqlBody = (originApisData as unknown as GraphQLDetailsData).request.body;
+    const graphqlBody = (originApisData as unknown as GraphQLDetailsData)
+      .request.body;
     const body =
-      graphqlBody?.query_list.find((item) => isEqual(item.param_id, originApisData.search_id)) ||
-      head(graphqlBody?.query_list);
+      graphqlBody?.query_list.find((item) =>
+        isEqual(item.param_id, originApisData.search_id),
+      ) || head(graphqlBody?.query_list);
     let raw;
     try {
       raw = {
-        query: body?.query || '',
-        variables: JSON5.parse(body?.variables || '') || {},
+        query: body?.query || "",
+        variables: JSON5.parse(body?.variables || "") || {},
       };
     } catch (err) {
       raw = {
-        query: body?.query || '',
+        query: body?.query || "",
         variables: {},
       };
     }
     originApisData.request.body = {
-      mode: 'json',
+      mode: "json",
       parameter: [],
       raw: JSON.stringify(raw, null),
       raw_parameter: [],
-      raw_schema: { type: 'object' },
+      raw_schema: { type: "object" },
       binary: null,
     };
   }
@@ -114,23 +127,24 @@ export const getAboutCollections = async (
 
         return acc;
       },
-      []
+      [],
     );
     arr = concat(
       [],
       arr,
-      result?.sort((a, b) => indexOf(folderIds, a.target_id) - indexOf(folderIds, b.target_id))
+      result?.sort(
+        (a, b) =>
+          indexOf(folderIds, a.target_id) - indexOf(folderIds, b.target_id),
+      ),
     );
   }
 
   if (omitResponse) {
-    return map(arr, (item) => omit(item, ['response']));
+    return map(arr, (item) => omit(item, ["response"]));
   }
 
   return arr;
 };
-
-
 
 // Optimize auth data
 export const optimizeAuth = (auth: { [x: string]: any; type: string }) => {
@@ -141,19 +155,17 @@ export const optimizeAuth = (auth: { [x: string]: any; type: string }) => {
     };
   }
   // If auth.type is inherit, return inherit; otherwise return noauth
-  return { type: auth.type == 'inherit' ? 'inherit' : 'noauth' };
+  return { type: auth.type == "inherit" ? "inherit" : "noauth" };
 };
 
 // Create targetIdMap from collection, optimize redundant fields
 export const createTargetIdMap = (
-  collection: Omit<ApiDetailsData, 'response'>[] | ApiDetailsData[],
-  serverList: ServerItem[] = []
+  collection: Omit<ApiDetailsData, "response">[] | ApiDetailsData[],
+  serverList: ServerItem[] = [],
 ) => {
   const targetIdMap = new Map();
-  let default_pre_url = '';
-  let defaultServer = serverList.find(
-    (item) => item.is_default === 1
-  );
+  let default_pre_url = "";
+  let defaultServer = serverList.find((item) => item.is_default === 1);
   // Fallback. If serverList is empty, use the first server by default
   if (!defaultServer && serverList.length > 0) {
     defaultServer = serverList[0];
@@ -187,8 +199,8 @@ export const createTargetIdMap = (
       ...([APIS_TARGET_TYPE_ENUM.GRAPHQL].includes(item?.target_type) && {
         url: item?.url,
         target_type: APIS_TARGET_TYPE_ENUM.API,
-        method: 'POST',
-        protocol: 'http/1.1',
+        method: "POST",
+        protocol: "http/1.1",
       }),
     };
     targetIdMap.set(item.target_id, newItem);
@@ -197,25 +209,35 @@ export const createTargetIdMap = (
   targetIdMap.forEach((item) => {
     let server_id = item?.server_id;
     item.pre_url = default_pre_url;
-    if (item.parent_id && item.parent_id !== '0') {
+    if (item.parent_id && item.parent_id !== "0") {
       const parents: any = [];
       let currentParentId = item.parent_id;
 
       // Get all parent elements
-      while (currentParentId && currentParentId !== '0' && targetIdMap.has(currentParentId)) {
+      while (
+        currentParentId &&
+        currentParentId !== "0" &&
+        targetIdMap.has(currentParentId)
+      ) {
         const parentItem = targetIdMap.get(currentParentId);
         if (!parentItem) {
           break;
         }
-        if (parentItem.server_id && parentItem.server_id != '0' && !server_id) {
+        if (parentItem.server_id && parentItem.server_id != "0" && !server_id) {
           server_id = parentItem.server_id;
         }
-        if (!parents.some((parent: any) => parent.target_id === parentItem.target_id)) {
+        if (
+          !parents.some(
+            (parent: any) => parent.target_id === parentItem.target_id,
+          )
+        ) {
           parents.push({
             target_id: parentItem.target_id,
             target_type: parentItem.target_type,
             ...(parentItem.server_id &&
-              parentItem.server_id !== '0' && { server_id: parentItem.server_id }),
+              parentItem.server_id !== "0" && {
+                server_id: parentItem.server_id,
+              }),
           });
         }
         currentParentId = parentItem.parent_id; // Update to next parent element's parent_id
@@ -226,7 +248,9 @@ export const createTargetIdMap = (
     }
     if (server_id) {
       item.server_id = server_id;
-      const serverItem = serverList.find((item2) => item2.server_id === server_id);
+      const serverItem = serverList.find(
+        (item2) => item2.server_id === server_id,
+      );
       if (serverItem) {
         item.pre_url = serverItem.uri;
       }
@@ -237,7 +261,10 @@ export const createTargetIdMap = (
 };
 
 // Request parameter preprocessing
-export const prepareRequest = (tempRequest: ApiDetailsData['request'], runTimeHeaders?: any[]) => {
+export const prepareRequest = (
+  tempRequest: ApiDetailsData["request"],
+  runTimeHeaders?: any[],
+) => {
   const resultRequest = cloneDeep(tempRequest);
   // Prepend http protocol prefix
   if (isArray(tempRequest?.header?.parameter) && isArray(runTimeHeaders)) {

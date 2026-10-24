@@ -1,7 +1,7 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-import { SYS_CONFIG } from '@/features/settings/constants/settings';
-import { SysConfig } from '@/features/settings/types/settings';
+import { SYS_CONFIG } from "@/features/settings/constants/settings";
+import { SysConfig } from "@/features/settings/types/settings";
 
 type State = {
   systemConfig: SysConfig;

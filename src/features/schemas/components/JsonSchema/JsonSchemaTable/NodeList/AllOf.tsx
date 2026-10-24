@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from "react";
 
-import { useMemoizedFn } from 'ahooks';
-import produce from 'immer';
-import { isArray, isNumber } from 'lodash';
+import { useMemoizedFn } from "ahooks";
+import produce from "immer";
+import { isArray, isNumber } from "lodash";
 
-import ItemNode from '../ItemNode';
+import ItemNode from "../ItemNode";
 
 interface AllOfItemProps {
   deepIndex: number;
   nodeValue: any;
   onChange: (nodeKey: string, val: any) => void;
-  linkSchema?: 'enable' | 'disable';
+  linkSchema?: "enable" | "disable";
   parentModels: React.MutableRefObject<string[]>;
 }
 
@@ -29,7 +29,7 @@ const AllOfItem: React.FC<AllOfItemProps> = (props) => {
     const newData = produce(preData, (draft: any) => {
       draft[attrName] = newVal;
     });
-    onChange('allOf', newData);
+    onChange("allOf", newData);
   }, []);
 
   // Delete attribute
@@ -41,16 +41,16 @@ const AllOfItem: React.FC<AllOfItemProps> = (props) => {
     const newData = produce(preData, (draft: any) => {
       draft.splice(removeIndex, 1);
     });
-    onChange('allOf', newData);
+    onChange("allOf", newData);
   }, []);
 
   const dataList = isArray(nodeValue?.allOf) ? nodeValue.allOf : [];
 
   const handleAddSiblingNode = useMemoizedFn((nodeKey) => {
     const newData = produce(dataList, (draft: any) => {
-      draft.splice(nodeKey + 1, 0, { type: 'string' });
+      draft.splice(nodeKey + 1, 0, { type: "string" });
     });
-    onChange('allOf', newData);
+    onChange("allOf", newData);
   });
 
   return (

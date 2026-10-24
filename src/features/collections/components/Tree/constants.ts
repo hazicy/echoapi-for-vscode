@@ -1,8 +1,8 @@
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
 
 export const DEFAULT_NO_DRAG_INCLUDES_KEYS = [
-  'tree-top-node-wrap',
-  'tree-bottom-node-key',
+  "tree-top-node-wrap",
+  "tree-bottom-node-key",
 ] as const;
 
 export enum DROP_POSITION_ENUM {

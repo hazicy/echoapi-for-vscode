@@ -1,36 +1,38 @@
-import { APIS_TARGET_TYPE_ENUM, DEFAULT_API_MARK_ENUM } from '@/features/requests/constants';
-import { CustomNumberBooleanType, HttpStatusCode } from '@/shared/types/common';
+import {
+  APIS_TARGET_TYPE_ENUM,
+  DEFAULT_API_MARK_ENUM,
+} from "@/features/requests/constants";
+import { CustomNumberBooleanType, HttpStatusCode } from "@/shared/types/common";
 
-import { ApiDetailsData } from './api';
-import { SampleGroupsDetailsData } from './apiSample';
-import { DocDetailsData } from './doc';
-import { FolderDetailsData } from './folder';
-import { GrpcDetailsData } from './grpc';
-import { SocketDetailsData } from './socket';
-import { SocketServiceDetailsData } from './socketService';
-import { SSEDetailsData } from './sse';
-import { Websocket2DetailsData } from './websocket2';
-import { SocketIoDetailsData } from './socketio';
-import { GraphQLDetailsData } from './graphql';
+import { ApiDetailsData } from "./api";
+import { SampleGroupsDetailsData } from "./apiSample";
+import { DocDetailsData } from "./doc";
+import { FolderDetailsData } from "./folder";
+import { GrpcDetailsData } from "./grpc";
+import { SocketDetailsData } from "./socket";
+import { SocketServiceDetailsData } from "./socketService";
+import { SSEDetailsData } from "./sse";
+import { Websocket2DetailsData } from "./websocket2";
+import { SocketIoDetailsData } from "./socketio";
+import { GraphQLDetailsData } from "./graphql";
 
 // API request method
 export type ApiTypeMethod =
-  | 'POST'
-  | 'GET'
-  | 'PUT'
-  | 'PATCH'
-  | 'DELETE'
-  | 'COPY'
-  | 'HEAD'
-  | 'OPTIONS'
-  | 'LINK'
-  | 'UNLINK'
-  | 'PURGE'
-  | 'LOCK'
-  | 'UNLOCK'
-  | 'PROPFIND'
-  | 'VIEW';
-
+  | "POST"
+  | "GET"
+  | "PUT"
+  | "PATCH"
+  | "DELETE"
+  | "COPY"
+  | "HEAD"
+  | "OPTIONS"
+  | "LINK"
+  | "UNLINK"
+  | "PURGE"
+  | "LOCK"
+  | "UNLOCK"
+  | "PROPFIND"
+  | "VIEW";
 
 export interface ApisBaseData {
   // Parent directory ID
@@ -87,7 +89,7 @@ export interface ApisBaseData {
   has_changed?: CustomNumberBooleanType;
 
   // vscodeVersion
-  vscode_version?:string;
+  vscode_version?: string;
 }
 
 export interface ApisBaseDataItem {
@@ -115,18 +117,18 @@ export interface ApisBaseDataItem {
 }
 
 export type TypeFiledType =
-  | 'Object'
-  | 'Array'
-  | 'String'
-  | 'Number'
-  | 'Integer'
-  | 'Float'
-  | 'Double'
-  | 'File'
-  | 'Date'
-  | 'DateTime'
-  | 'TimeStamp'
-  | 'Boolean';
+  | "Object"
+  | "Array"
+  | "String"
+  | "Number"
+  | "Integer"
+  | "Float"
+  | "Double"
+  | "File"
+  | "Date"
+  | "DateTime"
+  | "TimeStamp"
+  | "Boolean";
 
 export interface ExpectItem {
   // Expect name
@@ -136,9 +138,9 @@ export interface ExpectItem {
   // HTTP status code
   code: HttpStatusCode | string;
   // Response content format
-  content_type: 'json' | 'xml' | 'html' | 'binary';
+  content_type: "json" | "xml" | "html" | "binary";
   // Validation type
-  verify_type: 'schema' | 'mock';
+  verify_type: "schema" | "mock";
   // json schema
   schema: SchemaObj | any;
   // Mock data
@@ -157,7 +159,10 @@ export type ApisDataTypeMapping = {
   [APIS_TARGET_TYPE_ENUM.FOLDER]: FolderDetailsData;
   [APIS_TARGET_TYPE_ENUM.DOC]: DocDetailsData;
   [APIS_TARGET_TYPE_ENUM.GRPC]: GrpcDetailsData;
-  [APIS_TARGET_TYPE_ENUM.API_SAMPLE]: Omit<ApiDetailsData, 'description' | 'attribute_info'>;
+  [APIS_TARGET_TYPE_ENUM.API_SAMPLE]: Omit<
+    ApiDetailsData,
+    "description" | "attribute_info"
+  >;
   [APIS_TARGET_TYPE_ENUM.API_SAMPLE_GROUP]: SampleGroupsDetailsData;
   [APIS_TARGET_TYPE_ENUM.SOCKET]: SocketServiceDetailsData;
   [APIS_TARGET_TYPE_ENUM.SOCKET_METHOD]: SocketDetailsData;

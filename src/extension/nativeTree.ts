@@ -54,8 +54,11 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
         : vscode.TreeItemCollapsibleState.None,
     );
     item.id = `${prefix}:${data.target_id}`;
-    item.contextValue = folder ? "okapiFolder"
-      : ["api", "graphql"].includes(data.target_type) ? "okapiRequestHttp" : "okapiRequest";
+    item.contextValue = folder
+      ? "okapiFolder"
+      : ["api", "graphql"].includes(data.target_type)
+        ? "okapiRequestHttp"
+        : "okapiRequest";
     const protocolLabels: Record<string, string> = {
       sse: "SSE",
       graphql: "GraphQL",
@@ -63,23 +66,50 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
       socketio: "Socket.IO",
       grpc: "gRPC",
     };
-    const requestLabel = protocolLabels[data.target_type] ||
+    const requestLabel =
+      protocolLabels[data.target_type] ||
       String(data.method || data.target_type).toUpperCase();
     const count = folder ? countFolderRequests(list(), data.target_id) : 0;
     item.description = count ? `(${count})` : undefined;
     item.iconPath = folder
-      ? new vscode.ThemeIcon("folder", new vscode.ThemeColor("textLink.foreground"))
+      ? new vscode.ThemeIcon(
+          "folder",
+          new vscode.ThemeColor("textLink.foreground"),
+        )
       : getProtocolIcon(context, data);
     if (data.target_type === "api") {
       const method = String(data.method || "GET").toLowerCase();
-      const icon = ["get", "post", "put", "patch", "delete", "head", "options"].includes(method)
-        ? method : "http";
+      const icon = [
+        "get",
+        "post",
+        "put",
+        "patch",
+        "delete",
+        "head",
+        "options",
+      ].includes(method)
+        ? method
+        : "http";
       item.iconPath = {
-        light: vscode.Uri.joinPath(context.extensionUri, "dist", "images", "methods", `${icon}-badge-light.svg`),
-        dark: vscode.Uri.joinPath(context.extensionUri, "dist", "images", "methods", `${icon}-badge.svg`),
+        light: vscode.Uri.joinPath(
+          context.extensionUri,
+          "dist",
+          "images",
+          "methods",
+          `${icon}-badge-light.svg`,
+        ),
+        dark: vscode.Uri.joinPath(
+          context.extensionUri,
+          "dist",
+          "images",
+          "methods",
+          `${icon}-badge.svg`,
+        ),
       };
     }
-    item.tooltip = [data.name, folder ? undefined : requestLabel, data.url].filter(Boolean).join(" ");
+    item.tooltip = [data.name, folder ? undefined : requestLabel, data.url]
+      .filter(Boolean)
+      .join(" ");
     return item;
   };
   const provider = (section: Section): vscode.TreeDataProvider<TreeNode> => ({
@@ -282,7 +312,9 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
     treeDataProvider: provider("history"),
     showCollapseAll: true,
   });
-  const decorationsChanged = new vscode.EventEmitter<vscode.Uri | vscode.Uri[] | undefined>();
+  const decorationsChanged = new vscode.EventEmitter<
+    vscode.Uri | vscode.Uri[] | undefined
+  >();
   context.subscriptions.push(
     decorationsChanged,
     vscode.window.registerFileDecorationProvider({
@@ -296,12 +328,21 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
           return;
         }
         const rows = list();
-        const data = rows.find((row) => encodeURIComponent(row.target_id) === id);
+        const data = rows.find(
+          (row) => encodeURIComponent(row.target_id) === id,
+        );
         if (!data) {
           return;
         }
-        const status = requestDecoration(getApiListName(context), data, getCurrentProjectConfig(context), rows);
-        return status ? { badge: status.badge, tooltip: status.tooltip, propagate: false } : undefined;
+        const status = requestDecoration(
+          getApiListName(context),
+          data,
+          getCurrentProjectConfig(context),
+          rows,
+        );
+        return status
+          ? { badge: status.badge, tooltip: status.tooltip, propagate: false }
+          : undefined;
       },
     }),
     requestStatusChanged.event(() => decorationsChanged.fire(undefined)),
@@ -382,7 +423,8 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
     },
   );
   const selectedData = (node?: TreeNode) => {
-    if (!node || (node.kind !== "request" && node.kind !== "testFolder")) return;
+    if (!node || (node.kind !== "request" && node.kind !== "testFolder"))
+      return;
     return list().find((item) => item.target_id === node.data.target_id);
   };
   command("okapi.tree.rename", async (node?: TreeNode) => {
@@ -392,29 +434,51 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
     const name = await vscode.window.showInputBox({
       title: zh ? "重命名" : "Rename",
       value: data.name,
-      validateInput: (value) => value.trim() ? undefined : zh ? "请输入名称" : "Enter a name",
+      validateInput: (value) =>
+        value.trim() ? undefined : zh ? "请输入名称" : "Enter a name",
     });
-    if (!name?.trim() || name.trim() === data.name || getApiListName(context) !== projectKey) return;
+    if (
+      !name?.trim() ||
+      name.trim() === data.name ||
+      getApiListName(context) !== projectKey
+    )
+      return;
     // Read again after the prompt so concurrent edits are preserved.
     const current = selectedData(node);
     if (!current) return;
-    await handleMessage({ action: "saveFolder", data: { ...cloneDeep(current), name: name.trim() } }, context);
+    await handleMessage(
+      {
+        action: "saveFolder",
+        data: { ...cloneDeep(current), name: name.trim() },
+      },
+      context,
+    );
     changed.fire(undefined);
   });
   command("okapi.tree.clone", async (node?: TreeNode) => {
     const data = selectedData(node);
     if (!data || data.target_type === "folder") return;
-    await handleMessage({ action: "cloneApi", data: { target_id: data.target_id } }, context);
+    await handleMessage(
+      { action: "cloneApi", data: { target_id: data.target_id } },
+      context,
+    );
     changed.fire(undefined);
   });
   command("okapi.tree.delete", async (node?: TreeNode) => {
     const data = selectedData(node);
     if (!data) return;
-    await handleMessage({ action: "showConfirmation", data: {
-      target_id: data.target_id,
-      title: zh ? `确定删除“${data.name}”${data.target_type === "folder" ? "及其所有内容" : ""}？`
-        : `Delete "${data.name}"${data.target_type === "folder" ? " and all its contents" : ""}?`,
-    } }, context);
+    await handleMessage(
+      {
+        action: "showConfirmation",
+        data: {
+          target_id: data.target_id,
+          title: zh
+            ? `确定删除“${data.name}”${data.target_type === "folder" ? "及其所有内容" : ""}？`
+            : `Delete "${data.name}"${data.target_type === "folder" ? " and all its contents" : ""}?`,
+        },
+      },
+      context,
+    );
     changed.fire(undefined);
   });
   command("okapi.tree.copyCurl", async (node?: TreeNode) => {
@@ -424,17 +488,25 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
   });
   command("okapi.tree.revealStorage", (node?: TreeNode) => {
     if (!selectedData(node)) return;
-    return handleMessage({ action: "openVscodeFileExplorer", data: undefined }, context);
+    return handleMessage(
+      { action: "openVscodeFileExplorer", data: undefined },
+      context,
+    );
   });
   command("okapi.tree.folderSettings", (node?: TreeNode) => {
     const data = selectedData(node);
     if (data?.target_type !== "folder") return;
-    return handleMessage({ action: "openTagPanelById", data: data.target_id }, context);
+    return handleMessage(
+      { action: "openTagPanelById", data: data.target_id },
+      context,
+    );
   });
   command("okapi.tree.folderReports", (node?: TreeNode) => {
     const data = selectedData(node);
     if (data?.target_type !== "folder") return;
-    return vscode.commands.executeCommand("echoapi.folderTest", data, { openHistoryReport: true });
+    return vscode.commands.executeCommand("echoapi.folderTest", data, {
+      openHistoryReport: true,
+    });
   });
   command("okapi.tree.refresh", () => changed.fire(undefined));
   command("okapi.tree.filter", async () => {
@@ -453,9 +525,17 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
     historyView.message = view.message;
     changed.fire(undefined);
   });
-  for (const type of ["api", "sse", "graphql", "websocket2", "socketio", "folder"]) {
+  for (const type of [
+    "api",
+    "sse",
+    "graphql",
+    "websocket2",
+    "socketio",
+    "folder",
+  ]) {
     command(`okapi.tree.new.${type}`, (node?: TreeNode) =>
-      vscode.commands.executeCommand("okapi.tree.new", node, type));
+      vscode.commands.executeCommand("okapi.tree.new", node, type),
+    );
   }
   command("okapi.tree.new", async (node?: TreeNode, targetType?: string) => {
     const parent =
@@ -470,15 +550,21 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
       APIS_TARGET_TYPE_ENUM.SOCKETIO,
       APIS_TARGET_TYPE_ENUM.FOLDER,
     ];
-    const type = targetType && types.includes(targetType as APIS_TARGET_TYPE_ENUM)
-      ? { type: targetType } : await vscode.window.showQuickPick(
-      types.map((type) => ({
-        label:
-          type === "folder" ? (zh ? "目录" : "Folder") : type.toUpperCase(),
-        type,
-      })),
-      { title: zh ? "新建" : "New" },
-    );
+    const type =
+      targetType && types.includes(targetType as APIS_TARGET_TYPE_ENUM)
+        ? { type: targetType }
+        : await vscode.window.showQuickPick(
+            types.map((type) => ({
+              label:
+                type === "folder"
+                  ? zh
+                    ? "目录"
+                    : "Folder"
+                  : type.toUpperCase(),
+              type,
+            })),
+            { title: zh ? "新建" : "New" },
+          );
     if (!type) {
       return;
     }

@@ -28,7 +28,12 @@ export const Flex = forwardRef<HTMLDivElement, UIProps>(
       {
         ...props,
         ref,
-        className: cx(css.flex, slots["beautify-flex"], className, rootClassName),
+        className: cx(
+          css.flex,
+          slots["beautify-flex"],
+          className,
+          rootClassName,
+        ),
         style: {
           flexDirection: vertical ? "column" : "row",
           alignItems: align,
@@ -117,12 +122,17 @@ export function Empty({
   style,
 }: UIProps) {
   return (
-    <div className={cx(css.empty, slots["beautify-empty"], className)} style={style}>
+    <div
+      className={cx(css.empty, slots["beautify-empty"], className)}
+      style={style}
+    >
       {image && <div className={slots["beautify-empty-image"]}>{image}</div>}
       {description !== false && (
         <div className={slots["beautify-empty-description"]}>{description}</div>
       )}
-      {children && <div className={slots["beautify-empty-footer"]}>{children}</div>}
+      {children && (
+        <div className={slots["beautify-empty-footer"]}>{children}</div>
+      )}
     </div>
   );
 }
@@ -138,7 +148,11 @@ export function Spin({
 }: UIProps) {
   return (
     <div
-      className={cx(css.spinHost, slots["beautify-spin-nested-loading"], className)}
+      className={cx(
+        css.spinHost,
+        slots["beautify-spin-nested-loading"],
+        className,
+      )}
       style={style}
     >
       {spinning && (
@@ -158,7 +172,11 @@ export const Skeleton = Object.assign(
     loading ? (
       <div
         {...props}
-        className={cx(css.skeleton, slots["beautify-skeleton"], props.className)}
+        className={cx(
+          css.skeleton,
+          slots["beautify-skeleton"],
+          props.className,
+        )}
         aria-label="Loading"
       >
         {Array.from({ length: paragraph?.rows ?? 3 }, (_, i) => (
@@ -284,7 +302,10 @@ export const Badge = ({
   className,
   style,
 }: UIProps) => (
-  <span className={cx(css.badge, slots["beautify-badge"], className)} style={style}>
+  <span
+    className={cx(css.badge, slots["beautify-badge"], className)}
+    style={style}
+  >
     {children}
     {status ? (
       <span style={{ color }}>{text}</span>

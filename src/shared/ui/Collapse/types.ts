@@ -1,4 +1,4 @@
-import type { CollapseProps as AntdCollapseProps } from '@/shared/ui/base';
+import type { CollapseProps as AntdCollapseProps } from "@/shared/ui/base";
 
 export type CollapseProps = {
   /**header background color */

@@ -1,8 +1,8 @@
 import { useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import type { TabsProps } from '@/shared/ui/base';
-import { LineTabs } from '@/shared/components';
+import type { TabsProps } from "@/shared/ui/base";
+import { LineTabs } from "@/shared/components";
 
 import ResultList from "./ResultList";
 import { filter, toUpper } from "lodash";

@@ -1,11 +1,11 @@
-import type { ModalFuncProps, ModalProps } from '@/shared/ui/base';
-import { Flex, Modal } from '@/shared/ui/base';
+import type { ModalFuncProps, ModalProps } from "@/shared/ui/base";
+import { Flex, Modal } from "@/shared/ui/base";
 
-import { map, size } from 'lodash';
+import { map, size } from "lodash";
 
-import Button, { ButtonProps } from '@/shared/ui/Button';
-import useTheme from '@/shared/hooks/useTheme';
-import { useAntdApp } from '@/app/store';
+import Button, { ButtonProps } from "@/shared/ui/Button";
+import useTheme from "@/shared/hooks/useTheme";
+import { useAntdApp } from "@/app/store";
 
 const defaultProps = {
   centered: true, // default centered display
@@ -50,8 +50,12 @@ const CustomModal = (props: ModalProps) => {
 
 const promiseModalConfirm = (
   config: ModalFuncProps & {
-    footerBtnList?: { text: string; action: string; buttonProps?: ButtonProps }[];
-  }
+    footerBtnList?: {
+      text: string;
+      action: string;
+      buttonProps?: ButtonProps;
+    }[];
+  },
 ) => {
   const { footerBtnList, ...otherConfig } = config;
   const { modal } = useAntdApp.getState();

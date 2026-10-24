@@ -1,11 +1,11 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex, Input, InputNumber, Select, Switch } from '@/shared/ui/base';
+import { Flex, Input, InputNumber, Select, Switch } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import { isEmpty, isNumber, trim } from 'lodash';
+import { useSafeState } from "ahooks";
+import { isEmpty, isNumber, trim } from "lodash";
 
 const NumberModal = (props: any) => {
   const {
@@ -28,9 +28,14 @@ const NumberModal = (props: any) => {
     <>
       <div className={slots["base-setting"]}>
         <div className={slots["item-line"]}>{SelectTypeDom}</div>
-        <Flex gap={20} className={[slots["item-all-line"], slots["item-necessarily"]].join(" ")}>
+        <Flex
+          gap={20}
+          className={[slots["item-all-line"], slots["item-necessarily"]].join(
+            " ",
+          )}
+        >
           <Flex align="center" gap={8}>
-            {t('common.schema.advanced_settings.required')}
+            {t("common.schema.advanced_settings.required")}
             <Switch
               size="small"
               onChange={() => handleUpdateRequired(isRequired)}
@@ -38,8 +43,12 @@ const NumberModal = (props: any) => {
             />
           </Flex>
           <Flex align="center" gap={8}>
-            {t('common.schema.advanced_settings.null')}
-            <Switch size="small" value={empty} onChange={handleChangeAllowNull} />
+            {t("common.schema.advanced_settings.null")}
+            <Switch
+              size="small"
+              value={empty}
+              onChange={handleChangeAllowNull}
+            />
           </Flex>
         </Flex>
         {ItemMockDom && (
@@ -52,59 +61,69 @@ const NumberModal = (props: any) => {
         )}
         <Flex vertical>
           <div className={slots["item-line"]}>
-            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.default_values')}</div>
+            <div className={slots["case-title"]}>
+              {t("common.schema.advanced_settings.default_values")}
+            </div>
             <div className={slots["case-value"]}>
               <InputNumber
-                style={{ width: '100%' }}
+                style={{ width: "100%" }}
                 size="small"
                 min={-Infinity}
                 value={isNumber(value?.default) ? value?.default : 0}
-                onChange={onChange.bind(null, 'default')}
+                onChange={onChange.bind(null, "default")}
               />
             </div>
           </div>
         </Flex>
         <Flex gap={20}>
           <div className={slots["item-line"]}>
-            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.min_value')}</div>
+            <div className={slots["case-title"]}>
+              {t("common.schema.advanced_settings.min_value")}
+            </div>
             <div className={slots["case-value"]}>
               <InputNumber
                 size="small"
-                style={{ width: '100%' }}
+                style={{ width: "100%" }}
                 min={0}
                 value={isNumber(value?.minimum) ? value?.minimum : undefined}
-                onChange={onChange.bind(null, 'minimum')}
+                onChange={onChange.bind(null, "minimum")}
               />
             </div>
           </div>
           <div className={slots["item-line"]}>
-            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.eq_min_value')}</div>
+            <div className={slots["case-title"]}>
+              {t("common.schema.advanced_settings.eq_min_value")}
+            </div>
             <Switch
               size="small"
               checked={value?.exclusiveMinimum}
-              onChange={onChange.bind(null, 'exclusiveMinimum')}
+              onChange={onChange.bind(null, "exclusiveMinimum")}
             />
           </div>
         </Flex>
         <Flex gap={20}>
           <div className={slots["item-line"]}>
-            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.max_value')}</div>
+            <div className={slots["case-title"]}>
+              {t("common.schema.advanced_settings.max_value")}
+            </div>
             <div className={slots["case-value"]}>
               <InputNumber
                 size="small"
                 min={0}
-                style={{ width: '100%' }}
+                style={{ width: "100%" }}
                 value={isNumber(value?.maximum) ? value?.maximum : undefined}
-                onChange={onChange.bind(null, 'maximum')}
+                onChange={onChange.bind(null, "maximum")}
               />
             </div>
           </div>
           <div className={slots["item-line"]}>
-            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.eq_max_value')}</div>
+            <div className={slots["case-title"]}>
+              {t("common.schema.advanced_settings.eq_max_value")}
+            </div>
             <Switch
               size="small"
               checked={value?.exclusiveMaximum}
-              onChange={onChange.bind(null, 'exclusiveMaximum')}
+              onChange={onChange.bind(null, "exclusiveMaximum")}
             />
           </div>
         </Flex>
@@ -112,17 +131,21 @@ const NumberModal = (props: any) => {
         <div className={slots["item-line"]}>
           <div className={slots["case-title"]}>
             <span style={{ paddingRight: 5 }}>
-              {t('common.schema.advanced_settings.enum_values')}
+              {t("common.schema.advanced_settings.enum_values")}
             </span>
             <Switch
               size="small"
               checked={value?.apipost_enable_enum === true ? true : false}
-              onChange={onChange.bind(null, 'apipost_enable_enum', !value?.apipost_enable_enum)}
+              onChange={onChange.bind(
+                null,
+                "apipost_enable_enum",
+                !value?.apipost_enable_enum,
+              )}
             />
           </div>
           <div className={slots["case-value"]}>
             <Select
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
               disabled={value?.apipost_enable_enum !== true}
               mode="tags"
               value={caseValue}
@@ -130,26 +153,30 @@ const NumberModal = (props: any) => {
                 setCaseValue(e);
                 const numberList = [];
                 for (const valItem of e) {
-                  const parsedValue = !isEmpty(trim(valItem)) ? Number(valItem) : null;
+                  const parsedValue = !isEmpty(trim(valItem))
+                    ? Number(valItem)
+                    : null;
                   if (isNumber(parsedValue) && !isNaN(parsedValue)) {
                     numberList.push(parsedValue);
                   }
                 }
-                onChange('enum', numberList);
+                onChange("enum", numberList);
               }}
               options={caseValue?.map((e) => ({ label: e, value: e }))}
             />
           </div>
         </div>
         <div className={slots["item-line"]}>
-          <div className={slots["case-title"]}>{t('common.schema.advanced_settings.remarks')}</div>
+          <div className={slots["case-title"]}>
+            {t("common.schema.advanced_settings.remarks")}
+          </div>
           <div className={slots["case-value"]}>
             <Input.TextArea
               size="small"
               autoSize={{ minRows: 3, maxRows: 3 }}
               value={value?.enumDesc}
               onChange={(e) => {
-                onChange('enumDesc', e.target.value);
+                onChange("enumDesc", e.target.value);
               }}
             />
           </div>

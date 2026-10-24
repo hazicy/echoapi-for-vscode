@@ -1,14 +1,14 @@
-import { memo } from 'react';
+import { memo } from "react";
 
-import { useMemoizedFn } from 'ahooks';
-import { isEqual } from 'lodash';
+import { useMemoizedFn } from "ahooks";
+import { isEqual } from "lodash";
 
-import RawEditor from '@/shared/components/RawEditor';
-import { ApiRequest } from '@/features/requests/types/request';
+import RawEditor from "@/shared/components/RawEditor";
+import { ApiRequest } from "@/features/requests/types/request";
 
-import { RequestBodyProps } from '../../types';
+import { RequestBodyProps } from "../../types";
 
-type Props = Pick<RequestBodyProps, 'value' | 'onChange'> & {
+type Props = Pick<RequestBodyProps, "value" | "onChange"> & {
   isParameter?: boolean;
   mode?: string;
 };
@@ -17,8 +17,8 @@ const RequestBodyRaw = memo(
   (props: Props) => {
     const { isParameter, value, onChange, mode } = props;
 
-    const handleChange = useMemoizedFn((newValue: ApiRequest['body']) => {
-      onChange?.('body', newValue);
+    const handleChange = useMemoizedFn((newValue: ApiRequest["body"]) => {
+      onChange?.("body", newValue);
     });
 
     return (
@@ -34,7 +34,7 @@ const RequestBodyRaw = memo(
       />
     );
   },
-  (prevProps, nextProps) => isEqual(prevProps, nextProps)
+  (prevProps, nextProps) => isEqual(prevProps, nextProps),
 );
 
 export default RequestBodyRaw;

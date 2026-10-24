@@ -5,7 +5,7 @@ import { exportMethod } from "@/features/export/utils/export";
 import { isPlainObject } from "lodash";
 import * as vscode from "vscode";
 import { DEFAULT_PROJECT } from "@/features/project/constants/project";
-import { getCurrentProjectConfig } from '../utils';
+import { getCurrentProjectConfig } from "../utils";
 import { EnvList } from "@/features/environment/types";
 import { AnyObject } from "@/shared/types/common";
 import { Project } from "@/features/auth/types";
@@ -221,7 +221,6 @@ export const updatePageDocBaseUrl = (docBaseUrl: string) => {
       data: docBaseUrl,
     });
   });
-
 };
 
 export const getDocBaseUrl = (context: vscode.ExtensionContext) => {

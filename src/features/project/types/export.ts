@@ -1,8 +1,8 @@
-import { ApiDetailsData } from '@/features/requests/types/api';
-import { GrpcProtos } from '@/features/requests/types/grpc';
-import { Websocket2Config } from '@/features/requests/types/websocket2';
-import { SocketIoConfig } from '@/features/requests/types/socketio';
-import { EnvListItem } from '@/features/environment/types';
+import { ApiDetailsData } from "@/features/requests/types/api";
+import { GrpcProtos } from "@/features/requests/types/grpc";
+import { Websocket2Config } from "@/features/requests/types/websocket2";
+import { SocketIoConfig } from "@/features/requests/types/socketio";
+import { EnvListItem } from "@/features/environment/types";
 import {
   ConnectToDatabaseItem,
   CustomAttributeItem,
@@ -10,8 +10,8 @@ import {
   MarkItem,
   MockItem,
   RequestGlobalParams,
-} from '@/features/project/types/index';
-import { TestingDetailData } from '@/features/testing/types';
+} from "@/features/project/types/index";
+import { TestingDetailData } from "@/features/testing/types";
 
 export type ExportEnvItem = {
   env_id: string;

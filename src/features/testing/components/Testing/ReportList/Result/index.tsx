@@ -1,7 +1,7 @@
-import { useTranslation } from 'react-i18next';
-import Drawer from '@/shared/ui/Drawer';
-import { Modal } from '@/shared/ui/Modal';
-import TestingMain from '../../Main';
+import { useTranslation } from "react-i18next";
+import Drawer from "@/shared/ui/Drawer";
+import { Modal } from "@/shared/ui/Modal";
+import TestingMain from "../../Main";
 
 type ResultProps = {
   /** Report data to open */
@@ -12,11 +12,7 @@ type ResultProps = {
   onClose: () => void;
 };
 
-const Result = ({
-  data,
-  open,
-  onClose,
-}: ResultProps) => {
+const Result = ({ data, open, onClose }: ResultProps) => {
   const { t } = useTranslation();
   const [modal, contextHolder] = Modal.useModal();
 
@@ -24,20 +20,25 @@ const Result = ({
     onClose();
   };
 
-
   return (
     <>
       <Drawer
         destroyOnClose
-        title={data?.folderName || t('report_detail.title')}
+        title={data?.folderName || t("report_detail.title")}
         open={open}
         onClose={() => handleOnClose()}
       >
-        <TestingMain is_report={true} testingSendingData={{
-          sendStatus: 'sendOver',
-          requestList: data?.requestList || [],
-          complete:data?.complete || {},
-        }} testingConfig={data.testingConfig} eventList={[]} eventAllCount={data?.eventAllCount} />
+        <TestingMain
+          is_report={true}
+          testingSendingData={{
+            sendStatus: "sendOver",
+            requestList: data?.requestList || [],
+            complete: data?.complete || {},
+          }}
+          testingConfig={data.testingConfig}
+          eventList={[]}
+          eventAllCount={data?.eventAllCount}
+        />
       </Drawer>
       {contextHolder}
     </>

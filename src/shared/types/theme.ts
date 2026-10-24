@@ -1,4 +1,4 @@
-import type { GlobalToken } from '@/shared/ui/base/tokens';
+import type { GlobalToken } from "@/shared/ui/base/tokens";
 
 export interface ThemeToken extends GlobalToken {
   colorHeaderBorder: string;
@@ -24,7 +24,7 @@ export interface ThemeToken extends GlobalToken {
   dividerColor: string;
   checkBoxBorderColor: string;
   colorBorder: string;
-  tableColorBorder:string;
+  tableColorBorder: string;
   colorBorderLight: string;
   iconColor: string;
   fontTitleColor: string;

@@ -1,5 +1,6 @@
-
-export const generateToken = (antdThemeConfig: { token: Partial<GlobalThemeToken> }) => ({
+export const generateToken = (antdThemeConfig: {
+  token: Partial<GlobalThemeToken>;
+}) => ({
   padding: 16,
   paddingMD: 20,
   paddingSM: 12,

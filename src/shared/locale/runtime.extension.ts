@@ -1,3 +1,3 @@
-import { env } from 'vscode';
+import { env } from "vscode";
 
-export default env?.language || 'en';
+export default env?.language || "en";

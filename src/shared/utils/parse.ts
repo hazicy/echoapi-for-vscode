@@ -1,17 +1,17 @@
-import aptTools from 'apipost-tools';
-import iconv from 'iconv-lite';
-import { isString } from 'lodash';
+import aptTools from "apipost-tools";
+import iconv from "iconv-lite";
+import { isString } from "lodash";
 
 export const parseStreamToRaw: (
   stream: ArrayBuffer | undefined,
   mimeType: object,
-  encode?: string
-) => string = (stream, mimeType, encode = 'utf8') => {
+  encode?: string,
+) => string = (stream, mimeType, encode = "utf8") => {
   const bufferToRaw = aptTools.bufferToRaw(stream, mimeType);
   const { buffer } = bufferToRaw;
 
   let rawBody = bufferToRaw.raw;
-  const rawEncode = isString(encode) ? encode : 'utf8';
+  const rawEncode = isString(encode) ? encode : "utf8";
 
   try {
     rawBody = iconv.decode(buffer, rawEncode);
@@ -23,18 +23,17 @@ export const parseStreamToRaw: (
 export const parseStreamToBody: (
   stream: ArrayBuffer,
   mimeType: object,
-  encode?: string
+  encode?: string,
 ) => {
   rawBody: string;
   base64Body: string;
-} = (stream, mimeType, encode = 'utf8') => {
-
+} = (stream, mimeType, encode = "utf8") => {
   const bufferToRaw = aptTools.bufferToRaw(stream, mimeType);
   let rawBody = bufferToRaw.raw;
 
   try {
-    if (rawBody.indexOf('�') > -1) {
-      rawBody = iconv.decode(bufferToRaw?.buffer, 'GBK');
+    if (rawBody.indexOf("�") > -1) {
+      rawBody = iconv.decode(bufferToRaw?.buffer, "GBK");
     } else {
       rawBody = iconv.decode(bufferToRaw?.buffer, encode);
     }

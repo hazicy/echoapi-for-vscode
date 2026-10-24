@@ -1,12 +1,9 @@
-import { useApis } from '@/app/store';
-import { GraphQLDetailsData } from '@/features/requests/types/graphql';
-import { message } from '@/shared/ui/base';
-import produce from 'immer';
-import {
-  useState,
-} from 'react';
-import { useTranslation } from 'react-i18next';
-
+import { useApis } from "@/app/store";
+import { GraphQLDetailsData } from "@/features/requests/types/graphql";
+import { message } from "@/shared/ui/base";
+import produce from "immer";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface SchemaType {
   queries: Record<string, unknown>;
@@ -98,22 +95,26 @@ class InspectSchema {
     };
 
     switch (type.kind) {
-      case 'OBJECT':
-      case 'INTERFACE':
+      case "OBJECT":
+      case "INTERFACE":
         typeInfo.fields = type.fields?.map((f) => this.parseField(f)) || [];
-        typeInfo.interfaces = type.interfaces?.map((i) => this.parseTypeRef(i)) || [];
+        typeInfo.interfaces =
+          type.interfaces?.map((i) => this.parseTypeRef(i)) || [];
         break;
 
-      case 'INPUT_OBJECT':
-        typeInfo.inputFields = type.inputFields?.map((f) => this.parseInputValue(f)) || [];
+      case "INPUT_OBJECT":
+        typeInfo.inputFields =
+          type.inputFields?.map((f) => this.parseInputValue(f)) || [];
         break;
 
-      case 'ENUM':
-        typeInfo.enumValues = type.enumValues?.map((v) => this.parseEnumValue(v)) || [];
+      case "ENUM":
+        typeInfo.enumValues =
+          type.enumValues?.map((v) => this.parseEnumValue(v)) || [];
         break;
 
-      case 'UNION':
-        typeInfo.possibleTypes = type.possibleTypes?.map((t) => this.parseTypeRef(t)) || [];
+      case "UNION":
+        typeInfo.possibleTypes =
+          type.possibleTypes?.map((t) => this.parseTypeRef(t)) || [];
         break;
     }
 
@@ -129,12 +130,12 @@ class InspectSchema {
 
     // Process all types
     schemaData.types.forEach((type) => {
-      if (type.name.startsWith('__')) return; // Skip built-in types
+      if (type.name.startsWith("__")) return; // Skip built-in types
 
       const parsedType = this.parseFullType(type);
 
       switch (type.kind) {
-        case 'OBJECT':
+        case "OBJECT":
           if (type.name === queryTypeName) {
             this.schema.queries = parsedType;
           } else if (type.name === mutationTypeName) {
@@ -145,19 +146,19 @@ class InspectSchema {
             this.schema.objects[type.name] = parsedType;
           }
           break;
-        case 'INTERFACE':
+        case "INTERFACE":
           this.schema.interfaces[type.name] = parsedType;
           break;
-        case 'UNION':
+        case "UNION":
           this.schema.unions[type.name] = parsedType;
           break;
-        case 'ENUM':
+        case "ENUM":
           this.schema.enums[type.name] = parsedType;
           break;
-        case 'INPUT_OBJECT':
+        case "INPUT_OBJECT":
           this.schema.inputObjects[type.name] = parsedType;
           break;
-        case 'SCALAR':
+        case "SCALAR":
           this.schema.scalars[type.name] = parsedType;
           break;
       }
@@ -180,11 +181,11 @@ class InspectSchema {
 
   // Get full type name (including non-null and list modifiers)
   getFullTypeName(type) {
-    if (!type) return 'Unknown';
-    if (type.kind === 'NON_NULL') {
+    if (!type) return "Unknown";
+    if (type.kind === "NON_NULL") {
       return `${this.getFullTypeName(type.ofType)}!`;
     }
-    if (type.kind === 'LIST') {
+    if (type.kind === "LIST") {
       return `[${this.getFullTypeName(type.ofType)}]`;
     }
     return type.name;
@@ -192,25 +193,25 @@ class InspectSchema {
 
   // Generate type documentation
   generateTypeDoc() {
-    let doc = '';
+    let doc = "";
 
     // Queries
     if (Object.keys(this.schema.queries).length > 0) {
-      doc += '# Queries\n\n';
+      doc += "# Queries\n\n";
       this.schema.queries.fields.forEach((field) => {
         doc += `## ${field.name}\n`;
         if (field.description) doc += `${field.description}\n\n`;
         doc += `Type: ${this.getFullTypeName(field.type)}\n\n`;
         if (field.args.length > 0) {
-          doc += 'Arguments:\n';
+          doc += "Arguments:\n";
           field.args.forEach((arg) => {
             doc += `- ${arg.name}: ${this.getFullTypeName(arg.type)}`;
             if (arg.defaultValue) doc += ` = ${arg.defaultValue}`;
             if (arg.description) doc += ` - ${arg.description}`;
-            doc += '\n';
+            doc += "\n";
           });
         }
-        doc += '\n';
+        doc += "\n";
       });
     }
 
@@ -222,11 +223,18 @@ class InspectSchema {
 
 const useGraphQLQuery = () => {
   const { t } = useTranslation();
-  const handelGraphQLSchemaFetchResult = (result: { code: number, data: any, error?:string }) => {
-    const {updateApisActiveData, apisActiveData ,updateSchemaLoading} = useApis.getState();
+  const handelGraphQLSchemaFetchResult = (result: {
+    code: number;
+    data: any;
+    error?: string;
+  }) => {
+    const { updateApisActiveData, apisActiveData, updateSchemaLoading } =
+      useApis.getState();
     const { code, data, error } = result;
     if (code !== 200 || error) {
-      message.error(code === 200 ? error : 'Refresh failed, GraphQL Schema not retrieved.');
+      message.error(
+        code === 200 ? error : "Refresh failed, GraphQL Schema not retrieved.",
+      );
       updateSchemaLoading(false);
       return;
     }
@@ -238,24 +246,26 @@ const useGraphQLQuery = () => {
     }
 
     const inspectSchema = new InspectSchema();
-    const organizedSchema = inspectSchema.organizeSchema(data?.data?.__schema || {});
+    const organizedSchema = inspectSchema.organizeSchema(
+      data?.data?.__schema || {},
+    );
 
     if (apisActiveData) {
-      const newData = produce(apisActiveData, (draft : GraphQLDetailsData) => {
+      const newData = produce(apisActiveData, (draft: GraphQLDetailsData) => {
         draft.request.body = {
           ...draft.request.body,
-          query_schema:organizedSchema
+          query_schema: organizedSchema,
         };
       });
       updateApisActiveData?.(newData);
     }
 
-    message.success(t('supplement.refresh_success'));
+    message.success(t("supplement.refresh_success"));
     updateSchemaLoading(false);
-  }
+  };
 
   return {
-    handelGraphQLSchemaFetchResult
+    handelGraphQLSchemaFetchResult,
   };
 };
 

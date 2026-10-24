@@ -1,25 +1,25 @@
-import { ThemeConfig } from '@/shared/ui/base';
+import { ThemeConfig } from "@/shared/ui/base";
 
 export const generateComponents = (antdThemeConfig: {
   token: Partial<GlobalThemeToken>;
-}): ThemeConfig['components'] => ({
+}): ThemeConfig["components"] => ({
   App: {
     fontSize: antdThemeConfig.token.fontSize14,
   },
   Input: {
-    colorBorder: 'transparent',
+    colorBorder: "transparent",
     fontSize: antdThemeConfig.token.fontSize14,
     colorTextDescription: antdThemeConfig.token.fontContentColor,
-    colorBgContainer: 'transparent',
+    colorBgContainer: "transparent",
     lineHeight: 1,
-    colorTextPlaceholder: 'var(--vscode-input-placeholderForeground)',
+    colorTextPlaceholder: "var(--vscode-input-placeholderForeground)",
     paddingBlock: 6.5,
   },
   InputNumber: {
     colorBorder: antdThemeConfig.token.tableColorBorder,
     colorTextDescription: antdThemeConfig.token.fontContentColor,
-    colorBgContainer: 'transparent',
-    colorTextPlaceholder: 'var(--vscode-input-placeholderForeground)',
+    colorBgContainer: "transparent",
+    colorTextPlaceholder: "var(--vscode-input-placeholderForeground)",
   },
   Checkbox: {
     colorBgContainer: antdThemeConfig.token.colorBgRight,
@@ -27,12 +27,12 @@ export const generateComponents = (antdThemeConfig: {
   },
 
   Button: {
-    defaultBg: 'transparent',
+    defaultBg: "transparent",
     defaultBorderColor: antdThemeConfig.token.colorDashed,
     colorText: antdThemeConfig.token.fontContentColor,
-    textHoverBg: 'transparent',
-    defaultHoverBg: 'transparent',
-    defaultActiveBg: 'transparent',
+    textHoverBg: "transparent",
+    defaultHoverBg: "transparent",
+    defaultActiveBg: "transparent",
     defaultGhostBorderColor: antdThemeConfig.token.colorDashed,
     defaultGhostColor: antdThemeConfig.token.fontContentColor,
     colorLink: antdThemeConfig.token.colorPrimary,
@@ -42,7 +42,7 @@ export const generateComponents = (antdThemeConfig: {
   },
   List: {
     avatarMarginRight: 12,
-    itemPadding: '12px',
+    itemPadding: "12px",
   },
   Divider: {
     colorSplit: antdThemeConfig.token.dividerColor,
@@ -56,17 +56,17 @@ export const generateComponents = (antdThemeConfig: {
   },
   Badge: {
     dotSize: 8,
-    boxShadow: 'none',
+    boxShadow: "none",
   },
   Collapse: {
-    headerPadding: '14px 16px',
+    headerPadding: "14px 16px",
   },
   Segmented: {
-    itemColor: 'var(--vscode-foreground)',
-    itemActiveBg: 'none',
-    itemHoverBg: 'none',
+    itemColor: "var(--vscode-foreground)",
+    itemActiveBg: "none",
+    itemHoverBg: "none",
     itemHoverColor: antdThemeConfig.token.fontContentColor,
-    itemSelectedBg: 'transparent',
+    itemSelectedBg: "transparent",
     itemSelectedColor: antdThemeConfig.token.fontTitleColor,
     colorBgLayout: antdThemeConfig.token.colorBgPage,
   },
@@ -89,15 +89,15 @@ export const generateComponents = (antdThemeConfig: {
     colorText: antdThemeConfig.token.fontContentColor,
   },
   Select: {
-    selectorBg: 'var(--vscode-input-background)',
-    colorBorder: 'transparent',
+    selectorBg: "var(--vscode-input-background)",
+    colorBorder: "transparent",
     optionSelectedBg: antdThemeConfig.token.popoverSelectBgHoverColor,
-    optionSelectedColor: 'var(--vscode-foreground)',
-    colorTextPlaceholder:'var(--vscode-input-placeholderForeground)',
-    optionSelectedFontWeight: '400',
+    optionSelectedColor: "var(--vscode-foreground)",
+    colorTextPlaceholder: "var(--vscode-input-placeholderForeground)",
+    optionSelectedFontWeight: "400",
     fontSize: antdThemeConfig.token.fontSize14,
     padding: 0,
-    boxShadow: 'none',
+    boxShadow: "none",
     colorBgElevated: antdThemeConfig.token.popoverSelectBgColor,
     multipleItemBg: antdThemeConfig.token.colorBgGray,
     colorIcon: antdThemeConfig.token.iconColor,
@@ -111,17 +111,17 @@ export const generateComponents = (antdThemeConfig: {
   Tabs: {
     cardHeight: 30,
     horizontalItemGutter: 8,
-    cardPaddingSM: '6px 14px',
-    horizontalMargin: '0 0 12px 0',
-    horizontalItemPadding: '12px 8px',
+    cardPaddingSM: "6px 14px",
+    horizontalMargin: "0 0 12px 0",
+    horizontalItemPadding: "12px 8px",
     fontSize: antdThemeConfig.token.fontSize14,
     itemSelectedColor: antdThemeConfig.token.fontTitleColor,
   },
   Progress: {
     marginXS: 0,
     circleTextFontSize: `${antdThemeConfig.token.fontSize14}px`,
-    defaultColor:antdThemeConfig.token.colorBgFolderHover,
-    remainingColor:antdThemeConfig.token.tableHeaderBgColor,
+    defaultColor: antdThemeConfig.token.colorBgFolderHover,
+    remainingColor: antdThemeConfig.token.tableHeaderBgColor,
   },
   Statistic: {
     titleFontSize: antdThemeConfig.token.fontSize14,
@@ -132,8 +132,8 @@ export const generateComponents = (antdThemeConfig: {
     itemSelectedBg: antdThemeConfig.token.popoverSelectBgHoverColor,
     itemHoverBg: antdThemeConfig.token.popoverSelectBgHoverColor,
     itemHoverColor: antdThemeConfig.token.fontContentColor,
-    itemBg: 'transparent',
-    subMenuItemBg: 'transparent',
+    itemBg: "transparent",
+    subMenuItemBg: "transparent",
     itemActiveBg: antdThemeConfig.token.popoverSelectBgHoverColor,
     fontSize: antdThemeConfig.token.fontSize14,
   },
@@ -142,9 +142,9 @@ export const generateComponents = (antdThemeConfig: {
     controlItemBgHover: antdThemeConfig.token.popoverSelectBgHoverColor,
     controlItemBgActive: antdThemeConfig.token.popoverSelectBgHoverColor,
     controlItemBgActiveHover: antdThemeConfig.token.popoverSelectBgHoverColor,
-    controlPaddingHorizontal:8,
+    controlPaddingHorizontal: 8,
     paddingXS: 2,
-    paddingXXS: 2
+    paddingXXS: 2,
   },
   Drawer: {
     colorBgElevated: antdThemeConfig.token.modalContentBg,
@@ -172,13 +172,13 @@ export const generateComponents = (antdThemeConfig: {
   },
   Form: {
     itemMarginBottom: 20,
-    verticalLabelPadding: '0 0 12px 0',
+    verticalLabelPadding: "0 0 12px 0",
     fontSize: antdThemeConfig.token.fontSize14,
-    labelColor:antdThemeConfig.token.fontContentColor,
+    labelColor: antdThemeConfig.token.fontContentColor,
   },
   Pagination: {
     fontSize: antdThemeConfig.token.fontSize14,
-    itemActiveBg: 'transparent',
+    itemActiveBg: "transparent",
   },
   TreeSelect: {
     nodeHoverBg: antdThemeConfig.token.popoverSelectBgHoverColor,
@@ -200,11 +200,12 @@ export const generateComponents = (antdThemeConfig: {
   },
   Radio: {
     colorBorder: antdThemeConfig.token.checkBoxBorderColor,
-    buttonBg:'transparent',
-    buttonCheckedBg:'transparent'
+    buttonBg: "transparent",
+    buttonCheckedBg: "transparent",
   },
-  Tooltip:{
-    colorBgSpotlight:'var(--vscode-dropdown-listBackground, var(--vscode-settings-dropdownBackground))',
-    colorTextLightSolid:antdThemeConfig.token.fontContentColor,
-  }
+  Tooltip: {
+    colorBgSpotlight:
+      "var(--vscode-dropdown-listBackground, var(--vscode-settings-dropdownBackground))",
+    colorTextLightSolid: antdThemeConfig.token.fontContentColor,
+  },
 });

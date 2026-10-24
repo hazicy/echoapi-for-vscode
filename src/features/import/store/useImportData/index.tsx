@@ -1,7 +1,7 @@
-import { create } from '@/app/store/utils';
-import { ApiDetailsData } from '@/features/requests/types/api';
-import { EnvList } from '@/features/environment/types';
-import { IDataModel } from '@/features/schemas/types';
+import { create } from "@/app/store/utils";
+import { ApiDetailsData } from "@/features/requests/types/api";
+import { EnvList } from "@/features/environment/types";
+import { IDataModel } from "@/features/schemas/types";
 
 type State = {
   previewData: {
@@ -9,24 +9,25 @@ type State = {
     models: IDataModel[];
     envs: EnvList;
   };
-  previewSelectData:{
+  previewSelectData: {
     apis: string[];
     models: string[];
     envs: string[];
     apiHalfs?: string[];
     modelHalfs?: string[];
   };
-  preview:boolean;
-  previewLoading:boolean;
+  preview: boolean;
+  previewLoading: boolean;
 };
 
 type Action = {
-  updatePreviewData: (previewData: State['previewData']) => void;
-  updatePreviewSelectData: (previewSelectData: State['previewSelectData']) => void;
- 
-  updatePreview: (preview: State['preview']) => void;
-  updatePreviewLoading: (previewLoading: State['previewLoading']) => void;
+  updatePreviewData: (previewData: State["previewData"]) => void;
+  updatePreviewSelectData: (
+    previewSelectData: State["previewSelectData"],
+  ) => void;
 
+  updatePreview: (preview: State["preview"]) => void;
+  updatePreviewLoading: (previewLoading: State["previewLoading"]) => void;
 };
 
 const useImportData = create<State & Action>()((set) => ({
@@ -35,19 +36,19 @@ const useImportData = create<State & Action>()((set) => ({
     models: [],
     envs: [],
   },
-  previewSelectData:{
+  previewSelectData: {
     apis: [],
     models: [],
     envs: [],
   },
-  preview:false,
-  previewLoading:false,
+  preview: false,
+  previewLoading: false,
 
   updatePreviewData: (previewData) => set(() => ({ previewData })),
-  updatePreviewSelectData: (previewSelectData) => set(() => ({ previewSelectData })),
+  updatePreviewSelectData: (previewSelectData) =>
+    set(() => ({ previewSelectData })),
   updatePreview: (preview) => set(() => ({ preview })),
   updatePreviewLoading: (previewLoading) => set(() => ({ previewLoading })),
-  
 }));
 
 export default useImportData;

@@ -1,7 +1,7 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
-import { GraphQLDetailsData } from '@/features/requests/types/graphql';
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
+import { GraphQLDetailsData } from "@/features/requests/types/graphql";
 
 type Props = {
   target_type: APIS_TARGET_TYPE_ENUM | undefined;

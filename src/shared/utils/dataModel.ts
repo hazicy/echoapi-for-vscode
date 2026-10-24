@@ -1,6 +1,6 @@
-import { snowflakeId } from 'apipost-tools';
-import produce from 'immer';
-import { diff } from 'jsondiffpatch';
+import { snowflakeId } from "apipost-tools";
+import produce from "immer";
+import { diff } from "jsondiffpatch";
 import {
   cloneDeep,
   isArray,
@@ -10,14 +10,20 @@ import {
   isString,
   isUndefined,
   merge,
-} from 'lodash';
+} from "lodash";
 
-import { DIFF_DATA_KEYS } from '@/features/schemas/constants/schemas';
-import { SchemaObj, TYPE_DIFF_OBJECT_JSON, TYPE_PARSE_MODEL_TO_JSON_SCHEMA } from '@/features/schemas/types';
+import { DIFF_DATA_KEYS } from "@/features/schemas/constants/schemas";
+import {
+  SchemaObj,
+  TYPE_DIFF_OBJECT_JSON,
+  TYPE_PARSE_MODEL_TO_JSON_SCHEMA,
+} from "@/features/schemas/types";
 
 export const trimSchema = (schema: SchemaObj) => {
   const result = produce(schema, (draft) => {
-    const preProptosis = isPlainObject(draft?.properties) ? draft.properties : {};
+    const preProptosis = isPlainObject(draft?.properties)
+      ? draft.properties
+      : {};
 
     // Help php resolve the issue where $schema cannot be parsed
     if (!isUndefined(draft?.$schema)) {
@@ -26,21 +32,24 @@ export const trimSchema = (schema: SchemaObj) => {
 
     for (const key in preProptosis) {
       const dataItem = draft?.properties[key];
-      if (dataItem.type === 'object') {
+      if (dataItem.type === "object") {
         draft.properties[key] = trimSchema(preProptosis[key]);
         continue;
       }
-      if (dataItem.type === 'array' && isPlainObject(draft.properties[key]?.items)) {
+      if (
+        dataItem.type === "array" &&
+        isPlainObject(draft.properties[key]?.items)
+      ) {
         draft.properties[key].items = trimSchema(preProptosis[key]?.items);
         continue;
       }
 
       if (isArray(dataItem?.oneOf)) {
         dataItem?.oneOf?.forEach((item: any, index: number) => {
-          if (item.type === 'object') {
+          if (item.type === "object") {
             draft.properties[key].oneOf[index] = trimSchema(item);
           }
-          if (item.type === 'array') {
+          if (item.type === "array") {
             draft.properties[key].oneOf[index].items = trimSchema(item.items);
           }
         });
@@ -48,10 +57,10 @@ export const trimSchema = (schema: SchemaObj) => {
       }
       if (isArray(dataItem?.anyOf)) {
         dataItem?.anyOf?.forEach((item: any, index: number) => {
-          if (item.type === 'object') {
+          if (item.type === "object") {
             draft.properties[key].anyOf[index] = trimSchema(item);
           }
-          if (item.type === 'array') {
+          if (item.type === "array") {
             draft.properties[key].anyOf[index].items = trimSchema(item.items);
           }
         });
@@ -59,10 +68,10 @@ export const trimSchema = (schema: SchemaObj) => {
       }
       if (isArray(dataItem?.allOf)) {
         dataItem?.allOf?.forEach((item: any, index: number) => {
-          if (item.type === 'object') {
+          if (item.type === "object") {
             draft.properties[key].allOf[index] = trimSchema(item);
           }
-          if (item.type === 'array') {
+          if (item.type === "array") {
             draft.properties[key].allOf[index].items = trimSchema(item.items);
           }
         });
@@ -74,7 +83,7 @@ export const trimSchema = (schema: SchemaObj) => {
       }
     }
     if (isArray(draft?.ECHOAPI_ORDERS)) {
-      const emptyIndex = draft?.ECHOAPI_ORDERS?.indexOf('');
+      const emptyIndex = draft?.ECHOAPI_ORDERS?.indexOf("");
       if (emptyIndex !== -1) {
         draft.ECHOAPI_ORDERS.splice(emptyIndex, 1);
       }
@@ -87,7 +96,7 @@ export const trimSchema = (schema: SchemaObj) => {
 export const parseModelToJsonSchema: TYPE_PARSE_MODEL_TO_JSON_SCHEMA = async (
   model: any,
   parentModels = [],
-  schemasBaseData: any
+  schemasBaseData: any,
 ) => {
   const result = cloneDeep(model);
   if (isString(result?.ref)) {
@@ -99,16 +108,20 @@ export const parseModelToJsonSchema: TYPE_PARSE_MODEL_TO_JSON_SCHEMA = async (
       },
     };
     result.properties = {};
-    result.type = 'object';
+    result.type = "object";
     delete result.ref;
   }
   if (isArray(result?.type) && result?.type.length > 0) {
     result.type = result.type[0];
   }
-  if (result?.type === 'array') {
-    result.items = await parseModelToJsonSchema(result.items, parentModels, schemasBaseData);
+  if (result?.type === "array") {
+    result.items = await parseModelToJsonSchema(
+      result.items,
+      parentModels,
+      schemasBaseData,
+    );
   }
-  if (result?.type !== 'object') {
+  if (result?.type !== "object") {
     return result;
   }
 
@@ -136,7 +149,7 @@ export const parseModelToJsonSchema: TYPE_PARSE_MODEL_TO_JSON_SCHEMA = async (
     const newData: any = await parseModelToJsonSchema(
       dataModel?.schema || {},
       [...parentModels, dataModel?.model_id],
-      schemasBaseData
+      schemasBaseData,
     );
     newData.properties = merge(newData.properties || {}, overrideData);
 
@@ -155,15 +168,17 @@ export const parseModelToJsonSchema: TYPE_PARSE_MODEL_TO_JSON_SCHEMA = async (
     refData[key] = newData;
   }
 
-    if (isArray(result?.ECHOAPI_ORDERS) && result.ECHOAPI_ORDERS.length > 0) {
+  if (isArray(result?.ECHOAPI_ORDERS) && result.ECHOAPI_ORDERS.length > 0) {
     const newProperties = [];
     let requireds = isArray(result?.required) ? result.required : [];
     // eslint-disable-next-line
     for (const key of result?.ECHOAPI_ORDERS) {
       if (isPlainObject(refData?.[key]?.properties)) {
-        Object.entries(refData?.[key]?.properties).forEach(([refKey, refValue]) => {
-          newProperties.push([refKey, refValue]);
-        });
+        Object.entries(refData?.[key]?.properties).forEach(
+          ([refKey, refValue]) => {
+            newProperties.push([refKey, refValue]);
+          },
+        );
       } else if (isPlainObject(result?.properties?.[key])) {
         newProperties.push([key, result?.properties?.[key]]);
       }
@@ -184,7 +199,7 @@ export const parseModelToJsonSchema: TYPE_PARSE_MODEL_TO_JSON_SCHEMA = async (
     result.properties[modelKey] = await parseModelToJsonSchema(
       modelData,
       parentModels,
-      schemasBaseData
+      schemasBaseData,
     );
     if (isNull(result.properties[modelKey])) {
       delete result.properties[modelKey];
@@ -209,7 +224,10 @@ export const TreeTrans = (data: any[]) => {
 };
 
 // Compare if Opens data is consistent with model data
-export const diffObjectJSON: TYPE_DIFF_OBJECT_JSON = (sourceData: any, opensData: any) => {
+export const diffObjectJSON: TYPE_DIFF_OBJECT_JSON = (
+  sourceData: any,
+  opensData: any,
+) => {
   if (!isPlainObject(sourceData)) {
     return 1;
   }

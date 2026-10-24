@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import { useMemoizedFn } from 'ahooks';
-import produce from 'immer';
-import { assign } from 'lodash';
+import { useMemoizedFn } from "ahooks";
+import produce from "immer";
+import { assign } from "lodash";
 
-import ItemDescription from '../rowItems/ItemDescription';
-import ItemKey, { ItemKeyProps } from '../rowItems/ItemKey';
-import ModelSettings from '../rowItems/ModelSettings';
+import ItemDescription from "../rowItems/ItemDescription";
+import ItemKey, { ItemKeyProps } from "../rowItems/ItemKey";
+import ModelSettings from "../rowItems/ModelSettings";
 
 type Props = {
   value: any;
@@ -73,8 +73,8 @@ const EditItem: React.FC<Props> = (props) => {
     onChangeRef(newData);
   });
 
-  const mockDisable = ['object', 'array', 'oneOf', 'anyOf', 'allOf'].includes(
-    itemKeyProps.nodeType
+  const mockDisable = ["object", "array", "oneOf", "anyOf", "allOf"].includes(
+    itemKeyProps.nodeType,
   );
 
   const mergedValueOverride = assign({}, mergedValue, overrideData);
@@ -95,7 +95,7 @@ const EditItem: React.FC<Props> = (props) => {
     <>
       <ItemKey
         {...itemKeyProps}
-        nodeType={itemKeyProps?.nodeType || 'string'}
+        nodeType={itemKeyProps?.nodeType || "string"}
         onAddNode={handleAddNode}
         onAddSiblingNode={handleAddSiblingNode}
         singleOnly={singleOnly}

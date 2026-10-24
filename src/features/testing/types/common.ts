@@ -1,11 +1,11 @@
-import { STATUS_CODE } from '@/shared/constants/common';
-import { CASE_ITEM_TYPE } from '@/features/testing/constants';
+import { STATUS_CODE } from "@/shared/constants/common";
+import { CASE_ITEM_TYPE } from "@/features/testing/constants";
 
-import { EventData, TestingDetailData } from '.';
-import { ApiDetailsData } from '../../requests/types/api';
-import { ProjectConfigType } from '../../project/types';
-import { SysConfig } from '../../settings/types/settings';
-import { SendBaseOptions } from '@/extension/type';
+import { EventData, TestingDetailData } from ".";
+import { ApiDetailsData } from "../../requests/types/api";
+import { ProjectConfigType } from "../../project/types";
+import { SysConfig } from "../../settings/types/settings";
+import { SendBaseOptions } from "@/extension/type";
 
 export type CaseDataIf = {
   var: string;
@@ -60,7 +60,7 @@ export type Settings = {
   iteration_data: any[];
 
   //**Test file name */
-   file_name?: string;
+  file_name?: string;
 
   /**unknown */
   iterates_data_list: any[];
@@ -106,7 +106,7 @@ export type RunnerTestingProps = {
   testingData: EventData;
   projectConfig?: ProjectConfigType;
   systemConfig?: SysConfig;
-  originCollection?: SendBaseOptions['collection']
+  originCollection?: SendBaseOptions["collection"];
 };
 
 /**

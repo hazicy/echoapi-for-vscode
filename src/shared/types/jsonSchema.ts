@@ -1,5 +1,5 @@
 // Possible JSON Schema types
-export type JSONSchemaType = 
+export type JSONSchemaType =
   | "string"
   | "number"
   | "integer"
@@ -15,21 +15,21 @@ interface JSONSchemaBase {
   enum?: any[]; // Enum values
   default?: any; // Default value
   example?: any; // Example value
-  mock?:any;
-  description?:string;
+  mock?: any;
+  description?: string;
   properties?: { [key: string]: JSONSchema };
 }
 
 // Properties
 export interface JSONSchemaObject extends JSONSchemaBase {
   type: JSONSchemaType;
-  format?:string;
+  format?: string;
   properties?: { [key: string]: JSONSchema }; // Object properties, name as key, type as value
   required?: string[]; // Required fields
   additionalProperties?: boolean | JSONSchema; // Whether additional properties are allowed
-  description?:string;
-  default?:string;
-  example?:any;
+  description?: string;
+  default?: string;
+  example?: any;
 }
 
 // Array type
@@ -46,4 +46,5 @@ interface JSONSchemaCombined extends JSONSchemaBase {
 }
 
 // JSON Schema type
-export type JSONSchema = JSONSchemaBase | JSONSchemaObject | JSONSchemaArray | JSONSchemaCombined;
+export type JSONSchema =
+  JSONSchemaBase | JSONSchemaObject | JSONSchemaArray | JSONSchemaCombined;

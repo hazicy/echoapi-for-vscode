@@ -1,9 +1,18 @@
-import { ADD_CASE_DEFAULT } from '@/features/testing/constants/default';
-import { create } from '@/app/store/utils';
-import { ApiDetailsData } from '@/features/requests/types/api';
-import { EventItem, TestingData, TestingDataListItem, TestingDetailData, TestingSendingData } from '@/features/testing/types';
-import { RunnerTestingItem, Settings } from '@/features/testing/types/common';
-import { TestingReportList, TestingReportListRes } from '@/features/testing/types/res';
+import { ADD_CASE_DEFAULT } from "@/features/testing/constants/default";
+import { create } from "@/app/store/utils";
+import { ApiDetailsData } from "@/features/requests/types/api";
+import {
+  EventItem,
+  TestingData,
+  TestingDataListItem,
+  TestingDetailData,
+  TestingSendingData,
+} from "@/features/testing/types";
+import { RunnerTestingItem, Settings } from "@/features/testing/types/common";
+import {
+  TestingReportList,
+  TestingReportListRes,
+} from "@/features/testing/types/res";
 
 type State = {
   // raw base data flat list
@@ -14,13 +23,13 @@ type State = {
   testingDetailsData: { [x: string]: TestingDetailData };
 
   // test run result data
-  testingSendingData:Partial<TestingSendingData>;
+  testingSendingData: Partial<TestingSendingData>;
 
   // test report list
-  testingReportList:TestingReportList[];
+  testingReportList: TestingReportList[];
 
   // all test reports for current project
-  projectTestingReportList:TestingReportList[];
+  projectTestingReportList: TestingReportList[];
 
   // tabs open list
   openTestingList: string[];
@@ -40,7 +49,7 @@ type State = {
   testingConfig: Settings;
 
   // test interface list
-  eventList:EventItem[];
+  eventList: EventItem[];
 
   // running test cases
   runnerTestingList: RunnerTestingItem[];
@@ -52,79 +61,100 @@ type State = {
   // detail loading
   detailLoading: boolean;
   // test name
-  testingName:string;
+  testingName: string;
   // show report list
-  showReportList:boolean;
+  showReportList: boolean;
 };
 
 type Action = {
-  updateTestingOriginBaseList: (testingList: State['testingOriginBaseList']) => void;
-  updateTestingBaseData: (testingBaseData: State['testingBaseData']) => void;
-  updateShowReportList: (showReportList: State['showReportList']) => void;
-  updateTestingDetailsData: (testingDetailsData: State['testingDetailsData']) => void;
-  updateTestingDetailsDataItem: (testingDetailsData: State['testingDetailsData']) => void;
-
-  updateTestingDetailDataByTestingId: (testingDetailData: TestingDetailData) => void;
-
-  updateOpenTestingList: (openTestingList: State['openTestingList']) => void;
-  updateOpenTestingListDetailData: (
-    openTestingListDetailData: State['openTestingListDetailData']
+  updateTestingOriginBaseList: (
+    testingList: State["testingOriginBaseList"],
+  ) => void;
+  updateTestingBaseData: (testingBaseData: State["testingBaseData"]) => void;
+  updateShowReportList: (showReportList: State["showReportList"]) => void;
+  updateTestingDetailsData: (
+    testingDetailsData: State["testingDetailsData"],
+  ) => void;
+  updateTestingDetailsDataItem: (
+    testingDetailsData: State["testingDetailsData"],
   ) => void;
 
-  updateOpenTestingDetailDataByTestingId: (openTestingDetailData: TestingDetailData) => void;
+  updateTestingDetailDataByTestingId: (
+    testingDetailData: TestingDetailData,
+  ) => void;
 
-  updateTestingActiveKey: (testingActiveKey: State['testingActiveKey']) => void;
-  updateTestingData: (testingData: State['testingData']) => void;
+  updateOpenTestingList: (openTestingList: State["openTestingList"]) => void;
+  updateOpenTestingListDetailData: (
+    openTestingListDetailData: State["openTestingListDetailData"],
+  ) => void;
 
-  updateSampleDetailsData: (sampleList: State['sampleDetailsData']) => void;
+  updateOpenTestingDetailDataByTestingId: (
+    openTestingDetailData: TestingDetailData,
+  ) => void;
 
-  updateTestingReportData: (testingReportData: State['testingReportData']) => void;
-  updateTestingReportList: (testingReportList: State['testingReportList']) => void;
-  updateProjectTestingReportList: (projectTestingReportList: State['projectTestingReportList']) => void;
-  
-  updateTestingName: (testingName: State['testingName']) => void;
+  updateTestingActiveKey: (testingActiveKey: State["testingActiveKey"]) => void;
+  updateTestingData: (testingData: State["testingData"]) => void;
 
-  updateTestingConfig: (testingConfig: State['testingConfig']) => void;
+  updateSampleDetailsData: (sampleList: State["sampleDetailsData"]) => void;
 
-  updateEventList: (eventList: State['eventList']) => void;
+  updateTestingReportData: (
+    testingReportData: State["testingReportData"],
+  ) => void;
+  updateTestingReportList: (
+    testingReportList: State["testingReportList"],
+  ) => void;
+  updateProjectTestingReportList: (
+    projectTestingReportList: State["projectTestingReportList"],
+  ) => void;
 
-  updateRunnerTestingList: (runnerTestingList: State['runnerTestingList']) => void;
+  updateTestingName: (testingName: State["testingName"]) => void;
 
-  updateSaveLoading: (saveLoading: State['saveLoading']) => void;
-  updateTreeLoading: (treeLoading: State['treeLoading']) => void;
-  updateDetailLoading: (detailLoading: State['detailLoading']) => void;
-  updateTestingSendingData: (testingSendingData: State['testingSendingData']) => void;
-  
+  updateTestingConfig: (testingConfig: State["testingConfig"]) => void;
+
+  updateEventList: (eventList: State["eventList"]) => void;
+
+  updateRunnerTestingList: (
+    runnerTestingList: State["runnerTestingList"],
+  ) => void;
+
+  updateSaveLoading: (saveLoading: State["saveLoading"]) => void;
+  updateTreeLoading: (treeLoading: State["treeLoading"]) => void;
+  updateDetailLoading: (detailLoading: State["detailLoading"]) => void;
+  updateTestingSendingData: (
+    testingSendingData: State["testingSendingData"],
+  ) => void;
 };
 
 const useTesting = create<State & Action>()((set) => ({
   testingOriginBaseList: [],
-  showReportList:false,
+  showReportList: false,
   testingBaseData: {},
 
   testingDetailsData: {},
 
   openTestingListDetailData: {},
-  testingName:'',
+  testingName: "",
   openTestingList: [],
-  testingActiveKey: '',
+  testingActiveKey: "",
   testingData: {},
-  testingConfig:ADD_CASE_DEFAULT.settings,
+  testingConfig: ADD_CASE_DEFAULT.settings,
   testingResult: [],
-  eventList:[],
+  eventList: [],
   sampleDetailsData: {},
-  testingReportList:[],
+  testingReportList: [],
   testingReportData: {},
-  projectTestingReportList:[],
+  projectTestingReportList: [],
   runnerTestingList: [],
-  testingSendingData:{},
+  testingSendingData: {},
   saveLoading: false,
   treeLoading: true,
   detailLoading: false,
 
-  updateTestingOriginBaseList: (testingOriginBaseList) => set(() => ({ testingOriginBaseList })),
+  updateTestingOriginBaseList: (testingOriginBaseList) =>
+    set(() => ({ testingOriginBaseList })),
   updateTestingBaseData: (testingBaseData) => set(() => ({ testingBaseData })),
-  updateTestingDetailsData: (testingDetailsData) => set(() => ({ testingDetailsData })),
+  updateTestingDetailsData: (testingDetailsData) =>
+    set(() => ({ testingDetailsData })),
   updateTestingDetailsDataItem: (payload) =>
     set((state) => ({
       testingDetailsData: {
@@ -143,7 +173,8 @@ const useTesting = create<State & Action>()((set) => ({
     set(() => ({ openTestingListDetailData })),
 
   updateOpenTestingList: (openTestingList) => set(() => ({ openTestingList })),
-  updateTestingActiveKey: (testingActiveKey) => set(() => ({ testingActiveKey })),
+  updateTestingActiveKey: (testingActiveKey) =>
+    set(() => ({ testingActiveKey })),
   updateTestingData: (testingData) => set(() => ({ testingData })),
 
   updateOpenTestingDetailDataByTestingId: (payload) =>
@@ -154,22 +185,28 @@ const useTesting = create<State & Action>()((set) => ({
       },
     })),
 
-  updateSampleDetailsData: (sampleDetailsData) => set(() => ({ sampleDetailsData })),
+  updateSampleDetailsData: (sampleDetailsData) =>
+    set(() => ({ sampleDetailsData })),
 
-  updateTestingReportData: (testingReportData) => set(() => ({ testingReportData })),
-  updateTestingReportList: (testingReportList) => set(() => ({ testingReportList })),
-  updateProjectTestingReportList: (projectTestingReportList) => set(() => ({ projectTestingReportList })),
-  
-  updateRunnerTestingList: (runnerTestingList) => set(() => ({ runnerTestingList })),
+  updateTestingReportData: (testingReportData) =>
+    set(() => ({ testingReportData })),
+  updateTestingReportList: (testingReportList) =>
+    set(() => ({ testingReportList })),
+  updateProjectTestingReportList: (projectTestingReportList) =>
+    set(() => ({ projectTestingReportList })),
+
+  updateRunnerTestingList: (runnerTestingList) =>
+    set(() => ({ runnerTestingList })),
 
   updateSaveLoading: (saveLoading) => set(() => ({ saveLoading })),
   updateTreeLoading: (treeLoading) => set(() => ({ treeLoading })),
   updateDetailLoading: (detailLoading) => set(() => ({ detailLoading })),
-  updateTestingConfig:(testingConfig) => set(() => ({ testingConfig })),
-  updateEventList:(eventList) => set(() => ({ eventList })),
-  updateTestingSendingData:(testingSendingData) => set(() => ({ testingSendingData })),
-  updateTestingName:(testingName) => set(() => ({ testingName })),
-  updateShowReportList:(showReportList) => set(() => ({ showReportList })),
+  updateTestingConfig: (testingConfig) => set(() => ({ testingConfig })),
+  updateEventList: (eventList) => set(() => ({ eventList })),
+  updateTestingSendingData: (testingSendingData) =>
+    set(() => ({ testingSendingData })),
+  updateTestingName: (testingName) => set(() => ({ testingName })),
+  updateShowReportList: (showReportList) => set(() => ({ showReportList })),
 }));
 
 export default useTesting;

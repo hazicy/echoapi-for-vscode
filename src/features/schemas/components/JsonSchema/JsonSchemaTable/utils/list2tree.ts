@@ -1,4 +1,4 @@
-import { isArray, isUndefined } from 'lodash';
+import { isArray, isUndefined } from "lodash";
 
 export const listToTree = (data?: any[]) => {
   const treeData: any = {};
@@ -9,7 +9,7 @@ export const listToTree = (data?: any[]) => {
   data.forEach((item) => {
     treeData[item.model_id] = {
       key: item?.model_id,
-      title: item?.display_name || item?.name || '',
+      title: item?.display_name || item?.name || "",
       model_type: item.model_type,
     };
   });

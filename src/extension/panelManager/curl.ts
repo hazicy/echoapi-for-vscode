@@ -1,11 +1,14 @@
-import { globalConfig } from '../constants';
-import * as vscode from 'vscode';
-import path from 'path';
-import { getHtmlForWebview } from '../utils';
-import { handelCurlMessage } from '../messageHandler/curl';
+import { globalConfig } from "../constants";
+import * as vscode from "vscode";
+import path from "path";
+import { getHtmlForWebview } from "../utils";
+import { handelCurlMessage } from "../messageHandler/curl";
 
-export const createCurlPanel= (data:any, context: vscode.ExtensionContext) => {
-  let { curlWebView }= globalConfig;
+export const createCurlPanel = (
+  data: any,
+  context: vscode.ExtensionContext,
+) => {
+  let { curlWebView } = globalConfig;
 
   if (curlWebView) {
     // Tab already exists, switch to it
@@ -14,8 +17,8 @@ export const createCurlPanel= (data:any, context: vscode.ExtensionContext) => {
   }
   // Create and show panel
   const panel = vscode.window.createWebviewPanel(
-    'curlPanel',
-    'cURL',
+    "curlPanel",
+    "cURL",
     vscode.ViewColumn.One,
     {
       enableScripts: true,
@@ -27,26 +30,32 @@ export const createCurlPanel= (data:any, context: vscode.ExtensionContext) => {
   );
   // Get icon path
   const iconPath = vscode.Uri.file(
-    path.join(context.extensionPath, 'dist', 'images', 'curl.png')
+    path.join(context.extensionPath, "dist", "images", "curl.png"),
   );
 
   panel.iconPath = iconPath;
-  const scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', 'curlPanel.js')));
-  const resourceBaseUrl = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist')));
+  const scriptUri = panel.webview.asWebviewUri(
+    vscode.Uri.file(path.join(context.extensionPath, "dist", "curlPanel.js")),
+  );
+  const resourceBaseUrl = panel.webview.asWebviewUri(
+    vscode.Uri.file(path.join(context.extensionPath, "dist")),
+  );
 
   // And set its HTML content
-  panel.webview.html = getHtmlForWebview(scriptUri, resourceBaseUrl,null);
+  panel.webview.html = getHtmlForWebview(scriptUri, resourceBaseUrl, null);
 
   // Receive messages from Webview
-  panel.webview.onDidReceiveMessage(async (message: { action: string, data: any }) => {
-    handelCurlMessage(message, context);
-  });
+  panel.webview.onDidReceiveMessage(
+    async (message: { action: string; data: any }) => {
+      handelCurlMessage(message, context);
+    },
+  );
 
-    // Listen for Webview view visibility changes
-    panel.onDidChangeViewState(() => {
-      if (panel.visible) {
-      }
-    });
+  // Listen for Webview view visibility changes
+  panel.onDidChangeViewState(() => {
+    if (panel.visible) {
+    }
+  });
 
   // Triggered when tab is closed
   panel.onDidDispose(
@@ -55,7 +64,7 @@ export const createCurlPanel= (data:any, context: vscode.ExtensionContext) => {
       // When the panel is closed, cancel any future updates to the webview content
     },
     null,
-    context.subscriptions
+    context.subscriptions,
   );
   globalConfig.curlWebView = panel;
-}
+};

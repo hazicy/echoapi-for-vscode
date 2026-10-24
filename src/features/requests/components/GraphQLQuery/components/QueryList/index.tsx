@@ -1,22 +1,22 @@
-import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
-import { useMemoizedFn } from 'ahooks';
-import { snowflakeId } from 'apipost-tools';
-import produce from 'immer';
-import { cloneDeep, concat, findIndex, head, isEqual, set } from 'lodash';
+import { useMemoizedFn } from "ahooks";
+import { snowflakeId } from "apipost-tools";
+import produce from "immer";
+import { cloneDeep, concat, findIndex, head, isEqual, set } from "lodash";
 
-import { ListSideBar } from '@/shared/components';
+import { ListSideBar } from "@/shared/components";
 
-import GraphQLQueryContext from '@/features/requests/components/GraphQLQuery/context/GraphQLQueryContext';
-import { DEFAULT_GRAPHQL_QUERY_ITEM } from '@/features/requests/constants/request';
-import { GraphQLRequestBody } from '@/features/requests/types/request';
+import GraphQLQueryContext from "@/features/requests/components/GraphQLQuery/context/GraphQLQueryContext";
+import { DEFAULT_GRAPHQL_QUERY_ITEM } from "@/features/requests/constants/request";
+import { GraphQLRequestBody } from "@/features/requests/types/request";
 
 interface Props {
   data: GraphQLRequestBody;
   onChange: <K extends keyof GraphQLRequestBody>(
     value: GraphQLRequestBody[K],
-    search_id?: string
+    search_id?: string,
   ) => void;
   onAdd?: () => void;
 }
@@ -31,9 +31,11 @@ const Index = (props: Props) => {
     onChange(
       {
         ...data,
-        query_list: concat(data.query_list, [{ ...DEFAULT_GRAPHQL_QUERY_ITEM, param_id }]),
+        query_list: concat(data.query_list, [
+          { ...DEFAULT_GRAPHQL_QUERY_ITEM, param_id },
+        ]),
       },
-      param_id
+      param_id,
     );
     onAdd?.();
   };
@@ -42,12 +44,15 @@ const Index = (props: Props) => {
     let search_id;
     const activeKey = apiData?.search_id || head(data.query_list)?.param_id;
     const query_list = produce(data.query_list, (draft) => {
-      const messageIndex = findIndex(data.query_list, (item) => isEqual(item.param_id, param_id));
+      const messageIndex = findIndex(data.query_list, (item) =>
+        isEqual(item.param_id, param_id),
+      );
       if (messageIndex > -1) {
         draft.splice(messageIndex, 1);
       }
       if (isEqual(activeKey, param_id)) {
-        const nextActiveKey = draft[messageIndex - 1]?.param_id || head(draft)?.param_id;
+        const nextActiveKey =
+          draft[messageIndex - 1]?.param_id || head(draft)?.param_id;
         search_id = nextActiveKey;
       }
     });
@@ -57,13 +62,16 @@ const Index = (props: Props) => {
         ...data,
         query_list,
       },
-      search_id
+      search_id,
     );
   });
 
   const onEdit = (index: number, { value }: { key: string; value: string }) => {
     const queryList = cloneDeep(data.query_list);
-    set(queryList, index, { ...queryList[index], name: value?.trim() || t('graphql.cus_search') });
+    set(queryList, index, {
+      ...queryList[index],
+      name: value?.trim() || t("graphql.cus_search"),
+    });
     onChange({
       ...data,
       query_list: queryList,
@@ -71,7 +79,7 @@ const Index = (props: Props) => {
   };
 
   const onSelect = (param_id: string) => {
-    apiDataChange('search_id', param_id);
+    apiDataChange("search_id", param_id);
   };
 
   return (

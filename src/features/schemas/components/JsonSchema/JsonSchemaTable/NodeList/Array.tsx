@@ -1,14 +1,14 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 
-import isObject from 'lodash/isObject';
+import isObject from "lodash/isObject";
 
-import ItemNode from '../ItemNode';
+import ItemNode from "../ItemNode";
 
 interface ArrayItemProps {
   deepIndex: number;
   nodeValue: any;
   onChange: (nodeKey: string, val: any) => void;
-  linkSchema?: 'enable' | 'disable';
+  linkSchema?: "enable" | "disable";
   parentModels: React.MutableRefObject<string[]>;
 }
 
@@ -17,7 +17,7 @@ const ArrayItem: React.FC<ArrayItemProps> = (props) => {
 
   // Delete attribute
   const handleDeleteNode = useCallback(() => {
-    onChange('items', undefined);
+    onChange("items", undefined);
   }, []);
 
   return (
@@ -26,7 +26,7 @@ const ArrayItem: React.FC<ArrayItemProps> = (props) => {
         <ItemNode
           {...{
             value: nodeValue.items,
-            nodeKey: 'items',
+            nodeKey: "items",
             isRequired: false,
             readOnly: true,
             deepIndex: deepIndex + 1,

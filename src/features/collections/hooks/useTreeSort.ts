@@ -1,16 +1,18 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import { ReactElement } from 'react';
-import { useParams } from 'react-router-dom';
+import { ReactElement } from "react";
+import { useParams } from "react-router-dom";
 
-import { TreeProps } from '@/shared/ui/base';
-import { DataNode } from '@/shared/ui/base';
-import produce from 'immer';
-import { assign, concat, forEach, includes, isEqual, last } from 'lodash';
-import { DEFAULT_NO_DRAG_INCLUDES_KEYS, DROP_POSITION_ENUM } from '@/features/collections/constants/tree';
-
+import { TreeProps } from "@/shared/ui/base";
+import { DataNode } from "@/shared/ui/base";
+import produce from "immer";
+import { assign, concat, forEach, includes, isEqual, last } from "lodash";
+import {
+  DEFAULT_NO_DRAG_INCLUDES_KEYS,
+  DROP_POSITION_ENUM,
+} from "@/features/collections/constants/tree";
 
 interface Props {
-  allowDrop?: TreeProps['allowDrop'];
+  allowDrop?: TreeProps["allowDrop"];
   nodeDraggableKeys?: string[];
   onMoveApis?: (data: any) => void;
   primaryIdKeyName: string;
@@ -18,11 +20,17 @@ interface Props {
 }
 
 const useTreeSort = (props: Props) => {
-  const { primaryIdKeyName, allowDrop, nodeDraggableKeys = [], onMoveApis, type } = props;
+  const {
+    primaryIdKeyName,
+    allowDrop,
+    nodeDraggableKeys = [],
+    onMoveApis,
+    type,
+  } = props;
 
   const { projectId } = useParams();
 
-  const onDragOver: TreeProps['onDragOver'] = (info) => {
+  const onDragOver: TreeProps["onDragOver"] = (info) => {
     const { event } = info;
     const element = event.target as Element;
     const dropTitleProps = (info.node.title as ReactElement)?.props;
@@ -30,15 +38,20 @@ const useTreeSort = (props: Props) => {
 
     const offsetY = event.clientY - rect.top;
     // Dynamically adjust logic based on mouse position
-    if (offsetY > (rect.height * 2) / 3 && isEqual(dropTitleProps[type], 'folder')) {
+    if (
+      offsetY > (rect.height * 2) / 3 &&
+      isEqual(dropTitleProps[type], "folder")
+    ) {
       const treeNodeEl = element.closest(`.beautify-tree-treenode`) || element;
       treeNodeEl?.classList.add(slots["drag-over"]);
     }
   };
 
-
   const nodeDraggable = (node: DataNode) => {
-    return !includes(concat([], DEFAULT_NO_DRAG_INCLUDES_KEYS, nodeDraggableKeys), node.key);
+    return !includes(
+      concat([], DEFAULT_NO_DRAG_INCLUDES_KEYS, nodeDraggableKeys),
+      node.key,
+    );
   };
 
   const genNewData = <
@@ -46,7 +59,7 @@ const useTreeSort = (props: Props) => {
     U extends Record<typeof primaryIdKeyName, any>,
   >(
     detailsData: { [x: string]: T },
-    list: U[]
+    list: U[],
   ) => {
     return produce(detailsData, (draft) => {
       forEach(list, (item) => {
@@ -62,7 +75,7 @@ const useTreeSort = (props: Props) => {
     });
   };
 
-  const onDrop: TreeProps['onDrop'] = (info) => {
+  const onDrop: TreeProps["onDrop"] = (info) => {
     const dropKey = String(info.node.key);
     const dragKey = String(info.dragNode.key);
 
@@ -70,11 +83,11 @@ const useTreeSort = (props: Props) => {
 
     const dropParentId = dropTitleProps?.parent_id;
 
-    const dropPos = info.node.pos.split('-');
+    const dropPos = info.node.pos.split("-");
     let dropPosition = info.dropPosition - Number(last(dropPos));
     const positionTargetId = {
-      [`after_${primaryIdKeyName}`]: '0',
-      [`before_${primaryIdKeyName}`]: '0',
+      [`after_${primaryIdKeyName}`]: "0",
+      [`before_${primaryIdKeyName}`]: "0",
     };
     const { event } = info;
     const element = event.target as Element;
@@ -82,7 +95,10 @@ const useTreeSort = (props: Props) => {
     const offsetY = event.clientY - rect.top;
 
     // Dynamically adjust logic based on mouse position
-    if (offsetY > (rect.height * 2) / 3 && isEqual(dropTitleProps[type], 'folder')) {
+    if (
+      offsetY > (rect.height * 2) / 3 &&
+      isEqual(dropTitleProps[type], "folder")
+    ) {
       dropPosition = DROP_POSITION_ENUM.INSIDE;
     }
 
@@ -110,7 +126,7 @@ const useTreeSort = (props: Props) => {
     draggable: { icon: false, nodeDraggable: nodeDraggable },
     onDrop,
     genNewData,
-    onDragOver
+    onDragOver,
   };
 };
 

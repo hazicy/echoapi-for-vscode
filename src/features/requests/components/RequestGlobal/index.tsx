@@ -1,24 +1,35 @@
-import RequestPanel from '@/features/requests/components/Request';
-import { calcTabLineBodyHeaderNum } from '@/shared/utils/common';
+import RequestPanel from "@/features/requests/components/Request";
+import { calcTabLineBodyHeaderNum } from "@/shared/utils/common";
 
-import { RequestBody } from './components';
+import { RequestBody } from "./components";
 
 interface Props {
   requestData: any;
   onRequestDataChange: (value: any) => void;
   targetId?: string;
   isSystem?: boolean;
-  defaultTabKey?:string;
+  defaultTabKey?: string;
 }
 
 const RequestGlobal = (props: Props) => {
-  const { targetId,defaultTabKey, requestData, onRequestDataChange, isSystem = false } = props;
+  const {
+    targetId,
+    defaultTabKey,
+    requestData,
+    onRequestDataChange,
+    isSystem = false,
+  } = props;
 
   const extra = [
     {
-      key: 'cusBody',
-      label: 'Body',
-      children: <RequestBody onRequestDataChange={onRequestDataChange} requestData={requestData} />,
+      key: "cusBody",
+      label: "Body",
+      children: (
+        <RequestBody
+          onRequestDataChange={onRequestDataChange}
+          requestData={requestData}
+        />
+      ),
       countParams: {
         dataSource: requestData?.body?.parameter,
         customCalcFun: calcTabLineBodyHeaderNum,
@@ -29,13 +40,21 @@ const RequestGlobal = (props: Props) => {
   return (
     <RequestPanel
       tabOptions={{
-        defaultActiveKey:defaultTabKey === 'Body' ? 'cusBody' : defaultTabKey
+        defaultActiveKey: defaultTabKey === "Body" ? "cusBody" : defaultTabKey,
       }}
       isSystem={isSystem}
       paramsType="global"
       requestData={requestData}
       onRequestDataChange={onRequestDataChange}
-      includesTabs={['Headers', 'cusBody', 'Params', 'Auth', 'Cookie', 'preRequest', 'postResponse']}
+      includesTabs={[
+        "Headers",
+        "cusBody",
+        "Params",
+        "Auth",
+        "Cookie",
+        "preRequest",
+        "postResponse",
+      ]}
       extra={extra}
     />
   );

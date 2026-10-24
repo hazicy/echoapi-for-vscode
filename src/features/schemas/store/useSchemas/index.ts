@@ -1,5 +1,5 @@
-import { create } from '@/app/store/utils';
-import { IDataModel } from '@/features/schemas/types';
+import { create } from "@/app/store/utils";
+import { IDataModel } from "@/features/schemas/types";
 
 type State = {
   schemasBaseData: { [x: string]: any }; // model source data kv
@@ -14,11 +14,13 @@ type State = {
 };
 
 type Action = {
-  updateSchemasBaseData: (schemasBaseData: State['schemasBaseData']) => void;
-  updateSchemasOpenList: (schemasOpenList: State['schemasOpenList']) => void;
+  updateSchemasBaseData: (schemasBaseData: State["schemasBaseData"]) => void;
+  updateSchemasOpenList: (schemasOpenList: State["schemasOpenList"]) => void;
   updateSchemasActiveKey: (schemasActiveKey: string) => void;
-  updateSchemasLoading: (schemasLoading: State['schemasLoading']) => void;
-  updateSchemasDetailLoading: (schemasDetailLoading: State['schemasLoading']) => void;
+  updateSchemasLoading: (schemasLoading: State["schemasLoading"]) => void;
+  updateSchemasDetailLoading: (
+    schemasDetailLoading: State["schemasLoading"],
+  ) => void;
 
   updateSchemasOpens: (p: any) => void;
 };
@@ -26,26 +28,29 @@ type Action = {
 const useSchemas = create<State & Action>()((set) => ({
   schemasBaseData: {},
   schemasOpenList: [],
-  schemasActiveKey: '',
+  schemasActiveKey: "",
   schemasLoading: false,
   schemasDetailLoading: false,
 
   schemasOpensData: {},
   schemasOpensStagingData: {},
 
-  updateSchemasBaseData: (schemasBaseData: State['schemasBaseData']) =>
+  updateSchemasBaseData: (schemasBaseData: State["schemasBaseData"]) =>
     set(() => ({ schemasBaseData })),
-  updateSchemasOpenList: (schemasOpenList: State['schemasOpenList']) =>
+  updateSchemasOpenList: (schemasOpenList: State["schemasOpenList"]) =>
     set(() => ({ schemasOpenList })),
-  updateSchemasActiveKey: (schemasActiveKey) => set(() => ({ schemasActiveKey })),
+  updateSchemasActiveKey: (schemasActiveKey) =>
+    set(() => ({ schemasActiveKey })),
   updateSchemasLoading: (schemasLoading) => set(() => ({ schemasLoading })),
-  updateSchemasDetailLoading: (schemasDetailLoading) => set(() => ({ schemasDetailLoading })),
+  updateSchemasDetailLoading: (schemasDetailLoading) =>
+    set(() => ({ schemasDetailLoading })),
 
   updateSchemasOpens: (payload) =>
     set((state) => ({
       ...state,
       schemasOpensData: payload?.schemasOpensData || state?.schemasOpensData,
-      schemasOpensStagingData: payload?.schemasOpensStagingData || state?.schemasOpensStagingData,
+      schemasOpensStagingData:
+        payload?.schemasOpensStagingData || state?.schemasOpensStagingData,
       schemasOpenList: payload.schemasOpenList || state?.schemasOpenList,
     })),
 }));

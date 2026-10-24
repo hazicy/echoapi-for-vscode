@@ -1,10 +1,10 @@
-import { ThemeToken } from '@/shared/hooks/useTheme';
+import { ThemeToken } from "@/shared/hooks/useTheme";
 
-import { CollapseProps } from './types';
+import { CollapseProps } from "./types";
 
 export const getTheme = (
   themeToken: ThemeToken,
-  { headerPadding }: { headerPadding: CollapseProps['headerPadding'] }
+  { headerPadding }: { headerPadding: CollapseProps["headerPadding"] },
 ) => {
   return {
     components: {

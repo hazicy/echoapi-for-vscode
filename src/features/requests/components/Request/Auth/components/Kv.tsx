@@ -1,11 +1,14 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import { Form, Input, Select } from '@/shared/ui/base';
+import { Form, Input, Select } from "@/shared/ui/base";
 
-import { map } from 'lodash';
+import { map } from "lodash";
 
-import VarInput from '@/features/variables/components/VarInput';
-import { AUTH_APIKEY_LOCATION, AUTH_ENUM } from '@/features/requests/constants/auth';
+import VarInput from "@/features/variables/components/VarInput";
+import {
+  AUTH_APIKEY_LOCATION,
+  AUTH_ENUM,
+} from "@/features/requests/constants/auth";
 
 const Kv = () => {
   const { t } = useTranslation();
@@ -15,13 +18,21 @@ const Kv = () => {
   }));
   return (
     <>
-      <Form.Item label="Key" name={[AUTH_ENUM.KV, 'key']}>
-        <Input.TextArea autoSize placeholder={t('common.auth.key_tip')} />
+      <Form.Item label="Key" name={[AUTH_ENUM.KV, "key"]}>
+        <Input.TextArea autoSize placeholder={t("common.auth.key_tip")} />
       </Form.Item>
-      <Form.Item label="Value" name={[AUTH_ENUM.KV, 'value']}>
-        <VarInput enableNewRow hasBorder placeholder={t('common.auth.value_tip')} />
+      <Form.Item label="Value" name={[AUTH_ENUM.KV, "value"]}>
+        <VarInput
+          enableNewRow
+          hasBorder
+          placeholder={t("common.auth.value_tip")}
+        />
       </Form.Item>
-      <Form.Item initialValue="header" label={t('common.auth.add_to')} name={[AUTH_ENUM.KV, 'in']}>
+      <Form.Item
+        initialValue="header"
+        label={t("common.auth.add_to")}
+        name={[AUTH_ENUM.KV, "in"]}
+      >
         <Select options={options} />
       </Form.Item>
     </>

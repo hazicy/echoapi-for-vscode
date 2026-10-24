@@ -4,49 +4,53 @@ import { DEFAULT_TEAM } from "./team";
 import { ProjectConfigType } from "@/features/project/types";
 
 export const INIT_DOMAIN_INFO = {
-  inputDomain: '',
-  cookieText: '',
+  inputDomain: "",
+  cookieText: "",
   cookieObj: {},
   activeId: null,
-  isShowArea: '',
+  isShowArea: "",
   activeItem: {},
 };
 
-export const INIT_ENV_LIST = [{
-  "env_id": "1",
-  "name": "Default Environment",
-  "is_private": -1,
-  "sort": 1,
-  "server_list": [
-    {
-      "server_id": "1",
-      "name": "Default Services",
-      "sort": 1,
-      "uri": "",
-      "is_default": 1
-    }
-  ],
-  "env_var_list": {}
-}];
+export const INIT_ENV_LIST = [
+  {
+    env_id: "1",
+    name: "Default Environment",
+    is_private: -1,
+    sort: 1,
+    server_list: [
+      {
+        server_id: "1",
+        name: "Default Services",
+        sort: 1,
+        uri: "",
+        is_default: 1,
+      },
+    ],
+    env_var_list: {},
+  },
+];
 
-export const INIT_SERVER_LIST = [{
- name:'Default Services',
- server_id:'1',
- uri:'',
- sort:1,
- is_default:1
-}];
+export const INIT_SERVER_LIST = [
+  {
+    name: "Default Services",
+    server_id: "1",
+    uri: "",
+    sort: 1,
+    is_default: 1,
+  },
+];
 
-export const DEFAULT_PROJECT:Project={
-  project_id: '-1',
-  team_id: '',
-  name: 'Local Project',
+export const DEFAULT_PROJECT: Project = {
+  project_id: "-1",
+  team_id: "",
+  name: "Local Project",
   is_lock: -1,
   is_default: 1,
   is_describe_library: 1,
   is_force: "1",
-  logo: '',
-  intro: '',
+  logo: "",
+  intro: "",
   created_at: dayjs().toDate(),
   can_del: -1,
   can_quit: -1,
@@ -57,15 +61,13 @@ export const DEFAULT_PROJECT:Project={
   upgrade_status: 1,
 };
 
-export const DEFAULT_TEAM_PROJECT:TeamItem={
+export const DEFAULT_TEAM_PROJECT: TeamItem = {
   ...DEFAULT_TEAM,
-  project:[{...DEFAULT_PROJECT}]
+  project: [{ ...DEFAULT_PROJECT }],
 };
 
-export const DEFAULT_PROJECT_CONFIG:ProjectConfigType ={
+export const DEFAULT_PROJECT_CONFIG: ProjectConfigType = {
   envList: INIT_ENV_LIST,
-  envDetailKeys: '1',
+  envDetailKeys: "1",
   serverList: INIT_SERVER_LIST,
 };
-
-

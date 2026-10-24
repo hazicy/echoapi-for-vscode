@@ -354,7 +354,10 @@ export const Modal = Object.assign(ModalControl, {
 export const App = Object.assign(
   ({ children, className, style }: UIProps) => (
     <Toast.Provider toastManager={toastManager}>
-      <div className={cx(css.app, slots["beautify-app"], className)} style={style}>
+      <div
+        className={cx(css.app, slots["beautify-app"], className)}
+        style={style}
+      >
         {children}
       </div>
       <Toasts />

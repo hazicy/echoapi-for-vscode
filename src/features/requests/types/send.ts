@@ -1,11 +1,11 @@
-import { RequestBodyContentType } from './request';
+import { RequestBodyContentType } from "./request";
 
 /**
  * API sending data
  */
 export interface ApiSendingData {
   /**Send status */
-  sendStatus: 'initial' | 'sending' | 'sendError';
+  sendStatus: "initial" | "sending" | "sendError";
   /**Data timestamp */
   timestamp: number;
   /**Error message */
@@ -13,21 +13,21 @@ export interface ApiSendingData {
   /**Original error info */
   responseError: ApiSendResponseError;
   /**Request headers */
-  requestHeaders: ApiSendResponseDataRequest['headers'];
+  requestHeaders: ApiSendResponseDataRequest["headers"];
   /**Response headers */
-  responseHeaders: ApiSendResponseDataResponse['headers'];
+  responseHeaders: ApiSendResponseDataResponse["headers"];
   /**cookies */
-  cookies: ApiSendResponseDataResponse['arr_cookies'];
+  cookies: ApiSendResponseDataResponse["arr_cookies"];
   /**Assertions */
-  asserts: ApiSendResponseData['assertions'];
+  asserts: ApiSendResponseData["assertions"];
   /**Visualizer */
   visualizerHtml: string | null;
   /**target id*/
   target_id: string;
   /**Console log list */
-  consoleList: ApiSendResponseData['console'];
+  consoleList: ApiSendResponseData["console"];
   /**Raw response of send result */
-  response: Omit<ApiSendResponseDataResponse, 'headers' | 'arr_cookies'>;
+  response: Omit<ApiSendResponseDataResponse, "headers" | "arr_cookies">;
   /**Raw request of send result */
   request: ApiSendResponseDataRequest;
 }
@@ -46,16 +46,17 @@ export interface ApiSendingDataSSE extends ApiSendingData {
  * Stream response data item
  */
 export type ApiStreamResponseSSEItem = {
-  action: 'message' | 'complete' | 'connect' | 'disconnect';
-  data: string | { stream: { type: string; data: Buffer[] }; size: number; time: number };
+  action: "message" | "complete" | "connect" | "disconnect";
+  data:
+    | string
+    | { stream: { type: string; data: Buffer[] }; size: number; time: number };
   id: string;
   error: string | null;
   msg: string;
 };
 
 export type ApiStreamResponseSSEItemMessage =
-  | ApiStreamResponseSSEItemSSE
-  | ApiStreamResponseSSEItemRequest;
+  ApiStreamResponseSSEItemSSE | ApiStreamResponseSSEItemRequest;
 
 export interface ApiStreamResponseSSEItemBase {
   error: string | null;
@@ -63,12 +64,16 @@ export interface ApiStreamResponseSSEItemBase {
 }
 
 export interface ApiStreamResponseSSEItemSSE extends ApiStreamResponseSSEItemBase {
-  action: 'sse';
-  data: { stream: { type: string; data: Buffer[] }; size: number; time: number };
+  action: "sse";
+  data: {
+    stream: { type: string; data: Buffer[] };
+    size: number;
+    time: number;
+  };
 }
 
 export interface ApiStreamResponseSSEItemRequest extends ApiStreamResponseSSEItemBase {
-  action: 'request';
+  action: "request";
   data: ApiSendResponse;
 }
 

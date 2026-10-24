@@ -50,7 +50,8 @@
 .checkbox:focus-visible,
 .radio:focus-visible,
 .switch:focus-visible {
-  outline: 1px solid var(--control-focus-border, var(--vscode-focusBorder, #1677ff));
+  outline: 1px solid
+    var(--control-focus-border, var(--vscode-focusBorder, #1677ff));
   outline-offset: 2px;
 }
 .button.slot-beautify-btn-sm {
@@ -303,8 +304,13 @@
   display: flex;
   color: var(--popover-select-bg-color, var(--color-bg-right, #fff));
 }
-.selectPopupArrow[data-side="bottom"] { top: -8px; }
-.selectPopupArrow[data-side="top"] { bottom: -8px; transform: rotate(180deg); }
+.selectPopupArrow[data-side="bottom"] {
+  top: -8px;
+}
+.selectPopupArrow[data-side="top"] {
+  bottom: -8px;
+  transform: rotate(180deg);
+}
 .selectPopupArrow path {
   fill: currentColor;
   stroke: var(--color-border, #ddd);
@@ -864,7 +870,7 @@
   pointer-events: none;
 }
 .treeSelect [class~="beautify-select-arrow"]::after {
-  content: '';
+  content: "";
   display: block;
   width: 5px;
   height: 5px;

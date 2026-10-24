@@ -35,14 +35,27 @@ const IconFont = forwardRef<
         ...style,
       }}
     >
-      {['icon-logo-primary', 'icon-logo', 'icon-zanwu'].includes(type) ? (
-        <svg width="1em" height="1em" viewBox="0 0 96 96" fill="none" aria-hidden="true">
-          <path d="M63.799 28.201a28 28 0 1 0 0 39.598" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
+      {["icon-logo-primary", "icon-logo", "icon-zanwu"].includes(type) ? (
+        <svg
+          width="1em"
+          height="1em"
+          viewBox="0 0 96 96"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M63.799 28.201a28 28 0 1 0 0 39.598"
+            stroke="currentColor"
+            strokeWidth="8"
+            strokeLinecap="round"
+          />
           <circle cx="80" cy="48" r="5" fill="currentColor" />
         </svg>
-      ) : <svg width="1em" height="1em" fill="currentColor" aria-hidden="true">
-        <use href={`#${type}`} />
-      </svg>}
+      ) : (
+        <svg width="1em" height="1em" fill="currentColor" aria-hidden="true">
+          <use href={`#${type}`} />
+        </svg>
+      )}
     </span>
   );
 });

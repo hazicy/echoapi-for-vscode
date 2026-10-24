@@ -1,6 +1,6 @@
-import { FC, ReactNode, Suspense } from 'react';
+import { FC, ReactNode, Suspense } from "react";
 
-import { Skeleton, SkeletonProps } from '@/shared/ui/base';
+import { Skeleton, SkeletonProps } from "@/shared/ui/base";
 
 interface Props {
   children: ReactNode;
@@ -9,7 +9,12 @@ interface Props {
 
 const SuspenseContent: FC<Props> = ({ skeletonProps, children }) => {
   const loading = (
-    <Skeleton style={{ padding: 16 }} paragraph={{ rows: 3 }} loading {...skeletonProps} />
+    <Skeleton
+      style={{ padding: 16 }}
+      paragraph={{ rows: 3 }}
+      loading
+      {...skeletonProps}
+    />
   );
 
   return <Suspense fallback={loading}>{children}</Suspense>;

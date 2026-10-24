@@ -1,7 +1,7 @@
-import { get as _get } from 'lodash';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { get as _get } from "lodash";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-import { create } from '@/app/store/utils';
+import { create } from "@/app/store/utils";
 
 type State = {
   oauthRefreshData: {
@@ -14,7 +14,7 @@ type State = {
 };
 
 type Action = {
-  updateOauthRefreshData: (p: State['oauthRefreshData']) => void;
+  updateOauthRefreshData: (p: State["oauthRefreshData"]) => void;
   getOauthRefreshData: (path: string[]) => string;
 };
 
@@ -22,7 +22,7 @@ const useStorage = create<State & Action>()(
   persist(
     (set, get) => ({
       oauthRefreshData: {},
-      updateOauthRefreshData: (oauthRefreshData: State['oauthRefreshData']) =>
+      updateOauthRefreshData: (oauthRefreshData: State["oauthRefreshData"]) =>
         set(() => ({ oauthRefreshData })),
       getOauthRefreshData: (path) => {
         const oauthRefreshData = get().oauthRefreshData;
@@ -30,11 +30,11 @@ const useStorage = create<State & Action>()(
       },
     }),
     {
-      name: 'APP_STORAGE_DATA',
+      name: "APP_STORAGE_DATA",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ oauthRefreshData: state.oauthRefreshData }),
-    }
-  )
+    },
+  ),
 );
 
 export default useStorage;

@@ -1,7 +1,7 @@
-import { ApisBaseDataItem } from '@/features/requests/types/base';
-import { RequestBodyContentType } from '@/features/requests/types/request';
-import { CustomNumberBooleanType } from '@/shared/types/common';
-import { GlobalParamsHeaderItem } from '@/features/project/types';
+import { ApisBaseDataItem } from "@/features/requests/types/base";
+import { RequestBodyContentType } from "@/features/requests/types/request";
+import { CustomNumberBooleanType } from "@/shared/types/common";
+import { GlobalParamsHeaderItem } from "@/features/project/types";
 
 export type Item = {
   description: string;
@@ -19,8 +19,8 @@ export type ItemProps = {
   rowIndex: number;
   readOnly?: boolean;
   enableNewRow?: boolean;
-  tabType?: RequestTableProps['tabType'];
-  bodyMode?: RequestTableProps['bodyMode'];
+  tabType?: RequestTableProps["tabType"];
+  bodyMode?: RequestTableProps["bodyMode"];
   setSelectedRowKeys?: (keys: string[]) => void;
   onChange?: (rowIndex: number, rowData: ApisBaseDataItem) => void;
   onDelete?: (rowIndex: number) => void;
@@ -32,8 +32,9 @@ export interface RequestTableProps {
   globalParams?: GlobalParamsHeaderItem[];
   folderParams?: ApisBaseDataItem[];
   queryAddEqual?: CustomNumberBooleanType;
-  paramsType?: 'global' | 'folder' | 'request' | '';
-  tabType?: 'header' | 'query' | 'restful' | 'body' | 'cookie' | 'event' | 'socketio';
+  paramsType?: "global" | "folder" | "request" | "";
+  tabType?:
+    "header" | "query" | "restful" | "body" | "cookie" | "event" | "socketio";
   readOnly?: boolean;
   bodyMode?: RequestBodyContentType;
   isSystem?: boolean;
@@ -42,8 +43,8 @@ export interface RequestTableProps {
   onChangeQueryAddEqual?: (params: CustomNumberBooleanType) => void;
   columnSwitchConfig?: TableColumnSwitchConfig;
   onColumnSwitchConfig?: (params: TableColumnSwitchConfig) => void;
-  showDelete?:boolean;
-  target_type?:string;
+  showDelete?: boolean;
+  target_type?: string;
 }
 
 /**Table column configuration items */

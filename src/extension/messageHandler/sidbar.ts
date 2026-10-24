@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { storageChanged } from '../storageEvents';
+import { storageChanged } from "../storageEvents";
 import {
   deleteProjectReport,
   deleteTestingFoldersData,
@@ -41,7 +41,10 @@ import { snowflakeId } from "apipost-tools";
 import { ApiDetailsData } from "@/features/requests/types/api";
 import { getStorageFilePath } from "../db";
 
-const persistApiList = (list: ApiDetailsData[], context: vscode.ExtensionContext) => {
+const persistApiList = (
+  list: ApiDetailsData[],
+  context: vscode.ExtensionContext,
+) => {
   if (setApiList(list, context)) {
     return true;
   }
@@ -49,8 +52,16 @@ const persistApiList = (list: ApiDetailsData[], context: vscode.ExtensionContext
   return false;
 };
 
-const notifyApiListChanged = (apiList: ApiDetailsData[], context: vscode.ExtensionContext) => {
-  const { sidePanelWebView, pushWebView, shareListWebView, openedFolderTestPanels } = globalConfig;
+const notifyApiListChanged = (
+  apiList: ApiDetailsData[],
+  context: vscode.ExtensionContext,
+) => {
+  const {
+    sidePanelWebView,
+    pushWebView,
+    shareListWebView,
+    openedFolderTestPanels,
+  } = globalConfig;
   // Update page
   sidePanelWebView?.webview.postMessage({
     action: "setApiList",
@@ -112,10 +123,16 @@ const saveApiListItem = (
   if (index > -1) {
     updateOpenData(openedPanels, data);
     if (data.target_type === "folder") {
-      const testPanel = globalConfig.openedFolderTestPanels[getTestingFolderName(data.target_id, context)];
+      const testPanel =
+        globalConfig.openedFolderTestPanels[
+          getTestingFolderName(data.target_id, context)
+        ];
       if (testPanel) {
         testPanel.title = data.name;
-        testPanel.webview.postMessage({ action: "setTestData", data: { testingName: data.name } });
+        testPanel.webview.postMessage({
+          action: "setTestData",
+          data: { testingName: data.name },
+        });
       }
     }
   }
@@ -253,7 +270,6 @@ export const handleMessage = async (
           openedPanel.dispose();
         });
 
-
         // Close all tab pages
         forEach(globalConfig, (panel, key) => {
           if (isFunction(panel?.dispose) && key !== "sidePanelWebView") {
@@ -267,7 +283,7 @@ export const handleMessage = async (
         new_user_config.currentProject = project;
 
         await context.globalState.update("userConfig", new_user_config);
-        storageChanged.fire('userConfig');
+        storageChanged.fire("userConfig");
 
         // Restore local apiList
         sidePanelWebView?.webview.postMessage({
@@ -368,14 +384,20 @@ export const handleMessage = async (
         }
         // Confirmation is asynchronous; preserve edits made while it was open.
         const currentList = getApiList(context);
-        const curData = currentList.find(item => item.target_id === message.data.target_id);
+        const curData = currentList.find(
+          (item) => item.target_id === message.data.target_id,
+        );
         if (!curData) {
           return;
         }
-        const deletedIds = new Set(curData.target_type === "folder"
-          ? getAllChildIds(currentList, curData)
-          : [curData.target_id]);
-        const list = currentList.filter(item => !deletedIds.has(item.target_id));
+        const deletedIds = new Set(
+          curData.target_type === "folder"
+            ? getAllChildIds(currentList, curData)
+            : [curData.target_id],
+        );
+        const list = currentList.filter(
+          (item) => !deletedIds.has(item.target_id),
+        );
         if (!persistApiList(list, context)) {
           return false;
         }
@@ -387,8 +409,13 @@ export const handleMessage = async (
           }
         }
 
-        if (curData.target_type === "folder" && !deleteTestingFoldersData(deletedIds, context)) {
-          vscode.window.showErrorMessage("Requests were deleted, but saved test data could not be cleaned up.");
+        if (
+          curData.target_type === "folder" &&
+          !deleteTestingFoldersData(deletedIds, context)
+        ) {
+          vscode.window.showErrorMessage(
+            "Requests were deleted, but saved test data could not be cleaned up.",
+          );
         }
         notifyApiListChanged(list, context);
       }
@@ -398,12 +425,13 @@ export const handleMessage = async (
       if (isArray(message?.data?.target_ids)) {
         const changedItems = new Map<string, ApiDetailsData>();
         forEach(message.data.target_ids, (target_id) => {
-          const moved = apiList.find(item => item.target_id === target_id);
+          const moved = apiList.find((item) => item.target_id === target_id);
           if (!moved) {
             return;
           }
           const parentId = message.data.parent_id || "0";
-          const { after_target_id: after, before_target_id: before } = message.data;
+          const { after_target_id: after, before_target_id: before } =
+            message.data;
           if (after === "0" && before === "0") {
             moved.parent_id = parentId;
             moved.sort = getMaxSort(apiList, parentId);
@@ -414,9 +442,14 @@ export const handleMessage = async (
               return;
             }
             const siblings = apiList
-              .filter(item => item.parent_id === parentId && item.target_id !== target_id)
+              .filter(
+                (item) =>
+                  item.parent_id === parentId && item.target_id !== target_id,
+              )
               .sort((a, b) => a.sort - b.sort);
-            const goalIndex = siblings.findIndex(item => item.target_id === (insertAfter ? before : after));
+            const goalIndex = siblings.findIndex(
+              (item) => item.target_id === (insertAfter ? before : after),
+            );
             if (goalIndex < 0) {
               return;
             }
@@ -435,7 +468,7 @@ export const handleMessage = async (
         if (!persistApiList(apiList, context)) {
           return false;
         }
-        changedItems.forEach(item => updateOpenData(openedPanels, item));
+        changedItems.forEach((item) => updateOpenData(openedPanels, item));
         notifyApiListChanged(apiList, context);
 
         vscode.window.showInformationMessage("Move Success");
@@ -487,7 +520,6 @@ export const handleMessage = async (
       break;
     case "deleteShare":
       deleteShare(message.data, context);
-
 
       // Refresh share list
       // sidePanelWebView && sidePanelWebView.webview.postMessage({ action: 'setProjectShareData', data: getProjectShareData(context) });

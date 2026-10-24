@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { cloneDeep, isArray } from 'lodash';
+import { cloneDeep, isArray } from "lodash";
 
 const useListData: (props: any) => any = (props) => {
   const { menuList, filterName } = props;
@@ -20,9 +20,12 @@ const useListData: (props: any) => any = (props) => {
     const newList: { [key: string]: any } = {};
     for (const data of sourceList) {
       const includeName =
-        filterName === '' ||
-        `${data?.name}`.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
-        `${data?.display_name}`.toLowerCase().indexOf(filterName.toLowerCase()) !== -1;
+        filterName === "" ||
+        `${data?.name}`.toLowerCase().indexOf(filterName.toLowerCase()) !==
+          -1 ||
+        `${data?.display_name}`
+          .toLowerCase()
+          .indexOf(filterName.toLowerCase()) !== -1;
 
       if (includeName === true) {
         newList[data.model_id] = data;

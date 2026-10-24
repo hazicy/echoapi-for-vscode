@@ -1,4 +1,4 @@
-import { DragEndEvent } from '@dnd-kit/core';
+import { DragEndEvent } from "@dnd-kit/core";
 
 export interface DraggableMenuProps {
   items: DraggableMenuItemType[];
@@ -6,7 +6,7 @@ export interface DraggableMenuProps {
   className?: string;
   style?: React.CSSProperties;
   onDragEnd?: (event: DragEndEvent) => void;
-  onSelect?: (keys: DraggableMenuProps['selectedKeys']) => void;
+  onSelect?: (keys: DraggableMenuProps["selectedKeys"]) => void;
 }
 
 export type DraggableMenuItemType = {

@@ -1,29 +1,30 @@
-import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex, MenuProps } from '@/shared/ui/base';
+import { Flex, MenuProps } from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import { cloneDeep, isEqual } from 'lodash';
+import { useSafeState } from "ahooks";
+import { cloneDeep, isEqual } from "lodash";
 
-import { Button } from '@/shared/ui';
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
+import { Button } from "@/shared/ui";
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
 
-import { useApis, useProjectConfig, useUserConfig } from '@/app/store';
-import EnvDropdown from '@/features/environment/components/EnvDropdown';
-import { saveProjectConfig } from '@/features/requests/events/env';
-
+import { useApis, useProjectConfig, useUserConfig } from "@/app/store";
+import EnvDropdown from "@/features/environment/components/EnvDropdown";
+import { saveProjectConfig } from "@/features/requests/events/env";
 
 interface Props {
   targetId?: string;
 }
 
-const ToolBar: FC<Props> = ({ }) => {
+const ToolBar: FC<Props> = ({}) => {
   const { t } = useTranslation();
   const [saveLoading, setSaveLoading] = useSafeState(false);
   const envDetailKeys = useProjectConfig((state) => state.envDetailKeys);
-  const updateEnvDetailKeys = useProjectConfig((state) => state.updateEnvDetailKeys);
-  const apisData = useApis(store => store.apisActiveData);
+  const updateEnvDetailKeys = useProjectConfig(
+    (state) => state.updateEnvDetailKeys,
+  );
+  const apisData = useApis((store) => store.apisActiveData);
 
   const isReadonly = useUserConfig((state) => state.isReadonly);
 
@@ -33,8 +34,8 @@ const ToolBar: FC<Props> = ({ }) => {
       const result = cloneDeep(apisData);
       // await saveApis({ data: result });
       window?.vscode.postMessage({
-        action: 'saveApiData',
-        data: result
+        action: "saveApiData",
+        data: result,
       });
     } catch (error) {
     } finally {
@@ -42,12 +43,11 @@ const ToolBar: FC<Props> = ({ }) => {
     }
   };
 
-  const envClick: MenuProps['onClick'] = ({ key }) => {
+  const envClick: MenuProps["onClick"] = ({ key }) => {
     // Switch environment
     updateEnvDetailKeys(key);
-    saveProjectConfig('envDetailKeys', key);
+    saveProjectConfig("envDetailKeys", key);
   };
-
 
   if (isEqual(apisData?.target_type, APIS_TARGET_TYPE_ENUM.FOLDER)) {
     return (
@@ -62,15 +62,13 @@ const ToolBar: FC<Props> = ({ }) => {
           disabled={isReadonly}
           onClick={handleSave}
         >
-          {t('api.mock.expectation_set.save')}
+          {t("api.mock.expectation_set.save")}
         </Button>
       </Flex>
     );
   }
 
-  return (
-    <></>
-  );
+  return <></>;
 };
 
 export default ToolBar;

@@ -1,16 +1,16 @@
-import dayjs from 'dayjs';
-import { cloneDeep, isEqual } from 'lodash';
+import dayjs from "dayjs";
+import { cloneDeep, isEqual } from "lodash";
 
-import useWebsocket2Store from '@/features/requests/store/useApis/websocket2';
+import useWebsocket2Store from "@/features/requests/store/useApis/websocket2";
 
-import { getWs2SendOptions } from './utils';
+import { getWs2SendOptions } from "./utils";
 
 const useWebsocket2 = () => {
   const updatePool = (
     target_id: string,
-    type: 'connect' | 'connecting' | 'disconnect',
+    type: "connect" | "connecting" | "disconnect",
     data: any,
-    responseData?: any
+    responseData?: any,
   ) => {
     const { websocket2ConnectionPool, updateWebsocket2ConnectionPool } =
       useWebsocket2Store.getState();
@@ -22,7 +22,10 @@ const useWebsocket2 = () => {
         ...websocket2ConnectionPool,
         [target_id]: {
           status: type,
-          socketRes: [...(websocket2ConnectionPool?.[target_id]?.socketRes || []), newRes],
+          socketRes: [
+            ...(websocket2ConnectionPool?.[target_id]?.socketRes || []),
+            newRes,
+          ],
           responseData: {
             ...websocket2ConnectionPool?.[target_id]?.responseData,
             ...(responseData || {}),
@@ -31,30 +34,36 @@ const useWebsocket2 = () => {
       });
     }
   };
-  const connectWebSocket = async (ITarget: any, status: string, curServerId:string) => {
+  const connectWebSocket = async (
+    ITarget: any,
+    status: string,
+    curServerId: string,
+  ) => {
     const target = cloneDeep(ITarget);
 
     // Currently connecting
-    if (['connecting','connect'].includes(status)) {
+    if (["connecting", "connect"].includes(status)) {
       // Disconnect
       window?.vscode.postMessage({
-        action: 'ws_disconnect',
-        data: target?.target_id
+        action: "ws_disconnect",
+        data: target?.target_id,
       });
-      updatePool(target?.target_id, 'disconnect', {});
+      updatePool(target?.target_id, "disconnect", {});
       return false;
     }
 
     // WebSocket connection preprocessing
-    const options:any = await getWs2SendOptions(target);
+    const options: any = await getWs2SendOptions(target);
     const updateWebsocket2ConnectionPool =
       useWebsocket2Store.getState().updateWebsocket2ConnectionPool;
-    const _websocket2ConnectionPool = useWebsocket2Store.getState().websocket2ConnectionPool;
+    const _websocket2ConnectionPool =
+      useWebsocket2Store.getState().websocket2ConnectionPool;
     updateWebsocket2ConnectionPool({
       ..._websocket2ConnectionPool,
       [target?.target_id]: {
-        status: 'connecting',
-        socketRes: _websocket2ConnectionPool[target?.target_id]?.socketRes || [],
+        status: "connecting",
+        socketRes:
+          _websocket2ConnectionPool[target?.target_id]?.socketRes || [],
       },
     });
 
@@ -62,52 +71,52 @@ const useWebsocket2 = () => {
 
     // WebSocket connection request
     window?.vscode.postMessage({
-      action: 'ws_connect',
+      action: "ws_connect",
       data: {
         option: options,
         target,
-      }
+      },
     });
   };
 
   const handelWsResult = (event: any) => {
     const { message, target_id } = event;
     switch (event?.action) {
-      case 'connected':
+      case "connected":
         if (message?.isSuccess) {
           updatePool(
             target_id,
-            'connect',
+            "connect",
             {
-              action: 'connect',
+              action: "connect",
               message,
             },
-            message.data
+            message.data,
           );
         } else {
-          updatePool(target_id, 'disconnect', {
-            action: 'error',
+          updatePool(target_id, "disconnect", {
+            action: "error",
             message: message,
           });
         }
         break;
-      case 'received':
+      case "received":
         const { type, isSuccess } = message || {};
-        if (isEqual(type, 'close')) {
-          updatePool(target_id, 'disconnect', {
-            action: isSuccess ? 'disconnect' : 'error',
+        if (isEqual(type, "close")) {
+          updatePool(target_id, "disconnect", {
+            action: isSuccess ? "disconnect" : "error",
             message: message,
           });
           return;
         }
-        updatePool(target_id, 'connect', {
+        updatePool(target_id, "connect", {
           action: type,
           message: message,
         });
         break;
-      case 'error':
-        updatePool(target_id, 'disconnect', {
-          action: 'error',
+      case "error":
+        updatePool(target_id, "disconnect", {
+          action: "error",
           message: message,
         });
         break;
@@ -119,7 +128,7 @@ const useWebsocket2 = () => {
   return {
     connectWebSocket,
     updatePool,
-    handelWsResult
+    handelWsResult,
   };
 };
 

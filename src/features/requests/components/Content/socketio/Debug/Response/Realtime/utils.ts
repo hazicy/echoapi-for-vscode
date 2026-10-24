@@ -1,21 +1,25 @@
-import { snowflakeId } from 'apipost-tools';
-import { includes, isPlainObject, isString, toString, trim } from 'lodash';
+import { snowflakeId } from "apipost-tools";
+import { includes, isPlainObject, isString, toString, trim } from "lodash";
 
 // Handle websocket data
 export const handleSocketResponse = (
   response: any[],
   filterValue?: string,
-  filterType?: string
+  filterType?: string,
 ) => {
   const resArr: any[] = [];
 
   for (const res of response || []) {
-    if (isString(filterType) && filterType !== 'all' && res?.action !== filterType) {
+    if (
+      isString(filterType) &&
+      filterType !== "all" &&
+      res?.action !== filterType
+    ) {
       continue;
     }
 
     switch (res?.action) {
-      case 'connect':
+      case "connect":
         {
           if (
             isString(filterValue) &&
@@ -29,7 +33,7 @@ export const handleSocketResponse = (
           });
         }
         break;
-      case 'disconnect':
+      case "disconnect":
         if (
           isString(filterValue) &&
           trim(filterValue).length > 0 &&
@@ -42,7 +46,7 @@ export const handleSocketResponse = (
           id: res?.id || snowflakeId(),
         });
         break;
-      case 'error':
+      case "error":
         if (
           isString(filterValue) &&
           trim(filterValue).length > 0 &&
@@ -56,7 +60,7 @@ export const handleSocketResponse = (
           id: res?.id || snowflakeId(),
         });
         break;
-      case 'message':
+      case "message":
         if (
           isString(filterValue) &&
           trim(filterValue).length > 0 &&
@@ -69,7 +73,7 @@ export const handleSocketResponse = (
           id: res?.id || snowflakeId(),
         });
         break;
-      case 'send':
+      case "send":
         if (
           isString(filterValue) &&
           trim(filterValue).length > 0 &&
@@ -82,7 +86,7 @@ export const handleSocketResponse = (
           id: res?.id || snowflakeId(),
         });
         break;
-      case 'listen':
+      case "listen":
         if (
           isString(filterValue) &&
           trim(filterValue).length > 0 &&
@@ -94,7 +98,7 @@ export const handleSocketResponse = (
           id: res?.id || snowflakeId(),
         });
         break;
-      case 'listen-end':
+      case "listen-end":
         if (
           isString(filterValue) &&
           trim(filterValue).length > 0 &&
@@ -106,7 +110,7 @@ export const handleSocketResponse = (
           id: res?.id || snowflakeId(),
         });
         break;
-      case 'send_ack':
+      case "send_ack":
         if (
           isString(filterValue) &&
           trim(filterValue).length > 0 &&
@@ -145,7 +149,9 @@ export const stringToColor = (str: string) => {
   // Ensure at least two components are not less than 80
   const minComponentValue = 100;
   const components = [r, g, b];
-  const belowThreshold = components.filter((value) => value < minComponentValue).length;
+  const belowThreshold = components.filter(
+    (value) => value < minComponentValue,
+  ).length;
 
   if (belowThreshold > 1) {
     // Sort components in ascending order
@@ -183,8 +189,8 @@ export const stringToColor = (str: string) => {
   g = Math.max(minComponent, Math.min(maxComponent, g));
   b = Math.max(minComponent, Math.min(maxComponent, b));
 
-  const color = `#${('00' + r.toString(16)).substr(-2)}${('00' + g.toString(16)).substr(-2)}${(
-    '00' + b.toString(16)
+  const color = `#${("00" + r.toString(16)).substr(-2)}${("00" + g.toString(16)).substr(-2)}${(
+    "00" + b.toString(16)
   ).substr(-2)}`;
 
   return color;

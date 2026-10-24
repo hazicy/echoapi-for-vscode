@@ -1,1 +1,1 @@
-export { default as QueryList } from './QueryList';
+export { default as QueryList } from "./QueryList";

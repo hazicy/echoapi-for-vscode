@@ -1,10 +1,10 @@
-import CodeEditor from '@/shared/components/CodeEditor';
-import type { EditorOptions } from '@/shared/components/CodeEditor';
-import { EditFormat, isJSONString } from '@/shared/utils/common';
-import { isString } from 'lodash';
-import { Empty } from '@/shared/ui';
-import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import CodeEditor from "@/shared/components/CodeEditor";
+import type { EditorOptions } from "@/shared/components/CodeEditor";
+import { EditFormat, isJSONString } from "@/shared/utils/common";
+import { isString } from "lodash";
+import { Empty } from "@/shared/ui";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   rawHtml?: string;
@@ -17,9 +17,9 @@ interface Props {
 const Beautify = (props: Props) => {
   const { t } = useTranslation();
 
-  const { mode, rawHtml, isSSE=false, data, editorOptions } = props || {};
+  const { mode, rawHtml, isSSE = false, data, editorOptions } = props || {};
   const { mode: language, value: editValue } = useMemo(() => {
-    let originData = rawHtml || '';
+    let originData = rawHtml || "";
     if (isSSE) {
       try {
         if (isString(originData)) {
@@ -29,17 +29,24 @@ const Beautify = (props: Props) => {
       if (isJSONString(originData)) {
         originData = JSON.parse(originData);
       } else {
-        originData = rawHtml || '';
+        originData = rawHtml || "";
       }
     }
-    return EditFormat(originData || '');
+    return EditFormat(originData || "");
   }, [rawHtml, isSSE]);
 
   if (data?.response_size && data?.response_size / 1024 / 1024 > 10) {
-    return <Empty description={t('supplement.file_big')} />;
+    return <Empty description={t("supplement.file_big")} />;
   }
 
-  return <CodeEditor readOnly language={mode || language} value={editValue} options={editorOptions} />;
+  return (
+    <CodeEditor
+      readOnly
+      language={mode || language}
+      value={editValue}
+      options={editorOptions}
+    />
+  );
 };
 
 export default Beautify;

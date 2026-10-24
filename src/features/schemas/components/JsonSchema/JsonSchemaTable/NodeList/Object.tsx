@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useContext, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { message } from '@/shared/ui/base';
+import { message } from "@/shared/ui/base";
 
-import type { DragEndEvent } from '@dnd-kit/core';
-import { useMemoizedFn } from 'ahooks';
-import { snowflakeId } from 'apipost-tools';
-import produce from 'immer';
+import type { DragEndEvent } from "@dnd-kit/core";
+import { useMemoizedFn } from "ahooks";
+import { snowflakeId } from "apipost-tools";
+import produce from "immer";
 import {
   cloneDeep,
   isArray,
@@ -17,23 +17,30 @@ import {
   isUndefined,
   omit,
   trim,
-} from 'lodash';
+} from "lodash";
 
-import context from '../context';
-import { SortableList } from './Sortable';
+import context from "../context";
+import { SortableList } from "./Sortable";
 
 interface ObjectItemProps {
   deepIndex: number;
   nodeValue: any;
   onChange?: (nodeKey: string, val: any) => void;
   onMultiChange?: any;
-  linkSchema?: 'enable' | 'disable';
+  linkSchema?: "enable" | "disable";
   parentModels: React.MutableRefObject<string[]>;
 }
 
 const ObjectItem: React.FC<ObjectItemProps> = (props) => {
   const { t } = useTranslation();
-  const { deepIndex, nodeValue, onChange, onMultiChange, linkSchema, parentModels } = props;
+  const {
+    deepIndex,
+    nodeValue,
+    onChange,
+    onMultiChange,
+    linkSchema,
+    parentModels,
+  } = props;
 
   const { schemaData, parseModelToJsonSchema }: any = useContext(context);
 
@@ -41,10 +48,14 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
   const requiredKeys = isArray(nodeValue?.required) ? nodeValue.required : [];
 
   // Ensure order is correct when modifying key
-  const itemKeys = isArray(nodeValue?.ECHOAPI_ORDERS) ? nodeValue.ECHOAPI_ORDERS : [];
+  const itemKeys = isArray(nodeValue?.ECHOAPI_ORDERS)
+    ? nodeValue.ECHOAPI_ORDERS
+    : [];
 
   // Properties content under object
-  const propertiesData = isPlainObject(nodeValue?.properties) ? nodeValue.properties : {};
+  const propertiesData = isPlainObject(nodeValue?.properties)
+    ? nodeValue.properties
+    : {};
 
   useEffect(() => {
     const tempKeys = cloneDeep(itemKeys);
@@ -61,7 +72,7 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
     });
     if (!isEqual) {
       if (isFunction(onChange)) {
-        onChange('ECHOAPI_ORDERS', tempKeys);
+        onChange("ECHOAPI_ORDERS", tempKeys);
       }
     }
   }, [propertiesData]);
@@ -72,7 +83,7 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
       draft[attrName] = newVal;
     });
     if (isFunction(onChange)) {
-      onChange('properties', newData);
+      onChange("properties", newData);
     }
   });
 
@@ -81,7 +92,7 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
     // If key already exists, operation is forbidden
     if (itemKeys.includes(newKey)) {
       message.destroy();
-      message.warning(t('supplement.same_key'));
+      message.warning(t("supplement.same_key"));
       return;
     }
 
@@ -111,7 +122,7 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
 
         // If ECHOAPI_NEW_EMPTY_ROW exists, delete it
         if (!isUndefined(data?.ECHOAPI_NEW_EMPTY_ROW)) {
-          data = omit(data, ['ECHOAPI_NEW_EMPTY_ROW']);
+          data = omit(data, ["ECHOAPI_NEW_EMPTY_ROW"]);
         }
 
         return [newKey, data];
@@ -119,9 +130,9 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
       return Object.fromEntries(newList);
     });
     onMultiChange([
-      ['required', newRequired],
-      ['properties', newData],
-      ['ECHOAPI_ORDERS', newKeyList],
+      ["required", newRequired],
+      ["properties", newData],
+      ["ECHOAPI_ORDERS", newKeyList],
     ]);
   });
 
@@ -148,7 +159,7 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
               },
             },
             properties: {},
-            type: 'object',
+            type: "object",
           };
           resultList.push([key, refModelValue]);
           return;
@@ -162,7 +173,7 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
       const modelData = schemaData?.[schemaKey];
       if (isPlainObject(modelData) && isPlainObject(modelData?.schema)) {
         const modelSchema = produce(modelData?.schema, (draft: any) => {
-          draft.type = 'dataModel';
+          draft.type = "dataModel";
           draft.ECHOAPI_MODEL_ID = schemaKey;
           draft.ECHOAPI_MODEL_KEY = key;
           draft.refData = refData;
@@ -193,7 +204,7 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
       }
     });
     if (isFunction(onChange)) {
-      onChange('required', newList);
+      onChange("required", newList);
     }
   });
 
@@ -209,14 +220,18 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
       delete draft[keyRemove];
     });
     let multiChanges = [
-      ['required', newRequired],
-      ['properties', newData],
-      ['ECHOAPI_ORDERS', newKeyList],
+      ["required", newRequired],
+      ["properties", newData],
+      ["ECHOAPI_ORDERS", newKeyList],
     ];
 
-    const preRefValues = isPlainObject(nodeValue?.ECHOAPI_REFS) ? nodeValue?.ECHOAPI_REFS : {};
+    const preRefValues = isPlainObject(nodeValue?.ECHOAPI_REFS)
+      ? nodeValue?.ECHOAPI_REFS
+      : {};
     if (is_model) {
-      multiChanges = multiChanges.concat([['ECHOAPI_REFS', omit(preRefValues, keyRemove)]]);
+      multiChanges = multiChanges.concat([
+        ["ECHOAPI_REFS", omit(preRefValues, keyRemove)],
+      ]);
     }
 
     onMultiChange(multiChanges);
@@ -237,13 +252,13 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
     if (dataIndex === -1) {
       return;
     }
-    const newKey = '';
+    const newKey = "";
     const newProperties = produce(propertiesData, (draft: any) => {
       const entriesList = Object.entries(draft);
       entriesList.splice(dataIndex + 1, 0, [
         newKey,
         {
-          type: 'string',
+          type: "string",
           ECHOAPI_NEW_EMPTY_ROW: true,
         },
       ]);
@@ -252,54 +267,63 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
     const newKeys = cloneDeep(itemKeys);
     newKeys.splice(dataIndex + 1, 0, newKey);
     onMultiChange([
-      ['properties', newProperties],
-      ['ECHOAPI_ORDERS', newKeys],
+      ["properties", newProperties],
+      ["ECHOAPI_ORDERS", newKeys],
     ]);
   });
 
   // Link json-schema
-  const handleLinkSchema = useMemoizedFn(async (nodeKey: string, dataModel: any) => {
-    if (!isPlainObject(dataModel)) {
-      return;
-    }
-
-    // Data model cannot be referenced multiple times
-    if (isPlainObject(nodeValue?.ECHOAPI_REFS)) {
-      const modelIds = Object.values(nodeValue?.ECHOAPI_REFS).map((item: any) => item?.ref);
-      if (modelIds.includes(dataModel?.model_id)) {
-        message.warning(t('supplement.wont_link_more_schema'));
+  const handleLinkSchema = useMemoizedFn(
+    async (nodeKey: string, dataModel: any) => {
+      if (!isPlainObject(dataModel)) {
         return;
       }
-    }
 
-    const newData = produce(propertiesData, (draft: any) => {
-      delete draft[nodeKey];
-    });
-    const dataIndex = itemKeys.findIndex((item: any) => item === nodeKey);
-    if (dataIndex === -1) {
-      return;
-    }
-    const newOrderKeys = [...itemKeys];
-    const newRefKey = isEmpty(nodeKey) ? snowflakeId() : nodeKey;
-    newOrderKeys.splice(dataIndex, 1, newRefKey);
+      // Data model cannot be referenced multiple times
+      if (isPlainObject(nodeValue?.ECHOAPI_REFS)) {
+        const modelIds = Object.values(nodeValue?.ECHOAPI_REFS).map(
+          (item: any) => item?.ref,
+        );
+        if (modelIds.includes(dataModel?.model_id)) {
+          message.warning(t("supplement.wont_link_more_schema"));
+          return;
+        }
+      }
 
-    const preRefValues = isPlainObject(nodeValue?.ECHOAPI_REFS) ? nodeValue?.ECHOAPI_REFS : {};
-    const newRefs = produce(preRefValues, (draft: any) => {
-      draft[newRefKey] = {
-        ref: dataModel?.model_id,
-      };
-    });
-    onMultiChange([
-      ['properties', newData],
-      ['ECHOAPI_ORDERS', newOrderKeys],
-      ['ECHOAPI_REFS', newRefs],
-    ]);
-  });
+      const newData = produce(propertiesData, (draft: any) => {
+        delete draft[nodeKey];
+      });
+      const dataIndex = itemKeys.findIndex((item: any) => item === nodeKey);
+      if (dataIndex === -1) {
+        return;
+      }
+      const newOrderKeys = [...itemKeys];
+      const newRefKey = isEmpty(nodeKey) ? snowflakeId() : nodeKey;
+      newOrderKeys.splice(dataIndex, 1, newRefKey);
+
+      const preRefValues = isPlainObject(nodeValue?.ECHOAPI_REFS)
+        ? nodeValue?.ECHOAPI_REFS
+        : {};
+      const newRefs = produce(preRefValues, (draft: any) => {
+        draft[newRefKey] = {
+          ref: dataModel?.model_id,
+        };
+      });
+      onMultiChange([
+        ["properties", newData],
+        ["ECHOAPI_ORDERS", newOrderKeys],
+        ["ECHOAPI_REFS", newRefs],
+      ]);
+    },
+  );
 
   // Unlink Json-schema
   const handleCancelLinkSchema = useMemoizedFn(async (nodeKey: string) => {
     const schemaKey = nodeValue?.ECHOAPI_REFS?.[nodeKey]?.ref;
-    const modelJson = await parseModelToJsonSchema(schemaData?.[schemaKey]?.schema ?? {}, []);
+    const modelJson = await parseModelToJsonSchema(
+      schemaData?.[schemaKey]?.schema ?? {},
+      [],
+    );
     const modelProperties = modelJson?.properties ?? {};
     const orderIndex = itemKeys.findIndex((item: any) => item === nodeKey);
 
@@ -318,34 +342,42 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
       delete draft[nodeKey];
     });
     const multiChanges = [
-      ['properties', newData],
-      ['ECHOAPI_ORDERS', newOrderKeys],
-      ['ECHOAPI_REFS', newRefs],
+      ["properties", newData],
+      ["ECHOAPI_ORDERS", newOrderKeys],
+      ["ECHOAPI_REFS", newRefs],
     ];
     onMultiChange(multiChanges);
   });
 
   // Override data model field
-  const handleChangeRefs = useMemoizedFn((modelKey: string, rowKey: string, newVal: any) => {
-    const preRefValues = isPlainObject(nodeValue?.ECHOAPI_REFS) ? nodeValue?.ECHOAPI_REFS : {};
-    const newRefs = produce(preRefValues, (draft: any) => {
-      if (!isPlainObject(draft[modelKey].ECHOAPI_OVERRIDES)) {
-        draft[modelKey].ECHOAPI_OVERRIDES = {};
-      }
-      if (isUndefined(newVal)) {
-        delete draft[modelKey].ECHOAPI_OVERRIDES[rowKey];
-      } else {
-        draft[modelKey].ECHOAPI_OVERRIDES[rowKey] = newVal;
-      }
-    });
+  const handleChangeRefs = useMemoizedFn(
+    (modelKey: string, rowKey: string, newVal: any) => {
+      const preRefValues = isPlainObject(nodeValue?.ECHOAPI_REFS)
+        ? nodeValue?.ECHOAPI_REFS
+        : {};
+      const newRefs = produce(preRefValues, (draft: any) => {
+        if (!isPlainObject(draft[modelKey].ECHOAPI_OVERRIDES)) {
+          draft[modelKey].ECHOAPI_OVERRIDES = {};
+        }
+        if (isUndefined(newVal)) {
+          delete draft[modelKey].ECHOAPI_OVERRIDES[rowKey];
+        } else {
+          draft[modelKey].ECHOAPI_OVERRIDES[rowKey] = newVal;
+        }
+      });
 
-    onMultiChange([['ECHOAPI_REFS', newRefs]]);
-  });
+      onMultiChange([["ECHOAPI_REFS", newRefs]]);
+    },
+  );
 
   const handleItemSortEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
     if (active.id !== over?.id) {
-      const oldIndex = listData.findIndex(([itemKey]: any) => active.id === itemKey);
-      const newIndex = listData.findIndex(([itemKey]: any) => over?.id === itemKey);
+      const oldIndex = listData.findIndex(
+        ([itemKey]: any) => active.id === itemKey,
+      );
+      const newIndex = listData.findIndex(
+        ([itemKey]: any) => over?.id === itemKey,
+      );
 
       if (oldIndex > -1 && newIndex > -1) {
         const newOrders = produce<string[]>(itemKeys, (draft) => {
@@ -361,8 +393,8 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
           return Object.fromEntries(newList);
         });
         const multiChanges = [
-          ['properties', newProperties],
-          ['ECHOAPI_ORDERS', newOrders],
+          ["properties", newProperties],
+          ["ECHOAPI_ORDERS", newOrders],
         ];
         onMultiChange(multiChanges);
       }
@@ -391,8 +423,8 @@ const ObjectItem: React.FC<ObjectItemProps> = (props) => {
           requiredKeys,
         },
         onDragEnd: handleItemSortEnd,
-        axis: 'y',
-        lockAxis: 'y',
+        axis: "y",
+        lockAxis: "y",
         distance: 2,
         lockToContainerEdges: true,
         useDragHandle: true,

@@ -345,7 +345,13 @@ export const TreeSelect = Object.assign(
         {...props}
         ref={ref}
         prefixCls="beautify-select"
-        className={cx(css.select, css.treeSelect, slots["beautify-select"], className, rootClassName)}
+        className={cx(
+          css.select,
+          css.treeSelect,
+          slots["beautify-select"],
+          className,
+          rootClassName,
+        )}
         dropdownClassName={cx(
           css.popup,
           css.treeSelectPopup,
@@ -388,7 +394,9 @@ function UploadControl({
     onChange?.({ file, fileList: list });
   };
   return (
-    <div className={cx(css.upload, slots["beautify-upload-wrapper"], className)}>
+    <div
+      className={cx(css.upload, slots["beautify-upload-wrapper"], className)}
+    >
       <RcUpload
         {...props}
         beforeUpload={async (file, list) => {

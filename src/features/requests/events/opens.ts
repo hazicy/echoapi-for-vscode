@@ -1,19 +1,22 @@
-import { ApiDetailsData, ApisData } from '@/features/requests/types/api';
-import { snowflakeId } from 'apipost-tools';
-import { useApis, useSystemConfig } from '@/app/store';
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
-import { APIS_BASE_DEFAULT_DATA, APIS_VIEW_DEFAULT_STATUS } from '@/features/requests/constants/common';
-import { assign, cloneDeep, concat, includes, isEqual, omit } from 'lodash';
-import { ApiTypeMethod } from '@/features/requests/types/base';
-import { RequestBodyContentType } from '@/features/requests/types/request';
-import { VSCODE_VERSION } from '@/shared/constants/vscode';
+import { ApiDetailsData, ApisData } from "@/features/requests/types/api";
+import { snowflakeId } from "apipost-tools";
+import { useApis, useSystemConfig } from "@/app/store";
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
+import {
+  APIS_BASE_DEFAULT_DATA,
+  APIS_VIEW_DEFAULT_STATUS,
+} from "@/features/requests/constants/common";
+import { assign, cloneDeep, concat, includes, isEqual, omit } from "lodash";
+import { ApiTypeMethod } from "@/features/requests/types/base";
+import { RequestBodyContentType } from "@/features/requests/types/request";
+import { VSCODE_VERSION } from "@/shared/constants/vscode";
 
 const RESET_DEFAULT_DATA_OMIT_ARR = [
-  'created_user',
-  'created_at',
-  'updated_user',
-  'updated_at',
-  'version',
+  "created_user",
+  "created_at",
+  "updated_user",
+  "updated_at",
+  "version",
 ];
 
 /**
@@ -32,7 +35,7 @@ export const updateOpensItem = (data: Partial<ApisData>) => {
 /**
  * Update opened items
  */
-export const updateApisActiveItem= (data: Partial<ApisData>) => {
+export const updateApisActiveItem = (data: Partial<ApisData>) => {
   try {
     const { updateApisActiveData } = useApis.getState();
 
@@ -41,7 +44,6 @@ export const updateApisActiveItem= (data: Partial<ApisData>) => {
     // err
   }
 };
-
 
 /**
  * Create new opened item
@@ -54,7 +56,13 @@ export const createOpensItem = async (params: {
   resetDefaultData?: Partial<ApisData>;
 }) => {
   try {
-    const { project_id, target_type, parent_id, mark_id, resetDefaultData = {} } = params;
+    const {
+      project_id,
+      target_type,
+      parent_id,
+      mark_id,
+      resetDefaultData = {},
+    } = params;
 
     const defaultData = APIS_BASE_DEFAULT_DATA[target_type];
 
@@ -70,13 +78,17 @@ export const createOpensItem = async (params: {
 
     const result = cloneDeep({
       ...defaultData,
-      ...assign({}, omit(resetDefaultData, RESET_DEFAULT_DATA_OMIT_ARR), APIS_VIEW_DEFAULT_STATUS),
+      ...assign(
+        {},
+        omit(resetDefaultData, RESET_DEFAULT_DATA_OMIT_ARR),
+        APIS_VIEW_DEFAULT_STATUS,
+      ),
       project_id,
       target_type,
       target_id,
       parent_id,
       is_changed: 1,
-      mark_id: '',
+      mark_id: "",
     }) as Partial<ApiDetailsData>;
 
     // Manually set API status
@@ -88,7 +100,8 @@ export const createOpensItem = async (params: {
     if (isEqual(target_type, APIS_TARGET_TYPE_ENUM.API)) {
       // Whether to auto-add equals sign for API query
       if (systemConfig?.request_query_add_equal && result?.request?.query) {
-        result.request.query.query_add_equal = systemConfig?.request_query_add_equal;
+        result.request.query.query_add_equal =
+          systemConfig?.request_query_add_equal;
       }
       // Default request method for API
       if (systemConfig?.request_method && result.method) {
@@ -96,14 +109,20 @@ export const createOpensItem = async (params: {
       }
       // Default request mode for API
       if (systemConfig?.request_mode && result?.request?.body) {
-        result.request.body.mode = systemConfig?.request_mode as RequestBodyContentType;
+        result.request.body.mode =
+          systemConfig?.request_mode as RequestBodyContentType;
       }
     }
 
     // When new API is GET, default request tab to query
-    if (includes([APIS_TARGET_TYPE_ENUM.API, APIS_TARGET_TYPE_ENUM.SSE], target_type)) {
-      if (systemConfig?.request_method === 'GET' && result.request) {
-        result.request.tabs_default_active_key = 'query';
+    if (
+      includes(
+        [APIS_TARGET_TYPE_ENUM.API, APIS_TARGET_TYPE_ENUM.SSE],
+        target_type,
+      )
+    ) {
+      if (systemConfig?.request_method === "GET" && result.request) {
+        result.request.tabs_default_active_key = "query";
       }
     }
 

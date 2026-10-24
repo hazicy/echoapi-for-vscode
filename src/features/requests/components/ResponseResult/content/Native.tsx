@@ -1,5 +1,5 @@
-import CodeEditor from '@/shared/components/CodeEditor';
-import type { EditorOptions } from '@/shared/components/CodeEditor';
+import CodeEditor from "@/shared/components/CodeEditor";
+import type { EditorOptions } from "@/shared/components/CodeEditor";
 
 interface Props {
   rawHtml?: string;
@@ -12,8 +12,8 @@ const Native = (props: Props) => {
     <CodeEditor
       language="text"
       readOnly
-      value={rawHtml || ''}
-      options={{ ...editorOptions, lineNumbers: 'off' }}
+      value={rawHtml || ""}
+      options={{ ...editorOptions, lineNumbers: "off" }}
     />
   );
 };

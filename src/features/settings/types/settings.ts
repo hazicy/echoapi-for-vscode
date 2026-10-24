@@ -3,21 +3,21 @@ import { DefaultRequestSystemHeaders } from "../../requests/types/request";
 import { IMPORT_TYPE_ENUM } from "@/features/settings/constants/settings";
 
 export type TYPE_METHOD =
-  | 'POST'
-  | 'GET'
-  | 'PUT'
-  | 'PATCH'
-  | 'DELETE'
-  | 'COPY'
-  | 'HEAD'
-  | 'OPTIONS'
-  | 'LINK'
-  | 'UNLINK'
-  | 'PURGE'
-  | 'LOCK'
-  | 'UNLOCK'
-  | 'PROPFIND'
-  | 'VIEW';
+  | "POST"
+  | "GET"
+  | "PUT"
+  | "PATCH"
+  | "DELETE"
+  | "COPY"
+  | "HEAD"
+  | "OPTIONS"
+  | "LINK"
+  | "UNLINK"
+  | "PURGE"
+  | "LOCK"
+  | "UNLOCK"
+  | "PROPFIND"
+  | "VIEW";
 
 export type FILE_OBJ = {
   // File name
@@ -48,22 +48,23 @@ export interface ClientCertificates {
 export interface SysConfig {
   global_cookie_open: 1 | -1; //Global cookie on/off
   // Background: dark, white, gray
-  bg_color: 'white' | 'dark' | 'gray' | 'orange' | 'lightgray' | 'darkgrey';
+  bg_color: "white" | "dark" | "gray" | "orange" | "lightgray" | "darkgrey";
 
   // Theme color【orange,blue,green,pink,purple,lakeblue,pinkpurple】
-  theme_color: 'orange' | 'blue' | 'pink' | 'purple' | 'green' | 'pinkpurple' | 'lakeblue';
+  theme_color:
+    "orange" | "blue" | "pink" | "purple" | "green" | "pinkpurple" | "lakeblue";
 
   // Font scale
   font_scale: number;
 
   // Default font size
-  font_size?:number;
+  font_size?: number;
 
   // Font
-  font_family?:string;
+  font_family?: string;
 
   //  Language: en, zh-cn
-  language: 'en' | 'zh-cn';
+  language: "en" | "zh-cn";
 
   // Default request timeout
   send_timeout: number;
@@ -98,7 +99,7 @@ export interface SysConfig {
     request_proxy_auth_password: string;
   };
   //  Proxy type:request_proxy_type :[http,https]
-  request_proxy_type: ('http' | 'https')[];
+  request_proxy_type: ("http" | "https")[];
 
   //  Proxy server address:request_proxy_url
   request_proxy_url: string;
@@ -144,7 +145,7 @@ export interface SysConfig {
   folder_click_set: 1 | 2;
 
   // Default tab when opening API
-  open_new_tab: 'debug';
+  open_new_tab: "debug";
 
   // API split direction
   tab_direction: -1 | 1;
@@ -175,12 +176,11 @@ export interface SysConfig {
   raw_parameter_column_switch: TableColumnSwitchConfig;
 
   // Parameter list bubble tooltip
-  raw_parameter_pilot_bubble_switch?:boolean;
+  raw_parameter_pilot_bubble_switch?: boolean;
 
   // Import data initial selection type
-  import_data_init_type?: IMPORT_TYPE_ENUM
+  import_data_init_type?: IMPORT_TYPE_ENUM;
 }
-
 
 export interface WorkSpaceType {
   DEFAULT_PROJECT_ID: string;

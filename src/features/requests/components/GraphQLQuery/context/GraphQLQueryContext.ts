@@ -1,6 +1,9 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
-import { GraphQLChangeFuncType, GraphQLDetailsData } from '@/features/requests/types/graphql';
+import {
+  GraphQLChangeFuncType,
+  GraphQLDetailsData,
+} from "@/features/requests/types/graphql";
 
 type Props = {
   apiData: GraphQLDetailsData;

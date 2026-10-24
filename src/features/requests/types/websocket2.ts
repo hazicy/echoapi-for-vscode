@@ -1,6 +1,6 @@
-import { AnyObject } from '../../../shared/types/common';
-import { JSONSchemaObject } from '../../../shared/types/jsonSchema';
-import { ApisBaseData, ApisBaseDataItem } from './base';
+import { AnyObject } from "../../../shared/types/common";
+import { JSONSchemaObject } from "../../../shared/types/jsonSchema";
+import { ApisBaseData, ApisBaseDataItem } from "./base";
 
 export interface Websocket2Config {
   // Max receivable content size in MB, 0 means unlimited

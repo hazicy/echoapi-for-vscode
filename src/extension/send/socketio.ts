@@ -1,15 +1,22 @@
 global.IS_ECHOAPI = true;
 
-import { Websocket2DetailsData } from '@/features/requests/types/websocket2';
-import { globalConfig, socketIoStore } from '../constants';
-import { SocketClient } from 'socket.io-client-pro';
-import * as vscode from 'vscode';
-import { SocketIoDetailsData } from '@/features/requests/types/socketio';
-import { createTargetIdMap, getAboutCollections } from '@/features/requests/utils/send/utils';
-import { SysConfig } from '@/features/settings/types/settings';
-import { genSendBaseOptions, getApiList, getCurrentProjectConfig } from '../utils';
-import { ProjectConfigType } from '@/features/project/types';
-import { find, isEqual } from 'lodash';
+import { Websocket2DetailsData } from "@/features/requests/types/websocket2";
+import { globalConfig, socketIoStore } from "../constants";
+import { SocketClient } from "socket.io-client-pro";
+import * as vscode from "vscode";
+import { SocketIoDetailsData } from "@/features/requests/types/socketio";
+import {
+  createTargetIdMap,
+  getAboutCollections,
+} from "@/features/requests/utils/send/utils";
+import { SysConfig } from "@/features/settings/types/settings";
+import {
+  genSendBaseOptions,
+  getApiList,
+  getCurrentProjectConfig,
+} from "../utils";
+import { ProjectConfigType } from "@/features/project/types";
+import { find, isEqual } from "lodash";
 
 export const socketioDisconnect = (target_id: string) => {
   if (socketIoStore[target_id]) {
@@ -33,8 +40,10 @@ class PromiseQueue {
   }
 }
 
-
-export const socketioConnect = async (data: { option: any, target: SocketIoDetailsData }) => {
+export const socketioConnect = async (data: {
+  option: any;
+  target: SocketIoDetailsData;
+}) => {
   const { openedPanels } = globalConfig;
   let client;
   let global_target_id;
@@ -57,7 +66,7 @@ export const socketioConnect = async (data: { option: any, target: SocketIoDetai
         return;
       }
 
-      if(msg?.type === 'disconnect' && msg?.isSuccess){
+      if (msg?.type === "disconnect" && msg?.isSuccess) {
         socketIoStore[target?.target_id] = null;
         delete socketIoStore[target?.target_id];
       }
@@ -67,19 +76,29 @@ export const socketioConnect = async (data: { option: any, target: SocketIoDetai
       } else {
         try {
           enqueue.add(() => {
-            if (['disconnect','connect_error','error','connect_timeout'].indexOf(msg?.type) > -1) {
+            if (
+              [
+                "disconnect",
+                "connect_error",
+                "error",
+                "connect_timeout",
+              ].indexOf(msg?.type) > -1
+            ) {
               socketIoStore[target?.target_id] = null;
               delete socketIoStore[target?.target_id];
             }
 
             if (openedPanels?.[target?.target_id]) {
               openedPanels[target?.target_id]?.webview.postMessage({
-                action: 'setSocketIoResult', data: {
-                  message: msg, target_id: target?.target_id, action: 'received'
-                }
+                action: "setSocketIoResult",
+                data: {
+                  message: msg,
+                  target_id: target?.target_id,
+                  action: "received",
+                },
               });
             }
-          })
+          });
         } catch (error) {
           // logger.error("emitRuntimeEvent", String(error));
         }
@@ -92,7 +111,7 @@ export const socketioConnect = async (data: { option: any, target: SocketIoDetai
         await socketIoStore[global_target_id]?.awaitDisconnect();
         socketIoStore[global_target_id] = null;
         delete socketIoStore[global_target_id];
-      } catch (error) { }
+      } catch (error) {}
     }
 
     client = new SocketClient({ target, option, callback: emitMessageEvent });
@@ -103,9 +122,13 @@ export const socketioConnect = async (data: { option: any, target: SocketIoDetai
 
     if (openedPanels?.[target?.target_id]) {
       openedPanels[target?.target_id]?.webview.postMessage({
-        action: 'setSocketIoResult', data: {
-          message: wsResponse, target_id: target?.target_id, action: 'connected', target: target
-        }
+        action: "setSocketIoResult",
+        data: {
+          message: wsResponse,
+          target_id: target?.target_id,
+          action: "connected",
+          target: target,
+        },
       });
     }
 
@@ -120,9 +143,12 @@ export const socketioConnect = async (data: { option: any, target: SocketIoDetai
     if (error?.isSuccess !== undefined) {
       if (openedPanels?.[target?.target_id]) {
         openedPanels[target?.target_id]?.webview.postMessage({
-          action: 'setSocketIoResult', data: {
-            message: error, target_id: target?.target_id, action: 'error'
-          }
+          action: "setSocketIoResult",
+          data: {
+            message: error,
+            target_id: target?.target_id,
+            action: "error",
+          },
         });
       }
       return;
@@ -130,17 +156,25 @@ export const socketioConnect = async (data: { option: any, target: SocketIoDetai
     try {
       if (openedPanels?.[target?.target_id]) {
         openedPanels[target?.target_id]?.webview.postMessage({
-          action: 'setSocketIoResult', data: {
-            message: "websocket" + String(error), target_id: target?.target_id, action: 'error'
-          }
+          action: "setSocketIoResult",
+          data: {
+            message: "websocket" + String(error),
+            target_id: target?.target_id,
+            action: "error",
+          },
         });
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 };
 
-export const socketioSend = async (data: { target_id: any; event: any; msg: any; is_ack: any; type: any; }) => {
+export const socketioSend = async (data: {
+  target_id: any;
+  event: any;
+  msg: any;
+  is_ack: any;
+  type: any;
+}) => {
   try {
     const { target_id, event, msg, is_ack, type } = data;
     if (!target_id) {
@@ -165,11 +199,13 @@ export const socketioSend = async (data: { target_id: any; event: any; msg: any;
     } else {
       client.emitEvent(event, msg, type);
     }
-  } catch (error) {
-  }
+  } catch (error) {}
 };
 
-export const socketioUpdateEvent = async (data: { target_id: any; parameter: any; }) => {
+export const socketioUpdateEvent = async (data: {
+  target_id: any;
+  parameter: any;
+}) => {
   const { openedPanels } = globalConfig;
   try {
     const { target_id, parameter } = data;
@@ -194,22 +230,26 @@ export const socketioUpdateEvent = async (data: { target_id: any; parameter: any
 
     if (openedPanels?.[target_id]) {
       openedPanels[target_id]?.webview.postMessage({
-        action: 'setSocketIoResult', data: {
+        action: "setSocketIoResult",
+        data: {
           message: { ...ret, target_id: target_id },
           target_id: target_id,
-          action: 'updateEvent'
-        }
+          action: "updateEvent",
+        },
       });
     }
-  } catch (error) {
-  }
+  } catch (error) {}
 };
 
-export const getSocketIoOption = async (data: { option: any, target: any }, context: vscode.ExtensionContext) => {
+export const getSocketIoOption = async (
+  data: { option: any; target: any },
+  context: vscode.ExtensionContext,
+) => {
   const projectConfig = getCurrentProjectConfig(context) as ProjectConfigType;
   const apiList = getApiList(context);
   const { option, target } = data;
-  const systemConfig = context.globalState.get('systemConfig') as SysConfig || {};
+  const systemConfig =
+    (context.globalState.get("systemConfig") as SysConfig) || {};
   // Parent directory related parameters
   const _collection = await getAboutCollections(
     target,
@@ -219,7 +259,9 @@ export const getSocketIoOption = async (data: { option: any, target: any }, cont
     option?.server_id,
   );
 
-  const curEnv = find(projectConfig?.envList || [], (env) => isEqual(env.env_id, projectConfig?.envDetailKeys));
+  const curEnv = find(projectConfig?.envList || [], (env) =>
+    isEqual(env.env_id, projectConfig?.envDetailKeys),
+  );
 
   // Create target_id mapping and remove extra fields
   const targetIdMap = createTargetIdMap(_collection, curEnv?.server_list);
@@ -231,14 +273,14 @@ export const getSocketIoOption = async (data: { option: any, target: any }, cont
     }
   }
   const options = await genSendBaseOptions({
-    scene: 'http_request',
+    scene: "http_request",
     collection: _collection,
     databaseConfigs: {},
     projectConfig,
     systemConfig,
     curServerId: option?.server_id,
     targetId: target?.target_id,
-    type:target?.target_type
+    type: target?.target_type,
   });
   return options;
-}
+};

@@ -1,6 +1,9 @@
-import type { ApiDetailsData } from '@/features/requests/types/api';
+import type { ApiDetailsData } from "@/features/requests/types/api";
 
-type CollectionItem = Pick<ApiDetailsData, 'target_id' | 'parent_id' | 'target_type' | 'sort'>;
+type CollectionItem = Pick<
+  ApiDetailsData,
+  "target_id" | "parent_id" | "target_type" | "sort"
+>;
 
 const indexChildren = <T extends CollectionItem>(items: T[]) => {
   const children = new Map<string, T[]>();
@@ -16,7 +19,10 @@ const indexChildren = <T extends CollectionItem>(items: T[]) => {
 };
 
 /** Include the selected item, then its descendants in the original collection order. */
-export const getCollectionChildIds = <T extends CollectionItem>(items: T[], root: T): string[] => {
+export const getCollectionChildIds = <T extends CollectionItem>(
+  items: T[],
+  root: T,
+): string[] => {
   const children = indexChildren(items);
   const visited = new Set<string>();
   const result: string[] = [];
@@ -28,7 +34,7 @@ export const getCollectionChildIds = <T extends CollectionItem>(items: T[], root
     }
     visited.add(item.target_id);
     result.push(item.target_id);
-    if (item === root || item.target_type === 'folder') {
+    if (item === root || item.target_type === "folder") {
       const descendants = children.get(item.target_id) || [];
       for (let index = descendants.length - 1; index >= 0; index--) {
         pending.push(descendants[index]);
@@ -39,7 +45,10 @@ export const getCollectionChildIds = <T extends CollectionItem>(items: T[], root
 };
 
 /** Test runs use sorted APIs in each folder before visiting its sorted subfolders. */
-export const getCollectionApis = <T extends CollectionItem>(items: T[], folderId: string): T[] => {
+export const getCollectionApis = <T extends CollectionItem>(
+  items: T[],
+  folderId: string,
+): T[] => {
   const children = indexChildren(items);
   const visited = new Set<string>();
   const result: T[] = [];
@@ -52,12 +61,12 @@ export const getCollectionApis = <T extends CollectionItem>(items: T[], folderId
     visited.add(id);
     const siblings = (children.get(id) || []).sort((a, b) => a.sort - b.sort);
     for (const item of siblings) {
-      if (item.target_type === 'api') {
+      if (item.target_type === "api") {
         result.push(item);
       }
     }
     for (let index = siblings.length - 1; index >= 0; index--) {
-      if (siblings[index].target_type === 'folder') {
+      if (siblings[index].target_type === "folder") {
         pending.push(siblings[index].target_id);
       }
     }

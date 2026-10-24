@@ -1,21 +1,25 @@
-import { message as messageApi, notification as notificationApi, modal as modalApi } from '@/shared/ui/base/Feedback';
-import type { MessageInstance } from '@/shared/ui/base';
-import type { ModalStaticFunctions } from '@/shared/ui/base';
-import type { NotificationInstance } from '@/shared/ui/base';
+import {
+  message as messageApi,
+  notification as notificationApi,
+  modal as modalApi,
+} from "@/shared/ui/base/Feedback";
+import type { MessageInstance } from "@/shared/ui/base";
+import type { ModalStaticFunctions } from "@/shared/ui/base";
+import type { NotificationInstance } from "@/shared/ui/base";
 
-import { create } from 'zustand';
+import { create } from "zustand";
 
 type State = {
   message?: MessageInstance;
   notification?: NotificationInstance;
-  modal?: Omit<ModalStaticFunctions, 'warn'>;
+  modal?: Omit<ModalStaticFunctions, "warn">;
 };
 
 type Action = {
   updateAntdStaticFunctions: (staticFunctions: {
     message: MessageInstance;
     notification: NotificationInstance;
-    modal: Omit<ModalStaticFunctions, 'warn'>;
+    modal: Omit<ModalStaticFunctions, "warn">;
   }) => void;
 };
 

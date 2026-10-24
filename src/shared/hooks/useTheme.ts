@@ -1,4 +1,4 @@
-import { theme } from '@/shared/ui/base';
+import { theme } from "@/shared/ui/base";
 
 const { useToken } = theme;
 

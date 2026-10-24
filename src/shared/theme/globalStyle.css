@@ -1,13 +1,22 @@
 #root {
   -webkit-font-smoothing: antialiased;
 }
-.page-global-tabs .slot-beautify-tabs-nav > .slot-beautify-tabs-nav-wrap > .slot-beautify-tabs-nav-list .slot-name {
+.page-global-tabs
+  .slot-beautify-tabs-nav
+  > .slot-beautify-tabs-nav-wrap
+  > .slot-beautify-tabs-nav-list
+  .slot-name {
   font-size: var(--font-size-14);
   font-weight: normal;
   color: var(--font-light-color);
   text-shadow: none;
 }
-.page-global-tabs .slot-beautify-tabs-nav > .slot-beautify-tabs-nav-wrap > .slot-beautify-tabs-nav-list .slot-beautify-tabs-tab-active .slot-name {
+.page-global-tabs
+  .slot-beautify-tabs-nav
+  > .slot-beautify-tabs-nav-wrap
+  > .slot-beautify-tabs-nav-list
+  .slot-beautify-tabs-tab-active
+  .slot-name {
   font-weight: bold;
   color: var(--font-content-color);
 }
@@ -57,7 +66,11 @@
   display: flex;
   align-items: center;
 }
-.beautify-dropdown .slot-beautify-dropdown-menu .beautify-dropdown-menu-submenu-title .beautify-dropdown-menu-submenu-expand-icon .beautify-dropdown-menu-submenu-arrow-icon {
+.beautify-dropdown
+  .slot-beautify-dropdown-menu
+  .beautify-dropdown-menu-submenu-title
+  .beautify-dropdown-menu-submenu-expand-icon
+  .beautify-dropdown-menu-submenu-arrow-icon {
   color: var(--vscode-editorWidget-foreground, #cecece);
 }
 .beautify-tree-create-title .beautify-dropdown-menu-item-icon {
@@ -91,19 +104,28 @@
 .ant-dropdown,
 .ant-dropdown-menu.md-drop-menu,
 .ant-dropdown-menu-submenu.md-drop-menu {
-  box-shadow: rgba(255, 255, 255, 0.72) 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 16px 24px -8px !important;
+  box-shadow:
+    rgba(255, 255, 255, 0.72) 0px 0px 1px,
+    rgba(0, 0, 0, 0.1) 0px 16px 24px -8px !important;
 }
-.beautify-dropdown .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item-selected {
+.beautify-dropdown
+  .slot-beautify-dropdown-menu
+  .slot-beautify-dropdown-menu-item-selected {
   text-shadow: 0 0 0.25px currentcolor;
 }
-.slot-beautify-select-dropdown .beautify-select-item-option-active:not(.beautify-select-item-option-disabled) {
+.slot-beautify-select-dropdown
+  .beautify-select-item-option-active:not(
+    .beautify-select-item-option-disabled
+  ) {
   background-color: var(--vscode-list-inactiveSelectionBackground);
 }
 .slot-beautify-radio-wrapper .beautify-radio-checked .slot-beautify-radio-inner,
 .slot-beautify-radio-wrapper .slot-beautify-radio-inner {
   background-color: transparent !important;
 }
-.slot-beautify-radio-wrapper .beautify-radio-checked .slot-beautify-radio-inner::after {
+.slot-beautify-radio-wrapper
+  .beautify-radio-checked
+  .slot-beautify-radio-inner::after {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -112,7 +134,10 @@
   height: 8px;
   background-color: var(--color-primary);
 }
-.slot-beautify-select-outlined:not(.beautify-select-disabled):not(.slot-beautify-select-customize-input):not(.beautify-pagination-size-changer):hover .slot-beautify-select-selector {
+.slot-beautify-select-outlined:not(.beautify-select-disabled):not(
+    .slot-beautify-select-customize-input
+  ):not(.beautify-pagination-size-changer):hover
+  .slot-beautify-select-selector {
   border-color: var(--color-primary) !important;
 }
 .slot-beautify-segmented .slot-beautify-segmented-item-selected {
@@ -121,10 +146,10 @@
 }
 .slot-beautify-btn-primary {
   background-color: var(--color-primary);
-  color: var(--vscode-button-foreground, #FFFFFF);
+  color: var(--vscode-button-foreground, #ffffff);
 }
 .slot-beautify-btn-primary:not(:disabled):not(.beautify-btn-disabled):hover {
-  color: var(--vscode-button-foreground, #FFFFFF);
+  color: var(--vscode-button-foreground, #ffffff);
 }
 .slot-beautify-tabs-top > .slot-beautify-tabs-nav::before {
   /* border: none; */
@@ -132,17 +157,25 @@
 .slot-beautify-input,
 .slot-beautify-input-number {
   background: var(--vscode-input-background);
-  border: 1px solid var(--vscode-input-border, var(--vscode-settings-numberInputBorder, transparent));
+  border: 1px solid
+    var(
+      --vscode-input-border,
+      var(--vscode-settings-numberInputBorder, transparent)
+    );
 }
 .slot-beautify-input-outlined:hover {
   background: var(--vscode-input-background);
   border: 1px solid var(--color-primary);
 }
 .slot-beautify-input-outlined:focus {
-  border-color: var(--control-focus-border, var(--vscode-focusBorder, var(--color-primary)));
+  border-color: var(
+    --control-focus-border,
+    var(--vscode-focusBorder, var(--color-primary))
+  );
 }
 .slot-beautify-select .slot-beautify-select-selector,
-.slot-beautify-select-outlined:not(.slot-beautify-select-customize-input) .slot-beautify-select-selector {
+.slot-beautify-select-outlined:not(.slot-beautify-select-customize-input)
+  .slot-beautify-select-selector {
   border: 1px solid var(--vscode-settings-numberInputBorder, transparent);
 }
 .slot-beautify-dropdown-trigger {
@@ -155,9 +188,14 @@
 .slot-beautify-table .slot-beautify-select .slot-beautify-select-selector {
   border-color: transparent !important;
 }
-.slot-beautify-table .slot-beautify-select-focused .slot-beautify-select-selector {
+.slot-beautify-table
+  .slot-beautify-select-focused
+  .slot-beautify-select-selector {
   background: var(--highlight-change-color) !important;
-  border-color: var(--control-focus-border, var(--vscode-focusBorder, var(--color-primary))) !important;
+  border-color: var(
+    --control-focus-border,
+    var(--vscode-focusBorder, var(--color-primary))
+  ) !important;
 }
 .slot-beautify-table .slot-beautify-input {
   border-color: transparent !important;
@@ -165,13 +203,21 @@
 .slot-beautify-table .slot-beautify-input:focus {
   border-color: var(--control-focus-border) !important;
 }
-.slot-beautify-table .beautify-table-tbody .beautify-table-cell .slot-beautify-input-outlined:focus {
+.slot-beautify-table
+  .beautify-table-tbody
+  .beautify-table-cell
+  .slot-beautify-input-outlined:focus {
   background: var(--highlight-change-color) !important;
 }
-.slot-beautify-table .beautify-table-tbody .beautify-table-cell .slot-beautify-input-outlined:hover:not(:focus) {
+.slot-beautify-table
+  .beautify-table-tbody
+  .beautify-table-cell
+  .slot-beautify-input-outlined:hover:not(:focus) {
   border-color: var(--color-primary) !important;
 }
-.beautify-dropdown .slot-beautify-dropdown-menu .slot-beautify-dropdown-menu-item-selected {
+.beautify-dropdown
+  .slot-beautify-dropdown-menu
+  .slot-beautify-dropdown-menu-item-selected {
   color: var(--vscode-foreground);
 }
 .slot-beautify-segmented .slot-beautify-segmented-item {
@@ -185,11 +231,15 @@
 }
 .beautify-tooltip .beautify-tooltip-inner,
 .beautify-tooltip .beautify-tooltip-arrow:before {
-  background-color: var(--vscode-dropdown-listBackground, var(--vscode-settings-dropdownBackground));
+  background-color: var(
+    --vscode-dropdown-listBackground,
+    var(--vscode-settings-dropdownBackground)
+  );
 }
 .beautify-select-tree-list-scrollbar-thumb {
   background: var(--vscode-scrollbarSlider-background) !important;
 }
-.beautify-input-number-group-wrapper-outlined .beautify-input-number-group-addon {
+.beautify-input-number-group-wrapper-outlined
+  .beautify-input-number-group-addon {
   border: none;
 }

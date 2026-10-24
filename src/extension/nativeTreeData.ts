@@ -18,7 +18,10 @@ export function dayKey(timestamp: number): string {
 }
 
 /** Count descendants, excluding containers, without looping on malformed ancestry. */
-export function countFolderRequests(all: ApiDetailsData[], folderId: string): number {
+export function countFolderRequests(
+  all: ApiDetailsData[],
+  folderId: string,
+): number {
   const children = new Map<string, ApiDetailsData[]>();
   for (const item of all) {
     const parent = String(item.parent_id);
@@ -34,7 +37,8 @@ export function countFolderRequests(all: ApiDetailsData[], folderId: string): nu
       const id = String(item.target_id);
       if (visited.has(id)) continue;
       visited.add(id);
-      if (!["folder", "socket", "sample_group"].includes(item.target_type)) count++;
+      if (!["folder", "socket", "sample_group"].includes(item.target_type))
+        count++;
       pending.push(id);
     }
   }

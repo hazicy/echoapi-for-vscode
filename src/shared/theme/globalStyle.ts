@@ -1,5 +1,4 @@
-import './globalStyle.css';
-
+import "./globalStyle.css";
 
 const GlobalStyle = () => null;
 

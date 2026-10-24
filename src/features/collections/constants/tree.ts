@@ -5,8 +5,11 @@ import {
   APIS_TARGET_TYPE_ENUM,
 } from "@/features/requests/constants";
 
-import { ApisCreateList, ApisCreateListItem } from "@/features/requests/types/api";
-import { MenuProps } from '@/shared/ui/base';
+import {
+  ApisCreateList,
+  ApisCreateListItem,
+} from "@/features/requests/types/api";
+import { MenuProps } from "@/shared/ui/base";
 
 const TREE_TITLE = [
   i18next.t("common.folder_operate.new_http_request"),
@@ -104,7 +107,6 @@ export const APIS_FOLDER_ADD_LIST = concat(
   ] as any,
 ) as MenuProps["items"];
 
-
 export const APIS_FOLDER_OPERATE_LIST = [
   {
     key: APIS_TARGET_TYPE_ENUM.API,
@@ -186,7 +188,6 @@ export const APIS_FOLDER_OPERATE_LIST = [
     label: i18next.t("common.folder_operate.delete"),
   },
 ];
-
 
 export const SOCKET_SERVICE_FOLDER_OPERATE_LIST = [
   {
@@ -329,7 +330,6 @@ export const SOCKETIO_METHOD_OPERATE_LIST = [
     icon: "icon-trash",
   },
 ];
-
 
 export const APIS_MORE_OPERATE_LIST = [
   {

@@ -1,6 +1,6 @@
-import { ApiSendResponseData } from '@/features/requests/types/send';
+import { ApiSendResponseData } from "@/features/requests/types/send";
 
 export type ConsoleContentProps = {
-  consoleList: ApiSendResponseData['console'];
+  consoleList: ApiSendResponseData["console"];
   onClear?: () => void;
 };

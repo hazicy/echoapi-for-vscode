@@ -12,7 +12,7 @@ import {
 import useWebsocket2Store from "@/features/requests/store/useApis/websocket2";
 
 import { getWs2SendOptions } from "./utils";
-import { message } from '@/shared/ui/base';
+import { message } from "@/shared/ui/base";
 import { useTranslation } from "react-i18next";
 import { useApis, useStorage, useUserConfig } from "@/app/store";
 import produce from "immer";

@@ -1,15 +1,15 @@
-import { ApiDetailsData } from '@/features/requests/types/api';
-import { get, post } from './utils';
-import { ApisBaseData } from '@/features/requests/types/base';
-
+import { ApiDetailsData } from "@/features/requests/types/api";
+import { get, post } from "./utils";
+import { ApisBaseData } from "@/features/requests/types/base";
 
 /**
  * API brief info list
  */
-export const getApisListService = (data: {project_id:string}): Promise<{ list: ApisBaseData[] }> => {
-  return get({ url: '/ide/vscode/apis/list', data });
+export const getApisListService = (data: {
+  project_id: string;
+}): Promise<{ list: ApisBaseData[] }> => {
+  return get({ url: "/ide/vscode/apis/list", data });
 };
-
 
 /**
  * Batch get API details
@@ -17,12 +17,14 @@ export const getApisListService = (data: {project_id:string}): Promise<{ list: A
 export const getApisDetailsRequest = (data: {
   project_id: string;
   target_ids: string[];
-}): Promise<{ list: ApiDetailsData[] }> => post({ url: '/ide/vscode/apis/details', data });
+}): Promise<{ list: ApiDetailsData[] }> =>
+  post({ url: "/ide/vscode/apis/details", data });
 
 /**
  * Batch save APIs
  */
 export const batchSaveApiService = (data: {
-  project_id:string;
+  project_id: string;
   apis: ApiDetailsData[];
-}): Promise<{ list: ApiDetailsData[] }> => post({ url: '/ide/vscode/apis/batch_save', data });
+}): Promise<{ list: ApiDetailsData[] }> =>
+  post({ url: "/ide/vscode/apis/batch_save", data });

@@ -1,7 +1,7 @@
 import slots from "@/shared/ui/base/slots.module.css";
 import { useTranslation } from "react-i18next";
 
-import { Flex, message } from '@/shared/ui/base';
+import { Flex, message } from "@/shared/ui/base";
 
 import { useDebounce, useSafeState } from "ahooks";
 
@@ -13,7 +13,10 @@ import { openUrl } from "@/shared/utils/open";
 
 import { PanelProps } from "../types";
 import TabsPanel from "./Tabs";
-import { copyApiDocsUrlToClipboard, getApiDocsUrlById } from "@/features/sharing/utils/share";
+import {
+  copyApiDocsUrlToClipboard,
+  getApiDocsUrlById,
+} from "@/features/sharing/utils/share";
 
 const SharePanel = (props: PanelProps) => {
   const { t } = useTranslation();

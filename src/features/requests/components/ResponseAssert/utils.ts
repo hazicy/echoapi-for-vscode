@@ -1,16 +1,16 @@
-import Ajv, { ErrorObject } from 'ajv';
-import localize from 'ajv-i18n';
-import { isJson } from 'apipost-tools';
-import i18next from 'i18next';
-import JSON5 from 'json5';
-import { isArray, isPlainObject, isString, trim } from 'lodash';
-import Mock from 'mockjs';
+import Ajv, { ErrorObject } from "ajv";
+import localize from "ajv-i18n";
+import { isJson } from "apipost-tools";
+import i18next from "i18next";
+import JSON5 from "json5";
+import { isArray, isPlainObject, isString, trim } from "lodash";
+import Mock from "mockjs";
 
-import { ExpectItem } from '@/features/requests/types/base';
-import { ApiSendingData } from '@/features/requests/types/send';
+import { ExpectItem } from "@/features/requests/types/base";
+import { ApiSendingData } from "@/features/requests/types/send";
 export const getTestAssertResult = async (
   expect: ExpectItem,
-  response: ApiSendingData['response']
+  response: ApiSendingData["response"],
 ) => {
   const assertResult: {
     result: boolean;
@@ -23,48 +23,57 @@ export const getTestAssertResult = async (
     assertList: [],
   };
   if (
-    expect?.content_type === 'html' &&
+    expect?.content_type === "html" &&
     `${expect?.content_type}` !== `${response.mime_type?.ext}`
   ) {
     assertResult.result = false;
     assertResult.assertList.push({
       result: false,
-      expect: i18next.t('common.test_component.false_content', { type: 'html' }),
+      expect: i18next.t("common.test_component.false_content", {
+        type: "html",
+      }),
     });
     return assertResult;
   }
 
   if (
-    expect?.content_type === 'xml' &&
+    expect?.content_type === "xml" &&
     `${expect?.content_type}` !== `${response.mime_type?.ext}`
   ) {
     assertResult.result = false;
     assertResult.assertList.push({
       result: false,
-      expect: i18next.t('common.test_component.false_content', { type: 'xml' }),
-    });
-    return assertResult;
-  }
-
-  if (expect?.content_type === 'binary' && `${response?.fit_for_show}` === 'Monaco') {
-    assertResult.result = false;
-    assertResult.assertList.push({
-      result: false,
-      expect: i18next.t('common.test_component.false_content', { type: 'binary' }),
+      expect: i18next.t("common.test_component.false_content", { type: "xml" }),
     });
     return assertResult;
   }
 
   if (
-    expect?.content_type === 'json' &&
-    expect?.verify_type === 'schema' &&
+    expect?.content_type === "binary" &&
+    `${response?.fit_for_show}` === "Monaco"
+  ) {
+    assertResult.result = false;
+    assertResult.assertList.push({
+      result: false,
+      expect: i18next.t("common.test_component.false_content", {
+        type: "binary",
+      }),
+    });
+    return assertResult;
+  }
+
+  if (
+    expect?.content_type === "json" &&
+    expect?.verify_type === "schema" &&
     isPlainObject(expect?.schema)
   ) {
-    if (!isJson(response?.raw_body || '')) {
+    if (!isJson(response?.raw_body || "")) {
       assertResult.result = false;
       assertResult.assertList.push({
         result: false,
-        expect: i18next.t('common.test_component.false_content', { type: 'json' }),
+        expect: i18next.t("common.test_component.false_content", {
+          type: "json",
+        }),
       });
       return assertResult;
     }
@@ -81,12 +90,12 @@ export const getTestAssertResult = async (
     try {
       const validSchema = expect.schema;
       const validate = ajv.compile(validSchema);
-      const body = JSON.parse(response?.raw_body || '{}');
+      const body = JSON.parse(response?.raw_body || "{}");
       const newValid = validate(body);
 
       assertResult.result = newValid;
 
-      const localizeLanguage = i18next.language === 'zh-cn' ? 'zh' : 'en';
+      const localizeLanguage = i18next.language === "zh-cn" ? "zh" : "en";
       localize[localizeLanguage](validate.errors);
 
       if (isArray(validate.errors)) {
@@ -101,22 +110,24 @@ export const getTestAssertResult = async (
   }
 
   if (
-    expect?.content_type === 'json' &&
-    expect?.verify_type === 'mock' &&
+    expect?.content_type === "json" &&
+    expect?.verify_type === "mock" &&
     isString(expect?.mock) &&
     trim(expect.mock).length > 0
   ) {
-    if (!isJson(response?.raw_body || '')) {
+    if (!isJson(response?.raw_body || "")) {
       assertResult.result = false;
       assertResult.assertList.push({
         result: false,
-        expect: i18next.t('common.test_component.false_content', { type: 'json' }),
+        expect: i18next.t("common.test_component.false_content", {
+          type: "json",
+        }),
       });
       return assertResult;
     }
     try {
       const mockObj = JSON5.parse(expect.mock);
-      const body = JSON.parse(response.raw_body || '{}');
+      const body = JSON.parse(response.raw_body || "{}");
       const mockJsErrs = Mock.valid(mockObj, body);
       if (isArray(mockJsErrs) && mockJsErrs.length > 0) {
         assertResult.result = false;
@@ -132,8 +143,10 @@ export const getTestAssertResult = async (
   return assertResult;
 };
 
-const genAssertExpectMsg = (item: ErrorObject<string, Record<string, any>, unknown>) => {
-  const genInstancePath = item.instancePath?.split('/')?.join('.');
+const genAssertExpectMsg = (
+  item: ErrorObject<string, Record<string, any>, unknown>,
+) => {
+  const genInstancePath = item.instancePath?.split("/")?.join(".");
 
   if (genInstancePath) {
     return `$${genInstancePath} ${item.message}`;

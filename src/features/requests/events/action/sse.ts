@@ -2,11 +2,9 @@ import i18next from "i18next";
 
 import { ApisItemActionType } from "@/features/requests/types/other";
 
-export const shareSSE = (params: ApisItemActionType) => {
-};
+export const shareSSE = (params: ApisItemActionType) => {};
 
-export const copySSE = (params: ApisItemActionType) => {
-};
+export const copySSE = (params: ApisItemActionType) => {};
 
 export const cloneSSE = (params: ApisItemActionType) => {
   const { apisData } = params;

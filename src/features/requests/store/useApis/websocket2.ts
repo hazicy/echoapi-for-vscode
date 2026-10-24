@@ -1,8 +1,8 @@
-import { create, devtools } from '@/app/store/utils';
+import { create, devtools } from "@/app/store/utils";
 
 type Pool = {
   [k: string]: {
-    status: 'connect' | 'connecting' | 'disconnect';
+    status: "connect" | "connecting" | "disconnect";
     socketRes: any[];
     responseData: any;
   };
@@ -36,8 +36,8 @@ const useApisWebsocket2 = create<State & Action>()(
         });
       },
     }),
-    { name: 'useApisWebsocket2' }
-  )
+    { name: "useApisWebsocket2" },
+  ),
 );
 
 export default useApisWebsocket2;

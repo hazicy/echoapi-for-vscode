@@ -16,13 +16,11 @@ export type DataSourceItem = {
   param_id?: string;
 };
 
-
 interface TableProps {
   value?: DataSourceItem[];
   onChange?: any;
   hasSendIn?: boolean;
 }
-
 
 const DEFAULT_ITEM = {
   key: "",
@@ -33,7 +31,11 @@ const DEFAULT_ITEM = {
   enabled: true,
 };
 
-const Oauth2ParamsTable = ({ value, onChange, hasSendIn = false }: TableProps) => {
+const Oauth2ParamsTable = ({
+  value,
+  onChange,
+  hasSendIn = false,
+}: TableProps) => {
   const lastRowDataRef = useRef<DataSourceItem | null>(null);
   const handleItemChange = (rowData: any, index: number, newVal: any) => {
     const newList = [...(value || [])];
@@ -117,10 +119,13 @@ const Oauth2ParamsTable = ({ value, onChange, hasSendIn = false }: TableProps) =
   ];
 
   const tableDataList = useMemo(() => {
-    if (value?.some(item => item.static)) {
+    if (value?.some((item) => item.static)) {
       return value;
     }
-    if (!lastRowDataRef.current || value?.some(item => item.param_id === lastRowDataRef.current?.param_id)) {
+    if (
+      !lastRowDataRef.current ||
+      value?.some((item) => item.param_id === lastRowDataRef.current?.param_id)
+    ) {
       lastRowDataRef.current = { ...DEFAULT_ITEM, param_id: snowflakeId() };
     }
     return [...(value || []), lastRowDataRef.current];
@@ -131,8 +136,8 @@ const Oauth2ParamsTable = ({ value, onChange, hasSendIn = false }: TableProps) =
       return;
     }
     const rows = value || [];
-    const activeIndex = rows.findIndex(item => item.param_id === active.id);
-    const overIndex = rows.findIndex(item => item.param_id === over.id);
+    const activeIndex = rows.findIndex((item) => item.param_id === active.id);
+    const overIndex = rows.findIndex((item) => item.param_id === over.id);
     if (activeIndex < 0 || overIndex < 0) {
       return;
     }

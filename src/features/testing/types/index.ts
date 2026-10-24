@@ -1,8 +1,8 @@
-import { STATUS_CODE } from '@/shared/constants/common';
-import { CASE_ITEM_TYPE, TESTING_TYPE } from '@/features/testing/constants';
-import { CaseItem, Settings } from '@/features/testing/types/common';
-import { ApiDetailsData } from '../../requests/types/api';
-import { ApiSendResponseData } from '../../requests/types/send';
+import { STATUS_CODE } from "@/shared/constants/common";
+import { CASE_ITEM_TYPE, TESTING_TYPE } from "@/features/testing/constants";
+import { CaseItem, Settings } from "@/features/testing/types/common";
+import { ApiDetailsData } from "../../requests/types/api";
+import { ApiSendResponseData } from "../../requests/types/send";
 
 export type CaseAddMenu = {
   /**Icon */
@@ -72,10 +72,10 @@ export type TestingDetailData = {
   event_list: CaseItem[];
 } & TestingData;
 
-export type EventData={
+export type EventData = {
   settings: Settings;
   event_list: EventItem[];
-}
+};
 
 export type EventItem = {
   event_id: string;
@@ -128,18 +128,16 @@ export type TestingDataListItem = {
 };
 export type TestingDataList = TestingDataListItem[];
 
-
 export interface TestingSendingData {
   /**Send status */
-  sendStatus: 'initial' | 'sending' | 'sendError' | 'sendOver';
+  sendStatus: "initial" | "sending" | "sendError" | "sendOver";
   /**Send result */
   requestList: any[];
   /**Completion info */
-  complete:any;
+  complete: any;
 }
-
 
 export type RuntimeResponse = Pick<
   ApiSendResponseData,
-  'console' | 'request' | 'response' | 'assertions'
+  "console" | "request" | "response" | "assertions"
 >;

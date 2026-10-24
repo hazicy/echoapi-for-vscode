@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 type Props = {
   showError: boolean;
@@ -7,7 +7,7 @@ type Props = {
 
 const Context = createContext<Props>({
   showError: false,
-  errorMsg: '',
+  errorMsg: "",
 });
 
 export default Context;

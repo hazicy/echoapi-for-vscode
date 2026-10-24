@@ -1,11 +1,14 @@
-import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from '../constants';
-import * as vscode from 'vscode';
-import path from 'path';
-import { getApiList, getHtmlForWebview } from '../utils';
-import { handelPushMessage } from '../messageHandler/shareList';
-import { getProjectShareData } from '../utils/share';
+import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from "../constants";
+import * as vscode from "vscode";
+import path from "path";
+import { getApiList, getHtmlForWebview } from "../utils";
+import { handelPushMessage } from "../messageHandler/shareList";
+import { getProjectShareData } from "../utils/share";
 
-export const createShareListPanel = (data:any, context: vscode.ExtensionContext) => {
+export const createShareListPanel = (
+  data: any,
+  context: vscode.ExtensionContext,
+) => {
   let { shareListWebView } = globalConfig;
 
   const panelOptions = PANEL_OPTIONS.SHARELIST;
@@ -30,31 +33,44 @@ export const createShareListPanel = (data:any, context: vscode.ExtensionContext)
   );
   // Get icon path
   const iconPath = vscode.Uri.file(
-    path.join(context.extensionPath, 'dist', 'images', panelOptions.iconName)
+    path.join(context.extensionPath, "dist", "images", panelOptions.iconName),
   );
 
   panel.iconPath = iconPath;
-  let scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', `${panelOptions.viewType}.js`)));
-  if(process.env.ECHOAPI_DEV_SERVER === "true"){
+  let scriptUri = panel.webview.asWebviewUri(
+    vscode.Uri.file(
+      path.join(context.extensionPath, "dist", `${panelOptions.viewType}.js`),
+    ),
+  );
+  if (process.env.ECHOAPI_DEV_SERVER === "true") {
     scriptUri = `http://localhost:${LOCAL_PORT}/src/app/webviews/${panelOptions.viewType[0].toUpperCase()}${panelOptions.viewType.slice(1)}.tsx`;
   }
-  const resourceBaseUrl = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist')));
-
+  const resourceBaseUrl = panel.webview.asWebviewUri(
+    vscode.Uri.file(path.join(context.extensionPath, "dist")),
+  );
 
   // And set its HTML content
   panel.webview.html = getHtmlForWebview(scriptUri, resourceBaseUrl, null);
 
   // Receive messages from Webview
-  panel.webview.onDidReceiveMessage(async (message: { action: string, data: any }) => {
-    handelPushMessage(message, context);
-  });
+  panel.webview.onDidReceiveMessage(
+    async (message: { action: string; data: any }) => {
+      handelPushMessage(message, context);
+    },
+  );
 
-   // Listen for Webview view visibility changes
-   panel.onDidChangeViewState(() => {
+  // Listen for Webview view visibility changes
+  panel.onDidChangeViewState(() => {
     if (panel.visible) {
       // Pass latest data to view after display
-      panel?.webview.postMessage({ action: 'setApiList', data: getApiList(context) });
-      panel?.webview.postMessage({ action: 'setShareData', data: getProjectShareData(context) });
+      panel?.webview.postMessage({
+        action: "setApiList",
+        data: getApiList(context),
+      });
+      panel?.webview.postMessage({
+        action: "setShareData",
+        data: getProjectShareData(context),
+      });
     }
   });
 
@@ -65,7 +81,7 @@ export const createShareListPanel = (data:any, context: vscode.ExtensionContext)
       // When the panel is closed, cancel any future updates to the webview content
     },
     null,
-    context.subscriptions
+    context.subscriptions,
   );
   globalConfig.shareListWebView = panel;
-}
+};

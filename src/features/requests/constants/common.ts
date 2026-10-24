@@ -1,4 +1,4 @@
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
 import {
   DEFAULT_API_DATA,
   DEFAULT_API_SAMPLE_DATA,
@@ -11,10 +11,10 @@ import {
   DEFAULT_SSE_DATA,
   DEFAULT_WEBSOCKET2_DATA,
   DEFAULT_SOCKETIO_DATA,
-  DEFAULT_GRAPHQL_DATA
-} from '@/features/requests/constants/default';
-import { STATUS_CODE } from '@/shared/constants/common';
-import { ApisDataTypeMapping } from '@/features/requests/types/base';
+  DEFAULT_GRAPHQL_DATA,
+} from "@/features/requests/constants/default";
+import { STATUS_CODE } from "@/shared/constants/common";
+import { ApisDataTypeMapping } from "@/features/requests/types/base";
 
 export const APIS_VIEW_DEFAULT_STATUS = {
   is_changed: STATUS_CODE.DISABLE,
@@ -39,20 +39,22 @@ export const APIS_BASE_DEFAULT_DATA: Partial<ApisDataTypeMapping> = {
 };
 
 const DEFAULT_COLOR_MAP = {
-  doc: 'doc',
-  websocket2: 'ws',
-  grpc: 'grpc',
-  socket_method: 'socket-service',
-  socket: 'socket',
-  note: 'note',
+  doc: "doc",
+  websocket2: "ws",
+  grpc: "grpc",
+  socket_method: "socket-service",
+  socket: "socket",
+  note: "note",
 };
 
 export const ColorMap = (type: any, method: any) => {
   const maps: any = DEFAULT_COLOR_MAP;
   if (method) {
-    maps['api'] = ['post', 'delete', 'get', 'put', 'patch'].includes(method?.toLowerCase())
+    maps["api"] = ["post", "delete", "get", "put", "patch"].includes(
+      method?.toLowerCase(),
+    )
       ? method?.toLowerCase()
-      : 'api-extra';
+      : "api-extra";
   }
   if (maps[type]) {
     return maps[type];

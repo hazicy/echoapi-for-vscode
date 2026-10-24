@@ -11,7 +11,10 @@ import {
 } from "../utils";
 import { importMethod } from "@/features/export/utils/export";
 import { createBatchApi } from "@/features/requests/utils/apis";
-import { IMPORT_TYPE_ENUM, ImportLocationEnum } from "@/features/settings/constants/settings";
+import {
+  IMPORT_TYPE_ENUM,
+  ImportLocationEnum,
+} from "@/features/settings/constants/settings";
 import { find, forEach, has, isArray, isString } from "lodash";
 import { validate } from "jsonschema";
 import { apiConverFormat } from "../utils/import";
@@ -112,7 +115,9 @@ export const handelImportDataMessage = async (
 
         // Save modified environment and services locally
         if (!setProjectConfig(context, currentProjectConfig)) {
-          vscode.window.showErrorMessage("Failed to save imported environments. Please try again.");
+          vscode.window.showErrorMessage(
+            "Failed to save imported environments. Please try again.",
+          );
           return false;
         }
       }

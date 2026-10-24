@@ -2,7 +2,7 @@ import { setRequestDraft } from "../requestStatus";
 import { getApiListName } from "../utils";
 import { getProtocolIcon } from "../protocolIcon";
 import * as vscode from "vscode";
-import { recordRequestHistory } from '../requestHistory';
+import { recordRequestHistory } from "../requestHistory";
 import {
   downloadFile,
   getApiList,
@@ -13,12 +13,7 @@ import {
   setProjectConfig,
   showTabName,
 } from "../utils";
-import {
-  getCodeHarRequest,
-  sendApi,
-  sendSse,
-  stopWorker,
-} from "../apis";
+import { getCodeHarRequest, sendApi, sendSse, stopWorker } from "../apis";
 import { globalConfig, DEFAULT_TARGET_NAME } from "../constants";
 import { cloneDeep, forEach, isPlainObject, trim } from "lodash";
 import {
@@ -72,7 +67,9 @@ const saveApiData = (
       setRequestDraft(getApiListName(context), data.target_id, cloneDeep(data));
       panel.title = showTabName(data?.name) + " ⚈";
     }
-    vscode.window.showErrorMessage("Failed to save requests. Please try again.");
+    vscode.window.showErrorMessage(
+      "Failed to save requests. Please try again.",
+    );
     return false;
   }
   setRequestDraft(getApiListName(context), newData.target_id);
@@ -81,7 +78,6 @@ const saveApiData = (
   if (!automatic) {
     panel.webview.postMessage({ action: "setApiData", data: newData });
   }
-
 
   // Update title
   panel.title = showTabName(newData?.name);
@@ -119,8 +115,7 @@ export const handelOpenMessage = async (
   panel: vscode.WebviewPanel,
   apiData: ApiDetailsData,
 ) => {
-  const { sidePanelWebView, environmentWebView } =
-    globalConfig;
+  const { sidePanelWebView, environmentWebView } = globalConfig;
   const { action, data } = message;
 
   switch (action) {

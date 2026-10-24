@@ -1,14 +1,14 @@
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
-import { useShallow } from 'zustand/react/shallow';
+import { useShallow } from "zustand/react/shallow";
 
-import { useGlobal, useSystemConfig } from '@/app/store';
+import { useGlobal, useSystemConfig } from "@/app/store";
 
-import { generateComponents } from './components';
+import { generateComponents } from "./components";
 // Import generateComponents from './components' module
-import { getAntdTheme } from './theme';
+import { getAntdTheme } from "./theme";
 // Import getAntdTheme from './theme' module
-import { generateToken } from './token';
+import { generateToken } from "./token";
 
 // Import generateToken from './token' module
 
@@ -22,10 +22,10 @@ const useGlobalTheme = () => {
       theme_color: systemConfig.theme_color,
       bg_color: systemConfig.bg_color,
       font_scale: systemConfig.font_scale,
-    }))
+    })),
   ); // Destructure theme and themeMode from useUserConfigStore
 
-  const vscodeTheme = useGlobal(store => store.vscodeTheme);
+  const vscodeTheme = useGlobal((store) => store.vscodeTheme);
 
   const antdThemeConfig = useMemo(() => {
     return getAntdTheme(theme_color, bg_color, font_scale); // Call getAntdTheme with theme and themeMode, assign result to antdThemeConfig

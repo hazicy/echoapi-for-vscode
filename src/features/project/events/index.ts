@@ -1,7 +1,7 @@
-import { MIGRATE_RESULT_STATUS } from '@/features/import/constants/migrate';
-import { TeamItem } from '@/features/auth/types';
-import dayjs from 'dayjs';
-import { filter, find, get, isEmpty, last, map, size, sortBy } from 'lodash';
+import { MIGRATE_RESULT_STATUS } from "@/features/import/constants/migrate";
+import { TeamItem } from "@/features/auth/types";
+import dayjs from "dayjs";
+import { filter, find, get, isEmpty, last, map, size, sortBy } from "lodash";
 
 /**
  * - Get project and team from project list by project ID
@@ -18,22 +18,26 @@ export const getTeamAndProjectByProjectId = ({
   if (isEmpty(teamProjectList)) return;
   const allProjects = filter(
     map(teamProjectList, (item) => item.project).flat(),
-    (project) => project?.upgrade_status === MIGRATE_RESULT_STATUS.NORMAL
+    (project) => project?.upgrade_status === MIGRATE_RESULT_STATUS.NORMAL,
   ); // Find all projects
-  const sortProjects = sortBy(allProjects, (item) => dayjs(item?.edited_at).valueOf()); // Sort by last edit time
+  const sortProjects = sortBy(allProjects, (item) =>
+    dayjs(item?.edited_at).valueOf(),
+  ); // Sort by last edit time
   const lastEditProject = projectId || last(sortProjects)?.project_id; // Find the last edited one
 
   // Check if the project in the current route exists in the project list; if so, it belongs to the same user or team
   const currentProjectInProjectList = find(teamProjectList, (item) =>
-    find(item.project, (p) => p.project_id === lastEditProject)
+    find(item.project, (p) => p.project_id === lastEditProject),
   );
 
   if (currentProjectInProjectList) {
-    const team = teamProjectList?.find(
-      (item) => item.project?.find((p) => p.project_id === lastEditProject)
+    const team = teamProjectList?.find((item) =>
+      item.project?.find((p) => p.project_id === lastEditProject),
     );
 
-    const project = team?.project?.find((item) => item.project_id === lastEditProject);
+    const project = team?.project?.find(
+      (item) => item.project_id === lastEditProject,
+    );
 
     return {
       team,
@@ -42,9 +46,12 @@ export const getTeamAndProjectByProjectId = ({
   }
 
   // Find the first team with projects or the first team
-  const hasProjectFirstTeam = find(teamProjectList, (temItem) => size(temItem.project) > 0);
-  const team = hasProjectFirstTeam || get(teamProjectList, '[0]');
-  const project = get(team, 'project[0]');
+  const hasProjectFirstTeam = find(
+    teamProjectList,
+    (temItem) => size(temItem.project) > 0,
+  );
+  const team = hasProjectFirstTeam || get(teamProjectList, "[0]");
+  const project = get(team, "project[0]");
 
   return {
     team,

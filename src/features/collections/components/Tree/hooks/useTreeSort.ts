@@ -1,28 +1,39 @@
-import { ReactElement } from 'react';
-import { useParams } from 'react-router-dom';
+import { ReactElement } from "react";
+import { useParams } from "react-router-dom";
 
-import { TreeProps } from '@/shared/ui/base';
-import { DataNode } from '@/shared/ui/base';
+import { TreeProps } from "@/shared/ui/base";
+import { DataNode } from "@/shared/ui/base";
 
-import produce from 'immer';
-import { assign, concat, forEach, includes, isEqual, last } from 'lodash';
+import produce from "immer";
+import { assign, concat, forEach, includes, isEqual, last } from "lodash";
 
-import { DEFAULT_NO_DRAG_INCLUDES_KEYS, DROP_POSITION_ENUM } from '../constants';
+import {
+  DEFAULT_NO_DRAG_INCLUDES_KEYS,
+  DROP_POSITION_ENUM,
+} from "../constants";
 
 interface Props {
-  allowDrop?: TreeProps['allowDrop'];
+  allowDrop?: TreeProps["allowDrop"];
   nodeDraggableKeys?: string[];
   onMoveApis?: (data: any) => void;
   primaryIdKeyName: string;
 }
 
 const useTreeSort = (props: Props) => {
-  const { primaryIdKeyName, allowDrop, nodeDraggableKeys = [], onMoveApis } = props;
+  const {
+    primaryIdKeyName,
+    allowDrop,
+    nodeDraggableKeys = [],
+    onMoveApis,
+  } = props;
 
   const { projectId } = useParams();
 
   const nodeDraggable = (node: DataNode) => {
-    return !includes(concat([], DEFAULT_NO_DRAG_INCLUDES_KEYS, nodeDraggableKeys), node.key);
+    return !includes(
+      concat([], DEFAULT_NO_DRAG_INCLUDES_KEYS, nodeDraggableKeys),
+      node.key,
+    );
   };
 
   const genNewData = <
@@ -30,7 +41,7 @@ const useTreeSort = (props: Props) => {
     U extends Record<typeof primaryIdKeyName, any>,
   >(
     detailsData: { [x: string]: T },
-    list: U[]
+    list: U[],
   ) => {
     return produce(detailsData, (draft) => {
       forEach(list, (item) => {
@@ -46,19 +57,19 @@ const useTreeSort = (props: Props) => {
     });
   };
 
-  const onDrop: TreeProps['onDrop'] = (info) => {
+  const onDrop: TreeProps["onDrop"] = (info) => {
     const dropKey = String(info.node.key);
     const dragKey = String(info.dragNode.key);
 
     const dropTitleProps = (info.node.title as ReactElement)?.props;
     const dropParentId = dropTitleProps?.parent_id;
 
-    const dropPos = info.node.pos.split('-');
+    const dropPos = info.node.pos.split("-");
     const dropPosition = info.dropPosition - Number(last(dropPos));
 
     const positionTargetId = {
-      [`after_${primaryIdKeyName}`]: '0',
-      [`before_${primaryIdKeyName}`]: '0',
+      [`after_${primaryIdKeyName}`]: "0",
+      [`before_${primaryIdKeyName}`]: "0",
     };
 
     const moveParams = {

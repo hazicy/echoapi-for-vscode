@@ -45,7 +45,7 @@ export enum MIGRATE_RESULT_STATUS {
  */
 export enum MIGRATE_TYPE {
   /** Migrate team */
-  TEAM = 'team',
+  TEAM = "team",
   /** Migrate project */
-  PROJECT = 'project',
+  PROJECT = "project",
 }

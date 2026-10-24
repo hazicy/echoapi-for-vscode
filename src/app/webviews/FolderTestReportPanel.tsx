@@ -1,21 +1,21 @@
-import { getPopupContainer } from '@/shared/utils/popupContainer';
-import { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom/client';
-import { App as AntdApp, ConfigProvider, Spin } from '@/shared/ui/base';
-import useGlobalTheme from '@/shared/theme';
-import antdLocale from '@/shared/locale/antd';
+import { getPopupContainer } from "@/shared/utils/popupContainer";
+import { useEffect, useState } from "react";
+import ReactDOM from "react-dom/client";
+import { App as AntdApp, ConfigProvider, Spin } from "@/shared/ui/base";
+import useGlobalTheme from "@/shared/theme";
+import antdLocale from "@/shared/locale/antd";
 
-import '@/shared/assets/css/reset.css';
+import "@/shared/assets/css/reset.css";
 
-import '@/shared/locale';
-import ReportDetails from '@/features/testing/components/Testing/ReportDetails';
-import { ThemeProvider } from '@/shared/ui/base/Theme';
-import GlobalThemeStyle from '../../shared/theme/global';
-import GlobalStyle from '../../shared/theme/globalStyle';
-import { useProjectConfig, useSystemConfig } from '../../app/store';
-import useTesting from '@/features/testing/store/useTesting';
-import { TestingReportList } from '@/features/testing/types/res';
-import { useTranslation } from 'react-i18next';
+import "@/shared/locale";
+import ReportDetails from "@/features/testing/components/Testing/ReportDetails";
+import { ThemeProvider } from "@/shared/ui/base/Theme";
+import GlobalThemeStyle from "../../shared/theme/global";
+import GlobalStyle from "../../shared/theme/globalStyle";
+import { useProjectConfig, useSystemConfig } from "../../app/store";
+import useTesting from "@/features/testing/store/useTesting";
+import { TestingReportList } from "@/features/testing/types/res";
+import { useTranslation } from "react-i18next";
 
 function FolderTestPanel() {
   const customTheme = useGlobalTheme();
@@ -31,16 +31,16 @@ function FolderTestPanel() {
   useEffect(() => {
     // First time get test data
     window?.vscode.postMessage({
-      action: 'getReportDetails',
+      action: "getReportDetails",
     });
 
     // Get global configuration
     window?.vscode.postMessage({
-      action: 'getSystemConfig',
+      action: "getSystemConfig",
     });
 
     window?.vscode.postMessage({
-      action: 'getProjectConfig',
+      action: "getProjectConfig",
     });
   }, []);
 
@@ -49,13 +49,13 @@ function FolderTestPanel() {
       const message = event.data; // The JSON data our extension sent
 
       switch (message.action) {
-        case 'setProjectConfig':
+        case "setProjectConfig":
           updateProjectConfig({ ...message.data });
           break;
-        case 'setReportDetails':
+        case "setReportDetails":
           setReportDetails(message.data);
           break;
-        case 'setSystemConfig':
+        case "setSystemConfig":
           const { systemConfig, updateSystemConfig } =
             useSystemConfig.getState();
 
@@ -63,16 +63,16 @@ function FolderTestPanel() {
           break;
       }
     };
-    window.addEventListener('message', messageHandler);
+    window.addEventListener("message", messageHandler);
     return () => {
-      window.removeEventListener('message', messageHandler);
+      window.removeEventListener("message", messageHandler);
     };
   }, [testingSendingData]);
 
   return (
     <ConfigProvider
       getPopupContainer={getPopupContainer}
-      prefixCls={'beautify'}
+      prefixCls={"beautify"}
       // theme={{ ...customTheme, cssVar: true }}
       theme={{
         token: customTheme.token,
@@ -84,10 +84,7 @@ function FolderTestPanel() {
         <ThemeProvider theme={customTheme}>
           <GlobalThemeStyle />
           <GlobalStyle />
-          <Spin
-            tip={t('common.loading')}
-            spinning={!Boolean(reportDetails)}
-          >
+          <Spin tip={t("common.loading")} spinning={!Boolean(reportDetails)}>
             {reportDetails && <ReportDetails reportDetails={reportDetails} />}
           </Spin>
         </ThemeProvider>
@@ -96,6 +93,6 @@ function FolderTestPanel() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <FolderTestPanel />,
 );

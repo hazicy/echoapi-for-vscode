@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { FC } from "react";
 
-import { InputNumberProps } from '@/shared/ui/base';
+import { InputNumberProps } from "@/shared/ui/base";
 
-import InputNumber from '@/shared/ui/InputNumber';
-import { TaskBaseItem } from '@/features/requests/types/request';
+import InputNumber from "@/shared/ui/InputNumber";
+import { TaskBaseItem } from "@/features/requests/types/request";
 
 interface Props {
   value: TaskBaseItem;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Wait: FC<Props> = ({ value, onChange }) => {
-  const handleChange: InputNumberProps['onChange'] = (changeValue) => {
+  const handleChange: InputNumberProps["onChange"] = (changeValue) => {
     onChange({
       ...value,
       data: changeValue || 0,

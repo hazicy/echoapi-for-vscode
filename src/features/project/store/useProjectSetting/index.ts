@@ -1,6 +1,6 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-import { devtools } from '@/app/store/utils';
+import { devtools } from "@/app/store/utils";
 import {
   AutoImportItem,
   ConnectToDatabaseItem,
@@ -9,8 +9,8 @@ import {
   MarkItem,
   MockInfo,
   MockItem,
-  FunctionItem
-} from '@/features/project/types';
+  FunctionItem,
+} from "@/features/project/types";
 
 type State = {
   markList: MarkItem[]; // interface status list
@@ -20,7 +20,9 @@ type State = {
   mockInfo: MockInfo; // mock settings
   mockInnerList: MockItem[]; // built-in mock list
   mockList: MockItem[]; // custom mock list
-  syncList: Array<AutoImportItem & { auto_import_id: string; project_id: string }>; // sync import project list
+  syncList: Array<
+    AutoImportItem & { auto_import_id: string; project_id: string }
+  >; // sync import project list
   connectDatabaseList: ConnectToDatabaseItem[]; // database connection list
   tags: string[];
   functionList: FunctionItem[];
@@ -35,7 +37,9 @@ type Action = {
   updateMockInnerList: (config: MockItem[]) => void;
   updateMockList: (config: MockItem[]) => void;
   updateSyncList: (
-    config: Array<AutoImportItem & { auto_import_id: string; project_id: string }>
+    config: Array<
+      AutoImportItem & { auto_import_id: string; project_id: string }
+    >,
   ) => void;
   updateConnectDatabaseList: (config: ConnectToDatabaseItem[]) => void;
   updateTags: (config: string[]) => void;
@@ -56,22 +60,24 @@ const useProjectSetting = create<State & Action>()(
       connectDatabaseList: [],
       tags: [],
       functionList: [],
-     
+
       updateMarkList: (params) => set({ markList: params }),
-      updateCustomAttributeList: (params) => set({ customAttributeList: params }),
-      updateDescriptionInnerList: (params) => set({ innerDescriptionList: params }),
+      updateCustomAttributeList: (params) =>
+        set({ customAttributeList: params }),
+      updateDescriptionInnerList: (params) =>
+        set({ innerDescriptionList: params }),
       updateDescriptionList: (params) => set({ descriptionList: params }),
       updateMockInfo: (params) => set({ mockInfo: params }),
       updateMockInnerList: (params) => set({ mockInnerList: params }),
       updateMockList: (params) => set({ mockList: params }),
       updateSyncList: (params) => set({ syncList: params }),
-      updateConnectDatabaseList: (params) => set({ connectDatabaseList: params }),
+      updateConnectDatabaseList: (params) =>
+        set({ connectDatabaseList: params }),
       updateTags: (params) => set({ tags: params }),
       updateFunctionList: (params) => set({ functionList: params }),
-  
     }),
-    { name: 'useProjectSetting' }
-  )
+    { name: "useProjectSetting" },
+  ),
 );
 
 export default useProjectSetting;

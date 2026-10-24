@@ -111,17 +111,13 @@ export const addGraphqlChild = async (params: ApisItemActionType) => {
   });
 };
 
-export const shareFolder = (_params: ApisItemActionType) => {
-};
+export const shareFolder = (_params: ApisItemActionType) => {};
 
-export const copyFolder = (_params: ApisItemActionType) => {
-};
+export const copyFolder = (_params: ApisItemActionType) => {};
 
-export const pasteFolder = (_params: ApisItemActionType) => {
-};
+export const pasteFolder = (_params: ApisItemActionType) => {};
 
-export const cloneFolder = (_params: ApisItemActionType) => {
-};
+export const cloneFolder = (_params: ApisItemActionType) => {};
 
 export const editFolder = (params: ApisItemActionType) => {
   const { apisData } = params;

@@ -1,7 +1,7 @@
-import { ApisBaseData } from './base';
+import { ApisBaseData } from "./base";
 
 export interface SocketServiceDetailsData extends ApisBaseData {
-  method: 'TCP' | 'UDP';
+  method: "TCP" | "UDP";
   description: string;
   url: string;
   request: {

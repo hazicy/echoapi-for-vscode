@@ -1,13 +1,19 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import { useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Dropdown, Flex, Input, Popconfirm, Typography } from '@/shared/ui/base';
+import {
+  Dropdown,
+  Flex,
+  Input,
+  Popconfirm,
+  Typography,
+} from "@/shared/ui/base";
 
-import { useSafeState } from 'ahooks';
-import classnames from 'classnames';
+import { useSafeState } from "ahooks";
+import classnames from "classnames";
 
-import IconFont from '@/shared/ui/IconFont';
+import IconFont from "@/shared/ui/IconFont";
 
 const { Paragraph } = Typography;
 interface Props {
@@ -21,7 +27,8 @@ interface Props {
 }
 const InputEdit = (props: Props) => {
   const { t } = useTranslation();
-  const { active, curKey, label, canDelete, onSelect, onEdit, onRemove } = props || {};
+  const { active, curKey, label, canDelete, onSelect, onEdit, onRemove } =
+    props || {};
 
   const [edit, setEdit] = useSafeState(true);
   const [value, setValue] = useSafeState(label);
@@ -33,11 +40,14 @@ const InputEdit = (props: Props) => {
   const Items = useMemo(() => {
     const items = [
       {
-        key: 'edit',
+        key: "edit",
         label: (
           <Flex className={slots["item-label"]}>
-            <IconFont type="icon-edit" style={{ fontSize: 'var(--font-size-16)' }} />
-            <span>{t('supplement.edit')}</span>
+            <IconFont
+              type="icon-edit"
+              style={{ fontSize: "var(--font-size-16)" }}
+            />
+            <span>{t("supplement.edit")}</span>
           </Flex>
         ),
         danger: false,
@@ -45,21 +55,24 @@ const InputEdit = (props: Props) => {
     ];
     canDelete &&
       items.push({
-        key: 'delete',
+        key: "delete",
         label: (
           <Popconfirm
-            title={t('supplement.delete')}
-            description={t('supplement.del_this_param')}
+            title={t("supplement.delete")}
+            description={t("supplement.del_this_param")}
             onConfirm={(e) => {
               e?.stopPropagation();
               onRemove?.(curKey);
             }}
-            okText={t('supplement.confirm')}
-            cancelText={t('supplement.cancel')}
+            okText={t("supplement.confirm")}
+            cancelText={t("supplement.cancel")}
           >
             <Flex className={slots["item-label"]}>
-              <IconFont type="icon-delete" style={{ fontSize: 'var(--font-size-16)' }} />
-              <span>{t('supplement.delete')}</span>
+              <IconFont
+                type="icon-delete"
+                style={{ fontSize: "var(--font-size-16)" }}
+              />
+              <span>{t("supplement.delete")}</span>
             </Flex>
           </Popconfirm>
         ) as any,
@@ -89,7 +102,7 @@ const InputEdit = (props: Props) => {
             onEdit && onEdit({ key: curKey, value: value });
             setEdit(true);
           }}
-          onChange={(e) => setValue(e?.target?.value || '')}
+          onChange={(e) => setValue(e?.target?.value || "")}
           readOnly={edit}
           value={value}
         />
@@ -100,22 +113,24 @@ const InputEdit = (props: Props) => {
       )}
 
       <Dropdown
-        getPopupContainer={(triggerNode: HTMLElement) => triggerNode.parentNode as HTMLElement}
+        getPopupContainer={(triggerNode: HTMLElement) =>
+          triggerNode.parentNode as HTMLElement
+        }
         menu={{
           items: Items,
           onClick: (node) => {
             node?.domEvent?.stopPropagation();
-            if (node.key === 'edit') {
+            if (node.key === "edit") {
               setEdit(false);
               return;
             }
-            if (node.key === 'delete') {
+            if (node.key === "delete") {
               // onRemove?.(curKey);
               return;
             }
           },
         }}
-        trigger={['click']}
+        trigger={["click"]}
       >
         <IconFont
           type="icon-navi-more"

@@ -1,5 +1,5 @@
-import { parse, printParseErrorCode, type ParseError } from 'jsonc-parser';
-import type { Diagnostic } from '@codemirror/lint';
+import { parse, printParseErrorCode, type ParseError } from "jsonc-parser";
+import type { Diagnostic } from "@codemirror/lint";
 
 export function jsonDiagnostics(value: string): Diagnostic[] {
   if (!value.trim()) {
@@ -12,9 +12,11 @@ export function jsonDiagnostics(value: string): Diagnostic[] {
   return errors.map((error) => ({
     from: error.offset,
     to: Math.min(value.length, error.offset + error.length),
-    severity: relaxed.some((other) => other.offset === error.offset && other.error === error.error)
-      ? 'error'
-      : 'warning',
+    severity: relaxed.some(
+      (other) => other.offset === error.offset && other.error === error.error,
+    )
+      ? "error"
+      : "warning",
     message: printParseErrorCode(error.error),
   }));
 }

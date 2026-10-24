@@ -1,6 +1,6 @@
-import { ApisBaseData } from './base';
-import { SocketRequest } from './request';
-import { BaseResponse } from './response';
+import { ApisBaseData } from "./base";
+import { SocketRequest } from "./request";
+import { BaseResponse } from "./response";
 
 export interface SocketDetailsData extends ApisBaseData {
   // Request object

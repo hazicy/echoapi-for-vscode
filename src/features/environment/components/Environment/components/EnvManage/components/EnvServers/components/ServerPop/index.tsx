@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Input, message } from '@/shared/ui/base';
+import { Input, message } from "@/shared/ui/base";
 
-import { Modal } from '@/shared/ui/Modal';
+import { Modal } from "@/shared/ui/Modal";
 
 interface Props {
   open: boolean;
-  type: 'add' | 'modify';
+  type: "add" | "modify";
   onCancel: () => void;
   onConfirm: (v: string) => void;
   value: string;
@@ -16,11 +16,11 @@ interface Props {
 const Index = (props: Props) => {
   const { t } = useTranslation();
   const { open, type, value, onCancel, onConfirm } = props;
-  const [serverName, setServerName] = useState('');
+  const [serverName, setServerName] = useState("");
 
   useEffect(() => {
-    if (type === 'add') {
-      setServerName('');
+    if (type === "add") {
+      setServerName("");
     } else {
       setServerName(value);
     }
@@ -28,13 +28,13 @@ const Index = (props: Props) => {
 
   useEffect(() => {
     if (!open) {
-      setServerName('');
+      setServerName("");
     }
   }, [open]);
 
   const handleOk = () => {
     if (serverName?.trim()?.length === 0) {
-      message.error(t('supplement.service_not_empty'));
+      message.error(t("supplement.service_not_empty"));
       return;
     }
     onConfirm(serverName);
@@ -47,13 +47,13 @@ const Index = (props: Props) => {
       onOk={handleOk}
       onCancel={onCancel}
       title={
-        type === 'add'
-          ? t('global_setting.environment_detail.add_server')
-          : t('global_setting.environment_detail.edit_name')
+        type === "add"
+          ? t("global_setting.environment_detail.add_server")
+          : t("global_setting.environment_detail.edit_name")
       }
     >
       <Input
-        placeholder={t('global_setting.environment_detail.input_tip')}
+        placeholder={t("global_setting.environment_detail.input_tip")}
         value={serverName}
         maxLength={128}
         onChange={(e) => setServerName(e.target.value)}

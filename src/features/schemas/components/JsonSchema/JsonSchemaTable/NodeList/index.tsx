@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import AllOfList from './AllOf';
-import AnyOfList from './AnyOf';
-import ArrayList from './Array';
-import ObjectList from './Object';
-import OneOfList from './OneOf';
+import AllOfList from "./AllOf";
+import AnyOfList from "./AnyOf";
+import ArrayList from "./Array";
+import ObjectList from "./Object";
+import OneOfList from "./OneOf";
 
 interface NodeListProps {
   deepIndex: number;
@@ -17,17 +17,24 @@ interface NodeListProps {
   onDeleteModel: () => void;
   onCancelLinkSchema: () => void;
   onChangeRefs: any;
-  linkSchema?: 'enable' | 'disable';
+  linkSchema?: "enable" | "disable";
   parentModels: React.MutableRefObject<any[]>;
 }
 
 const NodeList: React.FC<NodeListProps> = (props) => {
-  const { deepIndex, nodeType, nodeValue, onChange, onMultiChange, linkSchema, parentModels } =
-    props;
+  const {
+    deepIndex,
+    nodeType,
+    nodeValue,
+    onChange,
+    onMultiChange,
+    linkSchema,
+    parentModels,
+  } = props;
 
   return (
     <>
-      {nodeType === 'array' && (
+      {nodeType === "array" && (
         <ArrayList
           {...{
             deepIndex,
@@ -39,7 +46,7 @@ const NodeList: React.FC<NodeListProps> = (props) => {
           }}
         />
       )}
-      {nodeType === 'object' && (
+      {nodeType === "object" && (
         <ObjectList
           {...{
             deepIndex,
@@ -51,7 +58,7 @@ const NodeList: React.FC<NodeListProps> = (props) => {
           }}
         />
       )}
-      {nodeType === 'oneOf' && (
+      {nodeType === "oneOf" && (
         <OneOfList
           {...{
             deepIndex,
@@ -63,7 +70,7 @@ const NodeList: React.FC<NodeListProps> = (props) => {
           }}
         />
       )}
-      {nodeType === 'anyOf' && (
+      {nodeType === "anyOf" && (
         <AnyOfList
           {...{
             deepIndex,
@@ -75,7 +82,7 @@ const NodeList: React.FC<NodeListProps> = (props) => {
           }}
         />
       )}
-      {nodeType === 'allOf' && (
+      {nodeType === "allOf" && (
         <AllOfList
           {...{
             deepIndex,

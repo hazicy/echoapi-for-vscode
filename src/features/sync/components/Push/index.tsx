@@ -11,12 +11,7 @@ import {
   batchSaveApiService,
   getApisListService,
 } from "@/shared/services/apis";
-import {
-  cloneDeep,
-  forEach,
-  isArray,
-  isPlainObject,
-} from "lodash";
+import { cloneDeep, forEach, isArray, isPlainObject } from "lodash";
 import Left from "./Left";
 import Right from "./Right";
 import {
@@ -102,13 +97,16 @@ const Push = () => {
     setPushEnvData(newPushEnvData);
   };
 
-  const completePush = (uploaded: Array<{ target_id: string; version: number }> = [], selectedIds?: Set<string>) => {
+  const completePush = (
+    uploaded: Array<{ target_id: string; version: number }> = [],
+    selectedIds?: Set<string>,
+  ) => {
     window?.vscode.postMessage({
       action: "completePush",
       data: {
         project_id: currentProject.project_id,
         versions: uploaded
-          .filter(item => !selectedIds || selectedIds.has(item.target_id))
+          .filter((item) => !selectedIds || selectedIds.has(item.target_id))
           .map(({ target_id, version }) => ({ target_id, version })),
       },
     });
@@ -141,7 +139,9 @@ const Push = () => {
         pushEnvData?.checkedKeys || [],
         currentProject.project_id,
       );
-      const response = await getApisListService({ project_id: currentProject.project_id });
+      const response = await getApisListService({
+        project_id: currentProject.project_id,
+      });
       if (!isArray(response?.list)) {
         throw new Error("Unable to load API versions for conflict checking.");
       }
@@ -151,9 +151,14 @@ const Push = () => {
       return;
     }
 
-    const localApisVersion = localProjectApisVersion?.[currentProject.project_id] || {};
-    const conflictList = findApiConflicts(checkedItems, cloudList, localApisVersion);
-    const conflictIdList = conflictList.map(item => item.target_id);
+    const localApisVersion =
+      localProjectApisVersion?.[currentProject.project_id] || {};
+    const conflictList = findApiConflicts(
+      checkedItems,
+      cloudList,
+      localApisVersion,
+    );
+    const conflictIdList = conflictList.map((item) => item.target_id);
     // API or environment has conflict, proceed to conflict resolution step
     if (conflictList.length > 0 || envConflictList.diffEnvs.length > 0) {
       if (conflictType === "manual") {
@@ -237,7 +242,10 @@ const Push = () => {
       if (!isArray(result?.list)) {
         throw new Error("The upload response did not contain API versions.");
       }
-      completePush(result.list, new Set(checkedItems.map(item => item.target_id)));
+      completePush(
+        result.list,
+        new Set(checkedItems.map((item) => item.target_id)),
+      );
     } catch (error) {
       message.error(error instanceof Error ? error.message : String(error));
     } finally {
@@ -332,7 +340,10 @@ const Push = () => {
       if (!isArray(result?.list)) {
         throw new Error("The upload response did not contain API versions.");
       }
-      completePush(result.list, new Set(checkedItems.map(item => item.target_id)));
+      completePush(
+        result.list,
+        new Set(checkedItems.map((item) => item.target_id)),
+      );
     } catch (error) {
       message.error(error instanceof Error ? error.message : String(error));
     } finally {
@@ -345,9 +356,13 @@ const Push = () => {
       let envConflictItems = pushEnvData?.conflictItems || [];
       let conflictItems = pushApiData?.conflictItems || [];
       if (tabValue === "apis") {
-        const checkedKeys = [...new Set((pushApiData?.checkedKeys || []).concat(halfCheckedKeys))];
+        const checkedKeys = [
+          ...new Set((pushApiData?.checkedKeys || []).concat(halfCheckedKeys)),
+        ];
         const mode = pushApiData?.conflictType;
-        const conflictCheckedKeys = new Set(pushApiData?.conflictCheckedKeys || []);
+        const conflictCheckedKeys = new Set(
+          pushApiData?.conflictCheckedKeys || [],
+        );
         if (!mode) {
           message.error(t("common.select_conflict_mode_tip"));
           return;
@@ -356,11 +371,18 @@ const Push = () => {
           message.error(t("common.least_one_item_tip"));
           return;
         }
-        const remaining = conflictItems.filter(item => !conflictCheckedKeys.has(item.target_id));
-        const uploadKeys = mode === "cloud"
-          ? checkedKeys.filter(key => !conflictCheckedKeys.has(key))
-          : checkedKeys;
-        updatePushApiData({ conflictItems: remaining, checkedKeys: uploadKeys, conflictCheckedKeys: [] });
+        const remaining = conflictItems.filter(
+          (item) => !conflictCheckedKeys.has(item.target_id),
+        );
+        const uploadKeys =
+          mode === "cloud"
+            ? checkedKeys.filter((key) => !conflictCheckedKeys.has(key))
+            : checkedKeys;
+        updatePushApiData({
+          conflictItems: remaining,
+          checkedKeys: uploadKeys,
+          conflictCheckedKeys: [],
+        });
         if (remaining.length === 0) {
           if (envConflictItems.length === 0) {
             await conflictPush(uploadKeys);
@@ -427,7 +449,10 @@ const Push = () => {
         updatePushEnvData({ ...resolved, conflictCheckedKeys: [] });
         if (resolved.conflictItems.length === 0) {
           if (conflictItems.length === 0) {
-            await conflictPush(pushApiData?.checkedKeys || [], resolved.uploadItems);
+            await conflictPush(
+              pushApiData?.checkedKeys || [],
+              resolved.uploadItems,
+            );
           } else {
             setTabValue("apis");
           }

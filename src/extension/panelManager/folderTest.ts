@@ -1,13 +1,24 @@
-import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from '../constants';
-import * as vscode from 'vscode';
-import path from 'path';
-import { getAllApiChildren, getHtmlForWebview, getCurrentProjectConfig, getTestingFolderData, getTestingFolderName, showTabName } from '../utils';
-import { handelFolderTestMessage } from '../messageHandler/folderTest';
-import { ApiDetailsData } from '@/features/requests/types/api';
-import { ADD_CASE_DEFAULT } from '@/features/testing/constants/default';
-import { cloneDeep } from 'lodash';
+import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from "../constants";
+import * as vscode from "vscode";
+import path from "path";
+import {
+  getAllApiChildren,
+  getHtmlForWebview,
+  getCurrentProjectConfig,
+  getTestingFolderData,
+  getTestingFolderName,
+  showTabName,
+} from "../utils";
+import { handelFolderTestMessage } from "../messageHandler/folderTest";
+import { ApiDetailsData } from "@/features/requests/types/api";
+import { ADD_CASE_DEFAULT } from "@/features/testing/constants/default";
+import { cloneDeep } from "lodash";
 
-export const createFolderTestPanel = (data: ApiDetailsData, context: vscode.ExtensionContext, option?:any) => {
+export const createFolderTestPanel = (
+  data: ApiDetailsData,
+  context: vscode.ExtensionContext,
+  option?: any,
+) => {
   let { openedFolderTestPanels } = globalConfig;
 
   const folderName = getTestingFolderName(data.target_id, context);
@@ -18,21 +29,24 @@ export const createFolderTestPanel = (data: ApiDetailsData, context: vscode.Exte
   const openHistoryReport = option?.openHistoryReport || false;
 
   if (openedFolderTestPanels[folderName]) {
-     // Get all API endpoints under directory and assemble into event list
+    // Get all API endpoints under directory and assemble into event list
     const eventList = getAllApiChildren(data.target_id, context);
     // Tab already exists, switch to it
     openedFolderTestPanels[folderName].reveal(vscode.ViewColumn.One);
 
     // Return to initial state
-    openedFolderTestPanels[folderName].webview.postMessage({ action: 'setTestData', data: {
-      isInit:true,
-      showReportList:openHistoryReport,
-      testingName:data.name,// Test name
-      eventList, // API list under directory (flat)
-      config:cloneDeep(ADD_CASE_DEFAULT.settings), // Folder run configuration
-      reportList:[], // Report list
-      ...getTestingFolderData(data.target_id, context) || {}
-    } });
+    openedFolderTestPanels[folderName].webview.postMessage({
+      action: "setTestData",
+      data: {
+        isInit: true,
+        showReportList: openHistoryReport,
+        testingName: data.name, // Test name
+        eventList, // API list under directory (flat)
+        config: cloneDeep(ADD_CASE_DEFAULT.settings), // Folder run configuration
+        reportList: [], // Report list
+        ...(getTestingFolderData(data.target_id, context) || {}),
+      },
+    });
 
     return;
   }
@@ -52,31 +66,42 @@ export const createFolderTestPanel = (data: ApiDetailsData, context: vscode.Exte
   );
   // Get icon path
   const iconPath = vscode.Uri.file(
-    path.join(context.extensionPath, 'dist', 'images', panelOptions.iconName)
+    path.join(context.extensionPath, "dist", "images", panelOptions.iconName),
   );
 
   panel.iconPath = iconPath;
-  let scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', `${panelOptions.viewType}.js`)));
-  if(process.env.ECHOAPI_DEV_SERVER === "true"){
+  let scriptUri = panel.webview.asWebviewUri(
+    vscode.Uri.file(
+      path.join(context.extensionPath, "dist", `${panelOptions.viewType}.js`),
+    ),
+  );
+  if (process.env.ECHOAPI_DEV_SERVER === "true") {
     scriptUri = `http://localhost:${LOCAL_PORT}/src/app/webviews/${panelOptions.viewType[0].toUpperCase()}${panelOptions.viewType.slice(1)}.tsx`;
   }
-  const resourceBaseUrl = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist')));
+  const resourceBaseUrl = panel.webview.asWebviewUri(
+    vscode.Uri.file(path.join(context.extensionPath, "dist")),
+  );
 
   // And set its HTML content
-  panel.webview.html = getHtmlForWebview(scriptUri, resourceBaseUrl,null);
-  
-  // Receive messages from Webview
-  panel.webview.onDidReceiveMessage(async (message: { action: string, data: any }) => {
-    handelFolderTestMessage(message, context, panel, data, openHistoryReport);
-  });
+  panel.webview.html = getHtmlForWebview(scriptUri, resourceBaseUrl, null);
 
-    // Listen for Webview view visibility changes
-    panel.onDidChangeViewState(() => {
-      if (panel.visible) {
-        // Pass environment info to page after display
-        panel.webview.postMessage({ action: 'setProjectConfig', data: getCurrentProjectConfig(context) });
-      }
-    });
+  // Receive messages from Webview
+  panel.webview.onDidReceiveMessage(
+    async (message: { action: string; data: any }) => {
+      handelFolderTestMessage(message, context, panel, data, openHistoryReport);
+    },
+  );
+
+  // Listen for Webview view visibility changes
+  panel.onDidChangeViewState(() => {
+    if (panel.visible) {
+      // Pass environment info to page after display
+      panel.webview.postMessage({
+        action: "setProjectConfig",
+        data: getCurrentProjectConfig(context),
+      });
+    }
+  });
 
   // Triggered when tab is closed
   panel.onDidDispose(
@@ -85,8 +110,8 @@ export const createFolderTestPanel = (data: ApiDetailsData, context: vscode.Exte
       // When the panel is closed, cancel any future updates to the webview content
     },
     null,
-    context.subscriptions
+    context.subscriptions,
   );
   // Store tab in list
   openedFolderTestPanels[folderName] = panel;
-}
+};

@@ -1,4 +1,4 @@
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
 
 export const DEFAULT_CALC_CHILDREN_COUNT_TYPES = [
   APIS_TARGET_TYPE_ENUM.FOLDER,

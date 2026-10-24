@@ -1,20 +1,20 @@
-import { APIS_TASK_TYPES_ENUM } from '@/features/requests/constants';
+import { APIS_TASK_TYPES_ENUM } from "@/features/requests/constants";
 
-import { CustomNumberBooleanType } from '../../../shared/types/common';
-import { Auth } from './auth';
-import { ApisBaseDataItem } from './base';
+import { CustomNumberBooleanType } from "../../../shared/types/common";
+import { Auth } from "./auth";
+import { ApisBaseDataItem } from "./base";
 
 export type RequestBodyContentType =
-  | 'none'
-  | 'form-data'
-  | 'urlencoded'
-  | 'binary'
-  | 'json'
-  | 'xml'
-  | 'javascript'
-  | 'plain'
-  | 'html'
-  | 'msgpack';
+  | "none"
+  | "form-data"
+  | "urlencoded"
+  | "binary"
+  | "json"
+  | "xml"
+  | "javascript"
+  | "plain"
+  | "html"
+  | "msgpack";
 
 export type ApisBaseRequestBody = {
   // Request body type, none，form-data,urlencoded,json,xml,javascript,plain,html
@@ -83,7 +83,8 @@ export interface FolderRequest {
 
 export interface SocketRequestBody {
   //Parameter type
-  mode: 'iso8583' | 'json' | 'xml' | 'raw' | 'fixed_message' | 'delimiter_message';
+  mode:
+    "iso8583" | "json" | "xml" | "raw" | "fixed_message" | "delimiter_message";
   //  Use this data for iso8583 type parameters
   parameter: any[];
   //  'json' | 'xml' | 'raw' Use this data for
@@ -145,7 +146,6 @@ export type GraphQLRequestBodyQueryItem = {
     raw_schema: any;
   };
 };
-
 
 export type GraphQLRequestBody = {
   query_schema: object;

@@ -1,8 +1,7 @@
-import ATools from 'apipost-tools';
-import { isPlainObject, isString } from 'lodash';
+import ATools from "apipost-tools";
+import { isPlainObject, isString } from "lodash";
 
-import { useProjectConfig } from '@/app/store';
-
+import { useProjectConfig } from "@/app/store";
 
 export const completionHttpProtocol = (data: any) => {
   return ATools.completionHttpProtocol(data);
@@ -11,15 +10,18 @@ export const completionHttpProtocol = (data: any) => {
 export const completionWSProtocol = (data: any) => {
   if (isString(data)) {
     if (
-      data.substr(0, 5).toLowerCase() !== 'ws://' &&
-      data.substr(0, 6).toLowerCase() !== 'wss://'
+      data.substr(0, 5).toLowerCase() !== "ws://" &&
+      data.substr(0, 6).toLowerCase() !== "wss://"
     ) {
       data = `ws://${data}`;
     }
-  } else if (isPlainObject(data) && Object.prototype.hasOwnProperty.call(data, 'url')) {
+  } else if (
+    isPlainObject(data) &&
+    Object.prototype.hasOwnProperty.call(data, "url")
+  ) {
     if (
-      data.url.substr(0, 5).toLowerCase() !== 'ws://' &&
-      data.url.substr(0, 6).toLowerCase() !== 'wss://'
+      data.url.substr(0, 5).toLowerCase() !== "ws://" &&
+      data.url.substr(0, 6).toLowerCase() !== "wss://"
     ) {
       data.url = `ws://${data.url}`;
     }
@@ -27,12 +29,15 @@ export const completionWSProtocol = (data: any) => {
   return data;
 };
 
-export const getWs2SendOptions = async (target: any, temporaryServerId:string) => {
+export const getWs2SendOptions = async (
+  target: any,
+  temporaryServerId: string,
+) => {
   try {
     const { envDetailKeys } = useProjectConfig.getState();
 
     return {
-      server_id:temporaryServerId
+      server_id: temporaryServerId,
     };
   } catch (err: any) {}
 };

@@ -1,4 +1,4 @@
-import { isNumber } from 'lodash';
+import { isNumber } from "lodash";
 
 type VersionedApi = {
   target_id: string;
@@ -7,7 +7,14 @@ type VersionedApi = {
   version: number;
 };
 
-const conflictTypes = new Set(['api', 'sse', 'websocket2', 'socketio', 'folder', 'graphql']);
+const conflictTypes = new Set([
+  "api",
+  "sse",
+  "websocket2",
+  "socketio",
+  "folder",
+  "graphql",
+]);
 
 export const findApiConflicts = <T extends VersionedApi>(
   selected: T[],
@@ -22,17 +29,28 @@ export const findApiConflicts = <T extends VersionedApi>(
       cloudVersions.set(item.target_id, version);
     }
   }
-  return selected.filter(item => {
-    const recorded = recordedVersions[item.target_id];
-    const baseline = isNumber(recorded) ? recorded : item.version;
-    const cloudVersion = cloudVersions.get(item.target_id);
-    return conflictTypes.has(item.target_type) && cloudVersion !== undefined && cloudVersion > baseline;
-  }).map(item => ({ ...item, parent_id: '0' }))
-    .sort((a, b) => Number(b.target_type === 'folder') - Number(a.target_type === 'folder'));
+  return selected
+    .filter((item) => {
+      const recorded = recordedVersions[item.target_id];
+      const baseline = isNumber(recorded) ? recorded : item.version;
+      const cloudVersion = cloudVersions.get(item.target_id);
+      return (
+        conflictTypes.has(item.target_type) &&
+        cloudVersion !== undefined &&
+        cloudVersion > baseline
+      );
+    })
+    .map((item) => ({ ...item, parent_id: "0" }))
+    .sort(
+      (a, b) =>
+        Number(b.target_type === "folder") - Number(a.target_type === "folder"),
+    );
 };
 
 /** Mutate the caller's upload snapshot; ignore response IDs that are no longer local. */
-export const applyApiVersions = <T extends { target_id: string; version: number }>(
+export const applyApiVersions = <
+  T extends { target_id: string; version: number },
+>(
   local: T[],
   uploaded: Array<{ target_id: string; version?: unknown }>,
 ): boolean => {

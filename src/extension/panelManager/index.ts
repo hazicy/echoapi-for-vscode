@@ -1,18 +1,17 @@
-export { default as MySidebarView } from './sidebar';
+export { default as MySidebarView } from "./sidebar";
 
-export { createCurlPanel } from './curl';
+export { createCurlPanel } from "./curl";
 
-export { createOpenPanel } from './open';
+export { createOpenPanel } from "./open";
 
-export { createImportDataPanel } from './importData';
+export { createImportDataPanel } from "./importData";
 
-export { createEnvironmentPanel } from './environment';
+export { createEnvironmentPanel } from "./environment";
 
-export { createPushPanel } from './push';
+export { createPushPanel } from "./push";
 
+export { createFolderTestPanel } from "./folderTest";
 
-export { createFolderTestPanel } from './folderTest';
+export { createfolderTestReportDataPanel } from "./folderTestReport";
 
-export { createfolderTestReportDataPanel } from './folderTestReport';
-
-export { createExportDataPanel } from './exportData';
+export { createExportDataPanel } from "./exportData";

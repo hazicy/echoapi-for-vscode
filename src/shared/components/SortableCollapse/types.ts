@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import { TAG_TYPE_MAP } from './constants';
+import { TAG_TYPE_MAP } from "./constants";
 
 export enum DRAG_MODE {
-  TOP = 'top',
-  INSIDE = 'inside',
-  BOTTOM = 'bottom',
+  TOP = "top",
+  INSIDE = "inside",
+  BOTTOM = "bottom",
 }
 
 export type TagType = keyof typeof TAG_TYPE_MAP;
@@ -19,7 +19,7 @@ export type SortableCollapseProps<SortItem> = {
   sortItemList: SortItem[];
   /**Container class name */
   wrapClassName?: string;
-} & Omit<SortableItemProps<SortItem>, 'sortItem'>;
+} & Omit<SortableItemProps<SortItem>, "sortItem">;
 
 export type SortableItemProps<SortItem> = {
   /**Type without children (no arrow shown and cannot be expanded) */
@@ -62,7 +62,11 @@ export type SortableItemProps<SortItem> = {
   /**Panel collapse callback */
   onCollapseChange?: (activeKey: string, item: SortItem) => void;
   /**Drag end callback function */
-  handleDragEnd?: (sourceKey: string, targetKey: string, mode: DRAG_MODE) => void;
+  handleDragEnd?: (
+    sourceKey: string,
+    targetKey: string,
+    mode: DRAG_MODE,
+  ) => void;
   /**Whether to expand by default */
   isDefaultActiveKeyShowAll?: boolean;
   // Whether to expand items by default

@@ -1,7 +1,7 @@
-import { memo } from 'react';
+import { memo } from "react";
 
-import PrefixIcon from '@/shared/ui/PrefixIcon';
-import { TreeDataItem } from '@/features/requests/types/api';
+import PrefixIcon from "@/shared/ui/PrefixIcon";
+import { TreeDataItem } from "@/features/requests/types/api";
 
 const ItemIcon = memo((props: TreeDataItem & Record<string, any>) => {
   const { method, type } = props;

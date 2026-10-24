@@ -1,12 +1,15 @@
-import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from '../constants';
-import * as vscode from 'vscode';
-import path from 'path';
-import { getHtmlForWebview } from '../utils';
-import { handelEnvMessage } from '../messageHandler/environment';
-import { ENV_MANAGE_ENUM } from '@/features/environment/components/Environment/constants';
+import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from "../constants";
+import * as vscode from "vscode";
+import path from "path";
+import { getHtmlForWebview } from "../utils";
+import { handelEnvMessage } from "../messageHandler/environment";
+import { ENV_MANAGE_ENUM } from "@/features/environment/components/Environment/constants";
 
-export const createEnvironmentPanel = (data:any, context: vscode.ExtensionContext) => {
-  let { environmentWebView }= globalConfig;
+export const createEnvironmentPanel = (
+  data: any,
+  context: vscode.ExtensionContext,
+) => {
+  let { environmentWebView } = globalConfig;
 
   const panelOptions = PANEL_OPTIONS.ENVIRONMENT;
 
@@ -15,19 +18,31 @@ export const createEnvironmentPanel = (data:any, context: vscode.ExtensionContex
     environmentWebView.reveal(vscode.ViewColumn.One);
     // Create new environment
     if (data?.create) {
-      environmentWebView.webview.postMessage({ action: 'initCreateEnv' });
-    }else if(data?.global_param){
-      environmentWebView.webview.postMessage({ action: 'setEnvSettingKeys', data: ENV_MANAGE_ENUM.globalParm });
-      if(data?.global_param_tab_key){
-        environmentWebView.webview.postMessage({ action: 'setProjectConfig', data: {
-          globalParamsTabKey:data.global_param_tab_key
-        } });
+      environmentWebView.webview.postMessage({ action: "initCreateEnv" });
+    } else if (data?.global_param) {
+      environmentWebView.webview.postMessage({
+        action: "setEnvSettingKeys",
+        data: ENV_MANAGE_ENUM.globalParm,
+      });
+      if (data?.global_param_tab_key) {
+        environmentWebView.webview.postMessage({
+          action: "setProjectConfig",
+          data: {
+            globalParamsTabKey: data.global_param_tab_key,
+          },
+        });
       }
     } else if (!data?.cookie) {
-      environmentWebView.webview.postMessage({ action: 'setEnvSettingKeys', data: !data?.env_id ? '1' : data?.env_id });
-    } 
-    if(data?.cookie){
-      environmentWebView.webview.postMessage({ action: 'setEnvSettingKeys', data: ENV_MANAGE_ENUM.cookie });
+      environmentWebView.webview.postMessage({
+        action: "setEnvSettingKeys",
+        data: !data?.env_id ? "1" : data?.env_id,
+      });
+    }
+    if (data?.cookie) {
+      environmentWebView.webview.postMessage({
+        action: "setEnvSettingKeys",
+        data: ENV_MANAGE_ENUM.cookie,
+      });
     }
     return;
   }
@@ -46,23 +61,31 @@ export const createEnvironmentPanel = (data:any, context: vscode.ExtensionContex
   );
   // Get icon path
   const iconPath = vscode.Uri.file(
-    path.join(context.extensionPath, 'dist', 'images', panelOptions.iconName)
+    path.join(context.extensionPath, "dist", "images", panelOptions.iconName),
   );
 
   panel.iconPath = iconPath;
-  let scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', `${panelOptions.viewType}.js`)));
-  if(process.env.ECHOAPI_DEV_SERVER === "true"){
+  let scriptUri = panel.webview.asWebviewUri(
+    vscode.Uri.file(
+      path.join(context.extensionPath, "dist", `${panelOptions.viewType}.js`),
+    ),
+  );
+  if (process.env.ECHOAPI_DEV_SERVER === "true") {
     scriptUri = `http://localhost:${LOCAL_PORT}/src/app/webviews/${panelOptions.viewType[0].toUpperCase()}${panelOptions.viewType.slice(1)}.tsx`;
   }
-  const resourceBaseUrl = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist')));
+  const resourceBaseUrl = panel.webview.asWebviewUri(
+    vscode.Uri.file(path.join(context.extensionPath, "dist")),
+  );
 
   // And set its HTML content
-  panel.webview.html = getHtmlForWebview(scriptUri, resourceBaseUrl,null);
+  panel.webview.html = getHtmlForWebview(scriptUri, resourceBaseUrl, null);
 
   // Receive messages from Webview
-  panel.webview.onDidReceiveMessage(async (message: { action: string, data: any }) => {
-    handelEnvMessage(message, context, data, panel);
-  });
+  panel.webview.onDidReceiveMessage(
+    async (message: { action: string; data: any }) => {
+      handelEnvMessage(message, context, data, panel);
+    },
+  );
 
   // Triggered when tab is closed
   panel.onDidDispose(
@@ -70,7 +93,7 @@ export const createEnvironmentPanel = (data:any, context: vscode.ExtensionContex
       globalConfig.environmentWebView = null;
     },
     null,
-    context.subscriptions
+    context.subscriptions,
   );
   globalConfig.environmentWebView = panel;
-}
+};

@@ -1,1 +1,1 @@
-declare module 'apipost2har';
+declare module "apipost2har";

@@ -1,12 +1,21 @@
-import i18next from 'i18next';
-import { cloneDeep, isArray } from 'lodash';
-import { DEFAULT_AUTH } from '@/features/requests/constants/auth';
-import { snowflakeId } from 'apipost-tools';
-import { getSubstring } from '@/shared/utils/common';
-import { genUrlByQuery } from '@/features/requests/utils/apis';
-import { DEFAULT_API_RESPONSE, ERROR_RESPONSE, SUCCESS_RESPONSE } from '@/features/requests/constants/response';
+import i18next from "i18next";
+import { cloneDeep, isArray } from "lodash";
+import { DEFAULT_AUTH } from "@/features/requests/constants/auth";
+import { snowflakeId } from "apipost-tools";
+import { getSubstring } from "@/shared/utils/common";
+import { genUrlByQuery } from "@/features/requests/utils/apis";
+import {
+  DEFAULT_API_RESPONSE,
+  ERROR_RESPONSE,
+  SUCCESS_RESPONSE,
+} from "@/features/requests/constants/response";
 
-const appendSwaggerApis = (res: any, apis: any, parent_id: string = '0', project_id: string) => {
+const appendSwaggerApis = (
+  res: any,
+  apis: any,
+  parent_id: string = "0",
+  project_id: string,
+) => {
   if (isArray(apis) && apis.length) {
     apis.forEach(
       ({
@@ -24,7 +33,7 @@ const appendSwaggerApis = (res: any, apis: any, parent_id: string = '0', project
         const targetItem: any = {
           target_type,
           description,
-          mark_id: mark_id || '1',
+          mark_id: mark_id || "1",
           request: {
             auth: cloneDeep(DEFAULT_AUTH),
             pre_tasks: [],
@@ -48,60 +57,75 @@ const appendSwaggerApis = (res: any, apis: any, parent_id: string = '0', project
           is_locked: -1,
           is_force: -1,
           attribute_info: {},
-          protocol: 'http/1.1',
+          protocol: "http/1.1",
           ai_expect: {
             list: [],
-            none_math_expect_id: '1',
+            none_math_expect_id: "1",
           },
           project_id,
           target_id: snowflakeId(),
           parent_id,
           sort: 0,
           version: 0,
-          server_id: '0',
+          server_id: "0",
           status: 1,
           is_changed: -1,
         };
-        if (target_type === 'api') {
-          targetItem['name'] = getSubstring(name, 255) || i18next.t('supplement.new_api');
-          targetItem['tags'] = tags || [];
-          targetItem['url'] = url || '';
-          targetItem['method'] = method || '';
-          targetItem['request'] = {
-            ...targetItem['request'],
+        if (target_type === "api") {
+          targetItem["name"] =
+            getSubstring(name, 255) || i18next.t("supplement.new_api");
+          targetItem["tags"] = tags || [];
+          targetItem["url"] = url || "";
+          targetItem["method"] = method || "";
+          targetItem["request"] = {
+            ...targetItem["request"],
             body: {
-              mode: request?.body?.mode || 'none',
+              mode: request?.body?.mode || "none",
               parameter: request?.body?.parameter || [],
-              raw: request?.body?.raw || '',
+              raw: request?.body?.raw || "",
               raw_parameter: request?.body?.raw_parameter || [],
-              raw_schema: request?.body?.raw_schema || { type: 'object' },
+              raw_schema: request?.body?.raw_schema || { type: "object" },
               binary: null,
             },
           };
-          const completedResponse = cloneDeep({ ...DEFAULT_API_RESPONSE, ...response });
+          const completedResponse = cloneDeep({
+            ...DEFAULT_API_RESPONSE,
+            ...response,
+          });
           const examples = completedResponse.example || [];
-          const exampleIds = new Set(examples.map((example: { example_id: string }) => example?.example_id));
-          if (!exampleIds.has('2')) {
+          const exampleIds = new Set(
+            examples.map(
+              (example: { example_id: string }) => example?.example_id,
+            ),
+          );
+          if (!exampleIds.has("2")) {
             examples.unshift(cloneDeep(ERROR_RESPONSE));
           }
-          if (!exampleIds.has('1')) {
+          if (!exampleIds.has("1")) {
             examples.unshift(cloneDeep(SUCCESS_RESPONSE));
           }
           completedResponse.example = examples;
           targetItem.response = completedResponse;
           // Regenerate URL from query parameters
-          if (targetItem.url && isArray(targetItem?.request?.query?.parameter)) {
-            const newUrl = genUrlByQuery(targetItem.url, targetItem?.request?.query?.parameter);
+          if (
+            targetItem.url &&
+            isArray(targetItem?.request?.query?.parameter)
+          ) {
+            const newUrl = genUrlByQuery(
+              targetItem.url,
+              targetItem?.request?.query?.parameter,
+            );
             targetItem.url = newUrl;
           }
           res.apis.push(targetItem);
           if (isArray(children) && children.length) {
             appendSwaggerApis(res, children, targetItem.target_id, project_id);
           }
-        } else if (target_type === 'folder') {
-          targetItem['name'] = getSubstring(name, 255) || i18next.t('supplement.new_folder');
-          targetItem['request'] = {
-            ...targetItem['request'],
+        } else if (target_type === "folder") {
+          targetItem["name"] =
+            getSubstring(name, 255) || i18next.t("supplement.new_folder");
+          targetItem["request"] = {
+            ...targetItem["request"],
             body: {
               parameter: request?.body?.parameter || [],
             },
@@ -111,24 +135,34 @@ const appendSwaggerApis = (res: any, apis: any, parent_id: string = '0', project
             appendSwaggerApis(res, children, targetItem.target_id, project_id);
           }
         }
-      }
+      },
     );
   }
 };
 
 export const completionSwaggerEnv = (res: any, env: any[]) => {
-  res['global']['envs'] = env?.map(({ name, env_var_list, url }: any) => ({
+  res["global"]["envs"] = env?.map(({ name, env_var_list, url }: any) => ({
     env_id: snowflakeId(),
     name,
     is_private: -1,
     env_var_list: env_var_list || {},
     server_list: url
-      ? [{ name: i18next.t('supplement.default_server'), server_id: '1', uri: url }]
+      ? [
+          {
+            name: i18next.t("supplement.default_server"),
+            server_id: "1",
+            uri: url,
+          },
+        ]
       : undefined,
   }));
 };
 
-export const completionSwaggerApis = (res: any, apis: any, project_id: string) => {
-  res['apis'] = [];
+export const completionSwaggerApis = (
+  res: any,
+  apis: any,
+  project_id: string,
+) => {
+  res["apis"] = [];
   appendSwaggerApis(res, apis, res?.config?.folder, project_id);
 };

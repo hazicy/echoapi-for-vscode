@@ -5,21 +5,9 @@ import slots from "@/shared/ui/base/slots.module.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  Flex,
-  Form,
-  Select,
-  Typography,
-  message,
-} from "@/shared/ui/base";
+import { Flex, Form, Select, Typography, message } from "@/shared/ui/base";
 
-import {
-  find,
-  has,
-  includes,
-  isEqual,
-  setWith,
-} from "lodash";
+import { find, has, includes, isEqual, setWith } from "lodash";
 
 import { SegmentedTabs } from "@/shared/components";
 import VarInput from "@/features/variables/components/VarInput";
@@ -43,8 +31,11 @@ import {
 import { AuthOauth2, RequestParamsItem } from "@/features/requests/types/auth";
 import { openUrl } from "@/shared/utils/open";
 
-import { buildOAuth2VariableMap, resolveOAuth2Parameters, resolveOAuth2Variables } from "@/features/requests/utils/oauth2Variables";
-
+import {
+  buildOAuth2VariableMap,
+  resolveOAuth2Parameters,
+  resolveOAuth2Variables,
+} from "@/features/requests/utils/oauth2Variables";
 
 import Oauth2ParamsTable, { type DataSourceItem } from "./Oauth2ParamsTable";
 
@@ -66,12 +57,10 @@ type TokenInfo = Omit<
   | "refreshRequestParams"
 >;
 
-
 interface Props {
   onChange: (v: AuthOauth2) => void;
   target_id?: string | undefined;
 }
-
 
 const Oauth2 = (props: Props) => {
   const { t } = useTranslation();
@@ -264,12 +253,14 @@ const Oauth2 = (props: Props) => {
   }, [grantType]);
 
   const variableMap = useMemo(() => {
-    const currentEnv = find(envList, item => item.env_id === envDetailKeys);
+    const currentEnv = find(envList, (item) => item.env_id === envDetailKeys);
     return buildOAuth2VariableMap(globalVars, currentEnv?.env_var_list);
   }, [globalVars, envList, envDetailKeys]);
 
-  const validateUrl = (value = "") => resolveOAuth2Variables(value, variableMap);
-  const validateTableParams = (parameters: DataSourceItem[]) => resolveOAuth2Parameters(parameters, variableMap);
+  const validateUrl = (value = "") =>
+    resolveOAuth2Variables(value, variableMap);
+  const validateTableParams = (parameters: DataSourceItem[]) =>
+    resolveOAuth2Parameters(parameters, variableMap);
 
   const handleGetTokenByPassword = async () => {
     const { oauth2 = {} } = await form.validateFields();

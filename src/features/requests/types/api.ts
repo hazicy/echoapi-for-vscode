@@ -1,4 +1,4 @@
-import { ItemType } from '@/shared/ui/base';
+import { ItemType } from "@/shared/ui/base";
 
 import {
   APIS_CREATE_ITEM_OTHER_ENUM,
@@ -6,13 +6,17 @@ import {
   APIS_PRESSURE_MODE,
   APIS_TARGET_TYPE_ENUM,
   DEFAULT_API_MARK_ENUM,
-} from '@/features/requests/constants';
+} from "@/features/requests/constants";
 
-import { AnyObject, CompareCalcSymbols, CustomNumberBooleanType } from '../../../shared/types/common';
-import { ApiTypeMethod, ApisBaseData, ApisBaseDataItem } from './base';
-import { ApiRequest, RequestBodyContentType } from './request';
-import { BaseResponse } from './response';
-import { JSONSchemaObject } from '../../../shared/types/jsonSchema';
+import {
+  AnyObject,
+  CompareCalcSymbols,
+  CustomNumberBooleanType,
+} from "../../../shared/types/common";
+import { ApiTypeMethod, ApisBaseData, ApisBaseDataItem } from "./base";
+import { ApiRequest, RequestBodyContentType } from "./request";
+import { BaseResponse } from "./response";
+import { JSONSchemaObject } from "../../../shared/types/jsonSchema";
 
 export interface ApiDetailsData extends ApisBaseData {
   // Request method
@@ -50,8 +54,8 @@ export interface ApiDetailsData extends ApisBaseData {
 
 export type OpenApiData = {
   [url: string]: {
-    [method: string]: OpenApiMainObj
-  }
+    [method: string]: OpenApiMainObj;
+  };
 };
 
 export type OpenApiMainObj = {
@@ -60,37 +64,46 @@ export type OpenApiMainObj = {
   tags: string[];
   parameters: ParametersItem[];
   requestBody: {
-    content: { [content_type: string]: {
-      schema?:JSONSchemaObject,
-      example?: any,
-    } };
+    content: {
+      [content_type: string]: {
+        schema?: JSONSchemaObject;
+        example?: any;
+      };
+    };
   };
   responses: {
     [code: string]: {
-      description: string,
+      description: string;
       content: {
         [content_type: string]: {
-          schema?:JSONSchemaObject,
-          example?: any,
-        }
-      }
-    }
-  }
-}
+          schema?: JSONSchemaObject;
+          example?: any;
+        };
+      };
+    };
+  };
+};
 
 export type ParametersItem = {
-  name: string,
-  in: "header" | 'query' | 'cookie' | 'path',
-  description: string,
-  required: boolean,
-  example: string,
-  schema: JSONSchemaObject
+  name: string;
+  in: "header" | "query" | "cookie" | "path";
+  description: string;
+  required: boolean;
+  example: string;
+  schema: JSONSchemaObject;
 };
 
 // Tree directory item generated from base data
 export type TreeDataItem = Pick<
   ApisBaseData,
-  'target_id' | 'target_type' | 'name' | 'sort' | 'mark_id' | 'status' | 'method' | 'parent_id'
+  | "target_id"
+  | "target_type"
+  | "name"
+  | "sort"
+  | "mark_id"
+  | "status"
+  | "method"
+  | "parent_id"
 > & {
   method: string;
   url: string;
@@ -124,7 +137,7 @@ export type ApiMark = {
 // AI expect condition collection item
 export interface ExpectConditionItem {
   conditionId?: string;
-  location: 'header' | 'query' | 'body' | '';
+  location: "header" | "query" | "body" | "";
   // Parameter name
   name: string;
   // Comparison type
@@ -192,7 +205,7 @@ export type OpenApiComponentType = {
   apisData?: ApiDetailsData;
   openApiData: OpenApiData;
   onOpenApiDataChange: (data: OpenApiData) => void;
-  setPreView?: (val: any) => void
+  setPreView?: (val: any) => void;
 };
 
 export type ApiPressureData = {
@@ -228,16 +241,18 @@ export type echoapiResult = {
   } | null;
   bodyRawSchema?: object;
   bodyMode?: RequestBodyContentType;
-  diffArr:Array<string>;
-}
+  diffArr: Array<string>;
+};
 
-export type openapiResult={
-  parameters:ParametersItem[],
-  requestBodyContent:{ [content_type: string]: {
-    schema?:JSONSchemaObject,
-    example?: any,
-  } },
-  method:string,
-  url:string,
-  responses:any
-}
+export type openapiResult = {
+  parameters: ParametersItem[];
+  requestBodyContent: {
+    [content_type: string]: {
+      schema?: JSONSchemaObject;
+      example?: any;
+    };
+  };
+  method: string;
+  url: string;
+  responses: any;
+};

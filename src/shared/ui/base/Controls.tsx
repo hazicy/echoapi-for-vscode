@@ -93,7 +93,12 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       {...props}
       ref={ref}
       rows={props.rows ?? autoSize?.minRows ?? 2}
-      className={cx(css.input, slots["beautify-input"], className, rootClassName)}
+      className={cx(
+        css.input,
+        slots["beautify-input"],
+        className,
+        rootClassName,
+      )}
       onKeyDown={(event) => {
         props.onKeyDown?.(event);
         if (event.key === "Enter") {
@@ -134,11 +139,17 @@ const InputControl = forwardRef<InputRef, InputProps>(
       <BaseInput
         {...props}
         ref={input}
-        style={!(addonBefore || addonAfter || prefix || suffix || allowClear) ? style : undefined}
+        style={
+          !(addonBefore || addonAfter || prefix || suffix || allowClear)
+            ? style
+            : undefined
+        }
         className={cx(
           css.input,
           slots["beautify-input"],
-          bordered && variant !== "borderless" && slots["beautify-input-outlined"],
+          bordered &&
+            variant !== "borderless" &&
+            slots["beautify-input-outlined"],
           !prefix && !suffix && !allowClear && className,
           { [css.borderless]: !bordered || variant === "borderless" },
         )}
@@ -257,7 +268,11 @@ function CheckboxGroup({
   return (
     <div
       {...props}
-      className={cx(css.flex, props.className, slots["beautify-checkbox-group"])}
+      className={cx(
+        css.flex,
+        props.className,
+        slots["beautify-checkbox-group"],
+      )}
     >
       {children ??
         options.map((raw: any) => {
@@ -303,7 +318,12 @@ export const Switch = forwardRef<HTMLElement, SwitchProps>(
       {...props}
       ref={ref}
       disabled={props.disabled || loading}
-      className={cx(css.switch, slots["beautify-switch"], className, rootClassName)}
+      className={cx(
+        css.switch,
+        slots["beautify-switch"],
+        className,
+        rootClassName,
+      )}
       onCheckedChange={(checked, details) => onChange?.(checked, details.event)}
     >
       <span>{props.checked ? checkedChildren : unCheckedChildren}</span>
@@ -378,7 +398,12 @@ const Group = ({
   <RadioContext.Provider value={true}>
     <RadioGroup
       {...props}
-      className={cx(css.flex, slots["beautify-radio-group"], className, rootClassName)}
+      className={cx(
+        css.flex,
+        slots["beautify-radio-group"],
+        className,
+        rootClassName,
+      )}
       onValueChange={(value, details) =>
         onChange?.(eventFor(value, true, details.event))
       }
@@ -511,9 +536,14 @@ export function Collapse({
           </Accordion.Header>
           <Accordion.Panel
             keepMounted={!destroyInactivePanel && !item.destroyOnHidden}
-            className={cx(css.collapsePanel, slots["beautify-collapse-content"])}
+            className={cx(
+              css.collapsePanel,
+              slots["beautify-collapse-content"],
+            )}
           >
-            <div className={slots["beautify-collapse-content-box"]}>{item.children}</div>
+            <div className={slots["beautify-collapse-content-box"]}>
+              {item.children}
+            </div>
           </Accordion.Panel>
         </Accordion.Item>
       ))}
@@ -561,7 +591,9 @@ export function Tabs({
           ? tabBarExtraContent.left
           : null}
         <div className={slots["beautify-tabs-nav-wrap"]}>
-          <BaseTabs.List className={cx(css.tabList, slots["beautify-tabs-nav-list"])}>
+          <BaseTabs.List
+            className={cx(css.tabList, slots["beautify-tabs-nav-list"])}
+          >
             {items.map((item) => (
               <span
                 key={item.key}
@@ -637,7 +669,9 @@ export function Segmented<V extends string | number = string | number>({
       onValueChange={(v) => onChange?.(v as V)}
       className={cx(css.segmented, slots["beautify-segmented"], className)}
     >
-      <BaseTabs.List className={cx(css.tabList, slots["beautify-segmented-group"])}>
+      <BaseTabs.List
+        className={cx(css.tabList, slots["beautify-segmented-group"])}
+      >
         {options.map((raw: any) => {
           const o = typeof raw === "object" ? raw : { value: raw, label: raw };
           return (

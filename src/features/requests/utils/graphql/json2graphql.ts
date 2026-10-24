@@ -1,4 +1,4 @@
-import { Kind, print } from 'graphql';
+import { Kind, print } from "graphql";
 
 export function json2graphql(tree) {
   // Create AST node
@@ -13,7 +13,7 @@ export function json2graphql(tree) {
 export function createOperationDefinition(tree) {
   return {
     kind: Kind.OPERATION_DEFINITION,
-    operation: tree.operation || 'query',
+    operation: tree.operation || "query",
     name: createName(tree.name),
     variableDefinitions: createVariableDefinitions(tree.variables),
     directives: [],
@@ -108,8 +108,8 @@ function createValue(value) {
     return { kind: Kind.NULL };
   }
 
-  if (typeof value === 'string') {
-    if (value.startsWith('$')) {
+  if (typeof value === "string") {
+    if (value.startsWith("$")) {
       return {
         kind: Kind.VARIABLE,
         name: createName(value.substring(1)),
@@ -121,14 +121,14 @@ function createValue(value) {
     };
   }
 
-  if (typeof value === 'number') {
+  if (typeof value === "number") {
     return {
       kind: Kind.INT,
       value: String(value),
     };
   }
 
-  if (typeof value === 'boolean') {
+  if (typeof value === "boolean") {
     return {
       kind: Kind.BOOLEAN,
       value: value,
@@ -142,7 +142,7 @@ function createValue(value) {
     };
   }
 
-  if (typeof value === 'object') {
+  if (typeof value === "object") {
     return {
       kind: Kind.OBJECT,
       fields: Object.entries(value).map(([key, val]) => ({

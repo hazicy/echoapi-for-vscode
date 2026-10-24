@@ -1,10 +1,10 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React from 'react';
+import React from "react";
 
-import { entries, isArray, isPlainObject } from 'lodash';
+import { entries, isArray, isPlainObject } from "lodash";
 
-import BasicTable from '@/shared/components/BasicTable';
-import { AnyObject } from '@/shared/types/common';
+import BasicTable from "@/shared/components/BasicTable";
+import { AnyObject } from "@/shared/types/common";
 
 interface Props {
   value: any[] | AnyObject;
@@ -13,14 +13,14 @@ interface Props {
 const CommonTable: React.FC<Props> = ({ value }) => {
   const calcValue = (text: string | any[] | undefined) => {
     if (isArray(text)) {
-      return text.join(', ');
+      return text.join(", ");
     }
 
     if (text) {
       return String(text);
     }
 
-    return '-';
+    return "-";
   };
 
   const dataList = () => {
@@ -42,23 +42,32 @@ const CommonTable: React.FC<Props> = ({ value }) => {
   const columns = [
     {
       width: 200,
-      title: 'name',
-      dataIndex: 'key',
+      title: "name",
+      dataIndex: "key",
       render: (_text: any, rowData: any, _rowIndex: number) => (
-        <span className={slots["table-cell-span"]}>{rowData.key || rowData.name}</span>
+        <span className={slots["table-cell-span"]}>
+          {rowData.key || rowData.name}
+        </span>
       ),
     },
     {
       // width: '50%',
-      title: 'value',
-      dataIndex: 'value',
+      title: "value",
+      dataIndex: "value",
       render: (text: any, _rowData: any, _rowIndex: number) => (
         <span className={slots["table-cell-span"]}>{calcValue(text)}</span>
       ),
     },
   ];
 
-  return <BasicTable bordered showHeader={false} columns={columns} dataSource={dataList()} />;
+  return (
+    <BasicTable
+      bordered
+      showHeader={false}
+      columns={columns}
+      dataSource={dataList()}
+    />
+  );
 };
 
 export default CommonTable;

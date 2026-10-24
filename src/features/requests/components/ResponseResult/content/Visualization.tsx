@@ -1,17 +1,17 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Flex } from '@/shared/ui/base';
+import { Flex } from "@/shared/ui/base";
 
-import { isString } from 'lodash';
+import { isString } from "lodash";
 
-import Button from '@/shared/ui/Button';
-import IconFont from '@/shared/ui/IconFont';
-import { openUrl } from '@/shared/utils/open';
-import useGlobalTheme from '@/shared/theme';
-import { useSystemConfig } from '@/app/store';
-import useTheme from '@/shared/hooks/useTheme';
+import Button from "@/shared/ui/Button";
+import IconFont from "@/shared/ui/IconFont";
+import { openUrl } from "@/shared/utils/open";
+import useGlobalTheme from "@/shared/theme";
+import { useSystemConfig } from "@/app/store";
+import useTheme from "@/shared/hooks/useTheme";
 
 interface Props {
   html?: string;
@@ -28,12 +28,19 @@ const Visualization: React.FC<Props> = (props) => {
   useEffect(() => {
     if (isString(html)) {
       visualizingRef.current.contentDocument.body.innerHTML = `<div class="markdown-section">${html}</div>`;
-      const style = document.createElement('style');
+      const style = document.createElement("style");
 
-      const vscodeForeground = getComputedStyle(document.documentElement).getPropertyValue('--vscode-foreground').trim();
-      const vscodeScrollBar = getComputedStyle(document.documentElement).getPropertyValue('--vscode-scrollbarSlider-background').trim() || '#242427';
-      const vscodeScrollbarThumbHoverBgColor =getComputedStyle(document.documentElement).getPropertyValue('--vscode-scrollbarSlider-hoverBackground').trim() || '#323237'; 
-
+      const vscodeForeground = getComputedStyle(document.documentElement)
+        .getPropertyValue("--vscode-foreground")
+        .trim();
+      const vscodeScrollBar =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--vscode-scrollbarSlider-background")
+          .trim() || "#242427";
+      const vscodeScrollbarThumbHoverBgColor =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--vscode-scrollbarSlider-hoverBackground")
+          .trim() || "#323237";
 
       style.textContent = `
         body {
@@ -70,32 +77,43 @@ const Visualization: React.FC<Props> = (props) => {
 
   return (
     <div
-      style={{ width: '100%', height: '100%', position: 'relative' }}
+      style={{ width: "100%", height: "100%", position: "relative" }}
       onFocus={() => 0}
       onBlur={() => 0}
     >
       {isString(html) ? (
         <>
           <iframe
-            title={t('common.response_component.visualize')}
+            title={t("common.response_component.visualize")}
             ref={visualizingRef}
             width="100%"
-            style={{ border: 0, height: '100%' }}
+            style={{ border: 0, height: "100%" }}
             frameBorder="0"
           ></iframe>
         </>
       ) : (
-        <Flex vertical justify="center" gap={12} align="center" className={slots["visualization-empty"]}>
-          {t('common.response_component.visualize_tip')}
+        <Flex
+          vertical
+          justify="center"
+          gap={12}
+          align="center"
+          className={slots["visualization-empty"]}
+        >
+          {t("common.response_component.visualize_tip")}
           <Button
-            onClick={() => openUrl('http://wiki.echoapi.com/docs/usescript/visual/')}
+            onClick={() =>
+              openUrl("http://wiki.echoapi.com/docs/usescript/visual/")
+            }
             mode="background"
             icon={<IconFont type="icon-guide" />}
             size="small"
             type="text"
           >
-            {t('common.response_component.visualize_doc')}
-            <IconFont type="icon-drop-down" style={{ transform: 'rotate(-90deg)' }} />
+            {t("common.response_component.visualize_doc")}
+            <IconFont
+              type="icon-drop-down"
+              style={{ transform: "rotate(-90deg)" }}
+            />
           </Button>
         </Flex>
       )}

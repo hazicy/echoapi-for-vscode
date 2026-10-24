@@ -1,9 +1,9 @@
-import { ValueOf } from 'type-fest';
+import { ValueOf } from "type-fest";
 
-import { STATUS_CODE } from '@/shared/constants/common';
-import { MIGRATE_RESULT_STATUS } from '@/features/import/constants/migrate';
-import { AUTHORITY, WECHAT_TOKEN_STATUS } from '@/features/auth/constants/user';
-import { SysConfig } from '../../settings/types/settings';
+import { STATUS_CODE } from "@/shared/constants/common";
+import { MIGRATE_RESULT_STATUS } from "@/features/import/constants/migrate";
+import { AUTHORITY, WECHAT_TOKEN_STATUS } from "@/features/auth/constants/user";
+import { SysConfig } from "../../settings/types/settings";
 
 export type EmailLoginReq = {
   email: string;

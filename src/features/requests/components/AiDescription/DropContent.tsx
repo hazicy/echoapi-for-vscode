@@ -1,10 +1,10 @@
-import { Tooltip } from '@base-ui/react/tooltip';
-import { isArray, isString, trim } from 'lodash';
+import { Tooltip } from "@base-ui/react/tooltip";
+import { isArray, isString, trim } from "lodash";
 
-import useProjectSetting from '@/features/project/store/useProjectSetting';
-import useUserConfig from '@/features/auth/store/useUserConfig';
+import useProjectSetting from "@/features/project/store/useProjectSetting";
+import useUserConfig from "@/features/auth/store/useUserConfig";
 
-import styles from './AiDescription.module.css';
+import styles from "./AiDescription.module.css";
 
 interface Props {
   onChange?: (description: string) => void;
@@ -14,20 +14,28 @@ interface Props {
 
 const DropContent = ({ onChange, filterKey, handleSelect }: Props) => {
   const { descriptionList, innerDescriptionList } = useProjectSetting();
-  const includeBuiltIn = useUserConfig(state => state.currentProject?.is_describe_library === 1);
+  const includeBuiltIn = useUserConfig(
+    (state) => state.currentProject?.is_describe_library === 1,
+  );
   const descriptions = [
     ...(isArray(descriptionList) ? descriptionList : []),
-    ...(includeBuiltIn && isArray(innerDescriptionList) ? innerDescriptionList : []),
+    ...(includeBuiltIn && isArray(innerDescriptionList)
+      ? innerDescriptionList
+      : []),
   ];
-  const key = isString(filterKey) ? trim(filterKey) : '';
+  const key = isString(filterKey) ? trim(filterKey) : "";
 
   return (
     <Tooltip.Provider delay={500}>
       <div className={styles.list}>
-        {descriptions.map(item => {
-          if (!isString(item?.key) || !item.key.length ||
-            !isString(item?.description) || !item.description.length ||
-            (key && key !== trim(item.key))) {
+        {descriptions.map((item) => {
+          if (
+            !isString(item?.key) ||
+            !item.key.length ||
+            !isString(item?.description) ||
+            !item.description.length ||
+            (key && key !== trim(item.key))
+          ) {
             return null;
           }
           return (
@@ -43,8 +51,15 @@ const DropContent = ({ onChange, filterKey, handleSelect }: Props) => {
                 {item.description}
               </Tooltip.Trigger>
               <Tooltip.Portal>
-                <Tooltip.Positioner className={styles.tooltipPositioner} side="top" align="start" sideOffset={4}>
-                  <Tooltip.Popup className={styles.tooltip}>{item.description}</Tooltip.Popup>
+                <Tooltip.Positioner
+                  className={styles.tooltipPositioner}
+                  side="top"
+                  align="start"
+                  sideOffset={4}
+                >
+                  <Tooltip.Popup className={styles.tooltip}>
+                    {item.description}
+                  </Tooltip.Popup>
                 </Tooltip.Positioner>
               </Tooltip.Portal>
             </Tooltip.Root>

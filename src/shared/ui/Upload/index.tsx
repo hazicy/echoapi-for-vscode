@@ -1,7 +1,12 @@
-import { FC } from 'react';
+import { FC } from "react";
 
-import { Upload as AntdUpload, UploadProps } from '@/shared/ui/base';
-import { APIPOST_MACHINE, APIPOST_PLATFORM, APIPOST_TERMINAL, APIPOST_VERSION } from '@/features/auth/constants/user';
+import { Upload as AntdUpload, UploadProps } from "@/shared/ui/base";
+import {
+  APIPOST_MACHINE,
+  APIPOST_PLATFORM,
+  APIPOST_TERMINAL,
+  APIPOST_VERSION,
+} from "@/features/auth/constants/user";
 
 type Props = UploadProps;
 
@@ -10,13 +15,13 @@ const Upload: FC<Props> = (props) => {
 };
 
 Upload.defaultProps = {
-  action: '/api/upload',
-  name: 'file',
+  action: "/api/upload",
+  name: "file",
   headers: {
-    [APIPOST_MACHINE]: '',
-    [APIPOST_TERMINAL]: 'vscode',
-    [APIPOST_VERSION]: '1.0.0',
-    [APIPOST_PLATFORM]: '',
+    [APIPOST_MACHINE]: "",
+    [APIPOST_TERMINAL]: "vscode",
+    [APIPOST_VERSION]: "1.0.0",
+    [APIPOST_PLATFORM]: "",
   },
   data: { business: 2 },
 };

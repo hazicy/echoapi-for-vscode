@@ -1,5 +1,12 @@
-import { snowflakeId } from 'apipost-tools';
-import { cloneDeep, isArray, isNull, isPlainObject, isString, merge } from 'lodash';
+import { snowflakeId } from "apipost-tools";
+import {
+  cloneDeep,
+  isArray,
+  isNull,
+  isPlainObject,
+  isString,
+  merge,
+} from "lodash";
 
 function dataModels(models: any) {
   const getModelItem: (id: string) => any = (ref_id) => {
@@ -18,16 +25,16 @@ function dataModels(models: any) {
         },
       };
       result.properties = {};
-      result.type = 'object';
+      result.type = "object";
       delete result.ref;
     }
     if (isArray(result?.type) && result?.type.length > 0) {
       result.type = result.type[0];
     }
-    if (result?.type === 'array') {
+    if (result?.type === "array") {
       result.items = await parseModelToJsonSchema(result.items, parentModels);
     }
-    if (result?.type !== 'object') {
+    if (result?.type !== "object") {
       return result;
     }
 
@@ -48,14 +55,17 @@ function dataModels(models: any) {
       }
 
       // eslint-disable-next-line no-await-in-loop
-      const newData: any = await parseModelToJsonSchema(dataModel?.schema || {}, [
-        ...parentModels,
-        dataModel?.model_id,
-      ]);
+      const newData: any = await parseModelToJsonSchema(
+        dataModel?.schema || {},
+        [...parentModels, dataModel?.model_id],
+      );
       newData.properties = merge(newData.properties || {}, overrideData);
 
       // Re-sort
-      if (isArray(newData?.ECHOAPI_ORDERS) && newData.ECHOAPI_ORDERS.length > 0) {
+      if (
+        isArray(newData?.ECHOAPI_ORDERS) &&
+        newData.ECHOAPI_ORDERS.length > 0
+      ) {
         const newProperties = [];
         for (const dataKey of newData?.ECHOAPI_ORDERS) {
           newProperties.push([dataKey, newData?.properties?.[dataKey]]);
@@ -74,9 +84,11 @@ function dataModels(models: any) {
       let requireds = isArray(result?.required) ? result.required : [];
       for (const key of result?.ECHOAPI_ORDERS) {
         if (isPlainObject(refData?.[key]?.properties)) {
-          Object.entries(refData?.[key]?.properties).forEach(([refKey, refValue]) => {
-            newProperties.push([refKey, refValue]);
-          });
+          Object.entries(refData?.[key]?.properties).forEach(
+            ([refKey, refValue]) => {
+              newProperties.push([refKey, refValue]);
+            },
+          );
         } else if (isPlainObject(result?.properties?.[key])) {
           newProperties.push([key, result?.properties?.[key]]);
         }
@@ -94,7 +106,10 @@ function dataModels(models: any) {
     for (const modelKey in result.properties) {
       const modelData = result.properties[modelKey];
       // eslint-disable-next-line no-await-in-loop
-      result.properties[modelKey] = await parseModelToJsonSchema(modelData, parentModels);
+      result.properties[modelKey] = await parseModelToJsonSchema(
+        modelData,
+        parentModels,
+      );
       if (isNull(result.properties[modelKey])) {
         delete result.properties[modelKey];
       }

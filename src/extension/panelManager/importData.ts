@@ -1,21 +1,27 @@
-import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from '../constants';
-import * as vscode from 'vscode';
-import path from 'path';
-import { getApiList, getHtmlForWebview } from '../utils';
-import { handelImportDataMessage } from '../messageHandler/importData';
-import { isString } from 'lodash';
+import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from "../constants";
+import * as vscode from "vscode";
+import path from "path";
+import { getApiList, getHtmlForWebview } from "../utils";
+import { handelImportDataMessage } from "../messageHandler/importData";
+import { isString } from "lodash";
 
-export const createImportDataPanel = (data: any, context: vscode.ExtensionContext) => {
+export const createImportDataPanel = (
+  data: any,
+  context: vscode.ExtensionContext,
+) => {
   let { importDataWebView } = globalConfig;
 
   const panelOptions = PANEL_OPTIONS.IMPORTDATA;
 
   if (importDataWebView) {
-    let systemConfig: any = context.globalState.get('systemConfig') || {}
+    let systemConfig: any = context.globalState.get("systemConfig") || {};
     if (isString(data?.type)) {
-      systemConfig['import_data_init_type'] = data.type;
+      systemConfig["import_data_init_type"] = data.type;
     }
-    importDataWebView?.webview.postMessage({ action: 'setSystemConfig', data: systemConfig });
+    importDataWebView?.webview.postMessage({
+      action: "setSystemConfig",
+      data: systemConfig,
+    });
 
     // Tab already exists, switch to it
     importDataWebView.reveal(vscode.ViewColumn.One);
@@ -36,30 +42,41 @@ export const createImportDataPanel = (data: any, context: vscode.ExtensionContex
   );
   // Get icon path
   const iconPath = vscode.Uri.file(
-    path.join(context.extensionPath, 'dist', 'images', panelOptions.iconName)
+    path.join(context.extensionPath, "dist", "images", panelOptions.iconName),
   );
 
   panel.iconPath = iconPath;
-  let scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', `${panelOptions.viewType}.js`)));
-  if(process.env.ECHOAPI_DEV_SERVER === "true"){
+  let scriptUri = panel.webview.asWebviewUri(
+    vscode.Uri.file(
+      path.join(context.extensionPath, "dist", `${panelOptions.viewType}.js`),
+    ),
+  );
+  if (process.env.ECHOAPI_DEV_SERVER === "true") {
     scriptUri = `http://localhost:${LOCAL_PORT}/src/app/webviews/${panelOptions.viewType[0].toUpperCase()}${panelOptions.viewType.slice(1)}.tsx`;
   }
-  
-  const resourceBaseUrl = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist')));
+
+  const resourceBaseUrl = panel.webview.asWebviewUri(
+    vscode.Uri.file(path.join(context.extensionPath, "dist")),
+  );
 
   // And set its HTML content
   panel.webview.html = getHtmlForWebview(scriptUri, resourceBaseUrl, null);
 
   // Receive messages from Webview
-  panel.webview.onDidReceiveMessage(async (message: { action: string, data: any }) => {
-    handelImportDataMessage(message, context, data);
-  });
+  panel.webview.onDidReceiveMessage(
+    async (message: { action: string; data: any }) => {
+      handelImportDataMessage(message, context, data);
+    },
+  );
 
   // Listen for Webview view visibility changes
   panel.onDidChangeViewState(() => {
     if (panel.visible) {
-        // Get latest API list
-        panel.webview.postMessage({ action: 'setApiList', data: getApiList(context) || [] });
+      // Get latest API list
+      panel.webview.postMessage({
+        action: "setApiList",
+        data: getApiList(context) || [],
+      });
     }
   });
 
@@ -70,7 +87,7 @@ export const createImportDataPanel = (data: any, context: vscode.ExtensionContex
       // When the panel is closed, cancel any future updates to the webview content
     },
     null,
-    context.subscriptions
+    context.subscriptions,
   );
   globalConfig.importDataWebView = panel;
-}
+};

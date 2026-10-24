@@ -1,7 +1,13 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { MouseEventHandler, memo, useEffect, useRef, useState } from 'react';
+import React, {
+  MouseEventHandler,
+  memo,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
-import cn from 'classnames';
+import cn from "classnames";
 
 interface Props {
   width?: number;
@@ -87,11 +93,11 @@ const SplitBar: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    window.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mousemove", handleMouseMove);
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [width]);
 

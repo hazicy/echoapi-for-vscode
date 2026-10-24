@@ -1,20 +1,23 @@
-import { MouseEvent, useEffect, useMemo } from 'react';
-import type { ResizeCallbackData } from 'react-resizable';
-import { Resizable } from 'react-resizable';
+import { MouseEvent, useEffect, useMemo } from "react";
+import type { ResizeCallbackData } from "react-resizable";
+import { Resizable } from "react-resizable";
 
-import { Table as AntdTable, TableColumnsType } from '@/shared/ui/base';
+import { Table as AntdTable, TableColumnsType } from "@/shared/ui/base";
 
-import { useMemoizedFn, useSafeState } from 'ahooks';
-import produce from 'immer';
-import { includes, map } from 'lodash';
+import { useMemoizedFn, useSafeState } from "ahooks";
+import produce from "immer";
+import { includes, map } from "lodash";
 
-import { AnyObject, BasicTableProps } from '../types';
+import { AnyObject, BasicTableProps } from "../types";
 
 const ResizableTitle = (
   props: React.HTMLAttributes<any> & {
-    onResize: (e: React.SyntheticEvent<Element>, data: ResizeCallbackData) => void;
+    onResize: (
+      e: React.SyntheticEvent<Element>,
+      data: ResizeCallbackData,
+    ) => void;
     width: number;
-  }
+  },
 ) => {
   const { onResize, width, ...restProps } = props;
 
@@ -22,7 +25,7 @@ const ResizableTitle = (
     event?.stopPropagation();
   };
 
-  if (!width || includes(props.className, 'sort-handle')) {
+  if (!width || includes(props.className, "sort-handle")) {
     return <th {...restProps} />;
   }
 
@@ -32,7 +35,12 @@ const ResizableTitle = (
       height={0}
       maxConstraints={[500, 0]}
       minConstraints={[60, 0]}
-      handle={<span className="react-resizable-handle" onClick={handleStopPropagation} />}
+      handle={
+        <span
+          className="react-resizable-handle"
+          onClick={handleStopPropagation}
+        />
+      }
       onResize={onResize}
       draggableOpts={{ enableUserSelectHack: false }}
     >
@@ -41,7 +49,9 @@ const ResizableTitle = (
   );
 };
 
-const ResizableTable = <DataSource extends AnyObject>(props: BasicTableProps<DataSource>) => {
+const ResizableTable = <DataSource extends AnyObject>(
+  props: BasicTableProps<DataSource>,
+) => {
   const { columns } = props;
   const [resizableColumns, setResizableColumns] = useSafeState(columns);
 
@@ -64,20 +74,22 @@ const ResizableTable = <DataSource extends AnyObject>(props: BasicTableProps<Dat
         });
 
         setResizableColumns(newColumns);
-      }
+      },
   );
 
   const mergedColumns = useMemo(
     () =>
-      resizableColumns?.map<TableColumnsType<DataSource>[number]>((col, index) => ({
-        ...col,
-        onHeaderCell: (column: TableColumnsType<DataSource>[number]) => ({
-          width: column.width,
-          onResize: handleResize(index) as React.ReactEventHandler<any>,
-          key: column.key,
+      resizableColumns?.map<TableColumnsType<DataSource>[number]>(
+        (col, index) => ({
+          ...col,
+          onHeaderCell: (column: TableColumnsType<DataSource>[number]) => ({
+            width: column.width,
+            onResize: handleResize(index) as React.ReactEventHandler<any>,
+            key: column.key,
+          }),
         }),
-      })),
-    [resizableColumns, handleResize]
+      ),
+    [resizableColumns, handleResize],
   );
 
   const tableProps = { ...props, columns: mergedColumns };

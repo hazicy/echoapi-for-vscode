@@ -1,5 +1,5 @@
-import { ApisBaseData } from './base';
-import { FolderRequest } from './request';
+import { ApisBaseData } from "./base";
+import { FolderRequest } from "./request";
 
 export interface FolderDetailsData extends ApisBaseData {
   // Description

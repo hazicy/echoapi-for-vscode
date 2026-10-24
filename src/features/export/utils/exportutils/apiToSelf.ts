@@ -1,41 +1,62 @@
-import { snowflakeId } from 'apipost-tools';
-import i18next from 'i18next';
-import { cloneDeep, has, isArray, isEmpty, isEqual, isPlainObject, isString, keys } from 'lodash';
+import { snowflakeId } from "apipost-tools";
+import i18next from "i18next";
+import {
+  cloneDeep,
+  has,
+  isArray,
+  isEmpty,
+  isEqual,
+  isPlainObject,
+  isString,
+  keys,
+} from "lodash";
 
-import { APIS_TARGET_TYPE_ENUM } from '@/features/requests/constants';
-import { DEFAULT_WEBSOCKET2_MESSAGE } from '@/features/requests/constants/request';
-import { Auth } from '@/features/requests/types/auth';
-import { ApisBaseDataItem, ExpectItem } from '@/features/requests/types/base';
+import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
+import { DEFAULT_WEBSOCKET2_MESSAGE } from "@/features/requests/constants/request";
+import { Auth } from "@/features/requests/types/auth";
+import { ApisBaseDataItem, ExpectItem } from "@/features/requests/types/base";
 import {
   GrpcProtos,
   GrpcProtosServices,
   GrpcProtosServicesMethods,
   IncludesInfo,
-} from '@/features/requests/types/grpc';
+} from "@/features/requests/types/grpc";
 import {
   ApisBaseRequestBody,
   GraphQLRequest,
   GraphQLRequestBodyQueryItem,
   SocketRequestBody,
-} from '@/features/requests/types/request';
-import { BaseResponse } from '@/features/requests/types/response';
-import { SocketDetailsData } from '@/features/requests/types/socket';
-import { SocketServiceDetailsData } from '@/features/requests/types/socketService';
-import { SocketIoConfig, SocketIoRequest } from '@/features/requests/types/socketio';
-import { MessageItem, WebSocket2Request, Websocket2Config } from '@/features/requests/types/websocket2';
-import { EnvListItem, ServerItem } from '@/features/environment/types';
-import { RequestGlobalParams } from '@/features/project/types';
-import { ApiProjectImportParams, GlobalVars } from '@/features/project/types/export';
-import { genUrlByQuery } from '@/features/requests/utils/apis';
-import { getSubstring } from '@/shared/utils/common';
+} from "@/features/requests/types/request";
+import { BaseResponse } from "@/features/requests/types/response";
+import { SocketDetailsData } from "@/features/requests/types/socket";
+import { SocketServiceDetailsData } from "@/features/requests/types/socketService";
+import {
+  SocketIoConfig,
+  SocketIoRequest,
+} from "@/features/requests/types/socketio";
+import {
+  MessageItem,
+  WebSocket2Request,
+  Websocket2Config,
+} from "@/features/requests/types/websocket2";
+import { EnvListItem, ServerItem } from "@/features/environment/types";
+import { RequestGlobalParams } from "@/features/project/types";
+import {
+  ApiProjectImportParams,
+  GlobalVars,
+} from "@/features/project/types/export";
+import { genUrlByQuery } from "@/features/requests/utils/apis";
+import { getSubstring } from "@/shared/utils/common";
 
 export const completionServerList = (
   server_list: ServerItem[],
-  serversMap: { [key: string]: string }
+  serversMap: { [key: string]: string },
 ) => {
   if (isArray(server_list)) {
     return server_list?.map(({ name, uri, server_id, sort }) => ({
-      server_id: has(serversMap, server_id) ? serversMap[server_id] : snowflakeId(),
+      server_id: has(serversMap, server_id)
+        ? serversMap[server_id]
+        : snowflakeId(),
       name,
       uri,
       sort,
@@ -48,9 +69,9 @@ export const completionVarList = (env_var_list: any) => {
   if (isPlainObject(env_var_list)) {
     return keys(env_var_list)?.reduce((pre: { [key: string]: any }, key) => {
       pre[key] = {
-        value: env_var_list[key]?.value || '',
-        current_value: env_var_list[key]?.current_value || '',
-        description: env_var_list[key]?.description || '',
+        value: env_var_list[key]?.value || "",
+        current_value: env_var_list[key]?.current_value || "",
+        description: env_var_list[key]?.description || "",
       };
       return pre;
     }, {});
@@ -59,7 +80,7 @@ export const completionVarList = (env_var_list: any) => {
 };
 
 export const completionGlobalVars = (
-  global_vars: ApiProjectImportParams['global']['global_vars']
+  global_vars: ApiProjectImportParams["global"]["global_vars"],
 ) => {
   if (isPlainObject(global_vars)) {
     return keys(global_vars).reduce((prev, key) => {
@@ -73,9 +94,9 @@ export const completionGlobalVars = (
 };
 
 export const completionEnv = (
-  envs: ApiProjectImportParams['global']['envs'],
+  envs: ApiProjectImportParams["global"]["envs"],
   envMap: { [k: string]: string },
-  serversMap: { [key: string]: string }
+  serversMap: { [key: string]: string },
 ) => {
   if (isArray(envs)) {
     return envs?.map(
@@ -88,7 +109,7 @@ export const completionEnv = (
         sort,
       }: EnvListItem) => {
         const newEnvId = snowflakeId();
-        if (['1', '2'].includes(env_id)) {
+        if (["1", "2"].includes(env_id)) {
           envMap[env_id] = env_id;
         } else {
           envMap[env_id] = newEnvId;
@@ -101,18 +122,18 @@ export const completionEnv = (
           env_var_list: completionVarList(env_var_list),
           sort,
         };
-      }
+      },
     );
   }
   return [];
 };
 
 export const completionServers = (
-  servers: ApiProjectImportParams['global']['servers'],
-  serversMap: { [key: string]: string }
+  servers: ApiProjectImportParams["global"]["servers"],
+  serversMap: { [key: string]: string },
 ) => {
   if (isArray(servers)) {
-    return servers.map(({ name = '', server_id = snowflakeId() }) => {
+    return servers.map(({ name = "", server_id = snowflakeId() }) => {
       return {
         server_id: serversMap?.[server_id] || snowflakeId(),
         name,
@@ -122,15 +143,17 @@ export const completionServers = (
   return [];
 };
 
-export const completionParameter = (parameter: RequestGlobalParams['header']['parameter']) => {
+export const completionParameter = (
+  parameter: RequestGlobalParams["header"]["parameter"],
+) => {
   if (isArray(parameter)) {
     return parameter.map(
       ({
-        description = '',
-        field_type = 'String',
+        description = "",
+        field_type = "String",
         is_checked = 1,
-        key = '',
-        value = '',
+        key = "",
+        value = "",
         not_null = 1,
         schema = {},
       }) => {
@@ -145,7 +168,7 @@ export const completionParameter = (parameter: RequestGlobalParams['header']['pa
           schema,
         };
         return param;
-      }
+      },
     );
   }
   return [];
@@ -155,15 +178,15 @@ export const completionBodyParameter = (parameter: ApisBaseDataItem[]) => {
   if (isArray(parameter)) {
     return parameter?.map(
       ({
-        field_type = 'String',
+        field_type = "String",
         is_checked = 1,
         key,
         not_null = 1,
-        value = '',
-        description = '',
-        content_type = '',
-        file_name = '',
-        file_base64 = '',
+        value = "",
+        description = "",
+        content_type = "",
+        file_name = "",
+        file_base64 = "",
         schema = {},
       }) => ({
         param_id: snowflakeId(),
@@ -177,22 +200,24 @@ export const completionBodyParameter = (parameter: ApisBaseDataItem[]) => {
         file_name,
         file_base64,
         schema,
-      })
+      }),
     );
   }
   return [];
 };
 
-export const completionBodyRawParameter = (raw_parameter: ApisBaseDataItem[]) => {
+export const completionBodyRawParameter = (
+  raw_parameter: ApisBaseDataItem[],
+) => {
   if (isArray(raw_parameter)) {
     return raw_parameter?.map(
       ({
-        description = '',
-        field_type = 'String',
+        description = "",
+        field_type = "String",
         is_checked = 1,
-        key = '',
+        key = "",
         not_null = 1,
-        value = '',
+        value = "",
       }) => ({
         param_id: snowflakeId(),
         description,
@@ -201,28 +226,30 @@ export const completionBodyRawParameter = (raw_parameter: ApisBaseDataItem[]) =>
         key,
         not_null,
         value,
-      })
+      }),
     );
   }
   return [];
 };
 
-export const completionTasks = (tasks: RequestGlobalParams['post_tasks']) => {
+export const completionTasks = (tasks: RequestGlobalParams["post_tasks"]) => {
   if (isArray(tasks)) {
-    return tasks?.map(({ data = '', enabled = 1, type = 'customScript', name = '' }) => ({
-      data,
-      enabled,
-      id: snowflakeId(),
-      type,
-      name,
-    }));
+    return tasks?.map(
+      ({ data = "", enabled = 1, type = "customScript", name = "" }) => ({
+        data,
+        enabled,
+        id: snowflakeId(),
+        type,
+        name,
+      }),
+    );
   }
   return [];
 };
 
 export const completionAuth = (
   {
-    type = 'noauth',
+    type = "noauth",
     kv,
     bearer,
     basic,
@@ -236,134 +263,137 @@ export const completionAuth = (
     jwt,
     asap,
   }: Auth = {},
-  isGlobal: boolean
+  isGlobal: boolean,
 ) => {
-  const defaultType = isGlobal ? 'noauth' : 'inherit';
+  const defaultType = isGlobal ? "noauth" : "inherit";
   return {
     type: type || defaultType,
     kv: {
-      key: kv?.key || '',
-      value: kv?.value || '',
-      in: kv?.in || 'header',
+      key: kv?.key || "",
+      value: kv?.value || "",
+      in: kv?.in || "header",
     },
     bearer: {
-      key: bearer?.key || '',
+      key: bearer?.key || "",
     },
     basic: {
-      username: basic?.username || '',
-      password: basic?.password || '',
+      username: basic?.username || "",
+      password: basic?.password || "",
     },
     digest: {
-      username: digest?.username || '',
-      password: digest?.password || '',
-      realm: digest?.realm || '',
-      nonce: digest?.nonce || '',
-      algorithm: digest?.algorithm || 'MD5',
-      qop: digest?.qop || '',
-      nc: digest?.nc || '',
-      cnonce: digest?.cnonce || '',
-      opaque: digest?.opaque || '',
+      username: digest?.username || "",
+      password: digest?.password || "",
+      realm: digest?.realm || "",
+      nonce: digest?.nonce || "",
+      algorithm: digest?.algorithm || "MD5",
+      qop: digest?.qop || "",
+      nc: digest?.nc || "",
+      cnonce: digest?.cnonce || "",
+      opaque: digest?.opaque || "",
       disableRetryRequest: digest?.disableRetryRequest ? true : false,
     },
     hawk: {
-      authId: hawk?.authId || '',
-      authKey: hawk?.authKey || '',
-      algorithm: hawk?.algorithm || '',
-      user: hawk?.user || '',
-      nonce: hawk?.nonce || '',
-      extraData: hawk?.extraData || '',
-      app: hawk?.app || '',
-      delegation: hawk?.delegation || '',
-      timestamp: hawk?.timestamp || '',
+      authId: hawk?.authId || "",
+      authKey: hawk?.authKey || "",
+      algorithm: hawk?.algorithm || "",
+      user: hawk?.user || "",
+      nonce: hawk?.nonce || "",
+      extraData: hawk?.extraData || "",
+      app: hawk?.app || "",
+      delegation: hawk?.delegation || "",
+      timestamp: hawk?.timestamp || "",
       includePayloadHash: hawk?.includePayloadHash ? true : false,
     },
     awsv4: {
-      accessKey: awsv4?.accessKey || '',
-      secretKey: awsv4?.secretKey || '',
-      region: awsv4?.region || '',
-      service: awsv4?.service || '',
-      sessionToken: awsv4?.sessionToken || '',
+      accessKey: awsv4?.accessKey || "",
+      secretKey: awsv4?.secretKey || "",
+      region: awsv4?.region || "",
+      service: awsv4?.service || "",
+      sessionToken: awsv4?.sessionToken || "",
       addAuthDataToQuery: awsv4?.addAuthDataToQuery ? true : false,
     },
     ntlm: {
-      username: ntlm?.username || '',
-      password: ntlm?.password || '',
-      domain: ntlm?.domain || '',
-      workstation: ntlm?.workstation || '',
+      username: ntlm?.username || "",
+      password: ntlm?.password || "",
+      domain: ntlm?.domain || "",
+      workstation: ntlm?.workstation || "",
       disableRetryRequest: ntlm?.disableRetryRequest ? true : false,
     },
     edgegrid: {
-      accessToken: edgegrid?.accessToken || '',
-      clientToken: edgegrid?.clientToken || '',
-      clientSecret: edgegrid?.clientSecret || '',
-      nonce: edgegrid?.nonce || '',
-      timestamp: edgegrid?.timestamp || '',
-      baseURi: edgegrid?.baseURi || '',
-      headersToSign: edgegrid?.headersToSign || '',
+      accessToken: edgegrid?.accessToken || "",
+      clientToken: edgegrid?.clientToken || "",
+      clientSecret: edgegrid?.clientSecret || "",
+      nonce: edgegrid?.nonce || "",
+      timestamp: edgegrid?.timestamp || "",
+      baseURi: edgegrid?.baseURi || "",
+      headersToSign: edgegrid?.headersToSign || "",
     },
     oauth1: {
-      consumerKey: oauth1?.consumerKey || '',
-      consumerSecret: oauth1?.consumerSecret || '',
-      signatureMethod: oauth1?.signatureMethod || '',
+      consumerKey: oauth1?.consumerKey || "",
+      consumerSecret: oauth1?.consumerSecret || "",
+      signatureMethod: oauth1?.signatureMethod || "",
       addEmptyParamsToSign: oauth1?.addEmptyParamsToSign ? true : false,
       includeBodyHash: oauth1?.includeBodyHash ? true : false,
       addParamsToHeader: oauth1?.addParamsToHeader ? true : false,
-      realm: oauth1?.realm || '',
-      version: oauth1?.version || '',
-      nonce: oauth1?.nonce || '',
-      timestamp: oauth1?.timestamp || '',
-      verifier: oauth1?.verifier || '',
-      callback: oauth1?.callback || '',
-      tokenSecret: oauth1?.tokenSecret || '',
-      token: oauth1?.token || '',
+      realm: oauth1?.realm || "",
+      version: oauth1?.version || "",
+      nonce: oauth1?.nonce || "",
+      timestamp: oauth1?.timestamp || "",
+      verifier: oauth1?.verifier || "",
+      callback: oauth1?.callback || "",
+      tokenSecret: oauth1?.tokenSecret || "",
+      token: oauth1?.token || "",
       disableHeaderEncoding: oauth1?.disableHeaderEncoding ? true : false,
     },
     oauth2: {
-      addTokenTo: oauth2?.addTokenTo || 'header',
-      headerPrefix: oauth2?.headerPrefix || 'Bearer',
-      access_token: oauth2?.access_token || '',
-      grant_type: oauth2?.grant_type || 'authorization_code',
-      redirect_uri: oauth2?.redirect_uri || '',
-      authUrl: oauth2?.authUrl || '',
-      accessTokenUrl: oauth2?.accessTokenUrl || '',
-      clientId: oauth2?.clientId || '',
-      clientSecret: oauth2?.clientSecret || '',
-      username: oauth2?.username || '',
-      password: oauth2?.password || '',
-      challengeAlgorithm: oauth2?.challengeAlgorithm || 'S256',
-      code_verifier: oauth2?.code_verifier || 'Bearer',
-      scope: oauth2?.scope || '',
-      state: oauth2?.state || '',
-      client_authentication: oauth2?.client_authentication || 'header',
-      refreshTokenUrl: oauth2?.refreshTokenUrl || '',
+      addTokenTo: oauth2?.addTokenTo || "header",
+      headerPrefix: oauth2?.headerPrefix || "Bearer",
+      access_token: oauth2?.access_token || "",
+      grant_type: oauth2?.grant_type || "authorization_code",
+      redirect_uri: oauth2?.redirect_uri || "",
+      authUrl: oauth2?.authUrl || "",
+      accessTokenUrl: oauth2?.accessTokenUrl || "",
+      clientId: oauth2?.clientId || "",
+      clientSecret: oauth2?.clientSecret || "",
+      username: oauth2?.username || "",
+      password: oauth2?.password || "",
+      challengeAlgorithm: oauth2?.challengeAlgorithm || "S256",
+      code_verifier: oauth2?.code_verifier || "Bearer",
+      scope: oauth2?.scope || "",
+      state: oauth2?.state || "",
+      client_authentication: oauth2?.client_authentication || "header",
+      refreshTokenUrl: oauth2?.refreshTokenUrl || "",
       authRequestParams: oauth2?.authRequestParams || [],
       tokenRequestParams: oauth2?.tokenRequestParams || [],
       refreshRequestParams: oauth2?.refreshRequestParams || [],
     },
     jwt: {
-      addTokenTo: jwt?.addTokenTo || 'header',
-      algorithm: jwt?.algorithm || 'HS256',
-      secret: jwt?.secret || '',
+      addTokenTo: jwt?.addTokenTo || "header",
+      algorithm: jwt?.algorithm || "HS256",
+      secret: jwt?.secret || "",
       isSecretBase64Encoded: jwt?.isSecretBase64Encoded ? true : false,
-      payload: jwt?.payload || '',
-      headerPrefix: jwt?.headerPrefix || 'Bearer',
-      queryParamKey: jwt?.queryParamKey || 'token',
-      header: jwt?.header || '',
+      payload: jwt?.payload || "",
+      headerPrefix: jwt?.headerPrefix || "Bearer",
+      queryParamKey: jwt?.queryParamKey || "token",
+      header: jwt?.header || "",
     },
     asap: {
-      alg: asap?.alg || 'HS256',
-      iss: asap?.iss || '',
-      aud: asap?.aud || '',
-      kid: asap?.kid || '',
-      privateKey: asap?.privateKey || '',
-      sub: asap?.sub || '',
-      claims: asap?.claims || '',
-      exp: asap?.exp || '',
+      alg: asap?.alg || "HS256",
+      iss: asap?.iss || "",
+      aud: asap?.aud || "",
+      kid: asap?.kid || "",
+      privateKey: asap?.privateKey || "",
+      sub: asap?.sub || "",
+      claims: asap?.claims || "",
+      exp: asap?.exp || "",
     },
   };
 };
 
-export const completionGlobalParam = (global_param: RequestGlobalParams, isGlobal = false) => {
+export const completionGlobalParam = (
+  global_param: RequestGlobalParams,
+  isGlobal = false,
+) => {
   return {
     auth: completionAuth(global_param?.auth, isGlobal),
     body: {
@@ -386,9 +416,11 @@ export const completionGlobalParam = (global_param: RequestGlobalParams, isGloba
   };
 };
 
-export const completionCodes = (codes: ApiProjectImportParams['global']['codes']) => {
+export const completionCodes = (
+  codes: ApiProjectImportParams["global"]["codes"],
+) => {
   if (isArray(codes)) {
-    return codes?.map(({ code_number = '', code_msg = '' }) => ({
+    return codes?.map(({ code_number = "", code_msg = "" }) => ({
       code_number,
       code_msg,
     }));
@@ -397,38 +429,44 @@ export const completionCodes = (codes: ApiProjectImportParams['global']['codes']
 };
 
 export const completionMarks = (
-  marks: ApiProjectImportParams['global']['marks'],
-  project_id: string
+  marks: ApiProjectImportParams["global"]["marks"],
+  project_id: string,
 ) => {
   if (isArray(marks)) {
     return marks?.map(
-      ({ mark_id, name = '', color = '#2857FF', is_sys_default = 1, is_default_mark = -1 }) => ({
+      ({
+        mark_id,
+        name = "",
+        color = "#2857FF",
+        is_sys_default = 1,
+        is_default_mark = -1,
+      }) => ({
         mark_id: mark_id,
         project_id,
         name,
         color,
         is_sys_default,
         is_default_mark,
-      })
+      }),
     );
   }
   return [];
 };
 
 export const completionAttributes = (
-  attributes: ApiProjectImportParams['global']['attributes'],
-  project_id: string
+  attributes: ApiProjectImportParams["global"]["attributes"],
+  project_id: string,
 ) => {
   if (isArray(attributes)) {
     return attributes?.map(
       ({
-        field_name = '',
+        field_name = "",
         field_type = 1,
         enable = 1,
-        tooltip = '',
+        tooltip = "",
         sort = 1,
         extra = [],
-        open_api_field = '',
+        open_api_field = "",
         attribute_id,
       }) => ({
         attribute_id,
@@ -440,26 +478,26 @@ export const completionAttributes = (
         sort,
         extra,
         open_api_field,
-      })
+      }),
     );
   }
   return [];
 };
 
 export const completionCustomRules = (
-  mock_custom_rules: ApiProjectImportParams['global']['mock_custom_rules'],
-  project_id: string
+  mock_custom_rules: ApiProjectImportParams["global"]["mock_custom_rules"],
+  project_id: string,
 ) => {
   if (isArray(mock_custom_rules)) {
     return mock_custom_rules?.map(
       ({
-        field_type = 'string',
-        match_type = 'wildcard',
-        match_rule = '',
+        field_type = "string",
+        match_type = "wildcard",
+        match_rule = "",
         match_case = 1,
         mock_type = 1,
-        mock_rule_content = '',
-        intro = '',
+        mock_rule_content = "",
+        intro = "",
       }) => ({
         mock_custom_rule_id: snowflakeId(),
         project_id,
@@ -470,36 +508,38 @@ export const completionCustomRules = (
         mock_type,
         mock_rule_content,
         intro,
-      })
+      }),
     );
   }
   return [];
 };
 
 export const completionDbLink = (
-  db_link: ApiProjectImportParams['global']['db_link'],
-  project_id: string
+  db_link: ApiProjectImportParams["global"]["db_link"],
+  project_id: string,
 ) => {
   if (isArray(db_link)) {
-    return db_link?.map(({ name = '', intro = '', type, config = null, sort = 0 }) => ({
-      db_id: snowflakeId(),
-      project_id,
-      name,
-      type,
-      intro,
-      config,
-      sort,
-    }));
+    return db_link?.map(
+      ({ name = "", intro = "", type, config = null, sort = 0 }) => ({
+        db_id: snowflakeId(),
+        project_id,
+        name,
+        type,
+        intro,
+        config,
+        sort,
+      }),
+    );
   }
   return [];
 };
 
 export const completionDesLibrary = (
-  describe_library: ApiProjectImportParams['global']['describe_library'],
-  project_id: string
+  describe_library: ApiProjectImportParams["global"]["describe_library"],
+  project_id: string,
 ) => {
   if (isArray(describe_library)) {
-    return describe_library?.map(({ key = '', description = '' }) => ({
+    return describe_library?.map(({ key = "", description = "" }) => ({
       id: snowflakeId(),
       project_id,
       key,
@@ -511,21 +551,26 @@ export const completionDesLibrary = (
 
 export const completionCustomFunc = (custom_func: any) => {
   if (isArray(custom_func)) {
-    return custom_func.map(({ func_name = '', func_desc = '', func_body = '' }) => ({
-      func_id: snowflakeId(),
-      func_name,
-      func_desc,
-      func_body,
-    }));
+    return custom_func.map(
+      ({ func_name = "", func_desc = "", func_body = "" }) => ({
+        func_id: snowflakeId(),
+        func_name,
+        func_desc,
+        func_body,
+      }),
+    );
   }
   return [];
 };
 
-export const recursionSchema = (schemaObj: any, modelsMap: Record<string, string>): any => {
+export const recursionSchema = (
+  schemaObj: any,
+  modelsMap: Record<string, string>,
+): any => {
   // Clone once at the boundary; recursion only touches this private copy.
   const visit = (schema: any): any => {
     // 1. Non-object/array - return directly
-    if (typeof schema !== 'object' || schema === null) {
+    if (typeof schema !== "object" || schema === null) {
       return schema;
     }
 
@@ -536,36 +581,42 @@ export const recursionSchema = (schemaObj: any, modelsMap: Record<string, string
     // 3. Process the cloned object in place.
     for (const key in schema) {
       const value = schema[key];
-      if (['ECHOAPI_REFS', 'x-schema-refs'].includes(key) && isPlainObject(value)) {
+      if (
+        ["ECHOAPI_REFS", "x-schema-refs"].includes(key) &&
+        isPlainObject(value)
+      ) {
         keys(value).forEach((e) => {
           const $ref = value[e]?.$ref;
-          if (has(value[e], 'ref')) {
-            schema[key][e]['$ref'] = modelsMap?.[value[e]['ref']];
-            delete schema[key][e]['ref'];
-          } else if (has(value[e], '$ref') && $ref) {
-            const refId = $ref.split('/').pop() || '';
+          if (has(value[e], "ref")) {
+            schema[key][e]["$ref"] = modelsMap?.[value[e]["ref"]];
+            delete schema[key][e]["ref"];
+          } else if (has(value[e], "$ref") && $ref) {
+            const refId = $ref.split("/").pop() || "";
             schema[key][e].$ref = modelsMap?.[refId];
           }
           // Recursively process refEntry
           schema[key][e] = visit(value[e]);
         });
-        schema['x-schema-refs'] = schema[key];
-        delete schema['ECHOAPI_REFS'];
-      } else if (['ECHOAPI_ORDERS', 'x-schema-orders'].includes(key)) {
-        schema['x-schema-orders'] = value;
-        delete schema['ECHOAPI_ORDERS'];
+        schema["x-schema-refs"] = schema[key];
+        delete schema["ECHOAPI_REFS"];
+      } else if (["ECHOAPI_ORDERS", "x-schema-orders"].includes(key)) {
+        schema["x-schema-orders"] = value;
+        delete schema["ECHOAPI_ORDERS"];
       } else if (
-        (key === 'properties' || key === 'x-schema-overrides') &&
+        (key === "properties" || key === "x-schema-overrides") &&
         isPlainObject(schema[key]) &&
         !isEmpty(schema[key])
       ) {
-        schema[key] = keys(schema[key])?.reduce((pre: { [key: string]: any }, propertiesKey) => {
-          pre[propertiesKey] = visit(schema[key][propertiesKey]);
-          return pre;
-        }, {});
-      } else if (key === '$ref' && isString(schema[key])) {
+        schema[key] = keys(schema[key])?.reduce(
+          (pre: { [key: string]: any }, propertiesKey) => {
+            pre[propertiesKey] = visit(schema[key][propertiesKey]);
+            return pre;
+          },
+          {},
+        );
+      } else if (key === "$ref" && isString(schema[key])) {
         // Handle direct model reference in properties
-        const refId = schema[key].split('/').pop() || '';
+        const refId = schema[key].split("/").pop() || "";
         if (modelsMap?.[refId]) {
           schema[key] = modelsMap?.[refId];
         }
@@ -584,41 +635,44 @@ export const recursionSchema = (schemaObj: any, modelsMap: Record<string, string
 };
 
 export const completionModels = (
-  models: ApiProjectImportParams['models'],
-  modelsMap: { [key: string]: string }
+  models: ApiProjectImportParams["models"],
+  modelsMap: { [key: string]: string },
 ) => {
   if (isArray(models)) {
     const newModels = cloneDeep(models);
     return newModels?.map(
       ({
-        model_type = 'model',
-        description = '',
-        parent_id = '0',
-        name = '',
-        schema = { type: 'object', properties: {} },
-        display_name = '',
+        model_type = "model",
+        description = "",
+        parent_id = "0",
+        name = "",
+        schema = { type: "object", properties: {} },
+        display_name = "",
         sort = 0,
         model_id,
       }) => ({
         model_id: modelsMap?.[model_id] || snowflakeId(),
         model_type,
         description,
-        parent_id: modelsMap?.[parent_id] || '0',
+        parent_id: modelsMap?.[parent_id] || "0",
         schema: recursionSchema(schema, modelsMap), // schema recursion
         name,
         display_name,
         sort,
-      })
+      }),
     );
   }
   return [];
 };
 
-export const completionBody = (body: ApisBaseRequestBody, modelsMap: { [key: string]: string }) => {
+export const completionBody = (
+  body: ApisBaseRequestBody,
+  modelsMap: { [key: string]: string },
+) => {
   return {
-    mode: body?.mode || 'none',
+    mode: body?.mode || "none",
     parameter: completionBodyParameter(body?.parameter || []),
-    raw: body?.raw || '',
+    raw: body?.raw || "",
     raw_parameter: completionBodyRawParameter(body?.raw_parameter || []),
     raw_schema: recursionSchema(body?.raw_schema, modelsMap), // schema recursion
     binary: body?.binary || null,
@@ -627,63 +681,75 @@ export const completionBody = (body: ApisBaseRequestBody, modelsMap: { [key: str
 
 export const completionSocketMethodBody = (
   body: SocketRequestBody,
-  modelsMap: { [key: string]: string }
+  modelsMap: { [key: string]: string },
 ) => {
   return {
-    mode: body?.mode || 'xml',
+    mode: body?.mode || "xml",
     parameter: body?.parameter || [],
-    raw: body?.raw || '',
+    raw: body?.raw || "",
     raw_parameter: body?.raw_parameter || [],
     raw_schema: recursionSchema(body?.raw_schema, modelsMap), // schema recursion
   };
 };
 
-export const completionExpect = (expect: ExpectItem, modelsMap: { [key: string]: string }) => {
+export const completionExpect = (
+  expect: ExpectItem,
+  modelsMap: { [key: string]: string },
+) => {
   return {
-    code: getSubstring(expect?.code, 128) || '',
-    content_type: expect?.content_type || '',
+    code: getSubstring(expect?.code, 128) || "",
+    content_type: expect?.content_type || "",
     is_default: expect?.is_default || 1,
-    mock: expect?.mock || '',
-    name: getSubstring(expect?.name, 255) || '',
-    verify_type: expect?.verify_type || '',
+    mock: expect?.mock || "",
+    name: getSubstring(expect?.name, 255) || "",
+    verify_type: expect?.verify_type || "",
     schema: recursionSchema(expect?.schema, modelsMap), // schema recursion
   };
 };
 
 export const completionExample = (
-  example: BaseResponse['example'],
-  modelsMap: { [key: string]: string }
+  example: BaseResponse["example"],
+  modelsMap: { [key: string]: string },
 ) => {
   if (isArray(example)) {
     let exampleList = cloneDeep(example);
-    const successExample = example?.find((e) => e?.example_id === '1');
-    const failExample = example?.find((e) => e?.example_id === '2');
+    const successExample = example?.find((e) => e?.example_id === "1");
+    const failExample = example?.find((e) => e?.example_id === "2");
     const res = [];
     if (successExample) {
       res.push({
-        example_id: '1',
-        raw: successExample?.raw || '',
-        raw_parameter: completionBodyRawParameter(successExample?.raw_parameter),
-        expect: completionExpect(successExample?.expect as ExpectItem, modelsMap),
+        example_id: "1",
+        raw: successExample?.raw || "",
+        raw_parameter: completionBodyRawParameter(
+          successExample?.raw_parameter,
+        ),
+        expect: completionExpect(
+          successExample?.expect as ExpectItem,
+          modelsMap,
+        ),
         headers: isArray(successExample?.headers) ? successExample.headers : [],
       });
-      exampleList = exampleList?.filter((e) => e?.example_id !== successExample?.example_id);
+      exampleList = exampleList?.filter(
+        (e) => e?.example_id !== successExample?.example_id,
+      );
     }
     if (failExample) {
       res.push({
-        example_id: '2',
-        raw: failExample?.raw || '',
+        example_id: "2",
+        raw: failExample?.raw || "",
         raw_parameter: completionBodyRawParameter(failExample?.raw_parameter),
         expect: completionExpect(failExample?.expect as ExpectItem, modelsMap),
         headers: isArray(failExample?.headers) ? failExample.headers : [],
       });
-      exampleList = exampleList?.filter((e) => e?.example_id !== failExample?.example_id);
+      exampleList = exampleList?.filter(
+        (e) => e?.example_id !== failExample?.example_id,
+      );
     }
 
     return exampleList?.reduce((pre, item) => {
       res.push({
         example_id: snowflakeId(),
-        raw: item?.raw || '',
+        raw: item?.raw || "",
         raw_parameter: completionBodyRawParameter(item?.raw_parameter),
         expect: completionExpect(item?.expect as ExpectItem, modelsMap),
         headers: isArray(item?.headers) ? item.headers : [],
@@ -696,7 +762,7 @@ export const completionExample = (
 
 export const completionResponse = (
   response: BaseResponse,
-  modelsMap: { [key: string]: string }
+  modelsMap: { [key: string]: string },
 ) => {
   return {
     is_check_result: response?.is_check_result || 1,
@@ -704,7 +770,9 @@ export const completionResponse = (
   };
 };
 
-export const completionAttributeInfo = (attribute_info: Record<string, any>) => {
+export const completionAttributeInfo = (
+  attribute_info: Record<string, any>,
+) => {
   if (isPlainObject(attribute_info)) {
     return attribute_info;
   }
@@ -730,30 +798,32 @@ export const completionWs2Config = (config: Websocket2Config | undefined) => {
   };
 };
 
-export const completionSocketIoConfig = (config: SocketIoConfig | undefined) => {
+export const completionSocketIoConfig = (
+  config: SocketIoConfig | undefined,
+) => {
   if (isPlainObject(config)) {
     return {
       reconnect_num: config?.reconnect_num || 5,
       reconnect_time: config?.reconnect_time || 5000,
-      shake_hands_path: config?.shake_hands_path || '/socket.io',
+      shake_hands_path: config?.shake_hands_path || "/socket.io",
       shake_hands_timeout: config?.shake_hands_timeout || 0,
-      socket_version: config?.socket_version || 'v4',
+      socket_version: config?.socket_version || "v4",
       certificate_verification: config?.certificate_verification || -1,
     };
   }
   return {
     reconnect_num: 5,
     reconnect_time: 5000,
-    shake_hands_path: '/socket.io',
+    shake_hands_path: "/socket.io",
     shake_hands_timeout: 0,
-    socket_version: 'v4',
+    socket_version: "v4",
     certificate_verification: -1,
   };
 };
 
 export const completionWs2Message = (
   msg: Array<MessageItem>,
-  modelsMap: { [key: string]: string }
+  modelsMap: { [key: string]: string },
 ) => {
   if (!msg || !isArray(msg)) {
     return [
@@ -764,17 +834,17 @@ export const completionWs2Message = (
     ];
   }
   return msg?.map(({ name, request, response }) => ({
-    name: name || i18next.t('supplement.msg'),
+    name: name || i18next.t("supplement.msg"),
     param_id: snowflakeId(),
     request: {
-      mode: request?.mode || 'text',
-      raw: request?.raw || '',
+      mode: request?.mode || "text",
+      raw: request?.raw || "",
       raw_parameter: completionBodyRawParameter(request?.raw_parameter),
       raw_schema: recursionSchema(request?.raw_schema, modelsMap),
     },
     response: {
-      mode: response?.mode || 'text',
-      raw: response?.raw || '',
+      mode: response?.mode || "text",
+      raw: response?.raw || "",
       raw_parameter: completionBodyRawParameter(response?.raw_parameter),
       raw_schema: recursionSchema(response?.raw_schema, modelsMap),
     },
@@ -785,27 +855,29 @@ export const completionSocketIoRequest = (request: SocketIoRequest) => {
   return {
     header: {
       parameter: completionParameter(
-        request?.header?.parameter as RequestGlobalParams['header']['parameter']
+        request?.header
+          ?.parameter as RequestGlobalParams["header"]["parameter"],
       ),
     },
     query: {
       parameter: completionParameter(
-        request?.query?.parameter as RequestGlobalParams['query']['parameter']
+        request?.query?.parameter as RequestGlobalParams["query"]["parameter"],
       ),
     },
     cookie: {
       parameter: completionParameter(
-        request?.cookie?.parameter as RequestGlobalParams['cookie']['parameter']
+        request?.cookie
+          ?.parameter as RequestGlobalParams["cookie"]["parameter"],
       ),
     },
     event: {
       parameter: isArray(request?.event?.parameter)
         ? request?.event?.parameter?.map(
             ({
-              description = '',
-              field_type = 'String',
+              description = "",
+              field_type = "String",
               is_checked = 1,
-              key = '',
+              key = "",
               value,
               not_null = 1,
             }) => ({
@@ -814,9 +886,9 @@ export const completionSocketIoRequest = (request: SocketIoRequest) => {
               field_type,
               is_checked,
               key,
-              value: isEqual(value, '1') ? value : '-1',
+              value: isEqual(value, "1") ? value : "-1",
               not_null,
-            })
+            }),
           )
         : [],
     },
@@ -827,41 +899,48 @@ export const completionWs2Request = (request: WebSocket2Request) => {
   return {
     header: {
       parameter: completionParameter(
-        request?.header?.parameter as RequestGlobalParams['header']['parameter']
+        request?.header
+          ?.parameter as RequestGlobalParams["header"]["parameter"],
       ),
     },
     query: {
       parameter: completionParameter(
-        request?.query?.parameter as RequestGlobalParams['query']['parameter']
+        request?.query?.parameter as RequestGlobalParams["query"]["parameter"],
       ),
     },
     cookie: {
       parameter: completionParameter(
-        request?.cookie?.parameter as RequestGlobalParams['cookie']['parameter']
+        request?.cookie
+          ?.parameter as RequestGlobalParams["cookie"]["parameter"],
       ),
     },
   };
 };
 
-export const completionSocketRequest = (request: SocketServiceDetailsData['request']) => {
+export const completionSocketRequest = (
+  request: SocketServiceDetailsData["request"],
+) => {
   return {
     timeout: request?.timeout || 10,
     end_func: {
-      name: request?.end_func?.name || 'none',
-      option: request?.end_func?.option || '',
+      name: request?.end_func?.name || "none",
+      option: request?.end_func?.option || "",
     },
   };
 };
 
 export const completionSocketMethodRequest = (
-  request: SocketDetailsData['request'],
-  modelsMap: { [key: string]: string }
+  request: SocketDetailsData["request"],
+  modelsMap: { [key: string]: string },
 ) => {
   return {
-    body: completionSocketMethodBody(request?.body as SocketRequestBody, modelsMap),
+    body: completionSocketMethodBody(
+      request?.body as SocketRequestBody,
+      modelsMap,
+    ),
     post_tasks: request?.post_tasks || [],
     configs: {
-      charset: request?.configs?.charset || 'utf8',
+      charset: request?.configs?.charset || "utf8",
       func: {
         request: request?.configs?.func?.request || [],
         response: request?.configs?.func?.response || [],
@@ -871,10 +950,10 @@ export const completionSocketMethodRequest = (
 };
 
 export const completionGrpcProtosServicesMethodsRequest = (
-  request: GrpcProtosServicesMethods['request']
+  request: GrpcProtosServicesMethods["request"],
 ) => {
   const message = isArray(request?.message)
-    ? request?.message?.map(({ name, raw = '', raw_parameter }) => ({
+    ? request?.message?.map(({ name, raw = "", raw_parameter }) => ({
         param_id: snowflakeId(),
         name,
         raw,
@@ -893,8 +972,8 @@ export const completionGrpcProtosServicesMethodsRequest = (
 };
 
 export const completionGrpcProtosServicesMethods = (
-  methods: GrpcProtosServices['methods'],
-  modelsMap: { [key: string]: string }
+  methods: GrpcProtosServices["methods"],
+  modelsMap: { [key: string]: string },
 ) => {
   if (isArray(methods)) {
     return methods?.map(
@@ -921,15 +1000,15 @@ export const completionGrpcProtosServicesMethods = (
         ssl,
         tls,
         url,
-      })
+      }),
     );
   }
   return [];
 };
 
 export const completionGrpcProtosServices = (
-  services: GrpcProtos['services'],
-  modelsMap: { [key: string]: string }
+  services: GrpcProtos["services"],
+  modelsMap: { [key: string]: string },
 ) => {
   if (isArray(services)) {
     return services?.map(({ service_name, methods }) => ({
@@ -943,7 +1022,7 @@ export const completionGrpcProtosServices = (
 
 export const completionGrpcProtosFiles = (include_files: IncludesInfo[]) => {
   if (isArray(include_files)) {
-    return include_files?.map(({ name = '', path = '', proto = '' }) => ({
+    return include_files?.map(({ name = "", path = "", proto = "" }) => ({
       name,
       path,
       proto,
@@ -954,7 +1033,7 @@ export const completionGrpcProtosFiles = (include_files: IncludesInfo[]) => {
 
 export const completionGrpcProtos = (
   protos: GrpcProtos[],
-  modelsMap: { [key: string]: string }
+  modelsMap: { [key: string]: string },
 ) => {
   if (isArray(protos)) {
     return protos?.map(
@@ -968,8 +1047,12 @@ export const completionGrpcProtos = (
         include_dirs,
         proto_is_cloud = 1,
       }) => ({
-        include_dirs: completionGrpcProtosFiles(include_dirs as unknown as IncludesInfo[]),
-        include_files: completionGrpcProtosFiles(include_files as unknown as IncludesInfo[]),
+        include_dirs: completionGrpcProtosFiles(
+          include_dirs as unknown as IncludesInfo[],
+        ),
+        include_files: completionGrpcProtosFiles(
+          include_files as unknown as IncludesInfo[],
+        ),
         proto_content,
         proto_id: snowflakeId(),
         proto_is_cloud,
@@ -977,30 +1060,33 @@ export const completionGrpcProtos = (
         proto_path,
         url,
         services: completionGrpcProtosServices(services, modelsMap),
-      })
+      }),
     );
   }
   return [];
 };
 
 export const completionGraphqlRequestBody = (
-  body: GraphQLRequest['body'],
-  modelsMap: { [key: string]: string }
+  body: GraphQLRequest["body"],
+  modelsMap: { [key: string]: string },
 ) => {
   let query_list: GraphQLRequestBodyQueryItem[] = [];
   if (isArray(body?.query_list)) {
-    query_list = body?.query_list?.map(({ name = '', query = '', variables = '', response }) => ({
-      param_id: snowflakeId(),
-      name,
-      query,
-      variables,
-      response: {
-        mode: response?.mode || 'json',
-        raw: response?.raw || '',
-        raw_parameter: completionBodyRawParameter(response?.raw_parameter) || [],
-        raw_schema: recursionSchema(response?.raw_schema || {}, modelsMap),
-      },
-    }));
+    query_list = body?.query_list?.map(
+      ({ name = "", query = "", variables = "", response }) => ({
+        param_id: snowflakeId(),
+        name,
+        query,
+        variables,
+        response: {
+          mode: response?.mode || "json",
+          raw: response?.raw || "",
+          raw_parameter:
+            completionBodyRawParameter(response?.raw_parameter) || [],
+          raw_schema: recursionSchema(response?.raw_schema || {}, modelsMap),
+        },
+      }),
+    );
   }
   return {
     query_list,
@@ -1010,18 +1096,20 @@ export const completionGraphqlRequestBody = (
 
 export const completionGraphqlRequest = (
   request: GraphQLRequest,
-  modelsMap: { [key: string]: string }
+  modelsMap: { [key: string]: string },
 ) => {
   return {
     auth: completionAuth(request?.auth, false),
     header: {
       parameter: completionParameter(
-        request?.header?.parameter as RequestGlobalParams['header']['parameter']
+        request?.header
+          ?.parameter as RequestGlobalParams["header"]["parameter"],
       ),
     },
     cookie: {
       parameter: completionParameter(
-        request?.cookie?.parameter as RequestGlobalParams['cookie']['parameter']
+        request?.cookie
+          ?.parameter as RequestGlobalParams["cookie"]["parameter"],
       ),
     },
     pre_tasks: completionTasks(request?.pre_tasks),
@@ -1031,11 +1119,11 @@ export const completionGraphqlRequest = (
 };
 
 export const completionApis = (
-  apis: ApiProjectImportParams['apis'],
+  apis: ApiProjectImportParams["apis"],
   apiMap: { [key: string]: string },
   modelsMap: { [key: string]: string },
   serversMap: { [key: string]: string },
-  project_id: string
+  project_id: string,
 ) => {
   if (isArray(apis)) {
     return apis?.reduce(
@@ -1045,7 +1133,7 @@ export const completionApis = (
           target_id,
           target_type,
           parent_id,
-          name = '',
+          name = "",
           sort = 0,
           version = 0,
           server_id,
@@ -1053,22 +1141,22 @@ export const completionApis = (
           is_changed = -1,
           is_socket = 1,
           request,
-          method = 'GET',
-          url = '',
-          mark_id = '1',
-          protocol = 'http/1.1',
+          method = "GET",
+          url = "",
+          mark_id = "1",
+          protocol = "http/1.1",
           response,
           attribute_info,
           tags,
           config,
           protos,
           message,
-        }
+        },
       ) => {
         const baseApiInfo = {
           target_id: apiMap?.[target_id] || snowflakeId(),
           project_id,
-          parent_id: apiMap?.[parent_id] || '0',
+          parent_id: apiMap?.[parent_id] || "0",
           target_type,
           name: getSubstring(name, 255),
           version,
@@ -1078,13 +1166,18 @@ export const completionApis = (
         if (target_type === APIS_TARGET_TYPE_ENUM.FOLDER) {
           pre.push({
             ...baseApiInfo,
-            server_id: has(serversMap, server_id) ? serversMap[server_id] : '0',
-            request: completionGlobalParam(request as unknown as RequestGlobalParams),
+            server_id: has(serversMap, server_id) ? serversMap[server_id] : "0",
+            request: completionGlobalParam(
+              request as unknown as RequestGlobalParams,
+            ),
             is_changed,
             is_socket,
           });
         }
-        if (target_type === APIS_TARGET_TYPE_ENUM.API || target_type === APIS_TARGET_TYPE_ENUM.SSE) {
+        if (
+          target_type === APIS_TARGET_TYPE_ENUM.API ||
+          target_type === APIS_TARGET_TYPE_ENUM.SSE
+        ) {
           pre.push({
             ...baseApiInfo,
             method,
@@ -1095,9 +1188,14 @@ export const completionApis = (
             mark_id,
             protocol,
             request: {
-              ...completionGlobalParam(request as unknown as RequestGlobalParams),
+              ...completionGlobalParam(
+                request as unknown as RequestGlobalParams,
+              ),
               body: {
-                ...completionBody(request?.body as ApisBaseRequestBody, modelsMap),
+                ...completionBody(
+                  request?.body as ApisBaseRequestBody,
+                  modelsMap,
+                ),
               },
             },
             response: completionResponse(response, modelsMap),
@@ -1114,8 +1212,13 @@ export const completionApis = (
             url,
             is_socket,
             config: completionWs2Config(config as Websocket2Config),
-            request: completionWs2Request(request as unknown as WebSocket2Request),
-            message: completionWs2Message(message as unknown as Array<MessageItem>, modelsMap),
+            request: completionWs2Request(
+              request as unknown as WebSocket2Request,
+            ),
+            message: completionWs2Message(
+              message as unknown as Array<MessageItem>,
+              modelsMap,
+            ),
           });
         }
         if (target_type === APIS_TARGET_TYPE_ENUM.DOC) {
@@ -1132,22 +1235,31 @@ export const completionApis = (
             ...baseApiInfo,
             method,
             url,
-            request: completionSocketRequest(request as SocketServiceDetailsData['request']),
+            request: completionSocketRequest(
+              request as SocketServiceDetailsData["request"],
+            ),
           });
         }
         if (target_type === APIS_TARGET_TYPE_ENUM.SOCKETIO) {
           pre.push({
             ...baseApiInfo,
-            method: '',
+            method: "",
             url:
               url && isArray(request?.query?.parameter)
                 ? genUrlByQuery(url, request?.query?.parameter)
                 : url,
-            request: completionSocketIoRequest(request as unknown as SocketIoRequest),
-            message: completionWs2Message(message as unknown as Array<MessageItem>, modelsMap),
+            request: completionSocketIoRequest(
+              request as unknown as SocketIoRequest,
+            ),
+            message: completionWs2Message(
+              message as unknown as Array<MessageItem>,
+              modelsMap,
+            ),
             attribute_info: completionAttributeInfo(attribute_info),
             tags,
-            config: completionSocketIoConfig(config as unknown as SocketIoConfig),
+            config: completionSocketIoConfig(
+              config as unknown as SocketIoConfig,
+            ),
           });
         }
         if (target_type === APIS_TARGET_TYPE_ENUM.SOCKET_METHOD) {
@@ -1159,8 +1271,8 @@ export const completionApis = (
             attribute_info,
             tags,
             request: completionSocketMethodRequest(
-              request as SocketDetailsData['request'],
-              modelsMap
+              request as SocketDetailsData["request"],
+              modelsMap,
             ),
             response: {
               example: completionExample(response?.example, modelsMap),
@@ -1183,24 +1295,27 @@ export const completionApis = (
             mark_id,
             attribute_info: completionAttributeInfo(attribute_info),
             tags,
-            request: completionGraphqlRequest(request as unknown as GraphQLRequest, modelsMap),
+            request: completionGraphqlRequest(
+              request as unknown as GraphQLRequest,
+              modelsMap,
+            ),
             response: completionResponse(response, modelsMap),
           });
         }
         return pre;
       },
-      []
+      [],
     );
   }
   return [];
 };
 
 export const completionSamples = (
-  samples: ApiProjectImportParams['samples'],
+  samples: ApiProjectImportParams["samples"],
   apiMap: { [key: string]: string },
   sampleMap: { [key: string]: string },
   modelsMap: { [key: string]: string },
-  project_id: string
+  project_id: string,
 ) => {
   try {
     if (isArray(samples)) {
@@ -1211,19 +1326,19 @@ export const completionSamples = (
             sample_id,
             parent_id,
             target_id,
-            name = '',
+            name = "",
             type,
             method,
             url,
             sort = 1,
-            description = '',
-            protocol = 'http/1.1',
+            description = "",
+            protocol = "http/1.1",
             request,
             response,
-          }
+          },
         ) => {
           if (has(apiMap, target_id)) {
-            if (type === 'sample_group') {
+            if (type === "sample_group") {
               pre.push({
                 sample_id: sampleMap?.[sample_id],
                 parent_id: sampleMap?.[parent_id],
@@ -1236,7 +1351,7 @@ export const completionSamples = (
                 sort,
               });
             }
-            if (type === 'sample') {
+            if (type === "sample") {
               pre.push({
                 sample_id: sampleMap?.[sample_id],
                 parent_id: sampleMap?.[parent_id],
@@ -1250,9 +1365,14 @@ export const completionSamples = (
                 description,
                 protocol,
                 request: {
-                  ...completionGlobalParam(request as unknown as RequestGlobalParams),
+                  ...completionGlobalParam(
+                    request as unknown as RequestGlobalParams,
+                  ),
                   body: {
-                    ...completionBody(request?.body as ApisBaseRequestBody, modelsMap),
+                    ...completionBody(
+                      request?.body as ApisBaseRequestBody,
+                      modelsMap,
+                    ),
                   },
                 },
                 response: completionResponse(response, modelsMap),
@@ -1262,7 +1382,7 @@ export const completionSamples = (
 
           return pre;
         },
-        []
+        [],
       );
     }
     return [];
@@ -1270,5 +1390,3 @@ export const completionSamples = (
     return [];
   }
 };
-
-

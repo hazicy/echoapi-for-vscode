@@ -88,11 +88,7 @@
       {
         "group": "Query",
         "type": "String",
-        "allowedValues": [
-          "Aerial",
-          "Land",
-          "Underwater"
-        ],
+        "allowedValues": ["Aerial", "Land", "Underwater"],
         "optional": false,
         "field": "view",
         "isArray": false,

@@ -1,22 +1,25 @@
-import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-import { useSafeState } from 'ahooks';
-import { concat, forEach, isEqual, keys, reverse } from 'lodash';
+import { useSafeState } from "ahooks";
+import { concat, forEach, isEqual, keys, reverse } from "lodash";
 
-import LineTabs from '@/shared/components/LineTabs';
-import context from '@/shared/components/RawEditor/visualizationContext';
-import RequestTable from '@/shared/components/RequestTable';
-import { useTableColumnSwitchConfig } from '@/shared/hooks';
+import LineTabs from "@/shared/components/LineTabs";
+import context from "@/shared/components/RawEditor/visualizationContext";
+import RequestTable from "@/shared/components/RequestTable";
+import { useTableColumnSwitchConfig } from "@/shared/hooks";
 
-import { useApis, useProjectConfig } from '@/app/store';
-import { ApisBaseDataItem } from '@/features/requests/types/base';
-import { Websocket2DetailsData } from '@/features/requests/types/websocket2';
-import { calcTabLineBodyHeaderNum, getAllParentDirectories } from '@/shared/utils/common';
+import { useApis, useProjectConfig } from "@/app/store";
+import { ApisBaseDataItem } from "@/features/requests/types/base";
+import { Websocket2DetailsData } from "@/features/requests/types/websocket2";
+import {
+  calcTabLineBodyHeaderNum,
+  getAllParentDirectories,
+} from "@/shared/utils/common";
 
-import Message from './Message';
-import Setting from './Setting';
-import { genUrlByQuery } from '@/features/requests/utils/apis';
+import Message from "./Message";
+import Setting from "./Setting";
+import { genUrlByQuery } from "@/features/requests/utils/apis";
 
 interface Props {
   value: any;
@@ -38,22 +41,22 @@ const Request: React.FC<Props> = (props) => {
   const {
     columnSwitchConfig: headerColumnSwitchConfig,
     onColumnSwitchConfig: onHeaderColumnSwitchConfig,
-  } = useTableColumnSwitchConfig('request_header_column_switch');
+  } = useTableColumnSwitchConfig("request_header_column_switch");
 
   const {
     columnSwitchConfig: queryColumnSwitchConfig,
     onColumnSwitchConfig: onQueryColumnSwitchConfig,
-  } = useTableColumnSwitchConfig('request_query_column_switch');
+  } = useTableColumnSwitchConfig("request_query_column_switch");
 
   const {
     columnSwitchConfig: cookieColumnSwitchConfig,
     onColumnSwitchConfig: onCookieColumnSwitchConfig,
-  } = useTableColumnSwitchConfig('request_cookie_column_switch');
+  } = useTableColumnSwitchConfig("request_cookie_column_switch");
 
   const handleRequest = (data: ApisBaseDataItem[], type: string) => {
     onChange({
       ...value,
-      url:isEqual(type, 'query') ? genUrlByQuery(value.url, data) : value.url,
+      url: isEqual(type, "query") ? genUrlByQuery(value.url, data) : value.url,
       request: {
         ...value.request,
         [type]: {
@@ -66,9 +69,12 @@ const Request: React.FC<Props> = (props) => {
     onChange({ ...value, config: { ...data } });
   };
   useEffect(() => {
-    const allParentFolder = getAllParentDirectories(apiDetailsData, value?.target_id || '');
+    const allParentFolder = getAllParentDirectories(
+      apiDetailsData,
+      value?.target_id || "",
+    );
     const reverseFolder = reverse(allParentFolder);
-    
+
     const folderParams: { [k: string]: ApisBaseDataItem[] } = {
       header: [],
       query: [],
@@ -87,7 +93,10 @@ const Request: React.FC<Props> = (props) => {
           folderParams[key] = concat(
             [],
             folderParams[key],
-            request[key]?.parameter?.map((e: any) => ({ ...e, target_id: item?.target_id })) // Associate target_id for global parameter navigation
+            request[key]?.parameter?.map((e: any) => ({
+              ...e,
+              target_id: item?.target_id,
+            })), // Associate target_id for global parameter navigation
           );
         }
       });
@@ -97,8 +106,8 @@ const Request: React.FC<Props> = (props) => {
   }, [value?.target_id, apiDetailsData]);
   const items = [
     {
-      key: 'send',
-      label: t('ws.request.message'),
+      key: "send",
+      label: t("ws.request.message"),
       children: (
         <Provider
           value={{
@@ -110,8 +119,8 @@ const Request: React.FC<Props> = (props) => {
       ),
     },
     {
-      key: 'header',
-      label: t('ws.request.headers'),
+      key: "header",
+      label: t("ws.request.headers"),
       children: (
         <RequestTable
           target_type="websocket2"
@@ -120,7 +129,7 @@ const Request: React.FC<Props> = (props) => {
           folderParams={allParentDirectories?.header}
           readOnly={readOnly}
           dataSource={request?.header?.parameter}
-          onChange={(data) => handleRequest(data, 'header')}
+          onChange={(data) => handleRequest(data, "header")}
           columnSwitchConfig={headerColumnSwitchConfig}
           onColumnSwitchConfig={onHeaderColumnSwitchConfig}
         />
@@ -131,13 +140,13 @@ const Request: React.FC<Props> = (props) => {
       },
     },
     {
-      key: 'params',
-      label: t('ws.request.params'),
+      key: "params",
+      label: t("ws.request.params"),
       children: (
         <RequestTable
           readOnly={readOnly}
           dataSource={request?.query?.parameter}
-          onChange={(data: ApisBaseDataItem[]) => handleRequest(data, 'query')}
+          onChange={(data: ApisBaseDataItem[]) => handleRequest(data, "query")}
           folderParams={allParentDirectories?.query}
           columnSwitchConfig={queryColumnSwitchConfig}
           onColumnSwitchConfig={onQueryColumnSwitchConfig}
@@ -149,14 +158,14 @@ const Request: React.FC<Props> = (props) => {
       },
     },
     {
-      key: 'cookie',
-      label: 'Cookie',
+      key: "cookie",
+      label: "Cookie",
       children: (
         <RequestTable
           readOnly={readOnly}
           dataSource={request?.cookie?.parameter}
           folderParams={allParentDirectories?.cookie}
-          onChange={(data: ApisBaseDataItem[]) => handleRequest(data, 'cookie')}
+          onChange={(data: ApisBaseDataItem[]) => handleRequest(data, "cookie")}
           columnSwitchConfig={cookieColumnSwitchConfig}
           onColumnSwitchConfig={onCookieColumnSwitchConfig}
         />
@@ -167,10 +176,14 @@ const Request: React.FC<Props> = (props) => {
       },
     },
     {
-      key: 'setting',
-      label: t('ws.request.settings'),
+      key: "setting",
+      label: t("ws.request.settings"),
       children: (
-        <Setting readOnly={readOnly} onChange={handleRequestConfig} value={value?.config} />
+        <Setting
+          readOnly={readOnly}
+          onChange={handleRequestConfig}
+          value={value?.config}
+        />
       ),
     },
   ];

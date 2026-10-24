@@ -2,21 +2,26 @@
 export type TYPE_GET_MAX_SORT = (val: Partial<IDataModel>) => Promise<number>;
 
 // Get default model info
-export type TYPE_GET_CONSTANT_DATA = (model_type: DATA_MODEL_TYPE) => IDataModel | IDataModelFolder;
+export type TYPE_GET_CONSTANT_DATA = (
+  model_type: DATA_MODEL_TYPE,
+) => IDataModel | IDataModelFolder;
 
-export type DATA_MODEL_TYPE = 'model' | 'folder';
+export type DATA_MODEL_TYPE = "model" | "folder";
 
 // Compare two data models for consistency
-export type TYPE_DIFF_OBJECT_JSON = (source: IDataModel, opens: IDataModel) => 1 | -1;
+export type TYPE_DIFF_OBJECT_JSON = (
+  source: IDataModel,
+  opens: IDataModel,
+) => 1 | -1;
 
 // Model directory info
-export type IDataModelFolder = Omit<IDataModel, 'display_name' | 'description'>;
+export type IDataModelFolder = Omit<IDataModel, "display_name" | "description">;
 
 // Convert data model to JSON-schema
 export type TYPE_PARSE_MODEL_TO_JSON_SCHEMA = (
   model: object,
   parentNodes: string[],
-  schemasBaseData: any
+  schemasBaseData: any,
 ) => Promise<object>;
 
 export type DirectoryCreate = {

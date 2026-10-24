@@ -1,13 +1,13 @@
-import $RefParser from '@apidevtools/json-schema-ref-parser';
-import { cloneDeep, isArray, isEmpty, isPlainObject, mapValues } from 'lodash';
-import { Parser } from 'sql-ddl-to-json-schema';
+import $RefParser from "@apidevtools/json-schema-ref-parser";
+import { cloneDeep, isArray, isEmpty, isPlainObject, mapValues } from "lodash";
+import { Parser } from "sql-ddl-to-json-schema";
 
 export const cutLength = (schema: any) => {
   try {
     if (schema && schema?.definitions && !isEmpty(schema?.definitions)) {
       const definitions = mapValues(schema?.definitions, (v) => {
         if (v?.maxLength) {
-          v['maxLength'] = 1024;
+          v["maxLength"] = 1024;
         }
         return v;
       });
@@ -24,7 +24,7 @@ export const cutLength = (schema: any) => {
 };
 
 export const parseMySqlddlToSchema = async (sql: string) => {
-  const parser = new Parser('mysql');
+  const parser = new Parser("mysql");
   let schemaDoc = null;
   try {
     schemaDoc = parser.feed(sql).toJsonSchemaArray({});
@@ -38,7 +38,7 @@ export const parseMySqlddlToSchema = async (sql: string) => {
     const schemas = cutLength(schemaDoc[0]);
     const result = await $RefParser.dereference(schemas, {
       dereference: {
-        circular: 'ignore',
+        circular: "ignore",
       },
     });
     if (!isPlainObject(result)) {

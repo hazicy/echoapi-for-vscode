@@ -7,8 +7,14 @@ html {
   background-color: #fff;
   font-size: 14px;
 
-  font-family:
-    var(--vscode-font-family, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-family: var(
+    --vscode-font-family,
+    -apple-system,
+    system-ui,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif
+  );
   overflow: hidden;
 }
 

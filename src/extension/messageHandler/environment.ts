@@ -1,14 +1,19 @@
-import * as vscode from 'vscode';
-import { getCurrentProjectConfig, setProjectConfig } from '../utils';
-import { globalConfig } from '../constants';
-import { forEach, isPlainObject } from 'lodash';
-import { ENV_MANAGE_ENUM } from '@/features/environment/components/Environment/constants';
-import { proxyFetch } from '../utils/fetch';
+import * as vscode from "vscode";
+import { getCurrentProjectConfig, setProjectConfig } from "../utils";
+import { globalConfig } from "../constants";
+import { forEach, isPlainObject } from "lodash";
+import { ENV_MANAGE_ENUM } from "@/features/environment/components/Environment/constants";
+import { proxyFetch } from "../utils/fetch";
 
-export const handelEnvMessage = async (message: { action: string, data: any }, context: vscode.ExtensionContext, data: any, panel: vscode.WebviewPanel) => {
-  let { } = globalConfig;
+export const handelEnvMessage = async (
+  message: { action: string; data: any },
+  context: vscode.ExtensionContext,
+  data: any,
+  panel: vscode.WebviewPanel,
+) => {
+  let {} = globalConfig;
   switch (message.action) {
-    case 'getProjectConfig':
+    case "getProjectConfig":
       let local_project_config: any = getCurrentProjectConfig(context);
       // Initialize create env
       if (data?.create) {
@@ -16,7 +21,7 @@ export const handelEnvMessage = async (message: { action: string, data: any }, c
       }
 
       if (!data?.cookie) {
-        local_project_config.envSettingKeys = !data?.env_id ? '1' : data.env_id;
+        local_project_config.envSettingKeys = !data?.env_id ? "1" : data.env_id;
       }
 
       if (data?.cookie) {
@@ -32,46 +37,61 @@ export const handelEnvMessage = async (message: { action: string, data: any }, c
       }
 
       // Update page
-      panel.webview.postMessage({ action: 'setProjectConfig', data: local_project_config || {} });
+      panel.webview.postMessage({
+        action: "setProjectConfig",
+        data: local_project_config || {},
+      });
       break;
-    case 'getSystemConfig':
-      let systemConfig: any = context.globalState.get('systemConfig') || {};
-      panel.webview.postMessage({ action: 'setSystemConfig', data: systemConfig || {} });
+    case "getSystemConfig":
+      let systemConfig: any = context.globalState.get("systemConfig") || {};
+      panel.webview.postMessage({
+        action: "setSystemConfig",
+        data: systemConfig || {},
+      });
       break;
-    case 'getVscodeTheme':
-      const vscodeTheme = vscode.workspace.getConfiguration('workbench').get('colorTheme');
-      panel.webview.postMessage({ action: 'setVscodeTheme', data: vscodeTheme });
+    case "getVscodeTheme":
+      const vscodeTheme = vscode.workspace
+        .getConfiguration("workbench")
+        .get("colorTheme");
+      panel.webview.postMessage({
+        action: "setVscodeTheme",
+        data: vscodeTheme,
+      });
       break;
-    case 'setProjectConfig':
+    case "setProjectConfig":
       const { key, value } = message.data;
       // Local stored data collection
       let project_config: any = getCurrentProjectConfig(context);
       project_config[key] = value;
       setProjectConfig(context, project_config);
       break;
-    case 'setSystemConfig':
+    case "setSystemConfig":
       // Local stored data collection
-      let default_system_config: any = context.globalState.get('systemConfig') || {};
+      let default_system_config: any =
+        context.globalState.get("systemConfig") || {};
       if (isPlainObject(message.data)) {
         forEach(message.data, (value, key) => {
           default_system_config[key] = value;
         });
       }
 
-      context.globalState.update('systemConfig', default_system_config);
+      context.globalState.update("systemConfig", default_system_config);
 
       // Notify other open tabs
       forEach(globalConfig.openedPanels, (openedPanel, key) => {
-        openedPanel.webview.postMessage({ action: 'setSystemConfig', data: default_system_config || {} });
+        openedPanel.webview.postMessage({
+          action: "setSystemConfig",
+          data: default_system_config || {},
+        });
       });
 
       break;
 
-    case 'openNewWindow':
+    case "openNewWindow":
       vscode.env.openExternal(vscode.Uri.parse(message.data));
       break;
-    case '/proxy/fetch':
+    case "/proxy/fetch":
       proxyFetch(message.data, panel);
       break;
   }
-}
+};

@@ -1,9 +1,9 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import { Flex, InputNumber, Switch } from '@/shared/ui/base';
+import { Flex, InputNumber, Switch } from "@/shared/ui/base";
 
-import { isNumber } from 'lodash';
+import { isNumber } from "lodash";
 
 const ArrayModal = (props: any) => {
   const {
@@ -21,9 +21,14 @@ const ArrayModal = (props: any) => {
     <>
       <div className={slots["base-setting"]}>
         <div className={slots["item-line"]}>{SelectTypeDom}</div>
-        <Flex gap={20} className={[slots["item-all-line"], slots["item-necessarily"]].join(" ")}>
+        <Flex
+          gap={20}
+          className={[slots["item-all-line"], slots["item-necessarily"]].join(
+            " ",
+          )}
+        >
           <Flex align="center" gap={8}>
-            {t('common.schema.advanced_settings.required')}
+            {t("common.schema.advanced_settings.required")}
             <Switch
               size="small"
               onChange={() => handleUpdateRequired(isRequired)}
@@ -31,15 +36,19 @@ const ArrayModal = (props: any) => {
             />
           </Flex>
           <Flex align="center" gap={8}>
-            {t('common.schema.advanced_settings.null')}
-            <Switch size="small" value={empty} onChange={handleChangeAllowNull} />
+            {t("common.schema.advanced_settings.null")}
+            <Switch
+              size="small"
+              value={empty}
+              onChange={handleChangeAllowNull}
+            />
           </Flex>
           <Flex align="center" gap={8}>
-            {t('common.schema.advanced_settings.unique_item')}
+            {t("common.schema.advanced_settings.unique_item")}
             <Switch
               size="small"
               checked={value?.uniqueItems}
-              onChange={onChange.bind(null, 'uniqueItems')}
+              onChange={onChange.bind(null, "uniqueItems")}
             />
           </Flex>
         </Flex>
@@ -53,26 +62,30 @@ const ArrayModal = (props: any) => {
         )}
         <Flex gap={20}>
           <div className={slots["item-line"]}>
-            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.min_item')}</div>
+            <div className={slots["case-title"]}>
+              {t("common.schema.advanced_settings.min_item")}
+            </div>
             <div className={slots["case-value"]}>
               <InputNumber
                 size="small"
                 min={0}
                 value={isNumber(value?.minItems) ? value?.minItems : 0}
-                onChange={onChange.bind(null, 'minItems')}
+                onChange={onChange.bind(null, "minItems")}
               />
             </div>
           </div>
         </Flex>
         <Flex gap={20}>
           <div className={slots["item-line"]}>
-            <div className={slots["case-title"]}>{t('common.schema.advanced_settings.max_item')}</div>
+            <div className={slots["case-title"]}>
+              {t("common.schema.advanced_settings.max_item")}
+            </div>
             <div className={slots["case-value"]}>
               <InputNumber
                 min={0}
                 size="small"
                 value={isNumber(value?.maxItems) ? value?.maxItems : 0}
-                onChange={onChange.bind(null, 'maxItems')}
+                onChange={onChange.bind(null, "maxItems")}
               />
             </div>
           </div>

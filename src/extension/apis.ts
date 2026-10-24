@@ -1,34 +1,69 @@
 import { setRequestResult } from "./requestStatus";
 import { getApiListName } from "./utils";
-const { Worker } = require('worker_threads');
-import path from 'path';
-import * as vscode from 'vscode';
-import { cloneDeep, find, forEach, includes, isEmpty, isEqual, isNil, isPlainObject, isString, map, omit } from 'lodash';
-import { copyTextToClipboard, genSendBaseOptions, getApiList, getCurrentProjectConfig, handleResponseVariables, handleSendResponse, prepareRequest, showTabName } from './utils';
-import { DEFAULT_REQUEST_SYSTEM_HEADERS } from '../features/requests/constants/request';
-import { ApiSendResponse } from '@/features/requests/types/send';
-import Har2languages from 'har2languages';
-import { ProjectConfigType } from '@/features/project/types';
-import { SysConfig } from '@/features/settings/types/settings';
-import { ApiDetailsData } from '@/features/requests/types/api';
-import Mock from 'mockjs';
-import { snowflakeId } from 'apipost-tools';
-import { EventData, } from '@/features/testing/types';
-import { RunnerTestingProps } from '@/features/testing/types/common';
-import { DEFAULT_ADD_CASE_NAME } from '@/features/testing/constants';
-import { STATUS_CODE } from '@/shared/constants/common';
-import { EnvListItem } from '@/features/environment/types';
-import { createTargetIdMap, getAboutCollections } from '@/features/requests/utils/send/utils';
+const { Worker } = require("worker_threads");
+import path from "path";
+import * as vscode from "vscode";
+import {
+  cloneDeep,
+  find,
+  forEach,
+  includes,
+  isEmpty,
+  isEqual,
+  isNil,
+  isPlainObject,
+  isString,
+  map,
+  omit,
+} from "lodash";
+import {
+  copyTextToClipboard,
+  genSendBaseOptions,
+  getApiList,
+  getCurrentProjectConfig,
+  handleResponseVariables,
+  handleSendResponse,
+  prepareRequest,
+  showTabName,
+} from "./utils";
+import { DEFAULT_REQUEST_SYSTEM_HEADERS } from "../features/requests/constants/request";
+import { ApiSendResponse } from "@/features/requests/types/send";
+import Har2languages from "har2languages";
+import { ProjectConfigType } from "@/features/project/types";
+import { SysConfig } from "@/features/settings/types/settings";
+import { ApiDetailsData } from "@/features/requests/types/api";
+import Mock from "mockjs";
+import { snowflakeId } from "apipost-tools";
+import { EventData } from "@/features/testing/types";
+import { RunnerTestingProps } from "@/features/testing/types/common";
+import { DEFAULT_ADD_CASE_NAME } from "@/features/testing/constants";
+import { STATUS_CODE } from "@/shared/constants/common";
+import { EnvListItem } from "@/features/environment/types";
+import {
+  createTargetIdMap,
+  getAboutCollections,
+} from "@/features/requests/utils/send/utils";
 
 let worker: any = null;
-const getSendData = async (requestData: any, projectConfig: ProjectConfigType, systemConfig: SysConfig, context: vscode.ExtensionContext, option?: { server_id: string }) => {
+const getSendData = async (
+  requestData: any,
+  projectConfig: ProjectConfigType,
+  systemConfig: SysConfig,
+  context: vscode.ExtensionContext,
+  option?: { server_id: string },
+) => {
   try {
-    const tempRequest: any = cloneDeep(omit(requestData, ['response']));
+    const tempRequest: any = cloneDeep(omit(requestData, ["response"]));
 
-    const curEnv = find(projectConfig?.envList || [], (env) => isEqual(env.env_id, projectConfig?.envDetailKeys));
+    const curEnv = find(projectConfig?.envList || [], (env) =>
+      isEqual(env.env_id, projectConfig?.envDetailKeys),
+    );
 
     // Request data preprocessing
-    tempRequest.request = prepareRequest(tempRequest.request, systemConfig?.systemRequestHeader || DEFAULT_REQUEST_SYSTEM_HEADERS);
+    tempRequest.request = prepareRequest(
+      tempRequest.request,
+      systemConfig?.systemRequestHeader || DEFAULT_REQUEST_SYSTEM_HEADERS,
+    );
 
     const apiList = getApiList(context);
 
@@ -52,7 +87,7 @@ const getSendData = async (requestData: any, projectConfig: ProjectConfigType, s
     }
 
     const options = await genSendBaseOptions({
-      scene: 'http_request',
+      scene: "http_request",
       collection: _collection,
       databaseConfigs: {},
       projectConfig,
@@ -65,7 +100,7 @@ const getSendData = async (requestData: any, projectConfig: ProjectConfigType, s
       option: options,
       test_events: [
         {
-          type: 'api',
+          type: "api",
           data: tempRequest,
         },
       ],
@@ -80,19 +115,24 @@ export const generateTestingRunnerParams = async ({
   testingData,
   projectConfig,
   systemConfig,
-  originCollection
+  originCollection,
 }: RunnerTestingProps) => {
-
   const currentTesting = {
-    name: 'test folder',
-    testing_id: ''
+    name: "test folder",
+    testing_id: "",
   };
 
   const eventList = testingData?.event_list || [];
   const settings = testingData?.settings;
-  
-  const { env_id, enable_sandbox, ignore_error, iteration_data, execute_count, interval_time } =
-    settings || {}; // Current test case settings
+
+  const {
+    env_id,
+    enable_sandbox,
+    ignore_error,
+    iteration_data,
+    execute_count,
+    interval_time,
+  } = settings || {}; // Current test case settings
 
   try {
     const name = currentTesting.name || DEFAULT_ADD_CASE_NAME;
@@ -104,20 +144,24 @@ export const generateTestingRunnerParams = async ({
 
     forEach(eventList, (item) => {
       // Request data preprocessing
-      item.data.request = prepareRequest(item.data.request, systemConfig?.systemRequestHeader || DEFAULT_REQUEST_SYSTEM_HEADERS);
+      item.data.request = prepareRequest(
+        item.data.request,
+        systemConfig?.systemRequestHeader || DEFAULT_REQUEST_SYSTEM_HEADERS,
+      );
 
       collection.push(item.data);
       testEvents.push({
-        ...item, data: {
+        ...item,
+        data: {
           target_id: item.data.target_id,
-          parent_id: item.data.parent_id
-        }
+          parent_id: item.data.parent_id,
+        },
       });
     });
 
     const options = await genSendBaseOptions({
       envId: env_id,
-      scene: 'auto_test',
+      scene: "auto_test",
       collection: originCollection,
       databaseConfigs: {},
       projectConfig,
@@ -147,9 +191,9 @@ function runWorker(method: string, args: any[], callback?: any) {
       if (worker !== null) {
         worker.terminate();
       }
-      worker = new Worker(path.join(__dirname, 'runtime-dist', 'work.js'));
+      worker = new Worker(path.join(__dirname, "runtime-dist", "work.js"));
 
-      worker.on('message', (message: unknown) => {
+      worker.on("message", (message: unknown) => {
         if (callback) {
           callback(message);
           return;
@@ -157,11 +201,11 @@ function runWorker(method: string, args: any[], callback?: any) {
         resolve(message);
       });
 
-      worker.on('error', (error: any) => {
+      worker.on("error", (error: any) => {
         reject(error);
       });
 
-      worker.on('exit', (code: any) => {
+      worker.on("exit", (code: any) => {
         if (code !== 0) {
           reject(new Error(`Worker stopped with exit code ${code}`));
         }
@@ -182,86 +226,146 @@ export const stopWorker = () => {
       worker.terminate();
       worker = null;
     }
-  } catch (error) { }
-}
+  } catch (error) {}
+};
 
-
-export const sendApi = async (apiData: any, context: vscode.ExtensionContext, environmentWebView: vscode.WebviewPanel | null, option?: { server_id: string }) => {
+export const sendApi = async (
+  apiData: any,
+  context: vscode.ExtensionContext,
+  environmentWebView: vscode.WebviewPanel | null,
+  option?: { server_id: string },
+) => {
   const statusWorkspace = getApiListName(context);
   try {
     const projectConfig = getCurrentProjectConfig(context) as ProjectConfigType;
-    const systemConfig = context.globalState.get('systemConfig') as SysConfig || {};
-    const { params } = await getSendData(apiData, projectConfig, systemConfig, context, option);
-    const result = await runWorker('httpSend', [params.option, params.test_events]) as string;
+    const systemConfig =
+      (context.globalState.get("systemConfig") as SysConfig) || {};
+    const { params } = await getSendData(
+      apiData,
+      projectConfig,
+      systemConfig,
+      context,
+      option,
+    );
+    const result = (await runWorker("httpSend", [
+      params.option,
+      params.test_events,
+    ])) as string;
     const response = JSON.parse(result) as ApiSendResponse;
-    setRequestResult(statusWorkspace, apiData.target_id, response.data?.response, response.error);
-    return await handleSendResponse(context, response, environmentWebView, false, -1);
+    setRequestResult(
+      statusWorkspace,
+      apiData.target_id,
+      response.data?.response,
+      response.error,
+    );
+    return await handleSendResponse(
+      context,
+      response,
+      environmentWebView,
+      false,
+      -1,
+    );
   } catch (error: any) {
     setRequestResult(statusWorkspace, apiData.target_id, undefined, error);
     vscode.window.showInformationMessage(error.message);
   }
 };
 
-export const sendSse = async (apiData: any, context: vscode.ExtensionContext, environmentWebView: vscode.WebviewPanel | null, callback: any, option?: { server_id: string }) => {
+export const sendSse = async (
+  apiData: any,
+  context: vscode.ExtensionContext,
+  environmentWebView: vscode.WebviewPanel | null,
+  callback: any,
+  option?: { server_id: string },
+) => {
   const statusWorkspace = getApiListName(context);
   try {
     const projectConfig = getCurrentProjectConfig(context) as ProjectConfigType;
-    const systemConfig = context.globalState.get('systemConfig') as SysConfig || {};
-    const { params } = await getSendData(apiData, projectConfig, systemConfig, context, option);
-    await runWorker('runnerEvent', [params.option, params.test_events], async (result: any) => {
-      if (!isPlainObject(result)) {
-        result = JSON.parse(result);
-      }
+    const systemConfig =
+      (context.globalState.get("systemConfig") as SysConfig) || {};
+    const { params } = await getSendData(
+      apiData,
+      projectConfig,
+      systemConfig,
+      context,
+      option,
+    );
+    await runWorker(
+      "runnerEvent",
+      [params.option, params.test_events],
+      async (result: any) => {
+        if (!isPlainObject(result)) {
+          result = JSON.parse(result);
+        }
 
-      if (result.action === 'sse') {
-        callback({ streamResponse: [{ ...result, action: 'message', id: snowflakeId() }] });
-      }
-      if (result.action === 'request') {
-        setRequestResult(statusWorkspace, apiData.target_id, result.data?.data?.response, result.data?.error);
-        const responseResult = await handleSendResponse(context, result.data as ApiSendResponse, environmentWebView, false, -1)
-        callback({
-          ...responseResult,
-          streamResponse: [
-            {
-              action: 'complete',
-              data: apiData.url,
-              error: null,
-              msg: 'success',
-              id: snowflakeId(),
-            },
-          ],
-        })
-      }
-
-    });
+        if (result.action === "sse") {
+          callback({
+            streamResponse: [
+              { ...result, action: "message", id: snowflakeId() },
+            ],
+          });
+        }
+        if (result.action === "request") {
+          setRequestResult(
+            statusWorkspace,
+            apiData.target_id,
+            result.data?.data?.response,
+            result.data?.error,
+          );
+          const responseResult = await handleSendResponse(
+            context,
+            result.data as ApiSendResponse,
+            environmentWebView,
+            false,
+            -1,
+          );
+          callback({
+            ...responseResult,
+            streamResponse: [
+              {
+                action: "complete",
+                data: apiData.url,
+                error: null,
+                msg: "success",
+                id: snowflakeId(),
+              },
+            ],
+          });
+        }
+      },
+    );
   } catch (error: any) {
     setRequestResult(statusWorkspace, apiData.target_id, undefined, error);
   }
-}
+};
 
 /**
  * targetIds include sample_id and target_id
  *
  */
-export const getRuntimeCollections = (eventData: EventData,context: vscode.ExtensionContext,systemConfig:SysConfig) => {
+export const getRuntimeCollections = (
+  eventData: EventData,
+  context: vscode.ExtensionContext,
+  systemConfig: SysConfig,
+) => {
   const apiList = getApiList(context);
   const tempObj: { [key: string]: any } = {};
   for (const item of apiList) {
     tempObj[item.target_id] = item;
   }
-  let collections:any[] = [];
-  let collectionIds:string[] = [];
+  let collections: any[] = [];
+  let collectionIds: string[] = [];
 
   const eventList = eventData?.event_list || [];
 
   const findParentTargetIds = (data: ApiDetailsData) => {
     if (!includes(collectionIds, data.target_id)) {
       collectionIds.push(data.target_id);
-      collections.push(omit(data,['response']));
+      collections.push(omit(data, ["response"]));
       const parent_id = tempObj[data.target_id]?.parent_id;
 
       // Ensure parent_id exists and is not '0'
-      if (parent_id && parent_id !== '0' && tempObj?.[parent_id]) {
+      if (parent_id && parent_id !== "0" && tempObj?.[parent_id]) {
         findParentTargetIds(tempObj[parent_id]);
       }
     }
@@ -269,102 +373,149 @@ export const getRuntimeCollections = (eventData: EventData,context: vscode.Exten
 
   forEach(eventList, (item) => {
     // Request data preprocessing
-    item.data.request = prepareRequest(item.data.request, systemConfig?.systemRequestHeader || DEFAULT_REQUEST_SYSTEM_HEADERS);
-    
+    item.data.request = prepareRequest(
+      item.data.request,
+      systemConfig?.systemRequestHeader || DEFAULT_REQUEST_SYSTEM_HEADERS,
+    );
+
     findParentTargetIds(item.data);
   });
 
   return collections;
 };
 
-export const sendAutoTest = async (eventData: EventData, context: vscode.ExtensionContext, environmentWebView: vscode.WebviewPanel | null, callback: any) => {
+export const sendAutoTest = async (
+  eventData: EventData,
+  context: vscode.ExtensionContext,
+  environmentWebView: vscode.WebviewPanel | null,
+  callback: any,
+) => {
   const projectConfig = getCurrentProjectConfig(context) as ProjectConfigType;
-  const systemConfig = context.globalState.get('systemConfig') as SysConfig || {};
+  const systemConfig =
+    (context.globalState.get("systemConfig") as SysConfig) || {};
 
- // Parent directory related parameters
-  const originCollection = getRuntimeCollections(eventData,context,systemConfig);
+  // Parent directory related parameters
+  const originCollection = getRuntimeCollections(
+    eventData,
+    context,
+    systemConfig,
+  );
 
   // Get pre-request parameters
   const runnerTestingParams = await generateTestingRunnerParams({
     testingData: eventData,
     projectConfig,
     systemConfig,
-    originCollection
+    originCollection,
   });
-  await runWorker('runnerEvent', [runnerTestingParams.option, runnerTestingParams.test_events], async (result: any) => {
-    if (!isPlainObject(result)) {
-      result = JSON.parse(result);
-    }
-
-    if (result.action === 'request') {
-      callback(result);
-    }
-    if (result.action === 'complete') {
-      // Not in sandbox mode, if there are global variables or environment variables, update
-      if (eventData.settings.enable_sandbox !== STATUS_CODE.ENABLE) {
-        if (!isNil(result.data.variables)) {
-          // Handle environment variables and global variables
-          await handleResponseVariables(result.data.variables, context, environmentWebView, eventData?.settings?.env_id);
-        }
+  await runWorker(
+    "runnerEvent",
+    [runnerTestingParams.option, runnerTestingParams.test_events],
+    async (result: any) => {
+      if (!isPlainObject(result)) {
+        result = JSON.parse(result);
       }
-      callback(result);
-    }
-  });
 
-}
+      if (result.action === "request") {
+        callback(result);
+      }
+      if (result.action === "complete") {
+        // Not in sandbox mode, if there are global variables or environment variables, update
+        if (eventData.settings.enable_sandbox !== STATUS_CODE.ENABLE) {
+          if (!isNil(result.data.variables)) {
+            // Handle environment variables and global variables
+            await handleResponseVariables(
+              result.data.variables,
+              context,
+              environmentWebView,
+              eventData?.settings?.env_id,
+            );
+          }
+        }
+        callback(result);
+      }
+    },
+  );
+};
 
-export const getCodeHarRequest = async (apiData: ApiDetailsData, context: vscode.ExtensionContext, option?: { server_id: string }) => {
+export const getCodeHarRequest = async (
+  apiData: ApiDetailsData,
+  context: vscode.ExtensionContext,
+  option?: { server_id: string },
+) => {
   try {
     const projectConfig = getCurrentProjectConfig(context) as ProjectConfigType;
-    const systemConfig = context.globalState.get('systemConfig') as SysConfig || {};
-    const { params } = await getSendData(apiData, projectConfig, systemConfig, context, option);
-    const result = await runWorker('httpHar', [params.option, params.test_events]) as string;
+    const systemConfig =
+      (context.globalState.get("systemConfig") as SysConfig) || {};
+    const { params } = await getSendData(
+      apiData,
+      projectConfig,
+      systemConfig,
+      context,
+      option,
+    );
+    const result = (await runWorker("httpHar", [
+      params.option,
+      params.test_events,
+    ])) as string;
     return result;
-  } catch (error: any) {
-  }
-}
+  } catch (error: any) {}
+};
 
-export const updateOpenData = (openedPanels: { [key: string]: vscode.WebviewPanel }, apiData: ApiDetailsData) => {
+export const updateOpenData = (
+  openedPanels: { [key: string]: vscode.WebviewPanel },
+  apiData: ApiDetailsData,
+) => {
   const panel = openedPanels?.[apiData?.target_id];
-  if (['api','folder'].includes(apiData?.target_type) && panel) {
+  if (["api", "folder"].includes(apiData?.target_type) && panel) {
     // Update title
     panel.title = showTabName(apiData?.name);
     // Update content
-    panel.webview.postMessage({ action: 'setApiData', data: apiData });
+    panel.webview.postMessage({ action: "setApiData", data: apiData });
   }
 };
 
-export const updateOpenProjectConfig = (openedPanels: { [key: string]: vscode.WebviewPanel }, projectConfig: ProjectConfigType) => {
+export const updateOpenProjectConfig = (
+  openedPanels: { [key: string]: vscode.WebviewPanel },
+  projectConfig: ProjectConfigType,
+) => {
   forEach(openedPanels, (openedPanel) => {
-    openedPanel.webview.postMessage({ action: 'setProjectConfig', data: projectConfig });
+    openedPanel.webview.postMessage({
+      action: "setProjectConfig",
+      data: projectConfig,
+    });
   });
 };
 
-export const varReplace = (_val: string, context: vscode.ExtensionContext, option?: any) => {
+export const varReplace = (
+  _val: string,
+  context: vscode.ExtensionContext,
+  option?: any,
+) => {
   const projectConfig = getCurrentProjectConfig(context) as ProjectConfigType;
   const globalVars = projectConfig.globalVars;
   const envList = projectConfig.envList;
   const envDetailKeys = projectConfig.envDetailKeys;
 
-
   const { mock } = option || { mock: true };
   const currentEnv: EnvListItem =
-    find(envList, (item) => item.env_id === envDetailKeys) || ({} as EnvListItem);
-  if (typeof _val !== 'string') {
+    find(envList, (item) => item.env_id === envDetailKeys) ||
+    ({} as EnvListItem);
+  if (typeof _val !== "string") {
     return _val;
   }
 
   // mock
   if (_val === null) {
-    return '';
+    return "";
   }
 
-  if (typeof _val === 'string' && mock) {
+  if (typeof _val === "string" && mock) {
     const _matches = _val.match(/{{\$([a-zA-Z0-9_]+).*?}}/gi);
     // Replace mock syntax in variables.
     if (_matches instanceof Array) {
       for (const _match of _matches) {
-        let mock_rule = _match.replace(/{{\$([a-zA-Z0-9_]+).*?}}/gi, '@$1');
+        let mock_rule = _match.replace(/{{\$([a-zA-Z0-9_]+).*?}}/gi, "@$1");
 
         // for 5.3.2
         try {
@@ -377,23 +528,22 @@ export const varReplace = (_val: string, context: vscode.ExtensionContext, optio
     }
   }
 
-  if (_val.toString().indexOf('{{') === -1) {
+  if (_val.toString().indexOf("{{") === -1) {
     return _val;
   }
 
   if (currentEnv && !isEmpty(currentEnv)) {
     for (const _x in currentEnv.env_var_list) {
-      if (_x !== '') {
+      if (_x !== "") {
         let _reg: any = false;
 
         try {
-          _reg = new RegExp(`[{][{]${_x}[}][}]`, 'g');
-        } catch (e) {
-        }
+          _reg = new RegExp(`[{][{]${_x}[}][}]`, "g");
+        } catch (e) {}
         if (
           _reg &&
-          typeof currentEnv.env_var_list[_x].current_value !== 'undefined' &&
-          typeof _val === 'string'
+          typeof currentEnv.env_var_list[_x].current_value !== "undefined" &&
+          typeof _val === "string"
         ) {
           _val = _val.replace(_reg, currentEnv.env_var_list[_x].current_value);
         }
@@ -404,15 +554,18 @@ export const varReplace = (_val: string, context: vscode.ExtensionContext, optio
   // Check global variables
   if (globalVars && !isEmpty(globalVars)) {
     for (const _x in globalVars) {
-      if (_x !== '') {
+      if (_x !== "") {
         let _reg: any = false;
 
         try {
-          _reg = new RegExp(`[{][{]${_x}[}][}]`, 'g');
-        } catch (e) {
-        }
+          _reg = new RegExp(`[{][{]${_x}[}][}]`, "g");
+        } catch (e) {}
 
-        if (_reg && typeof globalVars[_x] !== 'undefined' && typeof _val === 'string') {
+        if (
+          _reg &&
+          typeof globalVars[_x] !== "undefined" &&
+          typeof _val === "string"
+        ) {
           _val = _val.replace(_reg, globalVars[_x]);
         }
       }
@@ -422,7 +575,10 @@ export const varReplace = (_val: string, context: vscode.ExtensionContext, optio
   return _val;
 };
 
-export const copyAsCurl = async (apiData: ApiDetailsData, context: vscode.ExtensionContext) => {
+export const copyAsCurl = async (
+  apiData: ApiDetailsData,
+  context: vscode.ExtensionContext,
+) => {
   try {
     const codeHar: any = await getCodeHarRequest(apiData, context);
     if (isString(codeHar)) {
@@ -430,7 +586,7 @@ export const copyAsCurl = async (apiData: ApiDetailsData, context: vscode.Extens
       return;
     }
     const request = cloneDeep(codeHar)?.log?.entries?.[0]?.request;
-    request.url = request?.url?.split('#')[0];
+    request.url = request?.url?.split("#")[0];
     request.headers = map(request?.headers, (it) => {
       if (!isString(it.value)) {
         return { ...it, value: String(it.value) };
@@ -438,61 +594,64 @@ export const copyAsCurl = async (apiData: ApiDetailsData, context: vscode.Extens
       return it;
     });
     const har2languages = new Har2languages();
-    const languagesRes: any = har2languages.convert(request, 'shell', 'curl');
+    const languagesRes: any = har2languages.convert(request, "shell", "curl");
 
-    if (languagesRes?.status === 'error') {
+    if (languagesRes?.status === "error") {
       vscode.window.showInformationMessage(`${languagesRes?.message}`);
       return;
     }
     try {
       languagesRes.data = decodeURIComponent(languagesRes?.data);
       languagesRes.data = varReplace(languagesRes.data, context);
-      copyTextToClipboard(languagesRes.data || '');
-    } catch (error) { }
-  } catch (error) { }
+      copyTextToClipboard(languagesRes.data || "");
+    } catch (error) {}
+  } catch (error) {}
 };
 
-export const fillInOpenApi = async (apiData: ApiDetailsData, context?: vscode.ExtensionContext) => {
+export const fillInOpenApi = async (
+  apiData: ApiDetailsData,
+  context?: vscode.ExtensionContext,
+) => {
   if (!isPlainObject(apiData?.open_api)) {
     apiData.open_api = {
-      [apiData?.url || '/']: {
+      [apiData?.url || "/"]: {
         [apiData.method.toLocaleLowerCase()]: {
-          "summary": apiData?.name || "",
-          "description": "",
-          "tags": [],
-          "parameters": [],
-          "requestBody": {
-            "content": {}
+          summary: apiData?.name || "",
+          description: "",
+          tags: [],
+          parameters: [],
+          requestBody: {
+            content: {},
           },
-          "responses": {
+          responses: {
             "200": {
-              "description": "Success",
-              "content": {
+              description: "Success",
+              content: {
                 "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {}
+                  schema: {
+                    type: "object",
+                    properties: {},
                   },
-                  "example": ""
-                }
-              }
+                  example: "",
+                },
+              },
             },
             "404": {
-              "description": "Failure",
-              "content": {
+              description: "Failure",
+              content: {
                 "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {}
+                  schema: {
+                    type: "object",
+                    properties: {},
                   },
-                  "example": ""
-                }
-              }
-            }
-          }
-        }
-      }
+                  example: "",
+                },
+              },
+            },
+          },
+        },
+      },
     };
   }
   return apiData;
-}
+};

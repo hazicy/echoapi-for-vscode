@@ -1,4 +1,4 @@
-import { parse } from 'graphql';
+import { parse } from "graphql";
 
 export function graphql2json(queryString) {
   try {
@@ -9,7 +9,7 @@ export function graphql2json(queryString) {
     if (error instanceof Error) {
       throw error;
     } else {
-      throw new Error('Unknown error parsing GraphQL query');
+      throw new Error("Unknown error parsing GraphQL query");
     }
   }
 }
@@ -64,21 +64,21 @@ function processSelectionSet(selectionSet) {
 
 function processValue(value) {
   switch (value.kind) {
-    case 'IntValue':
-    case 'FloatValue':
+    case "IntValue":
+    case "FloatValue":
       return Number(value.value);
-    case 'StringValue':
-    case 'BooleanValue':
-    case 'EnumValue':
+    case "StringValue":
+    case "BooleanValue":
+    case "EnumValue":
       return value.value;
-    case 'ListValue':
+    case "ListValue":
       return value.values.map(processValue);
-    case 'ObjectValue':
+    case "ObjectValue":
       return value.fields.reduce((obj, field) => {
         obj[field.name.value] = processValue(field.value);
         return obj;
       }, {});
-    case 'Variable':
+    case "Variable":
       return `$${value.name.value}`;
     default:
       return null;

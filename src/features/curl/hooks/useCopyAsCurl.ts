@@ -2,7 +2,7 @@ import { cloneDeep, isString, map } from "lodash";
 
 import useVarReplaces from "../../variables/hooks/useVarReplaces";
 import Har2languages from "har2languages";
-import { message } from '@/shared/ui/base';
+import { message } from "@/shared/ui/base";
 import { copyStringToClipboard } from "@/shared/utils/common";
 
 const har2languages = new Har2languages();

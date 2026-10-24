@@ -1,10 +1,13 @@
-import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from '../constants';
-import * as vscode from 'vscode';
-import path from 'path';
-import { getApiList, getApiListName, getHtmlForWebview } from '../utils';
-import { handelPushMessage } from '../messageHandler/push';
+import { globalConfig, LOCAL_PORT, PANEL_OPTIONS } from "../constants";
+import * as vscode from "vscode";
+import path from "path";
+import { getApiList, getApiListName, getHtmlForWebview } from "../utils";
+import { handelPushMessage } from "../messageHandler/push";
 
-export const createPushPanel = (data:any, context: vscode.ExtensionContext) => {
+export const createPushPanel = (
+  data: any,
+  context: vscode.ExtensionContext,
+) => {
   let { pushWebView } = globalConfig;
 
   const panelOptions = PANEL_OPTIONS.PUSH;
@@ -29,15 +32,21 @@ export const createPushPanel = (data:any, context: vscode.ExtensionContext) => {
   );
   // Get icon path
   const iconPath = vscode.Uri.file(
-    path.join(context.extensionPath, 'dist', 'images', panelOptions.iconName)
+    path.join(context.extensionPath, "dist", "images", panelOptions.iconName),
   );
 
   panel.iconPath = iconPath;
-  let scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', `${panelOptions.viewType}.js`)));
-  if(process.env.ECHOAPI_DEV_SERVER === "true"){
+  let scriptUri = panel.webview.asWebviewUri(
+    vscode.Uri.file(
+      path.join(context.extensionPath, "dist", `${panelOptions.viewType}.js`),
+    ),
+  );
+  if (process.env.ECHOAPI_DEV_SERVER === "true") {
     scriptUri = `http://localhost:${LOCAL_PORT}/src/app/webviews/${panelOptions.viewType[0].toUpperCase()}${panelOptions.viewType.slice(1)}.tsx`;
   }
-  const resourceBaseUrl = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist')));
+  const resourceBaseUrl = panel.webview.asWebviewUri(
+    vscode.Uri.file(path.join(context.extensionPath, "dist")),
+  );
 
   // And set its HTML content
   panel.webview.html = getHtmlForWebview(scriptUri, resourceBaseUrl, null);
@@ -45,28 +54,31 @@ export const createPushPanel = (data:any, context: vscode.ExtensionContext) => {
   const source = { panel, apiListName: getApiListName(context) };
 
   // Receive messages from Webview
-  panel.webview.onDidReceiveMessage(async (message: { action: string, data: any }) => {
-    await handelPushMessage(message, context, source);
-  });
-
+  panel.webview.onDidReceiveMessage(
+    async (message: { action: string; data: any }) => {
+      await handelPushMessage(message, context, source);
+    },
+  );
 
   // Listen for Webview view visibility changes
   panel.onDidChangeViewState(() => {
     if (panel.visible) {
-       // Get latest API list information
-       const local_api_list = getApiList(context);
-       // Get current user information
-       let user_config: any = context.globalState.get('userConfig') || {};
-       // Get version record of local project APIs
-       let project_apis_version: any = context.globalState.get('projectApisVersion') || {};
- 
-       panel?.webview.postMessage({
-         action: 'setPushPanelData', data: {
-           local_api_list,
-           user_config,
-           project_apis_version
-         }
-       });
+      // Get latest API list information
+      const local_api_list = getApiList(context);
+      // Get current user information
+      let user_config: any = context.globalState.get("userConfig") || {};
+      // Get version record of local project APIs
+      let project_apis_version: any =
+        context.globalState.get("projectApisVersion") || {};
+
+      panel?.webview.postMessage({
+        action: "setPushPanelData",
+        data: {
+          local_api_list,
+          user_config,
+          project_apis_version,
+        },
+      });
     }
   });
 
@@ -79,7 +91,7 @@ export const createPushPanel = (data:any, context: vscode.ExtensionContext) => {
       // When the panel is closed, cancel any future updates to the webview content
     },
     null,
-    context.subscriptions
+    context.subscriptions,
   );
   globalConfig.pushWebView = panel;
-}
+};

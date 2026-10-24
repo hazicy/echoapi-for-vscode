@@ -1,5 +1,5 @@
-import { TestingData } from '..';
-import { Settings } from '../common';
+import { TestingData } from "..";
+import { Settings } from "../common";
 
 export type TestingListRes = {
   list: TestingData[];
@@ -45,12 +45,12 @@ export type TrashListRes = {
 
 export type TestingReportList = {
   report_id: string;
-  complete:any;
-  requestList:any[];
+  complete: any;
+  requestList: any[];
   eventAllCount: number;
-  report_name:string;
-  testingConfig:Settings;
-}
+  report_name: string;
+  testingConfig: Settings;
+};
 
 /**
  * Test report list

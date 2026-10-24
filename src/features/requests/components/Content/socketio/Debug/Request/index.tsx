@@ -1,24 +1,27 @@
-import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-import { useDebounceFn, useSafeState } from 'ahooks';
-import { concat, forEach, isEqual, keys, reverse } from 'lodash';
+import { useDebounceFn, useSafeState } from "ahooks";
+import { concat, forEach, isEqual, keys, reverse } from "lodash";
 
-import LineTabs from '@/shared/components/LineTabs';
-import context from '@/shared/components/RawEditor/visualizationContext';
-import RequestTable from '@/shared/components/RequestTable';
-import { useTableColumnSwitchConfig } from '@/shared/hooks';
+import LineTabs from "@/shared/components/LineTabs";
+import context from "@/shared/components/RawEditor/visualizationContext";
+import RequestTable from "@/shared/components/RequestTable";
+import { useTableColumnSwitchConfig } from "@/shared/hooks";
 
-import { useApis, useProjectConfig } from '@/app/store';
-import useWebsocket2Store from '@/features/requests/store/useApis/websocket2';
-import { ApisBaseDataItem } from '@/features/requests/types/base';
-import { SocketIoDetailsData } from '@/features/requests/types/socketio';
-import { genUrlByQuery } from '@/features/requests/utils/apis';
-import { calcTabLineBodyHeaderNum, getAllParentDirectories } from '@/shared/utils/common';
+import { useApis, useProjectConfig } from "@/app/store";
+import useWebsocket2Store from "@/features/requests/store/useApis/websocket2";
+import { ApisBaseDataItem } from "@/features/requests/types/base";
+import { SocketIoDetailsData } from "@/features/requests/types/socketio";
+import { genUrlByQuery } from "@/features/requests/utils/apis";
+import {
+  calcTabLineBodyHeaderNum,
+  getAllParentDirectories,
+} from "@/shared/utils/common";
 
-import useWebsocket2 from '../../useWebsocket2';
-import Message from './Message';
-import Setting from './Setting';
+import useWebsocket2 from "../../useWebsocket2";
+import Message from "./Message";
+import Setting from "./Setting";
 
 interface Props {
   value: any;
@@ -32,7 +35,9 @@ const Request: React.FC<Props> = (props) => {
   const apisActiveKey = useApis((state) => state.apisActiveKey);
   const apiDetailsData = useApis((state) => state.apiDetailsData);
   const globalParams = useProjectConfig((state) => state.globalParams);
-  const websocket2ConnectionPool = useWebsocket2Store((state) => state.websocket2ConnectionPool);
+  const websocket2ConnectionPool = useWebsocket2Store(
+    (state) => state.websocket2ConnectionPool,
+  );
   const [allParentDirectories, setAllParentDirectories] = useSafeState<{
     [k: string]: ApisBaseDataItem[];
   }>({});
@@ -42,42 +47,43 @@ const Request: React.FC<Props> = (props) => {
   const {
     columnSwitchConfig: headerColumnSwitchConfig,
     onColumnSwitchConfig: onHeaderColumnSwitchConfig,
-  } = useTableColumnSwitchConfig('request_header_column_switch');
+  } = useTableColumnSwitchConfig("request_header_column_switch");
 
   const {
     columnSwitchConfig: queryColumnSwitchConfig,
     onColumnSwitchConfig: onQueryColumnSwitchConfig,
-  } = useTableColumnSwitchConfig('request_query_column_switch');
+  } = useTableColumnSwitchConfig("request_query_column_switch");
 
   const {
     columnSwitchConfig: cookieColumnSwitchConfig,
     onColumnSwitchConfig: onCookieColumnSwitchConfig,
-  } = useTableColumnSwitchConfig('request_cookie_column_switch');
+  } = useTableColumnSwitchConfig("request_cookie_column_switch");
 
   const { run: sendSocketIoEventHandle } = useDebounceFn(
     (data: ApisBaseDataItem[]) => {
       window?.vscode.postMessage({
-        action: 'socketio_update_event',
+        action: "socketio_update_event",
         data: {
-            target_id: apisActiveKey,
-            parameter: data,
-          }
+          target_id: apisActiveKey,
+          parameter: data,
+        },
       });
-      
     },
     {
       wait: 500,
-    }
+    },
   );
   const handleRequest = (data: ApisBaseDataItem[], type: string) => {
-    if (isEqual(type, 'event')) {
-      if (isEqual(websocket2ConnectionPool?.[apisActiveKey]?.status, 'connect')) {
+    if (isEqual(type, "event")) {
+      if (
+        isEqual(websocket2ConnectionPool?.[apisActiveKey]?.status, "connect")
+      ) {
         sendSocketIoEventHandle(data);
       }
     }
     onChange({
       ...value,
-      url: isEqual(type, 'query') ? genUrlByQuery(value.url, data) : value.url,
+      url: isEqual(type, "query") ? genUrlByQuery(value.url, data) : value.url,
       request: {
         ...value.request,
         [type]: {
@@ -90,7 +96,10 @@ const Request: React.FC<Props> = (props) => {
     onChange({ ...value, config: { ...data } });
   };
   useEffect(() => {
-    const allParentFolder = getAllParentDirectories(apiDetailsData, value?.target_id || '');
+    const allParentFolder = getAllParentDirectories(
+      apiDetailsData,
+      value?.target_id || "",
+    );
     const reverseFolder = reverse(allParentFolder);
 
     const folderParams: { [k: string]: ApisBaseDataItem[] } = {
@@ -111,7 +120,10 @@ const Request: React.FC<Props> = (props) => {
           folderParams[key] = concat(
             [],
             folderParams[key],
-            request[key]?.parameter?.map((e: any) => ({ ...e, target_id: item?.target_id })) // Associate target_id for global parameter navigation
+            request[key]?.parameter?.map((e: any) => ({
+              ...e,
+              target_id: item?.target_id,
+            })), // Associate target_id for global parameter navigation
           );
         }
       });
@@ -121,8 +133,8 @@ const Request: React.FC<Props> = (props) => {
   }, [value?.target_id, apiDetailsData]);
   const items = [
     {
-      key: 'send',
-      label: t('ws.request.message'),
+      key: "send",
+      label: t("ws.request.message"),
       children: (
         <Provider
           value={{
@@ -134,13 +146,13 @@ const Request: React.FC<Props> = (props) => {
       ),
     },
     {
-      key: 'event',
-      label: t('ws.request.events'),
+      key: "event",
+      label: t("ws.request.events"),
       children: (
         <RequestTable
-          tabType={'socketio'}
+          tabType={"socketio"}
           dataSource={request?.event?.parameter}
-          onChange={(data: ApisBaseDataItem[]) => handleRequest(data, 'event')}
+          onChange={(data: ApisBaseDataItem[]) => handleRequest(data, "event")}
         />
       ),
       countParams: {
@@ -149,8 +161,8 @@ const Request: React.FC<Props> = (props) => {
       },
     },
     {
-      key: 'header',
-      label: t('ws.request.headers'),
+      key: "header",
+      label: t("ws.request.headers"),
       children: (
         <RequestTable
           target_type="socketio"
@@ -159,7 +171,7 @@ const Request: React.FC<Props> = (props) => {
           folderParams={allParentDirectories?.header}
           readOnly={readOnly}
           dataSource={request?.header?.parameter}
-          onChange={(data) => handleRequest(data, 'header')}
+          onChange={(data) => handleRequest(data, "header")}
           columnSwitchConfig={headerColumnSwitchConfig}
           onColumnSwitchConfig={onHeaderColumnSwitchConfig}
         />
@@ -170,8 +182,8 @@ const Request: React.FC<Props> = (props) => {
       },
     },
     {
-      key: 'params',
-      label: t('ws.request.params'),
+      key: "params",
+      label: t("ws.request.params"),
       children: (
         <RequestTable
           tabType="query"
@@ -179,7 +191,7 @@ const Request: React.FC<Props> = (props) => {
           folderParams={allParentDirectories?.query}
           readOnly={readOnly}
           dataSource={request?.query?.parameter}
-          onChange={(data: ApisBaseDataItem[]) => handleRequest(data, 'query')}
+          onChange={(data: ApisBaseDataItem[]) => handleRequest(data, "query")}
           columnSwitchConfig={queryColumnSwitchConfig}
           onColumnSwitchConfig={onQueryColumnSwitchConfig}
         />
@@ -190,8 +202,8 @@ const Request: React.FC<Props> = (props) => {
       },
     },
     {
-      key: 'cookie',
-      label: 'Cookie',
+      key: "cookie",
+      label: "Cookie",
       children: (
         <RequestTable
           tabType="cookie"
@@ -199,7 +211,7 @@ const Request: React.FC<Props> = (props) => {
           folderParams={allParentDirectories?.cookie}
           readOnly={readOnly}
           dataSource={request?.cookie?.parameter}
-          onChange={(data: ApisBaseDataItem[]) => handleRequest(data, 'cookie')}
+          onChange={(data: ApisBaseDataItem[]) => handleRequest(data, "cookie")}
           columnSwitchConfig={cookieColumnSwitchConfig}
           onColumnSwitchConfig={onCookieColumnSwitchConfig}
         />
@@ -210,10 +222,14 @@ const Request: React.FC<Props> = (props) => {
       },
     },
     {
-      key: 'setting',
-      label: t('ws.request.settings'),
+      key: "setting",
+      label: t("ws.request.settings"),
       children: (
-        <Setting readOnly={readOnly} onChange={handleRequestConfig} value={value?.config} />
+        <Setting
+          readOnly={readOnly}
+          onChange={handleRequestConfig}
+          value={value?.config}
+        />
       ),
     },
   ];

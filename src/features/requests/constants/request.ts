@@ -1,20 +1,23 @@
-import { ApisBaseDataItem } from '@/features/requests/types/base';
-import { DefaultRequestSystemHeaders, RequestBodyContentType } from '@/features/requests/types/request';
-import { CustomNumberBooleanType } from '@/shared/types/common';
+import { ApisBaseDataItem } from "@/features/requests/types/base";
+import {
+  DefaultRequestSystemHeaders,
+  RequestBodyContentType,
+} from "@/features/requests/types/request";
+import { CustomNumberBooleanType } from "@/shared/types/common";
 
-import { DEFAULT_AUTH } from './auth';
-import i18next from 'i18next';
-import { snowflakeId } from 'apipost-tools';
+import { DEFAULT_AUTH } from "./auth";
+import i18next from "i18next";
+import { snowflakeId } from "apipost-tools";
 
 // api default request
 export const DEFAULT_API_REQUEST = {
   auth: DEFAULT_AUTH,
   body: {
-    mode: 'none' as RequestBodyContentType,
+    mode: "none" as RequestBodyContentType,
     parameter: [],
-    raw: '',
+    raw: "",
     raw_parameter: [],
-    raw_schema: { type: 'object' },
+    raw_schema: { type: "object" },
     binary: null,
   },
   pre_tasks: [],
@@ -66,28 +69,28 @@ export const DEFAULT_WEBSOCKET2_REQUEST = {
 };
 
 export const DEFAULT_WEBSOCKET2_MESSAGE = {
-  name: i18next.t('supplement.msg') || 'Message',
+  name: i18next.t("supplement.msg") || "Message",
   param_id: snowflakeId(),
   request: {
-    mode: 'text',
-    raw: '',
+    mode: "text",
+    raw: "",
     raw_parameter: [],
-    raw_schema: { type: 'object' },
+    raw_schema: { type: "object" },
   },
   response: {
-    mode: 'text',
-    raw: '',
+    mode: "text",
+    raw: "",
     raw_parameter: [],
-    raw_schema: { type: 'object' },
+    raw_schema: { type: "object" },
   },
 };
 
 export const PARAMETER_ITEM: ApisBaseDataItem = {
-  description: '',
-  field_type: 'String' as ApisBaseDataItem['field_type'],
+  description: "",
+  field_type: "String" as ApisBaseDataItem["field_type"],
   is_checked: 1 as CustomNumberBooleanType,
-  key: '',
-  value: '',
+  key: "",
+  value: "",
   not_null: 1 as CustomNumberBooleanType,
   static: true,
   // file_base64: '',
@@ -98,28 +101,28 @@ export const PARAMETER_ITEM: ApisBaseDataItem = {
 // apipost default request headers
 export const DEFAULT_REQUEST_SYSTEM_HEADERS: DefaultRequestSystemHeaders[] = [
   {
-    key: 'Accept',
-    value: '*/*',
+    key: "Accept",
+    value: "*/*",
     is_checked: 1,
-    field_type: 'String',
+    field_type: "String",
   },
   {
-    key: 'Accept-Encoding',
-    value: 'gzip, deflate, br',
+    key: "Accept-Encoding",
+    value: "gzip, deflate, br",
     is_checked: 1,
-    field_type: 'String',
+    field_type: "String",
   },
   {
-    key: 'User-Agent',
-    value: 'EchoapiRuntime/1.1.0',
+    key: "User-Agent",
+    value: "EchoapiRuntime/1.1.0",
     is_checked: 1,
-    field_type: 'String',
+    field_type: "String",
   },
   {
-    key: 'Connection',
-    value: 'keep-alive',
+    key: "Connection",
+    value: "keep-alive",
     is_checked: 1,
-    field_type: 'String',
+    field_type: "String",
   },
 ];
 
@@ -138,57 +141,57 @@ export const DEFAULT_SOCKETIO_REQUEST = {
   },
 };
 
-
 // apipost default ws2 request headers
-export const DEFAULT_REQUEST_SYSTEM_HEADERS_WS2: DefaultRequestSystemHeaders[] = [
-  {
-    key: 'Host',
-    value: '<calculated at runtime>',
-    is_checked: 1,
-    field_type: 'String',
-  },
-  {
-    key: 'Connection',
-    value: 'Upgrade',
-    is_checked: 1,
-    field_type: 'String',
-  },
-  {
-    key: 'Upgrade',
-    value: 'websocket',
-    is_checked: 1,
-    field_type: 'String',
-  },
-  {
-    key: 'Sec-WebSocket-Key',
-    value: '<calculated at runtime>',
-    is_checked: 1,
-    field_type: 'String',
-  },
-  {
-    key: 'Sec-WebSocket-Version',
-    value: '13',
-    is_checked: 1,
-    field_type: 'String',
-  },
-  {
-    key: 'Sec-WebSocket-Extensions',
-    value: 'permessage-deflate; client_max_window_bits',
-    is_checked: 1,
-    field_type: 'String',
-  },
-];
+export const DEFAULT_REQUEST_SYSTEM_HEADERS_WS2: DefaultRequestSystemHeaders[] =
+  [
+    {
+      key: "Host",
+      value: "<calculated at runtime>",
+      is_checked: 1,
+      field_type: "String",
+    },
+    {
+      key: "Connection",
+      value: "Upgrade",
+      is_checked: 1,
+      field_type: "String",
+    },
+    {
+      key: "Upgrade",
+      value: "websocket",
+      is_checked: 1,
+      field_type: "String",
+    },
+    {
+      key: "Sec-WebSocket-Key",
+      value: "<calculated at runtime>",
+      is_checked: 1,
+      field_type: "String",
+    },
+    {
+      key: "Sec-WebSocket-Version",
+      value: "13",
+      is_checked: 1,
+      field_type: "String",
+    },
+    {
+      key: "Sec-WebSocket-Extensions",
+      value: "permessage-deflate; client_max_window_bits",
+      is_checked: 1,
+      field_type: "String",
+    },
+  ];
 
 export const DEFAULT_GRAPHQL_QUERY_ITEM = {
-  param_id: '',
-  name: i18next.t('graphql.cus_search') || 'New Query',
-  query: '',
-  variables: '',
+  param_id: "",
+  name: i18next.t("graphql.cus_search") || "New Query",
+  query: "",
+  variables: "",
   response: {
-    mode: 'json',
-    raw: '',
+    mode: "json",
+    raw: "",
     raw_parameter: [],
-    raw_schema: { type: 'object' },
+    raw_schema: { type: "object" },
   },
 };
 

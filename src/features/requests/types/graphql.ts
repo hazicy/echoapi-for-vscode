@@ -1,7 +1,10 @@
-import { AnyObject, CustomNumberBooleanType } from '../../../shared/types/common';
-import { ApisBaseData } from './base';
-import { GraphQLRequest } from './request';
-import { BaseResponse } from './response';
+import {
+  AnyObject,
+  CustomNumberBooleanType,
+} from "../../../shared/types/common";
+import { ApisBaseData } from "./base";
+import { GraphQLRequest } from "./request";
+import { BaseResponse } from "./response";
 
 export interface GraphQLDetailsData extends ApisBaseData {
   // Request method
@@ -44,7 +47,7 @@ export type ApiComponentType = {
 export type GraphQLChangeFuncType<T> = <K extends keyof T>(
   key: K,
   value: T[K],
-  search_id?: string
+  search_id?: string,
 ) => void;
 
 export type FilterDataType = {

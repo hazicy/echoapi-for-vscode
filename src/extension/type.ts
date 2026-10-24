@@ -1,27 +1,27 @@
-import { ApiDetailsData } from '@/features/requests/types/api';
-import { AnyObject, CustomNumberBooleanType } from '@/shared/types/common';
-import { ProjectConfigType } from '@/features/project/types';
-import { SysConfig } from '@/features/settings/types/settings';
+import { ApiDetailsData } from "@/features/requests/types/api";
+import { AnyObject, CustomNumberBooleanType } from "@/shared/types/common";
+import { ProjectConfigType } from "@/features/project/types";
+import { SysConfig } from "@/features/settings/types/settings";
 
 export type GenSendBaseOptionsType = (params: {
   envId?: string;
   targetId?: string;
-  scene: SendBaseOptions['scene'];
-  collection?: SendBaseOptions['collection'];
-  databaseConfigs?: SendBaseOptions['database_configs'];
-  projectConfig?:ProjectConfigType;
-  systemConfig?:SysConfig;
-  curServerId?:string;
-  type?:string;
+  scene: SendBaseOptions["scene"];
+  collection?: SendBaseOptions["collection"];
+  databaseConfigs?: SendBaseOptions["database_configs"];
+  projectConfig?: ProjectConfigType;
+  systemConfig?: SysConfig;
+  curServerId?: string;
+  type?: string;
 }) => Promise<SendBaseOptions>;
 
 export interface SendBaseOptions {
-  scene?: 'http_request' | 'auto_test';
+  scene?: "http_request" | "auto_test";
   env?: Env;
   globals?: Globals;
   project?: Project;
   cookies?: Cookies;
-  collection?: Omit<ApiDetailsData, 'response'>[];
+  collection?: Omit<ApiDetailsData, "response">[];
   system_configs?: SystemConfigs;
   database_configs?: DatabaseConfigs;
   [key: string]: any;
@@ -57,7 +57,7 @@ export interface EnvPreURL {
 export type Globals = AnyObject;
 
 export interface Project {
-  request: Partial<Omit<any, 'script'>>;
+  request: Partial<Omit<any, "script">>;
 }
 
 export interface SystemConfigs {

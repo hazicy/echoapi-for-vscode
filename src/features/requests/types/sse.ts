@@ -1,7 +1,10 @@
-import { AnyObject, CustomNumberBooleanType } from '../../../shared/types/common';
-import { ApiTypeMethod, ApisBaseData } from './base';
-import { ApiRequest } from './request';
-import { BaseResponse } from './response';
+import {
+  AnyObject,
+  CustomNumberBooleanType,
+} from "../../../shared/types/common";
+import { ApiTypeMethod, ApisBaseData } from "./base";
+import { ApiRequest } from "./request";
+import { BaseResponse } from "./response";
 
 export interface SSEDetailsData extends ApisBaseData {
   // Request method

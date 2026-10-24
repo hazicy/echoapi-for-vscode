@@ -1,6 +1,6 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense } from "react";
 
-const PdfDocument = lazy(() => import('./PdfDocument'));
+const PdfDocument = lazy(() => import("./PdfDocument"));
 
 export default function PdfView(props: { file: any }) {
   return (

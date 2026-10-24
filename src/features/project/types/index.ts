@@ -1,9 +1,9 @@
-import { Auth as AuthType } from '@/features/requests/types/auth';
-import { TaskBaseItem } from '@/features/requests/types/request';
-import { EnvList, ServerItem } from '../../environment/types';
-import { DomainInfoProps } from './cookie';
+import { Auth as AuthType } from "@/features/requests/types/auth";
+import { TaskBaseItem } from "@/features/requests/types/request";
+import { EnvList, ServerItem } from "../../environment/types";
+import { DomainInfoProps } from "./cookie";
 
-type MockFieldType = 'string' | 'number' | 'boolean' | 'integer';
+type MockFieldType = "string" | "number" | "boolean" | "integer";
 
 export type ProjectInfoReq = {
   project_id: string;
@@ -79,8 +79,8 @@ export type MockInfo = {
 
 export type MockItem = {
   mock_custom_rule_id?: string;
-  field_type: MockFieldType | '';
-  match_type: 'wildcard' | 'exact';
+  field_type: MockFieldType | "";
+  match_type: "wildcard" | "exact";
   match_rule: string;
   match_case: 1 | -1;
   mock_type: number;
@@ -105,7 +105,10 @@ export type AutoImportItem = {
   env_cover_modal: string;
 };
 
-export type AutoSyncImportItem = AutoImportItem & { project_id: string; auto_import_id: string };
+export type AutoSyncImportItem = AutoImportItem & {
+  project_id: string;
+  auto_import_id: string;
+};
 
 export type ConnectToDatabaseDBConfig = {
   host: string;
@@ -278,7 +281,6 @@ export type RequestGlobalParams = {
   post_tasks: TaskBaseItem[];
 };
 
-
 export type ProjectConfigType = {
   globalVars?: any;
   globalParams?: Partial<RequestGlobalParams>;
@@ -289,7 +291,7 @@ export type ProjectConfigType = {
   envDetailKeys?: string;
   tags?: string[];
   cookie?: DomainInfoProps;
-  serverList:ServerItem[];
+  serverList: ServerItem[];
 };
 
 export type FunctionItem = {

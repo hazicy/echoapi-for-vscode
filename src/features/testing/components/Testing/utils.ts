@@ -9,40 +9,49 @@ import { TestingReportList } from "@/features/testing/types/res";
  */
 export const getPercent = (percent: number, info: any) => {
   if (info.success + info.error === 0) {
-    return '0%';
+    return "0%";
   }
   return `${((percent / (info.success + info.error)) * 100).toFixed(2)}%`;
 };
- 
-export const saveReport= (complete:any)=>{
-  const { testingSendingData, eventList, testingName, testingConfig,testingReportList , updateTestingReportList } = useTesting.getState();
+
+export const saveReport = (complete: any) => {
+  const {
+    testingSendingData,
+    eventList,
+    testingName,
+    testingConfig,
+    testingReportList,
+    updateTestingReportList,
+  } = useTesting.getState();
 
   const reportDetail = {
-    report_id:snowflakeId(),
+    report_id: snowflakeId(),
     complete,
-    requestList:testingSendingData?.requestList || [],
-    eventAllCount: eventList.filter(i=>i.enabled === STATUS_CODE.ENABLE).length,
+    requestList: testingSendingData?.requestList || [],
+    eventAllCount: eventList.filter((i) => i.enabled === STATUS_CODE.ENABLE)
+      .length,
     report_name: testingName,
-    testingConfig
+    testingConfig,
   };
-  const newTestingReportList = produce(testingReportList,(draft)=>{
+  const newTestingReportList = produce(testingReportList, (draft) => {
     draft.push(reportDetail);
   });
   updateTestingReportList(newTestingReportList);
 
   // Save report list to vscode
-   window?.vscode.postMessage({
-    action: 'saveFolderTestData',
+  window?.vscode.postMessage({
+    action: "saveFolderTestData",
     data: {
-      reportList: newTestingReportList
-    }
+      reportList: newTestingReportList,
+    },
   });
 };
 
-export const setProjectReportList = (list:TestingReportList[])=>{
-  const { updateProjectTestingReportList, projectTestingReportList } = useTesting.getState();
-  
-  const newReportList = produce(projectTestingReportList,(draft)=>{
+export const setProjectReportList = (list: TestingReportList[]) => {
+  const { updateProjectTestingReportList, projectTestingReportList } =
+    useTesting.getState();
+
+  const newReportList = produce(projectTestingReportList, (draft) => {
     return list;
   });
   updateProjectTestingReportList(newReportList);

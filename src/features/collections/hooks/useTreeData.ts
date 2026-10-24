@@ -1,9 +1,18 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState } from "react";
 
-import { cloneDeep, filter, includes, isArray, isEqual, isUndefined, some, values } from 'lodash';
+import {
+  cloneDeep,
+  filter,
+  includes,
+  isArray,
+  isEqual,
+  isUndefined,
+  some,
+  values,
+} from "lodash";
 
-import { TreeDataItem } from '@/features/requests/types/api';
-import { TreeDataFilterParams } from '@/features/collections/types/tree';
+import { TreeDataItem } from "@/features/requests/types/api";
+import { TreeDataFilterParams } from "@/features/collections/types/tree";
 
 interface Props {
   dataSource: TreeDataItem[];
@@ -35,14 +44,16 @@ const useTreeData = (props: Props) => {
     setExpandedKeys,
   } = props;
   const {
-    key = 'target_id',
-    parentKey = 'parent_id',
-    children = 'children',
-    type = 'target_type',
-    parentNodeType = 'folder',
+    key = "target_id",
+    parentKey = "parent_id",
+    children = "children",
+    type = "target_type",
+    parentNodeType = "folder",
   } = customFieldNames || {};
 
-  const [originalExpandedKeys, setOriginalExpandedKeys] = useState<React.Key[]>([]);
+  const [originalExpandedKeys, setOriginalExpandedKeys] = useState<React.Key[]>(
+    [],
+  );
 
   // Filtered one-dimensional array
   const filteredTreeList: Array<TreeDataItem> = useMemo(() => {
@@ -54,53 +65,60 @@ const useTreeData = (props: Props) => {
     const sourceData = cloneDeep(isArray(dataSource) ? dataSource : []);
     const newList: { [key: string]: TreeDataItem } = {};
 
-    const sourceDataObj = sourceData.reduce((pre: { [key: string]: TreeDataItem }, cur: TreeDataItem,) => {
-      pre[cur.target_id] = cur;
-      return pre;
-    }, {});
+    const sourceDataObj = sourceData.reduce(
+      (pre: { [key: string]: TreeDataItem }, cur: TreeDataItem) => {
+        pre[cur.target_id] = cur;
+        return pre;
+      },
+      {},
+    );
     const folderIdList: string[] = [];
-    Object.entries(sourceDataObj).forEach(([target_id, data]: [string, TreeDataItem]) => {
-      const searchIncludes = some(searchIncludesField, (field) =>
-        includes(`${data?.[field]}`.toLowerCase(), value.toLowerCase())
-      );
+    Object.entries(sourceDataObj).forEach(
+      ([target_id, data]: [string, TreeDataItem]) => {
+        const searchIncludes = some(searchIncludesField, (field) =>
+          includes(`${data?.[field]}`.toLowerCase(), value.toLowerCase()),
+        );
 
-      if (searchIncludes) {
-        newList[target_id] = data;
+        if (searchIncludes) {
+          newList[target_id] = data;
 
-        // If it's a folder node (target_type === 'folder'), add all child nodes
-        if (data[type] === parentNodeType) {
-          folderIdList.push(target_id);
-          const collectChildren = (nodeId: string) => {
-            // Find all child nodes with the current node as parent
-            const children = Object.values(sourceData).filter((item) => item[parentKey] === nodeId);
+          // If it's a folder node (target_type === 'folder'), add all child nodes
+          if (data[type] === parentNodeType) {
+            folderIdList.push(target_id);
+            const collectChildren = (nodeId: string) => {
+              // Find all child nodes with the current node as parent
+              const children = Object.values(sourceData).filter(
+                (item) => item[parentKey] === nodeId,
+              );
 
-            children.forEach((child) => {
-              // Avoid duplicate additions
-              if (!newList[child[key]]) {
-                if (child[type] === parentNodeType) {
-                  folderIdList.push(child[key]);
+              children.forEach((child) => {
+                // Avoid duplicate additions
+                if (!newList[child[key]]) {
+                  if (child[type] === parentNodeType) {
+                    folderIdList.push(child[key]);
+                  }
+                  newList[child[key]] = child;
+                  // Recursively collect child nodes
+                  collectChildren(child[key]);
                 }
-                newList[child[key]] = child;
-                // Recursively collect child nodes
-                collectChildren(child[key]);
-              }
-            });
-          };
+              });
+            };
 
-          // Start collecting child nodes
-          collectChildren(target_id);
-        }
-
-        let parent = sourceData[data[parentKey]];
-        while (parent !== undefined && newList[parent[key]] !== parent) {
-          if (!folderIdList.includes(parent[key])) {
-            folderIdList.push(parent[key]);
+            // Start collecting child nodes
+            collectChildren(target_id);
           }
-          newList[parent[key]] = parent;
-          parent = sourceData[parent[parentKey]];
+
+          let parent = sourceData[data[parentKey]];
+          while (parent !== undefined && newList[parent[key]] !== parent) {
+            if (!folderIdList.includes(parent[key])) {
+              folderIdList.push(parent[key]);
+            }
+            newList[parent[key]] = parent;
+            parent = sourceData[parent[parentKey]];
+          }
         }
-      }
-    });
+      },
+    );
 
     if (expandedKeys && setExpandedKeys) {
       if (value) {
@@ -121,14 +139,16 @@ const useTreeData = (props: Props) => {
 
     const dataList: Array<TreeDataItem> = [];
 
-    Object.entries(newList).forEach(([target_id, data]: [string, TreeDataItem]) => {
-      if (includes(typeIncludes, data[type])) {
-        dataList.push({
-          ...data,
-          [key]: target_id,
-        });
-      }
-    });
+    Object.entries(newList).forEach(
+      ([target_id, data]: [string, TreeDataItem]) => {
+        if (includes(typeIncludes, data[type])) {
+          dataList.push({
+            ...data,
+            [key]: target_id,
+          });
+        }
+      },
+    );
 
     return dataList?.sort((a, b) => a?.sort - b?.sort);
   }, [dataSource, treeDataFilterParams]);
@@ -156,13 +176,15 @@ const useTreeData = (props: Props) => {
         }
 
         if (includes(typeIncludes, item?.[type])) {
-          parent[children].push(newTreeData[item[key] || '']);
+          parent[children].push(newTreeData[item[key] || ""]);
         }
       }
     }
 
     // Filter out root node data
-    const result = filter(values(newTreeData), (filterItem) => isEqual(filterItem[parentKey], '0'));
+    const result = filter(values(newTreeData), (filterItem) =>
+      isEqual(filterItem[parentKey], "0"),
+    );
 
     return result?.sort((a, b) => a?.sort - b?.sort);
   }, [filteredTreeList]);

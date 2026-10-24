@@ -1,4 +1,4 @@
-import _, { has, isEqual, map, union } from 'lodash';
+import _, { has, isEqual, map, union } from "lodash";
 
 function getQueryTypeInfo(typeObj) {
   // If no ofType, return current type info directly
@@ -10,10 +10,10 @@ function getQueryTypeInfo(typeObj) {
   }
 
   // If LIST type, recursively process and return array type
-  if (typeObj.kind === 'LIST') {
+  if (typeObj.kind === "LIST") {
     const innerType = getQueryTypeInfo(typeObj.ofType);
     return {
-      kind: 'array',
+      kind: "array",
       itemKind: innerType.itemKind,
     };
   }
@@ -23,13 +23,13 @@ function getQueryTypeInfo(typeObj) {
 }
 
 function transformQuery(queryData, ids) {
-  ids.push('Query');
+  ids.push("Query");
   const result = {
     Query: {
       name: queryData.name,
       kind: queryData.kind.toLowerCase(),
-      path: 'Query',
-      key: 'Query',
+      path: "Query",
+      key: "Query",
       children: [],
       checkable: false,
     },
@@ -54,15 +54,17 @@ function transformQuery(queryData, ids) {
 
 export const getChildTree = (field: any, raw: string) => {
   const objects = transformStructure({ objects: raw.objects });
-  if (isEqual(field?.key, 'Query')) {
+  if (isEqual(field?.key, "Query")) {
     return field?.children;
   }
   if (objects.objects[field.itemKind]) {
     const obj = _.cloneDeep(objects.objects[field.itemKind]);
-    const modifyPaths = objects.objectPaths.filter((path) => path.startsWith(`${field.itemKind}.`));
+    const modifyPaths = objects.objectPaths.filter((path) =>
+      path.startsWith(`${field.itemKind}.`),
+    );
     if (modifyPaths.length) {
       for (const modifyPath of modifyPaths) {
-        const newPath = modifyPath.replace(`${field.itemKind}.`, '');
+        const newPath = modifyPath.replace(`${field.itemKind}.`, "");
         updateObjectByPath(obj, newPath, {
           key: `${field.key}.${newPath}`,
           path: `${field.key}.${newPath}`,
@@ -73,7 +75,9 @@ export const getChildTree = (field: any, raw: string) => {
     return map(obj.children, (item) => {
       return {
         ...item,
-        ...(has(objects.objects, item?.itemKind) ? { children: [] } : { isLeaf: true }),
+        ...(has(objects.objects, item?.itemKind)
+          ? { children: [] }
+          : { isLeaf: true }),
       };
     });
   }
@@ -91,11 +95,11 @@ export const raw2tree = (raw) => {
       if (objects.objects[field.itemKind]) {
         const obj = _.cloneDeep(objects.objects[field.itemKind]);
         const modifyPaths = objects.objectPaths.filter((path) =>
-          path.startsWith(`${field.itemKind}.`)
+          path.startsWith(`${field.itemKind}.`),
         );
         if (modifyPaths.length) {
           for (const modifyPath of modifyPaths) {
-            const newPath = modifyPath.replace(`${field.itemKind}.`, '');
+            const newPath = modifyPath.replace(`${field.itemKind}.`, "");
             updateObjectByPath(obj, newPath, {
               key: `${field.key}.${newPath}`,
               path: `${field.key}.${newPath}`,
@@ -151,7 +155,7 @@ export const raw2tree = (raw) => {
 };
 
 function getTypeInfo(typeObj, objects, processedTypes = new Set()) {
-  const isNonNull = typeObj.kind === 'NON_NULL';
+  const isNonNull = typeObj.kind === "NON_NULL";
   // Basic type - return directly
   if (!typeObj.ofType) {
     return {
@@ -164,10 +168,10 @@ function getTypeInfo(typeObj, objects, processedTypes = new Set()) {
   }
 
   // Handle LIST type
-  if (typeObj.kind === 'LIST') {
+  if (typeObj.kind === "LIST") {
     const innerType = getTypeInfo(typeObj.ofType, objects, processedTypes);
     return {
-      kind: 'array',
+      kind: "array",
       itemKind: innerType.itemKind,
       non_null: isNonNull,
       description: typeObj.description || null,
@@ -209,7 +213,7 @@ function transformObject(objData, objects, processedTypes = new Set()) {
         const transformedObject = transformObject(
           { ...objects[typeInfo.itemKind], name: typeInfo.itemKind },
           objects,
-          new Set(processedTypes) // Create a new Set to avoid affecting other branches
+          new Set(processedTypes), // Create a new Set to avoid affecting other branches
         );
         if (transformedObject) {
           result.children = transformedObject.children;
@@ -223,13 +227,15 @@ function transformObject(objData, objects, processedTypes = new Set()) {
   return objResult;
 }
 
-function collectPaths(obj, parentPath = '', result = []) {
+function collectPaths(obj, parentPath = "", result = []) {
   // If current object is an array
   if (Array.isArray(obj)) {
     obj.forEach((item) => {
-      if (typeof item === 'object' && item !== null) {
+      if (typeof item === "object" && item !== null) {
         // Collect current path
-        const currentPath = parentPath ? `${parentPath}.${item.name}` : item.name;
+        const currentPath = parentPath
+          ? `${parentPath}.${item.name}`
+          : item.name;
         result.push(currentPath);
 
         // If has children, continue recursion
@@ -240,11 +246,11 @@ function collectPaths(obj, parentPath = '', result = []) {
     });
   }
   // If it's an object
-  else if (typeof obj === 'object' && obj !== null) {
+  else if (typeof obj === "object" && obj !== null) {
     Object.entries(obj).forEach(([key, value]) => {
-      if (key === 'children' && Array.isArray(value)) {
+      if (key === "children" && Array.isArray(value)) {
         collectPaths(value, parentPath, result);
-      } else if (typeof value === 'object' && value !== null) {
+      } else if (typeof value === "object" && value !== null) {
         const currentPath = parentPath ? `${parentPath}.${key}` : key;
         if (value.name) {
           result.push(currentPath);
@@ -260,7 +266,7 @@ function collectPaths(obj, parentPath = '', result = []) {
 }
 
 export function getObjectByPath(obj, path) {
-  const parts = path.split('.');
+  const parts = path.split(".");
   let current = obj;
 
   for (const part of parts) {
@@ -284,7 +290,7 @@ export function getObjectByPath(obj, path) {
 
 export function updateObjectByPath(obj, path, updates) {
   delete updates.name;
-  const parts = path.split('.');
+  const parts = path.split(".");
   let current = obj;
   const nodes = [current];
 
@@ -309,7 +315,9 @@ export function updateObjectByPath(obj, path, updates) {
   // The last part is the node to update
   const lastPart = parts[parts.length - 1];
   if (Array.isArray(current.children)) {
-    const index = current.children.findIndex((child) => child.name === lastPart);
+    const index = current.children.findIndex(
+      (child) => child.name === lastPart,
+    );
     if (index !== -1) {
       // Merge update
       current.children[index] = {
@@ -332,7 +340,7 @@ export function transformStructure(data) {
       result.objects[objName] = transformObject(
         { ...objData, name: objName },
         data?.objects,
-        processedTypes
+        processedTypes,
       );
     }
   });
@@ -359,7 +367,7 @@ function transformInputObjects(inputObjects: { [key: string]: any }): {
         };
 
         const fieldType = field.type;
-        if (fieldType.kind === 'INPUT_OBJECT' && inputObjects[fieldType.name]) {
+        if (fieldType.kind === "INPUT_OBJECT" && inputObjects[fieldType.name]) {
           for (const operation of inputObjects[fieldType.name].inputFields) {
             transformedField.operations.push({
               name: operation.name,

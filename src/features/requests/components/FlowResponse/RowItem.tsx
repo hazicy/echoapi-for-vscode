@@ -1,17 +1,17 @@
 import slots from "@/shared/ui/base/slots.module.css";
-import React from 'react';
+import React from "react";
 
-import { Flex } from '@/shared/ui/base';
+import { Flex } from "@/shared/ui/base";
 
-import classNames from 'classnames';
-import { includes, isEqual } from 'lodash';
+import classNames from "classnames";
+import { includes, isEqual } from "lodash";
 
-import IconFont from '@/shared/ui/IconFont';
-import Tooltip from '@/shared/ui/Tooltip';
-import { sizeFormat } from '@/shared/utils/common';
+import IconFont from "@/shared/ui/IconFont";
+import Tooltip from "@/shared/ui/Tooltip";
+import { sizeFormat } from "@/shared/utils/common";
 
-import WsIcon from './Icon';
-import { RowItemTipsConfig } from './types';
+import WsIcon from "./Icon";
+import { RowItemTipsConfig } from "./types";
 
 interface Props {
   data: any;
@@ -21,7 +21,7 @@ interface Props {
 
 const RowItem = (props: Props) => {
   const { data, renderTitle, customTipsContent } = props || {};
-  
+
   const calcTipsContent = (data: any) => {
     let config: RowItemTipsConfig = {
       size: data?.size,
@@ -43,13 +43,17 @@ const RowItem = (props: Props) => {
   };
 
   return (
-    <Flex justify="space-between" style={{ width: '100%' }}>
-      <Flex gap={12} align="center" style={{ maxWidth: '80%', overflow: 'hidden' }}>
+    <Flex justify="space-between" style={{ width: "100%" }}>
+      <Flex
+        gap={12}
+        align="center"
+        style={{ maxWidth: "80%", overflow: "hidden" }}
+      >
         <span
           className={classNames({
             [slots["icon-span"]]: true,
-            [slots.message]: isEqual('message', data.action),
-            [slots.send]: isEqual('send', data.action),
+            [slots.message]: isEqual("message", data.action),
+            [slots.send]: isEqual("send", data.action),
           })}
         >
           <WsIcon action={data.action} />
@@ -58,7 +62,7 @@ const RowItem = (props: Props) => {
       </Flex>
 
       <Flex gap={12} justify="flex-end">
-        {includes(['message', 'send'], data.action) && (
+        {includes(["message", "send"], data.action) && (
           <>
             <Tooltip title={calcTipsContent(data)}>
               <IconFont className={slots["flow-icon"]} type="icon-tips" />

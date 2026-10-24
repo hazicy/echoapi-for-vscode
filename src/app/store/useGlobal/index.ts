@@ -1,8 +1,8 @@
-import { NavigateFunction } from 'react-router-dom';
+import { NavigateFunction } from "react-router-dom";
 
-import { create } from 'zustand';
+import { create } from "zustand";
 
-import { CustomNumberBooleanType } from '@/shared/types/common';
+import { CustomNumberBooleanType } from "@/shared/types/common";
 
 type State = {
   /** collaboration websocket returned client id */
@@ -16,33 +16,34 @@ type State = {
   /** vscode current theme */
   vscodeTheme: string;
   /** project switching state */
-  switchingProject:boolean;
+  switchingProject: boolean;
   /** project initialization state */
-  initLoading:boolean;
+  initLoading: boolean;
 };
 
 type Action = {
-  updateInitLoading: (p: State['initLoading']) => void;
-  updateSwitchingProject: (p: State['switchingProject']) => void;
-  updateWsClientId: (p: State['clientId']) => void;
-  updateCancelToken: (p: State['cancelToken']) => void;
-  updateNavigate: (p: State['navigate']) => void;
-  updateAiDescEnable: (p: State['aiDescEnable']) => void;
-  updateVscodeTheme : (p: State['vscodeTheme']) => void;
+  updateInitLoading: (p: State["initLoading"]) => void;
+  updateSwitchingProject: (p: State["switchingProject"]) => void;
+  updateWsClientId: (p: State["clientId"]) => void;
+  updateCancelToken: (p: State["cancelToken"]) => void;
+  updateNavigate: (p: State["navigate"]) => void;
+  updateAiDescEnable: (p: State["aiDescEnable"]) => void;
+  updateVscodeTheme: (p: State["vscodeTheme"]) => void;
 };
 
 const useGlobal = create<State & Action>()((set) => ({
-  clientId: '',
+  clientId: "",
   navigate: null,
-  switchingProject:false,
+  switchingProject: false,
   aiDescEnable: -1,
-  loading:false,
-  initLoading:true,
-  vscodeTheme:'Dark',
+  loading: false,
+  initLoading: true,
+  vscodeTheme: "Dark",
   cancelToken: () => undefined,
   updateCancelToken: (cancelToken) => set(() => ({ cancelToken })),
   updateInitLoading: (initLoading) => set(() => ({ initLoading })),
-  updateSwitchingProject: (switchingProject) => set(() => ({ switchingProject })),
+  updateSwitchingProject: (switchingProject) =>
+    set(() => ({ switchingProject })),
   updateNavigate: (navigate) => set(() => ({ navigate })),
   updateWsClientId: (clientId) => set(() => ({ clientId })),
   updateAiDescEnable: (aiDescEnable) => set(() => ({ aiDescEnable })),

@@ -1,7 +1,12 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-import { devtools } from '@/app/store/utils';
-import { Project, TeamItem, UserInfo, UserListRes } from '@/features/auth/types';
+import { devtools } from "@/app/store/utils";
+import {
+  Project,
+  TeamItem,
+  UserInfo,
+  UserListRes,
+} from "@/features/auth/types";
 
 type State = {
   /**current user readonly permission */
@@ -23,15 +28,15 @@ type State = {
 };
 
 type Action = {
-  updateIsReadonly: (isReadonly: State['isReadonly']) => void;
-  updateCurrentProject: (currentProject: State['currentProject']) => void;
-  updateCurrentTeam: (currentTeam: State['currentTeam']) => void;
-  updateTeamProjectList: (teamProjectList: State['teamProjectList']) => void;
-  updateUserInfo: (userInfo: State['userInfo']) => void;
-  updateUserList: (userList: State['userList']) => void;
-  updateOnlineUserList: (onlineUserList: State['onlineUserList']) => void;
-  updateStreamliningMode: (streamliningMode: State['streamliningMode']) => void;
-  updateUserConfig:(state:State )=>void;
+  updateIsReadonly: (isReadonly: State["isReadonly"]) => void;
+  updateCurrentProject: (currentProject: State["currentProject"]) => void;
+  updateCurrentTeam: (currentTeam: State["currentTeam"]) => void;
+  updateTeamProjectList: (teamProjectList: State["teamProjectList"]) => void;
+  updateUserInfo: (userInfo: State["userInfo"]) => void;
+  updateUserList: (userList: State["userList"]) => void;
+  updateOnlineUserList: (onlineUserList: State["onlineUserList"]) => void;
+  updateStreamliningMode: (streamliningMode: State["streamliningMode"]) => void;
+  updateUserConfig: (state: State) => void;
 };
 
 const useUserConfig = create<State & Action>()(
@@ -49,15 +54,17 @@ const useUserConfig = create<State & Action>()(
       updateIsReadonly: (isReadonly) => set(() => ({ isReadonly })),
       updateCurrentProject: (currentProject) => set(() => ({ currentProject })),
       updateCurrentTeam: (currentTeam) => set(() => ({ currentTeam })),
-      updateTeamProjectList: (teamProjectList) => set(() => ({ teamProjectList })),
+      updateTeamProjectList: (teamProjectList) =>
+        set(() => ({ teamProjectList })),
       updateUserInfo: (userInfo) => set(() => ({ userInfo })),
       updateUserList: (userList) => set(() => ({ userList })),
       updateOnlineUserList: (onlineUserList) => set(() => ({ onlineUserList })),
-      updateStreamliningMode: (streamliningMode) => set(() => ({ streamliningMode })),
-      updateUserConfig:(payload)=>set((state) => ({ ...state, ...payload  }))
+      updateStreamliningMode: (streamliningMode) =>
+        set(() => ({ streamliningMode })),
+      updateUserConfig: (payload) => set((state) => ({ ...state, ...payload })),
     }),
-    { name: 'useUserConfig' }
-  )
+    { name: "useUserConfig" },
+  ),
 );
 
 export default useUserConfig;

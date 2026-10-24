@@ -1,19 +1,19 @@
 // Request auth type
 export type AuthType =
-  | 'inherit' // No auth required
-  | 'noauth' // No auth required
-  | 'kv' // Private key-value pair
-  | 'bearer' // 'Bearer Token',
-  | 'basic' // 'Basic auth',
-  | 'digest' // Digest auth
-  | 'oauth1' // Digest auth
-  | 'oauth2' // 'OAuth 1.0',
-  | 'hawk' // 'Hawk authentication',
-  | 'awsv4' // 'AWS Signature',
-  | 'ntlm' // 'NTLM Authentication [Beta]',
-  | 'edgegrid' // Akamai EdgeGrid', // edgegrid
-  | 'jwt' // JWT Bearer
-  | 'asap'; // ASAP(Atlassian)
+  | "inherit" // No auth required
+  | "noauth" // No auth required
+  | "kv" // Private key-value pair
+  | "bearer" // 'Bearer Token',
+  | "basic" // 'Basic auth',
+  | "digest" // Digest auth
+  | "oauth1" // Digest auth
+  | "oauth2" // 'OAuth 1.0',
+  | "hawk" // 'Hawk authentication',
+  | "awsv4" // 'AWS Signature',
+  | "ntlm" // 'NTLM Authentication [Beta]',
+  | "edgegrid" // Akamai EdgeGrid', // edgegrid
+  | "jwt" // JWT Bearer
+  | "asap"; // ASAP(Atlassian)
 
 export type AuthBasic = {
   username: string;

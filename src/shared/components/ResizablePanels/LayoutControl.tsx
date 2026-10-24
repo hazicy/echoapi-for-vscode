@@ -6,7 +6,9 @@ import IconFont from "@/shared/ui/IconFont";
 
 export default function LayoutControl() {
   const { t } = useTranslation();
-  const direction = useSystemConfig((state) => state.systemConfig?.tab_direction);
+  const direction = useSystemConfig(
+    (state) => state.systemConfig?.tab_direction,
+  );
 
   const changeDirection = (vertical: boolean) => {
     const tab_direction = vertical ? STATUS_CODE.ENABLE : STATUS_CODE.DISABLE;
@@ -21,7 +23,9 @@ export default function LayoutControl() {
   return (
     <Flex gap={4} align="center">
       {[true, false].map((vertical) => {
-        const label = t(`common.response_component.${vertical ? "single_pane" : "two_pane"}`);
+        const label = t(
+          `common.response_component.${vertical ? "single_pane" : "two_pane"}`,
+        );
         return (
           <Button
             key={String(vertical)}
@@ -29,7 +33,11 @@ export default function LayoutControl() {
             size="small"
             title={label}
             aria-label={label}
-            aria-pressed={vertical ? direction === STATUS_CODE.ENABLE : direction === STATUS_CODE.DISABLE}
+            aria-pressed={
+              vertical
+                ? direction === STATUS_CODE.ENABLE
+                : direction === STATUS_CODE.DISABLE
+            }
             onClick={() => changeDirection(vertical)}
           >
             <IconFont type={vertical ? "icon-up-down" : "icon-left-right"} />

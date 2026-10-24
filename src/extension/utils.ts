@@ -1,33 +1,79 @@
-import { getCollectionApis, getCollectionChildIds } from './utils/collectionTree';
-import { language } from '@/shared/locale/language';
+import {
+  getCollectionApis,
+  getCollectionChildIds,
+} from "./utils/collectionTree";
+import { language } from "@/shared/locale/language";
 import { ApiDetailsData } from "@/features/requests/types/api";
-import { assign, cloneDeep, concat, find, findIndex, forEach, groupBy, head, isArray, isEmpty, isEqual, isNull, isNumber, isObject, isPlainObject, isString, isUndefined, keys, map, omit, pullAt, reduce, size, trim, values } from "lodash";
+import {
+  assign,
+  cloneDeep,
+  concat,
+  find,
+  findIndex,
+  forEach,
+  groupBy,
+  head,
+  isArray,
+  isEmpty,
+  isEqual,
+  isNull,
+  isNumber,
+  isObject,
+  isPlainObject,
+  isString,
+  isUndefined,
+  keys,
+  map,
+  omit,
+  pullAt,
+  reduce,
+  size,
+  trim,
+  values,
+} from "lodash";
 import { GenSendBaseOptionsType, SendBaseOptions } from "./type";
 import { DEFAULT_FOLDER_REQUEST } from "../features/requests/constants/request";
-import { ApiSendResponseDataVariables, ApiSendingData, ApiSendResponse, ApiSendResponseDataRequest, ApiSendResponseDataResponse } from '@/features/requests/types/send';
-import aTools from 'apipost-inside-tools';
+import {
+  ApiSendResponseDataVariables,
+  ApiSendingData,
+  ApiSendResponse,
+  ApiSendResponseDataRequest,
+  ApiSendResponseDataResponse,
+} from "@/features/requests/types/send";
+import aTools from "apipost-inside-tools";
 import { STATUS_CODE } from "../shared/constants/common";
-import * as vscode from 'vscode';
-import * as childProcess from 'child_process';
-import curlToPostman from 'curl-to-postmanv2';
+import * as vscode from "vscode";
+import * as childProcess from "child_process";
+import curlToPostman from "curl-to-postmanv2";
 import dayjs from "dayjs";
 import { formatTime } from "../shared/utils/time";
-import parseUrl from 'url-parse';
+import parseUrl from "url-parse";
 import { parseStreamToRaw } from "@/shared/utils/parse";
 import { APIS_TARGET_TYPE_ENUM } from "@/features/requests/constants";
 import { DEFAULT_APIS_BASE_DATA } from "@/features/requests/constants/default";
 import { DEFAULT_API_RESPONSE } from "@/features/requests/constants/response";
-import { genUrlByQuery, getHistoryOpensData, getParameterDataFilterContentLength } from "@/features/requests/utils/apis";
+import {
+  genUrlByQuery,
+  getHistoryOpensData,
+  getParameterDataFilterContentLength,
+} from "@/features/requests/utils/apis";
 import { getCookiesOptions, getEnvOptions, getProjectOptions } from "./send";
 import { EnvListItem } from "@/features/environment/types";
 import { snowflakeId } from "apipost-tools";
-import { existFileSync, getDataFromGlobalStorage, setDataToGlobalStorage } from './db';
-import { DEFAULT_PROJECT, DEFAULT_PROJECT_CONFIG } from "@/features/project/constants/project";
+import {
+  existFileSync,
+  getDataFromGlobalStorage,
+  setDataToGlobalStorage,
+} from "./db";
+import {
+  DEFAULT_PROJECT,
+  DEFAULT_PROJECT_CONFIG,
+} from "@/features/project/constants/project";
 import { EventItem } from "@/features/testing/types";
 import { CASE_ITEM_TYPE } from "@/features/testing/constants";
-import fs from 'fs';
-import path from 'path';
-import os from 'os';
+import fs from "fs";
+import path from "path";
+import os from "os";
 import { DEFAULT_TEAM } from "@/features/project/constants/team";
 import { globalConfig } from "./constants";
 import { Project, TeamItem } from "@/features/auth/types";
@@ -36,7 +82,7 @@ import i18next from "i18next";
 const handleResponseConsole = (console: any) => {
   const _console = cloneDeep(console);
 
-  const time = formatTime(dayjs(), 'HH:mm:ss');
+  const time = formatTime(dayjs(), "HH:mm:ss");
 
   return map(_console, (item) => ({
     ...item,
@@ -45,7 +91,10 @@ const handleResponseConsole = (console: any) => {
 };
 
 // Request parameter preprocessing
-export const prepareRequest = (tempRequest: ApiDetailsData['request'], runTimeHeaders?: any[]) => {
+export const prepareRequest = (
+  tempRequest: ApiDetailsData["request"],
+  runTimeHeaders?: any[],
+) => {
   const resultRequest = cloneDeep(tempRequest);
   // Complete HTTP protocol prefix
   if (isArray(tempRequest?.header?.parameter) && isArray(runTimeHeaders)) {
@@ -75,10 +124,19 @@ export const genSendBaseOptions: GenSendBaseOptionsType = async ({
   systemConfig,
   curServerId,
   targetId,
-  type
+  type,
 }) => {
-  const { envDetailKeys, envList, globalParams, globalVars, serverList, cookie } = projectConfig || {};
-  const curEnv = find(envList, (env) => isEqual(env.env_id, envId || envDetailKeys));
+  const {
+    envDetailKeys,
+    envList,
+    globalParams,
+    globalVars,
+    serverList,
+    cookie,
+  } = projectConfig || {};
+  const curEnv = find(envList, (env) =>
+    isEqual(env.env_id, envId || envDetailKeys),
+  );
 
   const options: SendBaseOptions = {};
 
@@ -93,16 +151,24 @@ export const genSendBaseOptions: GenSendBaseOptionsType = async ({
 
       return prev;
     },
-    {}
+    {},
   );
 
   // Get project related information
-  options.project = globalParams ? getProjectOptions(globalParams, systemConfig, type) : {
-    request: cloneDeep(DEFAULT_FOLDER_REQUEST)
-  };
+  options.project = globalParams
+    ? getProjectOptions(globalParams, systemConfig, type)
+    : {
+        request: cloneDeep(DEFAULT_FOLDER_REQUEST),
+      };
 
   // Get environment related parameters
-  options.env = getEnvOptions(curEnv, serverList, curServerId, targetId || '', collection);
+  options.env = getEnvOptions(
+    curEnv,
+    serverList,
+    curServerId,
+    targetId || "",
+    collection,
+  );
 
   // Global Cookie
   options.cookies = getCookiesOptions(cookie, systemConfig);
@@ -133,18 +199,18 @@ export const genSendBaseOptions: GenSendBaseOptionsType = async ({
         // Whether to enable authentication
         authenticate: -1,
         // Proxy server host
-        host: '',
+        host: "",
         // Authentication username
-        username: '',
+        username: "",
         // Authentication password
-        password: '',
+        password: "",
       },
     },
     // CA certificate parameter handling
     ca_cert: {
-      base64: '',
+      base64: "",
       open: -1,
-      path: '',
+      path: "",
     },
     // Client certificate parameter handling
     client_cert: {},
@@ -170,7 +236,6 @@ export const handleSendResponse = async (
   isDownload?: boolean,
   /** Whether sandbox mode */
   isSandBox?: STATUS_CODE,
-
 ) => {
   const { target_id, error } = sendResponse;
 
@@ -186,7 +251,7 @@ export const handleSendResponse = async (
     responseHeaders: {},
     cookies: [],
     target_id,
-    message: '',
+    message: "",
     responseError: error,
   };
 
@@ -197,10 +262,14 @@ export const handleSendResponse = async (
   let sendError = false;
 
   // error.error_type equals 'test' means post-execution script error, no interception needed as response already exists
-  if ((!isNull(error) && !isEqual(error.error_type, 'test')) || !response || !request) {
+  if (
+    (!isNull(error) && !isEqual(error.error_type, "test")) ||
+    !response ||
+    !request
+  ) {
     _sendingData = assign({}, _sendingData, {
-      sendStatus: 'sendError',
-      message: error?.message || i18next.t('supplement.req_err'),
+      sendStatus: "sendError",
+      message: error?.message || i18next.t("supplement.req_err"),
       response: null,
     });
 
@@ -222,10 +291,16 @@ export const handleSendResponse = async (
     // Handle environment variables and global variables
     await handleResponseVariables(variables, context, environmentWebView);
     // Handle response cookies
-    await handleResponseCookies(request, response?.arr_cookies, context, environmentWebView);
+    await handleResponseCookies(
+      request,
+      response?.arr_cookies,
+      context,
+      environmentWebView,
+    );
   }
 
-  const result = (await convertSendingData(sendResponse, isDownload, sendError)) || {};
+  const result =
+    (await convertSendingData(sendResponse, isDownload, sendError)) || {};
 
   _sendingData = assign({}, _sendingData, result);
 
@@ -235,7 +310,7 @@ export const handleSendResponse = async (
 const convertSendingData = async (
   sendResponse: ApiSendResponse,
   _isDownload?: boolean,
-  sendError?: boolean
+  sendError?: boolean,
 ) => {
   if (isEmpty(sendResponse)) return;
 
@@ -252,35 +327,36 @@ const convertSendingData = async (
     (response as ApiSendResponseDataResponse).raw_body = parseStreamToRaw(
       stream?.data,
       mime_type,
-      'utf8'
+      "utf8",
     );
   }
 
   _result = {
     target_id,
-    sendStatus: 'initial',
+    sendStatus: "initial",
     requestHeaders: isPlainObject(request?.headers) ? request.headers : {},
     responseHeaders: isPlainObject(response?.headers) ? response?.headers : {},
     cookies: isArray(arr_cookies) ? arr_cookies : [],
-    response: sendError ? undefined : omit(response, ['headers', 'arr_cookies']),
+    response: sendError
+      ? undefined
+      : omit(response, ["headers", "arr_cookies"]),
     request,
     timestamp: new Date().valueOf(),
   };
 
   if (sendError) {
-    _result.sendStatus = 'sendError';
+    _result.sendStatus = "sendError";
   }
 
   return _result;
 };
-
 
 // Handle variable related information
 export const handleResponseVariables = async (
   variables: ApiSendResponseDataVariables | undefined,
   context: vscode.ExtensionContext,
   environmentWebView: vscode.WebviewPanel | null,
-  env_id?: string
+  env_id?: string,
 ) => {
   // Local stored data collection
   let default_project_config: any = getCurrentProjectConfig(context) || {};
@@ -293,11 +369,17 @@ export const handleResponseVariables = async (
     return;
   }
 
-  const currentEnvIndex = findIndex(envList, (item: any) => item?.env_id === current_env_id);
+  const currentEnvIndex = findIndex(
+    envList,
+    (item: any) => item?.env_id === current_env_id,
+  );
 
   if (isPlainObject(variables?.environment) && currentEnvIndex !== -1) {
     // Handle environment variables
-    const envInfo = await transformEnvVars(envList[currentEnvIndex], variables?.environment);
+    const envInfo = await transformEnvVars(
+      envList[currentEnvIndex],
+      variables?.environment,
+    );
     envList[currentEnvIndex] = { ...envList[currentEnvIndex], ...envInfo };
 
     default_project_config.envList = envList;
@@ -310,16 +392,19 @@ export const handleResponseVariables = async (
   }
   setProjectConfig(context, default_project_config);
   // Update global page open content
-  environmentWebView && environmentWebView.webview.postMessage({ action: 'setProjectConfig', data: default_project_config });
+  environmentWebView &&
+    environmentWebView.webview.postMessage({
+      action: "setProjectConfig",
+      data: default_project_config,
+    });
 };
 
 export const handleResponseCookies = async (
   request: ApiSendResponseDataRequest,
-  cookies: ApiSendResponseDataResponse['arr_cookies'],
+  cookies: ApiSendResponseDataResponse["arr_cookies"],
   context: vscode.ExtensionContext,
   environmentWebView: vscode.WebviewPanel | null,
 ) => {
-
   // Local stored data collection
   let default_project_config: any = getCurrentProjectConfig(context);
 
@@ -333,7 +418,7 @@ export const handleResponseCookies = async (
   const localList = reduce(
     values(_domainInfo?.cookieObj),
     (prev: any, curr) => concat(prev, curr),
-    []
+    [],
   );
 
   for (let index = 0; index < cookies.length; index++) {
@@ -352,14 +437,14 @@ export const handleResponseCookies = async (
 
     if (isUndefined(item.domain)) {
       try {
-        let _hostname = '';
-        let _host = '';
+        let _hostname = "";
+        let _host = "";
 
         if (isString(request?.uri)) {
           _hostname = parseUrl(request?.uri).hostname;
         }
 
-        if (typeof request?.uri === 'object' && !!request?.uri?.host) {
+        if (typeof request?.uri === "object" && !!request?.uri?.host) {
           _host = request?.uri?.host;
         }
 
@@ -378,11 +463,11 @@ export const handleResponseCookies = async (
       let localDomain = localItem.domain;
       let remoteDomain = item.domain;
 
-      if (localDomain.charAt(0) === '.') {
+      if (localDomain.charAt(0) === ".") {
         localDomain = localDomain.substr(1, localDomain.length);
       }
 
-      if (remoteDomain?.charAt(0) === '.') {
+      if (remoteDomain?.charAt(0) === ".") {
         remoteDomain = remoteDomain.substr(1, remoteDomain.length);
       }
 
@@ -408,7 +493,7 @@ export const handleResponseCookies = async (
     }
 
     for (const property in item) {
-      if (property === 'maxAge' || property === 'expiratioxnDate') {
+      if (property === "maxAge" || property === "expiratioxnDate") {
         let nowData = new Date().getTime();
         nowData += (item?.[property] as number) * 1000;
         item.expires = new Date(nowData).toUTCString();
@@ -436,25 +521,29 @@ export const handleResponseCookies = async (
       acc[item.cookie_id] = item;
       return acc;
     },
-    {}
+    {},
   );
 
   const finalCookieObj = assign({}, localCookieObj, cookieObj);
   const cookieArr: any[] = values(finalCookieObj);
 
-  _domainInfo.cookieObj = groupBy(cookieArr, 'domain');
+  _domainInfo.cookieObj = groupBy(cookieArr, "domain");
 
   default_project_config.cookie = _domainInfo;
   setProjectConfig(context, default_project_config);
 
   // Update global page open content
-  environmentWebView && environmentWebView.webview.postMessage({ action: 'setProjectConfig', data: default_project_config });
+  environmentWebView &&
+    environmentWebView.webview.postMessage({
+      action: "setProjectConfig",
+      data: default_project_config,
+    });
 };
 
-  // Transform environment variables
+// Transform environment variables
 export const transformEnvVars = async (
   currentEnvData: EnvListItem,
-  envVariables?: ApiSendResponseDataVariables['environment']
+  envVariables?: ApiSendResponseDataVariables["environment"],
 ) => {
   if (!envVariables) return;
 
@@ -464,8 +553,8 @@ export const transformEnvVars = async (
   Object.keys(envVariables).forEach((key: any) => {
     newList[key] = {
       current_value: envVariables[key],
-      value: localList[key]?.value || '',
-      description: localList[key]?.description || '',
+      value: localList[key]?.value || "",
+      description: localList[key]?.description || "",
     };
   });
 
@@ -476,8 +565,11 @@ export const transformEnvVars = async (
   return result;
 };
 
-  // Transform global variables
-export const transformGlobalVars = (localGlobalVars: any, globalVariables?: ApiSendResponseDataVariables['globals']) => {
+// Transform global variables
+export const transformGlobalVars = (
+  localGlobalVars: any,
+  globalVariables?: ApiSendResponseDataVariables["globals"],
+) => {
   if (!globalVariables) return;
 
   return reduce(
@@ -485,70 +577,92 @@ export const transformGlobalVars = (localGlobalVars: any, globalVariables?: ApiS
     (prev: any, curr) => {
       prev[curr] = {
         current_value: globalVariables[curr],
-        value: localGlobalVars[curr]?.value || '',
-        description: localGlobalVars[curr]?.description || '',
+        value: localGlobalVars[curr]?.value || "",
+        description: localGlobalVars[curr]?.description || "",
       };
       return prev;
     },
-    {}
+    {},
   );
 };
 
-export const getAllChildIds = (apiList: ApiDetailsData[], apisData: ApiDetailsData) =>
-  getCollectionChildIds(apiList, apisData);
+export const getAllChildIds = (
+  apiList: ApiDetailsData[],
+  apisData: ApiDetailsData,
+) => getCollectionChildIds(apiList, apisData);
 
-export const getMaxSort = (apiList: ApiDetailsData[], parent_id: string = '0') => {
-  const childList = apiList.filter((i: ApiDetailsData) => i?.parent_id === parent_id);
-  const maxSort = childList.reduce((max, obj) => obj?.sort > max ? obj?.sort : max, 0);
+export const getMaxSort = (
+  apiList: ApiDetailsData[],
+  parent_id: string = "0",
+) => {
+  const childList = apiList.filter(
+    (i: ApiDetailsData) => i?.parent_id === parent_id,
+  );
+  const maxSort = childList.reduce(
+    (max, obj) => (obj?.sort > max ? obj?.sort : max),
+    0,
+  );
   return maxSort + 1;
 };
 
 export const curlImport = (parsedValue: string) => {
   return new Promise((resolve, reject) => {
     try {
-      curlToPostman.convert({ type: 'string', data: parsedValue }, (error: any, result: any) => {
-        if (result?.error && !result?.result) {
-          reject(result?.error?.message);
-          return;
-        }
-        if (error) {
-          reject(error);
-          return;
-        }
+      curlToPostman.convert(
+        { type: "string", data: parsedValue },
+        (error: any, result: any) => {
+          if (result?.error && !result?.result) {
+            reject(result?.error?.message);
+            return;
+          }
+          if (error) {
+            reject(error);
+            return;
+          }
 
-        const newApi = aTools.curlPostman2apipost(head<any>(result?.output)?.data);
+          const newApi = aTools.curlPostman2apipost(
+            head<any>(result?.output)?.data,
+          );
 
-        if (!isPlainObject(newApi)) {
-          return;
-        }
+          if (!isPlainObject(newApi)) {
+            return;
+          }
 
-        newApi.project_id = '';
-        newApi.name = DEFAULT_APIS_BASE_DATA?.name || 'HTTP Request';
-        newApi.response = DEFAULT_API_RESPONSE;
-        newApi.request.header.parameter = getParameterDataFilterContentLength(
-          newApi.request.header.parameter || []
-        );
+          newApi.project_id = "";
+          newApi.name = DEFAULT_APIS_BASE_DATA?.name || "HTTP Request";
+          newApi.response = DEFAULT_API_RESPONSE;
+          newApi.request.header.parameter = getParameterDataFilterContentLength(
+            newApi.request.header.parameter || [],
+          );
 
-        const newUrl = genUrlByQuery(newApi?.url, newApi.request.query.parameter);
+          const newUrl = genUrlByQuery(
+            newApi?.url,
+            newApi.request.query.parameter,
+          );
 
-        if (isString(newUrl)) {
-          newApi.url = newUrl;
-        }
-        if (isPlainObject(newApi) && newApi?.target_type === APIS_TARGET_TYPE_ENUM.API) {
-          // Open new tab
-          const newApiData: any = getHistoryOpensData(newApi);
-          vscode.commands.executeCommand('openTabPanel', newApiData);
-          resolve(null);
-        }
-
-      });
+          if (isString(newUrl)) {
+            newApi.url = newUrl;
+          }
+          if (
+            isPlainObject(newApi) &&
+            newApi?.target_type === APIS_TARGET_TYPE_ENUM.API
+          ) {
+            // Open new tab
+            const newApiData: any = getHistoryOpensData(newApi);
+            vscode.commands.executeCommand("openTabPanel", newApiData);
+            resolve(null);
+          }
+        },
+      );
     } catch (error) {
       reject(error);
     }
   });
 };
 
-export const getApiList = (context: vscode.ExtensionContext): ApiDetailsData[] => {
+export const getApiList = (
+  context: vscode.ExtensionContext,
+): ApiDetailsData[] => {
   try {
     return getDataFromGlobalStorage(context, getApiListName(context), []);
   } catch (error) {
@@ -556,20 +670,26 @@ export const getApiList = (context: vscode.ExtensionContext): ApiDetailsData[] =
   }
 };
 
-export const getAllApiChildren = (folder_id: string, context: vscode.ExtensionContext): EventItem[] =>
-  getCollectionApis(getApiList(context), folder_id).map(child => ({
+export const getAllApiChildren = (
+  folder_id: string,
+  context: vscode.ExtensionContext,
+): EventItem[] =>
+  getCollectionApis(getApiList(context), folder_id).map((child) => ({
     event_id: child.target_id,
     test_id: folder_id,
     type: CASE_ITEM_TYPE.API,
     enabled: 1,
     sort: 1,
     data: child,
-    parent_event_id: '0',
+    parent_event_id: "0",
     auto_sync: true,
-    project_id: '-1',
+    project_id: "-1",
   }));
 
-export const setApiList = (newList: ApiDetailsData[], context: vscode.ExtensionContext) => {
+export const setApiList = (
+  newList: ApiDetailsData[],
+  context: vscode.ExtensionContext,
+) => {
   try {
     let apiListName = getApiListName(context);
     return setDataToGlobalStorage(context, apiListName, newList);
@@ -580,23 +700,32 @@ export const setApiList = (newList: ApiDetailsData[], context: vscode.ExtensionC
 
 export const getApiListName = (context: vscode.ExtensionContext) => {
   try {
-    let user_config: any = context.globalState.get('userConfig') || {};
-    let apiListName = 'apiList';
-    if (user_config?.currentProject && user_config?.currentProject?.project_id !== '-1') {
+    let user_config: any = context.globalState.get("userConfig") || {};
+    let apiListName = "apiList";
+    if (
+      user_config?.currentProject &&
+      user_config?.currentProject?.project_id !== "-1"
+    ) {
       apiListName = apiListName + `:${user_config.currentProject.project_id}`;
     } else {
-    };
+    }
     return apiListName;
   } catch (error) {
-    return 'apiList';
+    return "apiList";
   }
 };
 
-export const getTestingFolderName = (folder_id: string, context: vscode.ExtensionContext) => {
+export const getTestingFolderName = (
+  folder_id: string,
+  context: vscode.ExtensionContext,
+) => {
   try {
-    let user_config: any = context.globalState.get('userConfig') || {};
+    let user_config: any = context.globalState.get("userConfig") || {};
     let apiListName = `-1:${folder_id}:test`;
-    if (user_config?.currentProject && user_config?.currentProject?.project_id !== '-1') {
+    if (
+      user_config?.currentProject &&
+      user_config?.currentProject?.project_id !== "-1"
+    ) {
       apiListName = `${user_config.currentProject.project_id}:${folder_id}:test`;
     }
     return apiListName;
@@ -608,8 +737,11 @@ export const getTestingFolderName = (folder_id: string, context: vscode.Extensio
 export const getProjectTestName = (context: vscode.ExtensionContext) => {
   let projectTestName = `-1:test`;
   try {
-    let user_config: any = context.globalState.get('userConfig') || {};
-    if (user_config?.currentProject && user_config?.currentProject?.project_id !== '-1') {
+    let user_config: any = context.globalState.get("userConfig") || {};
+    if (
+      user_config?.currentProject &&
+      user_config?.currentProject?.project_id !== "-1"
+    ) {
       projectTestName = `${user_config.currentProject.project_id}:test`;
     }
     return projectTestName;
@@ -618,11 +750,17 @@ export const getProjectTestName = (context: vscode.ExtensionContext) => {
   }
 };
 
-export const getTestingFolderData = (folder_id: string, context: vscode.ExtensionContext) => {
+export const getTestingFolderData = (
+  folder_id: string,
+  context: vscode.ExtensionContext,
+) => {
   try {
     let projectTestName = getProjectTestName(context);
 
-    let projectTestData: any = getDataFromGlobalStorage(context, projectTestName);
+    let projectTestData: any = getDataFromGlobalStorage(
+      context,
+      projectTestName,
+    );
     const projectTestFolderData = projectTestData?.[folder_id] || {};
     return projectTestFolderData;
   } catch (error) {
@@ -630,11 +768,18 @@ export const getTestingFolderData = (folder_id: string, context: vscode.Extensio
   }
 };
 
-export const setTestingFolderData = (folder_id: string, data: any, context: vscode.ExtensionContext) => {
+export const setTestingFolderData = (
+  folder_id: string,
+  data: any,
+  context: vscode.ExtensionContext,
+) => {
   try {
     let projectTestName = getProjectTestName(context);
 
-    let projectTestData: any = getDataFromGlobalStorage(context, projectTestName);
+    let projectTestData: any = getDataFromGlobalStorage(
+      context,
+      projectTestName,
+    );
     let projectTestFolderData = projectTestData?.[folder_id] || {};
     if (isPlainObject(data)) {
       forEach(data, (val, key) => {
@@ -655,7 +800,10 @@ export const getProjectReportList = (context: vscode.ExtensionContext) => {
     let reslut: any[] = [];
     let projectTestName = getProjectTestName(context);
 
-    let projectTestData: any = getDataFromGlobalStorage(context, projectTestName);
+    let projectTestData: any = getDataFromGlobalStorage(
+      context,
+      projectTestName,
+    );
     if (isPlainObject(projectTestData)) {
       forEach(projectTestData, (_val, key) => {
         if (isArray(projectTestData[key]?.reportList)) {
@@ -670,11 +818,17 @@ export const getProjectReportList = (context: vscode.ExtensionContext) => {
   }
 };
 
-export const deleteProjectReport = (report_id: string, context: vscode.ExtensionContext) => {
+export const deleteProjectReport = (
+  report_id: string,
+  context: vscode.ExtensionContext,
+) => {
   try {
     let projectTestName = getProjectTestName(context);
 
-    let projectTestData: any = getDataFromGlobalStorage(context, projectTestName);
+    let projectTestData: any = getDataFromGlobalStorage(
+      context,
+      projectTestName,
+    );
     if (isPlainObject(projectTestData)) {
       forEach(projectTestData, (_val, key) => {
         // Delete report index
@@ -700,10 +854,16 @@ export const deleteProjectReport = (report_id: string, context: vscode.Extension
   }
 };
 
-export const deleteTestingFoldersData = (folderIds: Iterable<string>, context: vscode.ExtensionContext) => {
+export const deleteTestingFoldersData = (
+  folderIds: Iterable<string>,
+  context: vscode.ExtensionContext,
+) => {
   try {
     const projectTestName = getProjectTestName(context);
-    const projectTestData: any = getDataFromGlobalStorage(context, projectTestName);
+    const projectTestData: any = getDataFromGlobalStorage(
+      context,
+      projectTestName,
+    );
     for (const id of folderIds) {
       delete projectTestData[id];
     }
@@ -716,16 +876,29 @@ export const deleteTestingFoldersData = (folderIds: Iterable<string>, context: v
 export const getCurrentProjectConfig = (context: vscode.ExtensionContext) => {
   let projectConfig = { ...DEFAULT_PROJECT_CONFIG };
   try {
-    let user_config: any = context.globalState.get('userConfig') || {};
-    const project_id = user_config?.currentProject && user_config?.currentProject?.project_id !== '-1' ? user_config.currentProject.project_id : '-1';
-    const projectConfigFileName = project_id === '-1' ? `projectConfig_-1_-1` : `projectConfig_${user_config?.userInfo?.uid || -1}_${project_id}`;
+    let user_config: any = context.globalState.get("userConfig") || {};
+    const project_id =
+      user_config?.currentProject &&
+      user_config?.currentProject?.project_id !== "-1"
+        ? user_config.currentProject.project_id
+        : "-1";
+    const projectConfigFileName =
+      project_id === "-1"
+        ? `projectConfig_-1_-1`
+        : `projectConfig_${user_config?.userInfo?.uid || -1}_${project_id}`;
     // Check if file exists
     if (existFileSync(context, projectConfigFileName)) {
-      projectConfig = { ...DEFAULT_PROJECT_CONFIG, ...getDataFromGlobalStorage(context, projectConfigFileName) };
+      projectConfig = {
+        ...DEFAULT_PROJECT_CONFIG,
+        ...getDataFromGlobalStorage(context, projectConfigFileName),
+      };
     } else {
       // File does not exist, get from globalState
-      let project_config: any = context.globalState.get('projectConfig') || {};
-      projectConfig = { ...DEFAULT_PROJECT_CONFIG, ...project_config?.[project_id] || {} };
+      let project_config: any = context.globalState.get("projectConfig") || {};
+      projectConfig = {
+        ...DEFAULT_PROJECT_CONFIG,
+        ...(project_config?.[project_id] || {}),
+      };
 
       // Write to file
       if (setProjectConfig(context, projectConfig)) {
@@ -737,66 +910,86 @@ export const getCurrentProjectConfig = (context: vscode.ExtensionContext) => {
 
     if (isArray(projectConfig?.envList)) {
       projectConfig.envList = projectConfig.envList.map((i: any) => {
-        if (i?.env_id == 1 && i?.name == 'Default') {
-          i.name = 'Default Environment';
+        if (i?.env_id == 1 && i?.name == "Default") {
+          i.name = "Default Environment";
         }
         if (isArray(i?.server_list)) {
           i.server_list = i.server_list.map((f: any) => {
-            if (f?.server_id == 1 && f?.name == 'default_server') {
-              f.name = 'Default Services';
+            if (f?.server_id == 1 && f?.name == "default_server") {
+              f.name = "Default Services";
             }
             return f;
-          })
+          });
         }
         return i;
-      })
-    };
+      });
+    }
 
     if (isArray(projectConfig?.serverList)) {
       projectConfig.serverList = projectConfig.serverList.map((i: any) => {
-        if (i?.server_id == 1 && i?.name == 'default_server') {
-          i.name = 'Default Services';
+        if (i?.server_id == 1 && i?.name == "default_server") {
+          i.name = "Default Services";
         }
 
         return i;
-      })
-    };
+      });
+    }
 
     return projectConfig;
-  } catch (error) {
-
-  }
+  } catch (error) {}
   return projectConfig;
-}
+};
 
 export const getCurrentProjectId = (context: vscode.ExtensionContext) => {
   try {
-    let user_config: any = context.globalState.get('userConfig') || {};
-    if (user_config?.currentProject && user_config?.currentProject?.project_id !== '-1') {
+    let user_config: any = context.globalState.get("userConfig") || {};
+    if (
+      user_config?.currentProject &&
+      user_config?.currentProject?.project_id !== "-1"
+    ) {
       return user_config?.currentProject?.project_id;
     } else {
-      return '-1';
-    };
+      return "-1";
+    }
   } catch (error) {
-    return '-1';
+    return "-1";
   }
 };
 
-export const setProjectConfig = (context: vscode.ExtensionContext, new_project_config: any) => {
+export const setProjectConfig = (
+  context: vscode.ExtensionContext,
+  new_project_config: any,
+) => {
   try {
     let { sidePanelWebView } = globalConfig;
 
-    let user_config: any = context.globalState.get('userConfig') || {};
+    let user_config: any = context.globalState.get("userConfig") || {};
 
-    const project_id = user_config?.currentProject && user_config?.currentProject?.project_id !== '-1' ? user_config.currentProject.project_id : '-1';
-    const projectConfigFileName = project_id === '-1' ? `projectConfig_-1_-1` : `projectConfig_${user_config?.userInfo?.uid || -1}_${project_id}`;
+    const project_id =
+      user_config?.currentProject &&
+      user_config?.currentProject?.project_id !== "-1"
+        ? user_config.currentProject.project_id
+        : "-1";
+    const projectConfigFileName =
+      project_id === "-1"
+        ? `projectConfig_-1_-1`
+        : `projectConfig_${user_config?.userInfo?.uid || -1}_${project_id}`;
 
-    if (!setDataToGlobalStorage(context, projectConfigFileName, new_project_config)) {
+    if (
+      !setDataToGlobalStorage(
+        context,
+        projectConfigFileName,
+        new_project_config,
+      )
+    ) {
       return false;
     }
 
     if (sidePanelWebView) {
-      sidePanelWebView?.webview.postMessage({ action: 'setProjectConfig', data: new_project_config });
+      sidePanelWebView?.webview.postMessage({
+        action: "setProjectConfig",
+        data: new_project_config,
+      });
     }
     return true;
   } catch (error) {
@@ -804,12 +997,22 @@ export const setProjectConfig = (context: vscode.ExtensionContext, new_project_c
   }
 };
 
-export const setProjectApisVersion = async (context: vscode.ExtensionContext, apis: Pick<ApiDetailsData, 'project_id' | 'target_id' | 'version'>[]) => {
+export const setProjectApisVersion = async (
+  context: vscode.ExtensionContext,
+  apis: Pick<ApiDetailsData, "project_id" | "target_id" | "version">[],
+) => {
   try {
-    const project_apis_version: any = cloneDeep(context.globalState.get('projectApisVersion') || {});
+    const project_apis_version: any = cloneDeep(
+      context.globalState.get("projectApisVersion") || {},
+    );
     if (isArray(apis)) {
       forEach(apis, (item) => {
-        if (item?.target_id && item?.project_id && item.project_id !== '-1' && isNumber(item?.version)) {
+        if (
+          item?.target_id &&
+          item?.project_id &&
+          item.project_id !== "-1" &&
+          isNumber(item?.version)
+        ) {
           if (!project_apis_version?.[item.project_id]) {
             project_apis_version[item.project_id] = {};
           }
@@ -817,7 +1020,10 @@ export const setProjectApisVersion = async (context: vscode.ExtensionContext, ap
         }
       });
     }
-    await context.globalState.update("projectApisVersion", project_apis_version);
+    await context.globalState.update(
+      "projectApisVersion",
+      project_apis_version,
+    );
     return true;
   } catch {
     return false;
@@ -826,35 +1032,49 @@ export const setProjectApisVersion = async (context: vscode.ExtensionContext, ap
 
 export const getProjectApisVersion = (context: vscode.ExtensionContext) => {
   try {
-    let user_config: any = context.globalState.get('userConfig') || {};
-    let project_apis_version: any = context.globalState.get('projectApisVersion') || {};
+    let user_config: any = context.globalState.get("userConfig") || {};
+    let project_apis_version: any =
+      context.globalState.get("projectApisVersion") || {};
 
-    if (user_config?.currentProject && user_config?.currentProject?.project_id !== '-1') {
-      return project_apis_version?.[user_config.currentProject.project_id] || {};
+    if (
+      user_config?.currentProject &&
+      user_config?.currentProject?.project_id !== "-1"
+    ) {
+      return (
+        project_apis_version?.[user_config.currentProject.project_id] || {}
+      );
     } else {
       return {};
-    };
-  } catch (error) { }
+    }
+  } catch (error) {}
   return {};
 };
 
-export const getUserConfig = (context: vscode.ExtensionContext): { currentTeam: TeamItem; currentProject: Project } => {
+export const getUserConfig = (
+  context: vscode.ExtensionContext,
+): { currentTeam: TeamItem; currentProject: Project } => {
   try {
-    let user_config: any = context.globalState.get('userConfig') || {};
+    let user_config: any = context.globalState.get("userConfig") || {};
     return {
       ...{
         currentTeam: DEFAULT_TEAM,
-        currentProject: DEFAULT_PROJECT
-      }, ...user_config
-    }
-  } catch (error) { }
+        currentProject: DEFAULT_PROJECT,
+      },
+      ...user_config,
+    };
+  } catch (error) {}
   return {
     currentTeam: DEFAULT_TEAM,
-    currentProject: DEFAULT_PROJECT
+    currentProject: DEFAULT_PROJECT,
   };
 };
 
-export const getHtmlForWebview = (webviewUri: vscode.Uri, resourceBaseUrl: vscode.Uri, data?: any, script?: Boolean) => {
+export const getHtmlForWebview = (
+  webviewUri: vscode.Uri,
+  resourceBaseUrl: vscode.Uri,
+  data?: any,
+  script?: Boolean,
+) => {
   const devServer = /^http:\/\/localhost:8080\//.test(String(webviewUri));
   return `
     <!DOCTYPE html>
@@ -863,7 +1083,9 @@ export const getHtmlForWebview = (webviewUri: vscode.Uri, resourceBaseUrl: vscod
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>My View</title>
-      ${devServer ? `
+      ${
+        devServer
+          ? `
       <script type="module">
         import RefreshRuntime from 'http://localhost:8080/@react-refresh';
         RefreshRuntime.injectIntoGlobalHook(window);
@@ -872,7 +1094,9 @@ export const getHtmlForWebview = (webviewUri: vscode.Uri, resourceBaseUrl: vscod
         window.__vite_plugin_react_preamble_installed__ = true;
       </script>
       <script type="module" src="http://localhost:8080/@vite/client"></script>
-      ` : `<link rel="stylesheet" href="${resourceBaseUrl}/webviews.css">`}
+      `
+          : `<link rel="stylesheet" href="${resourceBaseUrl}/webviews.css">`
+      }
       <style>
         #loading {
             position: fixed;
@@ -894,7 +1118,7 @@ export const getHtmlForWebview = (webviewUri: vscode.Uri, resourceBaseUrl: vscod
         <div id="loading">loading...</div>
       </div>
       <script>
-      window.isMac = ${os.platform() === 'darwin' ? 'true' : 'false'}
+      window.isMac = ${os.platform() === "darwin" ? "true" : "false"}
       window.vscode = acquireVsCodeApi();
       window.vscodeData = ${data && JSON.stringify(data)};
       window.resourceBaseUrl = "${resourceBaseUrl}";
@@ -904,43 +1128,48 @@ export const getHtmlForWebview = (webviewUri: vscode.Uri, resourceBaseUrl: vscod
     </body>
     </html>
   `;
-}
+};
 
 export const downloadFile = async (fileName: string, fileText: string) => {
   // Get user home directory and download path
   const userHome = os.homedir();
-  const downloadPath = path.join(userHome, 'Downloads');
+  const downloadPath = path.join(userHome, "Downloads");
   const options = {
     defaultUri: vscode.Uri.file(path.join(downloadPath, fileName)),
     filters: {
-      'Text files': ['json'],
-      'All files': ['*']
-    }
+      "Text files": ["json"],
+      "All files": ["*"],
+    },
   };
 
   const uri = await vscode.window.showSaveDialog(options);
   if (uri) {
     const data = fileText;
     try {
-      fs.writeFileSync(uri.fsPath, data)
-      vscode.window.showInformationMessage('Export Successful！🎉: ' + uri.fsPath);
+      fs.writeFileSync(uri.fsPath, data);
+      vscode.window.showInformationMessage(
+        "Export Successful！🎉: " + uri.fsPath,
+      );
       return true;
     } catch (error: any) {
-      vscode.window.showErrorMessage('Export failed: ' + error?.message);
+      vscode.window.showErrorMessage("Export failed: " + error?.message);
     }
   }
   return false;
-}
+};
 
 export const copyTextToClipboard = (text: string) => {
-  vscode.env.clipboard.writeText(text).then(() => {
-    // Successfully copied to clipboard
-    vscode.window.showInformationMessage('Copy Success.');
-  }, (error) => {
-    // Copy failed
-    vscode.window.showErrorMessage('Copy Failed: ' + error);
-  });
-}
+  vscode.env.clipboard.writeText(text).then(
+    () => {
+      // Successfully copied to clipboard
+      vscode.window.showInformationMessage("Copy Success.");
+    },
+    (error) => {
+      // Copy failed
+      vscode.window.showErrorMessage("Copy Failed: " + error);
+    },
+  );
+};
 
 export const showTabName = (text: string): string => {
   if (text.length > 20) {
@@ -954,20 +1183,22 @@ export const getLocalIPv4 = () => {
     const interfaces: any = os.networkInterfaces();
     for (const i in interfaces) {
       for (const iface of interfaces[i]) {
-        if (iface.family === 'IPv4' && !iface.internal) {
+        if (iface.family === "IPv4" && !iface.internal) {
           return iface.address;
         }
       }
     }
   } catch (error) {
-    return 'localhost';
+    return "localhost";
   }
-  return 'localhost';
+  return "localhost";
 };
 
 export const getVscodeFontSize = () => {
   try {
-    const fontSize = vscode.workspace.getConfiguration('editor').get('fontSize') as number;
+    const fontSize = vscode.workspace
+      .getConfiguration("editor")
+      .get("fontSize") as number;
     if (isNumber(fontSize)) {
       return fontSize;
     }
@@ -976,41 +1207,53 @@ export const getVscodeFontSize = () => {
   } catch (error) {
     return 12;
   }
-}
+};
 
 export const getVscodeFontFamily = () => {
   try {
-    const fontFamily = vscode.workspace.getConfiguration('editor').get('fontFamily') as string;
+    const fontFamily = vscode.workspace
+      .getConfiguration("editor")
+      .get("fontFamily") as string;
     if (isString(fontFamily)) {
       return fontFamily;
     }
 
-    return '';
+    return "";
   } catch (error) {
-    return '';
+    return "";
   }
-}
+};
 
-export const getCurrentEnvCurrentServer = (context: vscode.ExtensionContext, curServerId: string) => {
-  const { envDetailKeys, envList, serverList } = getCurrentProjectConfig(context) || {};
+export const getCurrentEnvCurrentServer = (
+  context: vscode.ExtensionContext,
+  curServerId: string,
+) => {
+  const { envDetailKeys, envList, serverList } =
+    getCurrentProjectConfig(context) || {};
   let curEnv: any = find(envList, (env) => isEqual(env.env_id, envDetailKeys));
 
   if (isUndefined(curEnv) || !isObject(curEnv)) {
     curEnv = {
-      env_id: '',
-      env_name: '',
-      env_pre_url: '',
+      env_id: "",
+      env_name: "",
+      env_pre_url: "",
       env_pre_urls: {},
       environment: {},
     };
   }
 
-  const defaultSererId = curServerId || find(serverList, (im) => im?.is_default === 1)?.server_id || '';
+  const defaultSererId =
+    curServerId ||
+    find(serverList, (im) => im?.is_default === 1)?.server_id ||
+    "";
 
-  const defaultServer = find(curEnv?.server_list, (findItem) => isEqual(findItem?.server_id, defaultSererId)) || {};
+  const defaultServer =
+    find(curEnv?.server_list, (findItem) =>
+      isEqual(findItem?.server_id, defaultSererId),
+    ) || {};
 
   return defaultServer;
-}
+};
 
 export const openInFileExplorer = (filePath: string) => {
   const platform = os.platform();
@@ -1019,10 +1262,10 @@ export const openInFileExplorer = (filePath: string) => {
   try {
     let command: string;
     switch (platform) {
-      case 'win32': // Windows
+      case "win32": // Windows
         // Use `/select` parameter to select file
         // Convert to Windows-style path
-        const windowsPath = normalizedPath.replace(/\//g, '\\');
+        const windowsPath = normalizedPath.replace(/\//g, "\\");
         // Check if path exists
         if (!fs.existsSync(windowsPath)) {
           vscode.window.showErrorMessage(`Path does not exist: ${windowsPath}`);
@@ -1030,11 +1273,11 @@ export const openInFileExplorer = (filePath: string) => {
         }
         command = `explorer /select,"${windowsPath}"`;
         break;
-      case 'darwin': // macOS
+      case "darwin": // macOS
         // Use `-R` parameter to locate file
         command = `open -R "${normalizedPath}"`;
         break;
-      case 'linux': // Linux
+      case "linux": // Linux
         // Use file manager command (e.g. nautilus) and specify parent directory
         const parentDir = path.dirname(normalizedPath);
         command = `xdg-open "${parentDir}"`;
@@ -1047,4 +1290,4 @@ export const openInFileExplorer = (filePath: string) => {
   } catch (error) {
     vscode.window.showErrorMessage(`Failed to reveal file: ${error}`);
   }
-}
+};
