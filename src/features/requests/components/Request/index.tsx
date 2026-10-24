@@ -1,14 +1,15 @@
 import styles from "./style.module.css";
 import { TabPaneProps } from "@/shared/ui/base";
-import React, { FC, lazy, ReactNode, useEffect, useMemo } from "react";
+import React, {
+  FC,
+  lazy,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { RequestProps } from "./types";
 import produce from "immer";
-import RequestRestful from "./Restful";
-import RequestBody from "./Body";
-import RequestPreTask from "./PreTask";
-import RequestAuth from "./Auth";
-
-import RequestPostTask from "./PostTask";
 import { ApiRequest } from "@/features/requests/types/request";
 import { ChangeFuncType, DirectionType } from "@/shared/types/common";
 import { useMemoizedFn, useSafeState } from "ahooks";
@@ -39,6 +40,11 @@ import { APIS_TASK_TYPES_ENUM } from "@/features/requests/constants";
 const RequestHeader = lazy(() => import("./components/Header"));
 const RequestQuery = lazy(() => import("./components/Query"));
 const RequestCookie = lazy(() => import("./components/Cookie"));
+const RequestRestful = lazy(() => import("./Restful"));
+const RequestBody = lazy(() => import("./Body"));
+const RequestAuth = lazy(() => import("./Auth"));
+const RequestPreTask = lazy(() => import("./PreTask"));
+const RequestPostTask = lazy(() => import("./PostTask"));
 
 const Request: FC<
   RequestProps & {
@@ -59,6 +65,17 @@ const Request: FC<
   tabBarExtraContent,
 }) => {
   const { t } = useTranslation();
+  // Tabs keeps hidden panels mounted. Only mount a request tab once visited,
+  // so hidden panels do not trigger their dynamic imports during startup.
+  const [visitedTabs, setVisitedTabs] = useState<Set<string>>(
+    () =>
+      new Set([
+        tabOptions.activeKey ||
+          tabOptions.defaultActiveKey ||
+          head(includesTabs) ||
+          "Headers",
+      ]),
+  );
   const apiDetailsData = useApis((state) => state.apiDetailsData);
 
   const globalParams = useProjectConfig((state) => state.globalParams);
@@ -288,7 +305,11 @@ const Request: FC<
     const _originItems = map(originItems, (item) => ({
       ...item,
       children: (
-        <SuspenseContent>{item.children}</SuspenseContent>
+        <SuspenseContent>
+          {visitedTabs.has(item.key) || tabOptions.activeKey === item.key
+            ? item.children
+            : null}
+        </SuspenseContent>
       ) as React.ReactNode,
     }));
 
@@ -309,6 +330,8 @@ const Request: FC<
     includesTabs,
     requestData?.body?.parameter?.length,
     allParentDirectories?.header,
+    visitedTabs,
+    tabOptions.activeKey,
   ]);
 
   return (
@@ -318,6 +341,10 @@ const Request: FC<
         tabBarExtraContent={tabBarExtraContent}
         defaultActiveKey={tabOptions?.defaultActiveKey || head(tabsItems)?.key}
         {...tabOptions}
+        onChange={(key) => {
+          setVisitedTabs((previous) => new Set([...previous, key]));
+          tabOptions.onChange?.(key);
+        }}
       />
     </div>
   );

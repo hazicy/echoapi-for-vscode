@@ -29,6 +29,35 @@ bootstrap. A commit does not guarantee that every nested asynchronous editor has
 finished loading or that the browser has painted. Compare cold opens separately
 from existing panel reveals, which retain their context.
 
+## Request tab payload measurement (2026-10-24)
+
+Run `node scripts/measure-request-startup.mjs` after a production Webview build.
+It traverses the emitted static import graph, counts actual file bytes, and
+deduplicates shared chunks. HTTP is the first protocol import in the entry.
+
+| Uncompressed JavaScript | Before | After |
+| --- | ---: | ---: |
+| Entry and static dependencies | 2,027,327 B | 2,027,147 B |
+| Additional HTTP protocol static dependencies | 2,187,530 B | 1,783,060 B |
+| Entry plus HTTP protocol | 4,214,857 B / 39 files | 3,810,207 B / 34 files |
+
+The additional protocol payload decreased by 18.5%; the cumulative payload
+decreased by 9.6%. Shared CSS is unchanged at 277,627 bytes. These are emitted
+file sizes, not measured network transfer sizes or elapsed startup times. Nested
+lazy modules (including the selected Params tab) are excluded from this static
+graph measurement, so this is not the complete browser first-paint payload.
+
+Path, Body, Auth, pre-request and post-response tasks now use dynamic imports.
+Request tabs mount only when first selected and remain mounted after visiting;
+otherwise the underlying `keepMounted` panels would start every dynamic import
+immediately. This defers code rather than removing features from the package.
+The startup browser regression checks that selecting Path fetches additional
+scripts after startup.
+
+The entry's largest shared chunk is still 1,960,785 bytes; changing request tabs
+does not reduce that entry cost. Further optimization requires tracing the
+remaining shared editor/parser/mock dependencies.
+
 The extension uses ESM code splitting; import/export converters and Mock expression
 libraries load when used. The variable insertion editor also loads on opening its
 popover. Shared host utilities must import individual stores, rather than the

@@ -4,6 +4,10 @@ test("request startup handles immediate initialization and defers collection and
   page,
 }) => {
   const errors: string[] = [];
+  const scripts: string[] = [];
+  page.on("request", (request) => {
+    if (request.resourceType() === "script") scripts.push(request.url());
+  });
   page.on("pageerror", (error) => errors.push(error.message));
   await page.route("**/startup.html", (route) =>
     route.fulfill({
@@ -80,6 +84,16 @@ test("request startup handles immediate initialization and defers collection and
       () => performance.getEntriesByName("okapi:html-to-content").length,
     ),
   ).toBe(1);
+  // A hidden request tab must not fetch its module until first selected,
+  // even though the underlying Tabs panels use keepMounted.
+  await page.waitForLoadState("networkidle");
+  const startupScriptCount = scripts.length;
+  await page.getByRole("tab", { name: "Path", exact: true }).click();
+  await expect.poll(() => scripts.length).toBeGreaterThan(startupScriptCount);
+  await expect(
+    page.getByRole("tab", { name: "Path", exact: true }),
+  ).toHaveAttribute("aria-selected", "true");
+  await page.getByRole("tab", { name: "Params", exact: true }).click();
   await page.getByRole("button", { name: "Code", exact: true }).click();
   await expect
     .poll(() =>
