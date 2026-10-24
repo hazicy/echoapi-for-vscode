@@ -13,16 +13,27 @@ import { ThemeProvider } from '@/shared/ui/base/Theme';
 import GlobalThemeStyle from '../../shared/theme/global';
 import GlobalStyle from '../../shared/theme/globalStyle';
 import { isArray, isPlainObject } from 'lodash';
-import { useApis, useProjectConfig, useSystemConfig, useUserConfig } from '../../app/store';
+import {
+  useApis,
+  useProjectConfig,
+  useSystemConfig,
+  useUserConfig,
+} from '../../app/store';
 
 function PushPanel() {
   const customTheme = useGlobalTheme();
 
   const updateUserConfig = useUserConfig((store) => store.updateUserConfig);
-  const updateApiOriginDetailsList = useApis((store) => store.updateApiOriginDetailsList);
+  const updateApiOriginDetailsList = useApis(
+    (store) => store.updateApiOriginDetailsList,
+  );
 
-  const updateLocalProjectApisVersion = useApis((store) => store.updateLocalProjectApisVersion);
-  const updateProjectConfig = useProjectConfig((store) => store.updateProjectConfig)
+  const updateLocalProjectApisVersion = useApis(
+    (store) => store.updateLocalProjectApisVersion,
+  );
+  const updateProjectConfig = useProjectConfig(
+    (store) => store.updateProjectConfig,
+  );
 
   const [lodaing, setLodaing] = useState(true);
 
@@ -40,15 +51,15 @@ function PushPanel() {
     window?.vscode.postMessage({
       action: 'getProjectConfig',
     });
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const messageHandler = async (event: { data: any; }) => {
+    const messageHandler = async (event: { data: any }) => {
       const message = event.data; // The JSON data our extension sent
 
       switch (message.action) {
         case 'setPushPanelData':
-          if (isPlainObject((message?.data))) {
+          if (isPlainObject(message?.data)) {
             if (isPlainObject(message?.data?.user_config)) {
               updateUserConfig(message?.data?.user_config);
             }
@@ -56,13 +67,16 @@ function PushPanel() {
               updateApiOriginDetailsList(message?.data?.local_api_list);
             }
             if (isPlainObject(message?.data?.project_apis_version)) {
-              updateLocalProjectApisVersion(message?.data?.project_apis_version);
+              updateLocalProjectApisVersion(
+                message?.data?.project_apis_version,
+              );
             }
           }
           setLodaing(false);
           break;
         case 'setSystemConfig':
-          const { systemConfig, updateSystemConfig } = useSystemConfig.getState();
+          const { systemConfig, updateSystemConfig } =
+            useSystemConfig.getState();
 
           updateSystemConfig({ ...systemConfig, ...message.data });
           break;
@@ -92,7 +106,11 @@ function PushPanel() {
         <ThemeProvider theme={customTheme}>
           <GlobalThemeStyle />
           <GlobalStyle />
-          <Skeleton active paragraph={{ rows: 15, width: '100%' }} loading={lodaing}>
+          <Skeleton
+            active
+            paragraph={{ rows: 15, width: '100%' }}
+            loading={lodaing}
+          >
             <Push />
           </Skeleton>
         </ThemeProvider>

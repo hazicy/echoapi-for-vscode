@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     "target": "ES2020",
     "useDefineForClassFields": true,
@@ -25,5 +24,11 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": false
   },
-  "include": ["src", "config", "public/redoc.standalone.js","lib.d.ts","declare.d.ts"]
+  "include": [
+    "src",
+    "config",
+    "public/redoc.standalone.js",
+    "lib.d.ts",
+    "declare.d.ts"
+  ]
 }
