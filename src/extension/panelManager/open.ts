@@ -1,4 +1,4 @@
-import { getMethodIcon } from "../methodIcon";
+import { getProtocolIcon } from "../protocolIcon";
 import { globalConfig, LOCAL_PORT, PANEL_OPTIONS, socketIoStore, websocketStore } from '../constants';
 import * as vscode from 'vscode';
 import path from 'path';
@@ -12,8 +12,8 @@ export const createOpenPanel = (data: any, context: vscode.ExtensionContext) => 
 
   if (openedPanels[data?.target_id]) {
     // Tab already exists, switch to it
-    const methodIcon = getMethodIcon(context, data);
-    if (methodIcon) openedPanels[data?.target_id].iconPath = methodIcon;
+    const protocolIcon = getProtocolIcon(context, data);
+    if (protocolIcon) openedPanels[data?.target_id].iconPath = protocolIcon;
     openedPanels[data?.target_id].reveal(vscode.ViewColumn.One);
     return;
   }
@@ -33,7 +33,7 @@ export const createOpenPanel = (data: any, context: vscode.ExtensionContext) => 
   );
 
   const iconName = panelOptions?.iconObj?.[data?.target_type] || "";
-  panel.iconPath = getMethodIcon(context, data) ?? vscode.Uri.file(
+  panel.iconPath = getProtocolIcon(context, data) ?? vscode.Uri.file(
     path.join(context.extensionPath, "dist", "images", iconName)
   );
   let scriptUri = panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'dist', `${panelOptions.viewType}.js`)));

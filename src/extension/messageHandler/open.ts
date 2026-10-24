@@ -1,4 +1,4 @@
-import { getMethodIcon } from "../methodIcon";
+import { getProtocolIcon } from "../protocolIcon";
 import * as vscode from "vscode";
 import { recordRequestHistory } from '../requestHistory';
 import {
@@ -73,8 +73,8 @@ const saveApiData = (
 
   // Update title
   panel.title = showTabName(newData?.name);
-  const methodIcon = getMethodIcon(context, newData);
-  if (methodIcon) panel.iconPath = methodIcon;
+  const protocolIcon = getProtocolIcon(context, newData);
+  if (protocolIcon) panel.iconPath = protocolIcon;
 
   // Update left sidebar directory
   sidePanelWebView &&
@@ -131,8 +131,8 @@ export const handelOpenMessage = async (
     case "updateApiActiveData":
       // Update title
       panel.title = showTabName(data?.name) + " ⚈";
-      const activeMethodIcon = getMethodIcon(context, data);
-      if (activeMethodIcon) panel.iconPath = activeMethodIcon;
+      const activeProtocolIcon = getProtocolIcon(context, data);
+      if (activeProtocolIcon) panel.iconPath = activeProtocolIcon;
       break;
     case "sendApi":
       recordRequestHistory(context, data);

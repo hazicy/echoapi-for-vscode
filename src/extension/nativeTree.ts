@@ -1,5 +1,5 @@
 import { copyAsCurl } from "./apis";
-import { getMethodIcon } from "./methodIcon";
+import { protocolThemeIcons } from "./protocolIcon";
 import * as vscode from "vscode";
 import { snowflakeId } from "apipost-tools";
 import { cloneDeep } from "lodash";
@@ -65,18 +65,7 @@ export function registerNativeTree(context: vscode.ExtensionContext) {
     item.description = folder
       ? undefined
       : requestLabel;
-    const protocolIcons: Record<string, { icon: string; color: string }> = {
-      graphql: { icon: "type-hierarchy", color: "charts.purple" },
-      websocket2: { icon: "arrow-swap", color: "charts.blue" },
-      socketio: { icon: "plug", color: "charts.yellow" },
-      sse: { icon: "broadcast", color: "charts.orange" },
-    };
-    const protocol = protocolIcons[data.target_type];
-    item.iconPath = getMethodIcon(context, data)
-      ?? new vscode.ThemeIcon(
-          folder ? "folder" : protocol?.icon || "globe",
-          folder ? undefined : new vscode.ThemeColor(protocol?.color || "charts.green"),
-        );
+    item.iconPath = new vscode.ThemeIcon(protocolThemeIcons[data.target_type] || "globe");
     item.tooltip = [data.name, folder ? undefined : requestLabel, data.url].filter(Boolean).join(" ");
     return item;
   };

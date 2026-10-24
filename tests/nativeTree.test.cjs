@@ -180,16 +180,18 @@ test("native sidebar panels, test commands and workspace request history", async
     const requests = views.get("okapiRequests");
     for (const method of ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]) {
       const item = requests.getTreeItem({ kind: "request", data: { ...rows[2], method } });
-      assert.deepEqual(item.iconPath, {
-        light: `/extension/dist/images/methods/${method.toLowerCase()}-letter-light.svg`,
-        dark: `/extension/dist/images/methods/${method.toLowerCase()}-letter.svg`,
-      });
+      assert.equal(item.iconPath.id, "globe");
+      assert.equal(item.iconPath.color, undefined);
       assert.equal(item.description, method);
-      assert.ok(require("node:fs").existsSync(path.join(__dirname, "../public/images/methods", `${method.toLowerCase()}-letter.svg`)));
     }
     assert.equal(requests.getTreeItem({ kind: "request", data: rows[0] }).iconPath.id, "folder");
     assert.equal(requests.getTreeItem({ kind: "request", data: { ...rows[2], target_type: "graphql" } }).iconPath.id, "type-hierarchy");
     assert.equal(requests.getTreeItem({ kind: "request", data: { ...rows[2], method: "CUSTOM" } }).iconPath.id, "globe");
+    for (const [protocol, icon] of Object.entries({ sse: "broadcast", graphql: "type-hierarchy", websocket2: "debug-disconnect", socketio: "plug", grpc: "server-process", socket: "plug", socket_method: "symbol-method", doc: "file-text" })) {
+      const item = requests.getTreeItem({ kind: "request", data: { ...rows[2], target_type: protocol } });
+      assert.equal(item.iconPath.id, icon);
+      assert.equal(item.iconPath.color, undefined);
+    }
     const folderNode = { kind: "request", data: rows[0] };
     const requestNode = { kind: "request", data: rows[2] };
     const messages = [];

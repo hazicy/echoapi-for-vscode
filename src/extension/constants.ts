@@ -129,7 +129,7 @@ export const PANEL_OPTIONS:PanelOptionsType = {
     iconName: '',
     iconObj:{
       sse:'sse.png',
-      api:'http.png',
+      api:'http.svg',
       websocket2:'websocket.png',
       socketio:'socketio.png',
       graphql:'graphql.png'
