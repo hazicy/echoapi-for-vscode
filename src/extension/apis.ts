@@ -1,7 +1,6 @@
 import { setRequestResult } from "./requestStatus";
 import { getApiListName } from "./utils";
-const { Worker } = require("worker_threads");
-import path from "path";
+import { Worker } from "node:worker_threads";
 import * as vscode from "vscode";
 import {
   cloneDeep,
@@ -191,7 +190,7 @@ function runWorker(method: string, args: any[], callback?: any) {
       if (worker !== null) {
         worker.terminate();
       }
-      worker = new Worker(path.join(__dirname, "runtime-dist", "work.js"));
+      worker = new Worker(new URL("./runtime-dist/work.js", import.meta.url));
 
       worker.on("message", (message: unknown) => {
         if (callback) {

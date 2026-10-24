@@ -59,7 +59,7 @@ direct Oxlint equivalent and is not enabled.
 Regenerate the PNG icons after changing the source SVG:
 
 ```sh
-node scripts/generate-brand-icons.cjs
+node scripts/generate-brand-icons.mjs
 ```
 
 Existing local data and collection format identifiers remain compatible with the upstream project.

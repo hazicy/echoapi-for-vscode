@@ -54,10 +54,9 @@ const Setting = (props: Props) => {
       children: (
         <Select
           disabled={readOnly}
-          value={value?.socket_version}
+          value={value?.socket_version === "v3" ? "v3" : "v4"}
           onChange={(val) => handleConfig("socket_version", val)}
         >
-          <Select.Option value="v2">v2</Select.Option>
           <Select.Option value="v3">v3</Select.Option>
           <Select.Option value="v4">v4</Select.Option>
         </Select>

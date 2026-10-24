@@ -49,7 +49,7 @@
     "vscode:prepublish": "yarn run package",
     "compile": "yarn build:webviews --mode development && yarn build:extension",
     "watch": "concurrently --kill-others \"tsup --watch\" \"vite build --watch --mode development\"",
-    "package": "vite build && tsup --minify && node scripts/check-extension.cjs && node scripts/check-webviews.cjs && yarn check:ui",
+    "package": "vite build && tsup --minify && node scripts/check-extension.mjs && node scripts/check-webviews.mjs && yarn check:ui",
     "package:test": "yarn compile",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
@@ -59,7 +59,9 @@
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
     "test": "vscode-test",
-    "test:websocket": "node scripts/test-websocket.cjs",
+    "test:websocket": "node scripts/test-sockets.mjs",
+    "test:unit": "node --experimental-vm-modules --test tests/*.test.mjs",
+    "test:socketio": "node scripts/test-sockets.mjs --socketio",
     "test:editor": "playwright test --config tests/editor/playwright.config.ts",
     "build": "vsce package",
     "start": "concurrently --kill-others \"tsup --watch --env.ECHOAPI_DEV_SERVER true\" \"vite --host 127.0.0.1\"",
@@ -67,7 +69,7 @@
     "build:extension": "tsup",
     "build:webviews": "vite build",
     "test:ui": "playwright test --config tests/ui/playwright.config.ts",
-    "check:ui": "node scripts/check-ui-migration.cjs"
+    "check:ui": "node scripts/check-ui-migration.mjs"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.9",
@@ -152,7 +154,7 @@
     "react-resizable": "^3.0.5",
     "react-resizable-panels": "^1.0.9",
     "react-router-dom": "6.21.0",
-    "socket.io-client-pro": "^1.0.20",
+    "socket.io-client": "^4.8.4",
     "sql-ddl-to-json-schema": "^4.1.0",
     "url-parse": "^1.5.10",
     "web-curl-to-har": "^1.0.3",
@@ -185,6 +187,7 @@
     "esbuild": "^0.28.2",
     "oxfmt": "^0.74.0",
     "oxlint": "^1.89.0",
+    "socket.io": "^4.8.4",
     "tsup": "^9.0.0",
     "type-fest": "^4.8.3",
     "typescript": "^5.4.5",
@@ -551,7 +554,7 @@
   "activationEvents": [],
   "icon": "dist/images/okapi-icon.png",
   "engines": {
-    "vscode": "^1.74.3"
+    "vscode": "^1.100.0"
   },
   "sandbox": false
 }

@@ -1,8 +1,6 @@
-global.IS_ECHOAPI = true;
-
-import { Websocket2DetailsData } from "@/features/requests/types/websocket2";
 import { globalConfig, socketIoStore } from "../constants";
-import { SocketClient } from "socket.io-client-pro";
+import { SocketClient, SocketIoConnectionError } from "./socketioClient";
+import { applySocketSettings } from "./socketSettings";
 import * as vscode from "vscode";
 import { SocketIoDetailsData } from "@/features/requests/types/socketio";
 import {
@@ -19,152 +17,59 @@ import { ProjectConfigType } from "@/features/project/types";
 import { find, isEqual } from "lodash";
 
 export const socketioDisconnect = (target_id: string) => {
-  if (socketIoStore[target_id]) {
-    socketIoStore[target_id]?.disconnect(); //Close existing
-    socketIoStore[target_id] = null;
-    delete socketIoStore[target_id];
-  }
+  socketIoStore[target_id]?.disconnect();
 };
-
-// Promise Queue
-class PromiseQueue {
-  queue = Promise.resolve(true);
-
-  add(operation: any) {
-    return new Promise((resolve, reject) => {
-      this.queue = this.queue.then(operation).then(resolve).catch(reject);
-    });
-  }
-  get() {
-    return this.queue;
-  }
-}
 
 export const socketioConnect = async (data: {
   option: any;
   target: SocketIoDetailsData;
 }) => {
-  const { openedPanels } = globalConfig;
-  let client;
-  let global_target_id;
-  let isClose = false;
   const { target, option } = data;
-  try {
-    if (!target?.target_id) {
+  if (!target?.target_id) {
+    return;
+  }
+  const id = target.target_id;
+  socketIoStore[id]?.disconnect();
+  const client = new SocketClient(target, option, (message) => {
+    if (socketIoStore[id] !== client) {
       return;
     }
-    global_target_id = target.target_id;
-    const enqueue = new PromiseQueue();
-    //postMessage
-    const emitMessageEvent = function (msg: any) {
-      const { openedPanels } = globalConfig;
-      if (isClose) {
-        return;
-      }
-
-      if (!socketIoStore[target?.target_id]) {
-        return;
-      }
-
-      if (msg?.type === "disconnect" && msg?.isSuccess) {
-        socketIoStore[target?.target_id] = null;
-        delete socketIoStore[target?.target_id];
-      }
-
-      if (msg === undefined) {
-        return;
-      } else {
-        try {
-          enqueue.add(() => {
-            if (
-              [
-                "disconnect",
-                "connect_error",
-                "error",
-                "connect_timeout",
-              ].indexOf(msg?.type) > -1
-            ) {
-              socketIoStore[target?.target_id] = null;
-              delete socketIoStore[target?.target_id];
-            }
-
-            if (openedPanels?.[target?.target_id]) {
-              openedPanels[target?.target_id]?.webview.postMessage({
-                action: "setSocketIoResult",
-                data: {
-                  message: msg,
-                  target_id: target?.target_id,
-                  action: "received",
-                },
-              });
-            }
-          });
-        } catch (error) {
-          // logger.error("emitRuntimeEvent", String(error));
-        }
-      }
-    };
-
-    if (socketIoStore[global_target_id]) {
-      try {
-        socketIoStore[global_target_id]?.disconnect(); //Close existing
-        await socketIoStore[global_target_id]?.awaitDisconnect();
-        socketIoStore[global_target_id] = null;
-        delete socketIoStore[global_target_id];
-      } catch (error) {}
-    }
-
-    client = new SocketClient({ target, option, callback: emitMessageEvent });
-
-    socketIoStore[global_target_id] = client;
-
+    globalConfig.openedPanels[id]?.webview.postMessage({
+      action: "setSocketIoResult",
+      data: { message, target_id: id, action: "received" },
+    });
+  });
+  socketIoStore[id] = client;
+  try {
     const wsResponse = await client.connect();
-
-    if (openedPanels?.[target?.target_id]) {
-      openedPanels[target?.target_id]?.webview.postMessage({
+    if (socketIoStore[id] === client) {
+      globalConfig.openedPanels[id]?.webview.postMessage({
         action: "setSocketIoResult",
         data: {
           message: wsResponse,
-          target_id: target?.target_id,
+          target_id: id,
           action: "connected",
-          target: target,
+          target,
         },
       });
     }
-
-    const end = await client.awaitDisconnect();
-
-    await enqueue.get();
+    await client.awaitDisconnect();
   } catch (error: any) {
-    if (socketIoStore[target?.target_id]) {
-      socketIoStore[target?.target_id] = null;
-      delete socketIoStore[target?.target_id];
+    if (socketIoStore[id] === client) {
+      globalConfig.openedPanels[id]?.webview.postMessage({
+        action: "setSocketIoResult",
+        data: {
+          message:
+            error instanceof SocketIoConnectionError ? error.result : error,
+          target_id: id,
+          action: "error",
+        },
+      });
     }
-    if (error?.isSuccess !== undefined) {
-      if (openedPanels?.[target?.target_id]) {
-        openedPanels[target?.target_id]?.webview.postMessage({
-          action: "setSocketIoResult",
-          data: {
-            message: error,
-            target_id: target?.target_id,
-            action: "error",
-          },
-        });
-      }
-      return;
+  } finally {
+    if (socketIoStore[id] === client) {
+      delete socketIoStore[id];
     }
-    try {
-      if (openedPanels?.[target?.target_id]) {
-        openedPanels[target?.target_id]?.webview.postMessage({
-          action: "setSocketIoResult",
-          data: {
-            message: "websocket" + String(error),
-            target_id: target?.target_id,
-            action: "error",
-          },
-        });
-      }
-    } catch (e) {}
   }
 };
 
@@ -194,10 +99,10 @@ export const socketioSend = async (data: {
       return;
     }
 
-    if (is_ack) {
-      client.emitEventWithAck(event, msg, type);
+    if (is_ack === true || Number(is_ack) === 1) {
+      await client.emitEventWithAck(event, msg, type);
     } else {
-      client.emitEvent(event, msg, type);
+      await client.emitEvent(event, msg, type);
     }
   } catch (error) {}
 };
@@ -282,5 +187,9 @@ export const getSocketIoOption = async (
     targetId: target?.target_id,
     type: target?.target_type,
   });
-  return options;
+  return applySocketSettings(
+    options,
+    systemConfig,
+    vscode.workspace.getConfiguration("http").get<string>("proxy", ""),
+  );
 };

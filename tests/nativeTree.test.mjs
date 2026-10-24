@@ -1,9 +1,10 @@
-const { test } = require("node:test");
-const assert = require("node:assert/strict");
-const { build } = require("esbuild");
-const Module = require("node:module");
-const path = require("node:path");
-
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { build } from "esbuild";
+import path from "node:path";
+import dependency4 from "../package.json" with { type: "json" };
+import { fileURLToPath } from "node:url";
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
 test("native sidebar panels, test commands and workspace request history", async () => {
   const views = new Map();
   const commands = new Map();
@@ -50,7 +51,11 @@ test("native sidebar panels, test commands and workspace request history", async
     fire = (value) => this.listeners.forEach((listener) => listener(value));
     dispose() {}
   }
-  const context = { subscriptions: [], project: "one", extensionUri: "/extension" };
+  const context = {
+    subscriptions: [],
+    project: "one",
+    extensionUri: "/extension",
+  };
   const mocks = {
     vscode: {
       EventEmitter,
@@ -73,7 +78,10 @@ test("native sidebar panels, test commands and workspace request history", async
       TreeItemCollapsibleState: { None: 0, Collapsed: 1, Expanded: 2 },
       env: { language: "zh-cn" },
       window: {
-        registerFileDecorationProvider: (provider) => { decorations = provider; return { dispose() {} }; },
+        registerFileDecorationProvider: (provider) => {
+          decorations = provider;
+          return { dispose() {} };
+        },
         createTreeView: (id, options) => {
           views.set(id, options.treeDataProvider);
           return { dispose() {} };
@@ -105,7 +113,16 @@ test("native sidebar panels, test commands and workspace request history", async
     common: {
       APIS_BASE_DEFAULT_DATA: { api: { response: { restored: true } } },
     },
-    constants: { APIS_TARGET_TYPE_ENUM: { API: "api", FOLDER: "folder", SSE: "sse", GRAPHQL: "graphql", WEBSOCKET2: "websocket2", SOCKETIO: "socketio" } },
+    constants: {
+      APIS_TARGET_TYPE_ENUM: {
+        API: "api",
+        FOLDER: "folder",
+        SSE: "sse",
+        GRAPHQL: "graphql",
+        WEBSOCKET2: "websocket2",
+        SOCKETIO: "socketio",
+      },
+    },
     "apipost-tools": { snowflakeId: () => String(++nextId) },
   };
   globalThis.__okapiNativeMocks = mocks;
@@ -119,7 +136,7 @@ test("native sidebar panels, test commands and workspace request history", async
       bundle: true,
       write: false,
       platform: "node",
-      format: "cjs",
+      format: "esm",
       plugins: [
         {
           name: "native-test-dependencies",
@@ -140,24 +157,34 @@ test("native sidebar panels, test commands and workspace request history", async
               },
             );
             builder.onLoad({ filter: /.*/, namespace: "mock" }, (args) => ({
-              contents: `module.exports = globalThis.__okapiNativeMocks[${JSON.stringify(args.path)}]`,
+              contents: Object.entries(mocks[args.path])
+                .map(([key, value]) => {
+                  const reference = `globalThis.__okapiNativeMocks[${JSON.stringify(args.path)}][${JSON.stringify(key)}]`;
+                  const expression =
+                    typeof value === "function" &&
+                    !/^class\s/.test(String(value))
+                      ? `(...args) => ${reference}(...args)`
+                      : reference;
+                  return `export const ${key} = ${expression};`;
+                })
+                .join("\n"),
               loader: "js",
             }));
           },
         },
       ],
     });
-    const filename = path.join(__dirname, "nativeTree.bundle.cjs");
-    const bundled = new Module(filename);
-    bundled.paths = module.paths;
-    bundled._compile(result.outputFiles[0].text, filename);
+    const bundled = await import(
+      "data:text/javascript;base64," +
+        Buffer.from(result.outputFiles[0].text).toString("base64")
+    );
     const {
       registerNativeTree,
       recordRequestHistory,
       getRequestHistory,
       storageChanged,
       requestChildren,
-    } = bundled.exports;
+    } = bundled;
     registerNativeTree(context);
     assert.deepEqual(
       [...views.keys()],
@@ -171,9 +198,14 @@ test("native sidebar panels, test commands and workspace request history", async
     await commands.get("okapi.tree.new")();
     assert.equal(executed.at(-1)[0], "openTabPanel");
     const originalPicker = mocks.vscode.window.showQuickPick;
-    mocks.common.APIS_BASE_DEFAULT_DATA.websocket2 = { message: [{ request: { raw: "" } }] };
+    mocks.common.APIS_BASE_DEFAULT_DATA.websocket2 = {
+      message: [{ request: { raw: "" } }],
+    };
     mocks.vscode.window.showQuickPick = async (items) => {
-      assert.equal(items.some((item) => item.type === "websocket"), false);
+      assert.equal(
+        items.some((item) => item.type === "websocket"),
+        false,
+      );
       return items.find((item) => item.type === "websocket2");
     };
     await commands.get("okapi.tree.new")();
@@ -181,44 +213,131 @@ test("native sidebar panels, test commands and workspace request history", async
     assert.equal(executed.at(-1)[1].message.length, 1);
     mocks.vscode.window.showQuickPick = originalPicker;
     const requests = views.get("okapiRequests");
-    const folderDescription = (data) => requests.getTreeItem({ kind: "request", data }).description;
+    const folderDescription = (data) =>
+      requests.getTreeItem({ kind: "request", data }).description;
     assert.equal(folderDescription(rows[0]), "(1)");
     assert.equal(folderDescription(rows[1]), "(1)");
     const extraRows = [
-      { target_id: "deleted", parent_id: "folder", target_type: "api", is_deleted: 1 },
-      { target_id: "empty", parent_id: "folder", target_type: "folder", is_deleted: -1 },
-      { target_id: "socket", parent_id: "folder", target_type: "socket", is_deleted: -1 },
-      { target_id: "method", parent_id: "socket", target_type: "socket_method", is_deleted: -1 },
-      { target_id: "samples", parent_id: "folder", target_type: "sample_group", is_deleted: -1 },
+      {
+        target_id: "deleted",
+        parent_id: "folder",
+        target_type: "api",
+        is_deleted: 1,
+      },
+      {
+        target_id: "empty",
+        parent_id: "folder",
+        target_type: "folder",
+        is_deleted: -1,
+      },
+      {
+        target_id: "socket",
+        parent_id: "folder",
+        target_type: "socket",
+        is_deleted: -1,
+      },
+      {
+        target_id: "method",
+        parent_id: "socket",
+        target_type: "socket_method",
+        is_deleted: -1,
+      },
+      {
+        target_id: "samples",
+        parent_id: "folder",
+        target_type: "sample_group",
+        is_deleted: -1,
+      },
     ];
     rows.push(...extraRows);
     assert.equal(folderDescription(rows[0]), "(2)");
     assert.equal(folderDescription(extraRows[1]), undefined);
     rows.splice(3);
-    for (const method of ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]) {
-      const item = requests.getTreeItem({ kind: "request", data: { ...rows[2], method } });
-      assert.ok(item.iconPath.dark.endsWith(`/methods/${method.toLowerCase()}-badge.svg`));
-      assert.ok(item.iconPath.light.endsWith(`/methods/${method.toLowerCase()}-badge-light.svg`));
+    for (const method of [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "HEAD",
+      "OPTIONS",
+    ]) {
+      const item = requests.getTreeItem({
+        kind: "request",
+        data: { ...rows[2], method },
+      });
+      assert.ok(
+        item.iconPath.dark.endsWith(
+          `/methods/${method.toLowerCase()}-badge.svg`,
+        ),
+      );
+      assert.ok(
+        item.iconPath.light.endsWith(
+          `/methods/${method.toLowerCase()}-badge-light.svg`,
+        ),
+      );
       assert.equal(item.description, undefined);
       assert.ok(item.tooltip.includes(method));
     }
-    assert.equal(requests.getTreeItem({ kind: "request", data: rows[0] }).iconPath.id, "folder");
-    assert.equal(requests.getTreeItem({ kind: "request", data: rows[0] }).iconPath.color.id, "textLink.foreground");
-    assert.equal(requests.getTreeItem({ kind: "request", data: { ...rows[2], target_type: "graphql" } }).iconPath.id, "type-hierarchy");
-    assert.ok(requests.getTreeItem({ kind: "request", data: { ...rows[2], method: "CUSTOM" } }).iconPath.dark.endsWith("/methods/http-badge.svg"));
-    for (const [protocol, icon] of Object.entries({ sse: "broadcast", graphql: "type-hierarchy", websocket2: "debug-disconnect", socketio: "plug", grpc: "server-process", socket: "plug", socket_method: "symbol-method", doc: "file-text" })) {
-      const item = requests.getTreeItem({ kind: "request", data: { ...rows[2], target_type: protocol } });
-      assert.equal(item.iconPath.id, icon);
+    assert.equal(
+      requests.getTreeItem({ kind: "request", data: rows[0] }).iconPath.id,
+      "folder",
+    );
+    assert.equal(
+      requests.getTreeItem({ kind: "request", data: rows[0] }).iconPath.color
+        .id,
+      "textLink.foreground",
+    );
+    assert.ok(
+      requests
+        .getTreeItem({
+          kind: "request",
+          data: { ...rows[2], target_type: "graphql" },
+        })
+        .iconPath.dark.endsWith("/graphql-dark.svg"),
+    );
+    assert.ok(
+      requests
+        .getTreeItem({
+          kind: "request",
+          data: { ...rows[2], method: "CUSTOM" },
+        })
+        .iconPath.dark.endsWith("/methods/http-badge.svg"),
+    );
+    for (const [protocol, icon] of Object.entries({
+      sse: "broadcast",
+      graphql: "type-hierarchy",
+      websocket2: "debug-disconnect",
+      socketio: "plug",
+      grpc: "server-process",
+      socket: "plug",
+      socket_method: "symbol-method",
+      doc: "file-text",
+    })) {
+      const item = requests.getTreeItem({
+        kind: "request",
+        data: { ...rows[2], target_type: protocol },
+      });
+      assert.ok(item.iconPath.dark.endsWith(`/${protocol}-dark.svg`));
       assert.equal(item.iconPath.color, undefined);
     }
-    const resource = requests.getTreeItem({ kind: "request", data: rows[2] }).resourceUri;
+    const resource = requests.getTreeItem({
+      kind: "request",
+      data: rows[2],
+    }).resourceUri;
     assert.equal(resource.scheme, "okapi-request");
     assert.equal(decorations.provideFileDecoration(resource), undefined);
-    assert.equal(decorations.provideFileDecoration({ ...resource, scheme: "file" }), undefined);
+    assert.equal(
+      decorations.provideFileDecoration({ ...resource, scheme: "file" }),
+      undefined,
+    );
     rows[2].url = "";
     assert.equal(decorations.provideFileDecoration(resource).badge, "!");
     assert.equal(decorations.provideFileDecoration(resource).color, undefined);
-    assert.match(decorations.provideFileDecoration(resource).tooltip, /Missing URL/);
+    assert.match(
+      decorations.provideFileDecoration(resource).tooltip,
+      /Missing URL/,
+    );
     rows[2].url = "/users";
     context.project = "two";
     assert.equal(decorations.provideFileDecoration(resource), undefined);
@@ -226,7 +345,10 @@ test("native sidebar panels, test commands and workspace request history", async
     const folderNode = { kind: "request", data: rows[0] };
     const requestNode = { kind: "request", data: rows[2] };
     const messages = [];
-    mocks.sidbar.handleMessage = (message) => { messages.push(message); return true; };
+    mocks.sidbar.handleMessage = (message) => {
+      messages.push(message);
+      return true;
+    };
     const originalInput = mocks.vscode.window.showInputBox;
     mocks.vscode.window.showInputBox = async () => " Renamed ";
     await commands.get("okapi.tree.rename")(requestNode);
@@ -237,22 +359,35 @@ test("native sidebar panels, test commands and workspace request history", async
     mocks.vscode.window.showInputBox = async () => undefined;
     await commands.get("okapi.tree.rename")(folderNode);
     assert.equal(messages.length, messageCount);
-    mocks.vscode.window.showInputBox = async () => { context.project = "two"; return "Wrong workspace"; };
+    mocks.vscode.window.showInputBox = async () => {
+      context.project = "two";
+      return "Wrong workspace";
+    };
     await commands.get("okapi.tree.rename")(folderNode);
     assert.equal(messages.length, messageCount);
     context.project = "one";
     mocks.vscode.window.showInputBox = originalInput;
     await commands.get("okapi.tree.clone")(requestNode);
-    assert.deepEqual(messages.at(-1), { action: "cloneApi", data: { target_id: "request" } });
+    assert.deepEqual(messages.at(-1), {
+      action: "cloneApi",
+      data: { target_id: "request" },
+    });
     await commands.get("okapi.tree.delete")(folderNode);
     assert.equal(messages.at(-1).action, "showConfirmation");
     assert.equal(messages.at(-1).data.target_id, "folder");
     await commands.get("okapi.tree.folderSettings")(folderNode);
-    assert.deepEqual(messages.at(-1), { action: "openTagPanelById", data: "folder" });
+    assert.deepEqual(messages.at(-1), {
+      action: "openTagPanelById",
+      data: "folder",
+    });
     await commands.get("okapi.tree.revealStorage")(requestNode);
     assert.equal(messages.at(-1).action, "openVscodeFileExplorer");
     await commands.get("okapi.tree.folderReports")(folderNode);
-    assert.deepEqual(executed.at(-1), ["echoapi.folderTest", rows[0], { openHistoryReport: true }]);
+    assert.deepEqual(executed.at(-1), [
+      "echoapi.folderTest",
+      rows[0],
+      { openHistoryReport: true },
+    ]);
     await commands.get("okapi.tree.copyCurl")(requestNode);
     assert.equal(executed.at(-1)[0], "copyAsCurl");
     assert.equal(executed.at(-1)[1].parent_id, "0");
@@ -260,8 +395,10 @@ test("native sidebar panels, test commands and workspace request history", async
     await commands.get("okapi.tree.new")(folderNode, "folder");
     assert.equal(messages.at(-1).data.parent_id, "folder");
     assert.equal(messages.at(-1).data.target_type, "folder");
-    const manifest = require("../package.json");
-    for (const item of manifest.contributes.menus["view/item/context"].filter((item) => item.command.startsWith("okapi.tree."))) {
+    const manifest = dependency4;
+    for (const item of manifest.contributes.menus["view/item/context"].filter(
+      (item) => item.command.startsWith("okapi.tree."),
+    )) {
       assert.ok(commands.has(item.command), `missing handler: ${item.command}`);
     }
     mocks.sidbar.handleMessage = () => true;

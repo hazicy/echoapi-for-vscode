@@ -1,8 +1,7 @@
 global.IS_ECHOAPI = true;
 
-const path = require('path');
-const { parentPort } = require('worker_threads');
-const { run, request2HAR } = require(path.join(__dirname, 'runtime', 'index.js'));
+import { parentPort } from 'node:worker_threads';
+const { run, request2HAR } = await import('./runtime/index.js').then(module => module.default);
 
 // Promise Queue
 class PromiseQueue {

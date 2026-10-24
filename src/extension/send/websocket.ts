@@ -10,6 +10,7 @@ import {
 } from "../utils";
 import { getAboutCollections } from "@/features/requests/utils/send/utils";
 import { SysConfig } from "@/features/settings/types/settings";
+import { applySocketSettings } from "./socketSettings";
 
 export const wsDisconnect = (target_id: string) => {
   websocketStore[target_id]?.close();
@@ -120,34 +121,9 @@ export const getWebsocketOption = async (
     type: target?.target_type,
   });
 
-  return {
-    ...options,
-    language: systemConfig.language,
-    systemProxy: vscode.workspace
-      .getConfiguration("http")
-      .get<string>("proxy", ""),
-    system_configs: {
-      ...options.system_configs,
-      proxy: {
-        type: systemConfig.proxy === 3 ? 1 : systemConfig.proxy === 1 ? -1 : 2,
-        envfirst: systemConfig.request_proxy_sys_open,
-        bypass: systemConfig.request_proxy_bypass,
-        protocols: systemConfig.request_proxy_type,
-        auth: {
-          host: `${systemConfig.request_proxy_url || ""}${systemConfig.request_proxy_port ? `:${systemConfig.request_proxy_port}` : ""}`,
-          authenticate: systemConfig.request_proxy_auth_open,
-          username:
-            systemConfig.request_proxy_auth?.request_proxy_auth_username,
-          password:
-            systemConfig.request_proxy_auth?.request_proxy_auth_password,
-        },
-      },
-      ca_cert: {
-        open: systemConfig.ca_certificate?.open,
-        path: systemConfig.ca_certificate?.file_url,
-        base64: systemConfig.ca_certificate?.file_base64,
-      },
-      client_cert: systemConfig.client_certificate,
-    },
-  };
+  return applySocketSettings(
+    options,
+    systemConfig,
+    vscode.workspace.getConfiguration("http").get<string>("proxy", ""),
+  );
 };

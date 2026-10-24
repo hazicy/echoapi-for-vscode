@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import express, { Request, Response } from "express";
 import * as vscode from "vscode";
 import {
@@ -30,14 +31,14 @@ export const startDocsServer = (
       // Get share record (return error if not found)
       const shareData = getProjectShareData(context);
       if (!shareData?.[share_id]) {
-        res.status(404).sendFile(__dirname + "/404.html");
+        res.status(404).sendFile(fileURLToPath(new URL("./404.html", import.meta.url)));
         return "error";
       }
       // Find latest API data through record and convert to swagger format.
       const apiList = getApiList(context);
       const shareApiData = apiList.find((i) => i?.target_id === share_id);
       if (shareApiData === undefined) {
-        res.status(404).sendFile(__dirname + "/404.html");
+        res.status(404).sendFile(fileURLToPath(new URL("./404.html", import.meta.url)));
         return "error";
       }
 
@@ -84,13 +85,13 @@ export const startDocsServer = (
   });
 
   app.get("/doc.js", async (req: Request, res: Response) => {
-    res.sendFile(__dirname + "/redoc.standalone.js");
+    res.sendFile(fileURLToPath(new URL("./redoc.standalone.js", import.meta.url)));
   });
 
   app.get(
     "/api-docs/images/logo_icon.png",
     async (req: Request, res: Response) => {
-      res.sendFile(__dirname + "/images/logo_icon.png");
+      res.sendFile(fileURLToPath(new URL("./images/logo_icon.png", import.meta.url)));
     },
   );
 

@@ -7,7 +7,7 @@ export default defineConfig({
   outputDir: '../../test-results/editor',
   use: { browserName: 'chromium', baseURL: 'http://127.0.0.1:4178', headless: true },
   webServer: {
-    command: 'node tests/editor/serve.cjs',
+    command: 'node tests/editor/serve.mjs',
     cwd: '../..',
     url: 'http://127.0.0.1:4178',
     reuseExistingServer: false,

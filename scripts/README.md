@@ -10,7 +10,7 @@ files, with no custom build runner.
 - `yarn start`: watch the extension and run the Vite development server on port 8080.
   Launch the extension after its first build; React Webviews then use Vite HMR.
 - `yarn build`: create the production VSIX using `vsce`.
-- `yarn build:extension`: build only the CommonJS extension host.
+- `yarn build:extension`: build only the ESM extension host.
 - `yarn build:webviews`: build only the Webviews. This clears `dist/` before building,
   so run `yarn build:extension` afterwards if you need a complete extension.
 
@@ -24,6 +24,12 @@ The extension-generated HTML explicitly loads the stylesheet in local mode and
 Vite's client/React refresh runtime in development server mode. `yarn compile`
 and `yarn watch` use local bundles; only `yarn start` enables the server URLs.
 
+The extension and its HTTP Worker load as native ESM and require VS Code 1.100+.
+The extension build converts the vendored HTTP engine to ESM after copying public
+assets. Run tsup after Vite; copying public assets alone does not produce a complete
+extension. Bundled third-party Node dependencies retain a `createRequire` bridge
+for their internal calls to Node built-ins.
+
 Vite handles CSS Modules (`*.module.css`), regular CSS, Less, SVG React components,
 and public assets. Its plugins provide browser Node polyfills and copy the curl
 parser WASM files. Public files are served directly in development and copied into
@@ -33,6 +39,9 @@ are available when using `yarn start`.
 
 Both tools transpile TypeScript without checking types. Use `yarn tsc --noEmit`
 separately. Existing third-party dependency/type errors may still require follow-up.
+
+Run `yarn test:unit` for the ESM unit tests. The mock module loader uses Node’s
+`--experimental-vm-modules` flag to isolate host and UI dependencies.
 
 ## UI migration
 

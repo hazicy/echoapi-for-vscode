@@ -20,8 +20,8 @@
         "pattern": { "regexp": "^(?!)$" },
         "background": {
           "activeOnStart": true,
-          "beginsPattern": "(CLI Building entry|CJS Build start)",
-          "endsPattern": "CJS.*Build success"
+          "beginsPattern": "(CLI Building entry|ESM Build start)",
+          "endsPattern": "ESM.*Build success"
         }
       },
       "presentation": { "reveal": "silent", "panel": "dedicated" }
