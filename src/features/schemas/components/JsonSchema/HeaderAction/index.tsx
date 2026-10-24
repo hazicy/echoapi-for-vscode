@@ -1,6 +1,6 @@
 import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import React, { memo, useState } from "react";
+import React, { lazy, memo, Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Flex, Tooltip } from "@/shared/ui/base";
@@ -11,9 +11,9 @@ import Button from "@/shared/ui/Button";
 import IconFont from "@/shared/ui/IconFont";
 import useTheme from "@/shared/hooks/useTheme";
 
-import EditRow from "./modals/EditRaw";
-import ImportModal from "./modals/ImportModal";
-import PreviewModal from "./modals/PreviewModal";
+const EditRow = lazy(() => import("./modals/EditRaw"));
+const ImportModal = lazy(() => import("./modals/ImportModal"));
+const PreviewModal = lazy(() => import("./modals/PreviewModal"));
 
 type Props = {
   value: any;
@@ -30,28 +30,29 @@ const HeaderAction: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   return (
     <div className={styles.container}>
-      {modalType === "import" && (
-        <ImportModal
-          themeToken={themeToken}
-          onChange={onChange}
-          onCancel={() => setModalType("")}
-        />
-      )}
-      {modalType === "preview" && (
-        <PreviewModal
-          themeToken={themeToken}
-          value={value}
-          onCancel={() => setModalType("")}
-        />
-      )}
-      {modalType === "edit-raw" && (
-        <EditRow
-          value={shemaData}
-          onChange={onChange}
-          onCancel={() => setModalType("")}
-        />
-      )}
-
+      <Suspense fallback={null}>
+        {modalType === "import" && (
+          <ImportModal
+            themeToken={themeToken}
+            onChange={onChange}
+            onCancel={() => setModalType("")}
+          />
+        )}
+        {modalType === "preview" && (
+          <PreviewModal
+            themeToken={themeToken}
+            value={value}
+            onCancel={() => setModalType("")}
+          />
+        )}
+        {modalType === "edit-raw" && (
+          <EditRow
+            value={shemaData}
+            onChange={onChange}
+            onCancel={() => setModalType("")}
+          />
+        )}
+      </Suspense>
       <div className={slots["action-right"]} style={style}>
         <Flex gap={8}>
           <Tooltip title={t("common.schema.raw")}>

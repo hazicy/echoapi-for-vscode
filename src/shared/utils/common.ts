@@ -6,7 +6,7 @@ import {
 } from "@/shared/constants/common";
 import ATools from "apipost-tools";
 import i18next from "i18next";
-import { divide, format, round } from "mathjs";
+import { divide, format, round } from "mathjs/number";
 import FileSaver from "file-saver";
 import {
   concat,

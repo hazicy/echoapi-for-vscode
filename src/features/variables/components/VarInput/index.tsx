@@ -10,8 +10,6 @@ import { useMemoizedFn, useSafeState } from "ahooks";
 import cn from "classnames";
 import { find, head, isPlainObject, isString, pick } from "lodash";
 import { useShallow } from "zustand/react/shallow";
-import aTools from "apipost-inside-tools";
-import { convert, validate } from "curl-to-postmanv2";
 
 import {
   genUrlByQuery,
@@ -141,7 +139,7 @@ export default function VarInput(props: Partial<VarInputProps>) {
     );
   };
 
-  const handlePaste = (
+  const handlePaste = async (
     event: React.ClipboardEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const text = event.clipboardData.getData("text/plain");
@@ -175,37 +173,54 @@ export default function VarInput(props: Partial<VarInputProps>) {
     }
 
     event.preventDefault();
-    const { result: isCurl = false } = validate(bashText);
-    if (!isCurl) {
-      message.destroy();
-      message.info(t("supplement.curl_tip"));
-      return;
-    }
-    convert({ type: "string", data: bashText }, (error: any, result: any) => {
-      if (error || (result?.error && !result?.result)) {
+    const pastedValue = element.value;
+    element.blur();
+    try {
+      const [{ default: aTools }, { convert, validate }] = await Promise.all([
+        import("apipost-inside-tools"),
+        import("curl-to-postmanv2"),
+      ]);
+      // Loading the converter must not overwrite edits made while it was loading.
+      if (element.value !== pastedValue || !element.isConnected) {
+        return;
+      }
+      const { result: isCurl = false } = validate(bashText);
+      if (!isCurl) {
         message.destroy();
         message.info(t("supplement.curl_tip"));
         return;
       }
-      const newApi = aTools.curlPostman2apipost(
-        head<any>(result?.output)?.data,
-      );
-      if (!isPlainObject(newApi)) {
-        return;
-      }
-      newApi.request.header.parameter = getParameterDataFilterContentLength(
-        newApi.request.header.parameter || [],
-      );
-      const newUrl = genUrlByQuery(newApi?.url, newApi.request.query.parameter);
-      if (isString(newUrl)) {
-        newApi.url = newUrl;
-      }
-      pasteCurlChange?.({
-        ...pick(newApi, ["description", "method", "url", "request"]),
-        request: pick(newApi.request, ["header", "query", "body", "auth"]),
+      convert({ type: "string", data: bashText }, (error: any, result: any) => {
+        if (error || (result?.error && !result?.result)) {
+          message.destroy();
+          message.info(t("supplement.curl_tip"));
+          return;
+        }
+        const newApi = aTools.curlPostman2apipost(
+          head<any>(result?.output)?.data,
+        );
+        if (!isPlainObject(newApi)) {
+          return;
+        }
+        newApi.request.header.parameter = getParameterDataFilterContentLength(
+          newApi.request.header.parameter || [],
+        );
+        const newUrl = genUrlByQuery(
+          newApi?.url,
+          newApi.request.query.parameter,
+        );
+        if (isString(newUrl)) {
+          newApi.url = newUrl;
+        }
+        pasteCurlChange?.({
+          ...pick(newApi, ["description", "method", "url", "request"]),
+          request: pick(newApi.request, ["header", "query", "body", "auth"]),
+        });
       });
-    });
-    element.blur();
+    } catch {
+      message.destroy();
+      message.info(t("supplement.curl_tip"));
+    }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {

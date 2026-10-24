@@ -1,6 +1,6 @@
 import styles from "./style.module.css";
 import slots from "@/shared/ui/base/slots.module.css";
-import { FC, memo, useMemo, useRef } from "react";
+import { FC, lazy, memo, Suspense, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import { CheckboxProps, Flex } from "@/shared/ui/base";
@@ -44,7 +44,7 @@ import { PARAMETER_TYPE, RequestTableProps } from "./types";
 import PublicParamsTable from "./components/PublicParamsTable";
 import ColumnConfig from "./components/ColumnConfig";
 import { IconFont } from "@/shared/ui";
-import ParameterConversion from "../ParameterConversion";
+const ParameterConversion = lazy(() => import("../ParameterConversion"));
 
 const RequestTable: FC<RequestTableProps> = memo(
   ({
@@ -407,13 +407,17 @@ const RequestTable: FC<RequestTableProps> = memo(
             onColumnSwitchConfig={onColumnSwitchConfig}
           />
         </div>
-        <ParameterConversion
-          value={dataSource}
-          onCancel={() => setOpen(false)}
-          parameterType={parameterType}
-          open={open}
-          onChange={parameterChange}
-        />
+        {open && (
+          <Suspense fallback={null}>
+            <ParameterConversion
+              value={dataSource}
+              onCancel={() => setOpen(false)}
+              parameterType={parameterType}
+              open={open}
+              onChange={parameterChange}
+            />
+          </Suspense>
+        )}
       </div>
     );
   },

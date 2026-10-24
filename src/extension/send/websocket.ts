@@ -1,8 +1,6 @@
-global.IS_ECHOAPI = true;
-
 import { Websocket2DetailsData } from "@/features/requests/types/websocket2";
 import { globalConfig, websocketStore } from "../constants";
-import { WSClient } from "websocket-client-pro";
+import { WSClient, WebSocketConnectionError } from "./websocketClient";
 import * as vscode from "vscode";
 import { ProjectConfigType } from "@/features/project/types";
 import {
@@ -14,122 +12,64 @@ import { getAboutCollections } from "@/features/requests/utils/send/utils";
 import { SysConfig } from "@/features/settings/types/settings";
 
 export const wsDisconnect = (target_id: string) => {
-  if (websocketStore[target_id]) {
-    websocketStore[target_id]?.close(); //Close existing
-    websocketStore[target_id] = null;
-    delete websocketStore[target_id];
-  }
+  websocketStore[target_id]?.close();
 };
 
 export const wsConnect = async (data: {
   option: any;
   target: Websocket2DetailsData;
 }) => {
-  const { openedPanels } = globalConfig;
-  let client;
-  let global_target_id;
-  let isClose = false;
   const { target, option } = data;
-  try {
-    if (!target?.target_id) {
+  if (!target?.target_id) {
+    return;
+  }
+  const id = target.target_id;
+  const previous = websocketStore[id];
+  previous?.close();
+  const client = new WSClient(target, option, (message) => {
+    // A stale connection must not change the state of its replacement.
+    if (websocketStore[id] !== client) {
       return;
     }
-    global_target_id = target.target_id;
-
-    //postMessage
-    const emitMessageEvent = function (msg: any) {
-      const { openedPanels } = globalConfig;
-      if (isClose) {
-        return;
-      }
-      if (msg === undefined) {
-        return;
-      }
-
-      if (!websocketStore[target?.target_id] && msg?.type !== "close") {
-        return;
-      }
-
-      try {
-        if (openedPanels?.[target?.target_id]) {
-          openedPanels[target?.target_id]?.webview.postMessage({
-            action: "setWsResult",
-            data: {
-              message: msg,
-              target_id: target?.target_id,
-              action: "received",
-            },
-          });
-        }
-      } catch (error) {
-        // logger.error("emitRuntimeEvent", String(error));
-      }
-    };
-
-    if (websocketStore[global_target_id]) {
-      try {
-        websocketStore[global_target_id]?.close(); //Close existing
-        await websocketStore[global_target_id]?.wait();
-        websocketStore[global_target_id] = null;
-        delete websocketStore[global_target_id];
-      } catch (error) {}
-    }
-
-    client = new WSClient(target, option, emitMessageEvent);
-
-    websocketStore[global_target_id] = client;
-
+    globalConfig.openedPanels[id]?.webview.postMessage({
+      action: "setWsResult",
+      data: { message, target_id: id, action: "received" },
+    });
+  });
+  websocketStore[id] = client;
+  try {
     const wsResponse = await client.connect();
-
-    if (
-      openedPanels?.[target?.target_id] &&
-      websocketStore[target?.target_id]
-    ) {
-      openedPanels[target?.target_id]?.webview.postMessage({
+    if (websocketStore[id] === client) {
+      globalConfig.openedPanels[id]?.webview.postMessage({
+        action: "setWsResult",
+        data: { message: wsResponse, target_id: id, action: "connected" },
+      });
+    }
+    await client.wait();
+  } catch (error: any) {
+    if (websocketStore[id] === client) {
+      globalConfig.openedPanels[id]?.webview.postMessage({
         action: "setWsResult",
         data: {
-          message: wsResponse,
-          target_id: target?.target_id,
-          action: "connected",
+          message:
+            error instanceof WebSocketConnectionError ? error.result : error,
+          target_id: id,
+          action: "error",
         },
       });
     }
-
-    const end = await client.wait();
-  } catch (error: any) {
-    if (websocketStore[target?.target_id]) {
-      websocketStore[target?.target_id] = null;
-      delete websocketStore[target?.target_id];
+  } finally {
+    if (websocketStore[id] === client) {
+      delete websocketStore[id];
     }
-    if (error?.isSuccess !== undefined) {
-      if (openedPanels?.[target?.target_id]) {
-        openedPanels[target?.target_id]?.webview.postMessage({
-          action: "setWsResult",
-          data: {
-            message: error,
-            target_id: target?.target_id,
-            action: "error",
-          },
-        });
-      }
-      return;
-    }
-    try {
-      if (openedPanels?.[target?.target_id]) {
-        openedPanels[target?.target_id]?.webview.postMessage({
-          action: "setWsResult",
-          data: {
-            message: "websocket" + String(error),
-            target_id: target?.target_id,
-            action: "error",
-          },
-        });
-      }
-    } catch (e) {}
   }
 };
 
-export const wsSend = (data: { target_id: string }) => {
+export const wsSend = async (data: {
+  target_id: string;
+  msg?: unknown;
+  type?: string;
+}) => {
   try {
     const { target_id } = data;
     if (!target_id) {
@@ -144,7 +84,7 @@ export const wsSend = (data: { target_id: string }) => {
     if (!client?.send) {
       return;
     }
-    client.send(data);
+    await client.send(data);
   } catch (error) {}
 };
 
@@ -180,5 +120,34 @@ export const getWebsocketOption = async (
     type: target?.target_type,
   });
 
-  return options;
+  return {
+    ...options,
+    language: systemConfig.language,
+    systemProxy: vscode.workspace
+      .getConfiguration("http")
+      .get<string>("proxy", ""),
+    system_configs: {
+      ...options.system_configs,
+      proxy: {
+        type: systemConfig.proxy === 3 ? 1 : systemConfig.proxy === 1 ? -1 : 2,
+        envfirst: systemConfig.request_proxy_sys_open,
+        bypass: systemConfig.request_proxy_bypass,
+        protocols: systemConfig.request_proxy_type,
+        auth: {
+          host: `${systemConfig.request_proxy_url || ""}${systemConfig.request_proxy_port ? `:${systemConfig.request_proxy_port}` : ""}`,
+          authenticate: systemConfig.request_proxy_auth_open,
+          username:
+            systemConfig.request_proxy_auth?.request_proxy_auth_username,
+          password:
+            systemConfig.request_proxy_auth?.request_proxy_auth_password,
+        },
+      },
+      ca_cert: {
+        open: systemConfig.ca_certificate?.open,
+        path: systemConfig.ca_certificate?.file_url,
+        base64: systemConfig.ca_certificate?.file_base64,
+      },
+      client_cert: systemConfig.client_certificate,
+    },
+  };
 };
