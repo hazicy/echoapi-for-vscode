@@ -17,6 +17,7 @@ import {
   showTabName,
 } from "../utils";
 import { handelOpenMessage } from "../messageHandler/open";
+import { getDocBaseUrl } from "../utils/share";
 
 export const createOpenPanel = (
   data: any,
@@ -76,7 +77,18 @@ export const createOpenPanel = (
   panel.webview.html = getHtmlForWebview(
     scriptUri,
     resourceBaseUrl,
-    { target_type: data?.target_type },
+    {
+      target_type: data?.target_type,
+      initialData: {
+        apiData: data,
+        projectConfig: getCurrentProjectConfig(context),
+        systemConfig: context.globalState.get("systemConfig") || {},
+        vscodeTheme: vscode.workspace
+          .getConfiguration("workbench")
+          .get("colorTheme"),
+        docBaseUrl: getDocBaseUrl(context),
+      },
+    },
     true,
   );
 

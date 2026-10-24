@@ -1131,7 +1131,7 @@ export const getHtmlForWebview = (
       performance.mark("okapi:html-ready");
       window.isMac = ${os.platform() === "darwin" ? "true" : "false"}
       window.vscode = acquireVsCodeApi();
-      window.vscodeData = ${data && JSON.stringify(data)};
+      window.vscodeData = ${data ? JSON.stringify(data).replace(/</g, "\\u003c").replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029") : "null"};
       window.resourceBaseUrl = "${resourceBaseUrl}";
     </script>
       <script type="module" src="${webviewUri}"></script>

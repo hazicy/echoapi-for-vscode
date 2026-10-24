@@ -1,6 +1,47 @@
 import { expect, test } from "@playwright/test";
 import { generateScopedName } from "../../scripts/css-modules.mjs";
 
+const requestInitialData = {
+          projectConfig: {},
+          systemConfig: { raw_parameter_pilot_bubble_switch: false },
+          vscodeTheme: "Default Dark Modern",
+          docBaseUrl: "http://localhost:3000",
+          apiData: {
+          target_id: "test-api",
+          target_type: "api",
+          project_id: "-1",
+          parent_id: "0",
+          name: "Test Request",
+          method: "GET",
+          url: "",
+          description: "",
+          tags: [],
+          attribute_info: {},
+          is_force: -1,
+          is_locked: -1,
+          ai_expect_enable: -1,
+          ai_expect: { list: [] },
+          request: {
+            auth: { type: "noauth" },
+            body: {
+              mode: "none",
+              parameter: [],
+              raw: "",
+              raw_parameter: [],
+              raw_schema: { type: "object" },
+              binary: null,
+            },
+            header: { parameter: [] },
+            query: { parameter: [{param_id:"query-1",key:"search",value:"hello",field_type:"String",is_checked:1}], query_add_equal: 1 },
+            restful: { parameter: [] },
+            cookie: { parameter: [] },
+            pre_tasks: [],
+            post_tasks: [],
+          },
+          response: { is_check_result: 1, example: [] },
+          },
+        };
+
 const slotSelector = (name: string) =>
   `.${generateScopedName(name, "/ui/base/slots.module.css")}`;
 
@@ -25,7 +66,7 @@ for (const panel of [
         contentType: "text/html",
         body: `<!doctype html><html lang="en"><head>
         <link rel="stylesheet" href="/webviews.css"></head><body><div id="root"></div>
-        <script>window.vscode = { postMessage() {} }; window.vscodeData = null;
+        <script>window.vscode = { postMessage() {} }; window.vscodeData = ${JSON.stringify(panel === "tagPanel" ? {target_type: "api", initialData: requestInitialData} : null)};
         window.resourceBaseUrl = location.origin;</script>
         <script type="module" src="/${panel}.js"></script></body></html>`,
       }),
@@ -58,7 +99,7 @@ for (const panel of [
     await page.route("**/loaded.html", (route) =>
       route.fulfill({
         contentType: "text/html",
-        body: `<!doctype html><html lang="en" style="--vscode-foreground:#ccc;--vscode-icon-foreground:#aaa;--vscode-button-background:#78c4c0;--vscode-editor-background:#222;--vscode-sideBar-background:#222;--vscode-settings-headerBorder:#383838;--vscode-settings-focusedRowBackground:#282828;--vscode-toolbar-hoverBackground:#333;--vscode-gitDecoration-ignoredResourceForeground:#777;--vscode-input-placeholderForeground:#777;--vscode-input-background:#2e2e2e;--vscode-editorWidget-border:#333"><head><meta charset="utf-8"><link rel="stylesheet" href="/webviews.css"></head><body><div id="root"></div><script>window.vscode={postMessage(){}};window.vscodeData=null;window.resourceBaseUrl=location.origin;</script><script type="module" src="/${panel}.js"></script></body></html>`,
+        body: `<!doctype html><html lang="en" style="--vscode-foreground:#ccc;--vscode-icon-foreground:#aaa;--vscode-button-background:#78c4c0;--vscode-editor-background:#222;--vscode-sideBar-background:#222;--vscode-settings-headerBorder:#383838;--vscode-settings-focusedRowBackground:#282828;--vscode-toolbar-hoverBackground:#333;--vscode-gitDecoration-ignoredResourceForeground:#777;--vscode-input-placeholderForeground:#777;--vscode-input-background:#2e2e2e;--vscode-editorWidget-border:#333"><head><meta charset="utf-8"><link rel="stylesheet" href="/webviews.css"></head><body><div id="root"></div><script>window.vscode={postMessage(){}};window.vscodeData=${JSON.stringify(panel === "tagPanel" ? {target_type: "api", initialData: requestInitialData} : null)};window.resourceBaseUrl=location.origin;</script><script type="module" src="/${panel}.js"></script></body></html>`,
       }),
     );
     await page.goto("http://127.0.0.1:4180/loaded.html");
@@ -102,47 +143,7 @@ for (const panel of [
           testingConfig: { name: "Report", runTimes: 1 },
           eventAllCount: 0,
         });
-      if (panel === "tagPanel")
-        send("setInitialData", {
-          projectConfig: {},
-          systemConfig: { raw_parameter_pilot_bubble_switch: false },
-          vscodeTheme: "Default Dark Modern",
-          docBaseUrl: "http://localhost:3000",
-          apiData: {
-          target_id: "test-api",
-          target_type: "api",
-          project_id: "-1",
-          parent_id: "0",
-          name: "Test Request",
-          method: "GET",
-          url: "",
-          description: "",
-          tags: [],
-          attribute_info: {},
-          is_force: -1,
-          is_locked: -1,
-          ai_expect_enable: -1,
-          ai_expect: { list: [] },
-          request: {
-            auth: { type: "noauth" },
-            body: {
-              mode: "none",
-              parameter: [],
-              raw: "",
-              raw_parameter: [],
-              raw_schema: { type: "object" },
-              binary: null,
-            },
-            header: { parameter: [] },
-            query: { parameter: [{param_id:"query-1",key:"search",value:"hello",field_type:"String",is_checked:1}], query_add_equal: 1 },
-            restful: { parameter: [] },
-            cookie: { parameter: [] },
-            pre_tasks: [],
-            post_tasks: [],
-          },
-          response: { is_check_result: 1, example: [] },
-          },
-        });
+
     }, panel);
     if (panel === "folderTestReportPanel") {
       await expect(

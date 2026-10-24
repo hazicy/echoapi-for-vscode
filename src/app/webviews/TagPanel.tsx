@@ -1,5 +1,5 @@
 import { getPopupContainer } from "@/shared/utils/popupContainer";
-import { Suspense, use, useEffect, useState } from "react";
+import { Suspense, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { App as AntdApp, ConfigProvider, Skeleton } from "@/shared/ui/base";
 import useGlobalTheme from "@/shared/theme";
@@ -38,17 +38,25 @@ import useWebsocket2 from "@/features/requests/components/Content/websocket2/use
 import useSocketIo from "@/features/requests/components/Content/socketio/useWebsocket2";
 import useGraphQLQuery from "@/features/requests/components/GraphQLQuery/hooks";
 
-let resolveInitialData: () => void;
-const initialDataReady = new Promise<void>((resolve) => {
-  resolveInitialData = resolve;
-});
-
-function InitializedContent({ loading }: { loading: boolean }) {
-  if (loading) {
-    use(initialDataReady);
-  }
-  return <Content />;
+function initializeRequest(data: any) {
+  const { apiData, projectConfig, systemConfig, vscodeTheme, docBaseUrl } =
+    data;
+  preloadRequestProtocol(apiData.target_type);
+  useProjectConfig.getState().updateProjectConfig(projectConfig);
+  useSystemConfig.getState().updateSystemConfig({
+    ...useSystemConfig.getState().systemConfig,
+    ...systemConfig,
+  });
+  useGlobal.getState().updateVscodeTheme(vscodeTheme);
+  useShare.getState().updateDocBaseUrl(docBaseUrl);
+  useApis.getState().updateApisActiveData(apiData);
+  useApis.getState().updateApisActiveKey(apiData.target_id);
+  performance.mark("okapi:data-ready");
 }
+
+// Hydrate before the first render so a local request needs no host round trip
+// and never suspends on data that is already available in the HTML.
+initializeRequest(window.vscodeData.initialData);
 
 function TagPanel() {
   const customTheme = useGlobalTheme();
@@ -78,8 +86,6 @@ function TagPanel() {
   );
   const updateApisActiveKey = useApis((state) => state.updateApisActiveKey);
 
-  const [lodaing, setLodaing] = useState(true);
-
   useApisHotkeys();
 
   const { handelWsResult } = useWebsocket2();
@@ -101,34 +107,6 @@ function TagPanel() {
       const message = event.data; // The JSON data our extension sent
 
       switch (message.action) {
-        case "setInitialData": {
-          const {
-            apiData,
-            projectConfig,
-            systemConfig,
-            vscodeTheme,
-            docBaseUrl,
-          } = message.data;
-          preloadRequestProtocol(apiData.target_type);
-          updateProjectConfig(projectConfig);
-          updateSystemConfig({
-            ...useSystemConfig.getState().systemConfig,
-            ...systemConfig,
-          });
-          updateVscodeTheme(vscodeTheme);
-          updateDocBaseUrl(docBaseUrl);
-          updateApisActiveData(apiData);
-          updateApisActiveKey(apiData.target_id);
-          performance.mark("okapi:data-ready");
-          performance.measure(
-            "okapi:react-to-data",
-            "okapi:react-mounted",
-            "okapi:data-ready",
-          );
-          resolveInitialData();
-          setLodaing(false);
-          break;
-        }
         case "setApiList":
           updateApiOriginDetailsList(message?.data || []);
           updateAllApiDetailsData(
@@ -192,8 +170,6 @@ function TagPanel() {
             updateApisActiveKey(message?.data?.target_id);
           }
 
-          resolveInitialData();
-          setLodaing(false);
           break;
         case "setVscodeTheme":
           updateVscodeTheme(message.data);
@@ -222,8 +198,6 @@ function TagPanel() {
       }
     };
     window.addEventListener("message", messageHandler);
-    // Register the listener before requesting data, including fast local replies.
-    window.vscode.postMessage({ action: "getInitialData" });
     return () => {
       window.removeEventListener("message", messageHandler);
     };
@@ -256,7 +230,7 @@ function TagPanel() {
                     />
                   }
                 >
-                  <InitializedContent loading={lodaing} />
+                  <Content />
                 </Suspense>
               </DndProvider>
             </ErrorBoundary>
